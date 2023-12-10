@@ -3,6 +3,8 @@
     "src/locale",
     "src/components/message-box/locale",
     "src/views/login/locale",
-    "src/views/dashboard/workplace/locale"
+    "src/views/dashboard/workplace/locale",
+    "src/views/list/card/locale",
+    "src/views/list/search-table/locale"
   ]
 }

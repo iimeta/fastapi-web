@@ -3,6 +3,14 @@ import localeLogin from '@/views/login/locale/zh-CN';
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 
+import localeSearchTable from '@/views/list/search-table/locale/zh-CN';
+import localeCardList from '@/views/list/card/locale/zh-CN';
+
+import localeUserInfo from '@/views/user/info/locale/zh-CN';
+import localeUserSetting from '@/views/user/setting/locale/zh-CN';
+
+import localeModelAdd from '@/views/model/add/locale/zh-CN';
+
 import localeSettings from './zh-CN/settings';
 
 export default {
@@ -25,4 +33,9 @@ export default {
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
+  ...localeSearchTable,
+  ...localeCardList,
+  ...localeUserInfo,
+  ...localeUserSetting,
+  ...localeModelAdd,
 };
