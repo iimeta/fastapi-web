@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.form', 'menu.form.step']" />
+    <Breadcrumb :items="['menu.model', 'menu.model.create']" />
     <a-spin :loading="loading" style="width: 100%">
       <a-card class="general-card">
         <template #title>
-          {{ $t('stepForm.step.title') }}
+          {{ $t('model.title') }}
         </template>
         <div class="wrapper">
           <a-steps
@@ -13,19 +13,19 @@
             line-less
             class="steps"
           >
-            <a-step :description="$t('stepForm.step.subTitle.baseInfo')">
-              {{ $t('stepForm.step.title.baseInfo') }}
+            <a-step :description="$t('model.subTitle.baseInfo')">
+              {{ $t('model.title.baseInfo') }}
             </a-step>
-            <a-step :description="$t('stepForm.step.subTitle.channel')">
-              {{ $t('stepForm.step.title.channel') }}
+            <a-step :description="$t('model.subTitle.advanced')">
+              {{ $t('model.title.advanced') }}
             </a-step>
-            <a-step :description="$t('stepForm.step.subTitle.finish')">
-              {{ $t('stepForm.step.title.finish') }}
+            <a-step :description="$t('model.subTitle.finish')">
+              {{ $t('model.title.finish') }}
             </a-step>
           </a-steps>
           <keep-alive>
             <BaseInfo v-if="step === 1" @change-step="changeStep" />
-            <ChannelInfo v-else-if="step === 2" @change-step="changeStep" />
+            <Advanced v-else-if="step === 2" @change-step="changeStep" />
             <Success v-else-if="step === 3" @change-step="changeStep" />
           </keep-alive>
         </div>
@@ -37,25 +37,20 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import {
-    submitChannelForm,
-    BaseInfoModel,
-    ChannelInfoModel,
-    UnitChannelModel,
-  } from '@/api/form';
+  import { submitModelCreate, ModelCreate, ModelBaseInfo } from '@/api/model';
   import BaseInfo from './components/base-info.vue';
-  import ChannelInfo from './components/channel-info.vue';
+  import Advanced from './components/advanced.vue';
   import Success from './components/success.vue';
 
   const { loading, setLoading } = useLoading(false);
   const step = ref(1);
-  const submitModel = ref<UnitChannelModel>({} as UnitChannelModel);
+  const submitModel = ref<ModelCreate>({} as ModelCreate);
   const submitForm = async () => {
     setLoading(true);
     try {
-      await submitChannelForm(submitModel.value); // The mock api default success
+      await submitModelCreate(submitModel.value); // The mock api default success
       step.value = 3;
-      submitModel.value = {} as UnitChannelModel; // init
+      submitModel.value = {} as ModelCreate; // init
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -64,7 +59,7 @@
   };
   const changeStep = (
     direction: string | number,
-    model: BaseInfoModel | ChannelInfoModel
+    model: ModelBaseInfo | ModelCreate
   ) => {
     if (typeof direction === 'number') {
       step.value = direction;
@@ -89,7 +84,7 @@
 
 <script lang="ts">
   export default {
-    name: 'ModelAdd',
+    name: 'ModelCreate',
   };
 </script>
 

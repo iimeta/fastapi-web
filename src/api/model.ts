@@ -43,6 +43,24 @@ export interface ServiceRecord {
   enable?: boolean;
   expires?: boolean;
 }
+
+export interface ModelBaseInfo {
+  corp: string;
+  name: string;
+  model: string;
+  type: string;
+  remark: string;
+}
+
+export interface ModelAdvanced {
+  data_format: string;
+  base_url: string;
+  path: string;
+  proxy: string;
+}
+
+export type ModelCreate = ModelBaseInfo & ModelAdvanced;
+
 export function queryInspectionList() {
   return axios.get('/api/list/quality-inspection');
 }
@@ -53,4 +71,45 @@ export function queryTheServiceList() {
 
 export function queryRulesPresetList() {
   return axios.get('/api/list/rules-preset');
+}
+
+export function submitModelCreate(data: ModelCreate) {
+  return axios.post('/api/v1/model/create', data);
+}
+
+
+export interface ModelPage {
+  id: string;
+  corp: string;
+  name: string;
+  model: string;
+  type: number;
+  data_format: number;
+  status: number;
+  remark: string;
+}
+export interface Paging {
+  page: number;
+  page_size: number;
+  total: number;
+  page_count: number;
+}
+
+export interface ModelPageParams extends Partial<ModelPage> {
+  current: number;
+  pageSize: number;
+}
+
+export interface ModelPageRes {
+  items: ModelPage[];
+  paging: Paging;
+}
+
+export function queryModelPage(params: ModelPageParams) {
+  return axios.get<ModelPageRes>('/api/v1/model/page', {
+    params,
+    paramsSerializer: (obj) => {
+      return qs.stringify(obj);
+    },
+  });
 }

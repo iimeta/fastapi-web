@@ -101,7 +101,8 @@
     if (!errors) {
       setLoading(true);
       try {
-        values.platform = 'web';
+        values.terminal = 'web';
+        values.channel = 'user';
         await userStore.login(values as LoginData);
         const { redirect, ...othersQuery } = router.currentRoute.value.query;
         router.push({

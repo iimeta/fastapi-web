@@ -3,13 +3,10 @@ import localeLogin from '@/views/login/locale/zh-CN';
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 
-import localeSearchTable from '@/views/list/search-table/locale/zh-CN';
-import localeCardList from '@/views/list/card/locale/zh-CN';
-
 import localeUserInfo from '@/views/user/info/locale/zh-CN';
 import localeUserSetting from '@/views/user/setting/locale/zh-CN';
 
-import localeModelAdd from '@/views/model/add/locale/zh-CN';
+import localeModel from '@/views/model/locale/zh-CN';
 
 import localeSettings from './zh-CN/settings';
 
@@ -29,13 +26,20 @@ export default {
   'menu.faq': '常见问题',
   'navbar.docs': '文档中心',
   'navbar.action.locale': '切换为中文',
+  // size
+  'searchTable.size.mini': '迷你',
+  'searchTable.size.small': '偏小',
+  'searchTable.size.medium': '中等',
+  'searchTable.size.large': '偏大',
+  // actions
+  'searchTable.actions.refresh': '刷新',
+  'searchTable.actions.density': '密度',
+  'searchTable.actions.columnSetting': '列设置',
   ...localeSettings,
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
-  ...localeSearchTable,
-  ...localeCardList,
   ...localeUserInfo,
   ...localeUserSetting,
-  ...localeModelAdd,
+  ...localeModel,
 };

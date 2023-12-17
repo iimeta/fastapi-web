@@ -15,21 +15,22 @@ const LIST: AppRouteRecordRaw = {
     {
       path: 'model-list', // The midline path complies with SEO specifications
       name: 'ModelList',
-      component: () => import('@/views/model/search-table/index.vue'),
+      component: () => import('@/views/model/list/index.vue'),
       meta: {
-        locale: 'menu.model.modelList',
+        locale: 'menu.model.list',
         requiresAuth: true,
         roles: ['*'],
       },
     },
     {
-      path: 'model-add',
-      name: 'ModelAdd',
-      component: () => import('@/views/model/add/index.vue'),
+      path: 'model-create',
+      name: 'ModelCreate',
+      component: () => import('@/views/model/create/index.vue'),
       meta: {
-        locale: 'menu.model.add',
+        locale: 'menu.model.create',
         requiresAuth: true,
         roles: ['*'],
+        hideInMenu: true,
       },
     },
   ],

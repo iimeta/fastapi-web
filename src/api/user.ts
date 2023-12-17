@@ -5,7 +5,8 @@ import { UserState } from '@/store/modules/user/types';
 export interface LoginData {
   account: string;
   password: string;
-  platform: string;
+  terminal: string;
+  channel: string;
 }
 
 export interface LoginRes {
