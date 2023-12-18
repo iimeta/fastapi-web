@@ -7,6 +7,7 @@ import localeUserInfo from '@/views/user/info/locale/en-US';
 import localeUserSetting from '@/views/user/setting/locale/en-US';
 
 import localeModel from '@/views/model/locale/en-US';
+import localeKey from '@/views/key/locale/en-US';
 
 import localeSettings from './en-US/settings';
 
@@ -42,4 +43,5 @@ export default {
   ...localeUserInfo,
   ...localeUserSetting,
   ...localeModel,
+  ...localeKey,
 };
