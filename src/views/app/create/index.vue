@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.key', 'menu.key.create']" />
+    <Breadcrumb :items="['menu.app', 'menu.app.create']" />
     <a-spin :loading="loading" style="width: 100%">
       <a-card class="general-card">
         <template #title>
-          {{ $t('key.title') }}
+          {{ $t('app.title') }}
         </template>
         <div class="wrapper">
           <a-steps
@@ -13,14 +13,14 @@
             line-less
             class="steps"
           >
-            <a-step :description="$t('key.subTitle.baseInfo')">
-              {{ $t('key.title.baseInfo') }}
+            <a-step :description="$t('app.subTitle.baseInfo')">
+              {{ $t('app.title.baseInfo') }}
             </a-step>
-            <a-step :description="$t('key.subTitle.advanced')">
-              {{ $t('key.title.advanced') }}
+            <a-step :description="$t('app.subTitle.advanced')">
+              {{ $t('app.title.advanced') }}
             </a-step>
-            <a-step :description="$t('key.subTitle.finish')">
-              {{ $t('key.title.finish') }}
+            <a-step :description="$t('app.subTitle.finish')">
+              {{ $t('app.title.finish') }}
             </a-step>
           </a-steps>
           <keep-alive>
@@ -37,20 +37,20 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { submitKeyCreate, KeyCreate, KeyBaseInfo } from '@/api/key';
+  import { submitAppCreate, AppCreate, AppBaseInfo } from '@/api/app';
   import BaseInfo from './components/base-info.vue';
   import Advanced from './components/advanced.vue';
   import Success from './components/success.vue';
 
   const { loading, setLoading } = useLoading(false);
   const step = ref(1);
-  const submitKey = ref<KeyCreate>({} as KeyCreate);
+  const submitApp = ref<AppCreate>({} as AppCreate);
   const submitForm = async () => {
     setLoading(true);
     try {
-      await submitKeyCreate(submitKey.value); // The mock api default success
+      await submitAppCreate(submitApp.value); // The mock api default success
       step.value = 3;
-      submitKey.value = {} as KeyCreate; // init
+      submitApp.value = {} as AppCreate; // init
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -59,7 +59,7 @@
   };
   const changeStep = (
     direction: string | number,
-    model: KeyBaseInfo | KeyCreate
+    model: AppBaseInfo | AppCreate
   ) => {
     if (typeof direction === 'number') {
       step.value = direction;
@@ -67,8 +67,8 @@
     }
 
     if (direction === 'forward' || direction === 'submit') {
-      submitKey.value = {
-        ...submitKey.value,
+      submitApp.value = {
+        ...submitApp.value,
         ...model,
       };
       if (direction === 'submit') {
@@ -84,7 +84,7 @@
 
 <script lang="ts">
   export default {
-    name: 'KeyCreate',
+    name: 'AppCreate',
   };
 </script>
 

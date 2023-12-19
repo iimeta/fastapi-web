@@ -8,7 +8,7 @@
   >
     <a-form-item
       field="models"
-      :label="$t('key.label.models')"
+      :label="$t('app.label.models')"
       :rules="[
         {
           required: false,
@@ -17,7 +17,7 @@
     >
       <a-select
         v-model="formData.models"
-        :placeholder="$t('key.placeholder.models')"
+        :placeholder="$t('app.placeholder.models')"
         multiple
         :max-tag-count="3"
       >
@@ -43,12 +43,12 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { KeyAdvanced } from '@/api/key';
+  import { AppAdvanced } from '@/api/app';
 
   const emits = defineEmits(['changeStep']);
 
   const formRef = ref<FormInstance>();
-  const formData = ref<KeyAdvanced>({
+  const formData = ref<AppAdvanced>({
     models: [],
   });
 

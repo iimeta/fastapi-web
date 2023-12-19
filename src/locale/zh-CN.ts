@@ -6,6 +6,7 @@ import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 import localeUserInfo from '@/views/user/info/locale/zh-CN';
 import localeUserSetting from '@/views/user/setting/locale/zh-CN';
 
+import localeApp from '@/views/app/locale/zh-CN';
 import localeModel from '@/views/model/locale/zh-CN';
 import localeKey from '@/views/key/locale/zh-CN';
 
@@ -42,6 +43,7 @@ export default {
   ...localeWorkplace,
   ...localeUserInfo,
   ...localeUserSetting,
+  ...localeApp,
   ...localeModel,
   ...localeKey,
 };

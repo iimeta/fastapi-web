@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.key', 'menu.key.list']" />
-    <a-card class="general-card" :title="$t('menu.key.list')">
+    <Breadcrumb :items="['menu.app', 'menu.app.list']" />
+    <a-card class="general-card" :title="$t('menu.app.list')">
       <a-row>
         <a-col :flex="1">
           <a-form
@@ -12,55 +12,55 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="corp" :label="$t('keyList.form.corp')">
+                <a-form-item field="corp" :label="$t('appList.form.corp')">
                   <a-select
                     v-model="formModel.corp"
                     :options="corpOptions"
-                    :placeholder="$t('keyList.form.selectDefault')"
+                    :placeholder="$t('appList.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('keyList.form.name')">
+                <a-form-item field="name" :label="$t('appList.form.name')">
                   <a-input
                     v-model="formModel.name"
-                    :placeholder="$t('keyList.form.name.placeholder')"
+                    :placeholder="$t('appList.form.name.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="model" :label="$t('keyList.form.model')">
+                <a-form-item field="model" :label="$t('appList.form.model')">
                   <a-input
                     v-model="formModel.model"
-                    :placeholder="$t('keyList.form.key.placeholder')"
+                    :placeholder="$t('appList.form.app.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="type" :label="$t('keyList.form.type')">
+                <a-form-item field="type" :label="$t('appList.form.type')">
                   <a-select
                     v-model="formModel.type"
                     :options="typeOptions"
-                    :placeholder="$t('keyList.form.selectDefault')"
+                    :placeholder="$t('appList.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="status"
-                  :label="$t('keyList.form.status')"
+                  :label="$t('appList.form.status')"
                 >
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('keyList.form.selectDefault')"
+                    :placeholder="$t('appList.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="created_at"
-                  :label="$t('keyList.form.created_at')"
+                  :label="$t('appList.form.created_at')"
                 >
                   <a-range-picker
                     v-model="formModel.created_at"
@@ -78,13 +78,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('keyList.form.search') }}
+              {{ $t('appList.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('keyList.form.reset') }}
+              {{ $t('appList.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -95,17 +95,17 @@
           <a-space>
             <a-button
               type="primary"
-              @click="$router.push({ name: 'KeyCreate' })"
+              @click="$router.push({ name: 'AppCreate' })"
             >
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('keyList.operation.create') }}
+              {{ $t('appList.operation.create') }}
             </a-button>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('keyList.operation.import') }}
+                  {{ $t('appList.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -119,7 +119,7 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('keyList.operation.download') }}
+            {{ $t('appList.operation.download') }}
           </a-button>
           <a-tooltip :content="$t('searchTable.actions.refresh')">
             <div class="action-icon" @click="search"
@@ -204,7 +204,7 @@
         </template>
         <template #operations>
           <a-button type="text" size="small">
-            {{ $t('keyList.columns.operations.view') }}
+            {{ $t('appList.columns.operations.view') }}
           </a-button>
         </template>
       </a-table>
@@ -216,7 +216,7 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryKeyPage, KeyPage, KeyPageParams } from '@/api/key';
+  import { queryAppPage, AppPage, AppPageParams } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -244,7 +244,7 @@
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<KeyPage[]>([]);
+  const renderData = ref<AppPage[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -278,87 +278,87 @@
   ]);
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('keyList.columns.corp'),
+      title: t('appList.columns.corp'),
       dataIndex: 'corp',
       slotName: 'corp',
     },
     {
-      title: t('keyList.columns.key'),
-      dataIndex: 'key',
-      slotName: 'key',
+      title: t('appList.columns.app'),
+      dataIndex: 'app',
+      slotName: 'app',
     },
     {
-      title: t('keyList.columns.models'),
+      title: t('appList.columns.models'),
       dataIndex: 'models',
       slotName: 'models',
     },
     {
-      title: t('keyList.columns.status'),
+      title: t('appList.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
     },
     {
-      title: t('keyList.columns.remark'),
+      title: t('appList.columns.remark'),
       dataIndex: 'remark',
     },
     {
-      title: t('keyList.columns.operations'),
+      title: t('appList.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
   const corpOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('keyList.dict.corp.OpenAI'),
+      label: t('appList.dict.corp.OpenAI'),
       value: 'OpenAI',
     },
     {
-      label: t('keyList.dict.corp.Baidu'),
+      label: t('appList.dict.corp.Baidu'),
       value: 'Baidu',
     },
     {
-      label: t('keyList.dict.corp.Xfyun'),
+      label: t('appList.dict.corp.Xfyun'),
       value: 'Xfyun',
     },
     {
-      label: t('keyList.dict.corp.Aliyun'),
+      label: t('appList.dict.corp.Aliyun'),
       value: 'Aliyun',
     },
   ]);
   const typeOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('keyList.dict.type.1'),
+      label: t('appList.dict.type.1'),
       value: '1',
     },
     {
-      label: t('keyList.dict.type.2'),
+      label: t('appList.dict.type.2'),
       value: '2',
     },
     {
-      label: t('keyList.dict.type.3'),
+      label: t('appList.dict.type.3'),
       value: '3',
     },
     {
-      label: t('keyList.dict.type.4'),
+      label: t('appList.dict.type.4'),
       value: '4',
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('keyList.dict.status.1'),
+      label: t('appList.dict.status.1'),
       value: '1',
     },
     {
-      label: t('keyList.dict.status.2'),
+      label: t('appList.dict.status.2'),
       value: '2',
     },
   ]);
   const fetchData = async (
-    params: KeyPageParams = { current: 1, pageSize: 10 }
+    params: AppPageParams = { current: 1, pageSize: 10 }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryKeyPage(params);
+      const { data } = await queryAppPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.total = data.paging.total;
@@ -373,7 +373,7 @@
     fetchData({
       ...basePagination,
       ...formModel.value,
-    } as unknown as KeyPageParams);
+    } as unknown as AppPageParams);
   };
   const onPageChange = (current: number) => {
     fetchData({ ...basePagination, current });
@@ -453,7 +453,7 @@
 
 <script lang="ts">
   export default {
-    name: 'KeyList',
+    name: 'AppList',
   };
 </script>
 

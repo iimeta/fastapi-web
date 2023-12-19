@@ -8,7 +8,7 @@ const LIST: AppRouteRecordRaw = {
   meta: {
     locale: 'menu.key',
     requiresAuth: true,
-    icon: 'icon-list',
+    icon: 'icon-safe',
     order: 3,
   },
   children: [

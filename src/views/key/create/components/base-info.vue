@@ -67,15 +67,13 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { ModelBaseInfo } from '@/api/model';
+  import { KeyBaseInfo } from '@/api/key';
 
   const emits = defineEmits(['changeStep']);
   const formRef = ref<FormInstance>();
-  const formData = ref<ModelBaseInfo>({
+  const formData = ref<KeyBaseInfo>({
     corp: '',
-    name: '',
-    model: '',
-    type: '1',
+    key: '',
     remark: '',
   });
 

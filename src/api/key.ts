@@ -1,90 +1,27 @@
 import axios from 'axios';
 import qs from 'query-string';
-import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
-export interface PolicyRecord {
-  id: string;
-  number: number;
-  name: string;
-  contentType: 'img' | 'horizontalVideo' | 'verticalVideo';
-  filterType: 'artificial' | 'rules';
-  count: number;
-  status: 'online' | 'offline';
-  createdTime: string;
-}
-
-export interface PolicyParams extends Partial<PolicyRecord> {
-  current: number;
-  pageSize: number;
-}
-
-export interface PolicyListRes {
-  list: PolicyRecord[];
-  total: number;
-}
-
-export function queryPolicyList(params: PolicyParams) {
-  return axios.get<PolicyListRes>('/api/list/policy', {
-    params,
-    paramsSerializer: (obj) => {
-      return qs.stringify(obj);
-    },
-  });
-}
-
-export interface ServiceRecord {
-  id: number;
-  title: string;
-  description: string;
-  name?: string;
-  actionType?: string;
-  icon?: string;
-  data?: DescData[];
-  enable?: boolean;
-  expires?: boolean;
-}
-
-export interface ModelBaseInfo {
+export interface KeyBaseInfo {
   corp: string;
-  name: string;
-  model: string;
-  type: string;
+  key: string;
   remark: string;
 }
 
-export interface ModelAdvanced {
-  data_format: string;
-  base_url: string;
-  path: string;
-  proxy: string;
+export interface KeyAdvanced {
+  models: string[];
 }
 
-export type ModelCreate = ModelBaseInfo & ModelAdvanced;
+export type KeyCreate = KeyBaseInfo & KeyAdvanced;
 
-export function queryInspectionList() {
-  return axios.get('/api/list/quality-inspection');
+export function submitKeyCreate(data: KeyCreate) {
+  return axios.post('/api/v1/key/create', data);
 }
 
-export function queryTheServiceList() {
-  return axios.get('/api/list/the-service');
-}
-
-export function queryRulesPresetList() {
-  return axios.get('/api/list/rules-preset');
-}
-
-export function submitModelCreate(data: ModelCreate) {
-  return axios.post('/api/v1/model/create', data);
-}
-
-
-export interface ModelPage {
+export interface KeyPage {
   id: string;
   corp: string;
-  name: string;
-  model: string;
-  type: number;
-  data_format: number;
+  key: string;
+  models: string[];
   status: number;
   remark: string;
 }
@@ -95,18 +32,18 @@ export interface Paging {
   page_count: number;
 }
 
-export interface ModelPageParams extends Partial<ModelPage> {
+export interface KeyPageParams extends Partial<KeyPage> {
   current: number;
   pageSize: number;
 }
 
-export interface ModelPageRes {
-  items: ModelPage[];
+export interface KeyPageRes {
+  items: KeyPage[];
   paging: Paging;
 }
 
-export function queryModelPage(params: ModelPageParams) {
-  return axios.get<ModelPageRes>('/api/v1/model/page', {
+export function queryKeyPage(params: KeyPageParams) {
+  return axios.get<KeyPageRes>('/api/v1/key/page', {
     params,
     paramsSerializer: (obj) => {
       return qs.stringify(obj);

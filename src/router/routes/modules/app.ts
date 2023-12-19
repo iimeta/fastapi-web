@@ -1,0 +1,39 @@
+import { DEFAULT_LAYOUT } from '../base';
+import { AppRouteRecordRaw } from '../types';
+
+const LIST: AppRouteRecordRaw = {
+  path: '/app',
+  name: 'app',
+  component: DEFAULT_LAYOUT,
+  meta: {
+    locale: 'menu.app',
+    requiresAuth: true,
+    icon: 'icon-apps',
+    order: 1,
+  },
+  children: [
+    {
+      path: 'app-list', // The midline path complies with SEO specifications
+      name: 'AppList',
+      component: () => import('@/views/app/list/index.vue'),
+      meta: {
+        locale: 'menu.app.list',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'app-create',
+      name: 'AppCreate',
+      component: () => import('@/views/app/create/index.vue'),
+      meta: {
+        locale: 'menu.app.create',
+        requiresAuth: true,
+        roles: ['*'],
+        hideInMenu: true,
+      },
+    },
+  ],
+};
+
+export default LIST;

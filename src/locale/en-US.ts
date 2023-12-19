@@ -6,6 +6,7 @@ import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
 import localeUserInfo from '@/views/user/info/locale/en-US';
 import localeUserSetting from '@/views/user/setting/locale/en-US';
 
+import localeApp from '@/views/app/locale/en-US';
 import localeModel from '@/views/model/locale/en-US';
 import localeKey from '@/views/key/locale/en-US';
 
@@ -42,6 +43,7 @@ export default {
   ...localeWorkplace,
   ...localeUserInfo,
   ...localeUserSetting,
+  ...localeApp,
   ...localeModel,
   ...localeKey,
 };

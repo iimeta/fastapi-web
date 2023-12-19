@@ -7,19 +7,18 @@
     :wrapper-col-props="{ span: 18 }"
   >
     <a-form-item
-      field="models"
-      :label="$t('key.label.models')"
+      field="corp"
+      :label="$t('app.label.corp')"
       :rules="[
         {
-          required: false,
+          required: true,
+          message: $t('app.error.corp.required'),
         },
       ]"
     >
       <a-select
-        v-model="formData.models"
-        :placeholder="$t('key.placeholder.models')"
-        multiple
-        :max-tag-count="3"
+        v-model="formData.corp"
+        :placeholder="$t('app.placeholder.corp')"
       >
         <a-option value="OpenAI">OpenAI</a-option>
         <a-option value="Baidu">百度</a-option>
@@ -27,15 +26,40 @@
         <a-option value="Aliyun">阿里云</a-option>
       </a-select>
     </a-form-item>
+    <a-form-item
+      field="key"
+      :label="$t('app.label.app')"
+      :rules="[
+        {
+          required: true,
+          message: $t('app.error.app.required'),
+        },
+      ]"
+    >
+      <a-textarea
+        v-model="formData.key"
+        :placeholder="$t('app.placeholder.app')"
+        :auto-size="{ minRows: 5 }"
+      />
+    </a-form-item>
+    <a-form-item
+      field="remark"
+      :label="$t('app.label.remark')"
+      :rules="[
+        {
+          required: false,
+        },
+      ]"
+    >
+      <a-textarea
+        v-model="formData.remark"
+        :placeholder="$t('app.placeholder.remark')"
+      />
+    </a-form-item>
     <a-form-item>
-      <a-space>
-        <a-button type="secondary" @click="goPrev">
-          {{ $t('model.button.prev') }}
-        </a-button>
-        <a-button type="primary" @click="onNextClick">
-          {{ $t('model.button.next') }}
-        </a-button>
-      </a-space>
+      <a-button type="primary" @click="onNextClick">
+        {{ $t('app.button.next') }}
+      </a-button>
     </a-form-item>
   </a-form>
 </template>
@@ -43,28 +67,27 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { KeyAdvanced } from '@/api/key';
+  import { AppBaseInfo } from '@/api/app';
 
   const emits = defineEmits(['changeStep']);
-
   const formRef = ref<FormInstance>();
-  const formData = ref<KeyAdvanced>({
-    models: [],
+  const formData = ref<AppBaseInfo>({
+    corp: '',
+    app: '',
+    remark: '',
   });
 
   const onNextClick = async () => {
     const res = await formRef.value?.validate();
     if (!res) {
-      emits('changeStep', 'submit', { ...formData.value });
+      emits('changeStep', 'forward', { ...formData.value });
     }
-  };
-  const goPrev = () => {
-    emits('changeStep', 'backward');
   };
 </script>
 
 <style scoped lang="less">
   .container {
+    padding: 20px;
     .keep-margin {
       margin-bottom: 20px;
     }
@@ -83,7 +106,7 @@
   }
 
   .form {
-    width: 540px;
+    width: 500px;
   }
 
   .form-content {
