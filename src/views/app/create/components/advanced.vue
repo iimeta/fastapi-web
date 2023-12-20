@@ -18,14 +18,47 @@
       <a-select
         v-model="formData.models"
         :placeholder="$t('app.placeholder.models')"
-        multiple
         :max-tag-count="3"
+        multiple
+        allow-clear
       >
-        <a-option value="OpenAI">OpenAI</a-option>
-        <a-option value="Baidu">百度</a-option>
-        <a-option value="Xfyun">科大讯飞</a-option>
-        <a-option value="Aliyun">阿里云</a-option>
+        <a-option
+          v-for="item in models"
+          :key="item.value"
+          :value="item.value"
+          :label="item.label"
+        />
       </a-select>
+    </a-form-item>
+    <a-form-item
+      field="ip_whitelist"
+      :label="$t('app.label.ip_whitelist')"
+      :rules="[
+        {
+          required: false,
+        },
+      ]"
+    >
+      <a-textarea
+        v-model="formData.ip_whitelist"
+        :placeholder="$t('app.placeholder.ip_whitelist')"
+        :auto-size="{ minRows: 5 }"
+      />
+    </a-form-item>
+    <a-form-item
+      field="ip_blacklist"
+      :label="$t('app.label.ip_blacklist')"
+      :rules="[
+        {
+          required: false,
+        },
+      ]"
+    >
+      <a-textarea
+        v-model="formData.ip_blacklist"
+        :placeholder="$t('app.placeholder.ip_blacklist')"
+        :auto-size="{ minRows: 5 }"
+      />
     </a-form-item>
     <a-form-item>
       <a-space>
@@ -46,10 +79,30 @@
   import { AppAdvanced } from '@/api/app';
 
   const emits = defineEmits(['changeStep']);
+  const models = [
+    {
+      value: 'beijing',
+      label: 'Beijing',
+    },
+    {
+      value: 'shanghai',
+      label: 'Shanghai',
+    },
+    {
+      value: 'guangzhou',
+      label: 'Guangzhou',
+    },
+    {
+      value: 'chengdu',
+      label: 'Chengdu',
+    },
+  ];
 
   const formRef = ref<FormInstance>();
   const formData = ref<AppAdvanced>({
     models: [],
+    ip_whitelist: '',
+    ip_blacklist: '',
   });
 
   const onNextClick = async () => {

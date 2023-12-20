@@ -7,39 +7,22 @@
     :wrapper-col-props="{ span: 18 }"
   >
     <a-form-item
-      field="corp"
-      :label="$t('app.label.corp')"
+      field="name"
+      :label="$t('app.label.name')"
       :rules="[
         {
           required: true,
-          message: $t('app.error.corp.required'),
+          message: $t('app.error.name.required'),
         },
-      ]"
-    >
-      <a-select
-        v-model="formData.corp"
-        :placeholder="$t('app.placeholder.corp')"
-      >
-        <a-option value="OpenAI">OpenAI</a-option>
-        <a-option value="Baidu">百度</a-option>
-        <a-option value="Xfyun">科大讯飞</a-option>
-        <a-option value="Aliyun">阿里云</a-option>
-      </a-select>
-    </a-form-item>
-    <a-form-item
-      field="key"
-      :label="$t('app.label.app')"
-      :rules="[
         {
-          required: true,
-          message: $t('app.error.app.required'),
+          match: /^[a-zA-Z0-9\u4e00-\u9fa5]{1,20}$/,
+          message: $t('app.error.name.pattern'),
         },
       ]"
     >
-      <a-textarea
-        v-model="formData.key"
-        :placeholder="$t('app.placeholder.app')"
-        :auto-size="{ minRows: 5 }"
+      <a-input
+        v-model="formData.name"
+        :placeholder="$t('app.placeholder.name')"
       />
     </a-form-item>
     <a-form-item

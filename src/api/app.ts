@@ -2,13 +2,14 @@ import axios from 'axios';
 import qs from 'query-string';
 
 export interface AppBaseInfo {
-  corp: string;
-  app: string;
+  name: string;
   remark: string;
 }
 
 export interface AppAdvanced {
   models: string[];
+  ip_whitelist: string;
+  ip_blacklist: string;
 }
 
 export type AppCreate = AppBaseInfo & AppAdvanced;
@@ -19,8 +20,7 @@ export function submitAppCreate(data: AppCreate) {
 
 export interface AppPage {
   id: string;
-  corp: string;
-  app: string;
+  name: string;
   models: string[];
   status: number;
   remark: string;

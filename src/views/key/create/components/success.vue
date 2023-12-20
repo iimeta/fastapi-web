@@ -2,15 +2,15 @@
   <div class="success-wrap">
     <a-result
       status="success"
-      :title="$t('model.success.title')"
-      :subtitle="$t('model.success.subTitle')"
+      :title="$t('key.success.title')"
+      :subtitle="$t('key.success.subTitle')"
     />
     <a-space :size="16">
       <a-button key="view" type="primary">
-        {{ $t('model.button.view') }}
+        {{ $t('key.button.view') }}
       </a-button>
       <a-button key="again" type="secondary" @click="oneMore">
-        {{ $t('model.button.again') }}
+        {{ $t('key.button.again') }}
       </a-button>
     </a-space>
   </div>

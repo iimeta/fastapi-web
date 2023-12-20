@@ -46,10 +46,7 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('keyList.form.status')"
-                >
+                <a-form-item field="status" :label="$t('keyList.form.status')">
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
@@ -189,18 +186,18 @@
         @page-change="onPageChange"
       >
         <template #type="{ record }">
-          {{ $t(`modelList.dict.type.${record.type}`) }}
+          {{ $t(`keyList.dict.type.${record.type}`) }}
         </template>
         <template #corp="{ record }">
-          {{ $t(`modelList.dict.corp.${record.corp}`) }}
+          {{ $t(`keyList.dict.corp.${record.corp}`) }}
         </template>
         <template #dataFormat="{ record }">
-          {{ $t(`modelList.dict.data_format.${record.data_format}`) }}
+          {{ $t(`keyList.dict.data_format.${record.data_format}`) }}
         </template>
         <template #status="{ record }">
           <span v-if="record.status === 3" class="circle"></span>
           <span v-else class="circle pass"></span>
-          {{ $t(`modelList.dict.status.${record.status}`) }}
+          {{ $t(`keyList.dict.status.${record.status}`) }}
         </template>
         <template #operations>
           <a-button type="text" size="small">
