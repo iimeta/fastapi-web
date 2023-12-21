@@ -1,48 +1,5 @@
 import axios from 'axios';
 import qs from 'query-string';
-import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
-
-export interface PolicyRecord {
-  id: string;
-  number: number;
-  name: string;
-  contentType: 'img' | 'horizontalVideo' | 'verticalVideo';
-  filterType: 'artificial' | 'rules';
-  count: number;
-  status: 'online' | 'offline';
-  createdTime: string;
-}
-
-export interface PolicyParams extends Partial<PolicyRecord> {
-  current: number;
-  pageSize: number;
-}
-
-export interface PolicyListRes {
-  list: PolicyRecord[];
-  total: number;
-}
-
-export function queryPolicyList(params: PolicyParams) {
-  return axios.get<PolicyListRes>('/api/list/policy', {
-    params,
-    paramsSerializer: (obj) => {
-      return qs.stringify(obj);
-    },
-  });
-}
-
-export interface ServiceRecord {
-  id: number;
-  title: string;
-  description: string;
-  name?: string;
-  actionType?: string;
-  icon?: string;
-  data?: DescData[];
-  enable?: boolean;
-  expires?: boolean;
-}
 
 export interface ModelBaseInfo {
   corp: string;
@@ -53,30 +10,20 @@ export interface ModelBaseInfo {
 }
 
 export interface ModelAdvanced {
+  prompt_ratio: number;
+  completion_ratio: number;
   data_format: string;
   base_url: string;
   path: string;
   proxy: string;
+  is_public: boolean;
 }
 
 export type ModelCreate = ModelBaseInfo & ModelAdvanced;
 
-export function queryInspectionList() {
-  return axios.get('/api/list/quality-inspection');
-}
-
-export function queryTheServiceList() {
-  return axios.get('/api/list/the-service');
-}
-
-export function queryRulesPresetList() {
-  return axios.get('/api/list/rules-preset');
-}
-
 export function submitModelCreate(data: ModelCreate) {
   return axios.post('/api/v1/model/create', data);
 }
-
 
 export interface ModelPage {
   id: string;
@@ -84,7 +31,10 @@ export interface ModelPage {
   name: string;
   model: string;
   type: number;
+  prompt_ratio: number;
+  completion_ratio: number;
   data_format: number;
+  is_public: boolean;
   status: number;
   remark: string;
 }
@@ -112,4 +62,26 @@ export function queryModelPage(params: ModelPageParams) {
       return qs.stringify(obj);
     },
   });
+}
+
+export interface ModelList {
+  id: string;
+  corp: string;
+  name: string;
+  model: string;
+  type: number;
+  prompt_ratio: number;
+  completion_ratio: number;
+  data_format: number;
+  is_public: boolean;
+  status: number;
+  remark: string;
+}
+
+export interface ModelListRes {
+  items: ModelList[];
+}
+
+export function queryModelList() {
+  return axios.get<ModelListRes>('/api/v1/model/list');
 }

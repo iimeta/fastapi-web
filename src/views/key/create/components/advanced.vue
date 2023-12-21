@@ -18,13 +18,16 @@
       <a-select
         v-model="formData.models"
         :placeholder="$t('key.placeholder.models')"
-        multiple
         :max-tag-count="3"
+        multiple
+        allow-clear
       >
-        <a-option value="OpenAI">OpenAI</a-option>
-        <a-option value="Baidu">百度</a-option>
-        <a-option value="Xfyun">科大讯飞</a-option>
-        <a-option value="Aliyun">阿里云</a-option>
+        <a-option
+          v-for="item in models"
+          :key="item.model"
+          :value="item.model"
+          :label="item.model"
+        />
       </a-select>
     </a-form-item>
     <a-form-item>
@@ -42,10 +45,28 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { KeyAdvanced } from '@/api/key';
+  import { queryModelList, ModelList } from '@/api/model';
+
+  const { setLoading } = useLoading(true);
 
   const emits = defineEmits(['changeStep']);
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelList();
 
   const formRef = ref<FormInstance>();
   const formData = ref<KeyAdvanced>({

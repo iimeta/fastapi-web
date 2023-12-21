@@ -24,9 +24,9 @@
       >
         <a-option
           v-for="item in models"
-          :key="item.value"
-          :value="item.value"
-          :label="item.label"
+          :key="item.model"
+          :value="item.model"
+          :label="item.model"
         />
       </a-select>
     </a-form-item>
@@ -75,28 +75,28 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { AppAdvanced } from '@/api/app';
+  import { queryModelList, ModelList } from '@/api/model';
+
+  const { setLoading } = useLoading(true);
 
   const emits = defineEmits(['changeStep']);
-  const models = [
-    {
-      value: 'beijing',
-      label: 'Beijing',
-    },
-    {
-      value: 'shanghai',
-      label: 'Shanghai',
-    },
-    {
-      value: 'guangzhou',
-      label: 'Guangzhou',
-    },
-    {
-      value: 'chengdu',
-      label: 'Chengdu',
-    },
-  ];
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelList();
 
   const formRef = ref<FormInstance>();
   const formData = ref<AppAdvanced>({

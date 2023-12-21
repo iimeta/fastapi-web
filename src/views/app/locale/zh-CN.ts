@@ -26,6 +26,7 @@ export default {
   'app.success.subTitle': '应用新建成功',
   'app.button.submit': '提交',
   'app.button.again': '再次新建',
+  'app.button.finish': '新建完成',
   'app.button.view': '查看详情',
   'app.button.next': '下一步',
   'app.button.prev': '上一步',

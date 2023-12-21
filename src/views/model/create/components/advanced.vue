@@ -7,6 +7,38 @@
     :wrapper-col-props="{ span: 18 }"
   >
     <a-form-item
+      field="prompt_ratio"
+      :label="$t('model.label.promptRatio')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.promptRatio.required'),
+        },
+      ]"
+    >
+      <a-input-number
+        v-model="formData.prompt_ratio"
+        :min="1"
+        :placeholder="$t('model.placeholder.promptRatio')"
+      />
+    </a-form-item>
+    <a-form-item
+      field="completion_ratio"
+      :label="$t('model.label.completionRatio')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.completionRatio.required'),
+        },
+      ]"
+    >
+      <a-input-number
+        v-model="formData.completion_ratio"
+        :min="1"
+        :placeholder="$t('model.placeholder.completionRatio')"
+      />
+    </a-form-item>
+    <a-form-item
       field="data_format"
       :label="$t('model.label.dataFormat')"
       :rules="[
@@ -68,6 +100,17 @@
         :placeholder="$t('model.placeholder.proxy')"
       />
     </a-form-item>
+    <a-form-item
+      field="is_public"
+      :label="$t('model.label.isPublic')"
+      :rules="[
+        {
+          required: true,
+        },
+      ]"
+    >
+      <a-switch v-model="formData.is_public" />
+    </a-form-item>
     <a-form-item>
       <a-space>
         <a-button type="secondary" @click="goPrev">
@@ -90,10 +133,13 @@
 
   const formRef = ref<FormInstance>();
   const formData = ref<ModelAdvanced>({
+    prompt_ratio: 1,
+    completion_ratio: 1,
     data_format: '1',
     base_url: '',
     path: '',
     proxy: '',
+    is_public: true,
   });
 
   const onNextClick = async () => {

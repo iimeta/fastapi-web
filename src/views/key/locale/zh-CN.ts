@@ -25,6 +25,7 @@ export default {
   'key.success.subTitle': '密钥新建成功',
   'key.button.submit': '提交',
   'key.button.again': '再次新建',
+  'key.button.finish': '新建完成',
   'key.button.view': '查看详情',
   'key.button.next': '下一步',
   'key.button.prev': '上一步',

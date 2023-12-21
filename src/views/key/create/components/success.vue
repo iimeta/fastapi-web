@@ -6,10 +6,14 @@
       :subtitle="$t('key.success.subTitle')"
     />
     <a-space :size="16">
-      <a-button key="view" type="primary">
-        {{ $t('key.button.view') }}
+      <a-button
+        key="finish"
+        type="secondary"
+        @click="$router.push({ name: 'KeyList' })"
+      >
+        {{ $t('key.button.finish') }}
       </a-button>
-      <a-button key="again" type="secondary" @click="oneMore">
+      <a-button key="again" type="primary" @click="oneMore">
         {{ $t('key.button.again') }}
       </a-button>
     </a-space>
