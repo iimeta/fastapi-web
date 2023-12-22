@@ -17,31 +17,44 @@
                     v-model="formModel.corp"
                     :options="corpOptions"
                     :placeholder="$t('keyList.form.selectDefault')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('keyList.form.name')">
+                <a-form-item field="key" :label="$t('keyList.form.key')">
                   <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('keyList.form.name.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="model" :label="$t('keyList.form.model')">
-                  <a-input
-                    v-model="formModel.model"
+                    v-model="formModel.key"
                     :placeholder="$t('keyList.form.key.placeholder')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="type" :label="$t('keyList.form.type')">
+                <a-form-item field="models" :label="$t('keyList.form.models')">
                   <a-select
-                    v-model="formModel.type"
-                    :options="typeOptions"
+                    v-model="formModel.models"
                     :placeholder="$t('keyList.form.selectDefault')"
+                    :max-tag-count="3"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in models"
+                      :key="item.model"
+                      :value="item.model"
+                      :label="item.model"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="quota" :label="$t('keyList.form.quota')">
+                  <a-input-number
+                    v-model="formModel.quota"
+                    :placeholder="$t('keyList.form.quota.placeholder')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -51,6 +64,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('keyList.form.selectDefault')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -219,6 +233,7 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { queryModelList, ModelList } from '@/api/model';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -229,14 +244,26 @@
     onlyCurrent: false,
   });
 
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelList();
+
   const generateFormModel = () => {
     return {
       corp: '',
-      name: '',
-      model: '',
-      type: '',
-      status: '',
-      created_at: '',
+      key: '',
+      models: [],
+      quota: ref(),
+      status: ref(),
+      created_at: [],
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -285,6 +312,11 @@
       slotName: 'key',
     },
     {
+      title: t('keyList.columns.quota'),
+      dataIndex: 'quota',
+      slotName: 'quota',
+    },
+    {
       title: t('keyList.columns.models'),
       dataIndex: 'models',
       slotName: 'models',
@@ -322,32 +354,14 @@
       value: 'Aliyun',
     },
   ]);
-  const typeOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('keyList.dict.type.1'),
-      value: '1',
-    },
-    {
-      label: t('keyList.dict.type.2'),
-      value: '2',
-    },
-    {
-      label: t('keyList.dict.type.3'),
-      value: '3',
-    },
-    {
-      label: t('keyList.dict.type.4'),
-      value: '4',
-    },
-  ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('keyList.dict.status.1'),
-      value: '1',
+      value: 1,
     },
     {
       label: t('keyList.dict.status.2'),
-      value: '2',
+      value: 2,
     },
   ]);
   const fetchData = async (

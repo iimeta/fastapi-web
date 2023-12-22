@@ -12,11 +12,11 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="corp" :label="$t('appList.form.corp')">
-                  <a-select
-                    v-model="formModel.corp"
-                    :options="corpOptions"
-                    :placeholder="$t('appList.form.selectDefault')"
+                <a-form-item field="app_id" :label="$t('appList.form.appId')">
+                  <a-input
+                    v-model="formModel.app_id"
+                    :placeholder="$t('appList.form.appId.placeholder')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -25,23 +25,35 @@
                   <a-input
                     v-model="formModel.name"
                     :placeholder="$t('appList.form.name.placeholder')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="model" :label="$t('appList.form.model')">
-                  <a-input
-                    v-model="formModel.model"
-                    :placeholder="$t('appList.form.app.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="type" :label="$t('appList.form.type')">
+                <a-form-item field="models" :label="$t('appList.form.models')">
                   <a-select
-                    v-model="formModel.type"
-                    :options="typeOptions"
+                    v-model="formModel.models"
                     :placeholder="$t('appList.form.selectDefault')"
+                    :max-tag-count="3"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in models"
+                      :key="item.model"
+                      :value="item.model"
+                      :label="item.model"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="key" :label="$t('appList.form.key')">
+                  <a-input
+                    v-model="formModel.key"
+                    :placeholder="$t('appList.form.key.placeholder')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -51,6 +63,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('appList.form.selectDefault')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -185,15 +198,6 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
       >
-        <template #type="{ record }">
-          {{ $t(`appList.dict.type.${record.type}`) }}
-        </template>
-        <template #corp="{ record }">
-          {{ $t(`appList.dict.corp.${record.corp}`) }}
-        </template>
-        <template #dataFormat="{ record }">
-          {{ $t(`appList.dict.data_format.${record.data_format}`) }}
-        </template>
         <template #status="{ record }">
           <span v-if="record.status === 3" class="circle"></span>
           <span v-else class="circle pass"></span>
@@ -219,6 +223,7 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { queryModelList, ModelList } from '@/api/model';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -229,13 +234,27 @@
     onlyCurrent: false,
   });
 
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelList();
+
   const generateFormModel = () => {
     return {
+      app_id: ref(),
       name: '',
-      model: '',
-      type: '',
-      status: '',
-      created_at: '',
+      models: [],
+      key: '',
+      type: ref(),
+      status: ref(),
+      created_at: [],
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -251,9 +270,11 @@
     current: 1,
     pageSize: 10,
   };
+
   const pagination = reactive({
     ...basePagination,
   });
+
   const densityList = computed(() => [
     {
       name: t('searchTable.size.mini'),
@@ -272,7 +293,13 @@
       value: 'large',
     },
   ]);
+
   const columns = computed<TableColumnData[]>(() => [
+    {
+      title: t('appList.columns.appId'),
+      dataIndex: 'app_id',
+      slotName: 'app_id',
+    },
     {
       title: t('appList.columns.name'),
       dataIndex: 'name',
@@ -298,52 +325,18 @@
       slotName: 'operations',
     },
   ]);
-  const corpOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('appList.dict.corp.OpenAI'),
-      value: 'OpenAI',
-    },
-    {
-      label: t('appList.dict.corp.Baidu'),
-      value: 'Baidu',
-    },
-    {
-      label: t('appList.dict.corp.Xfyun'),
-      value: 'Xfyun',
-    },
-    {
-      label: t('appList.dict.corp.Aliyun'),
-      value: 'Aliyun',
-    },
-  ]);
-  const typeOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('appList.dict.type.1'),
-      value: '1',
-    },
-    {
-      label: t('appList.dict.type.2'),
-      value: '2',
-    },
-    {
-      label: t('appList.dict.type.3'),
-      value: '3',
-    },
-    {
-      label: t('appList.dict.type.4'),
-      value: '4',
-    },
-  ]);
+
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('appList.dict.status.1'),
-      value: '1',
+      value: 1,
     },
     {
       label: t('appList.dict.status.2'),
-      value: '2',
+      value: 2,
     },
   ]);
+
   const fetchData = async (
     params: AppPageParams = { current: 1, pageSize: 10 }
   ) => {

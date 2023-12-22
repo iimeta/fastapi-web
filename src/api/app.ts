@@ -1,5 +1,4 @@
 import axios from 'axios';
-import qs from 'query-string';
 
 export interface AppBaseInfo {
   name: string;
@@ -20,6 +19,7 @@ export function submitAppCreate(data: AppCreate) {
 
 export interface AppPage {
   id: string;
+  app_id: number;
   name: string;
   models: string[];
   status: number;
@@ -43,10 +43,5 @@ export interface AppPageRes {
 }
 
 export function queryAppPage(params: AppPageParams) {
-  return axios.get<AppPageRes>('/api/v1/app/page', {
-    params,
-    paramsSerializer: (obj) => {
-      return qs.stringify(obj);
-    },
-  });
+  return axios.post<AppPageRes>('/api/v1/app/page', params);
 }

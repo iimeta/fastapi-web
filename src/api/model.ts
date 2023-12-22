@@ -1,5 +1,4 @@
 import axios from 'axios';
-import qs from 'query-string';
 
 export interface ModelBaseInfo {
   corp: string;
@@ -56,12 +55,7 @@ export interface ModelPageRes {
 }
 
 export function queryModelPage(params: ModelPageParams) {
-  return axios.get<ModelPageRes>('/api/v1/model/page', {
-    params,
-    paramsSerializer: (obj) => {
-      return qs.stringify(obj);
-    },
-  });
+  return axios.post<ModelPageRes>('/api/v1/model/page', params);
 }
 
 export interface ModelList {

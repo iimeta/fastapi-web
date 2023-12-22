@@ -1,5 +1,4 @@
 import axios from 'axios';
-import qs from 'query-string';
 
 export interface KeyBaseInfo {
   corp: string;
@@ -21,6 +20,7 @@ export interface KeyPage {
   id: string;
   corp: string;
   key: string;
+  quota: number;
   models: string[];
   status: number;
   remark: string;
@@ -43,10 +43,5 @@ export interface KeyPageRes {
 }
 
 export function queryKeyPage(params: KeyPageParams) {
-  return axios.get<KeyPageRes>('/api/v1/key/page', {
-    params,
-    paramsSerializer: (obj) => {
-      return qs.stringify(obj);
-    },
-  });
+  return axios.post<KeyPageRes>('/api/v1/key/page', params);
 }

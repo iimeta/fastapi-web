@@ -17,6 +17,7 @@
                     v-model="formModel.corp"
                     :options="corpOptions"
                     :placeholder="$t('modelList.form.selectDefault')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -25,6 +26,7 @@
                   <a-input
                     v-model="formModel.name"
                     :placeholder="$t('modelList.form.name.placeholder')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -33,6 +35,7 @@
                   <a-input
                     v-model="formModel.model"
                     :placeholder="$t('modelList.form.model.placeholder')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -42,6 +45,7 @@
                     v-model="formModel.type"
                     :options="typeOptions"
                     :placeholder="$t('modelList.form.selectDefault')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -54,6 +58,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('modelList.form.selectDefault')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -237,9 +242,9 @@
       corp: '',
       name: '',
       model: '',
-      type: '',
-      status: '',
-      created_at: '',
+      type: ref(),
+      status: ref(),
+      created_at: [],
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -338,29 +343,29 @@
   const typeOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('modelList.dict.type.1'),
-      value: '1',
+      value: 1,
     },
     {
       label: t('modelList.dict.type.2'),
-      value: '2',
+      value: 2,
     },
     {
       label: t('modelList.dict.type.3'),
-      value: '3',
+      value: 3,
     },
     {
       label: t('modelList.dict.type.4'),
-      value: '4',
+      value: 4,
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('modelList.dict.status.1'),
-      value: '1',
+      value: 1,
     },
     {
       label: t('modelList.dict.status.2'),
-      value: '2',
+      value: 2,
     },
   ]);
   const fetchData = async (
