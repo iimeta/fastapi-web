@@ -63,10 +63,10 @@
     <a-form-item>
       <a-space>
         <a-button type="secondary" @click="goPrev">
-          {{ $t('model.button.prev') }}
+          {{ $t('app.button.prev') }}
         </a-button>
         <a-button type="primary" @click="onNextClick">
-          {{ $t('model.button.next') }}
+          {{ $t('app.button.next') }}
         </a-button>
       </a-space>
     </a-form-item>
@@ -77,7 +77,7 @@
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { AppAdvanced } from '@/api/app';
+  import { AppCreateAdvanced } from '@/api/app';
   import { queryModelList, ModelList } from '@/api/model';
 
   const { setLoading } = useLoading(true);
@@ -99,7 +99,7 @@
   getModelList();
 
   const formRef = ref<FormInstance>();
-  const formData = ref<AppAdvanced>({
+  const formData = ref<AppCreateAdvanced>({
     models: [],
     ip_whitelist: '',
     ip_blacklist: '',

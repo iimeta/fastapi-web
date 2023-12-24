@@ -5,12 +5,12 @@
         <icon-apps />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.app') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app.create') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.app.update') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card class="general-card">
         <template #title>
-          {{ $t('app.title.create') }}
+          {{ $t('app.title.update') }}
         </template>
         <div class="wrapper">
           <a-steps
@@ -25,8 +25,8 @@
             <a-step :description="$t('app.subTitle.advanced')">
               {{ $t('app.title.advanced') }}
             </a-step>
-            <a-step :description="$t('app.subTitle.create.finish')">
-              {{ $t('app.title.create.finish') }}
+            <a-step :description="$t('app.subTitle.update.finish')">
+              {{ $t('app.title.update.finish') }}
             </a-step>
           </a-steps>
           <keep-alive>
@@ -43,29 +43,32 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { submitAppCreate, AppCreate, AppCreateBaseInfo } from '@/api/app';
+  import { submitAppUpdate, AppUpdate, AppUpdateBaseInfo } from '@/api/app';
   import BaseInfo from './components/base-info.vue';
   import Advanced from './components/advanced.vue';
   import Success from './components/success.vue';
 
   const { loading, setLoading } = useLoading(false);
   const step = ref(1);
-  const submitApp = ref<AppCreate>({} as AppCreate);
+
+  const submitApp = ref<AppUpdate>({} as AppUpdate);
+
   const submitForm = async () => {
     setLoading(true);
     try {
-      await submitAppCreate(submitApp.value); // The mock api default success
+      await submitAppUpdate(submitApp.value); // The mock api default success
       step.value = 3;
-      submitApp.value = {} as AppCreate; // init
+      submitApp.value = {} as AppUpdate; // init
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }
   };
+
   const changeStep = (
     direction: string | number,
-    model: AppCreateBaseInfo | AppCreate
+    model: AppUpdateBaseInfo | AppUpdate
   ) => {
     if (typeof direction === 'number') {
       step.value = direction;
@@ -90,7 +93,7 @@
 
 <script lang="ts">
   export default {
-    name: 'AppCreate',
+    name: 'AppUpdate',
   };
 </script>
 

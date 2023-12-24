@@ -45,12 +45,18 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useRoute } from 'vue-router';
   import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { KeyCreateAdvanced } from '@/api/key';
+  import {
+    KeyUpdateAdvanced,
+    queryKeyDetail,
+    KeyDetailParams,
+  } from '@/api/key';
   import { queryModelList, ModelList } from '@/api/model';
 
   const { setLoading } = useLoading(true);
+  const route = useRoute();
 
   const emits = defineEmits(['changeStep']);
   const models = ref<ModelList[]>([]);
@@ -69,9 +75,24 @@
   getModelList();
 
   const formRef = ref<FormInstance>();
-  const formData = ref<KeyCreateAdvanced>({
+  const formData = ref<KeyUpdateAdvanced>({
     models: [],
   });
+
+  const getKeyDetail = async (
+    params: KeyDetailParams = { id: route.query.id }
+  ) => {
+    setLoading(true);
+    try {
+      const { data } = await queryKeyDetail(params);
+      formData.value.models = data.models;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getKeyDetail();
 
   const onNextClick = async () => {
     const res = await formRef.value?.validate();

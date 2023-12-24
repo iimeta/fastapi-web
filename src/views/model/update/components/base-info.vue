@@ -107,18 +107,48 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useRoute } from 'vue-router';
+  import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { ModelCreateBaseInfo } from '@/api/model';
+  import {
+    ModelUpdateBaseInfo,
+    queryModelDetail,
+    ModelDetailParams,
+  } from '@/api/model';
+
+  const { setLoading } = useLoading(true);
+  const route = useRoute();
 
   const emits = defineEmits(['changeStep']);
   const formRef = ref<FormInstance>();
-  const formData = ref<ModelCreateBaseInfo>({
+  const formData = ref<ModelUpdateBaseInfo>({
+    id: '',
     corp: '',
     name: '',
     model: '',
-    type: '1',
+    type: '',
     remark: '',
   });
+
+  const getModelDetail = async (
+    params: ModelDetailParams = { id: route.query.id }
+  ) => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelDetail(params);
+      formData.value.id = data.id;
+      formData.value.corp = data.corp;
+      formData.value.name = data.name;
+      formData.value.model = data.model;
+      formData.value.type = data.type;
+      formData.value.remark = data.remark;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelDetail();
 
   const onNextClick = async () => {
     const res = await formRef.value?.validate();

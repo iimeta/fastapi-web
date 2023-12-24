@@ -3,7 +3,7 @@
     <a-result
       status="success"
       :title="$t('key.success.title')"
-      :subtitle="$t('key.success.subTitle')"
+      :subtitle="$t('key.success.create.subTitle')"
     />
     <a-space :size="16">
       <a-button

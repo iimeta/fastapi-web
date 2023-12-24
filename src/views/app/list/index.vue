@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.app', 'menu.app.list']" />
+    <a-breadcrumb class="container-breadcrumb">
+      <a-breadcrumb-item>
+        <icon-apps />
+      </a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.app') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.app.list') }}</a-breadcrumb-item>
+    </a-breadcrumb>
     <a-card class="general-card" :title="$t('menu.app.list')">
       <a-row>
         <a-col :flex="1">
@@ -12,28 +18,28 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="app_id" :label="$t('appList.form.appId')">
+                <a-form-item field="app_id" :label="$t('app.form.appId')">
                   <a-input
                     v-model="formModel.app_id"
-                    :placeholder="$t('appList.form.appId.placeholder')"
+                    :placeholder="$t('app.form.appId.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('appList.form.name')">
+                <a-form-item field="name" :label="$t('app.form.name')">
                   <a-input
                     v-model="formModel.name"
-                    :placeholder="$t('appList.form.name.placeholder')"
+                    :placeholder="$t('app.form.name.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="models" :label="$t('appList.form.models')">
+                <a-form-item field="models" :label="$t('app.form.models')">
                   <a-select
                     v-model="formModel.models"
-                    :placeholder="$t('appList.form.selectDefault')"
+                    :placeholder="$t('app.form.selectDefault')"
                     :max-tag-count="3"
                     multiple
                     allow-search
@@ -49,20 +55,20 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="key" :label="$t('appList.form.key')">
+                <a-form-item field="key" :label="$t('app.form.key')">
                   <a-input
                     v-model="formModel.key"
-                    :placeholder="$t('appList.form.key.placeholder')"
+                    :placeholder="$t('app.form.key.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('appList.form.status')">
+                <a-form-item field="status" :label="$t('app.form.status')">
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('appList.form.selectDefault')"
+                    :placeholder="$t('app.form.selectDefault')"
                     allow-clear
                   />
                 </a-form-item>
@@ -70,7 +76,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="created_at"
-                  :label="$t('appList.form.created_at')"
+                  :label="$t('app.form.created_at')"
                 >
                   <a-range-picker
                     v-model="formModel.created_at"
@@ -88,13 +94,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('appList.form.search') }}
+              {{ $t('app.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('appList.form.reset') }}
+              {{ $t('app.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -110,27 +116,14 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('appList.operation.create') }}
+              {{ $t('app.operation.create') }}
             </a-button>
-            <a-upload action="/">
-              <template #upload-button>
-                <a-button>
-                  {{ $t('appList.operation.import') }}
-                </a-button>
-              </template>
-            </a-upload>
           </a-space>
         </a-col>
         <a-col
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
-            <template #icon>
-              <icon-download />
-            </template>
-            {{ $t('appList.operation.download') }}
-          </a-button>
           <a-tooltip :content="$t('searchTable.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -201,12 +194,41 @@
         <template #status="{ record }">
           <span v-if="record.status === 3" class="circle"></span>
           <span v-else class="circle pass"></span>
-          {{ $t(`appList.dict.status.${record.status}`) }}
+          {{ $t(`app.dict.status.${record.status}`) }}
         </template>
-        <template #operations>
-          <a-button type="text" size="small">
-            {{ $t('appList.columns.operations.view') }}
+        <template #operations="{ record }">
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              $router.push({
+                name: 'AppDetail',
+                query: { id: `${record.id}` },
+              })
+            "
+          >
+            {{ $t('app.columns.operations.view') }}
           </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              $router.push({
+                name: 'AppUpdate',
+                query: { id: `${record.id}` },
+              })
+            "
+          >
+            {{ $t('app.columns.operations.update') }}
+          </a-button>
+          <a-popconfirm
+            content="你确定要删除吗?"
+            @ok="appDelete({ id: `${record.id}` })"
+          >
+            <a-button type="text" size="small">
+              {{ $t('app.columns.operations.delete') }}
+            </a-button>
+          </a-popconfirm>
         </template>
       </a-table>
     </a-card>
@@ -217,7 +239,13 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryAppPage, AppPage, AppPageParams } from '@/api/app';
+  import {
+    queryAppPage,
+    AppPage,
+    AppPageParams,
+    submitAppDelete,
+    AppDeleteParams,
+  } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -245,6 +273,18 @@
     }
   };
   getModelList();
+
+  const appDelete = async (params: AppDeleteParams) => {
+    setLoading(true);
+    try {
+      await submitAppDelete(params);
+      fetchData();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const generateFormModel = () => {
     return {
@@ -296,31 +336,31 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('appList.columns.appId'),
+      title: t('app.columns.appId'),
       dataIndex: 'app_id',
       slotName: 'app_id',
     },
     {
-      title: t('appList.columns.name'),
+      title: t('app.columns.name'),
       dataIndex: 'name',
       slotName: 'name',
     },
     {
-      title: t('appList.columns.models'),
+      title: t('app.columns.models'),
       dataIndex: 'models',
       slotName: 'models',
     },
     {
-      title: t('appList.columns.status'),
+      title: t('app.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
     },
     {
-      title: t('appList.columns.remark'),
+      title: t('app.columns.remark'),
       dataIndex: 'remark',
     },
     {
-      title: t('appList.columns.operations'),
+      title: t('app.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
@@ -328,11 +368,11 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('appList.dict.status.1'),
+      label: t('app.dict.status.1'),
       value: 1,
     },
     {
-      label: t('appList.dict.status.2'),
+      label: t('app.dict.status.2'),
       value: 2,
     },
   ]);
@@ -467,6 +507,15 @@
     .title {
       margin-left: 12px;
       cursor: pointer;
+    }
+  }
+  .container-breadcrumb {
+    margin: 16px 0;
+    :deep(.arco-breadcrumb-item) {
+      color: rgb(var(--gray-6));
+      &:last-child {
+        color: rgb(var(--gray-8));
+      }
     }
   }
 </style>

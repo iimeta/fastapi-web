@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.key', 'menu.key.list']" />
+    <a-breadcrumb class="container-breadcrumb">
+      <a-breadcrumb-item>
+        <icon-safe />
+      </a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.key') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.key.list') }}</a-breadcrumb-item>
+    </a-breadcrumb>
     <a-card class="general-card" :title="$t('menu.key.list')">
       <a-row>
         <a-col :flex="1">
@@ -12,29 +18,29 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="corp" :label="$t('keyList.form.corp')">
+                <a-form-item field="corp" :label="$t('key.form.corp')">
                   <a-select
                     v-model="formModel.corp"
                     :options="corpOptions"
-                    :placeholder="$t('keyList.form.selectDefault')"
+                    :placeholder="$t('key.form.selectDefault')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="key" :label="$t('keyList.form.key')">
+                <a-form-item field="key" :label="$t('key.form.key')">
                   <a-input
                     v-model="formModel.key"
-                    :placeholder="$t('keyList.form.key.placeholder')"
+                    :placeholder="$t('key.form.key.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="models" :label="$t('keyList.form.models')">
+                <a-form-item field="models" :label="$t('key.form.models')">
                   <a-select
                     v-model="formModel.models"
-                    :placeholder="$t('keyList.form.selectDefault')"
+                    :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="3"
                     multiple
                     allow-search
@@ -50,20 +56,20 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="quota" :label="$t('keyList.form.quota')">
+                <a-form-item field="quota" :label="$t('key.form.quota')">
                   <a-input-number
                     v-model="formModel.quota"
-                    :placeholder="$t('keyList.form.quota.placeholder')"
+                    :placeholder="$t('key.form.quota.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('keyList.form.status')">
+                <a-form-item field="status" :label="$t('key.form.status')">
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('keyList.form.selectDefault')"
+                    :placeholder="$t('key.form.selectDefault')"
                     allow-clear
                   />
                 </a-form-item>
@@ -71,7 +77,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="created_at"
-                  :label="$t('keyList.form.created_at')"
+                  :label="$t('key.form.created_at')"
                 >
                   <a-range-picker
                     v-model="formModel.created_at"
@@ -89,13 +95,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('keyList.form.search') }}
+              {{ $t('key.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('keyList.form.reset') }}
+              {{ $t('key.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -111,27 +117,14 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('keyList.operation.create') }}
+              {{ $t('key.operation.create') }}
             </a-button>
-            <a-upload action="/">
-              <template #upload-button>
-                <a-button>
-                  {{ $t('keyList.operation.import') }}
-                </a-button>
-              </template>
-            </a-upload>
           </a-space>
         </a-col>
         <a-col
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
-            <template #icon>
-              <icon-download />
-            </template>
-            {{ $t('keyList.operation.download') }}
-          </a-button>
           <a-tooltip :content="$t('searchTable.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -200,23 +193,52 @@
         @page-change="onPageChange"
       >
         <template #type="{ record }">
-          {{ $t(`keyList.dict.type.${record.type}`) }}
+          {{ $t(`key.dict.type.${record.type}`) }}
         </template>
         <template #corp="{ record }">
-          {{ $t(`keyList.dict.corp.${record.corp}`) }}
+          {{ $t(`key.dict.corp.${record.corp}`) }}
         </template>
         <template #dataFormat="{ record }">
-          {{ $t(`keyList.dict.data_format.${record.data_format}`) }}
+          {{ $t(`key.dict.data_format.${record.data_format}`) }}
         </template>
         <template #status="{ record }">
           <span v-if="record.status === 3" class="circle"></span>
           <span v-else class="circle pass"></span>
-          {{ $t(`keyList.dict.status.${record.status}`) }}
+          {{ $t(`key.dict.status.${record.status}`) }}
         </template>
-        <template #operations>
-          <a-button type="text" size="small">
-            {{ $t('keyList.columns.operations.view') }}
+        <template #operations="{ record }">
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              $router.push({
+                name: 'KeyDetail',
+                query: { id: `${record.id}` },
+              })
+            "
+          >
+            {{ $t('key.columns.operations.view') }}
           </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              $router.push({
+                name: 'KeyUpdate',
+                query: { id: `${record.id}` },
+              })
+            "
+          >
+            {{ $t('key.columns.operations.update') }}
+          </a-button>
+          <a-popconfirm
+            content="你确定要删除吗?"
+            @ok="keyDelete({ id: `${record.id}` })"
+          >
+            <a-button type="text" size="small">
+              {{ $t('key.columns.operations.delete') }}
+            </a-button>
+          </a-popconfirm>
         </template>
       </a-table>
     </a-card>
@@ -227,7 +249,13 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryKeyPage, KeyPage, KeyPageParams } from '@/api/key';
+  import {
+    queryKeyPage,
+    KeyPage,
+    KeyPageParams,
+    submitKeyDelete,
+    KeyDeleteParams,
+  } from '@/api/key';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -255,6 +283,18 @@
     }
   };
   getModelList();
+
+  const keyDelete = async (params: KeyDeleteParams) => {
+    setLoading(true);
+    try {
+      await submitKeyDelete(params);
+      fetchData();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const generateFormModel = () => {
     return {
@@ -302,65 +342,65 @@
   ]);
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('keyList.columns.corp'),
+      title: t('key.columns.corp'),
       dataIndex: 'corp',
       slotName: 'corp',
     },
     {
-      title: t('keyList.columns.key'),
+      title: t('key.columns.key'),
       dataIndex: 'key',
       slotName: 'key',
     },
     {
-      title: t('keyList.columns.quota'),
+      title: t('key.columns.quota'),
       dataIndex: 'quota',
       slotName: 'quota',
     },
     {
-      title: t('keyList.columns.models'),
+      title: t('key.columns.models'),
       dataIndex: 'models',
       slotName: 'models',
     },
     {
-      title: t('keyList.columns.status'),
+      title: t('key.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
     },
     {
-      title: t('keyList.columns.remark'),
+      title: t('key.columns.remark'),
       dataIndex: 'remark',
     },
     {
-      title: t('keyList.columns.operations'),
+      title: t('key.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
   const corpOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('keyList.dict.corp.OpenAI'),
+      label: t('key.dict.corp.OpenAI'),
       value: 'OpenAI',
     },
     {
-      label: t('keyList.dict.corp.Baidu'),
+      label: t('key.dict.corp.Baidu'),
       value: 'Baidu',
     },
     {
-      label: t('keyList.dict.corp.Xfyun'),
+      label: t('key.dict.corp.Xfyun'),
       value: 'Xfyun',
     },
     {
-      label: t('keyList.dict.corp.Aliyun'),
+      label: t('key.dict.corp.Aliyun'),
       value: 'Aliyun',
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('keyList.dict.status.1'),
+      label: t('key.dict.status.1'),
       value: 1,
     },
     {
-      label: t('keyList.dict.status.2'),
+      label: t('key.dict.status.2'),
       value: 2,
     },
   ]);
@@ -494,6 +534,15 @@
     .title {
       margin-left: 12px;
       cursor: pointer;
+    }
+  }
+  .container-breadcrumb {
+    margin: 16px 0;
+    :deep(.arco-breadcrumb-item) {
+      color: rgb(var(--gray-6));
+      &:last-child {
+        color: rgb(var(--gray-8));
+      }
     }
   }
 </style>

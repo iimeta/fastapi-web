@@ -1,16 +1,17 @@
 import axios from 'axios';
+import qs from 'query-string';
 
-export interface KeyBaseInfo {
+export interface KeyCreateBaseInfo {
   corp: string;
   key: string;
   remark: string;
 }
 
-export interface KeyAdvanced {
+export interface KeyCreateAdvanced {
   models: string[];
 }
 
-export type KeyCreate = KeyBaseInfo & KeyAdvanced;
+export type KeyCreate = KeyCreateBaseInfo & KeyCreateAdvanced;
 
 export function submitKeyCreate(data: KeyCreate) {
   return axios.post('/api/v1/key/create', data);
@@ -44,4 +45,52 @@ export interface KeyPageRes {
 
 export function queryKeyPage(params: KeyPageParams) {
   return axios.post<KeyPageRes>('/api/v1/key/page', params);
+}
+
+export interface KeyDeleteParams {
+  id: string;
+}
+
+export function submitKeyDelete(params: KeyDeleteParams) {
+  return axios.post('/api/v1/key/delete', params);
+}
+
+export interface KeyDetailParams {
+  id: string;
+}
+
+export interface KeyDetail {
+  id: string;
+  corp: string;
+  key: string;
+  quota: number;
+  models: string[];
+  status: number;
+  remark: string;
+}
+
+export function queryKeyDetail(params: KeyDetailParams) {
+  return axios.get<KeyDetail>('/api/v1/key/detail', {
+    params,
+    paramsSerializer: (obj) => {
+      return qs.stringify(obj);
+    },
+  });
+}
+
+export interface KeyUpdateBaseInfo {
+  id: string;
+  corp: string;
+  key: string;
+  remark: string;
+}
+
+export interface KeyUpdateAdvanced {
+  models: string[];
+}
+
+export type KeyUpdate = KeyUpdateBaseInfo & KeyUpdateAdvanced;
+
+export function submitKeyUpdate(data: KeyUpdate) {
+  return axios.post('/api/v1/key/update', data);
 }

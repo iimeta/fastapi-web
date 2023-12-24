@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.key', 'menu.key.create']" />
+    <a-breadcrumb class="container-breadcrumb">
+      <a-breadcrumb-item>
+        <icon-safe />
+      </a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.key') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.key.create') }}</a-breadcrumb-item>
+    </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card class="general-card">
         <template #title>
@@ -19,8 +25,8 @@
             <a-step :description="$t('key.subTitle.advanced')">
               {{ $t('key.title.advanced') }}
             </a-step>
-            <a-step :description="$t('key.subTitle.finish')">
-              {{ $t('key.title.finish') }}
+            <a-step :description="$t('key.subTitle.create.finish')">
+              {{ $t('key.title.create.finish') }}
             </a-step>
           </a-steps>
           <keep-alive>
@@ -37,7 +43,7 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { submitKeyCreate, KeyCreate, KeyBaseInfo } from '@/api/key';
+  import { submitKeyCreate, KeyCreate, KeyCreateBaseInfo } from '@/api/key';
   import BaseInfo from './components/base-info.vue';
   import Advanced from './components/advanced.vue';
   import Success from './components/success.vue';
@@ -59,7 +65,7 @@
   };
   const changeStep = (
     direction: string | number,
-    model: KeyBaseInfo | KeyCreate
+    model: KeyCreateBaseInfo | KeyCreate
   ) => {
     if (typeof direction === 'number') {
       step.value = direction;
@@ -106,8 +112,16 @@
       }
     }
   }
-
   .steps {
     margin-bottom: 76px;
+  }
+  .container-breadcrumb {
+    margin: 16px 0;
+    :deep(.arco-breadcrumb-item) {
+      color: rgb(var(--gray-6));
+      &:last-child {
+        color: rgb(var(--gray-8));
+      }
+    }
   }
 </style>

@@ -33,6 +33,28 @@ const LIST: AppRouteRecordRaw = {
         hideInMenu: true,
       },
     },
+    {
+      path: 'model-update',
+      name: 'ModelUpdate',
+      component: () => import('@/views/model/update/index.vue'),
+      meta: {
+        locale: 'menu.model.update',
+        requiresAuth: true,
+        roles: ['*'],
+        hideInMenu: true,
+      },
+    },
+    {
+      path: 'model-detail',
+      name: 'ModelDetail',
+      component: () => import('@/views/model/detail/index.vue'),
+      meta: {
+        locale: 'menu.model.detail',
+        requiresAuth: true,
+        roles: ['*'],
+        hideInMenu: true,
+      },
+    },
   ],
 };
 

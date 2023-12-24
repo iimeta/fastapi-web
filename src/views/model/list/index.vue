@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.model', 'menu.model.list']" />
+    <a-breadcrumb class="container-breadcrumb">
+      <a-breadcrumb-item>
+        <icon-common />
+      </a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.model') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.model.list') }}</a-breadcrumb-item>
+    </a-breadcrumb>
     <a-card class="general-card" :title="$t('menu.model.list')">
       <a-row>
         <a-col :flex="1">
@@ -12,52 +18,49 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="corp" :label="$t('modelList.form.corp')">
+                <a-form-item field="corp" :label="$t('model.form.corp')">
                   <a-select
                     v-model="formModel.corp"
                     :options="corpOptions"
-                    :placeholder="$t('modelList.form.selectDefault')"
+                    :placeholder="$t('model.form.selectDefault')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('modelList.form.name')">
+                <a-form-item field="name" :label="$t('model.form.name')">
                   <a-input
                     v-model="formModel.name"
-                    :placeholder="$t('modelList.form.name.placeholder')"
+                    :placeholder="$t('model.form.name.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="model" :label="$t('modelList.form.model')">
+                <a-form-item field="model" :label="$t('model.form.model')">
                   <a-input
                     v-model="formModel.model"
-                    :placeholder="$t('modelList.form.model.placeholder')"
+                    :placeholder="$t('model.form.model.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="type" :label="$t('modelList.form.type')">
+                <a-form-item field="type" :label="$t('model.form.type')">
                   <a-select
                     v-model="formModel.type"
                     :options="typeOptions"
-                    :placeholder="$t('modelList.form.selectDefault')"
+                    :placeholder="$t('model.form.selectDefault')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('modelList.form.status')"
-                >
+                <a-form-item field="status" :label="$t('model.form.status')">
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('modelList.form.selectDefault')"
+                    :placeholder="$t('model.form.selectDefault')"
                     allow-clear
                   />
                 </a-form-item>
@@ -65,7 +68,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="created_at"
-                  :label="$t('modelList.form.created_at')"
+                  :label="$t('model.form.created_at')"
                 >
                   <a-range-picker
                     v-model="formModel.created_at"
@@ -83,13 +86,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('modelList.form.search') }}
+              {{ $t('model.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('modelList.form.reset') }}
+              {{ $t('model.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -105,27 +108,14 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('modelList.operation.create') }}
+              {{ $t('model.operation.create') }}
             </a-button>
-            <a-upload action="/">
-              <template #upload-button>
-                <a-button>
-                  {{ $t('modelList.operation.import') }}
-                </a-button>
-              </template>
-            </a-upload>
           </a-space>
         </a-col>
         <a-col
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
-            <template #icon>
-              <icon-download />
-            </template>
-            {{ $t('modelList.operation.download') }}
-          </a-button>
           <a-tooltip :content="$t('searchTable.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -194,23 +184,52 @@
         @page-change="onPageChange"
       >
         <template #type="{ record }">
-          {{ $t(`modelList.dict.type.${record.type}`) }}
+          {{ $t(`model.dict.type.${record.type}`) }}
         </template>
         <template #corp="{ record }">
-          {{ $t(`modelList.dict.corp.${record.corp}`) }}
+          {{ $t(`model.dict.corp.${record.corp}`) }}
         </template>
         <template #dataFormat="{ record }">
-          {{ $t(`modelList.dict.data_format.${record.data_format}`) }}
+          {{ $t(`model.dict.data_format.${record.data_format}`) }}
         </template>
         <template #status="{ record }">
           <span v-if="record.status === 3" class="circle"></span>
           <span v-else class="circle pass"></span>
-          {{ $t(`modelList.dict.status.${record.status}`) }}
+          {{ $t(`model.dict.status.${record.status}`) }}
         </template>
-        <template #operations>
-          <a-button type="text" size="small">
-            {{ $t('modelList.columns.operations.view') }}
+        <template #operations="{ record }">
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              $router.push({
+                name: 'ModelDetail',
+                query: { id: `${record.id}` },
+              })
+            "
+          >
+            {{ $t('model.columns.operations.view') }}
           </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              $router.push({
+                name: 'ModelUpdate',
+                query: { id: `${record.id}` },
+              })
+            "
+          >
+            {{ $t('model.columns.operations.update') }}
+          </a-button>
+          <a-popconfirm
+            content="你确定要删除吗?"
+            @ok="modelDelete({ id: `${record.id}` })"
+          >
+            <a-button type="text" size="small">
+              {{ $t('model.columns.operations.delete') }}
+            </a-button>
+          </a-popconfirm>
         </template>
       </a-table>
     </a-card>
@@ -221,7 +240,13 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryModelPage, ModelPage, ModelPageParams } from '@/api/model';
+  import {
+    queryModelPage,
+    ModelPage,
+    ModelPageParams,
+    submitModelDelete,
+    ModelDeleteParams,
+  } from '@/api/model';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -236,6 +261,18 @@
     showCheckedAll: true,
     onlyCurrent: false,
   });
+
+  const modelDelete = async (params: ModelDeleteParams) => {
+    setLoading(true);
+    try {
+      await submitModelDelete(params);
+      fetchData();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const generateFormModel = () => {
     return {
@@ -283,88 +320,88 @@
   ]);
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('modelList.columns.corp'),
+      title: t('model.columns.corp'),
       dataIndex: 'corp',
       slotName: 'corp',
     },
     {
-      title: t('modelList.columns.name'),
+      title: t('model.columns.name'),
       dataIndex: 'name',
       slotName: 'name',
     },
     {
-      title: t('modelList.columns.model'),
+      title: t('model.columns.model'),
       dataIndex: 'model',
       slotName: 'model',
     },
     {
-      title: t('modelList.columns.type'),
+      title: t('model.columns.type'),
       dataIndex: 'type',
       slotName: 'type',
     },
     {
-      title: t('modelList.columns.data_format'),
+      title: t('model.columns.data_format'),
       dataIndex: 'data_format',
       slotName: 'dataFormat',
     },
     {
-      title: t('modelList.columns.status'),
+      title: t('model.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
     },
     {
-      title: t('modelList.columns.remark'),
+      title: t('model.columns.remark'),
       dataIndex: 'remark',
     },
     {
-      title: t('modelList.columns.operations'),
+      title: t('model.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
   const corpOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('modelList.dict.corp.OpenAI'),
+      label: t('model.dict.corp.OpenAI'),
       value: 'OpenAI',
     },
     {
-      label: t('modelList.dict.corp.Baidu'),
+      label: t('model.dict.corp.Baidu'),
       value: 'Baidu',
     },
     {
-      label: t('modelList.dict.corp.Xfyun'),
+      label: t('model.dict.corp.Xfyun'),
       value: 'Xfyun',
     },
     {
-      label: t('modelList.dict.corp.Aliyun'),
+      label: t('model.dict.corp.Aliyun'),
       value: 'Aliyun',
     },
   ]);
   const typeOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('modelList.dict.type.1'),
+      label: t('model.dict.type.1'),
       value: 1,
     },
     {
-      label: t('modelList.dict.type.2'),
+      label: t('model.dict.type.2'),
       value: 2,
     },
     {
-      label: t('modelList.dict.type.3'),
+      label: t('model.dict.type.3'),
       value: 3,
     },
     {
-      label: t('modelList.dict.type.4'),
+      label: t('model.dict.type.4'),
       value: 4,
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('modelList.dict.status.1'),
+      label: t('model.dict.status.1'),
       value: 1,
     },
     {
-      label: t('modelList.dict.status.2'),
+      label: t('model.dict.status.2'),
       value: 2,
     },
   ]);
@@ -498,6 +535,15 @@
     .title {
       margin-left: 12px;
       cursor: pointer;
+    }
+  }
+  .container-breadcrumb {
+    margin: 16px 0;
+    :deep(.arco-breadcrumb-item) {
+      color: rgb(var(--gray-6));
+      &:last-child {
+        color: rgb(var(--gray-8));
+      }
     }
   }
 </style>

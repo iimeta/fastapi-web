@@ -1,17 +1,18 @@
 import axios from 'axios';
+import qs from 'query-string';
 
-export interface AppBaseInfo {
+export interface AppCreateBaseInfo {
   name: string;
   remark: string;
 }
 
-export interface AppAdvanced {
+export interface AppCreateAdvanced {
   models: string[];
   ip_whitelist: string;
   ip_blacklist: string;
 }
 
-export type AppCreate = AppBaseInfo & AppAdvanced;
+export type AppCreate = AppCreateBaseInfo & AppCreateAdvanced;
 
 export function submitAppCreate(data: AppCreate) {
   return axios.post('/api/v1/app/create', data);
@@ -44,4 +45,53 @@ export interface AppPageRes {
 
 export function queryAppPage(params: AppPageParams) {
   return axios.post<AppPageRes>('/api/v1/app/page', params);
+}
+
+export interface AppDeleteParams {
+  id: string;
+}
+
+export function submitAppDelete(params: AppDeleteParams) {
+  return axios.post('/api/v1/app/delete', params);
+}
+
+export interface AppDetailParams {
+  id: string;
+}
+
+export interface AppDetail {
+  id: string;
+  app_id: number;
+  name: string;
+  models: string[];
+  ip_whitelist: string;
+  ip_blacklist: string;
+  status: number;
+  remark: string;
+}
+
+export function queryAppDetail(params: AppDetailParams) {
+  return axios.get<AppDetail>('/api/v1/app/detail', {
+    params,
+    paramsSerializer: (obj) => {
+      return qs.stringify(obj);
+    },
+  });
+}
+
+export interface AppUpdateBaseInfo {
+  id: string,
+  name: string;
+  remark: string;
+}
+export interface AppUpdateAdvanced {
+  models: string[];
+  ip_whitelist: string;
+  ip_blacklist: string;
+}
+
+export type AppUpdate = AppUpdateBaseInfo & AppUpdateAdvanced;
+
+export function submitAppUpdate(data: AppUpdate) {
+  return axios.post('/api/v1/app/update', data);
 }

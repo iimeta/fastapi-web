@@ -126,21 +126,51 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useRoute } from 'vue-router';
+  import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { ModelCreateAdvanced } from '@/api/model';
+  import {
+    ModelUpdateAdvanced,
+    queryModelDetail,
+    ModelDetailParams,
+  } from '@/api/model';
+
+  const { setLoading } = useLoading(true);
+  const route = useRoute();
 
   const emits = defineEmits(['changeStep']);
 
   const formRef = ref<FormInstance>();
-  const formData = ref<ModelCreateAdvanced>({
+  const formData = ref<ModelUpdateAdvanced>({
     prompt_ratio: 1,
     completion_ratio: 1,
-    data_format: '1',
+    data_format: '',
     base_url: '',
     path: '',
     proxy: '',
     is_public: true,
   });
+
+  const getModelDetail = async (
+    params: ModelDetailParams = { id: route.query.id }
+  ) => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelDetail(params);
+      formData.value.prompt_ratio = data.prompt_ratio;
+      formData.value.completion_ratio = data.completion_ratio;
+      formData.value.data_format = data.data_format;
+      formData.value.base_url = data.base_url;
+      formData.value.path = data.path;
+      formData.value.proxy = data.proxy;
+      formData.value.is_public = data.is_public;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelDetail();
 
   const onNextClick = async () => {
     const res = await formRef.value?.validate();

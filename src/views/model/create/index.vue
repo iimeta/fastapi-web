@@ -1,10 +1,16 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.model', 'menu.model.create']" />
+    <a-breadcrumb class="container-breadcrumb">
+      <a-breadcrumb-item>
+        <icon-common />
+      </a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.model') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.model.create') }}</a-breadcrumb-item>
+    </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card class="general-card">
         <template #title>
-          {{ $t('model.title') }}
+          {{ $t('model.title.create') }}
         </template>
         <div class="wrapper">
           <a-steps
@@ -19,8 +25,8 @@
             <a-step :description="$t('model.subTitle.advanced')">
               {{ $t('model.title.advanced') }}
             </a-step>
-            <a-step :description="$t('model.subTitle.finish')">
-              {{ $t('model.title.finish') }}
+            <a-step :description="$t('model.subTitle.create.finish')">
+              {{ $t('model.title.create.finish') }}
             </a-step>
           </a-steps>
           <keep-alive>
@@ -37,7 +43,11 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { submitModelCreate, ModelCreate, ModelBaseInfo } from '@/api/model';
+  import {
+    submitModelCreate,
+    ModelCreate,
+    ModelCreateBaseInfo,
+  } from '@/api/model';
   import BaseInfo from './components/base-info.vue';
   import Advanced from './components/advanced.vue';
   import Success from './components/success.vue';
@@ -59,7 +69,7 @@
   };
   const changeStep = (
     direction: string | number,
-    model: ModelBaseInfo | ModelCreate
+    model: ModelCreateBaseInfo | ModelCreate
   ) => {
     if (typeof direction === 'number') {
       step.value = direction;
@@ -106,8 +116,16 @@
       }
     }
   }
-
   .steps {
     margin-bottom: 76px;
+  }
+  .container-breadcrumb {
+    margin: 16px 0;
+    :deep(.arco-breadcrumb-item) {
+      color: rgb(var(--gray-6));
+      &:last-child {
+        color: rgb(var(--gray-8));
+      }
+    }
   }
 </style>

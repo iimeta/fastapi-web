@@ -2,30 +2,34 @@
   <div class="success-wrap">
     <a-result
       status="success"
-      :title="$t('app.success.title')"
-      :subtitle="$t('app.success.create.subTitle')"
+      :title="$t('key.success.title')"
+      :subtitle="$t('key.success.update.subTitle')"
     />
     <a-space :size="16">
       <a-button
         key="finish"
         type="secondary"
-        @click="$router.push({ name: 'AppList' })"
+        @click="$router.push({ name: 'KeyList' })"
       >
-        {{ $t('app.button.finish') }}
+        {{ $t('key.button.return') }}
       </a-button>
-      <a-button key="again" type="primary" @click="oneMore">
-        {{ $t('app.button.again') }}
+      <a-button
+        key="again"
+        type="primary"
+        @click="
+          $router.push({
+            name: 'KeyDetail',
+            query: { id: `${$route.query.id}` },
+          })
+        "
+      >
+        {{ $t('key.button.view') }}
       </a-button>
     </a-space>
   </div>
 </template>
 
-<script lang="ts" setup>
-  const emits = defineEmits(['changeStep']);
-  const oneMore = () => {
-    emits('changeStep', 1);
-  };
-</script>
+<script lang="ts" setup></script>
 
 <style scoped lang="less">
   .success-wrap {

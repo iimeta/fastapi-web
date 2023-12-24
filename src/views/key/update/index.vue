@@ -2,15 +2,15 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-apps />
+        <icon-safe />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app.create') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.key') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.key.update') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card class="general-card">
         <template #title>
-          {{ $t('app.title.create') }}
+          {{ $t('key.title.update') }}
         </template>
         <div class="wrapper">
           <a-steps
@@ -19,14 +19,14 @@
             line-less
             class="steps"
           >
-            <a-step :description="$t('app.subTitle.baseInfo')">
-              {{ $t('app.title.baseInfo') }}
+            <a-step :description="$t('key.subTitle.baseInfo')">
+              {{ $t('key.title.baseInfo') }}
             </a-step>
-            <a-step :description="$t('app.subTitle.advanced')">
-              {{ $t('app.title.advanced') }}
+            <a-step :description="$t('key.subTitle.advanced')">
+              {{ $t('key.title.advanced') }}
             </a-step>
-            <a-step :description="$t('app.subTitle.create.finish')">
-              {{ $t('app.title.create.finish') }}
+            <a-step :description="$t('key.subTitle.update.finish')">
+              {{ $t('key.title.update.finish') }}
             </a-step>
           </a-steps>
           <keep-alive>
@@ -43,20 +43,20 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { submitAppCreate, AppCreate, AppCreateBaseInfo } from '@/api/app';
+  import { submitKeyUpdate, KeyUpdate, KeyUpdateBaseInfo } from '@/api/key';
   import BaseInfo from './components/base-info.vue';
   import Advanced from './components/advanced.vue';
   import Success from './components/success.vue';
 
   const { loading, setLoading } = useLoading(false);
   const step = ref(1);
-  const submitApp = ref<AppCreate>({} as AppCreate);
+  const submitKey = ref<KeyUpdate>({} as KeyUpdate);
   const submitForm = async () => {
     setLoading(true);
     try {
-      await submitAppCreate(submitApp.value); // The mock api default success
+      await submitKeyUpdate(submitKey.value); // The mock api default success
       step.value = 3;
-      submitApp.value = {} as AppCreate; // init
+      submitKey.value = {} as KeyUpdate; // init
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -65,7 +65,7 @@
   };
   const changeStep = (
     direction: string | number,
-    model: AppCreateBaseInfo | AppCreate
+    model: KeyUpdateBaseInfo | KeyUpdate
   ) => {
     if (typeof direction === 'number') {
       step.value = direction;
@@ -73,8 +73,8 @@
     }
 
     if (direction === 'forward' || direction === 'submit') {
-      submitApp.value = {
-        ...submitApp.value,
+      submitKey.value = {
+        ...submitKey.value,
         ...model,
       };
       if (direction === 'submit') {
@@ -90,7 +90,7 @@
 
 <script lang="ts">
   export default {
-    name: 'AppCreate',
+    name: 'KeyUpdate',
   };
 </script>
 

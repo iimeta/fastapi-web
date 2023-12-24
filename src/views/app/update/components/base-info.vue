@@ -23,7 +23,6 @@
       <a-input
         v-model="formData.name"
         :placeholder="$t('app.placeholder.name')"
-        allow-clear
       />
     </a-form-item>
     <a-form-item
@@ -50,15 +49,42 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useRoute } from 'vue-router';
+  import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { AppCreateBaseInfo } from '@/api/app';
+  import {
+    AppUpdateBaseInfo,
+    queryAppDetail,
+    AppDetailParams,
+  } from '@/api/app';
+
+  const { setLoading } = useLoading(false);
+  const route = useRoute();
 
   const emits = defineEmits(['changeStep']);
   const formRef = ref<FormInstance>();
-  const formData = ref<AppCreateBaseInfo>({
+  const formData = ref<AppUpdateBaseInfo>({
+    id: '',
     name: '',
     remark: '',
   });
+
+  const getAppDetail = async (
+    params: AppDetailParams = { id: route.query.id }
+  ) => {
+    setLoading(true);
+    try {
+      const { data } = await queryAppDetail(params);
+      formData.value.id = data.id;
+      formData.value.name = data.name;
+      formData.value.remark = data.remark;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getAppDetail();
 
   const onNextClick = async () => {
     const res = await formRef.value?.validate();

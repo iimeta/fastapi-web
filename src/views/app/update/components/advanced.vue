@@ -8,7 +8,7 @@
   >
     <a-form-item
       field="models"
-      :label="$t('key.label.models')"
+      :label="$t('app.label.models')"
       :rules="[
         {
           required: false,
@@ -17,7 +17,7 @@
     >
       <a-select
         v-model="formData.models"
-        :placeholder="$t('key.placeholder.models')"
+        :placeholder="$t('app.placeholder.models')"
         :max-tag-count="3"
         multiple
         allow-clear
@@ -30,13 +30,43 @@
         />
       </a-select>
     </a-form-item>
+    <a-form-item
+      field="ip_whitelist"
+      :label="$t('app.label.ip_whitelist')"
+      :rules="[
+        {
+          required: false,
+        },
+      ]"
+    >
+      <a-textarea
+        v-model="formData.ip_whitelist"
+        :placeholder="$t('app.placeholder.ip_whitelist')"
+        :auto-size="{ minRows: 5 }"
+      />
+    </a-form-item>
+    <a-form-item
+      field="ip_blacklist"
+      :label="$t('app.label.ip_blacklist')"
+      :rules="[
+        {
+          required: false,
+        },
+      ]"
+    >
+      <a-textarea
+        v-model="formData.ip_blacklist"
+        :placeholder="$t('app.placeholder.ip_blacklist')"
+        :auto-size="{ minRows: 5 }"
+      />
+    </a-form-item>
     <a-form-item>
       <a-space>
         <a-button type="secondary" @click="goPrev">
-          {{ $t('key.button.prev') }}
+          {{ $t('model.button.prev') }}
         </a-button>
         <a-button type="primary" @click="onNextClick">
-          {{ $t('key.button.next') }}
+          {{ $t('model.button.next') }}
         </a-button>
       </a-space>
     </a-form-item>
@@ -45,12 +75,18 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useRoute } from 'vue-router';
   import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { KeyCreateAdvanced } from '@/api/key';
+  import {
+    AppUpdateAdvanced,
+    queryAppDetail,
+    AppDetailParams,
+  } from '@/api/app';
   import { queryModelList, ModelList } from '@/api/model';
 
   const { setLoading } = useLoading(true);
+  const route = useRoute();
 
   const emits = defineEmits(['changeStep']);
   const models = ref<ModelList[]>([]);
@@ -69,9 +105,28 @@
   getModelList();
 
   const formRef = ref<FormInstance>();
-  const formData = ref<KeyCreateAdvanced>({
+  const formData = ref<AppUpdateAdvanced>({
     models: [],
+    ip_whitelist: '',
+    ip_blacklist: '',
   });
+
+  const getAppDetail = async (
+    params: AppDetailParams = { id: route.query.id }
+  ) => {
+    setLoading(true);
+    try {
+      const { data } = await queryAppDetail(params);
+      formData.value.models = data.models;
+      formData.value.ip_whitelist = data.ip_whitelist;
+      formData.value.ip_blacklist = data.ip_blacklist;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getAppDetail();
 
   const onNextClick = async () => {
     const res = await formRef.value?.validate();

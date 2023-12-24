@@ -66,16 +66,44 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useRoute } from 'vue-router';
+  import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { KeyCreateBaseInfo } from '@/api/key';
+  import {
+    KeyUpdateBaseInfo,
+    queryKeyDetail,
+    KeyDetailParams,
+  } from '@/api/key';
+
+  const { setLoading } = useLoading(false);
+  const route = useRoute();
 
   const emits = defineEmits(['changeStep']);
   const formRef = ref<FormInstance>();
-  const formData = ref<KeyCreateBaseInfo>({
+  const formData = ref<KeyUpdateBaseInfo>({
+    id: '',
     corp: '',
     key: '',
     remark: '',
   });
+
+  const getKeyDetail = async (
+    params: KeyDetailParams = { id: route.query.id }
+  ) => {
+    setLoading(true);
+    try {
+      const { data } = await queryKeyDetail(params);
+      formData.value.id = data.id;
+      formData.value.corp = data.corp;
+      formData.value.key = data.key;
+      formData.value.remark = data.remark;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getKeyDetail();
 
   const onNextClick = async () => {
     const res = await formRef.value?.validate();
