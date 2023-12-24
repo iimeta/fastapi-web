@@ -71,6 +71,14 @@
           label: t('app.detail.label.remark'),
           value: renderData?.remark || '-',
         },
+        {
+          label: t('app.detail.label.created_at'),
+          value: renderData.created_at,
+        },
+        {
+          label: t('app.detail.label.updated_at'),
+          value: renderData.updated_at,
+        },
       ],
     });
 
@@ -79,15 +87,15 @@
       data: [
         {
           label: t('app.detail.label.models'),
-          value: renderData?.models ? renderData?.models.join('\n') : '-',
+          value: renderData?.models?.join('\n') || '-',
         },
         {
           label: t('app.detail.label.ip_whitelist'),
-          value: renderData?.ip_whitelist || '-',
+          value: renderData?.ip_whitelist?.join('\n') || '-',
         },
         {
           label: t('app.detail.label.ip_blacklist'),
-          value: renderData?.ip_blacklist || '-',
+          value: renderData?.ip_blacklist?.join('\n') || '-',
         },
       ],
     });

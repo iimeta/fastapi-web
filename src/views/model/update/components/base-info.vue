@@ -140,7 +140,7 @@
       formData.value.corp = data.corp;
       formData.value.name = data.name;
       formData.value.model = data.model;
-      formData.value.type = data.type;
+      formData.value.type = String(data.type);
       formData.value.remark = data.remark;
     } catch (err) {
       // you can report use errorHandler or other

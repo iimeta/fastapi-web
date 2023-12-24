@@ -75,6 +75,14 @@
           label: t('key.detail.label.remark'),
           value: renderData?.remark || '-',
         },
+        {
+          label: t('key.detail.label.created_at'),
+          value: renderData.created_at,
+        },
+        {
+          label: t('key.detail.label.updated_at'),
+          value: renderData.updated_at,
+        },
       ],
     });
 
@@ -83,7 +91,7 @@
       data: [
         {
           label: t('key.detail.label.models'),
-          value: renderData?.models ? renderData?.models.join('\n') : '-',
+          value: renderData?.models?.join('\n') || '-',
         },
       ],
     });

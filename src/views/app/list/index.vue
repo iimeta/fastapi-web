@@ -358,6 +358,12 @@
     {
       title: t('app.columns.remark'),
       dataIndex: 'remark',
+      slotName: 'remark',
+    },
+    {
+      title: t('app.columns.updated_at'),
+      dataIndex: 'updated_at',
+      slotName: 'updated_at',
     },
     {
       title: t('app.columns.operations'),

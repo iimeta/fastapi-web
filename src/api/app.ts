@@ -64,10 +64,12 @@ export interface AppDetail {
   app_id: number;
   name: string;
   models: string[];
-  ip_whitelist: string;
-  ip_blacklist: string;
+  ip_whitelist: string[];
+  ip_blacklist: string[];
   status: number;
   remark: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export function queryAppDetail(params: AppDetailParams) {

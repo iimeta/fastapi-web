@@ -49,12 +49,7 @@
       ]"
     >
       <a-space size="large">
-        <a-radio
-          v-model="formData.data_format"
-          value="1"
-          :default-checked="true"
-          >统一格式</a-radio
-        >
+        <a-radio v-model="formData.data_format" value="1">统一格式</a-radio>
         <a-radio v-model="formData.data_format" value="2">官方格式</a-radio>
       </a-space>
     </a-form-item>
@@ -159,7 +154,7 @@
       const { data } = await queryModelDetail(params);
       formData.value.prompt_ratio = data.prompt_ratio;
       formData.value.completion_ratio = data.completion_ratio;
-      formData.value.data_format = data.data_format;
+      formData.value.data_format = String(data.data_format);
       formData.value.base_url = data.base_url;
       formData.value.path = data.path;
       formData.value.proxy = data.proxy;

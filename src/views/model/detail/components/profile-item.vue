@@ -79,6 +79,14 @@
           label: t('model.detail.label.remark'),
           value: renderData?.remark || '-',
         },
+        {
+          label: t('model.detail.label.created_at'),
+          value: renderData.created_at,
+        },
+        {
+          label: t('model.detail.label.updated_at'),
+          value: renderData.updated_at,
+        },
       ],
     });
 

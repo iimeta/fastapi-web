@@ -98,16 +98,18 @@ export interface ModelDetail {
   corp: string;
   name: string;
   model: string;
-  type: string;
+  type: number;
   prompt_ratio: number;
   completion_ratio: number;
-  data_format: string;
+  data_format: number;
   base_url: string;
   path: string;
   proxy: string;
   is_public: boolean;
   status: number;
   remark: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export function queryModelDetail(params: ModelDetailParams) {

@@ -70,6 +70,8 @@ export default {
   'model.detail.label.path': '模型路径',
   'model.detail.label.proxy': '代理',
   'model.detail.label.isPublic': '是否公开',
+  'model.detail.label.created_at': '创建时间',
+  'model.detail.label.updated_at': '更新时间',
   // search
   'model.form.corp': '公司',
   'model.form.name': '模型名称',
@@ -94,6 +96,7 @@ export default {
   'model.columns.data_format': '数据格式',
   'model.columns.status': '状态',
   'model.columns.remark': '备注',
+  'model.columns.updated_at': '更新时间',
   'model.columns.operations': '操作',
   'model.columns.operations.view': '查看',
   'model.columns.operations.update': '修改',

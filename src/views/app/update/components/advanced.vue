@@ -118,8 +118,8 @@
     try {
       const { data } = await queryAppDetail(params);
       formData.value.models = data.models;
-      formData.value.ip_whitelist = data.ip_whitelist;
-      formData.value.ip_blacklist = data.ip_blacklist;
+      formData.value.ip_whitelist = data?.ip_whitelist?.join('\n') || '';
+      formData.value.ip_blacklist = data?.ip_blacklist?.join('\n') || '';
     } catch (err) {
       // you can report use errorHandler or other
     } finally {

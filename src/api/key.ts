@@ -67,6 +67,8 @@ export interface KeyDetail {
   models: string[];
   status: number;
   remark: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export function queryKeyDetail(params: KeyDetailParams) {

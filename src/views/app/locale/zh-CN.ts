@@ -45,6 +45,8 @@ export default {
   'app.detail.label.models': '模型权限',
   'app.detail.label.ip_whitelist': 'IP白名单',
   'app.detail.label.ip_blacklist': 'IP黑名单',
+  'app.detail.label.created_at': '创建时间',
+  'app.detail.label.updated_at': '更新时间',
   // search
   'app.form.appId': '应用ID',
   'app.form.appId.placeholder': '请输入应用ID',
@@ -68,6 +70,7 @@ export default {
   'app.columns.models': '模型权限',
   'app.columns.status': '状态',
   'app.columns.remark': '备注',
+  'app.columns.updated_at': '更新时间',
   'app.columns.operations': '操作',
   'app.columns.operations.view': '查看',
   'app.columns.operations.update': '修改',
