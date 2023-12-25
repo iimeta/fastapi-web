@@ -221,6 +221,25 @@
           >
             {{ $t('app.columns.operations.update') }}
           </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="createKey({ app_id: `${record.app_id}` })"
+          >
+            {{ $t('app.columns.operations.createKey') }}
+          </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              $router.push({
+                name: 'KeyList',
+                query: { id: `${record.id}` },
+              })
+            "
+          >
+            {{ $t('app.columns.operations.manageKey') }}
+          </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
             @ok="appDelete({ id: `${record.id}` })"
@@ -231,6 +250,73 @@
           </a-popconfirm>
         </template>
       </a-table>
+      <template #extra>
+        <a-modal
+          v-model:visible="visible"
+          :title="$t('app.form.title.keyConfig')"
+          @cancel="handleCancel"
+          @before-ok="handleBeforeOk"
+          :okText="$t('app.button.save')"
+        >
+          <a-form :model="formData">
+            <a-form-item field="key" :label="$t('app.label.key')">
+              <a-input
+                v-model="formData.key"
+                :placeholder="$t('app.placeholder.key')"
+              />
+            </a-form-item>
+            <a-form-item field="quota" :label="$t('app.label.quota')">
+              <a-input-number
+                v-model="formData.quota"
+                :placeholder="$t('app.placeholder.quota')"
+                :min="0"
+              />
+            </a-form-item>
+            <a-form-item field="models" :label="$t('app.label.models')">
+              <a-select
+                v-model="formData.models"
+                :placeholder="$t('app.placeholder.models')"
+                :max-tag-count="3"
+                multiple
+                allow-clear
+              >
+                <a-option
+                  v-for="item in models"
+                  :key="item.model"
+                  :value="item.model"
+                  :label="item.model"
+                />
+              </a-select>
+            </a-form-item>
+            <a-form-item
+              field="ip_whitelist"
+              :label="$t('app.label.ip_whitelist')"
+            >
+              <a-textarea
+                v-model="formData.ip_whitelist"
+                :placeholder="$t('app.placeholder.ip_whitelist')"
+                :auto-size="{ minRows: 5, maxRows: 10 }"
+              />
+            </a-form-item>
+            <a-form-item
+              field="ip_blacklist"
+              :label="$t('app.label.ip_blacklist')"
+            >
+              <a-textarea
+                v-model="formData.ip_blacklist"
+                :placeholder="$t('app.placeholder.ip_blacklist')"
+                :auto-size="{ minRows: 5, maxRows: 10 }"
+              />
+            </a-form-item>
+            <a-form-item field="remark" :label="$t('app.placeholder.remark')">
+              <a-textarea
+                v-model="formData.remark"
+                :placeholder="$t('app.placeholder.remark')"
+              />
+            </a-form-item>
+          </a-form>
+        </a-modal>
+      </template>
     </a-card>
   </div>
 </template>
@@ -245,6 +331,10 @@
     AppPageParams,
     submitAppDelete,
     AppDeleteParams,
+    submitAppCreateKey,
+    AppCreateKeyParams,
+    submitAppKeyConfig,
+    AppKeyConfig,
   } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -479,6 +569,40 @@
     },
     { deep: true, immediate: true }
   );
+
+  const visible = ref(false);
+
+  const formData = ref<AppKeyConfig>({} as AppKeyConfig);
+
+  const createKey = async (params: AppCreateKeyParams) => {
+    setLoading(true);
+    try {
+      const { data } = await submitAppCreateKey(params);
+      formData.value.app_id = data.app_id;
+      formData.value.key = data.key;
+      visible.value = true;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleBeforeOk = async (done) => {
+    setLoading(true);
+    try {
+      await submitAppKeyConfig(formData.value); // The mock api default success
+      done();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCancel = () => {
+    visible.value = false;
+  };
 </script>
 
 <script lang="ts">

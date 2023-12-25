@@ -82,7 +82,7 @@ export function queryAppDetail(params: AppDetailParams) {
 }
 
 export interface AppUpdateBaseInfo {
-  id: string,
+  id: string;
   name: string;
   remark: string;
 }
@@ -96,4 +96,26 @@ export type AppUpdate = AppUpdateBaseInfo & AppUpdateAdvanced;
 
 export function submitAppUpdate(data: AppUpdate) {
   return axios.post('/api/v1/app/update', data);
+}
+
+export interface AppCreateKeyParams {
+  app_id: number;
+
+}
+export function submitAppCreateKey(data: AppCreateKeyParams) {
+  return axios.post('/api/v1/app/create/key', data);
+}
+
+export interface AppKeyConfig {
+  app_id: number;
+  key: string;
+  quota: number;
+  models: string[];
+  ip_whitelist: string;
+  ip_blacklist: string;
+  remark: string;
+}
+
+export function submitAppKeyConfig(data: AppKeyConfig) {
+  return axios.post('/api/v1/app/key/config', data);
 }

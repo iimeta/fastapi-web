@@ -39,7 +39,7 @@
       <a-textarea
         v-model="formData.key"
         :placeholder="$t('key.placeholder.key')"
-        :auto-size="{ minRows: 5 }"
+        :auto-size="{ minRows: 5, maxRows: 10 }"
       />
     </a-form-item>
     <a-form-item
