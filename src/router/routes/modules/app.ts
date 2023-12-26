@@ -13,7 +13,7 @@ const LIST: AppRouteRecordRaw = {
   },
   children: [
     {
-      path: 'app-list', // The midline path complies with SEO specifications
+      path: 'list',
       name: 'AppList',
       component: () => import('@/views/app/list/index.vue'),
       meta: {
@@ -23,7 +23,7 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'app-create',
+      path: 'create',
       name: 'AppCreate',
       component: () => import('@/views/app/create/index.vue'),
       meta: {
@@ -34,7 +34,7 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'app-update',
+      path: 'update',
       name: 'AppUpdate',
       component: () => import('@/views/app/update/index.vue'),
       meta: {
@@ -45,7 +45,7 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'app-detail',
+      path: 'detail',
       name: 'AppDetail',
       component: () => import('@/views/app/detail/index.vue'),
       meta: {

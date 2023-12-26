@@ -60,8 +60,14 @@
       title: t('key.detail.title.baseInfo'),
       data: [
         {
-          label: t('key.detail.label.corp'),
-          value: t(`key.dict.corp.${renderData.corp}`),
+          label:
+            renderData.type === 1
+              ? t('key.detail.label.app_id')
+              : t('key.detail.label.corp'),
+          value:
+            renderData.type === 1
+              ? renderData.app_id
+              : t(`key.dict.corp.${renderData.corp}`),
         },
         {
           label: t('key.detail.label.key'),
@@ -92,6 +98,22 @@
         {
           label: t('key.detail.label.models'),
           value: renderData?.models?.join('\n') || '-',
+        },
+        {
+          label:
+            renderData.type === 1 ? t('key.detail.label.ip_whitelist') : '',
+          value:
+            renderData.type === 1
+              ? renderData.ip_whitelist?.join('\n') || '-'
+              : '',
+        },
+        {
+          label:
+            renderData.type === 1 ? t('key.detail.label.ip_blacklist') : '',
+          value:
+            renderData.type === 1
+              ? renderData.ip_blacklist?.join('\n') || '-'
+              : '',
         },
       ],
     });

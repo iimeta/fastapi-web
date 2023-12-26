@@ -434,7 +434,7 @@
     } as unknown as ModelPageParams);
   };
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+    fetchData({ ...basePagination, ...formModel.value, current });
   };
 
   fetchData();

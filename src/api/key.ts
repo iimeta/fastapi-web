@@ -19,10 +19,14 @@ export function submitKeyCreate(data: KeyCreate) {
 
 export interface KeyPage {
   id: string;
+  type: number;
+  app_id: number;
   corp: string;
   key: string;
   quota: number;
   models: string[];
+  ip_whitelist: string[];
+  ip_blacklist: string[];
   status: number;
   remark: string;
 }
@@ -61,10 +65,14 @@ export interface KeyDetailParams {
 
 export interface KeyDetail {
   id: string;
+  type: number;
+  app_id: number;
   corp: string;
   key: string;
   quota: number;
   models: string[];
+  ip_whitelist: string[];
+  ip_blacklist: string[];
   status: number;
   remark: string;
   created_at: string;

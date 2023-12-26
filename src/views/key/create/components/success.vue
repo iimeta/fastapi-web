@@ -9,7 +9,7 @@
       <a-button
         key="finish"
         type="secondary"
-        @click="$router.push({ name: 'KeyList' })"
+        @click="$router.push({ name: 'KeyModelList' })"
       >
         {{ $t('key.button.finish') }}
       </a-button>

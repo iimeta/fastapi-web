@@ -2,12 +2,12 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-apps />
+        <icon-safe />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.key') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.key.model.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-card class="general-card" :title="$t('menu.app.list')">
+    <a-card class="general-card" :title="$t('menu.key.model.list')">
       <a-row>
         <a-col :flex="1">
           <a-form
@@ -18,28 +18,29 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="app_id" :label="$t('app.form.appId')">
-                  <a-input
-                    v-model="formModel.app_id"
-                    :placeholder="$t('app.form.appId.placeholder')"
+                <a-form-item field="corp" :label="$t('key.form.corp')">
+                  <a-select
+                    v-model="formModel.corp"
+                    :options="corpOptions"
+                    :placeholder="$t('key.form.selectDefault')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('app.form.name')">
+                <a-form-item field="key" :label="$t('key.form.key')">
                   <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('app.form.name.placeholder')"
+                    v-model="formModel.key"
+                    :placeholder="$t('key.form.key.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="models" :label="$t('app.form.models')">
+                <a-form-item field="models" :label="$t('key.form.models')">
                   <a-select
                     v-model="formModel.models"
-                    :placeholder="$t('app.form.selectDefault')"
+                    :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="3"
                     multiple
                     allow-search
@@ -55,20 +56,20 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="key" :label="$t('app.form.key')">
-                  <a-input
-                    v-model="formModel.key"
-                    :placeholder="$t('app.form.key.placeholder')"
+                <a-form-item field="quota" :label="$t('key.form.quota')">
+                  <a-input-number
+                    v-model="formModel.quota"
+                    :placeholder="$t('key.form.quota.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('app.form.status')">
+                <a-form-item field="status" :label="$t('key.form.status')">
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('app.form.selectDefault')"
+                    :placeholder="$t('key.form.selectDefault')"
                     allow-clear
                   />
                 </a-form-item>
@@ -76,7 +77,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="created_at"
-                  :label="$t('app.form.created_at')"
+                  :label="$t('key.form.created_at')"
                 >
                   <a-range-picker
                     v-model="formModel.created_at"
@@ -94,13 +95,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('app.form.search') }}
+              {{ $t('key.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('app.form.reset') }}
+              {{ $t('key.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -111,12 +112,12 @@
           <a-space>
             <a-button
               type="primary"
-              @click="$router.push({ name: 'AppCreate' })"
+              @click="$router.push({ name: 'KeyCreate' })"
             >
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('app.operation.create') }}
+              {{ $t('key.operation.create') }}
             </a-button>
           </a-space>
         </a-col>
@@ -191,10 +192,19 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
       >
+        <template #type="{ record }">
+          {{ $t(`key.dict.type.${record.type}`) }}
+        </template>
+        <template #corp="{ record }">
+          {{ $t(`key.dict.corp.${record.corp}`) }}
+        </template>
+        <template #dataFormat="{ record }">
+          {{ $t(`key.dict.data_format.${record.data_format}`) }}
+        </template>
         <template #status="{ record }">
           <span v-if="record.status === 3" class="circle"></span>
           <span v-else class="circle pass"></span>
-          {{ $t(`app.dict.status.${record.status}`) }}
+          {{ $t(`key.dict.status.${record.status}`) }}
         </template>
         <template #operations="{ record }">
           <a-button
@@ -202,122 +212,35 @@
             size="small"
             @click="
               $router.push({
-                name: 'AppDetail',
+                name: 'KeyDetail',
                 query: { id: `${record.id}` },
               })
             "
           >
-            {{ $t('app.columns.operations.view') }}
+            {{ $t('key.columns.operations.view') }}
           </a-button>
           <a-button
             type="text"
             size="small"
             @click="
               $router.push({
-                name: 'AppUpdate',
+                name: 'KeyUpdate',
                 query: { id: `${record.id}` },
               })
             "
           >
-            {{ $t('app.columns.operations.update') }}
-          </a-button>
-          <a-button
-            type="text"
-            size="small"
-            @click="createKey({ app_id: `${record.app_id}` })"
-          >
-            {{ $t('app.columns.operations.createKey') }}
-          </a-button>
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              $router.push({
-                name: 'KeyAppList',
-                query: { app_id: `${record.app_id}` },
-              })
-            "
-          >
-            {{ $t('app.columns.operations.manageKey') }}
+            {{ $t('key.columns.operations.update') }}
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="appDelete({ id: `${record.id}` })"
+            @ok="keyDelete({ id: `${record.id}` })"
           >
             <a-button type="text" size="small">
-              {{ $t('app.columns.operations.delete') }}
+              {{ $t('key.columns.operations.delete') }}
             </a-button>
           </a-popconfirm>
         </template>
       </a-table>
-      <template #extra>
-        <a-modal
-          v-model:visible="visible"
-          :title="$t('app.form.title.keyConfig')"
-          @cancel="handleCancel"
-          @before-ok="handleBeforeOk"
-          :okText="$t('app.button.save')"
-        >
-          <a-form :model="formData">
-            <a-form-item field="key" :label="$t('app.label.key')">
-              <a-input
-                v-model="formData.key"
-                :placeholder="$t('app.placeholder.key')"
-                readonly
-              />
-            </a-form-item>
-            <a-form-item field="quota" :label="$t('app.label.quota')">
-              <a-input-number
-                v-model="formData.quota"
-                :placeholder="$t('app.placeholder.quota')"
-                :min="0"
-              />
-            </a-form-item>
-            <a-form-item field="models" :label="$t('app.label.models')">
-              <a-select
-                v-model="formData.models"
-                :placeholder="$t('app.placeholder.models')"
-                :max-tag-count="3"
-                multiple
-                allow-clear
-              >
-                <a-option
-                  v-for="item in models"
-                  :key="item.model"
-                  :value="item.model"
-                  :label="item.model"
-                />
-              </a-select>
-            </a-form-item>
-            <a-form-item
-              field="ip_whitelist"
-              :label="$t('app.label.ip_whitelist')"
-            >
-              <a-textarea
-                v-model="formData.ip_whitelist"
-                :placeholder="$t('app.placeholder.ip_whitelist')"
-                :auto-size="{ minRows: 5, maxRows: 10 }"
-              />
-            </a-form-item>
-            <a-form-item
-              field="ip_blacklist"
-              :label="$t('app.label.ip_blacklist')"
-            >
-              <a-textarea
-                v-model="formData.ip_blacklist"
-                :placeholder="$t('app.placeholder.ip_blacklist')"
-                :auto-size="{ minRows: 5, maxRows: 10 }"
-              />
-            </a-form-item>
-            <a-form-item field="remark" :label="$t('app.placeholder.remark')">
-              <a-textarea
-                v-model="formData.remark"
-                :placeholder="$t('app.placeholder.remark')"
-              />
-            </a-form-item>
-          </a-form>
-        </a-modal>
-      </template>
     </a-card>
   </div>
 </template>
@@ -327,23 +250,18 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    queryAppPage,
-    AppPage,
-    AppPageParams,
-    submitAppDelete,
-    AppDeleteParams,
-    submitAppCreateKey,
-    AppCreateKeyParams,
-    submitAppKeyConfig,
-    AppKeyConfig,
-  } from '@/api/app';
+    queryKeyPage,
+    KeyPage,
+    KeyPageParams,
+    submitKeyDelete,
+    KeyDeleteParams,
+  } from '@/api/key';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList } from '@/api/model';
-  import { Message } from '@arco-design/web-vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -366,10 +284,10 @@
   };
   getModelList();
 
-  const appDelete = async (params: AppDeleteParams) => {
+  const keyDelete = async (params: KeyDeleteParams) => {
     setLoading(true);
     try {
-      await submitAppDelete(params);
+      await submitKeyDelete(params);
       fetchData();
     } catch (err) {
       // you can report use errorHandler or other
@@ -380,18 +298,18 @@
 
   const generateFormModel = () => {
     return {
-      app_id: ref(),
-      name: '',
-      models: [],
+      type: 2,
+      corp: '',
       key: '',
-      type: ref(),
+      models: [],
+      quota: ref(),
       status: ref(),
       created_at: [],
     };
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<AppPage[]>([]);
+  const renderData = ref<KeyPage[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -402,11 +320,9 @@
     current: 1,
     pageSize: 10,
   };
-
   const pagination = reactive({
     ...basePagination,
   });
-
   const densityList = computed(() => [
     {
       name: t('searchTable.size.mini'),
@@ -425,62 +341,82 @@
       value: 'large',
     },
   ]);
-
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('app.columns.appId'),
-      dataIndex: 'app_id',
-      slotName: 'app_id',
+      title: t('key.columns.corp'),
+      dataIndex: 'corp',
+      slotName: 'corp',
     },
     {
-      title: t('app.columns.name'),
-      dataIndex: 'name',
-      slotName: 'name',
+      title: t('key.columns.key'),
+      dataIndex: 'key',
+      slotName: 'key',
     },
     {
-      title: t('app.columns.models'),
+      title: t('key.columns.quota'),
+      dataIndex: 'quota',
+      slotName: 'quota',
+    },
+    {
+      title: t('key.columns.models'),
       dataIndex: 'models',
       slotName: 'models',
     },
     {
-      title: t('app.columns.status'),
+      title: t('key.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
     },
     {
-      title: t('app.columns.remark'),
+      title: t('key.columns.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
     },
     {
-      title: t('app.columns.updated_at'),
+      title: t('key.columns.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
     },
     {
-      title: t('app.columns.operations'),
+      title: t('key.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
-
+  const corpOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('key.dict.corp.OpenAI'),
+      value: 'OpenAI',
+    },
+    {
+      label: t('key.dict.corp.Baidu'),
+      value: 'Baidu',
+    },
+    {
+      label: t('key.dict.corp.Xfyun'),
+      value: 'Xfyun',
+    },
+    {
+      label: t('key.dict.corp.Aliyun'),
+      value: 'Aliyun',
+    },
+  ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('app.dict.status.1'),
+      label: t('key.dict.status.1'),
       value: 1,
     },
     {
-      label: t('app.dict.status.2'),
+      label: t('key.dict.status.2'),
       value: 2,
     },
   ]);
-
   const fetchData = async (
-    params: AppPageParams = { current: 1, pageSize: 10 }
+    params: KeyPageParams = { current: 1, pageSize: 10, type: 2 }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryAppPage(params);
+      const { data } = await queryKeyPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.total = data.paging.total;
@@ -495,7 +431,7 @@
     fetchData({
       ...basePagination,
       ...formModel.value,
-    } as unknown as AppPageParams);
+    } as unknown as KeyPageParams);
   };
   const onPageChange = (current: number) => {
     fetchData({ ...basePagination, ...formModel.value, current });
@@ -571,47 +507,11 @@
     },
     { deep: true, immediate: true }
   );
-
-  const visible = ref(false);
-
-  const formData = ref<AppKeyConfig>({} as AppKeyConfig);
-
-  const createKey = async (params: AppCreateKeyParams) => {
-    setLoading(true);
-    try {
-      const { data } = await submitAppCreateKey(params);
-      formData.value.app_id = data.app_id;
-      formData.value.key = data.key;
-      visible.value = true;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleBeforeOk = async (done) => {
-    setLoading(true);
-    try {
-      await submitAppKeyConfig(formData.value); // The mock api default success
-      navigator.clipboard.writeText(formData.value.key);
-      Message.success(t('app.success.key_config'));
-      done();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleCancel = () => {
-    visible.value = false;
-  };
 </script>
 
 <script lang="ts">
   export default {
-    name: 'AppList',
+    name: 'KeyList',
   };
 </script>
 

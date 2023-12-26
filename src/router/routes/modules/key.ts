@@ -13,17 +13,27 @@ const LIST: AppRouteRecordRaw = {
   },
   children: [
     {
-      path: 'key-list', // The midline path complies with SEO specifications
-      name: 'KeyList',
-      component: () => import('@/views/key/list/index.vue'),
+      path: 'model/list',
+      name: 'KeyModelList',
+      component: () => import('@/views/key/list/model.vue'),
       meta: {
-        locale: 'menu.key.list',
+        locale: 'menu.key.model.list',
         requiresAuth: true,
         roles: ['*'],
       },
     },
     {
-      path: 'key-create',
+      path: 'app/list',
+      name: 'KeyAppList',
+      component: () => import('@/views/key/list/app.vue'),
+      meta: {
+        locale: 'menu.key.app.list',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
+    {
+      path: 'create',
       name: 'KeyCreate',
       component: () => import('@/views/key/create/index.vue'),
       meta: {
@@ -34,7 +44,7 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'key-update',
+      path: 'update',
       name: 'KeyUpdate',
       component: () => import('@/views/key/update/index.vue'),
       meta: {
@@ -45,7 +55,7 @@ const LIST: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'key-detail',
+      path: 'detail',
       name: 'KeyDetail',
       component: () => import('@/views/key/detail/index.vue'),
       meta: {

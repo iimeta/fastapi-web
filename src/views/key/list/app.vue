@@ -5,9 +5,9 @@
         <icon-safe />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.key') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.key.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.key.app.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-card class="general-card" :title="$t('menu.key.list')">
+    <a-card class="general-card" :title="$t('menu.key.app.list')">
       <a-row>
         <a-col :flex="1">
           <a-form
@@ -18,13 +18,19 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="corp" :label="$t('key.form.corp')">
+                <a-form-item field="app_id" :label="$t('key.form.app')">
                   <a-select
-                    v-model="formModel.corp"
-                    :options="corpOptions"
+                    v-model="formModel.app_id"
                     :placeholder="$t('key.form.selectDefault')"
                     allow-clear
-                  />
+                  >
+                    <a-option
+                      v-for="item in apps"
+                      :key="item.app_id"
+                      :value="item.app_id"
+                      :label="item.name"
+                    />
+                  </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="8">
@@ -110,7 +116,7 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button
+            <!-- <a-button
               type="primary"
               @click="$router.push({ name: 'KeyCreate' })"
             >
@@ -118,7 +124,7 @@
                 <icon-plus />
               </template>
               {{ $t('key.operation.create') }}
-            </a-button>
+            </a-button> -->
           </a-space>
         </a-col>
         <a-col
@@ -219,16 +225,7 @@
           >
             {{ $t('key.columns.operations.view') }}
           </a-button>
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              $router.push({
-                name: 'KeyUpdate',
-                query: { id: `${record.id}` },
-              })
-            "
-          >
+          <a-button type="text" size="small" @click="updateKey(record)">
             {{ $t('key.columns.operations.update') }}
           </a-button>
           <a-popconfirm
@@ -241,12 +238,81 @@
           </a-popconfirm>
         </template>
       </a-table>
+      <template #extra>
+        <a-modal
+          v-model:visible="visible"
+          :title="$t('app.form.title.keyConfig')"
+          @cancel="handleCancel"
+          @before-ok="handleBeforeOk"
+          :okText="$t('app.button.save')"
+        >
+          <a-form :model="formData">
+            <a-form-item field="key" :label="$t('app.label.key')">
+              <a-input
+                v-model="formData.key"
+                :placeholder="$t('app.placeholder.key')"
+                readonly
+              />
+            </a-form-item>
+            <a-form-item field="quota" :label="$t('app.label.quota')">
+              <a-input-number
+                v-model="formData.quota"
+                :placeholder="$t('app.placeholder.quota')"
+                :min="0"
+              />
+            </a-form-item>
+            <a-form-item field="models" :label="$t('app.label.models')">
+              <a-select
+                v-model="formData.models"
+                :placeholder="$t('app.placeholder.models')"
+                :max-tag-count="3"
+                multiple
+                allow-clear
+              >
+                <a-option
+                  v-for="item in models"
+                  :key="item.model"
+                  :value="item.model"
+                  :label="item.model"
+                />
+              </a-select>
+            </a-form-item>
+            <a-form-item
+              field="ip_whitelist"
+              :label="$t('app.label.ip_whitelist')"
+            >
+              <a-textarea
+                v-model="formData.ip_whitelist"
+                :placeholder="$t('app.placeholder.ip_whitelist')"
+                :auto-size="{ minRows: 5, maxRows: 10 }"
+              />
+            </a-form-item>
+            <a-form-item
+              field="ip_blacklist"
+              :label="$t('app.label.ip_blacklist')"
+            >
+              <a-textarea
+                v-model="formData.ip_blacklist"
+                :placeholder="$t('app.placeholder.ip_blacklist')"
+                :auto-size="{ minRows: 5, maxRows: 10 }"
+              />
+            </a-form-item>
+            <a-form-item field="remark" :label="$t('app.placeholder.remark')">
+              <a-textarea
+                v-model="formData.remark"
+                :placeholder="$t('app.placeholder.remark')"
+              />
+            </a-form-item>
+          </a-form>
+        </a-modal>
+      </template>
     </a-card>
   </div>
 </template>
 
 <script lang="ts" setup>
   import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
@@ -261,16 +327,36 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import {
+    queryAppList,
+    AppList,
+    submitAppKeyConfig,
+    AppKeyConfig,
+  } from '@/api/app';
   import { queryModelList, ModelList } from '@/api/model';
+  import { Message } from '@arco-design/web-vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
+  const route = useRoute();
 
   const rowSelection = reactive({
     type: 'checkbox',
     showCheckedAll: true,
     onlyCurrent: false,
   });
+
+  const apps = ref<AppList[]>([]);
+
+  const getAppList = async () => {
+    try {
+      const { data } = await queryAppList();
+      apps.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getAppList();
 
   const models = ref<ModelList[]>([]);
 
@@ -298,7 +384,8 @@
 
   const generateFormModel = () => {
     return {
-      corp: '',
+      type: 1,
+      app_id: ref(),
       key: '',
       models: [],
       quota: ref(),
@@ -342,9 +429,9 @@
   ]);
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('key.columns.corp'),
-      dataIndex: 'corp',
-      slotName: 'corp',
+      title: t('key.columns.app_id'),
+      dataIndex: 'app_id',
+      slotName: 'app_id',
     },
     {
       title: t('key.columns.key'),
@@ -357,7 +444,7 @@
       slotName: 'quota',
     },
     {
-      title: t('key.columns.models'),
+      title: t('key.columns.app.models'),
       dataIndex: 'models',
       slotName: 'models',
     },
@@ -382,24 +469,6 @@
       slotName: 'operations',
     },
   ]);
-  const corpOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('key.dict.corp.OpenAI'),
-      value: 'OpenAI',
-    },
-    {
-      label: t('key.dict.corp.Baidu'),
-      value: 'Baidu',
-    },
-    {
-      label: t('key.dict.corp.Xfyun'),
-      value: 'Xfyun',
-    },
-    {
-      label: t('key.dict.corp.Aliyun'),
-      value: 'Aliyun',
-    },
-  ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('key.dict.status.1'),
@@ -411,7 +480,12 @@
     },
   ]);
   const fetchData = async (
-    params: KeyPageParams = { current: 1, pageSize: 10 }
+    params: KeyPageParams = {
+      current: 1,
+      pageSize: 10,
+      type: 1,
+      app_id: route.query.app_id,
+    }
   ) => {
     setLoading(true);
     try {
@@ -433,7 +507,7 @@
     } as unknown as KeyPageParams);
   };
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+    fetchData({ ...basePagination, ...formModel.value, current });
   };
 
   fetchData();
@@ -506,11 +580,61 @@
     },
     { deep: true, immediate: true }
   );
+
+  const visible = ref(false);
+
+  const formData = ref<AppKeyConfig>({} as AppKeyConfig);
+
+  interface AppKeyConfigView {
+    id: string;
+    key: string;
+    quota: number;
+    models: string[];
+    ip_whitelist: string[];
+    ip_blacklist: string[];
+    remark: string;
+  }
+
+  const updateKey = async (params: AppKeyConfigView) => {
+    setLoading(true);
+    try {
+      formData.value.id = params.id;
+      formData.value.key = params.key;
+      formData.value.quota = params.quota;
+      formData.value.models = params.models;
+      formData.value.ip_whitelist = params.ip_whitelist?.join('\n') || '';
+      formData.value.ip_blacklist = params.ip_blacklist?.join('\n') || '';
+      formData.value.remark = params.remark;
+      visible.value = true;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleBeforeOk = async (done) => {
+    setLoading(true);
+    try {
+      await submitAppKeyConfig(formData.value); // The mock api default success
+      navigator.clipboard.writeText(formData.value.key);
+      done();
+      fetchData();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCancel = () => {
+    visible.value = false;
+  };
 </script>
 
 <script lang="ts">
   export default {
-    name: 'KeyList',
+    name: 'AppKeyList',
   };
 </script>
 

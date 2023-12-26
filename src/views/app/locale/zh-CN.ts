@@ -33,6 +33,7 @@ export default {
   'app.success.title': '提交成功',
   'app.success.create.subTitle': '应用新建成功',
   'app.success.update.subTitle': '应用修改成功',
+  'app.success.key_config': '保存成功, 密钥已复制到剪贴板',
   'app.button.submit': '提交',
   'app.button.again': '再次新建',
   'app.button.finish': '新建完成',

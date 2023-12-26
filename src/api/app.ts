@@ -47,6 +47,23 @@ export function queryAppPage(params: AppPageParams) {
   return axios.post<AppPageRes>('/api/v1/app/page', params);
 }
 
+export interface AppList {
+  id: string;
+  app_id: number;
+  name: string;
+  models: string[];
+  status: number;
+  remark: string;
+}
+
+export interface AppListRes {
+  items: AppList[];
+}
+
+export function queryAppList() {
+  return axios.get<AppListRes>('/api/v1/app/list');
+}
+
 export interface AppDeleteParams {
   id: string;
 }
@@ -100,13 +117,14 @@ export function submitAppUpdate(data: AppUpdate) {
 
 export interface AppCreateKeyParams {
   app_id: number;
-
 }
+
 export function submitAppCreateKey(data: AppCreateKeyParams) {
   return axios.post('/api/v1/app/create/key', data);
 }
 
 export interface AppKeyConfig {
+  id: string;
   app_id: number;
   key: string;
   quota: number;
