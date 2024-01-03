@@ -30,6 +30,26 @@
         />
       </a-select>
     </a-form-item>
+    <a-form-item field="is_limit_quota" :label="$t('app.label.isLimitQuota')">
+      <a-switch v-model="formData.is_limit_quota" />
+    </a-form-item>
+    <a-form-item
+      v-if="formData.is_limit_quota"
+      field="quota"
+      :label="$t('app.label.quota')"
+      :rules="[
+        {
+          required: true,
+          message: $t('app.error.quota.required'),
+        },
+      ]"
+    >
+      <a-input-number
+        v-model="formData.quota"
+        :placeholder="$t('app.placeholder.quota')"
+        :min="1"
+      />
+    </a-form-item>
     <a-form-item
       field="ip_whitelist"
       :label="$t('app.label.ip_whitelist')"
@@ -101,6 +121,8 @@
   const formRef = ref<FormInstance>();
   const formData = ref<AppCreateAdvanced>({
     models: [],
+    is_limit_quota: false,
+    quota: ref(),
     ip_whitelist: '',
     ip_blacklist: '',
   });

@@ -90,6 +90,16 @@
           value: renderData?.models?.join('\n') || '-',
         },
         {
+          label: t('app.detail.label.isLimitQuota'),
+          value: t(
+            `app.dict.isLimitQuota.${renderData?.is_limit_quota || false}`
+          ),
+        },
+        {
+          label: t('app.detail.label.quota'),
+          value: renderData?.quota || '-',
+        },
+        {
           label: t('app.detail.label.ip_whitelist'),
           value: renderData?.ip_whitelist?.join('\n') || '-',
         },

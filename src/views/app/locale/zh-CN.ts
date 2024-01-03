@@ -22,6 +22,7 @@ export default {
   'app.placeholder.remark': '备注',
   'app.label.models': '模型权限',
   'app.placeholder.models': '模型权限, 可同时授权多个模型',
+  'app.label.isLimitQuota': '限制额度',
   'app.label.ip_whitelist': 'IP白名单',
   'app.placeholder.ip_whitelist': '一行一个, 可一次性添加多个多行, 支持 * 通配符\n如:\n10.10.10.*\n20.20.*\n30.*',
   'app.label.ip_blacklist': 'IP黑名单',
@@ -30,6 +31,7 @@ export default {
   'app.placeholder.key': '密钥',
   'app.label.quota': '额度',
   'app.placeholder.quota': '额度',
+  'app.error.quota.required': '请输入额度',
   'app.success.title': '提交成功',
   'app.success.create.subTitle': '应用新建成功',
   'app.success.update.subTitle': '应用修改成功',
@@ -49,6 +51,8 @@ export default {
   'app.detail.label.name': '应用名称',
   'app.detail.label.remark': '备注',
   'app.detail.label.models': '模型权限',
+  'app.detail.label.isLimitQuota': '限制额度',
+  'app.detail.label.quota': '额度',
   'app.detail.label.ip_whitelist': 'IP白名单',
   'app.detail.label.ip_blacklist': 'IP黑名单',
   'app.detail.label.created_at': '创建时间',
@@ -87,4 +91,6 @@ export default {
   // dict
   'app.dict.status.1': '正常',
   'app.dict.status.2': '禁用',
+  'app.dict.isLimitQuota.true': '是',
+  'app.dict.isLimitQuota.false': '否',
 };

@@ -246,7 +246,7 @@
           @before-ok="handleBeforeOk"
           :okText="$t('app.button.save')"
         >
-          <a-form :model="formData">
+          <a-form ref="formRef" :model="formData">
             <a-form-item field="key" :label="$t('app.label.key')">
               <a-input
                 v-model="formData.key"
@@ -254,11 +254,27 @@
                 readonly
               />
             </a-form-item>
-            <a-form-item field="quota" :label="$t('app.label.quota')">
+            <a-form-item
+              field="is_limit_quota"
+              :label="$t('app.label.isLimitQuota')"
+            >
+              <a-switch v-model="formData.is_limit_quota" />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_limit_quota"
+              field="quota"
+              :label="$t('app.label.quota')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('app.error.quota.required'),
+                },
+              ]"
+            >
               <a-input-number
                 v-model="formData.quota"
                 :placeholder="$t('app.placeholder.quota')"
-                :min="0"
+                :min="1"
               />
             </a-form-item>
             <a-form-item field="models" :label="$t('app.label.models')">
@@ -315,6 +331,7 @@
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { FormInstance } from '@arco-design/web-vue/es/form';
   import {
     queryKeyPage,
     KeyPage,
@@ -334,7 +351,6 @@
     AppKeyConfig,
   } from '@/api/app';
   import { queryModelList, ModelList } from '@/api/model';
-  import { Message } from '@arco-design/web-vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -583,11 +599,13 @@
 
   const visible = ref(false);
 
+  const formRef = ref<FormInstance>();
   const formData = ref<AppKeyConfig>({} as AppKeyConfig);
 
   interface AppKeyConfigView {
     id: string;
     key: string;
+    is_limit_quota: boolean;
     quota: number;
     models: string[];
     ip_whitelist: string[];
@@ -600,6 +618,7 @@
     try {
       formData.value.id = params.id;
       formData.value.key = params.key;
+      formData.value.is_limit_quota = params.is_limit_quota;
       formData.value.quota = params.quota;
       formData.value.models = params.models;
       formData.value.ip_whitelist = params.ip_whitelist?.join('\n') || '';
@@ -614,6 +633,13 @@
   };
 
   const handleBeforeOk = async (done) => {
+    const res = await formRef.value?.validate();
+    if (res) {
+      visible.value = true;
+      done(false);
+      return;
+    }
+
     setLoading(true);
     try {
       await submitAppKeyConfig(formData.value); // The mock api default success
