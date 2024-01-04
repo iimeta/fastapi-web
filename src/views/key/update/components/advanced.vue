@@ -24,9 +24,9 @@
       >
         <a-option
           v-for="item in models"
-          :key="item.model"
-          :value="item.model"
-          :label="item.model"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
         />
       </a-select>
     </a-form-item>

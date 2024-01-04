@@ -21,9 +21,9 @@
         :placeholder="$t('model.placeholder.corp')"
       >
         <a-option value="OpenAI">OpenAI</a-option>
-        <a-option value="Baidu">百度</a-option>
+        <!-- <a-option value="Baidu">百度</a-option>
         <a-option value="Xfyun">科大讯飞</a-option>
-        <a-option value="Aliyun">阿里云</a-option>
+        <a-option value="Aliyun">阿里云</a-option> -->
       </a-select>
     </a-form-item>
     <a-form-item
@@ -33,10 +33,6 @@
         {
           required: true,
           message: $t('model.error.name.required'),
-        },
-        {
-          match: /^[a-zA-Z0-9\u4e00-\u9fa5]{1,20}$/,
-          message: $t('model.error.name.pattern'),
         },
       ]"
     >
@@ -52,9 +48,6 @@
         {
           required: true,
           message: $t('model.error.model.required'),
-        },
-        {
-          message: $t('model.error.model.pattern'),
         },
       ]"
     >

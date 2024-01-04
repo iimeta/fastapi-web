@@ -296,6 +296,7 @@
   const basePagination: Pagination = {
     current: 1,
     pageSize: 10,
+    showTotal: true,
   };
   const pagination = reactive({
     ...basePagination,
@@ -370,18 +371,18 @@
       label: t('model.dict.corp.OpenAI'),
       value: 'OpenAI',
     },
-    {
-      label: t('model.dict.corp.Baidu'),
-      value: 'Baidu',
-    },
-    {
-      label: t('model.dict.corp.Xfyun'),
-      value: 'Xfyun',
-    },
-    {
-      label: t('model.dict.corp.Aliyun'),
-      value: 'Aliyun',
-    },
+    // {
+    //   label: t('model.dict.corp.Baidu'),
+    //   value: 'Baidu',
+    // },
+    // {
+    //   label: t('model.dict.corp.Xfyun'),
+    //   value: 'Xfyun',
+    // },
+    // {
+    //   label: t('model.dict.corp.Aliyun'),
+    //   value: 'Aliyun',
+    // },
   ]);
   const typeOptions = computed<SelectOptionData[]>(() => [
     {

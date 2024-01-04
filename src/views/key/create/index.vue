@@ -10,7 +10,7 @@
     <a-spin :loading="loading" style="width: 100%">
       <a-card class="general-card">
         <template #title>
-          {{ $t('key.title') }}
+          {{ $t('key.title.create') }}
         </template>
         <div class="wrapper">
           <a-steps
