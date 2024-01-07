@@ -457,8 +457,8 @@
     },
     {
       title: t('app.columns.models'),
-      dataIndex: 'models',
-      slotName: 'models',
+      dataIndex: 'model_names',
+      slotName: 'model_names',
     },
     {
       title: t('app.columns.status'),

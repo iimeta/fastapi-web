@@ -26,6 +26,7 @@ export interface AppPage {
   app_id: number;
   name: string;
   models: string[];
+  model_names: string[];
   status: number;
   remark: string;
 }
@@ -84,6 +85,7 @@ export interface AppDetail {
   app_id: number;
   name: string;
   models: string[];
+  model_names: string[];
   is_limit_quota: boolean;
   quota: number;
   ip_whitelist: string[];

@@ -462,8 +462,8 @@
     },
     {
       title: t('key.columns.app.models'),
-      dataIndex: 'models',
-      slotName: 'models',
+      dataIndex: 'model_names',
+      slotName: 'model_names',
     },
     {
       title: t('key.columns.status'),

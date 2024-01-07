@@ -87,7 +87,7 @@
       data: [
         {
           label: t('app.detail.label.models'),
-          value: renderData?.models?.join('\n') || '-',
+          value: renderData?.model_names?.join('\n') || '-',
         },
         {
           label: t('app.detail.label.isLimitQuota'),

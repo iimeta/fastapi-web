@@ -21,9 +21,9 @@
         :placeholder="$t('key.placeholder.corp')"
       >
         <a-option value="OpenAI">OpenAI</a-option>
-        <a-option value="Baidu">百度</a-option>
+        <!-- <a-option value="Baidu">百度</a-option>
         <a-option value="Xfyun">科大讯飞</a-option>
-        <a-option value="Aliyun">阿里云</a-option>
+        <a-option value="Aliyun">阿里云</a-option> -->
       </a-select>
     </a-form-item>
     <a-form-item

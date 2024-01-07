@@ -25,6 +25,7 @@ export interface KeyPage {
   key: string;
   quota: number;
   models: string[];
+  model_names: string[];
   ip_whitelist: string[];
   ip_blacklist: string[];
   status: number;
@@ -71,6 +72,7 @@ export interface KeyDetail {
   key: string;
   quota: number;
   models: string[];
+  model_names: string[];
   ip_whitelist: string[];
   ip_blacklist: string[];
   status: number;

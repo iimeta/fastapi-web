@@ -360,8 +360,8 @@
     },
     {
       title: t('key.columns.models'),
-      dataIndex: 'models',
-      slotName: 'models',
+      dataIndex: 'model_names',
+      slotName: 'model_names',
     },
     {
       title: t('key.columns.status'),
