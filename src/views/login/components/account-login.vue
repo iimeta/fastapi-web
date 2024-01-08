@@ -42,7 +42,6 @@
   import { useStorage } from '@vueuse/core';
   import { useUserStore } from '@/store';
   import { ValidatedError } from '@arco-design/web-vue';
-  import { encryptByRsa } from '@/utils/encrypt';
   import { useRouter } from 'vue-router';
 
   const { proxy } = getCurrentInstance() as any;

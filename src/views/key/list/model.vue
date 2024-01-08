@@ -258,7 +258,10 @@
   } from '@/api/key';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
-  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import type {
+    TableColumnData,
+    TableRowSelection,
+  } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList } from '@/api/model';
@@ -270,7 +273,7 @@
     type: 'checkbox',
     showCheckedAll: true,
     onlyCurrent: false,
-  });
+  } as TableRowSelection);
 
   const models = ref<ModelList[]>([]);
 
