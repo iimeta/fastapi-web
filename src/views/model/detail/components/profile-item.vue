@@ -29,14 +29,7 @@
   import { computed, PropType } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { ModelDetail } from '@/api/model';
-
-  type BlockList = {
-    title: string;
-    data: {
-      label: string;
-      value: string;
-    }[];
-  }[];
+  import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
   const props = defineProps({
     type: {
@@ -53,7 +46,7 @@
     },
   });
   const { t } = useI18n();
-  const blockDataList = computed<BlockList>(() => {
+  const blockDataList = computed(() => {
     const { renderData } = props;
     const result = [];
     result.push({
@@ -87,7 +80,7 @@
           label: t('model.detail.label.updated_at'),
           value: renderData.updated_at,
         },
-      ],
+      ] as DescData[],
     });
 
     result.push({
@@ -121,7 +114,7 @@
           label: t('model.detail.label.isPublic'),
           value: t(`model.dict.is_public.${renderData.is_public}`),
         },
-      ],
+      ] as DescData[],
     });
 
     return result;

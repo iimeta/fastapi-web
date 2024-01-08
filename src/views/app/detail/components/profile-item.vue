@@ -29,14 +29,7 @@
   import { computed, PropType } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { AppDetail } from '@/api/app';
-
-  type BlockList = {
-    title: string;
-    data: {
-      label: string;
-      value: string;
-    }[];
-  }[];
+  import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
   const props = defineProps({
     type: {
@@ -52,8 +45,9 @@
       default: false,
     },
   });
+
   const { t } = useI18n();
-  const blockDataList = computed<BlockList>(() => {
+  const blockDataList = computed(() => {
     const { renderData } = props;
     const result = [];
     result.push({
@@ -79,7 +73,7 @@
           label: t('app.detail.label.updated_at'),
           value: renderData.updated_at,
         },
-      ],
+      ] as DescData[],
     });
 
     result.push({
@@ -107,7 +101,7 @@
           label: t('app.detail.label.ip_blacklist'),
           value: renderData?.ip_blacklist?.join('\n') || '-',
         },
-      ],
+      ] as DescData[],
     });
 
     return result;

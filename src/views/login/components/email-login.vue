@@ -45,7 +45,7 @@
   import { useRouter } from 'vue-router';
   import { ValidatedError } from '@arco-design/web-vue';
   import { useUserStore } from '@/store';
-  import { getCaptcha, login } from '@/api/user';
+  import { getCaptcha } from '@/api/user';
 
   const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
@@ -99,7 +99,7 @@
           email: form.value.email,
           channel: 'login',
         })
-          .then((res) => {
+          .then(() => {
             captchaLoading.value = false;
             captchaDisable.value = true;
             captchaBtnNameKey.value = `${t(

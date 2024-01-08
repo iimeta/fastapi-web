@@ -90,7 +90,7 @@ export function submitModelDelete(params: ModelDeleteParams) {
 }
 
 export interface ModelDetailParams {
-  id: string;
+  id: any;
 }
 
 export interface ModelDetail {

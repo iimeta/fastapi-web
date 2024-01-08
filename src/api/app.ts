@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { matrix } from 'echarts';
 import qs from 'query-string';
 
 export interface AppCreateBaseInfo {
@@ -10,7 +9,7 @@ export interface AppCreateBaseInfo {
 export interface AppCreateAdvanced {
   models: string[];
   is_limit_quota: boolean;
-  quota: number;
+  quota: any;
   ip_whitelist: string;
   ip_blacklist: string;
 }
@@ -77,7 +76,7 @@ export function submitAppDelete(params: AppDeleteParams) {
 }
 
 export interface AppDetailParams {
-  id: string;
+  id: any;
 }
 
 export interface AppDetail {
@@ -113,7 +112,7 @@ export interface AppUpdateBaseInfo {
 export interface AppUpdateAdvanced {
   models: string[];
   is_limit_quota: boolean;
-  quota: number;
+  quota: any;
   ip_whitelist: string;
   ip_blacklist: string;
 }
@@ -125,7 +124,7 @@ export function submitAppUpdate(data: AppUpdate) {
 }
 
 export interface AppCreateKeyParams {
-  app_id: number;
+  app_id: any;
 }
 
 export function submitAppCreateKey(data: AppCreateKeyParams) {

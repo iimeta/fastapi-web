@@ -20,7 +20,7 @@ export function submitKeyCreate(data: KeyCreate) {
 export interface KeyPage {
   id: string;
   type: number;
-  app_id: number;
+  app_id: any;
   corp: string;
   key: string;
   quota: number;
@@ -61,7 +61,7 @@ export function submitKeyDelete(params: KeyDeleteParams) {
 }
 
 export interface KeyDetailParams {
-  id: string;
+  id: any;
 }
 
 export interface KeyDetail {

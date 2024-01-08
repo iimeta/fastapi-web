@@ -242,9 +242,9 @@
         <a-modal
           v-model:visible="visible"
           :title="$t('app.form.title.keyConfig')"
+          :ok-text="$t('app.button.save')"
           @cancel="handleCancel"
           @before-ok="handleBeforeOk"
-          :okText="$t('app.button.save')"
         >
           <a-form ref="formRef" :model="formData">
             <a-form-item field="key" :label="$t('app.label.key')">
@@ -341,7 +341,10 @@
   } from '@/api/key';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
-  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import type {
+    TableColumnData,
+    TableRowSelection,
+  } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import {
@@ -360,7 +363,7 @@
     type: 'checkbox',
     showCheckedAll: true,
     onlyCurrent: false,
-  });
+  } as TableRowSelection);
 
   const apps = ref<AppList[]>([]);
 
@@ -633,7 +636,7 @@
     }
   };
 
-  const handleBeforeOk = async (done) => {
+  const handleBeforeOk = async (done: any) => {
     const res = await formRef.value?.validate();
     if (res) {
       visible.value = true;
