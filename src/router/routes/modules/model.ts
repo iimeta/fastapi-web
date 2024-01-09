@@ -19,7 +19,7 @@ const MODEL: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.model.list',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin'],
       },
     },
     {
@@ -29,7 +29,7 @@ const MODEL: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.model.create',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin'],
         hideInMenu: true,
       },
     },
@@ -40,7 +40,7 @@ const MODEL: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.model.update',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin'],
         hideInMenu: true,
       },
     },
@@ -51,7 +51,7 @@ const MODEL: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.model.detail',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin'],
         hideInMenu: true,
       },
     },

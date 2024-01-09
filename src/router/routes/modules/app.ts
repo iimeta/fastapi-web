@@ -19,7 +19,7 @@ const APP: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.app.list',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin', 'user'],
       },
     },
     {
@@ -29,7 +29,7 @@ const APP: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.app.create',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin', 'user'],
         hideInMenu: true,
       },
     },
@@ -40,7 +40,7 @@ const APP: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.app.update',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin', 'user'],
         hideInMenu: true,
       },
     },
@@ -51,7 +51,7 @@ const APP: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.app.detail',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin', 'user'],
         hideInMenu: true,
       },
     },

@@ -16,4 +16,8 @@ const clearToken = () => {
   localStorage.removeItem(TOKEN_KEY);
 };
 
-export { isLogin, getToken, setToken, clearToken };
+const clearRole = () => {
+  localStorage.removeItem('userRole');
+};
+
+export { isLogin, getToken, setToken, clearToken, clearRole };

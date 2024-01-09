@@ -19,7 +19,7 @@ const KEY: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.key.model.list',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin'],
       },
     },
     {
@@ -29,7 +29,7 @@ const KEY: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.key.app.list',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin', 'user'],
       },
     },
     {
@@ -39,7 +39,7 @@ const KEY: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.key.create',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin', 'user'],
         hideInMenu: true,
       },
     },
@@ -50,7 +50,7 @@ const KEY: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.key.update',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin', 'user'],
         hideInMenu: true,
       },
     },
@@ -61,7 +61,7 @@ const KEY: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.key.detail',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin', 'user'],
         hideInMenu: true,
       },
     },

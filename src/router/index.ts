@@ -23,6 +23,14 @@ const router = createRouter({
         requiresAuth: false,
       },
     },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('@/views/login/admin.vue'),
+      meta: {
+        requiresAuth: false,
+      },
+    },
     ...appRoutes,
     REDIRECT_MAIN,
     NOT_FOUND_ROUTE,

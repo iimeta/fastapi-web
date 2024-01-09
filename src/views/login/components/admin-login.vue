@@ -22,14 +22,6 @@
         allow-clear
       />
     </a-form-item>
-    <div class="remember-me">
-      <a-checkbox
-        :model-value="loginConfig.rememberMe"
-        @change="setRememberMe as any"
-      >
-        {{ $t('login.rememberMe') }}
-      </a-checkbox>
-    </div>
     <a-button class="btn" :loading="loading" type="primary" html-type="submit"
       >{{ $t('login.button') }}
     </a-button>
@@ -39,7 +31,6 @@
 <script lang="ts" setup>
   import { getCurrentInstance, ref, toRefs, reactive } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { useStorage } from '@vueuse/core';
   import { useUserStore } from '@/store';
   import { ValidatedError } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
@@ -49,16 +40,11 @@
   const router = useRouter();
   const userStore = useUserStore();
   const loading = ref(false);
-  const loginConfig = useStorage('login-config', {
-    rememberMe: true,
-    username: '',
-    password: '',
-  });
 
   const data = reactive({
     form: {
-      username: loginConfig.value.username,
-      password: loginConfig.value.password,
+      username: '',
+      password: '',
       captcha: '',
       uuid: '',
     },
@@ -96,10 +82,9 @@
       userStore
         .login({
           account: values.username,
-          // password: encryptByRsa(values.password) || '',
           password: values.password,
           terminal: 'web',
-          channel: 'user',
+          channel: 'admin',
           method: 'account',
         })
         .then(() => {
@@ -110,10 +95,7 @@
               ...othersQuery,
             },
           });
-          const { rememberMe } = loginConfig.value;
-          const { username } = values;
-          loginConfig.value.username = rememberMe ? username : '';
-          window.localStorage.setItem('userRole', 'user');
+          window.localStorage.setItem('userRole', 'admin');
           proxy.$message.success(t('login.success'));
         })
         .catch(() => {})
@@ -121,15 +103,6 @@
           loading.value = false;
         });
     }
-  };
-
-  /**
-   * 记住我
-   *
-   * @param value 是否记住我
-   */
-  const setRememberMe = (value: boolean) => {
-    loginConfig.value.rememberMe = value;
   };
 </script>
 
@@ -151,21 +124,6 @@
       border-color: var(--color-danger-light-4);
     }
 
-    .captcha {
-      width: 111px;
-      height: 36px;
-      margin: 0 0 0 5px;
-      cursor: pointer;
-    }
-
-    .remember-me {
-      display: flex;
-      justify-content: space-between;
-      .arco-checkbox {
-        padding-left: 0;
-      }
-    }
-
     .btn {
       border-radius: 4px;
       box-shadow: 0 0 0 1px #05f, 0 2px 1px rgba(0, 0, 0, 0.15);
@@ -173,7 +131,7 @@
       font-weight: 500;
       height: 40px;
       line-height: 22px;
-      margin: 20px 0 12px;
+      margin: 36px 0 12px;
       width: 100%;
     }
   }

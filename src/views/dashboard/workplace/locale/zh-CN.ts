@@ -1,6 +1,6 @@
 export default {
-  'menu.dashboard.workplace': '工作台',
-  'workplace.welcome': '欢迎回来！',
+  'menu.dashboard.workplace': '控制台',
+  'workplace.welcome': '欢迎回来',
   'workplace.balance': '余额（元）',
   'workplace.order.pending': '待支付',
   'workplace.order.pendingRenewal': '待续费订单',
@@ -28,10 +28,10 @@ export default {
   'workplace.loadMore': '加载更多',
   'workplace.viewMore': '查看更多',
   'workplace.contentData': '内容数据',
-  'workplace.popularContent': '线上热门内容',
+  'workplace.popularContent': '数据TOP5',
   'workplace.popularContent.text': '文本',
   'workplace.popularContent.image': '图片',
   'workplace.popularContent.video': '视频',
-  'workplace.categoriesPercent': '内容类型占比',
+  'workplace.categoriesPercent': '模型占比',
   'workplace.pecs': '个',
 };
