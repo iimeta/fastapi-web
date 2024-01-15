@@ -198,6 +198,16 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
       >
+        <template #quota="{ record }">
+          <span v-if="record.is_limit_quota">{{ record.quota }}</span>
+          <span v-else>{{ $t(`key.columns.quota.no_limit`) }}</span>
+        </template>
+        <template #model_names="{ record }">
+          <span v-if="record.model_names">{{
+            record.model_names.join(',')
+          }}</span>
+          <span v-else>{{ $t(`key.columns.app.models.no_limit`) }}</span>
+        </template>
         <template #type="{ record }">
           {{ $t(`key.dict.type.${record.type}`) }}
         </template>
@@ -472,11 +482,6 @@
       title: t('key.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
-    },
-    {
-      title: t('key.columns.remark'),
-      dataIndex: 'remark',
-      slotName: 'remark',
     },
     {
       title: t('key.columns.updated_at'),

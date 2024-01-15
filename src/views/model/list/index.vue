@@ -354,11 +354,6 @@
       slotName: 'status',
     },
     {
-      title: t('model.columns.remark'),
-      dataIndex: 'remark',
-      slotName: 'remark',
-    },
-    {
       title: t('model.columns.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',

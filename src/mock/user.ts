@@ -63,7 +63,7 @@ setupMock({
       return failResponseWrap(null, '账号或者密码错误', 50000);
     });
 
-    // 登出
+    // 退出
     Mock.mock(new RegExp('/api/user/logout'), () => {
       return successResponseWrap(null);
     });

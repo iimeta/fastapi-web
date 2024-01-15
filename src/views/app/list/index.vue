@@ -191,6 +191,10 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
       >
+        <template #quota="{ record }">
+          <span v-if="record.is_limit_quota">{{ record.quota }}</span>
+          <span v-else>{{ $t(`app.columns.quota.no_limit`) }}</span>
+        </template>
         <template #status="{ record }">
           <span v-if="record.status === 3" class="circle"></span>
           <span v-else class="circle pass"></span>
@@ -464,14 +468,14 @@
       slotName: 'model_names',
     },
     {
+      title: t('app.columns.quota'),
+      dataIndex: 'quota',
+      slotName: 'quota',
+    },
+    {
       title: t('app.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
-    },
-    {
-      title: t('app.columns.remark'),
-      dataIndex: 'remark',
-      slotName: 'remark',
     },
     {
       title: t('app.columns.updated_at'),

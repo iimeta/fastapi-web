@@ -10,7 +10,7 @@ export default function useUser() {
     const userRole = localStorage.getItem('userRole');
     await userStore.logout();
     const currentRoute = router.currentRoute.value;
-    Message.success('登出成功');
+    Message.success('退出成功');
 
     let routeName = logoutTo && typeof logoutTo === 'string' ? logoutTo : 'login';
     if (routeName === 'login' && userRole === 'admin') {

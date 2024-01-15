@@ -356,11 +356,11 @@
       dataIndex: 'key',
       slotName: 'key',
     },
-    {
-      title: t('key.columns.quota'),
-      dataIndex: 'quota',
-      slotName: 'quota',
-    },
+    // {
+    //   title: t('key.columns.quota'),
+    //   dataIndex: 'quota',
+    //   slotName: 'quota',
+    // },
     {
       title: t('key.columns.models'),
       dataIndex: 'model_names',
@@ -370,11 +370,6 @@
       title: t('key.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
-    },
-    {
-      title: t('key.columns.remark'),
-      dataIndex: 'remark',
-      slotName: 'remark',
     },
     {
       title: t('key.columns.updated_at'),

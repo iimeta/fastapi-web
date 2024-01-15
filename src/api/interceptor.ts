@@ -45,15 +45,11 @@ axios.interceptors.response.use(
         duration: 5 * 1000,
       });
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (
-        [50008, 50012, 50014].includes(res.code) &&
-        response.config.url !== '/api/user/info'
-      ) {
+      if ([50008, 50012, 50014, 401, 403].includes(res.code)) {
         Modal.error({
-          title: 'Confirm logout',
-          content:
-            'You have been logged out, you can cancel to stay on this page, or log in again',
-          okText: 'Re-Login',
+          title: '会话超时',
+          content: '会话超时, 请重新登录',
+          okText: '重新登录',
           async onOk() {
             const userStore = useUserStore();
 
@@ -67,10 +63,34 @@ axios.interceptors.response.use(
     return res;
   },
   (error) => {
+    let { message } = error.message;
+
+    if (error.response.status) {
+      message = '会话超时, 请重新登录';
+    }
+
     Message.error({
-      content: error.message || 'Request Error',
+      content: message || 'Request Error',
       duration: 5 * 1000,
     });
+
+    if (
+      [401, 403].includes(error.response.status) &&
+      error.config.url !== '/api/v1/user/info'
+    ) {
+      Modal.error({
+        title: '会话超时',
+        content: '会话超时, 请重新登录',
+        okText: '重新登录',
+        async onOk() {
+          const userStore = useUserStore();
+
+          await userStore.logout();
+          window.location.reload();
+        },
+      });
+    }
+
     return Promise.reject(error);
   }
 );
