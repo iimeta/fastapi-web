@@ -13,13 +13,57 @@ const USER: AppRouteRecordRaw = {
   },
   children: [
     {
+      path: 'list',
+      name: 'UserList',
+      component: () => import('@/views/user/list/index.vue'),
+      meta: {
+        locale: 'menu.user.list',
+        requiresAuth: true,
+        roles: ['admin'],
+      },
+    },
+    {
+      path: 'create',
+      name: 'UserCreate',
+      component: () => import('@/views/user/create/index.vue'),
+      meta: {
+        locale: 'menu.user.create',
+        requiresAuth: true,
+        roles: ['admin'],
+        hideInMenu: true,
+      },
+    },
+    {
+      path: 'update',
+      name: 'UserUpdate',
+      component: () => import('@/views/user/update/index.vue'),
+      meta: {
+        locale: 'menu.user.update',
+        requiresAuth: true,
+        roles: ['admin'],
+        hideInMenu: true,
+      },
+    },
+    {
+      path: 'detail',
+      name: 'UserDetail',
+      component: () => import('@/views/user/detail/index.vue'),
+      meta: {
+        locale: 'menu.user.detail',
+        requiresAuth: true,
+        roles: ['admin'],
+        hideInMenu: true,
+      },
+    },
+    {
       path: 'info',
       name: 'Info',
       component: () => import('@/views/user/info/index.vue'),
       meta: {
         locale: 'menu.user.info',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin', 'user'],
+        hideInMenu: true,
       },
     },
     {
@@ -29,10 +73,11 @@ const USER: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.user.setting',
         requiresAuth: true,
-        roles: ['*'],
+        roles: ['admin', 'user'],
+        hideInMenu: true,
       },
     },
   ],
 };
 
-// export default USER;
+export default USER;
