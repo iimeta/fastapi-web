@@ -63,20 +63,14 @@ export function forget(data: ForgetData) {
 }
 
 
-export interface UserCreateBaseInfo {
+export interface UserCreate {
   name: string;
+  account: string;
+  password: string;
+  terminal: string;
+  quota: any;
   remark: string;
 }
-
-export interface UserCreateAdvanced {
-  models: string[];
-  is_limit_quota: boolean;
-  quota: any;
-  ip_whitelist: string;
-  ip_blacklist: string;
-}
-
-export type UserCreate = UserCreateBaseInfo & UserCreateAdvanced;
 
 export function submitUserCreate(data: UserCreate) {
   return axios.post('/api/v1/user/create', data);

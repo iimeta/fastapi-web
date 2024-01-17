@@ -2,39 +2,119 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-apps />
+        <icon-user />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app.create') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.user') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.user.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card class="general-card">
         <template #title>
-          {{ $t('app.title.create') }}
+          {{ $t('user.title.create') }}
+          <div class="wrapper">
+            <a-form
+              ref="formRef"
+              :model="formData"
+              class="form"
+              :label-col-props="{ span: 6 }"
+              :wrapper-col-props="{ span: 18 }"
+            >
+              <a-form-item
+                field="name"
+                :label="$t('user.label.name')"
+                :rules="[
+                  {
+                    required: true,
+                    message: $t('user.error.name.required'),
+                  },
+                  {
+                    match: /^.{1,20}$/,
+                    message: $t('user.error.name.pattern'),
+                  },
+                ]"
+              >
+                <a-input
+                  v-model="formData.name"
+                  :placeholder="$t('user.placeholder.name')"
+                  allow-clear
+                />
+              </a-form-item>
+              <a-form-item
+                field="account"
+                :label="$t('user.label.account')"
+                :rules="[
+                  {
+                    required: true,
+                    message: $t('user.error.account.required'),
+                  },
+                ]"
+              >
+                <a-input
+                  v-model="formData.account"
+                  :placeholder="$t('user.placeholder.account')"
+                  allow-clear
+                />
+              </a-form-item>
+              <a-form-item
+                field="password"
+                :label="$t('user.label.password')"
+                :rules="[
+                  {
+                    required: true,
+                    message: $t('user.error.password.required'),
+                  },
+                  {
+                    match: /^.{6,}$/,
+                    message: $t('user.error.password.pattern'),
+                  },
+                ]"
+              >
+                <a-input
+                  v-model="formData.password"
+                  :placeholder="$t('user.placeholder.password')"
+                  allow-clear
+                />
+              </a-form-item>
+              <a-form-item field="quota" :label="$t('user.label.quota')">
+                <a-input-number
+                  v-model="formData.quota"
+                  :placeholder="$t('user.placeholder.quota')"
+                />
+              </a-form-item>
+              <a-form-item
+                field="remark"
+                :label="$t('user.label.remark')"
+                :rules="[
+                  {
+                    required: false,
+                  },
+                ]"
+              >
+                <a-textarea
+                  v-model="formData.remark"
+                  :placeholder="$t('user.placeholder.remark')"
+                />
+              </a-form-item>
+              <a-form-item>
+                <a-space>
+                  <a-button
+                    type="secondary"
+                    @click="
+                      $router.push({
+                        name: 'UserList',
+                      })
+                    "
+                  >
+                    {{ $t('user.button.cancel') }}
+                  </a-button>
+                  <a-button type="primary" @click="submitForm">
+                    {{ $t('user.button.submit') }}
+                  </a-button>
+                </a-space>
+              </a-form-item>
+            </a-form>
+          </div>
         </template>
-        <div class="wrapper">
-          <a-steps
-            v-model:current="step"
-            style="width: 580px"
-            line-less
-            class="steps"
-          >
-            <a-step :description="$t('app.subTitle.baseInfo')">
-              {{ $t('app.title.baseInfo') }}
-            </a-step>
-            <a-step :description="$t('app.subTitle.advanced')">
-              {{ $t('app.title.advanced') }}
-            </a-step>
-            <a-step :description="$t('app.subTitle.create.finish')">
-              {{ $t('app.title.create.finish') }}
-            </a-step>
-          </a-steps>
-          <keep-alive>
-            <BaseInfo v-if="step === 1" @change-step="changeStep" />
-            <Advanced v-else-if="step === 2" @change-step="changeStep" />
-            <Success v-else-if="step === 3" @change-step="changeStep" />
-          </keep-alive>
-        </div>
       </a-card>
     </a-spin>
   </div>
@@ -43,54 +123,44 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { submitAppCreate, AppCreate, AppCreateBaseInfo } from '@/api/app';
-  import BaseInfo from './components/base-info.vue';
-  import Advanced from './components/advanced.vue';
-  import Success from './components/success.vue';
+  import { submitUserCreate, UserCreate } from '@/api/user';
+  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
+  const formRef = ref<FormInstance>();
+  const formData = ref<UserCreate>({
+    name: '',
+    account: '',
+    password: '',
+    terminal: 'web',
+    quota: ref(),
+    remark: '',
+  });
 
   const { loading, setLoading } = useLoading(false);
-  const step = ref(1);
-  const submitApp = ref<AppCreate>({} as AppCreate);
   const submitForm = async () => {
-    setLoading(true);
-    try {
-      await submitAppCreate(submitApp.value); // The mock api default success
-      step.value = 3;
-      submitApp.value = {} as AppCreate; // init
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  const changeStep = (
-    direction: string | number,
-    model: AppCreateBaseInfo | AppCreate
-  ) => {
-    if (typeof direction === 'number') {
-      step.value = direction;
-      return;
-    }
-
-    if (direction === 'forward' || direction === 'submit') {
-      submitApp.value = {
-        ...submitApp.value,
-        ...model,
-      };
-      if (direction === 'submit') {
-        submitForm();
-        return;
+    const res = await formRef.value?.validate();
+    if (!res) {
+      setLoading(true);
+      try {
+        await submitUserCreate(formData.value).then(() => {
+          router.push({
+            name: 'UserList',
+          });
+        });
+      } catch (err) {
+        // you can report use errorHandler or other
+      } finally {
+        setLoading(false);
       }
-      step.value += 1;
-    } else if (direction === 'backward') {
-      step.value -= 1;
     }
   };
 </script>
 
 <script lang="ts">
   export default {
-    name: 'AppCreate',
+    name: 'UserCreate',
   };
 </script>
 
@@ -112,9 +182,6 @@
       }
     }
   }
-  .steps {
-    margin-bottom: 76px;
-  }
   .container-breadcrumb {
     margin: 16px 0;
     :deep(.arco-breadcrumb-item) {
@@ -123,5 +190,15 @@
         color: rgb(var(--gray-8));
       }
     }
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 64px 0;
+    background-color: var(--color-bg-2);
+  }
+  .form {
+    width: 500px;
   }
 </style>
