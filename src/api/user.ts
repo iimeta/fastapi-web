@@ -80,10 +80,12 @@ export interface UserPage {
   id: string;
   user_id: number;
   name: string;
+  email: string;
+  phone: string;
   models: string[];
   model_names: string[];
-  status: number;
   remark: string;
+  status: number;
 }
 export interface Paging {
   page: number;
@@ -177,4 +179,18 @@ export type UserUpdate = UserUpdateBaseInfo & UserUpdateAdvanced;
 
 export function submitUserUpdate(data: UserUpdate) {
   return axios.post('/api/v1/user/update', data);
+}
+
+export interface UserGrantQuotaParams {
+  user_id: any;
+}
+
+export interface UserGrantQuota {
+  id: string;
+  user_id: number;
+  quota: number;
+}
+
+export function submitUserGrantQuota(data: UserGrantQuota) {
+  return axios.post('/api/v1/user/grant/quota', data);
 }

@@ -18,10 +18,10 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="app_id" :label="$t('user.form.appId')">
+                <a-form-item field="user_id" :label="$t('user.form.userId')">
                   <a-input
-                    v-model="formModel.app_id"
-                    :placeholder="$t('user.form.appId.placeholder')"
+                    v-model="formModel.user_id"
+                    :placeholder="$t('user.form.userId.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -191,16 +191,19 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
       >
-        <template #quota="{ record }">
-          <span v-if="record.is_limit_quota">{{ record.quota }}</span>
-          <span v-else>{{ $t(`app.columns.quota.no_limit`) }}</span>
-        </template>
         <template #status="{ record }">
           <span v-if="record.status === 3" class="circle"></span>
           <span v-else class="circle pass"></span>
-          {{ $t(`app.dict.status.${record.status}`) }}
+          {{ $t(`user.dict.status.${record.status}`) }}
         </template>
         <template #operations="{ record }">
+          <a-button
+            type="text"
+            size="small"
+            @click="grantQuota({ user_id: `${record.user_id}` })"
+          >
+            {{ $t('user.columns.operations.grantQuota') }}
+          </a-button>
           <a-button
             type="text"
             size="small"
@@ -225,28 +228,9 @@
           >
             {{ $t('user.columns.operations.update') }}
           </a-button>
-          <a-button
-            type="text"
-            size="small"
-            @click="createKey({ app_id: `${record.app_id}` })"
-          >
-            {{ $t('user.columns.operations.createKey') }}
-          </a-button>
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              $router.push({
-                name: 'KeyAppList',
-                query: { app_id: `${record.app_id}` },
-              })
-            "
-          >
-            {{ $t('user.columns.operations.manageKey') }}
-          </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="appDelete({ id: `${record.id}` })"
+            @ok="userDelete({ id: `${record.id}` })"
           >
             <a-button type="text" size="small">
               {{ $t('user.columns.operations.delete') }}
@@ -257,27 +241,13 @@
       <template #extra>
         <a-modal
           v-model:visible="visible"
-          :title="$t('user.form.title.keyConfig')"
+          :title="$t('user.form.title.grantQuota')"
           :ok-text="$t('user.button.save')"
           @cancel="handleCancel"
           @before-ok="handleBeforeOk"
         >
           <a-form ref="formRef" :model="formData">
-            <a-form-item field="key" :label="$t('user.label.key')">
-              <a-input
-                v-model="formData.key"
-                :placeholder="$t('user.placeholder.key')"
-                readonly
-              />
-            </a-form-item>
             <a-form-item
-              field="is_limit_quota"
-              :label="$t('user.label.isLimitQuota')"
-            >
-              <a-switch v-model="formData.is_limit_quota" />
-            </a-form-item>
-            <a-form-item
-              v-if="formData.is_limit_quota"
               field="quota"
               :label="$t('user.label.quota')"
               :rules="[
@@ -291,48 +261,6 @@
                 v-model="formData.quota"
                 :placeholder="$t('user.placeholder.quota')"
                 :min="1"
-              />
-            </a-form-item>
-            <a-form-item field="models" :label="$t('user.label.models')">
-              <a-select
-                v-model="formData.models"
-                :placeholder="$t('user.placeholder.models')"
-                :max-tag-count="3"
-                multiple
-                allow-clear
-              >
-                <a-option
-                  v-for="item in models"
-                  :key="item.id"
-                  :value="item.id"
-                  :label="item.name"
-                />
-              </a-select>
-            </a-form-item>
-            <a-form-item
-              field="ip_whitelist"
-              :label="$t('user.label.ip_whitelist')"
-            >
-              <a-textarea
-                v-model="formData.ip_whitelist"
-                :placeholder="$t('user.placeholder.ip_whitelist')"
-                :auto-size="{ minRows: 5, maxRows: 10 }"
-              />
-            </a-form-item>
-            <a-form-item
-              field="ip_blacklist"
-              :label="$t('user.label.ip_blacklist')"
-            >
-              <a-textarea
-                v-model="formData.ip_blacklist"
-                :placeholder="$t('user.placeholder.ip_blacklist')"
-                :auto-size="{ minRows: 5, maxRows: 10 }"
-              />
-            </a-form-item>
-            <a-form-item field="remark" :label="$t('user.placeholder.remark')">
-              <a-textarea
-                v-model="formData.remark"
-                :placeholder="$t('user.placeholder.remark')"
               />
             </a-form-item>
           </a-form>
@@ -353,13 +281,10 @@
     UserPageParams,
     submitUserDelete,
     UserDeleteParams,
+    UserGrantQuotaParams,
+    submitUserGrantQuota,
+    UserGrantQuota,
   } from '@/api/user';
-  import {
-    submitAppCreateKey,
-    AppCreateKeyParams,
-    submitAppKeyConfig,
-    AppKeyConfig,
-  } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -406,7 +331,7 @@
 
   const generateFormModel = () => {
     return {
-      app_id: ref(),
+      user_id: ref(),
       name: '',
       models: [],
       key: '',
@@ -455,9 +380,9 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('user.columns.appId'),
-      dataIndex: 'app_id',
-      slotName: 'app_id',
+      title: t('user.columns.userId'),
+      dataIndex: 'user_id',
+      slotName: 'user_id',
     },
     {
       title: t('user.columns.name'),
@@ -465,9 +390,9 @@
       slotName: 'name',
     },
     {
-      title: t('user.columns.models'),
-      dataIndex: 'model_names',
-      slotName: 'model_names',
+      title: t('user.columns.email'),
+      dataIndex: 'email',
+      slotName: 'email',
     },
     {
       title: t('user.columns.quota'),
@@ -602,14 +527,12 @@
   const visible = ref(false);
 
   const formRef = ref<FormInstance>();
-  const formData = ref<AppKeyConfig>({} as AppKeyConfig);
+  const formData = ref<UserGrantQuota>({} as UserGrantQuota);
 
-  const createKey = async (params: AppCreateKeyParams) => {
+  const grantQuota = async (params: UserGrantQuotaParams) => {
     setLoading(true);
     try {
-      const { data } = await submitAppCreateKey(params);
-      formData.value.app_id = data.app_id;
-      formData.value.key = data.key;
+      formData.value.user_id = params.user_id;
       visible.value = true;
     } catch (err) {
       // you can report use errorHandler or other
@@ -628,9 +551,7 @@
 
     setLoading(true);
     try {
-      await submitAppKeyConfig(formData.value); // The mock api default success
-      navigator.clipboard.writeText(formData.value.key);
-      Message.success(t('user.success.key_config'));
+      await submitUserGrantQuota(formData.value); // The mock api default success
       done();
     } catch (err) {
       // you can report use errorHandler or other

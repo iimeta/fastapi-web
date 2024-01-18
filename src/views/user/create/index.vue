@@ -75,21 +75,22 @@
                   allow-clear
                 />
               </a-form-item>
-              <a-form-item field="quota" :label="$t('user.label.quota')">
+              <a-form-item
+                field="quota"
+                :label="$t('user.label.quota')"
+                :rules="[
+                  {
+                    required: true,
+                    message: $t('user.error.quota.required'),
+                  },
+                ]"
+              >
                 <a-input-number
                   v-model="formData.quota"
                   :placeholder="$t('user.placeholder.quota')"
                 />
               </a-form-item>
-              <a-form-item
-                field="remark"
-                :label="$t('user.label.remark')"
-                :rules="[
-                  {
-                    required: false,
-                  },
-                ]"
-              >
+              <a-form-item field="remark" :label="$t('user.label.remark')">
                 <a-textarea
                   v-model="formData.remark"
                   :placeholder="$t('user.placeholder.remark')"
