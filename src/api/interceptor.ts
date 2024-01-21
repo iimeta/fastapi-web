@@ -65,7 +65,7 @@ axios.interceptors.response.use(
   (error) => {
     let { message } = error.message;
 
-    if (error.response.status) {
+    if ([401, 403].includes(error.response.status)) {
       message = '会话超时, 请重新登录';
     }
 

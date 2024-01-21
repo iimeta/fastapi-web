@@ -260,7 +260,6 @@
               <a-input-number
                 v-model="formData.quota"
                 :placeholder="$t('user.placeholder.quota')"
-                :min="1"
               />
             </a-form-item>
           </a-form>
@@ -552,7 +551,9 @@
     setLoading(true);
     try {
       await submitUserGrantQuota(formData.value); // The mock api default success
+      Message.success(t('user.success.grantQuota'));
       done();
+      fetchData();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
