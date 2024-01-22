@@ -28,7 +28,7 @@
 <script lang="ts" setup>
   import { computed, PropType } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { AppDetail } from '@/api/app';
+  import { UserDetail } from '@/api/user';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
   const props = defineProps({
@@ -37,7 +37,7 @@
       default: '',
     },
     renderData: {
-      type: Object as PropType<AppDetail>,
+      type: Object as PropType<UserDetail>,
       required: true,
     },
     loading: {
@@ -51,55 +51,35 @@
     const { renderData } = props;
     const result = [];
     result.push({
-      title: t('app.detail.title.baseInfo'),
+      title: t('user.detail.title.baseInfo'),
       data: [
         {
-          label: t('app.detail.label.appId'),
-          value: renderData.app_id,
+          label: t('user.detail.label.userId'),
+          value: renderData.user_id,
         },
         {
-          label: t('app.detail.label.name'),
+          label: t('user.detail.label.name'),
           value: renderData.name,
         },
         {
-          label: t('app.detail.label.remark'),
+          label: t('user.detail.label.email'),
+          value: renderData.email,
+        },
+        {
+          label: t('user.detail.label.quota'),
+          value: renderData.quota,
+        },
+        {
+          label: t('user.detail.label.remark'),
           value: renderData?.remark || '-',
         },
         {
-          label: t('app.detail.label.created_at'),
+          label: t('user.detail.label.created_at'),
           value: renderData.created_at,
         },
         {
-          label: t('app.detail.label.updated_at'),
+          label: t('user.detail.label.updated_at'),
           value: renderData.updated_at,
-        },
-      ] as DescData[],
-    });
-
-    result.push({
-      title: t('app.detail.title.advanced'),
-      data: [
-        {
-          label: t('app.detail.label.models'),
-          value: renderData?.model_names?.join('\n') || '-',
-        },
-        {
-          label: t('app.detail.label.isLimitQuota'),
-          value: t(
-            `app.dict.isLimitQuota.${renderData?.is_limit_quota || false}`
-          ),
-        },
-        {
-          label: t('app.detail.label.quota'),
-          value: renderData?.quota || '-',
-        },
-        {
-          label: t('app.detail.label.ip_whitelist'),
-          value: renderData?.ip_whitelist?.join('\n') || '-',
-        },
-        {
-          label: t('app.detail.label.ip_blacklist'),
-          value: renderData?.ip_blacklist?.join('\n') || '-',
         },
       ] as DescData[],
     });

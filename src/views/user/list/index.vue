@@ -19,9 +19,10 @@
             <a-row :gutter="16">
               <a-col :span="8">
                 <a-form-item field="user_id" :label="$t('user.form.userId')">
-                  <a-input
+                  <a-input-number
                     v-model="formModel.user_id"
                     :placeholder="$t('user.form.userId.placeholder')"
+                    :min="1"
                     allow-clear
                   />
                 </a-form-item>
@@ -36,22 +37,12 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="models" :label="$t('user.form.models')">
-                  <a-select
-                    v-model="formModel.models"
-                    :placeholder="$t('user.form.selectDefault')"
-                    :max-tag-count="3"
-                    multiple
-                    allow-search
+                <a-form-item field="email" :label="$t('user.form.email')">
+                  <a-input
+                    v-model="formModel.email"
+                    :placeholder="$t('user.form.email.placeholder')"
                     allow-clear
-                  >
-                    <a-option
-                      v-for="item in models"
-                      :key="item.id"
-                      :value="item.id"
-                      :label="item.name"
-                    />
-                  </a-select>
+                  />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
@@ -216,7 +207,7 @@
           >
             {{ $t('user.columns.operations.view') }}
           </a-button>
-          <a-button
+          <!-- <a-button
             type="text"
             size="small"
             @click="
@@ -227,7 +218,7 @@
             "
           >
             {{ $t('user.columns.operations.update') }}
-          </a-button>
+          </a-button> -->
           <a-popconfirm
             content="你确定要删除吗?"
             @ok="userDelete({ id: `${record.id}` })"
@@ -292,7 +283,6 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { queryModelList, ModelList } from '@/api/model';
   import { Message } from '@arco-design/web-vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -303,18 +293,6 @@
     showCheckedAll: true,
     onlyCurrent: false,
   } as TableRowSelection);
-
-  const models = ref<ModelList[]>([]);
-
-  const getModelList = async () => {
-    try {
-      const { data } = await queryModelList();
-      models.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelList();
 
   const userDelete = async (params: UserDeleteParams) => {
     setLoading(true);
@@ -332,9 +310,8 @@
     return {
       user_id: ref(),
       name: '',
-      models: [],
+      email: '',
       key: '',
-      type: ref(),
       status: ref(),
       created_at: [],
     };

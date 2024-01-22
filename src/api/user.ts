@@ -82,8 +82,6 @@ export interface UserPage {
   name: string;
   email: string;
   phone: string;
-  models: string[];
-  model_names: string[];
   remark: string;
   status: number;
 }
@@ -141,12 +139,9 @@ export interface UserDetail {
   id: string;
   user_id: number;
   name: string;
-  models: string[];
-  model_names: string[];
-  is_limit_quota: boolean;
+  phone: string;
+  email: string;
   quota: number;
-  ip_whitelist: string[];
-  ip_blacklist: string[];
   status: number;
   remark: string;
   created_at: string;

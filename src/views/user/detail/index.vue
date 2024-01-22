@@ -2,10 +2,10 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-apps />
+        <icon-user />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app.detail') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.user') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.user.detail') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-space direction="vertical" :size="16" fill>
       <a-card class="general-card">
@@ -19,19 +19,19 @@
   import { ref } from 'vue';
   import { useRoute } from 'vue-router';
   import useLoading from '@/hooks/loading';
-  import { queryAppDetail, AppDetailParams, AppDetail } from '@/api/app';
+  import { queryUserDetail, UserDetailParams, UserDetail } from '@/api/user';
   import ProfileItem from './components/profile-item.vue';
 
   const { loading, setLoading } = useLoading(true);
   const route = useRoute();
-  const currentData = ref<AppDetail>({} as AppDetail);
+  const currentData = ref<UserDetail>({} as UserDetail);
 
-  const getAppDetail = async (
-    params: AppDetailParams = { id: route.query.id }
+  const getUserDetail = async (
+    params: UserDetailParams = { id: route.query.id }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryAppDetail(params);
+      const { data } = await queryUserDetail(params);
       currentData.value = data;
     } catch (err) {
       // you can report use errorHandler or other
@@ -39,12 +39,12 @@
       setLoading(false);
     }
   };
-  getAppDetail();
+  getUserDetail();
 </script>
 
 <script lang="ts">
   export default {
-    name: 'AppDetail',
+    name: 'UserDetail',
   };
 </script>
 

@@ -11,111 +11,111 @@
       <a-card class="general-card">
         <template #title>
           {{ $t('user.title.create') }}
-          <div class="wrapper">
-            <a-form
-              ref="formRef"
-              :model="formData"
-              class="form"
-              :label-col-props="{ span: 6 }"
-              :wrapper-col-props="{ span: 18 }"
-            >
-              <a-form-item
-                field="name"
-                :label="$t('user.label.name')"
-                :rules="[
-                  {
-                    required: true,
-                    message: $t('user.error.name.required'),
-                  },
-                  {
-                    match: /^.{1,20}$/,
-                    message: $t('user.error.name.pattern'),
-                  },
-                ]"
-              >
-                <a-input
-                  v-model="formData.name"
-                  :placeholder="$t('user.placeholder.name')"
-                  allow-clear
-                />
-              </a-form-item>
-              <a-form-item
-                field="account"
-                :label="$t('user.label.account')"
-                :rules="[
-                  {
-                    required: true,
-                    message: $t('user.error.account.required'),
-                  },
-                ]"
-              >
-                <a-input
-                  v-model="formData.account"
-                  :placeholder="$t('user.placeholder.account')"
-                  allow-clear
-                />
-              </a-form-item>
-              <a-form-item
-                field="password"
-                :label="$t('user.label.password')"
-                :rules="[
-                  {
-                    required: true,
-                    message: $t('user.error.password.required'),
-                  },
-                  {
-                    match: /^.{6,}$/,
-                    message: $t('user.error.password.pattern'),
-                  },
-                ]"
-              >
-                <a-input
-                  v-model="formData.password"
-                  :placeholder="$t('user.placeholder.password')"
-                  allow-clear
-                />
-              </a-form-item>
-              <a-form-item
-                field="quota"
-                :label="$t('user.label.quota')"
-                :rules="[
-                  {
-                    required: true,
-                    message: $t('user.error.quota.required'),
-                  },
-                ]"
-              >
-                <a-input-number
-                  v-model="formData.quota"
-                  :placeholder="$t('user.placeholder.quota')"
-                />
-              </a-form-item>
-              <a-form-item field="remark" :label="$t('user.label.remark')">
-                <a-textarea
-                  v-model="formData.remark"
-                  :placeholder="$t('user.placeholder.remark')"
-                />
-              </a-form-item>
-              <a-form-item>
-                <a-space>
-                  <a-button
-                    type="secondary"
-                    @click="
-                      $router.push({
-                        name: 'UserList',
-                      })
-                    "
-                  >
-                    {{ $t('user.button.cancel') }}
-                  </a-button>
-                  <a-button type="primary" @click="submitForm">
-                    {{ $t('user.button.submit') }}
-                  </a-button>
-                </a-space>
-              </a-form-item>
-            </a-form>
-          </div>
         </template>
+        <div class="wrapper">
+          <a-form
+            ref="formRef"
+            :model="formData"
+            class="form"
+            :label-col-props="{ span: 6 }"
+            :wrapper-col-props="{ span: 18 }"
+          >
+            <a-form-item
+              field="name"
+              :label="$t('user.label.name')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('user.error.name.required'),
+                },
+                {
+                  match: /^.{1,20}$/,
+                  message: $t('user.error.name.pattern'),
+                },
+              ]"
+            >
+              <a-input
+                v-model="formData.name"
+                :placeholder="$t('user.placeholder.name')"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              field="account"
+              :label="$t('user.label.account')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('user.error.account.required'),
+                },
+              ]"
+            >
+              <a-input
+                v-model="formData.account"
+                :placeholder="$t('user.placeholder.account')"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              field="password"
+              :label="$t('user.label.password')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('user.error.password.required'),
+                },
+                {
+                  match: /^.{6,}$/,
+                  message: $t('user.error.password.pattern'),
+                },
+              ]"
+            >
+              <a-input
+                v-model="formData.password"
+                :placeholder="$t('user.placeholder.password')"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              field="quota"
+              :label="$t('user.label.quota')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('user.error.quota.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.quota"
+                :placeholder="$t('user.placeholder.quota')"
+              />
+            </a-form-item>
+            <a-form-item field="remark" :label="$t('user.label.remark')">
+              <a-textarea
+                v-model="formData.remark"
+                :placeholder="$t('user.placeholder.remark')"
+              />
+            </a-form-item>
+            <a-form-item>
+              <a-space>
+                <a-button
+                  type="secondary"
+                  @click="
+                    $router.push({
+                      name: 'UserList',
+                    })
+                  "
+                >
+                  {{ $t('user.button.cancel') }}
+                </a-button>
+                <a-button type="primary" @click="submitForm">
+                  {{ $t('user.button.submit') }}
+                </a-button>
+              </a-space>
+            </a-form-item>
+          </a-form>
+        </div>
       </a-card>
     </a-spin>
   </div>
