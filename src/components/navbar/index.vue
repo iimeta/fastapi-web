@@ -2,12 +2,9 @@
   <div class="navbar">
     <div class="left-side">
       <a-space>
-        <img
-          alt="logo"
-          src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/dfdba5317c0c20ce20e64fac803d52bc.svg~tplv-49unhts6dw-image.image"
-        />
+        <img alt="logo" class="logo" src="https://fastapi.ai/logo.png" />
         <a-typography-title
-          :style="{ margin: 0, fontSize: '18px' }"
+          :style="{ margin: 0, fontSize: '24px' }"
           :heading="5"
         >
           智元 Fast API
@@ -263,6 +260,10 @@
 </script>
 
 <style scoped lang="less">
+  .logo {
+    width: 32px;
+    height: 32px;
+  }
   .navbar {
     display: flex;
     justify-content: space-between;

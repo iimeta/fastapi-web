@@ -1,10 +1,7 @@
 <template>
   <div class="root">
     <div class="logo">
-      <img
-        alt="logo"
-        src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/dfdba5317c0c20ce20e64fac803d52bc.svg~tplv-49unhts6dw-image.image"
-      />
+      <img alt="logo" src="https://fastapi.ai/logo.png" />
       <div class="logo-text">智元 Fast API</div>
     </div>
     <div class="container">
@@ -260,17 +257,21 @@
   }
   .logo {
     position: fixed;
-    top: 24px;
-    left: 22px;
+    top: 20px;
+    left: 20px;
     z-index: 1;
     display: inline-flex;
     align-items: center;
 
     &-text {
-      margin-right: 4px;
-      margin-left: 4px;
       // color: var(--color-fill-1);
-      font-size: 20px;
+      font-size: 24px;
+    }
+
+    > img {
+      width: 32px;
+      height: 32px;
+      margin-right: 8px;
     }
   }
   .footer {
