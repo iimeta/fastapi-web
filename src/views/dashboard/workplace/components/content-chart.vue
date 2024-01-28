@@ -194,7 +194,7 @@
       setLoading(false);
     }
   };
-  fetchData();
+  // fetchData();
 </script>
 
 <style scoped lang="less"></style>

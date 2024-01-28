@@ -24,11 +24,9 @@
 
 <script lang="ts" setup>
   const links = [
-    { text: 'workplace.contentManagement', icon: 'icon-file' },
-    { text: 'workplace.contentStatistical', icon: 'icon-storage' },
+    { text: 'workplace.appManagement', icon: 'icon-apps' },
+    { text: 'workplace.keyManagement', icon: 'icon-safe' },
     { text: 'workplace.advanced', icon: 'icon-settings' },
-    { text: 'workplace.onlinePromotion', icon: 'icon-mobile' },
-    { text: 'workplace.contentPutIn', icon: 'icon-fire' },
   ];
 </script>
 
