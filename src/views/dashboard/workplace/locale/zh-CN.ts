@@ -18,7 +18,9 @@ export default {
   'workplace.docs.userGuide': '使用指南',
   'workplace.docs.workflow': '接入流程',
   'workplace.docs.interfaceDocs': '接口文档',
-  'workplace.contentManagement': '内容管理',
+  'workplace.appManagement': '应用管理',
+  'workplace.modelManagement': '模型管理',
+  'workplace.keyManagement': '密钥管理',
   'workplace.contentStatistical': '内容分析',
   'workplace.advanced': '高级管理',
   'workplace.onlinePromotion': '线上推广',
@@ -38,4 +40,6 @@ export default {
   'workplace.popularContent.video': '视频',
   'workplace.categoriesPercent': '模型占比',
   'workplace.pecs': '个',
+  'workplace.expense': '费用',
+  'workplace.current.quota': '当前额度(token)',
 };

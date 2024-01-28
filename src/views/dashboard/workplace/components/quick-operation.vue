@@ -9,7 +9,18 @@
       <a-link>{{ $t('workplace.quickOperation.setup') }}</a-link>
     </template>
     <a-row :gutter="8">
-      <a-col v-for="link in links" :key="link.text" :span="8" class="wrapper">
+      <a-col
+        v-for="link in links"
+        :key="link.text"
+        v-permission="link.permission"
+        :span="8"
+        class="wrapper"
+        @click="
+          $router.push({
+            name: link.router,
+          })
+        "
+      >
         <div class="icon">
           <component :is="link.icon" />
         </div>
@@ -24,11 +35,35 @@
 
 <script lang="ts" setup>
   const links = [
-    { text: 'workplace.contentManagement', icon: 'icon-file' },
-    { text: 'workplace.contentStatistical', icon: 'icon-storage' },
-    { text: 'workplace.advanced', icon: 'icon-settings' },
-    { text: 'workplace.onlinePromotion', icon: 'icon-mobile' },
-    { text: 'workplace.contentPutIn', icon: 'icon-fire' },
+    {
+      text: 'workplace.appManagement',
+      icon: 'icon-apps',
+      router: 'AppList',
+      permission: ['user'],
+    },
+    {
+      text: 'workplace.modelManagement',
+      icon: 'icon-common',
+      router: 'ModelList',
+      permission: ['admin'],
+    },
+    {
+      text: 'workplace.keyManagement',
+      icon: 'icon-safe',
+      router: 'KeyAppList',
+      permission: ['user'],
+    },
+    {
+      text: 'workplace.keyManagement',
+      icon: 'icon-safe',
+      router: 'KeyModelList',
+      permission: ['admin'],
+    },
+    {
+      text: 'workplace.advanced',
+      icon: 'icon-settings',
+      permission: ['user', 'admin'],
+    },
   ];
 </script>
 
