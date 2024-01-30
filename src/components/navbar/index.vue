@@ -147,7 +147,7 @@
             :size="32"
             :style="{ marginRight: '8px', cursor: 'pointer' }"
           >
-            <img alt="avatar" :src="avatar" />
+            <img alt="avatar" :src="avatar || 'https://fastapi.ai/logo.png'" />
           </a-avatar>
           <template #content>
             <!-- <a-doption>
