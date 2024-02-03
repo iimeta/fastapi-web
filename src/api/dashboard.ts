@@ -12,14 +12,17 @@ export function queryPopularList(params: { type: string }) {
   return axios.get<TableData[]>('/api/popular/list', { params });
 }
 
-
-export interface ContentDataRecord {
-  x: string;
-  y: number;
+export interface CallData {
+  date: string;
+  count: number;
 }
 
-export function queryContentData() {
-  return axios.get<ContentDataRecord[]>('/api/v1/dashboard/base/data');
+export interface CallDataRes {
+  items: CallData[];
+}
+
+export function queryCallData() {
+  return axios.get<CallDataRes>('/api/v1/dashboard/call/data');
 }
 
 export interface BaseDataRecord {

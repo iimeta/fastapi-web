@@ -7,8 +7,11 @@
   >
     <div>
       <div>
-        <div>{{ $t('workplace.current.quota') }}</div>
-        <div class="quota">{{ expense.quota }}</div>
+        <a-statistic
+          :title="$t('workplace.current.quota')"
+          :value="expense.quota"
+          show-group-separator
+        />
       </div>
     </div>
   </a-card>

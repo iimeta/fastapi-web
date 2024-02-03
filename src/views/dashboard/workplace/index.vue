@@ -4,7 +4,7 @@
       <div class="panel">
         <Banner />
         <DataPanel />
-        <ContentChart />
+        <DataChart />
       </div>
       <!-- <a-grid :cols="24" :col-gap="16" :row-gap="16" style="margin-top: 16px">
         <a-grid-item
@@ -54,7 +54,7 @@
 <script lang="ts" setup>
   import Banner from './components/banner.vue';
   import DataPanel from './components/data-panel.vue';
-  import ContentChart from './components/content-chart.vue';
+  import DataChart from './components/data-chart.vue';
   // import PopularContent from './components/popular-content.vue';
   // import CategoriesPercent from './components/categories-percent.vue';
   // import RecentlyVisited from './components/recently-visited.vue';

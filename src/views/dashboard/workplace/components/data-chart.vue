@@ -11,7 +11,7 @@
       <template #extra>
         <a-link>{{ $t('workplace.viewMore') }}</a-link>
       </template>
-      <Chart height="289px" :option="chartOption" />
+      <Chart height="297px" :option="chartOption" />
     </a-card>
   </a-spin>
 </template>
@@ -20,7 +20,7 @@
   import { ref } from 'vue';
   import { graphic } from 'echarts';
   import useLoading from '@/hooks/loading';
-  import { queryContentData, ContentDataRecord } from '@/api/dashboard';
+  import { queryCallData, CallData } from '@/api/dashboard';
   import useChartOption from '@/hooks/chart-option';
   import { ToolTipFormatterParams } from '@/types/echarts';
   import { AnyObject } from '@/types/global';
@@ -42,13 +42,13 @@
   const xAxis = ref<string[]>([]);
   const chartsData = ref<number[]>([]);
   const graphicElements = ref([
-    graphicFactory({ left: '2.6%' }),
+    graphicFactory({ left: '5%' }),
     graphicFactory({ right: 0 }),
   ]);
   const { chartOption } = useChartOption(() => {
     return {
       grid: {
-        left: '2.6%',
+        left: '5%',
         right: '0',
         top: '10',
         bottom: '30',
@@ -98,8 +98,19 @@
         },
         axisLabel: {
           formatter(value: any, idx: number) {
-            if (idx === 0) return value;
-            return `${value}k`;
+            if (idx === 0) {
+              return value;
+            }
+
+            if (value >= 10000) {
+              return `${value / 10000}w`;
+            }
+
+            if (value >= 1000) {
+              return `${value / 1000}k`;
+            }
+
+            return `${value}`;
           },
         },
         splitLine: {
@@ -116,9 +127,7 @@
           const [firstElement] = params as ToolTipFormatterParams[];
           return `<div>
             <p class="tooltip-title">${firstElement.axisValueLabel}</p>
-            <div class="content-panel"><span>总内容量</span><span class="tooltip-value">${(
-              Number(firstElement.value) * 10000
-            ).toLocaleString()}</span></div>
+            <div class="content-panel"><span>调用数</span><span class="tooltip-value">${firstElement.value.toLocaleString()}</span></div>
           </div>`;
         },
         className: 'echarts-tooltip-diy',
@@ -177,15 +186,15 @@
   const fetchData = async () => {
     setLoading(true);
     try {
-      const { data: chartData } = await queryContentData();
-      chartData.forEach((el: ContentDataRecord, idx: number) => {
-        xAxis.value.push(el.x);
-        chartsData.value.push(el.y);
+      const { data: chartData } = await queryCallData();
+      chartData.items.forEach((el: CallData, idx: number) => {
+        xAxis.value.push(el.date);
+        chartsData.value.push(el.count);
         if (idx === 0) {
-          graphicElements.value[0].style.text = el.x;
+          graphicElements.value[0].style.text = el.date;
         }
-        if (idx === chartData.length - 1) {
-          graphicElements.value[1].style.text = el.x;
+        if (idx === chartData.items.length - 1) {
+          graphicElements.value[1].style.text = el.date;
         }
       });
     } catch (err) {
@@ -194,7 +203,7 @@
       setLoading(false);
     }
   };
-  // fetchData();
+  fetchData();
 </script>
 
 <style scoped lang="less"></style>
