@@ -7,11 +7,12 @@
         paddingTop: '20px',
       }"
       :title="$t('workplace.callData')"
+      :bordered="false"
     >
       <template #extra>
         <a-link>{{ $t('workplace.viewMore') }}</a-link>
       </template>
-      <Chart height="297px" :option="chartOption" />
+      <Chart height="406px" :option="chartOption" />
     </a-card>
   </a-spin>
 </template>
@@ -49,7 +50,7 @@
     return {
       grid: {
         left: '5%',
-        right: '0',
+        right: '8',
         top: '10',
         bottom: '30',
       },

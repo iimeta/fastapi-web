@@ -3,6 +3,7 @@
     class="general-card"
     :title="$t('userSetting.certification.title.enterprise')"
     :header-style="{ padding: '0px 20px 16px 20px' }"
+    :bordered="false"
   >
     <template #extra>
       <a-link>{{ $t('userSetting.certification.extra.enterprise') }}</a-link>

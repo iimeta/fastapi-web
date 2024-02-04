@@ -8,7 +8,7 @@
       <a-breadcrumb-item>{{ $t('menu.key.detail') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-space direction="vertical" :size="16" fill>
-      <a-card class="general-card">
+      <a-card class="general-card" :bordered="false">
         <ProfileItem :loading="loading" :render-data="currentData" />
       </a-card>
     </a-space>

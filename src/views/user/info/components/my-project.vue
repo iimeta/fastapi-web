@@ -1,5 +1,9 @@
 <template>
-  <a-card class="general-card" :title="$t('userInfo.title.myProject')">
+  <a-card
+    class="general-card"
+    :title="$t('userInfo.title.myProject')"
+    :bordered="false"
+  >
     <template #extra>
       <a-link>{{ $t('userInfo.showMore') }}</a-link>
     </template>
@@ -15,7 +19,7 @@
         :xxl="8"
         class="my-project-item"
       >
-        <a-card>
+        <a-card :bordered="false">
           <a-skeleton v-if="loading" :loading="loading" :animation="true">
             <a-skeleton-line :rows="3" />
           </a-skeleton>

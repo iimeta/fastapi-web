@@ -11,7 +11,7 @@ export default {
   'workplace.modelKey': '模型密钥数',
   'workplace.user': '用户数',
   'workplace.todayUser': '今日新增用户数',
-  'workplace.apiCall': '调用数',
+  'workplace.call': '调用数',
   'workplace.minute': '分钟',
   'workplace.docs': '帮助文档',
   'workplace.docs.productOverview': '产品概要',
@@ -40,6 +40,7 @@ export default {
   'workplace.popularContent.video': '视频',
   'workplace.categoriesPercent': '模型占比',
   'workplace.pecs': '个',
+  'workplace.author': '作者',
   'workplace.expense': '费用',
   'workplace.current.quota': '当前额度(token)',
 };

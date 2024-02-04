@@ -4,6 +4,7 @@
     :title="$t('workplace.recently.visited')"
     :header-style="{ paddingBottom: '0' }"
     :body-style="{ paddingTop: '26px' }"
+    :bordered="false"
   >
     <div style="margin-bottom: -1rem">
       <a-row :gutter="8">

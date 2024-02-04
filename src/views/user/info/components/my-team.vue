@@ -4,6 +4,7 @@
     :title="$t('userInfo.tab.title.team')"
     :header-style="{ paddingBottom: '18px' }"
     :body-style="{ paddingBottom: '12px' }"
+    :bordered="false"
   >
     <a-list :bordered="false">
       <a-list-item

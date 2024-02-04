@@ -4,7 +4,8 @@
     :title="$t('workplace.docs')"
     :header-style="{ paddingBottom: 0 }"
     :body-style="{ paddingTop: 0 }"
-    style="height: 166px"
+    style="height: 153px"
+    :bordered="false"
   >
     <template #extra>
       <a-link>{{ $t('workplace.viewMore') }}</a-link>

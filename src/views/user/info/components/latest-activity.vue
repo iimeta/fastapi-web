@@ -1,5 +1,9 @@
 <template>
-  <a-card class="general-card" :title="$t('userInfo.title.latestActivity')">
+  <a-card
+    class="general-card"
+    :title="$t('userInfo.title.latestActivity')"
+    :bordered="false"
+  >
     <template #extra>
       <a-link>{{ $t('userInfo.viewAll') }}</a-link>
     </template>

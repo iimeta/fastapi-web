@@ -4,6 +4,7 @@
     :title="$t('workplace.quick.operation')"
     :header-style="{ paddingBottom: '0' }"
     :body-style="{ padding: '24px 20px 0 20px' }"
+    :bordered="false"
   >
     <template #extra>
       <a-link>{{ $t('workplace.quickOperation.setup') }}</a-link>
@@ -29,7 +30,7 @@
         </a-typography-paragraph>
       </a-col>
     </a-row>
-    <a-divider class="split-line" style="margin: 0" />
+    <!-- <a-divider class="split-line" style="margin: 0" /> -->
   </a-card>
 </template>
 

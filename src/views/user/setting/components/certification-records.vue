@@ -3,6 +3,7 @@
     class="general-card"
     :title="$t('userSetting.certification.title.record')"
     :header-style="{ border: 'none' }"
+    :bordered="false"
   >
     <a-table v-if="renderData.length" :data="renderData">
       <template #columns>

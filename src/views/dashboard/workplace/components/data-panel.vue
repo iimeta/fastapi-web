@@ -8,24 +8,38 @@
         <a-avatar :size="54" class="col-avatar">
           <img
             alt="avatar"
+            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/c8b36e26d2b9bb5dbf9b74dd6d7345af.svg~tplv-49unhts6dw-image.image"
+          />
+        </a-avatar>
+        <a-statistic
+          :title="$t('workplace.call')"
+          :value="baseData.call"
+          show-group-separator
+        >
+        </a-statistic>
+      </a-space>
+    </a-grid-item>
+    <a-grid-item
+      class="panel-col"
+      :span="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 6 }"
+    >
+      <a-space>
+        <a-avatar :size="54" class="col-avatar">
+          <img
+            alt="avatar"
             src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/288b89194e657603ff40db39e8072640.svg~tplv-49unhts6dw-image.image"
           />
         </a-avatar>
         <a-statistic
           :title="$t('workplace.app')"
-          :value="373.5"
-          :precision="1"
-          :value-from="0"
-          animation
+          :value="baseData.app"
           show-group-separator
         >
-          <template #suffix>
-            <span class="unit">{{ $t('workplace.pecs') }}</span>
-          </template>
         </a-statistic>
       </a-space>
     </a-grid-item>
     <a-grid-item
+      v-permission="['admin']"
       class="panel-col"
       :span="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 6 }"
     >
@@ -38,39 +52,9 @@
         </a-avatar>
         <a-statistic
           :title="$t('workplace.todayApp')"
-          :value="373.5"
-          :precision="1"
-          :value-from="0"
-          animation
+          :value="baseData.today_app"
           show-group-separator
         >
-          <template #suffix>
-            W+ <span class="unit">{{ $t('workplace.pecs') }}</span>
-          </template>
-        </a-statistic>
-      </a-space>
-    </a-grid-item>
-    <a-grid-item
-      class="panel-col"
-      :span="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 6 }"
-    >
-      <a-space>
-        <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/fdc66b07224cdf18843c6076c2587eb5.svg~tplv-49unhts6dw-image.image"
-          />
-        </a-avatar>
-        <a-statistic
-          :title="$t('workplace.model')"
-          :value="368"
-          :value-from="0"
-          animation
-          show-group-separator
-        >
-          <template #suffix>
-            <span class="unit">{{ $t('workplace.pecs') }}</span>
-          </template>
         </a-statistic>
       </a-space>
     </a-grid-item>
@@ -88,45 +72,17 @@
         </a-avatar>
         <a-statistic
           :title="$t('workplace.appKey')"
-          :value="8874"
-          :value-from="0"
-          animation
+          :value="baseData.app_key"
           show-group-separator
         >
-          <template #suffix>
-            <span class="unit">{{ $t('workplace.pecs') }}</span>
-          </template>
         </a-statistic>
       </a-space>
     </a-grid-item>
-    <a-grid-item :span="24">
+    <a-grid-item v-permission="['admin']" :span="24">
       <a-divider class="panel-border" />
     </a-grid-item>
     <a-grid-item
-      class="panel-col"
-      :span="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 6 }"
-    >
-      <a-space>
-        <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/77d74c9a245adeae1ec7fb5d4539738d.svg~tplv-49unhts6dw-image.image"
-          />
-        </a-avatar>
-        <a-statistic
-          :title="$t('workplace.modelKey')"
-          :value="8874"
-          :value-from="0"
-          animation
-          show-group-separator
-        >
-          <template #suffix>
-            <span class="unit">{{ $t('workplace.pecs') }}</span>
-          </template>
-        </a-statistic>
-      </a-space>
-    </a-grid-item>
-    <a-grid-item
+      v-permission="['admin']"
       class="panel-col"
       :span="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 6 }"
     >
@@ -139,38 +95,14 @@
         </a-avatar>
         <a-statistic
           :title="$t('workplace.user')"
-          :value="2.8"
-          :precision="1"
-          :value-from="0"
-          animation
+          :value="baseData.user"
+          show-group-separator
         >
-          <template #suffix> % <icon-caret-up class="up-icon" /> </template>
         </a-statistic>
       </a-space>
     </a-grid-item>
     <a-grid-item
-      class="panel-col"
-      :span="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 6 }"
-    >
-      <a-space>
-        <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/c8b36e26d2b9bb5dbf9b74dd6d7345af.svg~tplv-49unhts6dw-image.image"
-          />
-        </a-avatar>
-        <a-statistic
-          :title="$t('workplace.todayUser')"
-          :value="2.8"
-          :precision="1"
-          :value-from="0"
-          animation
-        >
-          <template #suffix> % <icon-caret-up class="up-icon" /> </template>
-        </a-statistic>
-      </a-space>
-    </a-grid-item>
-    <a-grid-item
+      v-permission="['admin']"
       class="panel-col"
       :span="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 6 }"
       style="border-right: none"
@@ -183,13 +115,51 @@
           />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.apiCall')"
-          :value="2.8"
-          :precision="1"
-          :value-from="0"
-          animation
+          :title="$t('workplace.todayUser')"
+          :value="baseData.today_user"
+          show-group-separator
         >
-          <template #suffix> % <icon-caret-up class="up-icon" /> </template>
+        </a-statistic>
+      </a-space>
+    </a-grid-item>
+    <a-grid-item
+      class="panel-col"
+      :span="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 6 }"
+      style="border-right: none; border-left: 1px solid rgb(var(--gray-2))"
+    >
+      <a-space>
+        <a-avatar :size="54" class="col-avatar">
+          <img
+            alt="avatar"
+            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/fdc66b07224cdf18843c6076c2587eb5.svg~tplv-49unhts6dw-image.image"
+          />
+        </a-avatar>
+        <a-statistic
+          :title="$t('workplace.model')"
+          :value="baseData.model"
+          show-group-separator
+        >
+        </a-statistic>
+      </a-space>
+    </a-grid-item>
+    <a-grid-item
+      v-permission="['admin']"
+      class="panel-col"
+      :span="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12, xxl: 6 }"
+      style="border-right: none; border-left: 1px solid rgb(var(--gray-2))"
+    >
+      <a-space>
+        <a-avatar :size="54" class="col-avatar">
+          <img
+            alt="avatar"
+            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/77d74c9a245adeae1ec7fb5d4539738d.svg~tplv-49unhts6dw-image.image"
+          />
+        </a-avatar>
+        <a-statistic
+          :title="$t('workplace.modelKey')"
+          :value="baseData.model_key"
+          show-group-separator
+        >
         </a-statistic>
       </a-space>
     </a-grid-item>
@@ -199,7 +169,29 @@
   </a-grid>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  import { reactive } from 'vue';
+  import { queryBaseData, BaseDataRecord } from '@/api/dashboard';
+
+  const baseData = reactive({}) as BaseDataRecord;
+
+  const getBaseData = async () => {
+    try {
+      const { data } = await queryBaseData();
+      baseData.app = data.app;
+      baseData.today_app = data.today_app;
+      baseData.model = data.model;
+      baseData.app_key = data.app_key;
+      baseData.model_key = data.model_key;
+      baseData.user = data.user;
+      baseData.today_user = data.today_user;
+      baseData.call = data.call;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getBaseData();
+</script>
 
 <style lang="less" scoped>
   .arco-grid.panel {

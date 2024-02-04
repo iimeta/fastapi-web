@@ -7,7 +7,11 @@
       <a-breadcrumb-item>{{ $t('menu.model') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.model.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-card class="general-card" :title="$t('menu.model.list')">
+    <a-card
+      class="general-card"
+      :title="$t('menu.model.list')"
+      :bordered="false"
+    >
       <a-row>
         <a-col :flex="1">
           <a-form

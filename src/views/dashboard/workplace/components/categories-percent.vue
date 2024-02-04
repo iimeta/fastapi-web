@@ -6,6 +6,7 @@
       :body-style="{
         padding: '20px',
       }"
+      :bordered="false"
     >
       <template #title>
         {{ $t('workplace.categoriesPercent') }}

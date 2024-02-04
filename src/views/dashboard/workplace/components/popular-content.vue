@@ -4,6 +4,7 @@
       class="general-card"
       :header-style="{ paddingBottom: '0' }"
       :body-style="{ padding: '17px 20px 21px 20px' }"
+      :bordered="false"
     >
       <template #title>
         {{ $t('workplace.popularContent') }}

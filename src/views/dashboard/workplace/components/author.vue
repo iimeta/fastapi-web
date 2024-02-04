@@ -1,19 +1,13 @@
 <template>
   <a-card
     class="general-card"
-    :title="$t('workplace.expense')"
+    :title="$t('workplace.author')"
     :header-style="{ paddingBottom: '0' }"
-    :body-style="{ paddingTop: '26px' }"
+    :body-style="{ paddingTop: '17px' }"
     :bordered="false"
   >
     <div>
-      <div>
-        <a-statistic
-          :title="$t('workplace.current.quota')"
-          :value="expense.quota"
-          show-group-separator
-        />
-      </div>
+      <img class="author" src="https://fastapi.ai/Author.png" />
     </div>
   </a-card>
 </template>
@@ -36,8 +30,7 @@
 </script>
 
 <style lang="less" scoped>
-  .quota {
-    font-size: 26px;
-    margin-top: 10px;
+  .author {
+    width: 246px;
   }
 </style>

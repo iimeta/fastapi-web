@@ -7,7 +7,7 @@
       <a-breadcrumb-item>{{ $t('menu.app') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.app.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-card class="general-card" :title="$t('menu.app.list')">
+    <a-card class="general-card" :title="$t('menu.app.list')" :bordered="false">
       <a-row>
         <a-col :flex="1">
           <a-form

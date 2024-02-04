@@ -1,5 +1,9 @@
 <template>
-  <a-card class="general-card" :title="$t('userInfo.title.latestNotification')">
+  <a-card
+    class="general-card"
+    :title="$t('userInfo.title.latestNotification')"
+    :bordered="false"
+  >
     <a-skeleton v-if="loading" :animation="true">
       <a-skeleton-line :rows="3" />
     </a-skeleton>

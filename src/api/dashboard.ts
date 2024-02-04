@@ -15,6 +15,9 @@ export function queryPopularList(params: { type: string }) {
 export interface CallData {
   date: string;
   count: number;
+  tokens: number;
+  user: number;
+  app: number;
 }
 
 export interface CallDataRes {
@@ -33,6 +36,7 @@ export interface BaseDataRecord {
   model_key: number;
   user: number;
   today_user: number;
+  call: number;
 }
 
 export function queryBaseData() {

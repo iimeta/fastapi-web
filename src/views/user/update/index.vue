@@ -8,7 +8,7 @@
       <a-breadcrumb-item>{{ $t('menu.app.update') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
-      <a-card class="general-card">
+      <a-card class="general-card" :bordered="false">
         <template #title>
           {{ $t('app.title.update') }}
         </template>

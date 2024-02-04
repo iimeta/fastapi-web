@@ -8,7 +8,7 @@
       <a-breadcrumb-item>{{ $t('menu.user.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
-      <a-card class="general-card">
+      <a-card class="general-card" :bordered="false">
         <template #title>
           {{ $t('user.title.create') }}
         </template>

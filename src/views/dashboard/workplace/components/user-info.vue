@@ -3,6 +3,7 @@
     class="general-card"
     :header-style="{ paddingBottom: '0' }"
     :body-style="{ paddingTop: '26px' }"
+    :bordered="false"
   >
     <div class="header">
       <a-space :size="12" direction="vertical" align="center">

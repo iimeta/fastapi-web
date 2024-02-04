@@ -4,6 +4,7 @@
     :title="$t('workplace.announcement')"
     :header-style="{ paddingBottom: '0' }"
     :body-style="{ padding: '15px 20px 13px 20px' }"
+    :bordered="false"
   >
     <template #extra>
       <a-link>{{ $t('workplace.viewMore') }}</a-link>
