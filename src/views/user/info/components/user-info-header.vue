@@ -5,7 +5,7 @@
         <template #trigger-icon>
           <icon-camera />
         </template>
-        <img :src="userInfo.avatar || 'https://fastapi.ai/logo.png'" />
+        <img :src="userInfo.avatar || 'https://www.fastapi.ai/logo.png'" />
       </a-avatar>
       <a-typography-title :heading="6" style="margin: 0">
         {{ userInfo.name }}

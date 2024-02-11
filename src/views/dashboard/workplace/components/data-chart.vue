@@ -12,7 +12,7 @@
       <template #extra>
         <a-link>{{ $t('workplace.viewMore') }}</a-link>
       </template>
-      <Chart height="406px" :option="chartOption" />
+      <Chart height="398px" :option="chartOption" />
     </a-card>
   </a-spin>
 </template>

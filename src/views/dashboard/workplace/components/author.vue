@@ -7,7 +7,7 @@
     :bordered="false"
   >
     <div>
-      <img class="author" src="https://fastapi.ai/Author.png" />
+      <img class="author" src="https://www.fastapi.ai/Author.png" />
     </div>
   </a-card>
 </template>
