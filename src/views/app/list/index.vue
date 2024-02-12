@@ -196,8 +196,8 @@
           <span v-else>{{ $t(`app.columns.quota.no_limit`) }}</span>
         </template>
         <template #status="{ record }">
-          <span v-if="record.status === 3" class="circle"></span>
-          <span v-else class="circle pass"></span>
+          <span v-if="record.status === 2" class="circle red"></span>
+          <span v-else class="circle"></span>
           {{ $t(`app.dict.status.${record.status}`) }}
         </template>
         <template #operations="{ record }">

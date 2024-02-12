@@ -13,9 +13,8 @@ export interface ModelCreateAdvanced {
   prompt_ratio: number;
   completion_ratio: number;
   data_format: string;
-  base_url: string;
-  path: string;
-  proxy: string;
+  is_enable_model_agent: boolean;
+  model_agents: string[];
   is_public: boolean;
 }
 
@@ -102,9 +101,8 @@ export interface ModelDetail {
   prompt_ratio: number;
   completion_ratio: number;
   data_format: number;
-  base_url: string;
-  path: string;
-  proxy: string;
+  is_enable_model_agent: boolean;
+  model_agents: string[];
   is_public: boolean;
   status: number;
   remark: string;
@@ -128,15 +126,15 @@ export interface ModelUpdateBaseInfo {
   model: string;
   type: string;
   remark: string;
+  status: number;
 }
 
 export interface ModelUpdateAdvanced {
   prompt_ratio: number;
   completion_ratio: number;
   data_format: string;
-  base_url: string;
-  path: string;
-  proxy: string;
+  is_enable_model_agent: boolean;
+  model_agents: string[];
   is_public: boolean;
 }
 

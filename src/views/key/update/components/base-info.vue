@@ -84,6 +84,7 @@
     corp: '',
     key: '',
     remark: '',
+    status: 1,
   });
 
   const getKeyDetail = async (
@@ -96,6 +97,7 @@
       formData.value.corp = data.corp;
       formData.value.key = data.key;
       formData.value.remark = data.remark;
+      formData.value.status = data.status;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {

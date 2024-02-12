@@ -6,31 +6,30 @@
     :body-style="{ paddingTop: '17px' }"
     :bordered="false"
   >
-    <div>
-      <img class="author" src="https://www.fastapi.ai/Author.png" />
-    </div>
+    <a-carousel
+      indicator-type="slider"
+      show-arrow="hover"
+      auto-play
+      style="height: 252px"
+    >
+      <a-carousel-item v-for="(src, idx) in imageSrc" :key="idx">
+        <div>
+          <img class="author" :src="src" />
+        </div>
+      </a-carousel-item>
+    </a-carousel>
   </a-card>
 </template>
 
 <script lang="ts" setup>
-  import { reactive } from 'vue';
-  import { queryExpense, Expense } from '@/api/dashboard';
-
-  const expense = reactive({}) as Expense;
-
-  const getExpense = async () => {
-    try {
-      const { data } = await queryExpense();
-      expense.quota = data.quota;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getExpense();
+  const imageSrc = [
+    'https://www.fastapi.ai/Author.png',
+    'https://www.fastapi.ai/AuthorQQ.png',
+  ];
 </script>
 
 <style lang="less" scoped>
   .author {
-    width: 246px;
+    width: 238px;
   }
 </style>

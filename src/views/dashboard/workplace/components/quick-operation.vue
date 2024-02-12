@@ -61,10 +61,16 @@
       permission: ['admin'],
     },
     {
-      text: 'workplace.advanced',
-      icon: 'icon-settings',
-      permission: ['user', 'admin'],
+      text: 'workplace.agentManagement',
+      icon: 'icon-bug',
+      router: 'ModelAgentList',
+      permission: ['admin'],
     },
+    // {
+    //   text: 'workplace.advanced',
+    //   icon: 'icon-settings',
+    //   permission: ['user', 'admin'],
+    // },
   ];
 </script>
 

@@ -8,40 +8,63 @@
   >
     <a-form-item
       field="name"
-      :label="$t('app.label.name')"
+      :label="$t('model.agent.label.name')"
       :rules="[
         {
           required: true,
-          message: $t('app.error.name.required'),
+          message: $t('model.agent.error.name.required'),
         },
         {
           match: /^.{1,20}$/,
-          message: $t('app.error.name.pattern'),
+          message: $t('model.agent.error.name.pattern'),
         },
       ]"
     >
       <a-input
         v-model="formData.name"
-        :placeholder="$t('app.placeholder.name')"
+        :placeholder="$t('model.agent.placeholder.name')"
+        allow-clear
       />
     </a-form-item>
     <a-form-item
-      field="remark"
-      :label="$t('app.label.remark')"
+      field="base_url"
+      :label="$t('model.agent.label.baseUrl')"
       :rules="[
         {
-          required: false,
+          required: true,
+          message: $t('model.agent.error.baseUrl.required'),
         },
       ]"
     >
+      <a-input
+        v-model="formData.base_url"
+        :placeholder="$t('model.agent.placeholder.baseUrl')"
+      />
+    </a-form-item>
+    <a-form-item field="path" :label="$t('model.agent.label.path')">
+      <a-input
+        v-model="formData.path"
+        :placeholder="$t('model.agent.placeholder.path')"
+      />
+    </a-form-item>
+    <a-form-item field="weight" :label="$t('model.agent.label.weight')">
+      <a-input-number
+        v-model="formData.weight"
+        :precision="0"
+        :min="0"
+        :max="99999"
+        :placeholder="$t('model.agent.placeholder.weight')"
+      />
+    </a-form-item>
+    <a-form-item field="remark" :label="$t('model.agent.label.remark')">
       <a-textarea
         v-model="formData.remark"
-        :placeholder="$t('app.placeholder.remark')"
+        :placeholder="$t('model.agent.placeholder.remark')"
       />
     </a-form-item>
     <a-form-item>
       <a-button type="primary" @click="onNextClick">
-        {{ $t('app.button.next') }}
+        {{ $t('model.agent.button.next') }}
       </a-button>
     </a-form-item>
   </a-form>
@@ -49,44 +72,18 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useRoute } from 'vue-router';
-  import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import {
-    AppUpdateBaseInfo,
-    queryAppDetail,
-    AppDetailParams,
-  } from '@/api/app';
-
-  const { setLoading } = useLoading(false);
-  const route = useRoute();
+  import { ModelAgentCreateBaseInfo } from '@/api/agent';
 
   const emits = defineEmits(['changeStep']);
   const formRef = ref<FormInstance>();
-  const formData = ref<AppUpdateBaseInfo>({
-    id: '',
+  const formData = ref<ModelAgentCreateBaseInfo>({
     name: '',
+    base_url: '',
+    path: '',
+    weight: ref(),
     remark: '',
-    status: 1,
   });
-
-  const getAppDetail = async (
-    params: AppDetailParams = { id: route.query.id }
-  ) => {
-    setLoading(true);
-    try {
-      const { data } = await queryAppDetail(params);
-      formData.value.id = data.id;
-      formData.value.name = data.name;
-      formData.value.remark = data.remark;
-      formData.value.status = data.status;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getAppDetail();
 
   const onNextClick = async () => {
     const res = await formRef.value?.validate();

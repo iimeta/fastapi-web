@@ -197,8 +197,8 @@
           {{ $t(`model.dict.data_format.${record.data_format}`) }}
         </template>
         <template #status="{ record }">
-          <span v-if="record.status === 3" class="circle"></span>
-          <span v-else class="circle pass"></span>
+          <span v-if="record.status === 2" class="circle red"></span>
+          <span v-else class="circle"></span>
           {{ $t(`model.dict.status.${record.status}`) }}
         </template>
         <template #operations="{ record }">

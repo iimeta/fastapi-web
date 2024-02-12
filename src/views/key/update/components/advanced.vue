@@ -30,6 +30,22 @@
         />
       </a-select>
     </a-form-item>
+    <a-form-item field="model_agents" :label="$t('model.label.modelAgents')">
+      <a-select
+        v-model="formData.model_agents"
+        :placeholder="$t('model.placeholder.modelAgents')"
+        :max-tag-count="3"
+        multiple
+        allow-clear
+      >
+        <a-option
+          v-for="item in modelAgents"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        />
+      </a-select>
+    </a-form-item>
     <a-form-item>
       <a-space>
         <a-button type="secondary" @click="goPrev">
@@ -54,6 +70,7 @@
     KeyDetailParams,
   } from '@/api/key';
   import { queryModelList, ModelList } from '@/api/model';
+  import { queryModelAgentList, ModelAgentList } from '@/api/agent';
 
   const { setLoading } = useLoading(true);
   const route = useRoute();
@@ -74,9 +91,25 @@
   };
   getModelList();
 
+  const modelAgents = ref<ModelAgentList[]>([]);
+
+  const getModelAgentList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelAgentList();
+      modelAgents.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelAgentList();
+
   const formRef = ref<FormInstance>();
   const formData = ref<KeyUpdateAdvanced>({
     models: [],
+    model_agents: [],
   });
 
   const getKeyDetail = async (
@@ -86,6 +119,7 @@
     try {
       const { data } = await queryKeyDetail(params);
       formData.value.models = data.models;
+      formData.value.model_agents = data.model_agents;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {

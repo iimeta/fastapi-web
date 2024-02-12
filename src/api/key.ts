@@ -9,6 +9,7 @@ export interface KeyCreateBaseInfo {
 
 export interface KeyCreateAdvanced {
   models: string[];
+  model_agents: string[];
 }
 
 export type KeyCreate = KeyCreateBaseInfo & KeyCreateAdvanced;
@@ -26,6 +27,7 @@ export interface KeyPage {
   quota: number;
   models: string[];
   model_names: string[];
+  model_agents: string[];
   ip_whitelist: string[];
   ip_blacklist: string[];
   status: number;
@@ -73,6 +75,7 @@ export interface KeyDetail {
   quota: number;
   models: string[];
   model_names: string[];
+  model_agents: string[];
   ip_whitelist: string[];
   ip_blacklist: string[];
   status: number;
@@ -95,10 +98,12 @@ export interface KeyUpdateBaseInfo {
   corp: string;
   key: string;
   remark: string;
+  status: number;
 }
 
 export interface KeyUpdateAdvanced {
   models: string[];
+  model_agents: string[];
 }
 
 export type KeyUpdate = KeyUpdateBaseInfo & KeyUpdateAdvanced;

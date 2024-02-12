@@ -124,6 +124,7 @@
     model: '',
     type: '',
     remark: '',
+    status: 1,
   });
 
   const getModelDetail = async (
@@ -138,6 +139,7 @@
       formData.value.model = data.model;
       formData.value.type = String(data.type);
       formData.value.remark = data.remark;
+      formData.value.status = data.status;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {

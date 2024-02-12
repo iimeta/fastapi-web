@@ -10,6 +10,7 @@ import localeUser from '@/views/user/locale/zh-CN';
 import localeApp from '@/views/app/locale/zh-CN';
 import localeModel from '@/views/model/locale/zh-CN';
 import localeKey from '@/views/key/locale/zh-CN';
+import localeAgent from '@/views/agent/locale/zh-CN';
 
 import localeSettings from './zh-CN/settings';
 
@@ -48,4 +49,5 @@ export default {
   ...localeApp,
   ...localeModel,
   ...localeKey,
+  ...localeAgent,
 };

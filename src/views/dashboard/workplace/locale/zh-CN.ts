@@ -21,6 +21,7 @@ export default {
   'workplace.appManagement': '应用管理',
   'workplace.modelManagement': '模型管理',
   'workplace.keyManagement': '密钥管理',
+  'workplace.agentManagement': '代理管理',
   'workplace.contentStatistical': '内容分析',
   'workplace.advanced': '高级管理',
   'workplace.onlinePromotion': '线上推广',

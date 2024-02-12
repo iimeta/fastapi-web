@@ -187,8 +187,8 @@
         @page-change="onPageChange"
       >
         <template #status="{ record }">
-          <span v-if="record.status === 3" class="circle"></span>
-          <span v-else class="circle pass"></span>
+          <span v-if="record.status === 2" class="circle red"></span>
+          <span v-else class="circle"></span>
           {{ $t(`user.dict.status.${record.status}`) }}
         </template>
         <template #operations="{ record }">

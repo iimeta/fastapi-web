@@ -108,6 +108,7 @@ export interface AppUpdateBaseInfo {
   id: string;
   name: string;
   remark: string;
+  status: number;
 }
 export interface AppUpdateAdvanced {
   models: string[];

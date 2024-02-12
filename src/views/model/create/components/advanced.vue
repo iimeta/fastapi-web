@@ -59,48 +59,6 @@
       </a-space>
     </a-form-item>
     <a-form-item
-      field="base_url"
-      :label="$t('model.label.baseUrl')"
-      :rules="[
-        {
-          required: false,
-        },
-      ]"
-    >
-      <a-input
-        v-model="formData.base_url"
-        :placeholder="$t('model.placeholder.baseUrl')"
-      />
-    </a-form-item>
-    <a-form-item
-      field="path"
-      :label="$t('model.label.path')"
-      :rules="[
-        {
-          required: false,
-        },
-      ]"
-    >
-      <a-input
-        v-model="formData.path"
-        :placeholder="$t('model.placeholder.path')"
-      />
-    </a-form-item>
-    <a-form-item
-      field="proxy"
-      :label="$t('model.label.proxy')"
-      :rules="[
-        {
-          required: false,
-        },
-      ]"
-    >
-      <a-input
-        v-model="formData.proxy"
-        :placeholder="$t('model.placeholder.proxy')"
-      />
-    </a-form-item>
-    <a-form-item
       field="is_public"
       :label="$t('model.label.isPublic')"
       :rules="[
@@ -110,6 +68,38 @@
       ]"
     >
       <a-switch v-model="formData.is_public" />
+    </a-form-item>
+    <a-form-item
+      field="is_enable_model_agent"
+      :label="$t('model.label.isEnableModelAgent')"
+    >
+      <a-switch v-model="formData.is_enable_model_agent" />
+    </a-form-item>
+    <a-form-item
+      v-if="formData.is_enable_model_agent"
+      field="model_agents"
+      :label="$t('model.label.modelAgents')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.modelAgents.required'),
+        },
+      ]"
+    >
+      <a-select
+        v-model="formData.model_agents"
+        :placeholder="$t('model.placeholder.modelAgents')"
+        :max-tag-count="3"
+        multiple
+        allow-clear
+      >
+        <a-option
+          v-for="item in modelAgents"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        />
+      </a-select>
     </a-form-item>
     <a-form-item>
       <a-space>
@@ -126,19 +116,36 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { ModelCreateAdvanced } from '@/api/model';
+  import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+
+  const { setLoading } = useLoading(true);
 
   const emits = defineEmits(['changeStep']);
+  const modelAgents = ref<ModelAgentList[]>([]);
+
+  const getModelAgentList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelAgentList();
+      modelAgents.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelAgentList();
 
   const formRef = ref<FormInstance>();
   const formData = ref<ModelCreateAdvanced>({
     prompt_ratio: 1,
     completion_ratio: 1,
     data_format: '1',
-    base_url: '',
-    path: '',
-    proxy: '',
+    is_enable_model_agent: false,
+    model_agents: [],
     is_public: true,
   });
 

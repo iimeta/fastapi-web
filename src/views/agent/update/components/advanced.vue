@@ -8,7 +8,7 @@
   >
     <a-form-item
       field="models"
-      :label="$t('key.label.models')"
+      :label="$t('model.agent.label.models')"
       :rules="[
         {
           required: false,
@@ -17,7 +17,7 @@
     >
       <a-select
         v-model="formData.models"
-        :placeholder="$t('key.placeholder.models')"
+        :placeholder="$t('model.agent.placeholder.models')"
         :max-tag-count="3"
         multiple
         allow-clear
@@ -30,29 +30,20 @@
         />
       </a-select>
     </a-form-item>
-    <a-form-item field="model_agents" :label="$t('model.label.modelAgents')">
-      <a-select
-        v-model="formData.model_agents"
-        :placeholder="$t('model.placeholder.modelAgents')"
-        :max-tag-count="3"
-        multiple
-        allow-clear
-      >
-        <a-option
-          v-for="item in modelAgents"
-          :key="item.id"
-          :value="item.id"
-          :label="item.name"
-        />
-      </a-select>
+    <a-form-item field="key" :label="$t('model.agent.label.key')">
+      <a-textarea
+        v-model="formData.key"
+        :placeholder="$t('model.agent.placeholder.key')"
+        :auto-size="{ minRows: 5, maxRows: 10 }"
+      />
     </a-form-item>
     <a-form-item>
       <a-space>
         <a-button type="secondary" @click="goPrev">
-          {{ $t('key.button.prev') }}
+          {{ $t('model.button.prev') }}
         </a-button>
         <a-button type="primary" @click="onNextClick">
-          {{ $t('key.button.next') }}
+          {{ $t('model.button.next') }}
         </a-button>
       </a-space>
     </a-form-item>
@@ -61,13 +52,18 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useRoute } from 'vue-router';
   import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { KeyCreateAdvanced } from '@/api/key';
+  import {
+    ModelAgentUpdateAdvanced,
+    queryModelAgentDetail,
+    ModelAgentDetailParams,
+  } from '@/api/agent';
   import { queryModelList, ModelList } from '@/api/model';
-  import { queryModelAgentList, ModelAgentList } from '@/api/agent';
 
   const { setLoading } = useLoading(true);
+  const route = useRoute();
 
   const emits = defineEmits(['changeStep']);
   const models = ref<ModelList[]>([]);
@@ -85,26 +81,27 @@
   };
   getModelList();
 
-  const modelAgents = ref<ModelAgentList[]>([]);
+  const formRef = ref<FormInstance>();
+  const formData = ref<ModelAgentUpdateAdvanced>({
+    models: [],
+    key: '',
+  });
 
-  const getModelAgentList = async () => {
+  const getModelAgentDetail = async (
+    params: ModelAgentDetailParams = { id: route.query.id }
+  ) => {
     setLoading(true);
     try {
-      const { data } = await queryModelAgentList();
-      modelAgents.value = data.items;
+      const { data } = await queryModelAgentDetail(params);
+      formData.value.models = data.models;
+      formData.value.key = data.key;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }
   };
-  getModelAgentList();
-
-  const formRef = ref<FormInstance>();
-  const formData = ref<KeyCreateAdvanced>({
-    models: [],
-    model_agents: [],
-  });
+  getModelAgentDetail();
 
   const onNextClick = async () => {
     const res = await formRef.value?.validate();

@@ -2,16 +2,12 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-safe />
+        <icon-bug />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.key') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.key.model.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.agent') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.model.agent.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-card
-      class="general-card"
-      :title="$t('menu.key.model.list')"
-      :bordered="false"
-    >
+    <a-card class="general-card" :title="$t('menu.model.agent.list')" :bordered="false">
       <a-row>
         <a-col :flex="1">
           <a-form
@@ -22,29 +18,28 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="corp" :label="$t('key.form.corp')">
-                  <a-select
-                    v-model="formModel.corp"
-                    :options="corpOptions"
-                    :placeholder="$t('key.form.selectDefault')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="key" :label="$t('key.form.key')">
+                <a-form-item field="app_id" :label="$t('model.agent.form.appId')">
                   <a-input
-                    v-model="formModel.key"
-                    :placeholder="$t('key.form.key.placeholder')"
+                    v-model="formModel.app_id"
+                    :placeholder="$t('model.agent.form.appId.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="models" :label="$t('key.form.models')">
+                <a-form-item field="name" :label="$t('model.agent.form.name')">
+                  <a-input
+                    v-model="formModel.name"
+                    :placeholder="$t('model.agent.form.name.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="models" :label="$t('model.agent.form.models')">
                   <a-select
                     v-model="formModel.models"
-                    :placeholder="$t('key.form.selectDefault')"
+                    :placeholder="$t('model.agent.form.selectDefault')"
                     :max-tag-count="3"
                     multiple
                     allow-search
@@ -60,20 +55,20 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="quota" :label="$t('key.form.quota')">
-                  <a-input-number
-                    v-model="formModel.quota"
-                    :placeholder="$t('key.form.quota.placeholder')"
+                <a-form-item field="key" :label="$t('model.agent.form.key')">
+                  <a-input
+                    v-model="formModel.key"
+                    :placeholder="$t('model.agent.form.key.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('key.form.status')">
+                <a-form-item field="status" :label="$t('model.agent.form.status')">
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('key.form.selectDefault')"
+                    :placeholder="$t('model.agent.form.selectDefault')"
                     allow-clear
                   />
                 </a-form-item>
@@ -81,7 +76,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="created_at"
-                  :label="$t('key.form.created_at')"
+                  :label="$t('model.agent.form.created_at')"
                 >
                   <a-range-picker
                     v-model="formModel.created_at"
@@ -99,13 +94,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('key.form.search') }}
+              {{ $t('model.agent.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('key.form.reset') }}
+              {{ $t('model.agent.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -116,12 +111,12 @@
           <a-space>
             <a-button
               type="primary"
-              @click="$router.push({ name: 'KeyCreate' })"
+              @click="$router.push({ name: 'ModelAgentCreate' })"
             >
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('key.operation.create') }}
+              {{ $t('model.agent.operation.create') }}
             </a-button>
           </a-space>
         </a-col>
@@ -196,19 +191,10 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
       >
-        <template #type="{ record }">
-          {{ $t(`key.dict.type.${record.type}`) }}
-        </template>
-        <template #corp="{ record }">
-          {{ $t(`key.dict.corp.${record.corp}`) }}
-        </template>
-        <template #dataFormat="{ record }">
-          {{ $t(`key.dict.data_format.${record.data_format}`) }}
-        </template>
         <template #status="{ record }">
           <span v-if="record.status === 2" class="circle red"></span>
           <span v-else class="circle"></span>
-          {{ $t(`key.dict.status.${record.status}`) }}
+          {{ $t(`app.dict.status.${record.status}`) }}
         </template>
         <template #operations="{ record }">
           <a-button
@@ -216,31 +202,43 @@
             size="small"
             @click="
               $router.push({
-                name: 'KeyDetail',
+                name: 'ModelAgentDetail',
                 query: { id: `${record.id}` },
               })
             "
           >
-            {{ $t('key.columns.operations.view') }}
+            {{ $t('model.agent.columns.operations.view') }}
           </a-button>
           <a-button
             type="text"
             size="small"
             @click="
               $router.push({
-                name: 'KeyUpdate',
+                name: 'ModelAgentUpdate',
                 query: { id: `${record.id}` },
               })
             "
           >
-            {{ $t('key.columns.operations.update') }}
+            {{ $t('model.agent.columns.operations.update') }}
+          </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              $router.push({
+                name: 'KeyModelList',
+                query: { agent_id: `${record.id}` },
+              })
+            "
+          >
+            {{ $t('model.agent.columns.operations.manageKey') }}
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="keyDelete({ id: `${record.id}` })"
+            @ok="appDelete({ id: `${record.id}` })"
           >
             <a-button type="text" size="small">
-              {{ $t('key.columns.operations.delete') }}
+              {{ $t('model.agent.columns.operations.delete') }}
             </a-button>
           </a-popconfirm>
         </template>
@@ -254,12 +252,12 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    queryKeyPage,
-    KeyPage,
-    KeyPageParams,
-    submitKeyDelete,
-    KeyDeleteParams,
-  } from '@/api/key';
+    queryModelAgentPage,
+    ModelAgentPage,
+    ModelAgentPageParams,
+    submitModelAgentDelete,
+    ModelAgentDeleteParams,
+  } from '@/api/agent';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -291,10 +289,10 @@
   };
   getModelList();
 
-  const keyDelete = async (params: KeyDeleteParams) => {
+  const appDelete = async (params: ModelAgentDeleteParams) => {
     setLoading(true);
     try {
-      await submitKeyDelete(params);
+      await submitModelAgentDelete(params);
       fetchData();
     } catch (err) {
       // you can report use errorHandler or other
@@ -305,18 +303,18 @@
 
   const generateFormModel = () => {
     return {
-      type: 2,
-      corp: '',
-      key: '',
+      app_id: ref(),
+      name: '',
       models: [],
-      quota: ref(),
+      key: '',
+      type: ref(),
       status: ref(),
       created_at: [],
     };
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<KeyPage[]>([]);
+  const renderData = ref<ModelAgentPage[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -328,9 +326,11 @@
     pageSize: 10,
     showTotal: true,
   };
+
   const pagination = reactive({
     ...basePagination,
   });
+
   const densityList = computed(() => [
     {
       name: t('searchTable.size.mini'),
@@ -349,77 +349,62 @@
       value: 'large',
     },
   ]);
+
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('key.columns.corp'),
-      dataIndex: 'corp',
-      slotName: 'corp',
+      title: t('model.agent.columns.name'),
+      dataIndex: 'name',
+      slotName: 'name',
     },
     {
-      title: t('key.columns.key'),
-      dataIndex: 'key',
-      slotName: 'key',
+      title: t('model.agent.columns.baseUrl'),
+      dataIndex: 'base_url',
+      slotName: 'base_url',
     },
-    // {
-    //   title: t('key.columns.quota'),
-    //   dataIndex: 'quota',
-    //   slotName: 'quota',
-    // },
     {
-      title: t('key.columns.models'),
+      title: t('model.agent.columns.models'),
       dataIndex: 'model_names',
       slotName: 'model_names',
     },
     {
-      title: t('key.columns.status'),
+      title: t('model.agent.columns.weight'),
+      dataIndex: 'weight',
+      slotName: 'weight',
+    },
+    {
+      title: t('model.agent.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
     },
     {
-      title: t('key.columns.updated_at'),
+      title: t('model.agent.columns.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
     },
     {
-      title: t('key.columns.operations'),
+      title: t('model.agent.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
   ]);
-  const corpOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('key.dict.corp.OpenAI'),
-      value: 'OpenAI',
-    },
-    // {
-    //   label: t('key.dict.corp.Baidu'),
-    //   value: 'Baidu',
-    // },
-    // {
-    //   label: t('key.dict.corp.Xfyun'),
-    //   value: 'Xfyun',
-    // },
-    // {
-    //   label: t('key.dict.corp.Aliyun'),
-    //   value: 'Aliyun',
-    // },
-  ]);
+
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('key.dict.status.1'),
+      label: t('model.agent.dict.status.1'),
       value: 1,
     },
     {
-      label: t('key.dict.status.2'),
+      label: t('model.agent.dict.status.2'),
       value: 2,
     },
   ]);
+
   const fetchData = async (
-    params: KeyPageParams = { current: 1, pageSize: 10, type: 2 }
+    params: ModelAgentPageParams = { current: 1, pageSize: 10 }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryKeyPage(params);
+      const { data } = await queryModelAgentPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.total = data.paging.total;
@@ -434,7 +419,7 @@
     fetchData({
       ...basePagination,
       ...formModel.value,
-    } as unknown as KeyPageParams);
+    } as unknown as ModelAgentPageParams);
   };
   const onPageChange = (current: number) => {
     fetchData({ ...basePagination, ...formModel.value, current });
@@ -514,7 +499,7 @@
 
 <script lang="ts">
   export default {
-    name: 'KeyList',
+    name: 'ModelAgentList',
   };
 </script>
 
