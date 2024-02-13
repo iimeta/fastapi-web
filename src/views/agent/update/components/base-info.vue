@@ -3,7 +3,7 @@
     ref="formRef"
     :model="formData"
     class="form"
-    :label-col-props="{ span: 6 }"
+    :label-col-props="{ span: 5 }"
     :wrapper-col-props="{ span: 18 }"
   >
     <a-form-item
@@ -15,7 +15,7 @@
           message: $t('model.agent.error.name.required'),
         },
         {
-          match: /^.{1,20}$/,
+          match: /^.{1,50}$/,
           message: $t('model.agent.error.name.pattern'),
         },
       ]"
@@ -23,7 +23,6 @@
       <a-input
         v-model="formData.name"
         :placeholder="$t('model.agent.placeholder.name')"
-        allow-clear
       />
     </a-form-item>
     <a-form-item

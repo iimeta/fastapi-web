@@ -54,12 +54,20 @@
       title: t('model.agent.detail.title.baseInfo'),
       data: [
         {
-          label: t('model.agent.detail.label.appId'),
-          value: renderData.app_id,
-        },
-        {
           label: t('model.agent.detail.label.name'),
           value: renderData.name,
+        },
+        {
+          label: t('model.agent.detail.label.baseUrl'),
+          value: renderData.base_url,
+        },
+        {
+          label: t('model.agent.detail.label.path'),
+          value: renderData?.path || '-',
+        },
+        {
+          label: t('model.agent.detail.label.weight'),
+          value: renderData?.weight || '-',
         },
         {
           label: t('model.agent.detail.label.remark'),
@@ -82,24 +90,6 @@
         {
           label: t('model.agent.detail.label.models'),
           value: renderData?.model_names?.join('\n') || '-',
-        },
-        {
-          label: t('model.agent.detail.label.isLimitQuota'),
-          value: t(
-            `app.dict.isLimitQuota.${renderData?.is_limit_quota || false}`
-          ),
-        },
-        {
-          label: t('model.agent.detail.label.quota'),
-          value: renderData?.quota || '-',
-        },
-        {
-          label: t('model.agent.detail.label.ip_whitelist'),
-          value: renderData?.ip_whitelist?.join('\n') || '-',
-        },
-        {
-          label: t('model.agent.detail.label.ip_blacklist'),
-          value: renderData?.ip_blacklist?.join('\n') || '-',
         },
       ] as DescData[],
     });

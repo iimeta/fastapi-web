@@ -16,7 +16,7 @@
         <a-col :flex="1">
           <a-form
             :model="formModel"
-            :label-col-props="{ span: 6 }"
+            :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
           >
@@ -69,6 +69,7 @@
                 <a-form-item field="quota" :label="$t('key.form.quota')">
                   <a-input-number
                     v-model="formModel.quota"
+                    :precision="0"
                     :placeholder="$t('key.form.quota.placeholder')"
                     allow-clear
                   />
@@ -203,7 +204,9 @@
         @page-change="onPageChange"
       >
         <template #quota="{ record }">
-          <span v-if="record.is_limit_quota">{{ record.quota }}</span>
+          <span v-if="record.is_limit_quota">
+            {{ record.quota.toLocaleString() }}
+          </span>
           <span v-else>{{ $t(`key.columns.quota.no_limit`) }}</span>
         </template>
         <template #model_names="{ record }">
@@ -287,8 +290,9 @@
             >
               <a-input-number
                 v-model="formData.quota"
-                :placeholder="$t('app.placeholder.quota')"
+                :precision="0"
                 :min="1"
+                :placeholder="$t('app.placeholder.quota')"
               />
             </a-form-item>
             <a-form-item field="models" :label="$t('app.label.models')">
@@ -466,36 +470,52 @@
       title: t('key.columns.app_id'),
       dataIndex: 'app_id',
       slotName: 'app_id',
+      align: 'center',
+      width: 80,
     },
     {
       title: t('key.columns.key'),
       dataIndex: 'key',
       slotName: 'key',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('key.columns.quota'),
       dataIndex: 'quota',
       slotName: 'quota',
+      align: 'center',
+      width: 120,
     },
     {
       title: t('key.columns.app.models'),
       dataIndex: 'model_names',
       slotName: 'model_names',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('key.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
+      align: 'center',
+      width: 80,
     },
     {
       title: t('key.columns.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
+      align: 'center',
+      width: 170,
     },
     {
       title: t('key.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
+      align: 'center',
+      width: 170,
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
@@ -713,5 +733,8 @@
         color: rgb(var(--gray-8));
       }
     }
+  }
+  .arco-btn-size-small {
+    padding: 0 8px;
   }
 </style>

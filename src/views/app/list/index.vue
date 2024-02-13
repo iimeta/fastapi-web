@@ -12,7 +12,7 @@
         <a-col :flex="1">
           <a-form
             :model="formModel"
-            :label-col-props="{ span: 6 }"
+            :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
           >
@@ -192,7 +192,9 @@
         @page-change="onPageChange"
       >
         <template #quota="{ record }">
-          <span v-if="record.is_limit_quota">{{ record.quota }}</span>
+          <span v-if="record.is_limit_quota">
+            {{ record.quota.toLocaleString() }}
+          </span>
           <span v-else>{{ $t(`app.columns.quota.no_limit`) }}</span>
         </template>
         <template #status="{ record }">
@@ -289,8 +291,9 @@
             >
               <a-input-number
                 v-model="formData.quota"
-                :placeholder="$t('app.placeholder.quota')"
+                :precision="0"
                 :min="1"
+                :placeholder="$t('app.placeholder.quota')"
               />
             </a-form-item>
             <a-form-item field="models" :label="$t('app.label.models')">
@@ -456,36 +459,51 @@
       title: t('app.columns.appId'),
       dataIndex: 'app_id',
       slotName: 'app_id',
+      align: 'center',
+      width: 80,
     },
     {
       title: t('app.columns.name'),
       dataIndex: 'name',
       slotName: 'name',
+      align: 'center',
+      width: 150,
     },
     {
       title: t('app.columns.models'),
       dataIndex: 'model_names',
       slotName: 'model_names',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('app.columns.quota'),
       dataIndex: 'quota',
       slotName: 'quota',
+      align: 'center',
+      width: 120,
     },
     {
       title: t('app.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
+      align: 'center',
+      width: 80,
     },
     {
       title: t('app.columns.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
+      align: 'center',
+      width: 170,
     },
     {
       title: t('app.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
+      align: 'center',
+      width: 320,
     },
   ]);
 
@@ -684,5 +702,8 @@
         color: rgb(var(--gray-8));
       }
     }
+  }
+  .arco-btn-size-small {
+    padding: 0 8px;
   }
 </style>

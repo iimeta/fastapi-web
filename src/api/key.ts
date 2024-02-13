@@ -76,6 +76,7 @@ export interface KeyDetail {
   models: string[];
   model_names: string[];
   model_agents: string[];
+  model_agent_names: string[];
   ip_whitelist: string[];
   ip_blacklist: string[];
   status: number;

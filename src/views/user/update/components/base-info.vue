@@ -3,7 +3,7 @@
     ref="formRef"
     :model="formData"
     class="form"
-    :label-col-props="{ span: 6 }"
+    :label-col-props="{ span: 5 }"
     :wrapper-col-props="{ span: 18 }"
   >
     <a-form-item
@@ -67,6 +67,7 @@
     id: '',
     name: '',
     remark: '',
+    status: 1,
   });
 
   const getAppDetail = async (
@@ -78,6 +79,7 @@
       formData.value.id = data.id;
       formData.value.name = data.name;
       formData.value.remark = data.remark;
+      formData.value.status = data.status;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {

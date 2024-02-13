@@ -15,7 +15,7 @@
         <div class="wrapper">
           <a-steps
             v-model:current="step"
-            style="width: 580px"
+            style="width: 660px"
             line-less
             class="steps"
           >

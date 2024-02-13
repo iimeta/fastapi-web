@@ -3,7 +3,7 @@
     ref="formRef"
     :model="formData"
     class="form"
-    :label-col-props="{ span: 6 }"
+    :label-col-props="{ span: 4 }"
     :wrapper-col-props="{ span: 18 }"
   >
     <a-form-item
@@ -46,8 +46,9 @@
     >
       <a-input-number
         v-model="formData.quota"
-        :placeholder="$t('app.placeholder.quota')"
+        :precision="0"
         :min="1"
+        :placeholder="$t('app.placeholder.quota')"
       />
     </a-form-item>
     <a-form-item

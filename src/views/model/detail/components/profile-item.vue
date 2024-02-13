@@ -99,20 +99,18 @@
           value: t(`model.dict.data_format.${renderData.data_format}`),
         },
         {
-          label: t('model.detail.label.baseUrl'),
-          value: renderData?.base_url || '-',
-        },
-        {
-          label: t('model.detail.label.path'),
-          value: renderData?.path || '-',
-        },
-        {
-          label: t('model.detail.label.proxy'),
-          value: renderData?.proxy || '-',
-        },
-        {
           label: t('model.detail.label.isPublic'),
           value: t(`model.dict.is_public.${renderData.is_public}`),
+        },
+        {
+          label: t('model.detail.label.isEnableModelAgent'),
+          value: t(
+            `model.dict.is_enable_model_agent.${renderData.is_enable_model_agent}`
+          ),
+        },
+        {
+          label: t('model.detail.label.modelAgentNames'),
+          value: renderData?.model_agent_names?.join('\n') || '-',
         },
       ] as DescData[],
     });

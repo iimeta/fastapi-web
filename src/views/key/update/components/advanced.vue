@@ -3,7 +3,7 @@
     ref="formRef"
     :model="formData"
     class="form"
-    :label-col-props="{ span: 6 }"
+    :label-col-props="{ span: 5 }"
     :wrapper-col-props="{ span: 18 }"
   >
     <a-form-item
@@ -30,10 +30,10 @@
         />
       </a-select>
     </a-form-item>
-    <a-form-item field="model_agents" :label="$t('model.label.modelAgents')">
+    <a-form-item field="model_agents" :label="$t('key.label.modelAgents')">
       <a-select
         v-model="formData.model_agents"
-        :placeholder="$t('model.placeholder.modelAgents')"
+        :placeholder="$t('key.placeholder.modelAgents')"
         :max-tag-count="3"
         multiple
         allow-clear

@@ -16,7 +16,7 @@
         <a-col :flex="1">
           <a-form
             :model="formModel"
-            :label-col-props="{ span: 6 }"
+            :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
           >
@@ -331,41 +331,53 @@
       title: t('model.columns.corp'),
       dataIndex: 'corp',
       slotName: 'corp',
+      align: 'center',
+      width: 100,
     },
     {
       title: t('model.columns.name'),
       dataIndex: 'name',
       slotName: 'name',
+      align: 'center',
     },
     {
       title: t('model.columns.model'),
       dataIndex: 'model',
       slotName: 'model',
+      align: 'center',
     },
     {
       title: t('model.columns.type'),
       dataIndex: 'type',
       slotName: 'type',
+      align: 'center',
     },
     {
       title: t('model.columns.data_format'),
       dataIndex: 'data_format',
       slotName: 'dataFormat',
+      align: 'center',
     },
     {
       title: t('model.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
+      align: 'center',
+      width: 80,
     },
     {
       title: t('model.columns.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
+      align: 'center',
+      width: 170,
     },
     {
       title: t('model.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
+      align: 'center',
+      width: 170,
     },
   ]);
   const corpOptions = computed<SelectOptionData[]>(() => [
@@ -554,5 +566,8 @@
         color: rgb(var(--gray-8));
       }
     }
+  }
+  .arco-btn-size-small {
+    padding: 0 8px;
   }
 </style>

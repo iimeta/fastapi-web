@@ -16,7 +16,7 @@
         <a-col :flex="1">
           <a-form
             :model="formModel"
-            :label-col-props="{ span: 6 }"
+            :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
           >
@@ -60,14 +60,37 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
+                <a-form-item
+                  field="model_agents"
+                  :label="$t('key.form.modelAgents')"
+                >
+                  <a-select
+                    v-model="formModel.model_agents"
+                    :placeholder="$t('key.form.selectDefault')"
+                    :max-tag-count="3"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in modelAgents"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <!-- <a-col :span="8">
                 <a-form-item field="quota" :label="$t('key.form.quota')">
                   <a-input-number
                     v-model="formModel.quota"
+                    :precision="0"
                     :placeholder="$t('key.form.quota.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
-              </a-col>
+              </a-col> -->
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('key.form.status')">
                   <a-select
@@ -269,6 +292,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList } from '@/api/model';
+  import { queryModelAgentList, ModelAgentList } from '@/api/agent';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -291,6 +315,18 @@
   };
   getModelList();
 
+  const modelAgents = ref<ModelAgentList[]>([]);
+
+  const getModelAgentList = async () => {
+    try {
+      const { data } = await queryModelAgentList();
+      modelAgents.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelAgentList();
+
   const keyDelete = async (params: KeyDeleteParams) => {
     setLoading(true);
     try {
@@ -309,6 +345,7 @@
       corp: '',
       key: '',
       models: [],
+      model_agents: [],
       quota: ref(),
       status: ref(),
       created_at: [],
@@ -354,11 +391,16 @@
       title: t('key.columns.corp'),
       dataIndex: 'corp',
       slotName: 'corp',
+      align: 'center',
+      width: 100,
     },
     {
       title: t('key.columns.key'),
       dataIndex: 'key',
       slotName: 'key',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     // {
     //   title: t('key.columns.quota'),
@@ -369,21 +411,30 @@
       title: t('key.columns.models'),
       dataIndex: 'model_names',
       slotName: 'model_names',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('key.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
+      align: 'center',
+      width: 80,
     },
     {
       title: t('key.columns.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
+      align: 'center',
+      width: 170,
     },
     {
       title: t('key.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
+      align: 'center',
+      width: 170,
     },
   ]);
   const corpOptions = computed<SelectOptionData[]>(() => [
@@ -554,5 +605,8 @@
         color: rgb(var(--gray-8));
       }
     }
+  }
+  .arco-btn-size-small {
+    padding: 0 8px;
   }
 </style>

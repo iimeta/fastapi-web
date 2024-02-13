@@ -93,6 +93,10 @@
           value: renderData?.model_names?.join('\n') || '-',
         },
         {
+          label: t('key.detail.label.modelAgentNames'),
+          value: renderData?.model_agent_names?.join('\n') || '-',
+        },
+        {
           label:
             renderData.type === 1 ? t('key.detail.label.ip_whitelist') : '',
           value:

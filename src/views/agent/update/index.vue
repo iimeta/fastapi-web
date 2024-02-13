@@ -15,7 +15,7 @@
         <div class="wrapper">
           <a-steps
             v-model:current="step"
-            style="width: 580px"
+            style="width: 660px"
             line-less
             class="steps"
           >
@@ -43,7 +43,11 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { submitModelAgentUpdate, ModelAgentUpdate, ModelAgentUpdateBaseInfo } from '@/api/agent';
+  import {
+    submitModelAgentUpdate,
+    ModelAgentUpdate,
+    ModelAgentUpdateBaseInfo,
+  } from '@/api/agent';
   import BaseInfo from './components/base-info.vue';
   import Advanced from './components/advanced.vue';
   import Success from './components/success.vue';

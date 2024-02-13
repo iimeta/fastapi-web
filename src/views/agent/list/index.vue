@@ -7,18 +7,25 @@
       <a-breadcrumb-item>{{ $t('menu.agent') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.model.agent.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-card class="general-card" :title="$t('menu.model.agent.list')" :bordered="false">
+    <a-card
+      class="general-card"
+      :title="$t('menu.model.agent.list')"
+      :bordered="false"
+    >
       <a-row>
         <a-col :flex="1">
           <a-form
             :model="formModel"
-            :label-col-props="{ span: 6 }"
+            :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="app_id" :label="$t('model.agent.form.appId')">
+                <a-form-item
+                  field="app_id"
+                  :label="$t('model.agent.form.appId')"
+                >
                   <a-input
                     v-model="formModel.app_id"
                     :placeholder="$t('model.agent.form.appId.placeholder')"
@@ -36,7 +43,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="models" :label="$t('model.agent.form.models')">
+                <a-form-item
+                  field="models"
+                  :label="$t('model.agent.form.models')"
+                >
                   <a-select
                     v-model="formModel.models"
                     :placeholder="$t('model.agent.form.selectDefault')"
@@ -64,7 +74,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('model.agent.form.status')">
+                <a-form-item
+                  field="status"
+                  :label="$t('model.agent.form.status')"
+                >
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
@@ -191,6 +204,12 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
       >
+        <template #model_names="{ record }">
+          {{ record?.model_names?.join(',') || '-' }}
+        </template>
+        <template #weight="{ record }">
+          {{ record.weight || '-' }}
+        </template>
         <template #status="{ record }">
           <span v-if="record.status === 2" class="circle red"></span>
           <span v-else class="circle"></span>
@@ -355,36 +374,51 @@
       title: t('model.agent.columns.name'),
       dataIndex: 'name',
       slotName: 'name',
+      align: 'center',
+      width: 200,
     },
     {
       title: t('model.agent.columns.baseUrl'),
       dataIndex: 'base_url',
       slotName: 'base_url',
+      align: 'center',
+      width: 200,
     },
     {
       title: t('model.agent.columns.models'),
       dataIndex: 'model_names',
       slotName: 'model_names',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('model.agent.columns.weight'),
       dataIndex: 'weight',
       slotName: 'weight',
+      align: 'center',
+      width: 80,
     },
     {
       title: t('model.agent.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
+      align: 'center',
+      width: 80,
     },
     {
       title: t('model.agent.columns.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
+      align: 'center',
+      width: 170,
     },
     {
       title: t('model.agent.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
+      align: 'center',
+      width: 250,
     },
   ]);
 
@@ -539,5 +573,8 @@
         color: rgb(var(--gray-8));
       }
     }
+  }
+  .arco-btn-size-small {
+    padding: 0 8px;
   }
 </style>

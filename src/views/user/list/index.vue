@@ -16,7 +16,7 @@
         <a-col :flex="1">
           <a-form
             :model="formModel"
-            :label-col-props="{ span: 6 }"
+            :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
           >
@@ -191,6 +191,9 @@
           <span v-else class="circle"></span>
           {{ $t(`user.dict.status.${record.status}`) }}
         </template>
+        <template #quota="{ record }">
+          {{ record.quota.toLocaleString() }}
+        </template>
         <template #operations="{ record }">
           <a-button
             type="text"
@@ -254,6 +257,7 @@
             >
               <a-input-number
                 v-model="formData.quota"
+                :precision="0"
                 :placeholder="$t('user.placeholder.quota')"
               />
             </a-form-item>
@@ -363,36 +367,46 @@
       title: t('user.columns.userId'),
       dataIndex: 'user_id',
       slotName: 'user_id',
+      align: 'center',
     },
     {
       title: t('user.columns.name'),
       dataIndex: 'name',
       slotName: 'name',
+      align: 'center',
     },
     {
       title: t('user.columns.email'),
       dataIndex: 'email',
       slotName: 'email',
+      align: 'center',
     },
     {
       title: t('user.columns.quota'),
       dataIndex: 'quota',
       slotName: 'quota',
+      align: 'center',
     },
     {
       title: t('user.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
+      align: 'center',
+      width: 80,
     },
     {
       title: t('user.columns.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
+      align: 'center',
+      width: 170,
     },
     {
       title: t('user.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
+      align: 'center',
+      width: 200,
     },
   ]);
 
@@ -589,5 +603,8 @@
         color: rgb(var(--gray-8));
       }
     }
+  }
+  .arco-btn-size-small {
+    padding: 0 8px;
   }
 </style>

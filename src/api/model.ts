@@ -103,6 +103,7 @@ export interface ModelDetail {
   data_format: number;
   is_enable_model_agent: boolean;
   model_agents: string[];
+  model_agent_names: string[];
   is_public: boolean;
   status: number;
   remark: string;

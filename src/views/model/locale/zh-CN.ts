@@ -66,6 +66,8 @@ export default {
   'model.detail.label.path': '模型路径',
   'model.detail.label.proxy': '代理',
   'model.detail.label.isPublic': '是否公开',
+  'model.detail.label.isEnableModelAgent': '启用代理',
+  'model.detail.label.modelAgentNames': '模型代理',
   'model.detail.label.created_at': '创建时间',
   'model.detail.label.updated_at': '更新时间',
   // search
@@ -112,4 +114,6 @@ export default {
   'model.dict.status.2': '禁用',
   'model.dict.is_public.true': '公开',
   'model.dict.is_public.false': '私有',
+  'model.dict.is_enable_model_agent.true': '启用',
+  'model.dict.is_enable_model_agent.false': '关闭',
 };
