@@ -247,6 +247,18 @@
           >
             {{ $t('app.columns.operations.manageKey') }}
           </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              appChangeStatus({
+                id: `${record.id}`,
+                status: Number(`${record.status}`),
+              })
+            "
+          >
+            {{ $t(`app.columns.operations.status.${record.status}`) }}
+          </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
             @ok="appDelete({ id: `${record.id}` })"
@@ -361,6 +373,8 @@
     AppCreateKeyParams,
     submitAppKeyConfig,
     AppKeyConfig,
+    AppChangeStatus,
+    submitAppChangeStatus,
   } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -398,7 +412,7 @@
     setLoading(true);
     try {
       await submitAppDelete(params);
-      fetchData();
+      search();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -505,7 +519,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 320,
+      width: 370,
     },
   ]);
 
@@ -553,8 +567,22 @@
   };
 
   fetchData();
+
   const reset = () => {
     formModel.value = generateFormModel();
+  };
+
+  const appChangeStatus = async (params: AppChangeStatus) => {
+    setLoading(true);
+    try {
+      params.status = params.status === 1 ? 2 : 1;
+      await submitAppChangeStatus(params);
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSelectDensity = (

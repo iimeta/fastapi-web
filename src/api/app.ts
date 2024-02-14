@@ -110,6 +110,7 @@ export interface AppUpdateBaseInfo {
   remark: string;
   status: number;
 }
+
 export interface AppUpdateAdvanced {
   models: string[];
   is_limit_quota: boolean;
@@ -122,6 +123,15 @@ export type AppUpdate = AppUpdateBaseInfo & AppUpdateAdvanced;
 
 export function submitAppUpdate(data: AppUpdate) {
   return axios.post('/api/v1/app/update', data);
+}
+
+export interface AppChangeStatus {
+  id: string;
+  status: number;
+}
+
+export function submitAppChangeStatus(data: AppChangeStatus) {
+  return axios.post('/api/v1/app/change/status', data);
 }
 
 export interface AppCreateKeyParams {

@@ -126,3 +126,12 @@ export type ModelAgentUpdate = ModelAgentUpdateBaseInfo & ModelAgentUpdateAdvanc
 export function submitModelAgentUpdate(data: ModelAgentUpdate) {
   return axios.post('/api/v1/model/agent/update', data);
 }
+
+export interface ModelAgentChangeStatus {
+  id: string;
+  status: number;
+}
+
+export function submitModelAgentChangeStatus(data: ModelAgentChangeStatus) {
+  return axios.post('/api/v1/model/agent/change/status', data);
+}

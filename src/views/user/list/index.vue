@@ -227,6 +227,18 @@
           >
             {{ $t('user.columns.operations.update') }}
           </a-button> -->
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              userChangeStatus({
+                id: `${record.id}`,
+                status: Number(`${record.status}`),
+              })
+            "
+          >
+            {{ $t(`user.columns.operations.status.${record.status}`) }}
+          </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
             @ok="userDelete({ id: `${record.id}` })"
@@ -283,6 +295,8 @@
     UserGrantQuotaParams,
     submitUserGrantQuota,
     UserGrantQuota,
+    UserChangeStatus,
+    submitUserChangeStatus,
   } from '@/api/user';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -307,7 +321,7 @@
     setLoading(true);
     try {
       await submitUserDelete(params);
-      fetchData();
+      search();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -408,7 +422,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 200,
+      width: 250,
     },
   ]);
 
@@ -456,8 +470,22 @@
   };
 
   fetchData();
+
   const reset = () => {
     formModel.value = generateFormModel();
+  };
+
+  const userChangeStatus = async (params: UserChangeStatus) => {
+    setLoading(true);
+    try {
+      params.status = params.status === 1 ? 2 : 1;
+      await submitUserChangeStatus(params);
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSelectDensity = (

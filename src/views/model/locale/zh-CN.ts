@@ -99,6 +99,8 @@ export default {
   'model.columns.operations.view': '查看',
   'model.columns.operations.update': '修改',
   'model.columns.operations.delete': '删除',
+  'model.columns.operations.status.1': '禁用',
+  'model.columns.operations.status.2': '启用',
   // dict
   'model.dict.corp.OpenAI': 'OpenAI',
   'model.dict.corp.Baidu': '百度',
@@ -115,5 +117,5 @@ export default {
   'model.dict.is_public.true': '公开',
   'model.dict.is_public.false': '私有',
   'model.dict.is_enable_model_agent.true': '启用',
-  'model.dict.is_enable_model_agent.false': '关闭',
+  'model.dict.is_enable_model_agent.false': '禁用',
 };

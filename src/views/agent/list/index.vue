@@ -253,9 +253,21 @@
           >
             {{ $t('model.agent.columns.operations.manageKey') }}
           </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              modelAgentChangeStatus({
+                id: `${record.id}`,
+                status: Number(`${record.status}`),
+              })
+            "
+          >
+            {{ $t(`key.columns.operations.status.${record.status}`) }}
+          </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="appDelete({ id: `${record.id}` })"
+            @ok="modelAgentDelete({ id: `${record.id}` })"
           >
             <a-button type="text" size="small">
               {{ $t('model.agent.columns.operations.delete') }}
@@ -277,6 +289,8 @@
     ModelAgentPageParams,
     submitModelAgentDelete,
     ModelAgentDeleteParams,
+    ModelAgentChangeStatus,
+    submitModelAgentChangeStatus,
   } from '@/api/agent';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -309,11 +323,11 @@
   };
   getModelList();
 
-  const appDelete = async (params: ModelAgentDeleteParams) => {
+  const modelAgentDelete = async (params: ModelAgentDeleteParams) => {
     setLoading(true);
     try {
       await submitModelAgentDelete(params);
-      fetchData();
+      search();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -420,7 +434,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 250,
+      width: 290,
     },
   ]);
 
@@ -468,8 +482,22 @@
   };
 
   fetchData();
+
   const reset = () => {
     formModel.value = generateFormModel();
+  };
+
+  const modelAgentChangeStatus = async (params: ModelAgentChangeStatus) => {
+    setLoading(true);
+    try {
+      params.status = params.status === 1 ? 2 : 1;
+      await submitModelAgentChangeStatus(params);
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSelectDensity = (

@@ -112,3 +112,12 @@ export type KeyUpdate = KeyUpdateBaseInfo & KeyUpdateAdvanced;
 export function submitKeyUpdate(data: KeyUpdate) {
   return axios.post('/api/v1/key/update', data);
 }
+
+export interface KeyChangeStatus {
+  id: string;
+  status: number;
+}
+
+export function submitKeyChangeStatus(data: KeyChangeStatus) {
+  return axios.post('/api/v1/key/change/status', data);
+}

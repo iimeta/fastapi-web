@@ -176,6 +176,15 @@ export function submitUserUpdate(data: UserUpdate) {
   return axios.post('/api/v1/user/update', data);
 }
 
+export interface UserChangeStatus {
+  id: string;
+  status: number;
+}
+
+export function submitUserChangeStatus(data: UserChangeStatus) {
+  return axios.post('/api/v1/user/change/status', data);
+}
+
 export interface UserGrantQuotaParams {
   user_id: any;
 }

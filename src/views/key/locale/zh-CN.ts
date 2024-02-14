@@ -86,6 +86,8 @@ export default {
   'key.columns.operations': '操作',
   'key.columns.operations.view': '查看',
   'key.columns.operations.update': '修改',
+  'key.columns.operations.status.1': '禁用',
+  'key.columns.operations.status.2': '启用',
   'key.columns.operations.delete': '删除',
   // dict
   'key.dict.corp.OpenAI': 'OpenAI',

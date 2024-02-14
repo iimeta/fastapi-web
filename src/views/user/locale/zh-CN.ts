@@ -93,6 +93,8 @@ export default {
   'user.columns.operations.delete': '删除',
   'user.columns.operations.grantQuota': '授予额度',
   'user.columns.operations.manageKey': '管理密钥',
+  'user.columns.operations.status.1': '禁用',
+  'user.columns.operations.status.2': '启用',
   // dict
   'user.dict.status.1': '正常',
   'user.dict.status.2': '禁用',

@@ -144,3 +144,12 @@ export type ModelUpdate = ModelUpdateBaseInfo & ModelUpdateAdvanced;
 export function submitModelUpdate(data: ModelUpdate) {
   return axios.post('/api/v1/model/update', data);
 }
+
+export interface ModelChangeStatus {
+  id: string;
+  status: number;
+}
+
+export function submitModelChangeStatus(data: ModelChangeStatus) {
+  return axios.post('/api/v1/model/change/status', data);
+}

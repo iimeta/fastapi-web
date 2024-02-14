@@ -90,6 +90,8 @@ export default {
   'app.columns.operations.delete': '删除',
   'app.columns.operations.createKey': '创建密钥',
   'app.columns.operations.manageKey': '管理密钥',
+  'app.columns.operations.status.1': '禁用',
+  'app.columns.operations.status.2': '启用',
   // dict
   'app.dict.status.1': '正常',
   'app.dict.status.2': '禁用',

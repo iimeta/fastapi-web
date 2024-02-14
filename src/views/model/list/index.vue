@@ -227,6 +227,18 @@
           >
             {{ $t('model.columns.operations.update') }}
           </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              modelChangeStatus({
+                id: `${record.id}`,
+                status: Number(`${record.status}`),
+              })
+            "
+          >
+            {{ $t(`model.columns.operations.status.${record.status}`) }}
+          </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
             @ok="modelDelete({ id: `${record.id}` })"
@@ -251,6 +263,8 @@
     ModelPageParams,
     submitModelDelete,
     ModelDeleteParams,
+    ModelChangeStatus,
+    submitModelChangeStatus,
   } from '@/api/model';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -274,7 +288,7 @@
     setLoading(true);
     try {
       await submitModelDelete(params);
-      fetchData();
+      search();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -379,7 +393,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 170,
+      width: 220,
     },
   ]);
   const corpOptions = computed<SelectOptionData[]>(() => [
@@ -461,8 +475,22 @@
   };
 
   fetchData();
+
   const reset = () => {
     formModel.value = generateFormModel();
+  };
+
+  const modelChangeStatus = async (params: ModelChangeStatus) => {
+    setLoading(true);
+    try {
+      params.status = params.status === 1 ? 2 : 1;
+      await submitModelChangeStatus(params);
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSelectDensity = (

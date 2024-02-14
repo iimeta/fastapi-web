@@ -246,6 +246,18 @@
           <a-button type="text" size="small" @click="updateKey(record)">
             {{ $t('key.columns.operations.update') }}
           </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              keyChangeStatus({
+                id: `${record.id}`,
+                status: Number(`${record.status}`),
+              })
+            "
+          >
+            {{ $t(`key.columns.operations.status.${record.status}`) }}
+          </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
             @ok="keyDelete({ id: `${record.id}` })"
@@ -357,6 +369,8 @@
     KeyPageParams,
     submitKeyDelete,
     KeyDeleteParams,
+    KeyChangeStatus,
+    submitKeyChangeStatus,
   } from '@/api/key';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -412,7 +426,7 @@
     setLoading(true);
     try {
       await submitKeyDelete(params);
-      fetchData();
+      search();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -517,7 +531,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 170,
+      width: 220,
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
@@ -568,8 +582,22 @@
   };
 
   fetchData();
+
   const reset = () => {
     formModel.value = generateFormModel();
+  };
+
+  const keyChangeStatus = async (params: KeyChangeStatus) => {
+    setLoading(true);
+    try {
+      params.status = params.status === 1 ? 2 : 1;
+      await submitKeyChangeStatus(params);
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSelectDensity = (
