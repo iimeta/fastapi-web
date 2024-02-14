@@ -203,6 +203,7 @@
         :size="size"
         :row-selection="rowSelection"
         @page-change="onPageChange"
+        @page-size-change="onPageSizeChange"
       >
         <template #model_names="{ record }">
           {{ record?.model_names?.join(',') || '-' }}
@@ -344,6 +345,7 @@
     current: 1,
     pageSize: 10,
     showTotal: true,
+    showPageSize: true,
   };
 
   const pagination = reactive({
@@ -441,6 +443,7 @@
       const { data } = await queryModelAgentPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
+      pagination.pageSize = params.pageSize;
       pagination.total = data.paging.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -455,8 +458,13 @@
       ...formModel.value,
     } as unknown as ModelAgentPageParams);
   };
+
   const onPageChange = (current: number) => {
     fetchData({ ...basePagination, ...formModel.value, current });
+  };
+
+  const onPageSizeChange = (pageSize: number) => {
+    fetchData({ ...basePagination, ...formModel.value, pageSize });
   };
 
   fetchData();

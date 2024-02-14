@@ -3,7 +3,7 @@
     ref="formRef"
     :model="formData"
     class="form"
-    :label-col-props="{ span: 5 }"
+    :label-col-props="{ span: 4 }"
     :wrapper-col-props="{ span: 18 }"
   >
     <a-form-item
@@ -113,7 +113,7 @@
   }
 
   .form {
-    width: 500px;
+    width: 650px;
   }
 
   .form-content {

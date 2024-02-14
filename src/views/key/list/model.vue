@@ -218,6 +218,7 @@
         :size="size"
         :row-selection="rowSelection"
         @page-change="onPageChange"
+        @page-size-change="onPageSizeChange"
       >
         <template #type="{ record }">
           {{ $t(`key.dict.type.${record.type}`) }}
@@ -274,6 +275,7 @@
 
 <script lang="ts" setup>
   import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
@@ -296,6 +298,7 @@
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
+  const route = useRoute();
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -364,6 +367,7 @@
     current: 1,
     pageSize: 10,
     showTotal: true,
+    showPageSize: true,
   };
   const pagination = reactive({
     ...basePagination,
@@ -465,14 +469,26 @@
       value: 2,
     },
   ]);
+
+  const modelAgentId = new Array(0);
+  if (route.query.agent_id) {
+    modelAgentId[0] = route.query.agent_id;
+  }
+
   const fetchData = async (
-    params: KeyPageParams = { current: 1, pageSize: 10, type: 2 }
+    params: KeyPageParams = {
+      current: 1,
+      pageSize: 10,
+      type: 2,
+      model_agents: modelAgentId,
+    }
   ) => {
     setLoading(true);
     try {
       const { data } = await queryKeyPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
+      pagination.pageSize = params.pageSize;
       pagination.total = data.paging.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -487,8 +503,13 @@
       ...formModel.value,
     } as unknown as KeyPageParams);
   };
+
   const onPageChange = (current: number) => {
     fetchData({ ...basePagination, ...formModel.value, current });
+  };
+
+  const onPageSizeChange = (pageSize: number) => {
+    fetchData({ ...basePagination, ...formModel.value, pageSize });
   };
 
   fetchData();

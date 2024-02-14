@@ -202,6 +202,7 @@
         :size="size"
         :row-selection="rowSelection"
         @page-change="onPageChange"
+        @page-size-change="onPageSizeChange"
       >
         <template #quota="{ record }">
           <span v-if="record.is_limit_quota">
@@ -443,6 +444,7 @@
     current: 1,
     pageSize: 10,
     showTotal: true,
+    showPageSize: true,
   };
   const pagination = reactive({
     ...basePagination,
@@ -541,6 +543,7 @@
       const { data } = await queryKeyPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
+      pagination.pageSize = params.pageSize;
       pagination.total = data.paging.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -555,8 +558,13 @@
       ...formModel.value,
     } as unknown as KeyPageParams);
   };
+
   const onPageChange = (current: number) => {
     fetchData({ ...basePagination, ...formModel.value, current });
+  };
+
+  const onPageSizeChange = (pageSize: number) => {
+    fetchData({ ...basePagination, ...formModel.value, pageSize });
   };
 
   fetchData();
