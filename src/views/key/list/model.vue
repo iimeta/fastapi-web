@@ -226,6 +226,9 @@
         <template #corp="{ record }">
           {{ $t(`key.dict.corp.${record.corp}`) }}
         </template>
+        <template #model_names="{ record }">
+          {{ record?.model_names?.join(',') || '-' }}
+        </template>
         <template #dataFormat="{ record }">
           {{ $t(`key.dict.data_format.${record.data_format}`) }}
         </template>
