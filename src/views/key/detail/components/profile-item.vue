@@ -85,35 +85,49 @@
       ] as DescData[],
     });
 
-    result.push({
-      title: t('key.detail.title.advanced'),
-      data: [
-        {
-          label: t('key.detail.label.models'),
-          value: renderData?.model_names?.join('\n') || '-',
-        },
-        {
-          label: t('key.detail.label.modelAgentNames'),
-          value: renderData?.model_agent_names?.join('\n') || '-',
-        },
-        {
-          label:
-            renderData.type === 1 ? t('key.detail.label.ip_whitelist') : '',
-          value:
-            renderData.type === 1
-              ? renderData.ip_whitelist?.join('\n') || '-'
-              : '',
-        },
-        {
-          label:
-            renderData.type === 1 ? t('key.detail.label.ip_blacklist') : '',
-          value:
-            renderData.type === 1
-              ? renderData.ip_blacklist?.join('\n') || '-'
-              : '',
-        },
-      ] as DescData[],
-    });
+    if (renderData.type === 1) {
+      result.push({
+        title: t('key.detail.title.advanced'),
+        data: [
+          {
+            label: t('key.detail.label.models'),
+            value: renderData?.model_names?.join('\n') || '-',
+          },
+          {
+            label: t('key.detail.label.ip_whitelist'),
+            value: renderData.ip_whitelist?.join('\n') || '-',
+          },
+          {
+            label:
+              renderData.type === 1 ? t('key.detail.label.ip_blacklist') : '',
+            value:
+              renderData.type === 1
+                ? renderData.ip_blacklist?.join('\n') || '-'
+                : '',
+          },
+        ] as DescData[],
+      });
+    }
+
+    if (renderData.type === 2) {
+      result.push({
+        title: t('key.detail.title.advanced'),
+        data: [
+          {
+            label: t('key.detail.label.models'),
+            value: renderData?.model_names?.join('\n') || '-',
+          },
+          {
+            label: t('key.detail.label.modelAgentNames'),
+            value: renderData?.model_agent_names?.join('\n') || '-',
+          },
+          {
+            label: t('key.detail.label.isAgentsOnly'),
+            value: t(`key.dict.is_agents_only.${renderData.is_agents_only}`),
+          },
+        ] as DescData[],
+      });
+    }
 
     return result;
   });

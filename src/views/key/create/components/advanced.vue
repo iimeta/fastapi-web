@@ -46,6 +46,9 @@
         />
       </a-select>
     </a-form-item>
+    <a-form-item field="is_agents_only" :label="$t('key.label.isAgentsOnly')">
+      <a-switch v-model="formData.is_agents_only" />
+    </a-form-item>
     <a-form-item>
       <a-space>
         <a-button type="secondary" @click="goPrev">
@@ -104,6 +107,7 @@
   const formData = ref<KeyCreateAdvanced>({
     models: [],
     model_agents: [],
+    is_agents_only: false,
   });
 
   const onNextClick = async () => {

@@ -27,6 +27,7 @@ export default {
   'key.placeholder.models': '绑定模型, 可同时绑定多个模型',
   'key.label.modelAgents': '绑定代理',
   'key.placeholder.modelAgents': '绑定代理, 可同时绑定多个代理',
+  'key.label.isAgentsOnly': '代理专用',
   'key.label.remark': '备注',
   'key.placeholder.remark': '备注',
   'key.success.title': '提交成功',
@@ -49,6 +50,7 @@ export default {
   'key.detail.label.remark': '备注',
   'key.detail.label.models': '绑定模型',
   'key.detail.label.modelAgentNames': '绑定代理',
+  'key.detail.label.isAgentsOnly': '代理专用',
   'key.detail.label.ip_whitelist': 'IP白名单',
   'key.detail.label.ip_blacklist': 'IP黑名单',
   'key.detail.label.created_at': '创建时间',
@@ -102,4 +104,6 @@ export default {
   'key.dict.data_format.2': '官方格式',
   'key.dict.status.1': '正常',
   'key.dict.status.2': '禁用',
+  'key.dict.is_agents_only.true': '是',
+  'key.dict.is_agents_only.false': '否',
 };

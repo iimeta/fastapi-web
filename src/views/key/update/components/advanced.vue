@@ -46,6 +46,9 @@
         />
       </a-select>
     </a-form-item>
+    <a-form-item field="is_agents_only" :label="$t('key.label.isAgentsOnly')">
+      <a-switch v-model="formData.is_agents_only" />
+    </a-form-item>
     <a-form-item>
       <a-space>
         <a-button type="secondary" @click="goPrev">
@@ -110,6 +113,7 @@
   const formData = ref<KeyUpdateAdvanced>({
     models: [],
     model_agents: [],
+    is_agents_only: false,
   });
 
   const getKeyDetail = async (
@@ -120,6 +124,7 @@
       const { data } = await queryKeyDetail(params);
       formData.value.models = data.models;
       formData.value.model_agents = data.model_agents;
+      formData.value.is_agents_only = data.is_agents_only;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
