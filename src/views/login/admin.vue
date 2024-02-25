@@ -57,7 +57,7 @@
 
 <style lang="less" scoped>
   .root {
-    background-image: url(https://z1.ax1x.com/2023/09/27/pPbnTOK.jpg);
+    background-image: url(https://www.fastapi.ai/bgimg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 100vh;
