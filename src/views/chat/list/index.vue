@@ -245,22 +245,20 @@
           </a-button>
         </template>
       </a-table>
+
       <!-- 详情区域 -->
       <a-drawer
-        :title="$t('chat.detail.title.chatInfo')"
+        title="日志详情"
         :visible="visible"
-        :width="660"
+        :width="700"
         :footer="false"
         unmount-on-close
         render-to-body
         @cancel="handleCancel"
       >
         <div style="margin: 10px 0 0 10px">
-          <a-descriptions :column="2" bordered>
-            <a-descriptions-item
-              :label="$t('chat.detail.label.trace_id')"
-              :span="2"
-            >
+          <a-descriptions v-permission="['user']" :column="2" bordered>
+            <a-descriptions-item label="Trace ID" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -272,10 +270,7 @@
                 />
               </span>
             </a-descriptions-item>
-            <a-descriptions-item
-              :label="$t('chat.detail.label.creator')"
-              :span="2"
-            >
+            <a-descriptions-item label="调用密钥" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -287,49 +282,37 @@
                 />
               </span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.user_id')">
+            <a-descriptions-item label="用户ID">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.user_id || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="应用ID">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.app_id || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="公司">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.user_id }}</span>
+              <span v-else>{{ currentData.corp || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.app_id')">
+            <a-descriptions-item label="模型">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.app_id }}</span>
+              <span v-else>{{ currentData.model || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.corp')">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.corp }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.model_id')">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.model_id }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.name')">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.name }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.model')">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.model }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.type')">
+            <a-descriptions-item label="模型类型">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ $t(`chat.dict.type.${currentData.type}`) }}</span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.stream')">
+            <a-descriptions-item label="流式">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -337,9 +320,221 @@
                 $t(`chat.dict.stream.${currentData.stream}`)
               }}</span>
             </a-descriptions-item>
-            <a-descriptions-item
-              :label="$t('chat.detail.label.is_enable_model_agent')"
-            >
+            <a-descriptions-item label="提问" :span="2">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.prompt || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="回答" :span="2">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.completion || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="提问倍率">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.prompt_ratio || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="回答倍率">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.completion_ratio || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="提问令牌数">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.prompt_tokens || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="回答令牌数">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.completion_tokens || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="总消耗令牌数">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.total_tokens || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="结果">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                $t(`chat.dict.status.${currentData.status}`)
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="连接耗时">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>
+                <a-tag v-if="currentData.conn_time > 1500" color="red">
+                  {{ currentData.conn_time || '-' }} ms
+                </a-tag>
+                <a-tag v-else-if="currentData.conn_time > 1000" color="orange">
+                  {{ currentData.conn_time || '-' }} ms
+                </a-tag>
+                <a-tag v-else color="green"
+                  >{{ currentData.conn_time || '-' }} ms</a-tag
+                >
+              </span>
+            </a-descriptions-item>
+            <a-descriptions-item label="持续时长">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>
+                <a-tag v-if="currentData.duration > 90000" color="red">
+                  {{ currentData.duration || '-' }} ms
+                </a-tag>
+                <a-tag v-else-if="currentData.duration > 60000" color="orange">
+                  {{ currentData.duration || '-' }} ms
+                </a-tag>
+                <a-tag v-else color="green"
+                  >{{ currentData.duration || '-' }} ms</a-tag
+                >
+              </span>
+            </a-descriptions-item>
+            <a-descriptions-item label="总耗时">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>
+                <a-tag v-if="currentData.total_time > 120000" color="red">
+                  {{ currentData.total_time || '-' }} ms
+                </a-tag>
+                <a-tag
+                  v-else-if="currentData.total_time > 60000"
+                  color="orange"
+                >
+                  {{ currentData.total_time || '-' }} ms
+                </a-tag>
+                <a-tag v-else color="green"
+                  >{{ currentData.total_time || '-' }} ms</a-tag
+                >
+              </span>
+            </a-descriptions-item>
+            <a-descriptions-item label="内耗">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>
+                <a-tag v-if="currentData.internal_time > 500" color="red">
+                  {{ currentData.internal_time || '-' }} ms
+                </a-tag>
+                <a-tag
+                  v-else-if="currentData.internal_time > 100"
+                  color="orange"
+                >
+                  {{ currentData.internal_time || '-' }} ms
+                </a-tag>
+                <a-tag v-else color="green"
+                  >{{ currentData.internal_time || '-' }} ms</a-tag
+                >
+              </span>
+            </a-descriptions-item>
+            <a-descriptions-item label="客户端IP">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.client_ip || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="请求时间">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.req_time || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="错误信息" :span="2">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.err_msg || '-' }}</span>
+            </a-descriptions-item>
+          </a-descriptions>
+          <a-descriptions v-permission="['admin']" :column="2" bordered>
+            <a-descriptions-item label="Trace ID" :span="2">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>
+                {{ currentData.trace_id }}
+                <icon-copy
+                  class="copy-btn"
+                  @click="handleCopy(currentData.trace_id)"
+                />
+              </span>
+            </a-descriptions-item>
+            <a-descriptions-item label="调用密钥" :span="2">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>
+                {{ currentData.creator }}
+                <icon-copy
+                  class="copy-btn"
+                  @click="handleCopy(currentData.creator)"
+                />
+              </span>
+            </a-descriptions-item>
+            <a-descriptions-item label="用户ID">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.user_id || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="应用ID">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.app_id || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="公司">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.corp || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="模型名称">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.name || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="模型类型">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ $t(`chat.dict.type.${currentData.type}`) }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="模型">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.model || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="流式">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                $t(`chat.dict.stream.${currentData.stream}`)
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="模型ID">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.model_id || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="启用代理">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -351,73 +546,67 @@
                 )
               }}</span>
             </a-descriptions-item>
-            <a-descriptions-item
-              :label="$t('chat.detail.label.model_agent_id')"
-            >
+            <a-descriptions-item label="代理名称">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData?.model_agent?.name || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="密钥" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.model_agent_id }}</span>
+              <span v-else>
+                {{ currentData.key || '-' }}
+                <icon-copy
+                  class="copy-btn"
+                  @click="handleCopy(currentData.key)"
+                />
+              </span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.key')" :span="2">
+            <a-descriptions-item label="提问" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.key }}</span>
+              <span v-else>{{ currentData.prompt || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item
-              :label="$t('chat.detail.label.prompt')"
-              :span="2"
-            >
+            <a-descriptions-item label="回答" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.prompt }}</span>
+              <span v-else>{{ currentData.completion || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item
-              :label="$t('chat.detail.label.completion')"
-              :span="2"
-            >
+            <a-descriptions-item label="提问倍率">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.completion }}</span>
+              <span v-else>{{ currentData.prompt_ratio || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.prompt_ratio')">
+            <a-descriptions-item label="回答倍率">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.prompt_ratio }}</span>
+              <span v-else>{{ currentData.completion_ratio || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item
-              :label="$t('chat.detail.label.completion_ratio')"
-            >
+            <a-descriptions-item label="提问令牌数">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.completion_ratio }}</span>
+              <span v-else>{{ currentData.prompt_tokens || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.prompt_tokens')">
+            <a-descriptions-item label="回答令牌数">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.prompt_tokens }}</span>
+              <span v-else>{{ currentData.completion_tokens || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item
-              :label="$t('chat.detail.label.completion_tokens')"
-            >
+            <a-descriptions-item label="总消耗令牌数">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.completion_tokens }}</span>
+              <span v-else>{{ currentData.total_tokens || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.total_tokens')">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.total_tokens }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.status')">
+            <a-descriptions-item label="结果">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -425,102 +614,105 @@
                 $t(`chat.dict.status.${currentData.status}`)
               }}</span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.conn_time')">
+            <a-descriptions-item label="连接耗时">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
                 <a-tag v-if="currentData.conn_time > 1500" color="red">
-                  {{ currentData.conn_time }} ms
+                  {{ currentData.conn_time || '-' }} ms
                 </a-tag>
                 <a-tag v-else-if="currentData.conn_time > 1000" color="orange">
-                  {{ currentData.conn_time }} ms
+                  {{ currentData.conn_time || '-' }} ms
                 </a-tag>
                 <a-tag v-else color="green"
-                  >{{ currentData.conn_time }} ms</a-tag
+                  >{{ currentData.conn_time || '-' }} ms</a-tag
                 >
               </span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.duration')">
+            <a-descriptions-item label="持续时长">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
                 <a-tag v-if="currentData.duration > 90000" color="red">
-                  {{ currentData.duration }} ms
+                  {{ currentData.duration || '-' }} ms
                 </a-tag>
                 <a-tag v-else-if="currentData.duration > 60000" color="orange">
-                  {{ currentData.duration }} ms
+                  {{ currentData.duration || '-' }} ms
                 </a-tag>
                 <a-tag v-else color="green"
-                  >{{ currentData.duration }} ms</a-tag
+                  >{{ currentData.duration || '-' }} ms</a-tag
                 >
               </span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.total_time')">
+            <a-descriptions-item label="总耗时">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
                 <a-tag v-if="currentData.total_time > 120000" color="red">
-                  {{ currentData.total_time }} ms
+                  {{ currentData.total_time || '-' }} ms
                 </a-tag>
                 <a-tag
                   v-else-if="currentData.total_time > 60000"
                   color="orange"
                 >
-                  {{ currentData.total_time }} ms
+                  {{ currentData.total_time || '-' }} ms
                 </a-tag>
                 <a-tag v-else color="green"
-                  >{{ currentData.total_time }} ms</a-tag
+                  >{{ currentData.total_time || '-' }} ms</a-tag
                 >
               </span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.internal_time')">
+            <a-descriptions-item label="内耗">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
                 <a-tag v-if="currentData.internal_time > 500" color="red">
-                  {{ currentData.internal_time }} ms
+                  {{ currentData.internal_time || '-' }} ms
                 </a-tag>
                 <a-tag
                   v-else-if="currentData.internal_time > 100"
                   color="orange"
                 >
-                  {{ currentData.internal_time }} ms
+                  {{ currentData.internal_time || '-' }} ms
                 </a-tag>
                 <a-tag v-else color="green"
-                  >{{ currentData.internal_time }} ms</a-tag
+                  >{{ currentData.internal_time || '-' }} ms</a-tag
                 >
               </span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.req_time')">
+            <a-descriptions-item label="客户端IP">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
+                <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.req_time }}</span>
+              <span v-else>{{ currentData.client_ip || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.client_ip')">
+            <a-descriptions-item label="远程IP">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
+                <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.client_ip }}</span>
+              <span v-else>{{ currentData.remote_ip || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item :label="$t('chat.detail.label.remote_ip')">
+            <a-descriptions-item label="请求时间">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
+                <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.remote_ip }}</span>
+              <span v-else>{{ currentData.req_time || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item
-              :label="$t('chat.detail.label.err_msg')"
-              :span="2"
-            >
+            <a-descriptions-item label="创建时间">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.created_at || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="错误信息" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.err_msg }}</span>
+              <span v-else>{{ currentData.err_msg || '-' }}</span>
             </a-descriptions-item>
           </a-descriptions>
           <a-descriptions
@@ -530,7 +722,7 @@
           >
             <a-descriptions-item :span="2">
               <a-tabs type="card">
-                <a-tab-pane key="1" :title="$t('chat.detail.label.messages')">
+                <a-tab-pane key="1" title="提问上下文">
                   <a-skeleton v-if="loading" :animation="true">
                     <a-skeleton-line :rows="3" />
                   </a-skeleton>
@@ -555,10 +747,7 @@
           >
             <a-descriptions-item :span="2">
               <a-tabs type="card">
-                <a-tab-pane
-                  key="1"
-                  :title="$t('chat.detail.label.model_agent')"
-                >
+                <a-tab-pane key="1" title="模型代理">
                   <a-skeleton v-if="loading" :animation="true">
                     <a-skeleton-line :rows="3" />
                   </a-skeleton>
