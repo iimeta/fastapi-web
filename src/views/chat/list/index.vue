@@ -489,7 +489,7 @@
                     <VueJsonPretty
                       v-if="currentData.messages"
                       :path="'res'"
-                      :data="JSON.parse(currentData.messages)"
+                      :data="currentData.messages"
                       :show-length="true"
                     />
                     <span v-else>无</span>
@@ -499,6 +499,7 @@
             </a-descriptions-item>
           </a-descriptions>
           <a-descriptions
+            v-permission="['admin']"
             layout="inline-vertical"
             :column="2"
             style="margin-top: 10px; position: relative"
@@ -512,7 +513,7 @@
                   <a-space v-else>
                     <VueJsonPretty
                       v-if="currentData.model_agent"
-                      :data="JSON.parse(currentData.model_agent)"
+                      :data="currentData.model_agent"
                       :show-length="true"
                     />
                     <span v-else>无</span>
@@ -555,6 +556,8 @@
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList } from '@/api/model';
   import { useClipboard } from '@vueuse/core';
+  import VueJsonPretty from 'vue-json-pretty';
+  import 'vue-json-pretty/lib/styles.css';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -594,7 +597,7 @@
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
 
-  const size = ref<SizeProps>('medium');
+  const size = ref<SizeProps>('small');
 
   const basePagination: Pagination = {
     current: 1,
@@ -629,14 +632,14 @@
       dataIndex: 'user_id',
       slotName: 'user_id',
       align: 'center',
-      width: 80,
+      width: 75,
     },
     {
       title: t('chat.columns.app_id'),
       dataIndex: 'app_id',
       slotName: 'app_id',
       align: 'center',
-      width: 80,
+      width: 75,
     },
     {
       title: t('chat.columns.model'),
@@ -697,21 +700,21 @@
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
-      width: 80,
+      width: 75,
     },
     {
       title: t('chat.columns.req_time'),
       dataIndex: 'req_time',
       slotName: 'req_time',
       align: 'center',
-      width: 170,
+      width: 132,
     },
     {
       title: t('chat.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 80,
+      width: 75,
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
