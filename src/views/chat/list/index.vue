@@ -21,11 +21,27 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="8">
+              <a-col v-permission="['user']" :span="8">
                 <a-form-item field="app_id" :label="$t('chat.form.app_id')">
-                  <a-input
+                  <a-select
                     v-model="formModel.app_id"
-                    :placeholder="$t('chat.form.app_id.placeholder')"
+                    :placeholder="$t('chat.form.selectDefault')"
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in apps"
+                      :key="item.app_id"
+                      :value="item.app_id"
+                      :label="item.name"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['admin']" :span="8">
+                <a-form-item field="user_id" :label="$t('chat.form.user_id')">
+                  <a-input
+                    v-model="formModel.user_id"
+                    :placeholder="$t('chat.form.user_id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -231,7 +247,7 @@
       </a-table>
       <!-- 详情区域 -->
       <a-drawer
-        title="日志详情"
+        :title="$t('chat.detail.title.chatInfo')"
         :visible="visible"
         :width="660"
         :footer="false"
@@ -241,9 +257,12 @@
       >
         <div style="margin: 10px 0 0 10px">
           <a-descriptions :column="2" bordered>
-            <a-descriptions-item label="日志ID" :span="2">
+            <a-descriptions-item
+              :label="$t('chat.detail.label.trace_id')"
+              :span="2"
+            >
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
                 {{ currentData.trace_id }}
@@ -253,9 +272,12 @@
                 />
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="调用密钥" :span="2">
+            <a-descriptions-item
+              :label="$t('chat.detail.label.creator')"
+              :span="2"
+            >
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
                 {{ currentData.creator }}
@@ -265,123 +287,147 @@
                 />
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="用户ID">
+            <a-descriptions-item :label="$t('chat.detail.label.user_id')">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.user_id }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="应用ID">
+            <a-descriptions-item :label="$t('chat.detail.label.app_id')">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.app_id }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="公司">
+            <a-descriptions-item :label="$t('chat.detail.label.corp')">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.corp }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="模型ID">
+            <a-descriptions-item :label="$t('chat.detail.label.model_id')">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.model_id }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="模型名称">
+            <a-descriptions-item :label="$t('chat.detail.label.name')">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.name }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="模型">
+            <a-descriptions-item :label="$t('chat.detail.label.model')">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.model }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="模型类型">
+            <a-descriptions-item :label="$t('chat.detail.label.type')">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.type }}</span>
+              <span v-else>{{ $t(`chat.dict.type.${currentData.type}`) }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="流式">
+            <a-descriptions-item :label="$t('chat.detail.label.stream')">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.stream }}</span>
+              <span v-else>{{
+                $t(`chat.dict.stream.${currentData.stream}`)
+              }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="启用代理">
+            <a-descriptions-item
+              :label="$t('chat.detail.label.is_enable_model_agent')"
+            >
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.is_enable_model_agent }}</span>
+              <span v-else>{{
+                $t(
+                  `chat.dict.is_enable_model_agent.${
+                    currentData.is_enable_model_agent || false
+                  }`
+                )
+              }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="代理ID">
+            <a-descriptions-item
+              :label="$t('chat.detail.label.model_agent_id')"
+            >
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.model_agent_id }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="密钥" :span="2">
+            <a-descriptions-item :label="$t('chat.detail.label.key')" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.key }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="提问" :span="2">
+            <a-descriptions-item
+              :label="$t('chat.detail.label.prompt')"
+              :span="2"
+            >
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.prompt }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="回答" :span="2">
+            <a-descriptions-item
+              :label="$t('chat.detail.label.completion')"
+              :span="2"
+            >
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.completion }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="提问倍率">
+            <a-descriptions-item :label="$t('chat.detail.label.prompt_ratio')">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.prompt_ratio }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="回答倍率">
+            <a-descriptions-item
+              :label="$t('chat.detail.label.completion_ratio')"
+            >
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.completion_ratio }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="提问令牌数">
+            <a-descriptions-item :label="$t('chat.detail.label.prompt_tokens')">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.prompt_tokens }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="回答令牌数">
+            <a-descriptions-item
+              :label="$t('chat.detail.label.completion_tokens')"
+            >
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.completion_tokens }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="总令牌数">
+            <a-descriptions-item :label="$t('chat.detail.label.total_tokens')">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.total_tokens }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="状态">
+            <a-descriptions-item :label="$t('chat.detail.label.status')">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.status }}</span>
+              <span v-else>{{
+                $t(`chat.dict.status.${currentData.status}`)
+              }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="连接时间">
+            <a-descriptions-item :label="$t('chat.detail.label.conn_time')">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
                 <a-tag v-if="currentData.conn_time > 1500" color="red">
@@ -395,9 +441,9 @@
                 >
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="持续时间">
+            <a-descriptions-item :label="$t('chat.detail.label.duration')">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
                 <a-tag v-if="currentData.duration > 90000" color="red">
@@ -411,9 +457,9 @@
                 >
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="总时间">
+            <a-descriptions-item :label="$t('chat.detail.label.total_time')">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
                 <a-tag v-if="currentData.total_time > 120000" color="red">
@@ -430,9 +476,9 @@
                 >
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="内耗时间">
+            <a-descriptions-item :label="$t('chat.detail.label.internal_time')">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
                 <a-tag v-if="currentData.internal_time > 500" color="red">
@@ -449,27 +495,30 @@
                 >
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="请求时间">
+            <a-descriptions-item :label="$t('chat.detail.label.req_time')">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.req_time }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="客户端IP">
+            <a-descriptions-item :label="$t('chat.detail.label.client_ip')">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.client_ip }}</span>
             </a-descriptions-item>
-            <a-descriptions-item v-permission="['admin']" label="远程IP">
+            <a-descriptions-item :label="$t('chat.detail.label.remote_ip')">
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.remote_ip }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="错误信息" :span="2">
+            <a-descriptions-item
+              :label="$t('chat.detail.label.err_msg')"
+              :span="2"
+            >
               <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
+                <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.err_msg }}</span>
             </a-descriptions-item>
@@ -481,7 +530,7 @@
           >
             <a-descriptions-item :span="2">
               <a-tabs type="card">
-                <a-tab-pane key="1" title="完整提问">
+                <a-tab-pane key="1" :title="$t('chat.detail.label.messages')">
                   <a-skeleton v-if="loading" :animation="true">
                     <a-skeleton-line :rows="3" />
                   </a-skeleton>
@@ -506,7 +555,10 @@
           >
             <a-descriptions-item :span="2">
               <a-tabs type="card">
-                <a-tab-pane key="1" title="模型代理信息">
+                <a-tab-pane
+                  key="1"
+                  :title="$t('chat.detail.label.model_agent')"
+                >
                   <a-skeleton v-if="loading" :animation="true">
                     <a-skeleton-line :rows="3" />
                   </a-skeleton>
@@ -546,6 +598,7 @@
     queryChatDetail,
     ChatDetail,
   } from '@/api/chat';
+  import { queryAppList, AppList } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -568,6 +621,18 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
+  const apps = ref<AppList[]>([]);
+
+  const getAppList = async () => {
+    try {
+      const { data } = await queryAppList();
+      apps.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getAppList();
+
   const models = ref<ModelList[]>([]);
 
   const getModelList = async () => {
@@ -583,6 +648,7 @@
   const generateFormModel = () => {
     return {
       app_id: ref(),
+      user_id: ref(),
       key: '',
       models: [],
       total_time: ref(),
@@ -597,7 +663,7 @@
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
 
-  const size = ref<SizeProps>('small');
+  const size = ref<SizeProps>('medium');
 
   const basePagination: Pagination = {
     current: 1,
@@ -626,18 +692,17 @@
       value: 'large',
     },
   ]);
+
+  const userRole = localStorage.getItem('userRole');
+
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('chat.columns.user_id'),
-      dataIndex: 'user_id',
-      slotName: 'user_id',
-      align: 'center',
-      width: 75,
-    },
-    {
-      title: t('chat.columns.app_id'),
-      dataIndex: 'app_id',
-      slotName: 'app_id',
+      title:
+        userRole === 'admin'
+          ? t('chat.columns.user_id')
+          : t('chat.columns.app_id'),
+      dataIndex: userRole === 'admin' ? 'user_id' : 'app_id',
+      slotName: userRole === 'admin' ? 'user_id' : 'app_id',
       align: 'center',
       width: 75,
     },
