@@ -32,9 +32,12 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useUserStore } from '@/store';
   import Footer from '@/components/footer/index.vue';
   import AccountLogin from './components/admin-login.vue';
   import Forget from './components/forget.vue';
+
+  useUserStore().logout();
 
   const isRegister = ref(false);
   const isForget = ref(false);

@@ -52,9 +52,13 @@ axios.interceptors.response.use(
           okText: '重新登录',
           async onOk() {
             const userStore = useUserStore();
-
-            await userStore.logout();
-            window.location.reload();
+            if (userStore.role === 'admin') {
+              await userStore.logout();
+              window.location.href = '/admin';
+            } else {
+              await userStore.logout();
+              window.location.reload();
+            }
           },
         });
       }
@@ -62,32 +66,27 @@ axios.interceptors.response.use(
     }
     return res;
   },
-  (error) => {
-    let { message } = error.message;
-
+  async (error) => {
     if ([401, 403].includes(error.response.status)) {
-      message = '会话超时, 请重新登录';
-    }
+      if (error.config.url !== '/api/v1/user/info') {
+        Message.error({
+          content: '会话超时, 请重新登录',
+          duration: 5 * 1000,
+        });
+      }
 
-    Message.error({
-      content: message || 'Request Error',
-      duration: 5 * 1000,
-    });
-
-    if (
-      [401, 403].includes(error.response.status) &&
-      error.config.url !== '/api/v1/user/info'
-    ) {
-      Modal.error({
-        title: '会话超时',
-        content: '会话超时, 请重新登录',
-        okText: '重新登录',
-        async onOk() {
-          const userStore = useUserStore();
-
-          await userStore.logout();
-          window.location.reload();
-        },
+      const userStore = useUserStore();
+      if (userStore.role === 'admin') {
+        await userStore.logout();
+        window.location.href = '/admin';
+      } else {
+        await userStore.logout();
+        window.location.reload();
+      }
+    } else {
+      Message.error({
+        content: error.message || 'Request Error',
+        duration: 5 * 1000,
       });
     }
 
