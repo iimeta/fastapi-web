@@ -150,62 +150,14 @@
         </a-col>
         <a-col
           :span="12"
-          style="display: flex; align-items: center; justify-content: end"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            height: 32px;
+          "
         >
-          <a-tooltip :content="$t('searchTable.actions.refresh')">
-            <div class="action-icon" @click="search"
-              ><icon-refresh size="18"
-            /></div>
-          </a-tooltip>
-          <a-dropdown @select="handleSelectDensity">
-            <a-tooltip :content="$t('searchTable.actions.density')">
-              <div class="action-icon"><icon-line-height size="18" /></div>
-            </a-tooltip>
-            <template #content>
-              <a-doption
-                v-for="item in densityList"
-                :key="item.value"
-                :value="item.value"
-                :class="{ active: item.value === size }"
-              >
-                <span>{{ item.name }}</span>
-              </a-doption>
-            </template>
-          </a-dropdown>
-          <a-tooltip :content="$t('searchTable.actions.columnSetting')">
-            <a-popover
-              trigger="click"
-              position="bl"
-              @popup-visible-change="popupVisibleChange"
-            >
-              <div class="action-icon"><icon-settings size="18" /></div>
-              <template #content>
-                <div id="tableSetting">
-                  <div
-                    v-for="(item, index) in showColumns"
-                    :key="item.dataIndex"
-                    class="setting"
-                  >
-                    <div style="margin-right: 4px; cursor: move">
-                      <icon-drag-arrow />
-                    </div>
-                    <div>
-                      <a-checkbox
-                        v-model="item.checked"
-                        @change="
-                          handleChange($event, item as TableColumnData, index)
-                        "
-                      >
-                      </a-checkbox>
-                    </div>
-                    <div class="title">
-                      {{ item.title === '#' ? '序列号' : item.title }}
-                    </div>
-                  </div>
-                </div>
-              </template>
-            </a-popover>
-          </a-tooltip>
+          <div>约 $100 可用额度</div>
         </a-col>
       </a-row>
       <a-table
