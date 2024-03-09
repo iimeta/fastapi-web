@@ -150,14 +150,62 @@
         </a-col>
         <a-col
           :span="12"
-          style="
-            display: flex;
-            align-items: center;
-            justify-content: end;
-            height: 32px;
-          "
+          style="display: flex; align-items: center; justify-content: end"
         >
-          <div>约 $100 可用额度</div>
+          <a-tooltip :content="$t('searchTable.actions.refresh')">
+            <div class="action-icon" @click="search"
+              ><icon-refresh size="18"
+            /></div>
+          </a-tooltip>
+          <a-dropdown @select="handleSelectDensity">
+            <a-tooltip :content="$t('searchTable.actions.density')">
+              <div class="action-icon"><icon-line-height size="18" /></div>
+            </a-tooltip>
+            <template #content>
+              <a-doption
+                v-for="item in densityList"
+                :key="item.value"
+                :value="item.value"
+                :class="{ active: item.value === size }"
+              >
+                <span>{{ item.name }}</span>
+              </a-doption>
+            </template>
+          </a-dropdown>
+          <a-tooltip :content="$t('searchTable.actions.columnSetting')">
+            <a-popover
+              trigger="click"
+              position="bl"
+              @popup-visible-change="popupVisibleChange"
+            >
+              <div class="action-icon"><icon-settings size="18" /></div>
+              <template #content>
+                <div id="tableSetting">
+                  <div
+                    v-for="(item, index) in showColumns"
+                    :key="item.dataIndex"
+                    class="setting"
+                  >
+                    <div style="margin-right: 4px; cursor: move">
+                      <icon-drag-arrow />
+                    </div>
+                    <div>
+                      <a-checkbox
+                        v-model="item.checked"
+                        @change="
+                          handleChange($event, item as TableColumnData, index)
+                        "
+                      >
+                      </a-checkbox>
+                    </div>
+                    <div class="title">
+                      {{ item.title === '#' ? '序列号' : item.title }}
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </a-popover>
+          </a-tooltip>
         </a-col>
       </a-row>
       <a-table
@@ -183,6 +231,9 @@
         </template>
         <template #dataFormat="{ record }">
           {{ $t(`key.dict.data_format.${record.data_format}`) }}
+        </template>
+        <template #quota="{ record }">
+          {{ record?.quota || '-' }}
         </template>
         <template #status="{ record }">
           <span v-if="record.status === 2" class="circle red"></span>
@@ -375,11 +426,6 @@
       ellipsis: true,
       tooltip: true,
     },
-    // {
-    //   title: t('key.columns.quota'),
-    //   dataIndex: 'quota',
-    //   slotName: 'quota',
-    // },
     {
       title: t('key.columns.models'),
       dataIndex: 'model_names',
@@ -387,6 +433,13 @@
       align: 'center',
       ellipsis: true,
       tooltip: true,
+    },
+    {
+      title: t('key.columns.quota'),
+      dataIndex: 'quota',
+      slotName: 'quota',
+      align: 'center',
+      width: 80,
     },
     {
       title: t('key.columns.status'),
@@ -446,8 +499,7 @@
 
   const fetchData = async (
     params: KeyPageParams = {
-      current: 1,
-      pageSize: 10,
+      ...basePagination,
       type: 2,
       model_agents: modelAgentId,
     }
@@ -474,11 +526,13 @@
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    basePagination.current = current;
+    fetchData({ ...basePagination, ...formModel.value });
   };
 
   const onPageSizeChange = (pageSize: number) => {
-    fetchData({ ...basePagination, ...formModel.value, pageSize });
+    basePagination.pageSize = pageSize;
+    fetchData({ ...basePagination, ...formModel.value });
   };
 
   fetchData();

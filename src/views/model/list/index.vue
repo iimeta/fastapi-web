@@ -443,7 +443,9 @@
     },
   ]);
   const fetchData = async (
-    params: ModelPageParams = { current: 1, pageSize: 10 }
+    params: ModelPageParams = {
+      ...basePagination,
+    }
   ) => {
     setLoading(true);
     try {
@@ -467,11 +469,13 @@
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    basePagination.current = current;
+    fetchData({ ...basePagination, ...formModel.value });
   };
 
   const onPageSizeChange = (pageSize: number) => {
-    fetchData({ ...basePagination, ...formModel.value, pageSize });
+    basePagination.pageSize = pageSize;
+    fetchData({ ...basePagination, ...formModel.value });
   };
 
   fetchData();
