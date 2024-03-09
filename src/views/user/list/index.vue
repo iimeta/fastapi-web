@@ -464,8 +464,7 @@
   };
 
   const onPageChange = (current: number) => {
-    basePagination.current = current;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formModel.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
