@@ -8,6 +8,7 @@ export interface AppState {
   topMenu: boolean;
   hideMenu: boolean;
   menuCollapse: boolean;
+  autoOpen: boolean;
   footer: boolean;
   themeColor: string;
   menuWidth: number;

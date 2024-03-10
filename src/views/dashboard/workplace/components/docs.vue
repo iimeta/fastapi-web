@@ -2,9 +2,9 @@
   <a-card
     class="general-card"
     :title="$t('workplace.docs')"
-    :header-style="{ paddingBottom: 0 }"
-    :body-style="{ paddingTop: 0 }"
-    style="height: 153px"
+    :header-style="{ padding: '20px 20px 0 20px' }"
+    :body-style="{ padding: '0 20px' }"
+    style="height: 178px"
     :bordered="false"
   >
     <template #extra>
@@ -31,13 +31,23 @@
           {{ $t('workplace.docs.interfaceDocs') }}
         </a-link>
       </a-col>
+      <a-col :span="12">
+        <a-link>
+          {{ $t('workplace.docs.interfaceDocs') }}
+        </a-link>
+      </a-col>
+      <a-col :span="12">
+        <a-link>
+          {{ $t('workplace.docs.interfaceDocs') }}
+        </a-link>
+      </a-col>
     </a-row>
   </a-card>
 </template>
 
 <style lang="less" scoped>
   .arco-card-body .arco-link {
-    margin: 10px 0;
+    margin: 9px 0;
     color: rgb(var(--gray-8));
   }
 </style>

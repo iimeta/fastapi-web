@@ -2,7 +2,7 @@
   <a-card
     class="general-card"
     :title="$t('workplace.quick.operation')"
-    :header-style="{ paddingBottom: '0' }"
+    :header-style="{ padding: '20px 20px 0 20px' }"
     :body-style="{ padding: '24px 20px 0 20px' }"
     :bordered="false"
   >
@@ -64,6 +64,18 @@
       text: 'workplace.agentManagement',
       icon: 'icon-bug',
       router: 'ModelAgentList',
+      permission: ['admin'],
+    },
+    {
+      text: 'workplace.userManagement',
+      icon: 'icon-user',
+      router: 'UserList',
+      permission: ['admin'],
+    },
+    {
+      text: 'workplace.chatManagement',
+      icon: 'icon-wechat',
+      router: 'ChatList',
       permission: ['admin'],
     },
     // {

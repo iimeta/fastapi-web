@@ -1,8 +1,8 @@
 <template>
   <a-card
     class="general-card"
-    :header-style="{ paddingBottom: '0' }"
-    :body-style="{ paddingTop: '26px' }"
+    :header-style="{ padding: '20px 20px 0 20px' }"
+    :body-style="{ padding: '20px' }"
     :bordered="false"
   >
     <div class="header">

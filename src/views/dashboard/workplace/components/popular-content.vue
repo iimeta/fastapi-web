@@ -2,7 +2,7 @@
   <a-spin :loading="loading" style="width: 100%">
     <a-card
       class="general-card"
-      :header-style="{ paddingBottom: '0' }"
+      :header-style="{ padding: '20px 20px 0 20px' }"
       :body-style="{ padding: '17px 20px 21px 20px' }"
       :bordered="false"
     >
@@ -32,7 +32,7 @@
           :data="renderList"
           :pagination="false"
           :bordered="false"
-          :scroll="{ x: '100%', y: '264px' }"
+          :scroll="{ x: '100%', y: '270px' }"
         >
           <template #columns>
             <a-table-column title="排名" data-index="key"></a-table-column>
@@ -101,10 +101,10 @@
 
 <style scoped lang="less">
   .general-card {
-    min-height: 395px;
+    height: 392px;
   }
   :deep(.arco-table-tr) {
-    height: 44px;
+    height: 45px;
     .arco-typography {
       margin-bottom: 0;
     }
@@ -115,5 +115,11 @@
     span {
       margin-right: 4px;
     }
+  }
+  .arco-card {
+    position: relative;
+    background: var(--color-bg-2);
+    border-radius: 4px;
+    transition: box-shadow 0.2s cubic-bezier(0, 0, 1, 1);
   }
 </style>

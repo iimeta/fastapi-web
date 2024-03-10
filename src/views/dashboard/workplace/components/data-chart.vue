@@ -2,9 +2,9 @@
   <a-spin :loading="loading" style="width: 100%">
     <a-card
       class="general-card"
-      :header-style="{ paddingBottom: 0 }"
+      :header-style="{ padding: '20px 20px 0 20px' }"
       :body-style="{
-        paddingTop: '20px',
+        padding: '20px',
       }"
       :title="$t('workplace.callData')"
       :bordered="false"
@@ -12,7 +12,7 @@
       <template #extra>
         <a-link>{{ $t('workplace.viewMore') }}</a-link>
       </template>
-      <Chart height="405px" :option="chartOption" />
+      <Chart height="380px" :option="chartOption" />
     </a-card>
   </a-spin>
 </template>

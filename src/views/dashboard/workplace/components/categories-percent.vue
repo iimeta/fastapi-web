@@ -2,7 +2,7 @@
   <a-spin :loading="loading" style="width: 100%">
     <a-card
       class="general-card"
-      :header-style="{ paddingBottom: '0' }"
+      :header-style="{ padding: '20px 20px 0 20px' }"
       :body-style="{
         padding: '20px',
       }"
@@ -11,7 +11,7 @@
       <template #title>
         {{ $t('workplace.categoriesPercent') }}
       </template>
-      <Chart height="310px" :option="chartOption" />
+      <Chart height="306px" :option="chartOption" />
     </a-card>
   </a-spin>
 </template>
@@ -49,7 +49,7 @@
             left: 'center',
             top: '40%',
             style: {
-              text: '内容量',
+              text: '调用数',
               textAlign: 'center',
               fill: isDark ? '#ffffffb3' : '#4E5969',
               fontSize: 14,
@@ -60,7 +60,7 @@
             left: 'center',
             top: '50%',
             style: {
-              text: '928,531',
+              text: '15',
               textAlign: 'center',
               fill: isDark ? '#ffffffb3' : '#1D2129',
               fontSize: 16,
@@ -85,21 +85,21 @@
           },
           data: [
             {
-              value: [148564],
+              value: [5],
               name: '纯文本',
               itemStyle: {
                 color: isDark ? '#3D72F6' : '#249EFF',
               },
             },
             {
-              value: [334271],
+              value: [5],
               name: '图文类',
               itemStyle: {
                 color: isDark ? '#A079DC' : '#313CA9',
               },
             },
             {
-              value: [445694],
+              value: [5],
               name: '视频类',
               itemStyle: {
                 color: isDark ? '#6CAAF5' : '#21CCFF',
@@ -112,4 +112,11 @@
   });
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+  .arco-card {
+    position: relative;
+    background: var(--color-bg-2);
+    border-radius: 4px;
+    transition: box-shadow 0.2s cubic-bezier(0, 0, 1, 1);
+  }
+</style>

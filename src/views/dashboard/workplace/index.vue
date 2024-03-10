@@ -6,7 +6,7 @@
         <DataPanel />
         <DataChart />
       </div>
-      <!-- <a-grid :cols="24" :col-gap="16" :row-gap="16" style="margin-top: 16px">
+      <a-grid :cols="24" :col-gap="16" :row-gap="16" style="margin-top: 16px">
         <a-grid-item
           :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
         >
@@ -17,7 +17,7 @@
         >
           <CategoriesPercent />
         </a-grid-item>
-      </a-grid> -->
+      </a-grid>
     </div>
     <div class="right-side">
       <a-grid :cols="24" :row-gap="16">
@@ -34,11 +34,7 @@
         >
           <Expense />
         </a-grid-item>
-        <a-grid-item
-          v-permission="['admin']"
-          class="panel moduler-wrap"
-          :span="24"
-        >
+        <a-grid-item class="panel moduler-wrap" :span="24">
           <QuickOperation />
         </a-grid-item>
         <!-- <a-grid-item class="panel" :span="24">
@@ -50,7 +46,7 @@
         <a-grid-item class="panel" :span="24">
           <Author />
         </a-grid-item>
-        <a-grid-item v-permission="['admin']" class="panel" :span="24">
+        <a-grid-item class="panel" :span="24">
           <Docs />
         </a-grid-item>
       </a-grid>
@@ -62,8 +58,8 @@
   import Banner from './components/banner.vue';
   import DataPanel from './components/data-panel.vue';
   import DataChart from './components/data-chart.vue';
-  // import PopularContent from './components/popular-content.vue';
-  // import CategoriesPercent from './components/categories-percent.vue';
+  import PopularContent from './components/popular-content.vue';
+  import CategoriesPercent from './components/categories-percent.vue';
   // import RecentlyVisited from './components/recently-visited.vue';
   import QuickOperation from './components/quick-operation.vue';
   import UserInfo from './components/user-info.vue';
@@ -90,7 +86,6 @@
 
   .left-side {
     flex: 1;
-    overflow: auto;
   }
 
   .right-side {
