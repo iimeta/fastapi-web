@@ -1,12 +1,12 @@
 <template>
   <a-card
     class="general-card"
-    :title="$t('userSetting.certification.title.enterprise')"
+    :title="$t('userCenter.certification.title.enterprise')"
     :header-style="{ padding: '0px 20px 16px 20px' }"
     :bordered="false"
   >
     <template #extra>
-      <a-link>{{ $t('userSetting.certification.extra.enterprise') }}</a-link>
+      <a-link>{{ $t('userCenter.certification.extra.enterprise') }}</a-link>
     </template>
     <a-descriptions
       class="card-content"
@@ -24,7 +24,7 @@
       <template #label="{ label }">{{ $t(label) }} :</template>
       <template #value="{ value, data }">
         <a-tag
-          v-if="data.label === 'userSetting.certification.label.status'"
+          v-if="data.label === 'userCenter.certification.label.status'"
           color="green"
           size="small"
         >
@@ -61,39 +61,39 @@
     } = props.enterpriseInfo;
     return [
       {
-        label: 'userSetting.certification.label.accountType',
+        label: 'userCenter.certification.label.accountType',
         value: accountType,
       },
       {
-        label: 'userSetting.certification.label.status',
+        label: 'userCenter.certification.label.status',
         value: status,
       },
       {
-        label: 'userSetting.certification.label.time',
+        label: 'userCenter.certification.label.time',
         value: time,
       },
       {
-        label: 'userSetting.certification.label.legalPerson',
+        label: 'userCenter.certification.label.legalPerson',
         value: legalPerson,
       },
       {
-        label: 'userSetting.certification.label.certificateType',
+        label: 'userCenter.certification.label.certificateType',
         value: certificateType,
       },
       {
-        label: 'userSetting.certification.label.authenticationNumber',
+        label: 'userCenter.certification.label.authenticationNumber',
         value: authenticationNumber,
       },
       {
-        label: 'userSetting.certification.label.enterpriseName',
+        label: 'userCenter.certification.label.enterpriseName',
         value: enterpriseName,
       },
       {
-        label: 'userSetting.certification.label.enterpriseCertificateType',
+        label: 'userCenter.certification.label.enterpriseCertificateType',
         value: enterpriseCertificateType,
       },
       {
-        label: 'userSetting.certification.label.organizationCode',
+        label: 'userCenter.certification.label.organizationCode',
         value: organizationCode,
       },
     ] as DescData[];

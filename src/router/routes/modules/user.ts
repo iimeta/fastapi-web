@@ -67,11 +67,11 @@ const USER: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'setting',
-      name: 'Setting',
-      component: () => import('@/views/user/setting/index.vue'),
+      path: 'center',
+      name: 'Center',
+      component: () => import('@/views/user/center/index.vue'),
       meta: {
-        locale: 'menu.user.setting',
+        locale: 'menu.user.center',
         requiresAuth: true,
         roles: ['admin', 'user'],
         hideInMenu: true,

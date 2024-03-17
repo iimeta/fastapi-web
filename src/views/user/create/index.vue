@@ -125,7 +125,7 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { submitUserCreate, UserCreate } from '@/api/user';
+  import { submitUserCreate, UserCreate } from '@/api/admin_user';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter } from 'vue-router';
 

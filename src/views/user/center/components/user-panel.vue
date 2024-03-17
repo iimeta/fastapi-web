@@ -37,7 +37,7 @@
         <template #label="{ label }">{{ $t(label) }} :</template>
         <template #value="{ value, data }">
           <a-tag
-            v-if="data.label === 'userSetting.label.certification'"
+            v-if="data.label === 'userCenter.label.certification'"
             color="green"
             size="small"
           >
@@ -68,24 +68,24 @@
   };
   const renderData = [
     {
-      label: 'userSetting.label.name',
+      label: 'userCenter.label.userId',
+      value: userStore.user_id,
+    },
+    {
+      label: 'userCenter.label.account',
+      value: userStore.email,
+    },
+    {
+      label: 'userCenter.label.name',
       value: userStore.name,
     },
     {
-      label: 'userSetting.label.certification',
-      value: userStore.certification,
+      label: 'userCenter.label.email',
+      value: userStore.email,
     },
     {
-      label: 'userSetting.label.accountId',
-      value: userStore.accountId,
-    },
-    {
-      label: 'userSetting.label.phone',
-      value: userStore.phone,
-    },
-    {
-      label: 'userSetting.label.registrationDate',
-      value: userStore.registrationDate,
+      label: 'userCenter.label.createdAt',
+      value: userStore.created_at,
     },
   ] as DescData[];
   const fileList = ref<FileItem[]>([file]);

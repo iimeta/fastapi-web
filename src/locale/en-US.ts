@@ -4,7 +4,7 @@ import localeLogin from '@/views/login/locale/en-US';
 import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
 
 import localeUserInfo from '@/views/user/info/locale/en-US';
-import localeUserSetting from '@/views/user/setting/locale/en-US';
+import localeUserCenter from '@/views/user/center/locale/en-US';
 
 import localeUser from '@/views/user/locale/en-US';
 import localeApp from '@/views/app/locale/en-US';
@@ -45,7 +45,7 @@ export default {
   ...localeLogin,
   ...localeWorkplace,
   ...localeUserInfo,
-  ...localeUserSetting,
+  ...localeUserCenter,
   ...localeUser,
   ...localeApp,
   ...localeModel,

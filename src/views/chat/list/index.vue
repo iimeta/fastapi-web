@@ -128,21 +128,8 @@
       </a-row>
       <a-divider style="margin-top: 0" />
       <a-row style="margin-bottom: 16px">
-        <a-col :span="12">
-          <a-space>
-            <!-- <a-button
-              type="primary"
-              @click="$router.push({ name: 'ChatCreate' })"
-            >
-              <template #icon>
-                <icon-plus />
-              </template>
-              {{ $t('chat.operation.create') }}
-            </a-button> -->
-          </a-space>
-        </a-col>
         <a-col
-          :span="12"
+          :span="24"
           style="display: flex; align-items: center; justify-content: end"
         >
           <a-tooltip :content="$t('searchTable.actions.refresh')">
@@ -1183,5 +1170,12 @@
   :deep(.arco-tabs-content) {
     padding-top: 5px;
     padding-left: 15px;
+  }
+  .copy-btn {
+    color: gray;
+    cursor: pointer;
+  }
+  .copy-btn:hover {
+    color: rgb(var(--arcoblue-6));
   }
 </style>

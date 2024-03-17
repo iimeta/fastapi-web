@@ -6,10 +6,15 @@
     :bordered="false"
   >
     <div class="header">
-      <a-space :size="12" direction="vertical" align="center">
+      <a-space
+        :size="12"
+        direction="vertical"
+        align="center"
+        @click="$router.push({ name: 'Center' })"
+      >
         <a-avatar :size="64">
           <template #trigger-icon>
-            <icon-camera />
+            <icon-settings />
           </template>
           <img :src="userInfo.avatar || 'https://www.fastapi.ai/logo.png'" />
         </a-avatar>

@@ -297,7 +297,7 @@
     UserGrantQuota,
     UserChangeStatus,
     submitUserChangeStatus,
-  } from '@/api/user';
+  } from '@/api/admin_user';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {

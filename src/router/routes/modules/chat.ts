@@ -22,17 +22,6 @@ const CHAT: AppRouteRecordRaw = {
         roles: ['admin', 'user'],
       },
     },
-    {
-      path: 'detail',
-      name: 'ChatDetail',
-      component: () => import('@/views/chat/detail/index.vue'),
-      meta: {
-        locale: 'menu.chat.detail',
-        requiresAuth: true,
-        roles: ['admin', 'user'],
-        hideInMenu: true,
-      },
-    },
   ],
 };
 

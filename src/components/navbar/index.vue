@@ -168,15 +168,15 @@
                   {{ $t('messageBox.userCenter') }}
                 </span>
               </a-space>
-            </a-doption>
+            </a-doption> -->
             <a-doption>
-              <a-space @click="$router.push({ name: 'Setting' })">
-                <icon-settings />
+              <a-space @click="$router.push({ name: 'Center' })">
+                <icon-user />
                 <span>
-                  {{ $t('messageBox.userSettings') }}
+                  {{ $t('messageBox.userCenter') }}
                 </span>
               </a-space>
-            </a-doption> -->
+            </a-doption>
             <a-doption>
               <a-space @click="handleLogout">
                 <icon-export />

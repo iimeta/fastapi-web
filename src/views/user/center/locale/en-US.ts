@@ -1,0 +1,91 @@
+export default {
+  'menu.user.center': 'User Center',
+  'userCenter.menu.title.info': 'Personal Information',
+  'userCenter.menu.title.account': 'Account Setting',
+  'userCenter.menu.title.password': 'Password',
+  'userCenter.menu.title.message': 'Message Notification',
+  'userCenter.menu.title.result': 'Result',
+  'userCenter.menu.title.data': 'Export Data',
+  'userCenter.saveSuccess': 'Save Success',
+  'userCenter.title.basicInfo': 'Basic Information',
+  'userCenter.title.socialInfo': 'Social Information',
+  'userCenter.label.avatar': 'Avatar',
+  'userCenter.label.name': 'User Name',
+  'userCenter.label.location': 'Office Location',
+  'userCenter.label.introduction': 'Introduction',
+  'userCenter.label.personalWebsite': 'Website',
+  'userCenter.save': 'Save',
+  'userCenter.cancel': 'Cancel',
+  'userCenter.reset': 'Reset',
+  // new
+  'userCenter.label.certification': 'Certification',
+  'userCenter.label.phone': 'Phone',
+  'userCenter.label.userId': 'Account Id',
+  'userCenter.label.registrationDate': 'Registration Date',
+  'userCenter.tab.basicInformation': 'Basic Information',
+  'userCenter.tab.securitySettings': 'Security Settings',
+  'userCenter.tab.certification': 'Certification',
+  'userCenter.basicInfo.form.label.email': 'Email',
+  'userCenter.basicInfo.placeholder.email': `Please enter your email address, such as xxx{'@'}bytedance.com`,
+  'userCenter.form.error.email.required': 'Please enter email address',
+  'userCenter.basicInfo.form.label.nickname': 'Nickname',
+  'userCenter.basicInfo.placeholder.nickname': 'Please enter nickname',
+  'userCenter.form.error.nickname.required': 'Please enter nickname',
+  'userCenter.basicInfo.form.label.countryRegion': 'Country/region',
+  'userCenter.basicInfo.placeholder.countryRegion':
+    'Please select country/region',
+  'userCenter.form.error.countryRegion.required':
+    'Please select country/region',
+  'userCenter.basicInfo.form.label.area': 'Area',
+  'userCenter.basicInfo.placeholder.area': 'Please select area',
+  'userCenter.form.error.area.required': 'Please Select a area',
+  'userCenter.basicInfo.form.label.address': 'Address',
+  'userCenter.basicInfo.placeholder.address': 'Please enter address',
+  'userCenter.basicInfo.form.label.profile': 'Personal profile',
+  'userCenter.basicInfo.placeholder.profile':
+    'Please enter your profile, no more than 200 words',
+  'userCenter.form.error.profile.maxLength': 'No more than 200 words',
+  'userCenter.SecuritySettings.form.label.password': 'Login Password',
+  'userCenter.SecuritySettings.placeholder.password':
+    'Has been set. The password must contain at least six letters, digits, and special characters except Spaces. The password must contain both uppercase and lowercase letters.',
+  'userCenter.SecuritySettings.form.label.securityQuestion':
+    'Security Question',
+  'userCenter.SecuritySettings.placeholder.securityQuestion':
+    'You have not set the password protection question. The password protection question can effectively protect the account security.',
+  'userCenter.SecuritySettings.form.label.phone': 'Phone',
+  // 'userCenter.SecuritySettings.placeholder.phone': '已绑定：150******50',
+  'userCenter.SecuritySettings.form.label.email': 'Email',
+  'userCenter.SecuritySettings.placeholder.email':
+    'You have not set a mailbox yet. The mailbox binding can be used to retrieve passwords and receive notifications.',
+  'userCenter.SecuritySettings.button.settings': 'Settings',
+  'userCenter.SecuritySettings.button.update': 'Update',
+  'userCenter.certification.title.enterprise':
+    'Enterprise Real Name Authentication',
+  'userCenter.certification.extra.enterprise':
+    'Modifying an Authentication Body',
+  'userCenter.certification.label.accountType': 'Account Type',
+  'userCenter.certification.label.status': 'status',
+  'userCenter.certification.label.time': 'time',
+  'userCenter.certification.label.legalPerson': 'Legal Person Name',
+  'userCenter.certification.label.certificateType':
+    'Types of legal person documents',
+  'userCenter.certification.label.authenticationNumber':
+    'Legal person certification number',
+  'userCenter.certification.label.enterpriseName': 'Enterprise Name',
+  'userCenter.certification.label.enterpriseCertificateType':
+    'Types of corporate certificates',
+  'userCenter.certification.label.organizationCode': 'Organization Code',
+  'userCenter.certification.title.record': 'Certification Records',
+  'userCenter.certification.columns.certificationType': 'Certification Type',
+  'userCenter.certification.cell.certificationType':
+    'Enterprise certificate Certification',
+  'userCenter.certification.columns.certificationContent':
+    'Certification Content',
+  'userCenter.certification.columns.status': 'Status',
+  'userCenter.certification.cell.pass': 'Pass',
+  'userCenter.certification.cell.auditing': 'Auditing',
+  'userCenter.certification.columns.time': 'Time',
+  'userCenter.certification.columns.operation': 'Operation',
+  'userCenter.certification.button.check': 'Check',
+  'userCenter.certification.button.withdraw': 'Withdraw',
+};

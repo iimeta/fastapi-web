@@ -19,7 +19,7 @@
   import { ref } from 'vue';
   import { useRoute } from 'vue-router';
   import useLoading from '@/hooks/loading';
-  import { queryUserDetail, UserDetailParams, UserDetail } from '@/api/user';
+  import { queryUserDetail, UserDetailParams, UserDetail } from '@/api/admin_user';
   import ProfileItem from './components/profile-item.vue';
 
   const { loading, setLoading } = useLoading(true);

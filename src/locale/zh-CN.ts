@@ -4,7 +4,7 @@ import localeLogin from '@/views/login/locale/zh-CN';
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 
 import localeUserInfo from '@/views/user/info/locale/zh-CN';
-import localeUserSetting from '@/views/user/setting/locale/zh-CN';
+import localeUserCenter from '@/views/user/center/locale/zh-CN';
 
 import localeUser from '@/views/user/locale/zh-CN';
 import localeApp from '@/views/app/locale/zh-CN';
@@ -45,7 +45,7 @@ export default {
   ...localeLogin,
   ...localeWorkplace,
   ...localeUserInfo,
-  ...localeUserSetting,
+  ...localeUserCenter,
   ...localeUser,
   ...localeApp,
   ...localeModel,
