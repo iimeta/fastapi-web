@@ -31,15 +31,6 @@ export function getMenuList() {
   return axios.post<RouteRecordNormalized[]>('/api/user/menu');
 }
 
-export interface CaptchaData {
-  email: string;
-  channel: string;
-}
-
-export function getCaptcha(data: CaptchaData) {
-  return axios.post(`/api/v1/common/email-code`, data);
-}
-
 export interface RegisterData {
   account: string;
   password: string;
@@ -68,4 +59,23 @@ export interface UpdateInfoData {
 
 export function updateInfo(data: UpdateInfoData) {
   return axios.post('/api/v1/user/update/info', data);
+}
+
+export interface ChangePasswordData {
+  old_password: string;
+  new_password: string;
+}
+
+export function changePassword(data: ChangePasswordData) {
+  return axios.post('/api/v1/user/change/password', data);
+}
+
+export interface ChangeEmailData {
+  email: string;
+  code: string;
+  password: string;
+}
+
+export function changeEmail(data: ChangeEmailData) {
+  return axios.post('/api/v1/user/change/email', data);
 }

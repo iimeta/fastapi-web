@@ -1,3 +1,36 @@
+<template>
+  <a-form
+    ref="formRef"
+    :model="form"
+    :rules="rules"
+    :label-col-props="{ span: 8 }"
+    :wrapper-col-props="{ span: 16 }"
+    size="large"
+    class="form"
+  >
+    <a-form-item
+      :label="$t('userCenter.basicInfo.form.label.name')"
+      field="name"
+    >
+      <a-input
+        v-model="form.name"
+        :placeholder="$t('userCenter.basicInfo.form.placeholder.name')"
+        :max-length="30"
+      />
+    </a-form-item>
+    <a-form-item>
+      <a-space>
+        <a-button :loading="loading" type="primary" @click="handleSave">
+          {{ $t('userCenter.basicInfo.form.save') }}
+        </a-button>
+        <a-button @click="handleReset">
+          {{ $t('userCenter.basicInfo.form.reset') }}
+        </a-button>
+      </a-space>
+    </a-form-item>
+  </a-form>
+</template>
+
 <script lang="ts" setup>
   import { computed, ref, reactive, getCurrentInstance, toRefs } from 'vue';
   import { FieldRule } from '@arco-design/web-vue';
@@ -60,39 +93,6 @@
     formRef.value.resetFields();
   };
 </script>
-
-<template>
-  <a-form
-    ref="formRef"
-    :model="form"
-    :rules="rules"
-    :label-col-props="{ span: 8 }"
-    :wrapper-col-props="{ span: 16 }"
-    size="large"
-    class="form"
-  >
-    <a-form-item
-      :label="$t('userCenter.basicInfo.form.label.name')"
-      field="name"
-    >
-      <a-input
-        v-model="form.name"
-        :placeholder="$t('userCenter.basicInfo.form.placeholder.name')"
-        :max-length="30"
-      />
-    </a-form-item>
-    <a-form-item>
-      <a-space>
-        <a-button :loading="loading" type="primary" @click="handleSave">
-          {{ $t('userCenter.basicInfo.form.save') }}
-        </a-button>
-        <a-button @click="handleReset">
-          {{ $t('userCenter.basicInfo.form.reset') }}
-        </a-button>
-      </a-space>
-    </a-form-item>
-  </a-form>
-</template>
 
 <style scoped lang="less">
   .form {

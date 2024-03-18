@@ -45,7 +45,7 @@
   import { useRouter } from 'vue-router';
   import { ValidatedError } from '@arco-design/web-vue';
   import { useUserStore } from '@/store';
-  import { getCaptcha } from '@/api/user';
+  import { getCaptcha } from '@/api/common';
 
   const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();

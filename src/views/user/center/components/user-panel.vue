@@ -64,7 +64,7 @@
   const file = {
     uid: '-2',
     name: 'avatar.png',
-    url: userStore.avatar,
+    url: userStore.avatar || 'https://www.fastapi.ai/logo.png',
   };
   const renderData = [
     {
@@ -73,7 +73,7 @@
     },
     {
       label: 'userCenter.label.account',
-      value: userStore.email,
+      value: userStore.account,
     },
     {
       label: 'userCenter.label.name',

@@ -11,7 +11,7 @@
     <a-form-item field="username" hide-label>
       <a-input
         v-model="form.username"
-        :placeholder="$t('login.account.placeholder.username')"
+        :placeholder="$t('login.admin.account.placeholder.username')"
         allow-clear
       />
     </a-form-item>
@@ -50,7 +50,10 @@
     },
     rules: {
       username: [
-        { required: true, message: t('login.account.error.required.username') },
+        {
+          required: true,
+          message: t('login.admin.account.error.required.username'),
+        },
       ],
       password: [
         { required: true, message: t('login.account.error.required.password') },

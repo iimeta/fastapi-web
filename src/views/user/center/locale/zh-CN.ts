@@ -21,6 +21,7 @@ export default {
 
   'userCenter.basicInfo.form.save': '保存',
   'userCenter.basicInfo.form.save.success': '保存成功',
+  'userCenter.basicInfo.form.change.success': '修改成功',
   'userCenter.basicInfo.form.reset': '重置',
 
   // security-settings
@@ -35,12 +36,12 @@ export default {
   'userCenter.securitySettings.updatePwd.form.label.rePassword': '确认新密码',
 
   'userCenter.securitySettings.updatePwd.form.placeholder.oldPassword':    '请输入登录密码',
-  'userCenter.securitySettings.updatePwd.form.placeholder.newPassword':    '长度为 6 到 32 位，同时包含字母和数字',
+  'userCenter.securitySettings.updatePwd.form.placeholder.newPassword':    '长度至少6位，同时包含字母、数字和符号',
   'userCenter.securitySettings.updatePwd.form.placeholder.rePassword':    '请再次输入新密码',
 
   'userCenter.securitySettings.updatePwd.form.error.required.oldPassword': '请输入登录密码',
   'userCenter.securitySettings.updatePwd.form.error.required.newPassword': '请输入新密码',
-  'userCenter.securitySettings.updatePwd.form.error.match.newPassword': '长度为 6 到 32 位，同时包含字母和数字',
+  'userCenter.securitySettings.updatePwd.form.error.match.newPassword': '长度至少6位，同时包含字母、数字和符号',
   'userCenter.securitySettings.updatePwd.form.error.validator.newPassword': '新密码不能与登录密码相同',
   'userCenter.securitySettings.updatePwd.form.error.required.rePassword': '请再次输入新密码',
   'userCenter.securitySettings.updatePwd.form.error.validator.rePassword': '两次输入的密码不一致',
@@ -69,15 +70,15 @@ export default {
   'userCenter.securitySettings.email.content': '未绑定',
 
   'userCenter.securitySettings.updateEmail.modal.title': '修改邮箱',
-  'userCenter.securitySettings.updateEmail.form.label.newEmail': '新邮箱',
+  'userCenter.securitySettings.updateEmail.form.label.email': '新邮箱',
   'userCenter.securitySettings.updateEmail.form.label.captcha': '验证码',
   'userCenter.securitySettings.updateEmail.form.label.currentPassword': '登录密码',
 
-  'userCenter.securitySettings.updateEmail.form.placeholder.newEmail': '请输入新邮箱',
+  'userCenter.securitySettings.updateEmail.form.placeholder.email': '请输入新邮箱',
   'userCenter.securitySettings.updateEmail.form.placeholder.currentPassword': '请输入登录密码',
 
-  'userCenter.securitySettings.updateEmail.form.error.required.newEmail': '请输入新邮箱',
-  'userCenter.securitySettings.updateEmail.form.error.match.newEmail': '请输入正确的邮箱',
+  'userCenter.securitySettings.updateEmail.form.error.required.email': '请输入新邮箱',
+  'userCenter.securitySettings.updateEmail.form.error.match.email': '请输入正确的邮箱',
   'userCenter.securitySettings.updateEmail.form.error.required.currentPassword': '请输入登录密码',
 
   'userCenter.securitySettings.content.hasBeenSet': '已设置',

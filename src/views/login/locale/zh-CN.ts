@@ -1,13 +1,14 @@
 export default {
   'login.welcome': '智元 Fast API 欢迎您',
   'login.admin.welcome': '智元 Fast API 管理端',
-  'login.account': '账号登录',
+  'login.account': '账密登录',
   'login.email': '邮箱登录',
   'login.other': '其他登录方式',
   'login.ing': '登录中...',
   'bind.ing': '绑定中...',
 
   'login.account.placeholder.username': '请输入邮箱',
+  'login.admin.account.placeholder.username': '请输入账号/邮箱',
   'login.account.placeholder.password': '请输入密码',
   'login.account.placeholder.captcha': '请输入验证码',
   'login.email.title': '登录邮箱未注册, 将会自动注册',
@@ -17,6 +18,7 @@ export default {
   'login.captcha.ing': '发送中...',
 
   'login.account.error.required.username': '请输入邮箱',
+  'login.admin.account.error.required.username': '请输入账号/邮箱',
   'login.account.error.required.password': '请输入密码',
   'login.account.error.required.captcha': '请输入验证码',
   'login.email.error.required.email': '请输入邮箱',

@@ -1,10 +1,100 @@
+<template>
+  <a-list-item-meta>
+    <template #avatar>
+      <a-typography-paragraph>
+        {{ $t('userCenter.securitySettings.password.label') }}
+      </a-typography-paragraph>
+    </template>
+    <template #description>
+      <div class="tip">
+        {{ $t('userCenter.securitySettings.password.tip') }}
+      </div>
+      <div class="content">
+        <a-typography-paragraph>
+          {{ $t('userCenter.securitySettings.content.hasBeenSet') }}
+        </a-typography-paragraph>
+      </div>
+      <div class="operation">
+        <a-link
+          :title="$t('userCenter.securitySettings.button.update')"
+          @click="toUpdate"
+        >
+          {{ $t('userCenter.securitySettings.button.update') }}
+        </a-link>
+      </div>
+    </template>
+  </a-list-item-meta>
+
+  <a-modal
+    :title="$t('userCenter.securitySettings.updatePwd.modal.title')"
+    :visible="visible"
+    :mask-closable="false"
+    :esc-to-close="false"
+    @ok="handleUpdate"
+    @cancel="handleCancel"
+  >
+    <a-form ref="formRef" :model="form" :rules="rules" size="large">
+      <a-form-item
+        :label="
+          $t('userCenter.securitySettings.updatePwd.form.label.oldPassword')
+        "
+        field="oldPassword"
+      >
+        <a-input-password
+          v-model="form.oldPassword"
+          :placeholder="
+            $t(
+              'userCenter.securitySettings.updatePwd.form.placeholder.oldPassword'
+            )
+          "
+          :max-length="32"
+          allow-clear
+        />
+      </a-form-item>
+      <a-form-item
+        :label="
+          $t('userCenter.securitySettings.updatePwd.form.label.newPassword')
+        "
+        field="newPassword"
+      >
+        <a-input-password
+          v-model="form.newPassword"
+          :placeholder="
+            $t(
+              'userCenter.securitySettings.updatePwd.form.placeholder.newPassword'
+            )
+          "
+          :max-length="32"
+          allow-clear
+        />
+      </a-form-item>
+      <a-form-item
+        :label="
+          $t('userCenter.securitySettings.updatePwd.form.label.rePassword')
+        "
+        field="rePassword"
+      >
+        <a-input-password
+          v-model="form.rePassword"
+          :placeholder="
+            $t(
+              'userCenter.securitySettings.updatePwd.form.placeholder.rePassword'
+            )
+          "
+          :max-length="32"
+          allow-clear
+        />
+      </a-form-item>
+    </a-form>
+  </a-modal>
+</template>
+
 <script lang="ts" setup>
   import { computed, ref, reactive, getCurrentInstance } from 'vue';
   import { FieldRule } from '@arco-design/web-vue';
-  import { updatePassword } from '@/api/system/user-center';
+  import { changePassword } from '@/api/user';
   import { useI18n } from 'vue-i18n';
   import { useUserStore } from '@/store';
-  import { encryptByRsa } from '@/utils/encrypt';
 
   const { proxy } = getCurrentInstance() as any;
 
@@ -95,13 +185,13 @@
   const handleUpdate = () => {
     formRef.value.validate((valid: any) => {
       if (!valid) {
-        updatePassword({
-          oldPassword: encryptByRsa(form.oldPassword) || '',
-          newPassword: encryptByRsa(form.newPassword) || '',
-        }).then((res) => {
+        changePassword({
+          old_password: form.oldPassword,
+          new_password: form.newPassword,
+        }).then(() => {
           userStore.info();
           handleCancel();
-          proxy.$message.success(res.msg);
+          proxy.$message.success(t('userCenter.basicInfo.form.change.success'));
         });
       }
     });
@@ -114,100 +204,5 @@
     visible.value = true;
   };
 </script>
-
-<template>
-  <a-list-item-meta>
-    <template #avatar>
-      <a-typography-paragraph>
-        {{ $t('userCenter.securitySettings.password.label') }}
-      </a-typography-paragraph>
-    </template>
-    <template #description>
-      <div class="tip">
-        {{ $t('userCenter.securitySettings.password.tip') }}
-      </div>
-      <div class="content">
-        <a-typography-paragraph v-if="userStore.pwdResetTime">
-          {{ $t('userCenter.securitySettings.content.hasBeenSet') }}
-        </a-typography-paragraph>
-        <a-typography-paragraph v-else class="tip">
-          {{ $t('userCenter.securitySettings.password.content') }}
-        </a-typography-paragraph>
-      </div>
-      <div class="operation">
-        <a-link
-          :title="$t('userCenter.securitySettings.button.update')"
-          @click="toUpdate"
-        >
-          {{ $t('userCenter.securitySettings.button.update') }}
-        </a-link>
-      </div>
-    </template>
-  </a-list-item-meta>
-
-  <a-modal
-    :title="$t('userCenter.securitySettings.updatePwd.modal.title')"
-    :visible="visible"
-    :mask-closable="false"
-    :esc-to-close="false"
-    @ok="handleUpdate"
-    @cancel="handleCancel"
-  >
-    <a-form ref="formRef" :model="form" :rules="rules" size="large">
-      <a-form-item
-        v-if="userStore.pwdResetTime"
-        :label="
-          $t('userCenter.securitySettings.updatePwd.form.label.oldPassword')
-        "
-        field="oldPassword"
-      >
-        <a-input-password
-          v-model="form.oldPassword"
-          :placeholder="
-            $t(
-              'userCenter.securitySettings.updatePwd.form.placeholder.oldPassword'
-            )
-          "
-          :max-length="32"
-          allow-clear
-        />
-      </a-form-item>
-      <a-form-item
-        :label="
-          $t('userCenter.securitySettings.updatePwd.form.label.newPassword')
-        "
-        field="newPassword"
-      >
-        <a-input-password
-          v-model="form.newPassword"
-          :placeholder="
-            $t(
-              'userCenter.securitySettings.updatePwd.form.placeholder.newPassword'
-            )
-          "
-          :max-length="32"
-          allow-clear
-        />
-      </a-form-item>
-      <a-form-item
-        :label="
-          $t('userCenter.securitySettings.updatePwd.form.label.rePassword')
-        "
-        field="rePassword"
-      >
-        <a-input-password
-          v-model="form.rePassword"
-          :placeholder="
-            $t(
-              'userCenter.securitySettings.updatePwd.form.placeholder.rePassword'
-            )
-          "
-          :max-length="32"
-          allow-clear
-        />
-      </a-form-item>
-    </a-form>
-  </a-modal>
-</template>
 
 <style scoped lang="less"></style>
