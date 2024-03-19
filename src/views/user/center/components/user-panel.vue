@@ -57,7 +57,7 @@
     RequestOption,
   } from '@arco-design/web-vue/es/upload/interfaces';
   import { useUserStore } from '@/store';
-  import { userUploadApi } from '@/api/user-center';
+  import { changeAvatar } from '@/api/user';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
   const userStore = useUserStore();
@@ -119,7 +119,7 @@
         // https://github.com/axios/axios/issues/1630
         // https://github.com/nuysoft/Mock/issues/127
 
-        const res = await userUploadApi(formData, {
+        const res = await changeAvatar(formData, {
           controller,
           onUploadProgress,
         });

@@ -24,8 +24,8 @@ export interface CallDataRes {
   items: CallData[];
 }
 
-export function queryCallData() {
-  return axios.get<CallDataRes>('/api/v1/dashboard/call/data');
+export function queryCallData(days: number) {
+  return axios.get<CallDataRes>(`/api/v1/dashboard/call/data/${days}`);
 }
 
 export interface BaseDataRecord {

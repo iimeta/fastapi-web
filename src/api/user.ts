@@ -79,3 +79,14 @@ export interface ChangeEmailData {
 export function changeEmail(data: ChangeEmailData) {
   return axios.post('/api/v1/user/change/email', data);
 }
+
+export function changeAvatar(
+  data: FormData,
+  config: {
+    controller: AbortController;
+    onUploadProgress?: (progressEvent: any) => void;
+  }
+) {
+  // const controller = new AbortController();
+  return axios.post('/api/v1/user/change/avatar', data, config);
+}

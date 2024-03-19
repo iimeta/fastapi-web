@@ -2,7 +2,7 @@
   <a-spin :loading="loading" style="width: 100%">
     <a-card
       class="general-card"
-      :header-style="{ padding: '20px 20px 0 20px' }"
+      :header-style="{ padding: '20px 20px 8px 20px' }"
       :body-style="{
         padding: '20px',
       }"
@@ -10,7 +10,21 @@
       :bordered="false"
     >
       <template #extra>
-        <a-link>{{ $t('workplace.viewMore') }}</a-link>
+        <a-radio-group
+          v-model:model-value="dateRange"
+          type="button"
+          @change="handleDateRangeChange as any"
+        >
+          <a-radio :value="7">
+            {{ $t('workplace.dateRange7') }}
+          </a-radio>
+          <a-radio :value="15">
+            {{ $t('workplace.dateRange15') }}
+          </a-radio>
+          <a-radio :value="30">
+            {{ $t('workplace.dateRange30') }}
+          </a-radio>
+        </a-radio-group>
       </template>
       <Chart height="380px" :option="chartOption" />
     </a-card>
@@ -19,40 +33,50 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { graphic } from 'echarts';
   import useLoading from '@/hooks/loading';
   import { queryCallData, CallData } from '@/api/dashboard';
   import useChartOption from '@/hooks/chart-option';
   import { ToolTipFormatterParams } from '@/types/echarts';
-  import { AnyObject } from '@/types/global';
 
-  function graphicFactory(side: AnyObject) {
-    return {
-      type: 'text',
-      bottom: '8',
-      ...side,
-      style: {
-        text: '',
-        textAlign: 'center',
-        fill: '#4E5969',
-        fontSize: 12,
-      },
-    };
-  }
+  const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
+    return items
+      .map(
+        (el) => `<div class="content-panel">
+        <p>
+          <span style="background-color: ${
+            el.color
+          }" class="tooltip-item-icon"></span>
+          <span>${el.seriesName}</span>
+        </p>
+        <span class="tooltip-value">
+        ${el.value.toLocaleString()}
+        </span>
+      </div>`
+      )
+      .join('');
+  };
+
   const { loading, setLoading } = useLoading(true);
+  const dateRange = ref(15);
   const xAxis = ref<string[]>([]);
-  const chartsData = ref<number[]>([]);
-  const graphicElements = ref([
-    graphicFactory({ left: '5%' }),
-    graphicFactory({ right: 0 }),
-  ]);
-  const { chartOption } = useChartOption(() => {
+  const countStatisticsData = ref<number[]>([]);
+  const tokensStatisticsData = ref<number[]>([]);
+  const userStatisticsData = ref<number[]>([]);
+  const appStatisticsData = ref<number[]>([]);
+  const { chartOption } = useChartOption((isDark) => {
     return {
       grid: {
-        left: '5%',
-        right: '8',
+        left: '38',
+        right: '0',
         top: '10',
-        bottom: '30',
+        bottom: '50',
+      },
+      legend: {
+        bottom: -3,
+        icon: 'circle',
+        textStyle: {
+          color: '#4E5969',
+        },
       },
       xAxis: {
         type: 'category',
@@ -77,11 +101,10 @@
           show: true,
           interval: (idx: number) => {
             if (idx === 0) return false;
-            if (idx === xAxis.value.length - 1) return false;
-            return true;
+            return idx !== xAxis.value.length - 1;
           },
           lineStyle: {
-            color: '#E5E8EF',
+            color: isDark ? '#3F3F3F' : '#E5E8EF',
           },
         },
         axisPointer: {
@@ -94,9 +117,6 @@
       },
       yAxis: {
         type: 'value',
-        axisLine: {
-          show: false,
-        },
         axisLabel: {
           formatter(value: any, idx: number) {
             if (idx === 0) {
@@ -114,89 +134,116 @@
             return `${value}`;
           },
         },
+        axisLine: {
+          show: false,
+        },
         splitLine: {
-          show: true,
           lineStyle: {
             type: 'dashed',
-            color: '#E5E8EF',
+            color: isDark ? '#3F3F3F' : '#E5E8EF',
           },
         },
       },
       tooltip: {
+        show: true,
         trigger: 'axis',
         formatter(params) {
           const [firstElement] = params as ToolTipFormatterParams[];
           return `<div>
             <p class="tooltip-title">${firstElement.axisValueLabel}</p>
-            <div class="content-panel"><span>调用数</span><span class="tooltip-value">${firstElement.value.toLocaleString()}</span></div>
+            ${tooltipItemsHtmlString(params as ToolTipFormatterParams[])}
           </div>`;
         },
         className: 'echarts-tooltip-diy',
       },
-      graphic: {
-        elements: graphicElements.value,
-      },
       series: [
         {
-          data: chartsData.value,
+          name: '调用数',
+          data: countStatisticsData.value,
           type: 'line',
           smooth: true,
-          // symbol: 'circle',
-          symbolSize: 12,
+          showSymbol: false,
+          color: isDark ? '#3D72F6' : '#246EFF',
+          symbol: 'circle',
+          symbolSize: 10,
           emphasis: {
             focus: 'series',
             itemStyle: {
               borderWidth: 2,
+              borderColor: '#E0E3FF',
             },
           },
-          lineStyle: {
-            width: 3,
-            color: new graphic.LinearGradient(0, 0, 1, 0, [
-              {
-                offset: 0,
-                color: 'rgba(30, 231, 255, 1)',
-              },
-              {
-                offset: 0.5,
-                color: 'rgba(36, 154, 255, 1)',
-              },
-              {
-                offset: 1,
-                color: 'rgba(111, 66, 251, 1)',
-              },
-            ]),
-          },
+        },
+        {
+          name: '令牌数',
+          data: tokensStatisticsData.value,
+          type: 'line',
+          smooth: true,
           showSymbol: false,
-          areaStyle: {
-            opacity: 0.8,
-            color: new graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: 'rgba(17, 126, 255, 0.16)',
-              },
-              {
-                offset: 1,
-                color: 'rgba(17, 128, 255, 0)',
-              },
-            ]),
+          color: isDark ? '#A079DC' : '#00B2FF',
+          symbol: 'circle',
+          symbolSize: 10,
+          emphasis: {
+            focus: 'series',
+            itemStyle: {
+              borderWidth: 2,
+              borderColor: '#E2F2FF',
+            },
+          },
+        },
+        {
+          name: '用户数',
+          data: userStatisticsData.value,
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          color: isDark ? '#A079DC' : '#00B2FF',
+          symbol: 'circle',
+          symbolSize: 10,
+          emphasis: {
+            focus: 'series',
+            itemStyle: {
+              borderWidth: 2,
+              borderColor: '#E2F2FF',
+            },
+          },
+        },
+        {
+          name: '应用数',
+          data: appStatisticsData.value,
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          color: isDark ? '#A079DC' : '#00B2FF',
+          symbol: 'circle',
+          symbolSize: 10,
+          emphasis: {
+            focus: 'series',
+            itemStyle: {
+              borderWidth: 2,
+              borderColor: '#E2F2FF',
+            },
           },
         },
       ],
     };
   });
-  const fetchData = async () => {
+
+  const fetchData = async (days: number) => {
     setLoading(true);
     try {
-      const { data: chartData } = await queryCallData();
-      chartData.items.forEach((el: CallData, idx: number) => {
+      xAxis.value = [];
+      countStatisticsData.value = [];
+      tokensStatisticsData.value = [];
+      userStatisticsData.value = [];
+      appStatisticsData.value = [];
+      const { data: chartData } = await queryCallData(days);
+      chartData.items.forEach((el: CallData) => {
         xAxis.value.push(el.date);
-        chartsData.value.push(el.count);
-        if (idx === 0) {
-          graphicElements.value[0].style.text = el.date;
-        }
-        if (idx === chartData.items.length - 1) {
-          graphicElements.value[1].style.text = el.date;
-        }
+        countStatisticsData.value.unshift(el.count);
+        tokensStatisticsData.value.unshift(el.tokens);
+        userStatisticsData.value.unshift(el.user);
+        appStatisticsData.value.unshift(el.app);
       });
     } catch (err) {
       // you can report use errorHandler or other
@@ -204,7 +251,16 @@
       setLoading(false);
     }
   };
-  fetchData();
+
+  /**
+   * 切换日期范围
+   *
+   * @param days 日期数
+   */
+  const handleDateRangeChange = (days: number) => {
+    fetchData(days);
+  };
+  fetchData(15);
 </script>
 
 <style scoped lang="less"></style>
