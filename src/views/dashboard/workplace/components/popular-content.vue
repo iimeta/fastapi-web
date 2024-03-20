@@ -10,7 +10,21 @@
         {{ $t('workplace.popularContent') }}
       </template>
       <template #extra>
-        <a-link>{{ $t('workplace.viewMore') }}</a-link>
+        <a-radio-group
+          v-model:model-value="dateRange"
+          type="button"
+          @change="handleDateRangeChange as any"
+        >
+          <a-radio :value="7">
+            {{ $t('workplace.dateRange7') }}
+          </a-radio>
+          <a-radio :value="15">
+            {{ $t('workplace.dateRange15') }}
+          </a-radio>
+          <a-radio :value="30">
+            {{ $t('workplace.dateRange30') }}
+          </a-radio>
+        </a-radio-group>
       </template>
       <a-space direction="vertical" :size="10" fill>
         <a-radio-group
@@ -81,6 +95,9 @@
 
   const type = ref('text');
   const { loading, setLoading } = useLoading();
+
+  const dateRange = ref(15);
+
   const renderList = ref<TableData[]>();
   const fetchData = async (contentType: string) => {
     try {
@@ -97,6 +114,16 @@
     fetchData(contentType);
   };
   fetchData('text');
+
+  /**
+   * 切换日期范围
+   *
+   * @param days 日期数
+   */
+  const handleDateRangeChange = (days: number) => {
+    fetchData(days);
+  };
+  fetchData(15);
 </script>
 
 <style scoped lang="less">

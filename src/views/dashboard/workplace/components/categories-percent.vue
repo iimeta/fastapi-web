@@ -11,16 +11,36 @@
       <template #title>
         {{ $t('workplace.categoriesPercent') }}
       </template>
+      <template #extra>
+        <a-radio-group
+          v-model:model-value="dateRange"
+          type="button"
+          @change="handleDateRangeChange as any"
+        >
+          <a-radio :value="7">
+            {{ $t('workplace.dateRange7') }}
+          </a-radio>
+          <a-radio :value="15">
+            {{ $t('workplace.dateRange15') }}
+          </a-radio>
+          <a-radio :value="30">
+            {{ $t('workplace.dateRange30') }}
+          </a-radio>
+        </a-radio-group>
+      </template>
       <Chart height="306px" :option="chartOption" />
     </a-card>
   </a-spin>
 </template>
 
 <script lang="ts" setup>
+  import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
   import useChartOption from '@/hooks/chart-option';
 
-  const { loading } = useLoading();
+  const { loading, setLoading } = useLoading(true);
+  const dateRange = ref(15);
+
   const { chartOption } = useChartOption((isDark) => {
     // echarts support https://echarts.apache.org/zh/theme-builder.html
     // It's not used here
@@ -110,6 +130,27 @@
       ],
     };
   });
+
+  const fetchData = async (days: number) => {
+    setLoading(true);
+    try {
+      //
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+   * 切换日期范围
+   *
+   * @param days 日期数
+   */
+  const handleDateRangeChange = (days: number) => {
+    fetchData(days);
+  };
+  fetchData(15);
 </script>
 
 <style scoped lang="less">

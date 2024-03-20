@@ -56,6 +56,8 @@
       .join('');
   };
 
+  const userRole = localStorage.getItem('userRole');
+
   const { loading, setLoading } = useLoading(true);
   const dateRange = ref(15);
   const xAxis = ref<string[]>([]);
@@ -121,6 +123,10 @@
           formatter(value: any, idx: number) {
             if (idx === 0) {
               return value;
+            }
+
+            if (value >= 1000000000) {
+              return `${value / 1000000000}b`;
             }
 
             if (value >= 10000) {
@@ -192,25 +198,11 @@
           },
         },
         {
-          name: '用户数',
-          data: userStatisticsData.value,
-          type: 'line',
-          smooth: true,
-          showSymbol: false,
-          color: isDark ? '#A079DC' : '#00B2FF',
-          symbol: 'circle',
-          symbolSize: 10,
-          emphasis: {
-            focus: 'series',
-            itemStyle: {
-              borderWidth: 2,
-              borderColor: '#E2F2FF',
-            },
-          },
-        },
-        {
-          name: '应用数',
-          data: appStatisticsData.value,
+          name: userRole === 'admin' ? '用户数' : '应用数',
+          data:
+            userRole === 'admin'
+              ? userStatisticsData.value
+              : appStatisticsData.value,
           type: 'line',
           smooth: true,
           showSymbol: false,
