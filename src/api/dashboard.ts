@@ -14,7 +14,7 @@ export function queryPopularList(params: { type: string }) {
 
 export interface CallData {
   date: string;
-  count: number;
+  call: number;
   tokens: number;
   user: number;
   app: number;
@@ -49,4 +49,37 @@ export interface Expense {
 
 export function queryExpense() {
   return axios.get<Expense>('/api/v1/dashboard/expense');
+}
+
+export interface DataTop5 {
+  user_id: number;
+  app_id: number;
+  model: string;
+  call: number;
+  models: number;
+  tokens: number;
+  user: number;
+  app: number;
+}
+
+export interface DataTop5Res {
+  items: DataTop5[];
+}
+
+export function queryDataTop5(params: { days: number; data_type: string }) {
+  return axios.get<DataTop5Res>(`/api/v1/dashboard/data/top5`, { params });
+}
+
+export interface ModelPercent {
+  name: string;
+  value: number;
+}
+
+export interface ModelPercentRes {
+  models: string[];
+  items: ModelPercent[];
+}
+
+export function queryModelPercent(days: number) {
+  return axios.get<ModelPercentRes>(`/api/v1/dashboard/model/percent/${days}`);
 }

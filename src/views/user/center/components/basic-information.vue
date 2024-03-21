@@ -34,7 +34,7 @@
 <script lang="ts" setup>
   import { computed, ref, reactive, getCurrentInstance, toRefs } from 'vue';
   import { FieldRule } from '@arco-design/web-vue';
-  import { UpdateInfoData, updateInfo } from '@/api/user';
+  import { UpdateInfoData, updateInfo } from '@/api/user-center';
   import { useI18n } from 'vue-i18n';
   import { useUserStore } from '@/store';
 

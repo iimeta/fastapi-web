@@ -1,82 +1,33 @@
 import axios from 'axios';
 
-export interface MyProjectRecord {
-  id: number;
+export interface UpdateInfoData {
   name: string;
-  description: string;
-  peopleNumber: number;
-  contributors: {
-    name: string;
-    email: string;
-    avatar: string;
-  }[];
-}
-export function queryMyProjectList() {
-  return axios.post('/api/user/my-project/list');
 }
 
-export interface MyTeamRecord {
-  id: number;
-  avatar: string;
-  name: string;
-  peopleNumber: number;
-}
-export function queryMyTeamList() {
-  return axios.post('/api/user/my-team/list');
+export function updateInfo(data: UpdateInfoData) {
+  return axios.post('/api/v1/user/update/info', data);
 }
 
-export interface LatestActivity {
-  id: number;
-  title: string;
-  description: string;
-  avatar: string;
-}
-export function queryLatestActivity() {
-  return axios.post<LatestActivity[]>('/api/user/latest-activity');
+export interface ChangePasswordData {
+  old_password: string;
+  new_password: string;
 }
 
-export function saveUserInfo() {
-  return axios.post('/api/user/save-info');
+export function changePassword(data: ChangePasswordData) {
+  return axios.post('/api/v1/user/change/password', data);
 }
 
-export interface BasicInfoModel {
+export interface ChangeEmailData {
   email: string;
-  nickname: string;
-  countryRegion: string;
-  area: string;
-  address: string;
-  profile: string;
+  code: string;
+  password: string;
 }
 
-export interface EnterpriseCertificationModel {
-  accountType: number;
-  status: number;
-  time: string;
-  legalPerson: string;
-  certificateType: string;
-  authenticationNumber: string;
-  enterpriseName: string;
-  enterpriseCertificateType: string;
-  organizationCode: string;
+export function changeEmail(data: ChangeEmailData) {
+  return axios.post('/api/v1/user/change/email', data);
 }
 
-export type CertificationRecord = Array<{
-  certificationType: number;
-  certificationContent: string;
-  status: number;
-  time: string;
-}>;
-
-export interface UnitCertification {
-  enterpriseInfo: EnterpriseCertificationModel;
-  record: CertificationRecord;
-}
-
-export function queryCertification() {
-  return axios.post<UnitCertification>('/api/user/certification');
-}
-
-export function userUploadApi(
+export function changeAvatar(
   data: FormData,
   config: {
     controller: AbortController;
@@ -84,5 +35,5 @@ export function userUploadApi(
   }
 ) {
   // const controller = new AbortController();
-  return axios.post('/api/user/upload', data, config);
+  return axios.post('/api/v1/user/change/avatar', data, config);
 }

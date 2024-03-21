@@ -28,7 +28,7 @@
 <script lang="ts" setup>
   import { computed, PropType } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { UserDetail } from '@/api/user';
+  import { UserDetail } from '@/api/admin_user';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
   const props = defineProps({

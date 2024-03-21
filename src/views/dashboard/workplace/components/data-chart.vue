@@ -169,7 +169,7 @@
           type: 'line',
           smooth: true,
           showSymbol: false,
-          color: isDark ? '#3D72F6' : '#246EFF',
+          color: isDark ? '#3D72F6' : '#00B2FF',
           symbol: 'circle',
           symbolSize: 10,
           emphasis: {
@@ -186,7 +186,7 @@
           type: 'line',
           smooth: true,
           showSymbol: false,
-          color: isDark ? '#A079DC' : '#00B2FF',
+          color: isDark ? '#A079DC' : '#246EFF',
           symbol: 'circle',
           symbolSize: 10,
           emphasis: {
@@ -206,7 +206,7 @@
           type: 'line',
           smooth: true,
           showSymbol: false,
-          color: isDark ? '#A079DC' : '#00B2FF',
+          color: isDark ? '#A079DC' : '#A079DC',
           symbol: 'circle',
           symbolSize: 10,
           emphasis: {
@@ -232,7 +232,7 @@
       const { data: chartData } = await queryCallData(days);
       chartData.items.forEach((el: CallData) => {
         xAxis.value.push(el.date);
-        countStatisticsData.value.unshift(el.count);
+        countStatisticsData.value.unshift(el.call);
         tokensStatisticsData.value.unshift(el.tokens);
         userStatisticsData.value.unshift(el.user);
         appStatisticsData.value.unshift(el.app);

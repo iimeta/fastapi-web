@@ -3,7 +3,6 @@ import localeLogin from '@/views/login/locale/en-US';
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
 
-import localeUserInfo from '@/views/user/info/locale/en-US';
 import localeUserCenter from '@/views/user/center/locale/en-US';
 
 import localeUser from '@/views/user/locale/en-US';
@@ -26,7 +25,6 @@ export default {
   'menu.form': 'Form',
   'menu.profile': 'Profile',
   'menu.visualization': 'Data Visualization',
-  'menu.user.center': 'User Center',
   'menu.arcoWebsite': 'Arco Design',
   'menu.faq': 'FAQ',
   'navbar.docs': 'Docs',
@@ -44,7 +42,6 @@ export default {
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
-  ...localeUserInfo,
   ...localeUserCenter,
   ...localeUser,
   ...localeApp,

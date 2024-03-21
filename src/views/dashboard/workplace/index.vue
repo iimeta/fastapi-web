@@ -37,14 +37,14 @@
         <a-grid-item class="panel moduler-wrap" :span="24">
           <QuickOperation />
         </a-grid-item>
-        <!-- <a-grid-item class="panel" :span="24">
-          <Carousel />
-        </a-grid-item>
-        <a-grid-item class="panel" :span="24">
-          <Announcement />
-        </a-grid-item> -->
         <a-grid-item class="panel" :span="24">
           <Author />
+        </a-grid-item>
+        <!-- <a-grid-item class="panel" :span="24">
+          <Carousel />
+        </a-grid-item> -->
+        <a-grid-item v-permission="['admin']" class="panel" :span="24">
+          <Announcement />
         </a-grid-item>
         <a-grid-item class="panel" :span="24">
           <Docs />
@@ -58,15 +58,15 @@
   import Banner from './components/banner.vue';
   import DataPanel from './components/data-panel.vue';
   import DataChart from './components/data-chart.vue';
-  import PopularContent from './components/popular-content.vue';
-  import CategoriesPercent from './components/categories-percent.vue';
+  import PopularContent from './components/data-top5.vue';
+  import CategoriesPercent from './components/model-percent.vue';
   // import RecentlyVisited from './components/recently-visited.vue';
   import QuickOperation from './components/quick-operation.vue';
   import UserInfo from './components/user-info.vue';
   import Expense from './components/expense.vue';
   import Author from './components/author.vue';
-  // import Announcement from './components/announcement.vue';
   // import Carousel from './components/carousel.vue';
+  import Announcement from './components/announcement.vue';
   import Docs from './components/docs.vue';
 </script>
 

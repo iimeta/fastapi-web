@@ -3,7 +3,6 @@ import localeLogin from '@/views/login/locale/zh-CN';
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 
-import localeUserInfo from '@/views/user/info/locale/zh-CN';
 import localeUserCenter from '@/views/user/center/locale/zh-CN';
 
 import localeUser from '@/views/user/locale/zh-CN';
@@ -26,7 +25,6 @@ export default {
   'menu.form': '表单页',
   'menu.profile': '详情页',
   'menu.visualization': '数据可视化',
-  'menu.user.center': '个人中心',
   'menu.arcoWebsite': 'Arco Design',
   'menu.faq': '常见问题',
   'navbar.docs': '文档中心',
@@ -44,7 +42,6 @@ export default {
   ...localeMessageBox,
   ...localeLogin,
   ...localeWorkplace,
-  ...localeUserInfo,
   ...localeUserCenter,
   ...localeUser,
   ...localeApp,

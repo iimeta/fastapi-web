@@ -103,7 +103,7 @@
   import { getCaptcha } from '@/api/common';
   import { useI18n } from 'vue-i18n';
   import { useUserStore } from '@/store';
-  import { changeEmail, ChangeEmailData } from '@/api/user';
+  import { changeEmail, ChangeEmailData } from '@/api/user-center';
 
   const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
