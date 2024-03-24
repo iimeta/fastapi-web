@@ -10,12 +10,12 @@
         <a-grid-item
           :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
         >
-          <PopularContent />
+          <DataTop5 />
         </a-grid-item>
         <a-grid-item
           :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
         >
-          <CategoriesPercent />
+          <ModelPercent />
         </a-grid-item>
       </a-grid>
     </div>
@@ -58,8 +58,8 @@
   import Banner from './components/banner.vue';
   import DataPanel from './components/data-panel.vue';
   import DataChart from './components/data-chart.vue';
-  import PopularContent from './components/data-top5.vue';
-  import CategoriesPercent from './components/model-percent.vue';
+  import DataTop5 from './components/data-top5.vue';
+  import ModelPercent from './components/model-percent.vue';
   // import RecentlyVisited from './components/recently-visited.vue';
   import QuickOperation from './components/quick-operation.vue';
   import UserInfo from './components/user-info.vue';

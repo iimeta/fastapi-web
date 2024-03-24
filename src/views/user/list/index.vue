@@ -207,6 +207,18 @@
             type="text"
             size="small"
             @click="
+              modelsPermission({
+                user_id: `${record.user_id}`,
+                models: `${record.models}`.split(','),
+              })
+            "
+          >
+            {{ $t('user.columns.operations.models') }}
+          </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="
               $router.push({
                 name: 'UserDetail',
                 query: { id: `${record.id}` },
@@ -251,7 +263,7 @@
       </a-table>
       <template #extra>
         <a-modal
-          v-model:visible="visible"
+          v-model:visible="grantQuotaVisible"
           :title="$t('user.form.title.grantQuota')"
           :ok-text="$t('user.button.save')"
           @cancel="handleCancel"
@@ -276,6 +288,32 @@
             </a-form-item>
           </a-form>
         </a-modal>
+        <a-modal
+          v-model:visible="modelsVisible"
+          :title="$t('user.form.title.models')"
+          :ok-text="$t('user.button.save')"
+          @cancel="modelsHandleCancel"
+          @before-ok="modelsHandleBeforeOk"
+        >
+          <a-form ref="formRef" :model="modelsFormData">
+            <a-form-item field="models" :label="$t('user.label.models')">
+              <a-select
+                v-model="modelsFormData.models"
+                :placeholder="$t('user.placeholder.models')"
+                :max-tag-count="15"
+                multiple
+                allow-clear
+              >
+                <a-option
+                  v-for="item in models"
+                  :key="item.id"
+                  :value="item.id"
+                  :label="item.name"
+                />
+              </a-select>
+            </a-form-item>
+          </a-form>
+        </a-modal>
       </template>
     </a-card>
   </div>
@@ -296,7 +334,10 @@
     submitUserGrantQuota,
     UserGrantQuota,
     UserChangeStatus,
+    UserModelsParams,
     submitUserChangeStatus,
+    submitUserModels,
+    UserModels,
   } from '@/api/admin_user';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -307,6 +348,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { Message } from '@arco-design/web-vue';
+  import { queryModelList, ModelList } from '@/api/model';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -316,6 +358,18 @@
     showCheckedAll: true,
     onlyCurrent: false,
   } as TableRowSelection);
+
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelList();
 
   const userDelete = async (params: UserDeleteParams) => {
     setLoading(true);
@@ -422,7 +476,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 250,
+      width: 320,
     },
   ]);
 
@@ -557,16 +611,39 @@
     { deep: true, immediate: true }
   );
 
-  const visible = ref(false);
+  const grantQuotaVisible = ref(false);
+  const modelsVisible = ref(false);
 
   const formRef = ref<FormInstance>();
   const formData = ref<UserGrantQuota>({} as UserGrantQuota);
+  const modelsFormData = ref<UserModels>({} as UserModels);
 
   const grantQuota = async (params: UserGrantQuotaParams) => {
     setLoading(true);
     try {
       formData.value.user_id = params.user_id;
-      visible.value = true;
+      grantQuotaVisible.value = true;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const modelsPermission = async (params: UserModelsParams) => {
+    setLoading(true);
+    try {
+      modelsFormData.value.user_id = params.user_id;
+      if (
+        params.models &&
+        params.models.length > 0 &&
+        params.models[0] !== 'undefined'
+      ) {
+        modelsFormData.value.models = params.models;
+      } else {
+        modelsFormData.value.models = [];
+      }
+      modelsVisible.value = true;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -577,7 +654,7 @@
   const handleBeforeOk = async (done: any) => {
     const res = await formRef.value?.validate();
     if (res) {
-      visible.value = true;
+      grantQuotaVisible.value = true;
       done(false);
       return;
     }
@@ -596,7 +673,32 @@
   };
 
   const handleCancel = () => {
-    visible.value = false;
+    grantQuotaVisible.value = false;
+  };
+
+  const modelsHandleBeforeOk = async (done: any) => {
+    const res = await formRef.value?.validate();
+    if (res) {
+      modelsVisible.value = true;
+      done(false);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await submitUserModels(modelsFormData.value); // The mock api default success
+      Message.success(t('user.success.models'));
+      done();
+      fetchData();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const modelsHandleCancel = () => {
+    modelsVisible.value = false;
   };
 </script>
 

@@ -37,6 +37,7 @@
   import { queryCallData, CallData } from '@/api/dashboard';
   import useChartOption from '@/hooks/chart-option';
   import { ToolTipFormatterParams } from '@/types/echarts';
+  import { AnyObject } from '@/types/global';
 
   const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
     return items
@@ -56,6 +57,20 @@
       .join('');
   };
 
+  function graphicFactory(side: AnyObject) {
+    return {
+      type: 'text',
+      bottom: '28',
+      ...side,
+      style: {
+        text: '',
+        textAlign: 'center',
+        fill: '#4E5969',
+        fontSize: 12,
+      },
+    };
+  }
+
   const userRole = localStorage.getItem('userRole');
 
   const { loading, setLoading } = useLoading(true);
@@ -65,11 +80,16 @@
   const tokensStatisticsData = ref<number[]>([]);
   const userStatisticsData = ref<number[]>([]);
   const appStatisticsData = ref<number[]>([]);
+  const graphicElements = ref([
+    graphicFactory({ left: '3%' }),
+    graphicFactory({ right: 8 }),
+  ]);
+
   const { chartOption } = useChartOption((isDark) => {
     return {
       grid: {
-        left: '38',
-        right: '0',
+        left: '3%',
+        right: '8',
         top: '10',
         bottom: '50',
       },
@@ -162,6 +182,9 @@
         },
         className: 'echarts-tooltip-diy',
       },
+      graphic: {
+        elements: graphicElements.value,
+      },
       series: [
         {
           name: '调用数',
@@ -230,12 +253,18 @@
       userStatisticsData.value = [];
       appStatisticsData.value = [];
       const { data: chartData } = await queryCallData(days);
-      chartData.items.forEach((el: CallData) => {
+      chartData.items.forEach((el: CallData, idx: number) => {
         xAxis.value.push(el.date);
         countStatisticsData.value.unshift(el.call);
         tokensStatisticsData.value.unshift(el.tokens);
         userStatisticsData.value.unshift(el.user);
         appStatisticsData.value.unshift(el.app);
+        if (idx === 0) {
+          graphicElements.value[0].style.text = el.date;
+        }
+        if (idx === chartData.items.length - 1) {
+          graphicElements.value[1].style.text = el.date;
+        }
       });
     } catch (err) {
       // you can report use errorHandler or other

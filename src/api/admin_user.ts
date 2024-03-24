@@ -20,6 +20,8 @@ export interface UserPage {
   name: string;
   email: string;
   phone: string;
+  quota: number;
+  models: string[];
   remark: string;
   status: number;
 }
@@ -135,4 +137,19 @@ export interface UserGrantQuota {
 
 export function submitUserGrantQuota(data: UserGrantQuota) {
   return axios.post('/api/v1/admin/user/grant/quota', data);
+}
+
+export interface UserModelsParams {
+  user_id: any;
+  models: string[];
+}
+
+export interface UserModels {
+  id: string;
+  user_id: number;
+  models: string[];
+}
+
+export function submitUserModels(data: UserModels) {
+  return axios.post('/api/v1/admin/user/models', data);
 }

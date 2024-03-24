@@ -41,7 +41,7 @@ export default {
   'workplace.dataTop5.user': '用户',
   'workplace.dataTop5.app': '应用',
   'workplace.dataTop5.model': '模型',
-  'workplace.modelPercent': '模型占比',
+  'workplace.modelPercent': '模型占比TOP10',
   'workplace.pecs': '个',
   'workplace.author': '作者',
   'workplace.expense': '费用',
