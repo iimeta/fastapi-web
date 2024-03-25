@@ -4,7 +4,7 @@
     :title="$t('workplace.docs')"
     :header-style="{ padding: '20px 20px 0 20px' }"
     :body-style="{ padding: '0 20px' }"
-    style="height: 178px"
+    style="height: 138px"
     :bordered="false"
   >
     <template #extra>
@@ -24,16 +24,6 @@
       <a-col :span="12">
         <a-link>
           {{ $t('workplace.docs.workflow') }}
-        </a-link>
-      </a-col>
-      <a-col :span="12">
-        <a-link>
-          {{ $t('workplace.docs.interfaceDocs') }}
-        </a-link>
-      </a-col>
-      <a-col :span="12">
-        <a-link>
-          {{ $t('workplace.docs.interfaceDocs') }}
         </a-link>
       </a-col>
       <a-col :span="12">

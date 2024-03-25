@@ -81,14 +81,14 @@
   const userStatisticsData = ref<number[]>([]);
   const appStatisticsData = ref<number[]>([]);
   const graphicElements = ref([
-    graphicFactory({ left: '3%' }),
+    graphicFactory({ left: '50' }),
     graphicFactory({ right: 8 }),
   ]);
 
   const { chartOption } = useChartOption((isDark) => {
     return {
       grid: {
-        left: '3%',
+        left: '50',
         right: '8',
         top: '10',
         bottom: '50',

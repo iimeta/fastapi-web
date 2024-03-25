@@ -10,7 +10,7 @@
         <a-grid-item
           :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
         >
-          <DataTop5 />
+          <DataTop />
         </a-grid-item>
         <a-grid-item
           :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
@@ -43,7 +43,7 @@
         <!-- <a-grid-item class="panel" :span="24">
           <Carousel />
         </a-grid-item> -->
-        <a-grid-item v-permission="['admin']" class="panel" :span="24">
+        <a-grid-item class="panel" :span="24">
           <Announcement />
         </a-grid-item>
         <a-grid-item class="panel" :span="24">
@@ -58,7 +58,7 @@
   import Banner from './components/banner.vue';
   import DataPanel from './components/data-panel.vue';
   import DataChart from './components/data-chart.vue';
-  import DataTop5 from './components/data-top5.vue';
+  import DataTop from './components/data-top.vue';
   import ModelPercent from './components/model-percent.vue';
   // import RecentlyVisited from './components/recently-visited.vue';
   import QuickOperation from './components/quick-operation.vue';

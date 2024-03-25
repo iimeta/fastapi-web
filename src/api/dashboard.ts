@@ -51,7 +51,7 @@ export function queryExpense() {
   return axios.get<Expense>('/api/v1/dashboard/expense');
 }
 
-export interface DataTop5 {
+export interface DataTop {
   user_id: number;
   app_id: number;
   model: string;
@@ -62,12 +62,12 @@ export interface DataTop5 {
   app: number;
 }
 
-export interface DataTop5Res {
-  items: DataTop5[];
+export interface DataTopRes {
+  items: DataTop[];
 }
 
-export function queryDataTop5(params: { days: number; data_type: string }) {
-  return axios.get<DataTop5Res>(`/api/v1/dashboard/data/top5`, { params });
+export function queryDataTop(params: { days: number; data_type: string }) {
+  return axios.get<DataTopRes>(`/api/v1/dashboard/data/top`, { params });
 }
 
 export interface ModelPercent {

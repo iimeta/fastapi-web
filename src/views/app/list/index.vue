@@ -192,6 +192,12 @@
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
       >
+        <template #model_names="{ record }">
+          <span v-if="record.model_names">{{
+            record.model_names.join(',')
+          }}</span>
+          <span v-else>{{ $t(`app.columns.models.no_limit`) }}</span>
+        </template>
         <template #quota="{ record }">
           <span v-if="record.is_limit_quota">
             {{ record.quota.toLocaleString() }}

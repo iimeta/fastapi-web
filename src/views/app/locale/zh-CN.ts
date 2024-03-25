@@ -80,6 +80,7 @@ export default {
   'app.columns.name': '应用名称',
   'app.columns.models': '模型权限',
   'app.columns.quota': '额度',
+  'app.columns.models.no_limit': '不限',
   'app.columns.quota.no_limit': '不限',
   'app.columns.status': '状态',
   'app.columns.remark': '备注',

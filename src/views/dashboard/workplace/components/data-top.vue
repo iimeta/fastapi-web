@@ -7,7 +7,7 @@
       :bordered="false"
     >
       <template #title>
-        {{ $t('workplace.dataTop5') }}
+        {{ $t('workplace.dataTop') }}
       </template>
       <template #extra>
         <a-radio-group
@@ -33,20 +33,20 @@
           @change="typeChange as any"
         >
           <a-radio v-if="userRole === 'admin'" value="user">
-            {{ $t('workplace.dataTop5.user') }}
+            {{ $t('workplace.dataTop.user') }}
           </a-radio>
           <a-radio v-if="userRole === 'user'" value="app">
-            {{ $t('workplace.dataTop5.app') }}
+            {{ $t('workplace.dataTop.app') }}
           </a-radio>
           <a-radio value="model">
-            {{ $t('workplace.dataTop5.model') }}
+            {{ $t('workplace.dataTop.model') }}
           </a-radio>
         </a-radio-group>
         <a-table
           :data="renderList"
           :pagination="false"
           :bordered="false"
-          :scroll="{ x: '100%', y: '270px' }"
+          :scroll="{ x: '100%', y: '500px' }"
         >
           <template #columns>
             <a-table-column title="排名" data-index="key" :width="60">
@@ -58,27 +58,31 @@
               v-if="dataType === 'user' && userRole === 'admin'"
               title="用户ID"
               data-index="user_id"
+              align="center"
             >
             </a-table-column>
             <a-table-column
               v-if="dataType === 'app' && userRole === 'user'"
               title="应用ID"
               data-index="app_id"
+              align="center"
             >
             </a-table-column>
             <a-table-column
               v-if="dataType === 'model'"
               title="模型"
               data-index="model"
-              :width="180"
+              align="center"
+              ellipsis
+              tooltip
             >
             </a-table-column>
-            <a-table-column title="调用数" data-index="call">
+            <a-table-column title="调用数" data-index="call" align="center">
               <template #cell="{ record }">
                 {{ record.call.toLocaleString() }}
               </template>
             </a-table-column>
-            <a-table-column
+            <!-- <a-table-column
               v-if="dataType === 'user' || dataType === 'app'"
               title="模型数"
               data-index="models"
@@ -87,7 +91,7 @@
                 {{ record.models.toLocaleString() }}
               </template>
             </a-table-column>
-            <a-table-column
+           <a-table-column
               v-if="dataType === 'model' && userRole === 'admin'"
               title="用户数"
               data-index="user"
@@ -104,8 +108,14 @@
               <template #cell="{ record }">
                 {{ record.app.toLocaleString() }}
               </template>
-            </a-table-column>
-            <a-table-column title="令牌数" data-index="tokens">
+            </a-table-column> -->
+            <a-table-column
+              title="令牌数"
+              data-index="tokens"
+              align="center"
+              ellipsis
+              tooltip
+            >
               <template #cell="{ record }">
                 {{ record.tokens.toLocaleString() }}
               </template>
@@ -120,7 +130,7 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { queryDataTop5 } from '@/api/dashboard';
+  import { queryDataTop } from '@/api/dashboard';
   import type { TableData } from '@arco-design/web-vue/es/table/interface';
 
   const userRole = localStorage.getItem('userRole');
@@ -138,7 +148,7 @@
   const fetchData = async () => {
     try {
       setLoading(true);
-      const { data } = await queryDataTop5({
+      const { data } = await queryDataTop({
         days: day,
         data_type: dataType,
       });
@@ -170,10 +180,10 @@
 
 <style scoped lang="less">
   .general-card {
-    height: 392px;
+    height: 582px;
   }
   :deep(.arco-table-tr) {
-    height: 45px;
+    height: 42px;
     .arco-typography {
       margin-bottom: 0;
     }

@@ -28,7 +28,7 @@
           </a-radio>
         </a-radio-group>
       </template>
-      <Chart height="306px" :option="chartOption" />
+      <Chart height="496px" :option="chartOption" />
     </a-card>
   </a-spin>
 </template>
@@ -70,7 +70,7 @@
       series: [
         {
           type: 'pie',
-          radius: '65%',
+          radius: '60%',
           label: {
             formatter: '{d}%',
             fontSize: 14,
