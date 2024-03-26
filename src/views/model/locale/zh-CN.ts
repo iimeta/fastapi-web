@@ -1,5 +1,6 @@
 export default {
   'menu.model': '模型管理',
+  'menu.my.model': '我的模型',
   'menu.model.list': '模型列表',
   'menu.model.create': '新建模型',
   'menu.model.update': '修改模型',
@@ -91,6 +92,8 @@ export default {
   'model.columns.name': '模型名称',
   'model.columns.model': '模型',
   'model.columns.type': '模型类型',
+  'model.columns.prompt_ratio': '提问倍率',
+  'model.columns.completion_ratio': '回答倍率',
   'model.columns.data_format': '数据格式',
   'model.columns.status': '状态',
   'model.columns.remark': '备注',

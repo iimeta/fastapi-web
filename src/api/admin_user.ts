@@ -82,6 +82,7 @@ export interface UserDetail {
   phone: string;
   email: string;
   quota: number;
+  model_names: string[];
   status: number;
   remark: string;
   created_at: string;

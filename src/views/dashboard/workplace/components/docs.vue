@@ -3,8 +3,8 @@
     class="general-card"
     :title="$t('workplace.docs')"
     :header-style="{ padding: '20px 20px 0 20px' }"
-    :body-style="{ padding: '0 20px' }"
-    style="height: 138px"
+    :body-style="{ padding: '10px 20px' }"
+    style="height: 158px"
     :bordered="false"
   >
     <template #extra>

@@ -5,15 +5,26 @@
     :header-style="{ padding: '20px 20px 0 20px' }"
     :body-style="{ padding: '15px 20px 13px 20px' }"
     :bordered="false"
+    style="height: 194px"
   >
     <template #extra>
-      <a-link>{{ $t('workplace.viewMore') }}</a-link>
+      <a-link
+        target="_blank"
+        href="https://github.com/iimeta/fastapi-admin/releases"
+      >
+        {{ $t('workplace.viewMore') }}
+      </a-link>
     </template>
     <div>
       <div v-for="(item, idx) in list" :key="idx" class="item">
         <a-tag :color="item.type" size="small">{{ item.label }}</a-tag>
         <span class="item-content">
-          {{ item.content }}
+          <a-link
+            target="_blank"
+            href="https://github.com/iimeta/fastapi-admin/releases"
+          >
+            {{ item.content }}
+          </a-link>
         </span>
       </div>
     </div>
@@ -23,29 +34,9 @@
 <script lang="ts" setup>
   const list = [
     {
-      type: 'orangered',
-      label: '活动',
-      content: '内容最新优惠活动',
-    },
-    {
-      type: 'cyan',
-      label: '消息',
-      content: '新增内容尚未通过审核，详情请点击查看。',
-    },
-    {
       type: 'blue',
       label: '通知',
-      content: '当前产品试用期即将结束，如需续费请点击查看。',
-    },
-    {
-      type: 'blue',
-      label: '通知',
-      content: '1月新系统升级计划通知',
-    },
-    {
-      type: 'cyan',
-      label: '消息',
-      content: '新增内容已经通过审核，详情请点击查看。',
+      content: 'v0.1.0版本发布啦! 啦!! 啦!!!',
     },
   ];
 </script>

@@ -59,6 +59,7 @@ export default {
   'user.detail.label.email': '邮箱',
   'user.detail.label.remark': '备注',
   'user.detail.label.quota': '额度',
+  'user.detail.label.models': '模型权限',
   'user.detail.label.created_at': '创建时间',
   'user.detail.label.updated_at': '更新时间',
   // search

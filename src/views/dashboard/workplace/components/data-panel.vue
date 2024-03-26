@@ -163,7 +163,7 @@
         </a-statistic>
       </a-space>
     </a-grid-item>
-    <a-grid-item v-permission="['admin']" :span="24">
+    <!-- <a-grid-item v-permission="['admin']" :span="24">
       <a-divider class="panel-border" />
     </a-grid-item>
     <a-grid-item
@@ -248,7 +248,7 @@
         >
         </a-statistic>
       </a-space>
-    </a-grid-item>
+    </a-grid-item> -->
     <a-grid-item :span="24">
       <a-divider class="panel-border" />
     </a-grid-item>

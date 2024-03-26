@@ -9,7 +9,7 @@ const KEY: AppRouteRecordRaw = {
     locale: 'menu.key',
     requiresAuth: true,
     icon: 'icon-safe',
-    order: 3,
+    order: 4,
   },
   children: [
     {

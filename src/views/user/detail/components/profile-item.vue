@@ -70,6 +70,10 @@
           value: renderData.quota,
         },
         {
+          label: t('user.detail.label.models'),
+          value: renderData?.model_names?.join('\n') || '-',
+        },
+        {
           label: t('user.detail.label.remark'),
           value: renderData?.remark || '-',
         },
