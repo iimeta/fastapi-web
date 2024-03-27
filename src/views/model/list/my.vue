@@ -5,7 +5,6 @@
         <icon-common />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.my.model') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.model.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"

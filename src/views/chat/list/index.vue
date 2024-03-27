@@ -958,6 +958,11 @@
       width: 75,
     },
   ]);
+
+  if (userRole === 'user') {
+    columns.value.splice(9, 1);
+  }
+
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('chat.dict.status.1'),

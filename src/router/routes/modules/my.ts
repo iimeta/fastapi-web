@@ -5,7 +5,7 @@ const MY: AppRouteRecordRaw = {
   path: '/my',
   name: 'my',
   component: DEFAULT_LAYOUT,
-  redirect: '/my/model/list',
+  redirect: '/my/model',
   meta: {
     locale: 'menu.my.model',
     requiresAuth: true,
@@ -16,8 +16,8 @@ const MY: AppRouteRecordRaw = {
   },
   children: [
     {
-      path: 'model/list',
-      name: 'MyModelList',
+      path: 'model',
+      name: 'MyModel',
       component: () => import('@/views/model/list/my.vue'),
       meta: {
         locale: 'menu.model.list',

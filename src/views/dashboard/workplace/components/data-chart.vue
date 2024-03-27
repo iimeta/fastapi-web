@@ -108,7 +108,7 @@
         axisLabel: {
           color: '#4E5969',
           formatter(value: number, idx: number) {
-            if (idx === 0) return '';
+            if (idx === 0 || idx === 28) return '';
             if (idx === xAxis.value.length - 1) return '';
             return `${value}`;
           },
@@ -255,10 +255,10 @@
       const { data: chartData } = await queryCallData(days);
       chartData.items.forEach((el: CallData, idx: number) => {
         xAxis.value.push(el.date);
-        countStatisticsData.value.unshift(el.call);
-        tokensStatisticsData.value.unshift(el.tokens);
-        userStatisticsData.value.unshift(el.user);
-        appStatisticsData.value.unshift(el.app);
+        countStatisticsData.value.push(el.call);
+        tokensStatisticsData.value.push(el.tokens);
+        userStatisticsData.value.push(el.user);
+        appStatisticsData.value.push(el.app);
         if (idx === 0) {
           graphicElements.value[0].style.text = el.date;
         }

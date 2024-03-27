@@ -142,6 +142,20 @@
         </a-tooltip>
       </li>
       <li>
+        <a-tooltip :content="$t('settings.github')">
+          <a-link
+            target="_blank"
+            href="https://github.com/iimeta/fastapi-admin"
+          >
+            <a-button class="nav-btn" type="outline" :shape="'circle'">
+              <template #icon>
+                <icon-github />
+              </template>
+            </a-button>
+          </a-link>
+        </a-tooltip>
+      </li>
+      <li>
         <a-dropdown trigger="click">
           <a-avatar
             :size="32"

@@ -1,5 +1,6 @@
 export default {
   'settings.title': '页面配置',
+  'settings.github': '开源项目',
   'settings.themeColor': '主题色',
   'settings.content': '内容区域',
   'settings.search': '搜索',

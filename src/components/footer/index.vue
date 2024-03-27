@@ -1,7 +1,9 @@
 <template>
-  <a-layout-footer class="footer"
-    >Copyright © 2023-2024 IIM. All Rights Reserved.</a-layout-footer
-  >
+  <a-layout-footer class="footer">
+    <a-link target="_blank" href="https://iim.ai">
+      Copyright © 2023-2024 IIM. All Rights Reserved.
+    </a-link>
+  </a-layout-footer>
 </template>
 
 <script lang="ts" setup></script>

@@ -6,10 +6,7 @@
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/c8b36e26d2b9bb5dbf9b74dd6d7345af.svg~tplv-49unhts6dw-image.image"
-          />
+          <img alt="avatar" src="@/assets/images/call.png" />
         </a-avatar>
         <a-statistic
           :title="$t('workplace.call')"
@@ -25,10 +22,7 @@
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/288b89194e657603ff40db39e8072640.svg~tplv-49unhts6dw-image.image"
-          />
+          <img alt="avatar" src="@/assets/images/app.png" />
         </a-avatar>
         <a-statistic
           :title="$t('workplace.app')"
@@ -45,10 +39,7 @@
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/288b89194e657603ff40db39e8072640.svg~tplv-49unhts6dw-image.image"
-          />
+          <img alt="avatar" src="@/assets/images/today-app.png" />
         </a-avatar>
         <a-statistic
           :title="$t('workplace.todayApp')"
@@ -65,10 +56,7 @@
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/77d74c9a245adeae1ec7fb5d4539738d.svg~tplv-49unhts6dw-image.image"
-          />
+          <img alt="avatar" src="@/assets/images/app-key.png" />
         </a-avatar>
         <a-statistic
           :title="$t('workplace.appKey')"
@@ -88,10 +76,7 @@
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/c8b36e26d2b9bb5dbf9b74dd6d7345af.svg~tplv-49unhts6dw-image.image"
-          />
+          <img alt="avatar" src="@/assets/images/user.png" />
         </a-avatar>
         <a-statistic
           :title="$t('workplace.user')"
@@ -109,10 +94,7 @@
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/c8b36e26d2b9bb5dbf9b74dd6d7345af.svg~tplv-49unhts6dw-image.image"
-          />
+          <img alt="avatar" src="@/assets/images/today-user.png" />
         </a-avatar>
         <a-statistic
           :title="$t('workplace.todayUser')"
@@ -129,10 +111,7 @@
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/fdc66b07224cdf18843c6076c2587eb5.svg~tplv-49unhts6dw-image.image"
-          />
+          <img alt="avatar" src="@/assets/images/model.png" />
         </a-avatar>
         <a-statistic
           :title="$t('workplace.model')"
@@ -150,10 +129,7 @@
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/77d74c9a245adeae1ec7fb5d4539738d.svg~tplv-49unhts6dw-image.image"
-          />
+          <img alt="avatar" src="@/assets/images/model-key.png" />
         </a-avatar>
         <a-statistic
           :title="$t('workplace.modelKey')"
