@@ -285,7 +285,7 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.corp || '-' }}</span>
+              <span v-else>{{ $t(`chat.dict.corp.${currentData.corp}`) }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="模型">
               <a-skeleton v-if="loading" :animation="true">
@@ -487,7 +487,7 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.corp || '-' }}</span>
+              <span v-else>{{ $t(`chat.dict.corp.${currentData.corp}`) }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="模型名称">
               <a-skeleton v-if="loading" :animation="true">
