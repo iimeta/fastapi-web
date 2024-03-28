@@ -416,7 +416,7 @@
       dataIndex: 'corp',
       slotName: 'corp',
       align: 'center',
-      width: 100,
+      width: 110,
     },
     {
       title: t('key.columns.key'),
@@ -467,6 +467,14 @@
     {
       label: t('key.dict.corp.OpenAI'),
       value: 'OpenAI',
+    },
+    {
+      label: t('key.dict.corp.Midjourney'),
+      value: 'Midjourney',
+    },
+    {
+      label: t('key.dict.corp.GLM'),
+      value: 'GLM',
     },
     // {
     //   label: t('key.dict.corp.Baidu'),

@@ -21,6 +21,8 @@
         :placeholder="$t('model.placeholder.corp')"
       >
         <a-option value="OpenAI">OpenAI</a-option>
+        <a-option value="Midjourney">Midjourney</a-option>
+        <a-option value="GLM">智谱AI</a-option>
         <!-- <a-option value="Baidu">百度</a-option>
         <a-option value="Xfyun">科大讯飞</a-option>
         <a-option value="Aliyun">阿里云</a-option> -->
