@@ -78,15 +78,13 @@
         <a-option value="4">图生图</a-option>
       </a-select>
     </a-form-item>
-    <a-form-item
-      field="remark"
-      :label="$t('model.label.remark')"
-      :rules="[
-        {
-          required: false,
-        },
-      ]"
-    >
+    <a-form-item field="prompt" :label="$t('model.label.prompt')">
+      <a-textarea
+        v-model="formData.prompt"
+        :placeholder="$t('model.placeholder.prompt')"
+      />
+    </a-form-item>
+    <a-form-item field="remark" :label="$t('model.label.remark')">
       <a-textarea
         v-model="formData.remark"
         :placeholder="$t('model.placeholder.remark')"
@@ -112,6 +110,7 @@
     name: '',
     model: '',
     type: '1',
+    prompt: '',
     remark: '',
   });
 

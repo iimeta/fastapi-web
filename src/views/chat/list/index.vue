@@ -683,6 +683,12 @@
               </a-skeleton>
               <span v-else>{{ currentData.remote_ip || '-' }}</span>
             </a-descriptions-item>
+            <a-descriptions-item label="本地IP">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.local_ip || '-' }}</span>
+            </a-descriptions-item>
             <a-descriptions-item label="请求时间">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />

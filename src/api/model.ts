@@ -6,6 +6,7 @@ export interface ModelCreateBaseInfo {
   name: string;
   model: string;
   type: string;
+  prompt: string;
   remark: string;
 }
 
@@ -98,6 +99,7 @@ export interface ModelDetail {
   name: string;
   model: string;
   type: number;
+  prompt: string;
   prompt_ratio: number;
   completion_ratio: number;
   data_format: number;
@@ -126,6 +128,7 @@ export interface ModelUpdateBaseInfo {
   name: string;
   model: string;
   type: string;
+  prompt: string;
   remark: string;
   status: number;
 }

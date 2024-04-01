@@ -69,6 +69,10 @@
           value: t(`model.dict.type.${renderData.type}`),
         },
         {
+          label: t('model.detail.label.prompt'),
+          value: renderData?.prompt || '-',
+        },
+        {
           label: t('model.detail.label.remark'),
           value: renderData?.remark || '-',
         },

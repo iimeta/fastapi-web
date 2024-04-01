@@ -73,6 +73,7 @@ export interface ChatDetail {
   req_time: string;
   client_ip: string;
   remote_ip: string;
+  local_ip: string;
   err_msg: string;
   status: number;
   creator: string;
