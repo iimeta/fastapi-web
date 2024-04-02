@@ -18,7 +18,7 @@
     >
       <a-input-number
         v-model="formData.prompt_ratio"
-        :min="1"
+        :min="0.001"
         :placeholder="$t('model.placeholder.promptRatio')"
       />
     </a-form-item>
@@ -34,7 +34,7 @@
     >
       <a-input-number
         v-model="formData.completion_ratio"
-        :min="1"
+        :min="0.001"
         :placeholder="$t('model.placeholder.completionRatio')"
       />
     </a-form-item>
