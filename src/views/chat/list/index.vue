@@ -408,25 +408,6 @@
                 >
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="内耗">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>
-                <a-tag v-if="currentData.internal_time > 500" color="red">
-                  {{ currentData.internal_time || '-' }} ms
-                </a-tag>
-                <a-tag
-                  v-else-if="currentData.internal_time > 100"
-                  color="orange"
-                >
-                  {{ currentData.internal_time || '-' }} ms
-                </a-tag>
-                <a-tag v-else color="green"
-                  >{{ currentData.internal_time || '-' }} ms</a-tag
-                >
-              </span>
-            </a-descriptions-item>
             <a-descriptions-item label="客户端IP">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
@@ -438,12 +419,6 @@
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.req_time || '-' }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="错误信息" :span="2">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.err_msg || '-' }}</span>
             </a-descriptions-item>
           </a-descriptions>
           <a-descriptions v-permission="['admin']" :column="2" bordered>
