@@ -15,7 +15,7 @@
           message: $t('app.error.name.required'),
         },
         {
-          match: /^.{1,20}$/,
+          match: /^.{1,100}$/,
           message: $t('app.error.name.pattern'),
         },
       ]"

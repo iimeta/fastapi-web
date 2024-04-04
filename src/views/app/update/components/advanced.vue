@@ -46,9 +46,10 @@
     >
       <a-input-number
         v-model="formData.quota"
-        :precision="0"
-        :min="1"
         :placeholder="$t('app.placeholder.quota')"
+        :precision="0"
+        :min="0"
+        :max="9999999999999"
       />
     </a-form-item>
     <a-form-item

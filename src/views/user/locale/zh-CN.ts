@@ -35,7 +35,7 @@ export default {
   'user.label.key': '密钥',
   'user.placeholder.key': '密钥',
   'user.label.quota': '额度',
-  'user.placeholder.quota': '额度',
+  'user.placeholder.quota': '正数为加额度, 负数为减额度',
   'user.success.title': '提交成功',
   'user.success.create.subTitle': '用户新建成功',
   'user.success.update.subTitle': '用户修改成功',

@@ -88,8 +88,10 @@
             >
               <a-input-number
                 v-model="formData.quota"
-                :precision="0"
                 :placeholder="$t('user.placeholder.quota')"
+                :precision="0"
+                :min="-9999999999999"
+                :max="9999999999999"
               />
             </a-form-item>
             <a-form-item field="remark" :label="$t('user.label.remark')">
