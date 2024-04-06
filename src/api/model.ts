@@ -11,8 +11,10 @@ export interface ModelCreateBaseInfo {
 }
 
 export interface ModelCreateAdvanced {
+  billing_method: string;
   prompt_ratio: number;
   completion_ratio: number;
+  fixed_quota: number;
   data_format: string;
   is_enable_model_agent: boolean;
   model_agents: string[];
@@ -31,8 +33,10 @@ export interface ModelPage {
   name: string;
   model: string;
   type: number;
+  billing_method: number;
   prompt_ratio: number;
   completion_ratio: number;
+  fixed_quota: number;
   data_format: number;
   is_public: boolean;
   status: number;
@@ -65,8 +69,10 @@ export interface ModelList {
   name: string;
   model: string;
   type: number;
+  billing_method: number;
   prompt_ratio: number;
   completion_ratio: number;
+  fixed_quota: number;
   data_format: number;
   is_public: boolean;
   status: number;
@@ -100,8 +106,10 @@ export interface ModelDetail {
   model: string;
   type: number;
   prompt: string;
+  billing_method: number;
   prompt_ratio: number;
   completion_ratio: number;
+  fixed_quota: number;
   data_format: number;
   is_enable_model_agent: boolean;
   model_agents: string[];
@@ -134,8 +142,10 @@ export interface ModelUpdateBaseInfo {
 }
 
 export interface ModelUpdateAdvanced {
+  billing_method: string;
   prompt_ratio: number;
   completion_ratio: number;
+  fixed_quota: number;
   data_format: string;
   is_enable_model_agent: boolean;
   model_agents: string[];

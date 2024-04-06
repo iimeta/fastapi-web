@@ -11,6 +11,10 @@
       class="general-card"
       :title="$t('menu.model.list')"
       :bordered="false"
+      :header-style="{ padding: '20px' }"
+      :body-style="{
+        padding: '0 20px 20px',
+      }"
     >
       <a-row>
         <a-col :flex="1">
@@ -194,6 +198,9 @@
         <template #corp="{ record }">
           {{ $t(`model.dict.corp.${record.corp}`) }}
         </template>
+        <template #billingMethod="{ record }">
+          {{ $t(`model.dict.billing_method.${record.billing_method}`) }}
+        </template>
         <template #dataFormat="{ record }">
           {{ $t(`model.dict.data_format.${record.data_format}`) }}
         </template>
@@ -366,6 +373,12 @@
       title: t('model.columns.type'),
       dataIndex: 'type',
       slotName: 'type',
+      align: 'center',
+    },
+    {
+      title: t('model.columns.billing_method'),
+      dataIndex: 'billing_method',
+      slotName: 'billingMethod',
       align: 'center',
     },
     {

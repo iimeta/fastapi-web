@@ -60,6 +60,7 @@ export interface ChatDetail {
   prompt: string;
   completion: string;
   messages: any;
+  billing_method: number;
   prompt_ratio: number;
   completion_ratio: number;
   prompt_tokens: number;

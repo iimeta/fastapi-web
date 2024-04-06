@@ -76,7 +76,7 @@
       text: 'workplace.chatManagement',
       icon: 'icon-wechat',
       router: 'ChatList',
-      permission: ['admin'],
+      permission: ['user', 'admin'],
     },
     // {
     //   text: 'workplace.advanced',

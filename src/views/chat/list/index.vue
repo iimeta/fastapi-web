@@ -11,6 +11,10 @@
       class="general-card"
       :title="$t('menu.chat.list')"
       :bordered="false"
+      :header-style="{ padding: '20px' }"
+      :body-style="{
+        padding: '0 20px 20px',
+      }"
     >
       <a-row>
         <a-col :flex="1">
@@ -201,13 +205,31 @@
         @page-size-change="onPageSizeChange"
       >
         <template #prompt_tokens="{ record }">
-          {{ record.prompt_tokens || '-' }}
+          {{
+            record.prompt_tokens
+              ? record.prompt_tokens
+              : record.status === 1 && record.billing_method === 2
+              ? 0
+              : '-'
+          }}
         </template>
         <template #completion_tokens="{ record }">
-          {{ record.completion_tokens || '-' }}
+          {{
+            record.completion_tokens
+              ? record.completion_tokens
+              : record.status === 1 && record.billing_method === 2
+              ? 0
+              : '-'
+          }}
         </template>
         <template #total_tokens="{ record }">
-          {{ record.total_tokens || '-' }}
+          {{
+            record.total_tokens
+              ? record.total_tokens
+              : record.status === 1 && record.billing_method === 2
+              ? 0
+              : '-'
+          }}
         </template>
         <template #stream="{ record }">
           {{ $t(`chat.dict.stream.${record.stream}`) }}
@@ -319,6 +341,26 @@
               </a-skeleton>
               <span v-else>{{ currentData.completion || '-' }}</span>
             </a-descriptions-item>
+            <a-descriptions-item label="计费方式">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                $t(`chat.dict.billing_method.${currentData.billing_method}`)
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="总消耗令牌数">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                currentData.total_tokens
+                  ? currentData.total_tokens
+                  : currentData.status === 1 && currentData.billing_method === 2
+                  ? 0
+                  : '-'
+              }}</span>
+            </a-descriptions-item>
             <a-descriptions-item label="提问倍率">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
@@ -342,12 +384,6 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.completion_tokens || '-' }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="总消耗令牌数">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.total_tokens || '-' }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="结果">
               <a-skeleton v-if="loading" :animation="true">
@@ -538,6 +574,26 @@
               </a-skeleton>
               <span v-else>{{ currentData.completion || '-' }}</span>
             </a-descriptions-item>
+            <a-descriptions-item label="计费方式">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                $t(`chat.dict.billing_method.${currentData.billing_method}`)
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="总消耗令牌数">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                currentData.total_tokens
+                  ? currentData.total_tokens
+                  : currentData.status === 1 && currentData.billing_method === 2
+                  ? 0
+                  : '-'
+              }}</span>
+            </a-descriptions-item>
             <a-descriptions-item label="提问倍率">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
@@ -561,12 +617,6 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.completion_tokens || '-' }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="总消耗令牌数">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.total_tokens || '-' }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="结果">
               <a-skeleton v-if="loading" :animation="true">

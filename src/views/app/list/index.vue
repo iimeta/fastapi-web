@@ -7,7 +7,15 @@
       <a-breadcrumb-item>{{ $t('menu.app') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.app.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-card class="general-card" :title="$t('menu.app.list')" :bordered="false">
+    <a-card
+      class="general-card"
+      :title="$t('menu.app.list')"
+      :bordered="false"
+      :header-style="{ padding: '20px' }"
+      :body-style="{
+        padding: '0 20px 20px',
+      }"
+    >
       <a-row>
         <a-col :flex="1">
           <a-form
@@ -490,7 +498,8 @@
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
-      width: 150,
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('app.columns.models'),

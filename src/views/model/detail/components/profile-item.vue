@@ -91,12 +91,22 @@
       title: t('model.detail.title.advanced'),
       data: [
         {
+          label: t('model.detail.label.billingMethod'),
+          value: t(`model.dict.billing_method.${renderData.billing_method}`),
+        },
+        {
           label: t('model.detail.label.promptRatio'),
-          value: renderData.prompt_ratio,
+          value:
+            renderData.billing_method === 1 ? renderData.prompt_ratio : '-',
         },
         {
           label: t('model.detail.label.completionRatio'),
-          value: renderData.completion_ratio,
+          value:
+            renderData.billing_method === 1 ? renderData.completion_ratio : '-',
+        },
+        {
+          label: t('model.detail.label.fixedQuota'),
+          value: renderData.billing_method === 2 ? renderData.fixed_quota : '-',
         },
         {
           label: t('model.detail.label.dataFormat'),

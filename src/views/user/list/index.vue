@@ -11,6 +11,10 @@
       class="general-card"
       :title="$t('menu.user.list')"
       :bordered="false"
+      :header-style="{ padding: '20px' }"
+      :body-style="{
+        padding: '0 20px 20px',
+      }"
     >
       <a-row>
         <a-col :flex="1">

@@ -10,6 +10,10 @@
       class="general-card"
       :title="$t('menu.model.list')"
       :bordered="false"
+      :header-style="{ padding: '20px' }"
+      :body-style="{
+        padding: '0 20px 20px',
+      }"
     >
       <a-row>
         <a-col :flex="1">
@@ -183,6 +187,15 @@
         <template #dataFormat="{ record }">
           {{ $t(`model.dict.data_format.${record.data_format}`) }}
         </template>
+        <template #prompt_ratio="{ record }">
+          {{ record.billing_method === 1 ? record.prompt_ratio : '-' }}
+        </template>
+        <template #completion_ratio="{ record }">
+          {{ record.billing_method === 1 ? record.completion_ratio : '-' }}
+        </template>
+        <template #fixed_quota="{ record }">
+          {{ record.billing_method === 2 ? record.fixed_quota : '-' }}
+        </template>
         <template #status="{ record }">
           <span v-if="record.status === 2" class="circle red"></span>
           <span v-else class="circle"></span>
@@ -298,6 +311,12 @@
       title: t('model.columns.completion_ratio'),
       dataIndex: 'completion_ratio',
       slotName: 'completion_ratio',
+      align: 'center',
+    },
+    {
+      title: t('model.columns.fixed_quota'),
+      dataIndex: 'fixed_quota',
+      slotName: 'fixed_quota',
       align: 'center',
     },
     {

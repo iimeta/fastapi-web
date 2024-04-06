@@ -7,6 +7,27 @@
     :wrapper-col-props="{ span: 18 }"
   >
     <a-form-item
+      field="billing_method"
+      :label="$t('model.label.billingMethod')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.billingMethod.required'),
+        },
+      ]"
+    >
+      <a-space size="large">
+        <a-radio
+          v-model="formData.billing_method"
+          value="1"
+          :default-checked="true"
+          >倍率</a-radio
+        >
+        <a-radio v-model="formData.billing_method" value="2">固定额度</a-radio>
+      </a-space>
+    </a-form-item>
+    <a-form-item
+      v-if="formData.billing_method === '1'"
       field="prompt_ratio"
       :label="$t('model.label.promptRatio')"
       :rules="[
@@ -23,6 +44,7 @@
       />
     </a-form-item>
     <a-form-item
+      v-if="formData.billing_method === '1'"
       field="completion_ratio"
       :label="$t('model.label.completionRatio')"
       :rules="[
@@ -36,6 +58,24 @@
         v-model="formData.completion_ratio"
         :min="0.001"
         :placeholder="$t('model.placeholder.completionRatio')"
+      />
+    </a-form-item>
+    <a-form-item
+      v-if="formData.billing_method === '2'"
+      field="fixed_quota"
+      :label="$t('model.label.fixedQuota')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.fixedQuota.required'),
+        },
+      ]"
+    >
+      <a-input-number
+        v-model="formData.fixed_quota"
+        :min="0"
+        :max="9999999999999"
+        :placeholder="$t('model.placeholder.fixedQuota')"
       />
     </a-form-item>
     <a-form-item
@@ -141,8 +181,10 @@
 
   const formRef = ref<FormInstance>();
   const formData = ref<ModelCreateAdvanced>({
+    billing_method: '1',
     prompt_ratio: 1,
     completion_ratio: 1,
+    fixed_quota: 1,
     data_format: '1',
     is_enable_model_agent: false,
     model_agents: [],

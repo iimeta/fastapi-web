@@ -71,6 +71,8 @@ export default {
   'chat.dict.status.-1': '失败',
   'chat.dict.stream.true': '是',
   'chat.dict.stream.false': '否',
+  'chat.dict.billing_method.1': '倍率',
+  'chat.dict.billing_method.2': '固定额度',
   'chat.dict.is_enable_model_agent.true': '是',
   'chat.dict.is_enable_model_agent.false': '否',
   'chat.dict.corp.OpenAI': 'OpenAI',
