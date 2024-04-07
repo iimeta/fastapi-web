@@ -395,14 +395,16 @@
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
-      width: 200,
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('model.agent.columns.baseUrl'),
       dataIndex: 'base_url',
       slotName: 'base_url',
       align: 'center',
-      width: 200,
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('model.agent.columns.models'),

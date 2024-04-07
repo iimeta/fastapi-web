@@ -415,25 +415,25 @@
       value: 'OpenAI',
     },
     {
-      label: t('model.dict.corp.Midjourney'),
-      value: 'Midjourney',
+      label: t('model.dict.corp.Baidu'),
+      value: 'Baidu',
+    },
+    {
+      label: t('model.dict.corp.Xfyun'),
+      value: 'Xfyun',
+    },
+    {
+      label: t('model.dict.corp.Aliyun'),
+      value: 'Aliyun',
     },
     {
       label: t('model.dict.corp.GLM'),
       value: 'GLM',
     },
-    // {
-    //   label: t('model.dict.corp.Baidu'),
-    //   value: 'Baidu',
-    // },
-    // {
-    //   label: t('model.dict.corp.Xfyun'),
-    //   value: 'Xfyun',
-    // },
-    // {
-    //   label: t('model.dict.corp.Aliyun'),
-    //   value: 'Aliyun',
-    // },
+    {
+      label: t('model.dict.corp.Midjourney'),
+      value: 'Midjourney',
+    },
   ]);
   const typeOptions = computed<SelectOptionData[]>(() => [
     {

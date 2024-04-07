@@ -473,25 +473,25 @@
       value: 'OpenAI',
     },
     {
-      label: t('key.dict.corp.Midjourney'),
-      value: 'Midjourney',
+      label: t('key.dict.corp.Baidu'),
+      value: 'Baidu',
+    },
+    {
+      label: t('key.dict.corp.Xfyun'),
+      value: 'Xfyun',
+    },
+    {
+      label: t('key.dict.corp.Aliyun'),
+      value: 'Aliyun',
     },
     {
       label: t('key.dict.corp.GLM'),
       value: 'GLM',
     },
-    // {
-    //   label: t('key.dict.corp.Baidu'),
-    //   value: 'Baidu',
-    // },
-    // {
-    //   label: t('key.dict.corp.Xfyun'),
-    //   value: 'Xfyun',
-    // },
-    // {
-    //   label: t('key.dict.corp.Aliyun'),
-    //   value: 'Aliyun',
-    // },
+    {
+      label: t('key.dict.corp.Midjourney'),
+      value: 'Midjourney',
+    },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {

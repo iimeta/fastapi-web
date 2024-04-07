@@ -35,7 +35,7 @@
           <a-radio v-if="userRole === 'admin'" value="user">
             {{ $t('workplace.dataTop.user') }}
           </a-radio>
-          <a-radio v-if="userRole === 'user'" value="app">
+          <a-radio value="app">
             {{ $t('workplace.dataTop.app') }}
           </a-radio>
           <a-radio value="model">
@@ -62,7 +62,7 @@
             >
             </a-table-column>
             <a-table-column
-              v-if="dataType === 'app' && userRole === 'user'"
+              v-if="dataType === 'app'"
               title="应用ID"
               data-index="app_id"
               align="center"

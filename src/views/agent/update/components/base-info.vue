@@ -15,7 +15,7 @@
           message: $t('model.agent.error.name.required'),
         },
         {
-          match: /^.{1,50}$/,
+          match: /^.{1,100}$/,
           message: $t('model.agent.error.name.pattern'),
         },
       ]"
