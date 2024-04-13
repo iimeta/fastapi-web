@@ -38,6 +38,9 @@
           <a-radio value="app">
             {{ $t('workplace.dataTop.app') }}
           </a-radio>
+          <a-radio v-if="userRole === 'user'" value="app_key">
+            {{ $t('workplace.dataTop.app_key') }}
+          </a-radio>
           <a-radio value="model">
             {{ $t('workplace.dataTop.model') }}
           </a-radio>
@@ -62,9 +65,25 @@
             >
             </a-table-column>
             <a-table-column
-              v-if="dataType === 'app'"
+              v-if="dataType === 'app_key'"
+              title="密钥"
+              data-index="app_key"
+              align="center"
+              ellipsis
+              tooltip
+            >
+            </a-table-column>
+            <a-table-column
+              v-if="dataType === 'app' || dataType === 'app_key'"
               title="应用ID"
               data-index="app_id"
+              align="center"
+            >
+            </a-table-column>
+            <a-table-column
+              v-if="dataType === 'app' && userRole === 'admin'"
+              title="用户ID"
+              data-index="user_id"
               align="center"
             >
             </a-table-column>
@@ -82,33 +101,6 @@
                 {{ record.call.toLocaleString() }}
               </template>
             </a-table-column>
-            <!-- <a-table-column
-              v-if="dataType === 'user' || dataType === 'app'"
-              title="模型数"
-              data-index="models"
-            >
-              <template #cell="{ record }">
-                {{ record.models.toLocaleString() }}
-              </template>
-            </a-table-column>
-           <a-table-column
-              v-if="dataType === 'model' && userRole === 'admin'"
-              title="用户数"
-              data-index="user"
-            >
-              <template #cell="{ record }">
-                {{ record.user.toLocaleString() }}
-              </template>
-            </a-table-column>
-            <a-table-column
-              v-if="dataType === 'model' && userRole === 'user'"
-              title="应用数"
-              data-index="app"
-            >
-              <template #cell="{ record }">
-                {{ record.app.toLocaleString() }}
-              </template>
-            </a-table-column> -->
             <a-table-column
               title="令牌数"
               data-index="tokens"

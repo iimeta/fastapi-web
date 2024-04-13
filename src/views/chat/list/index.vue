@@ -385,14 +385,6 @@
               </a-skeleton>
               <span v-else>{{ currentData.completion_tokens || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="结果">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{
-                $t(`chat.dict.status.${currentData.status}`)
-              }}</span>
-            </a-descriptions-item>
             <a-descriptions-item label="连接耗时">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
@@ -443,6 +435,14 @@
                   >{{ currentData.total_time || '-' }} ms</a-tag
                 >
               </span>
+            </a-descriptions-item>
+            <a-descriptions-item label="结果">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                $t(`chat.dict.status.${currentData.status}`)
+              }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="客户端IP">
               <a-skeleton v-if="loading" :animation="true">
@@ -618,14 +618,6 @@
               </a-skeleton>
               <span v-else>{{ currentData.completion_tokens || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="结果">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{
-                $t(`chat.dict.status.${currentData.status}`)
-              }}</span>
-            </a-descriptions-item>
             <a-descriptions-item label="连接耗时">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
@@ -696,6 +688,20 @@
                 >
               </span>
             </a-descriptions-item>
+            <a-descriptions-item label="结果">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                $t(`chat.dict.status.${currentData.status}`)
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="本地IP">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.local_ip || '-' }}</span>
+            </a-descriptions-item>
             <a-descriptions-item label="客户端IP">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
@@ -707,12 +713,6 @@
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.remote_ip || '-' }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="本地IP">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.local_ip || '-' }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="请求时间">
               <a-skeleton v-if="loading" :animation="true">

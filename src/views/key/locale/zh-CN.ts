@@ -96,7 +96,7 @@ export default {
   'key.dict.corp.Baidu': '百度',
   'key.dict.corp.Xfyun': '科大讯飞',
   'key.dict.corp.Aliyun': '阿里云',
-  'key.dict.corp.GLM': '智谱AI',
+  'key.dict.corp.ZhipuAI': '智谱AI',
   'key.dict.corp.Midjourney': 'Midjourney',
   'key.dict.type.1': '文生文',
   'key.dict.type.2': '文生图',

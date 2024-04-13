@@ -121,7 +121,7 @@ export default {
   'model.dict.corp.Baidu': '百度',
   'model.dict.corp.Xfyun': '科大讯飞',
   'model.dict.corp.Aliyun': '阿里云',
-  'model.dict.corp.GLM': '智谱AI',
+  'model.dict.corp.ZhipuAI': '智谱AI',
   'model.dict.corp.Midjourney': 'Midjourney',
   'model.dict.type.1': '文生文',
   'model.dict.type.2': '文生图',

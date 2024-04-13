@@ -137,7 +137,7 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-divider style="margin-top: 0" />
+      <a-divider style="margin-top: 0; margin-bottom: 16px" />
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
@@ -154,7 +154,12 @@
         </a-col>
         <a-col
           :span="12"
-          style="display: flex; align-items: center; justify-content: end"
+          style="
+            display: flex;
+            height: 32px;
+            align-items: center;
+            justify-content: end;
+          "
         >
           <a-tooltip :content="$t('searchTable.actions.refresh')">
             <div class="action-icon" @click="search"
@@ -485,8 +490,8 @@
       value: 'Aliyun',
     },
     {
-      label: t('key.dict.corp.GLM'),
-      value: 'GLM',
+      label: t('key.dict.corp.ZhipuAI'),
+      value: 'ZhipuAI',
     },
     {
       label: t('key.dict.corp.Midjourney'),

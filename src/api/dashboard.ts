@@ -54,6 +54,7 @@ export function queryExpense() {
 export interface DataTop {
   user_id: number;
   app_id: number;
+  app_key: string;
   model: string;
   call: number;
   models: number;

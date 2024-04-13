@@ -288,12 +288,16 @@
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('model.columns.model'),
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('model.columns.type'),
@@ -358,8 +362,8 @@
       value: 'Aliyun',
     },
     {
-      label: t('model.dict.corp.GLM'),
-      value: 'GLM',
+      label: t('model.dict.corp.ZhipuAI'),
+      value: 'ZhipuAI',
     },
     {
       label: t('model.dict.corp.Midjourney'),

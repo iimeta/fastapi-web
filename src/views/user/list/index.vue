@@ -104,7 +104,7 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-divider style="margin-top: 0" />
+      <a-divider style="margin-top: 0; margin-bottom: 16px" />
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
@@ -121,7 +121,12 @@
         </a-col>
         <a-col
           :span="12"
-          style="display: flex; align-items: center; justify-content: end"
+          style="
+            display: flex;
+            height: 32px;
+            align-items: center;
+            justify-content: end;
+          "
         >
           <a-tooltip :content="$t('searchTable.actions.refresh')">
             <div class="action-icon" @click="search"
@@ -444,18 +449,23 @@
       dataIndex: 'user_id',
       slotName: 'user_id',
       align: 'center',
+      width: 80,
     },
     {
       title: t('user.columns.name'),
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('user.columns.email'),
       dataIndex: 'email',
       slotName: 'email',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('user.columns.quota'),

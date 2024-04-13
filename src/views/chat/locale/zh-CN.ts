@@ -79,7 +79,7 @@ export default {
   'chat.dict.corp.Baidu': '百度',
   'chat.dict.corp.Xfyun': '科大讯飞',
   'chat.dict.corp.Aliyun': '阿里云',
-  'chat.dict.corp.GLM': '智谱AI',
+  'chat.dict.corp.ZhipuAI': '智谱AI',
   'chat.dict.corp.Midjourney': 'Midjourney',
   'chat.dict.type.1': '文生文',
   'chat.dict.type.2': '文生图',

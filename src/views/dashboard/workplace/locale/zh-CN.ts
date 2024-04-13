@@ -40,6 +40,7 @@ export default {
   'workplace.dataTop': '数据TOP10',
   'workplace.dataTop.user': '用户',
   'workplace.dataTop.app': '应用',
+  'workplace.dataTop.app_key': '密钥',
   'workplace.dataTop.model': '模型',
   'workplace.modelPercent': '模型占比TOP10',
   'workplace.pecs': '个',
