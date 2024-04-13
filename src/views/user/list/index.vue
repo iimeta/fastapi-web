@@ -9,11 +9,10 @@
     </a-breadcrumb>
     <a-card
       class="general-card"
-      :title="$t('menu.user.list')"
       :bordered="false"
       :header-style="{ padding: '20px' }"
       :body-style="{
-        padding: '0 20px 20px',
+        padding: '25px 20px 20px 20px',
       }"
     >
       <a-row>
@@ -270,62 +269,60 @@
           </a-popconfirm>
         </template>
       </a-table>
-      <template #extra>
-        <a-modal
-          v-model:visible="grantQuotaVisible"
-          :title="$t('user.form.title.grantQuota')"
-          :ok-text="$t('user.button.save')"
-          @cancel="handleCancel"
-          @before-ok="handleBeforeOk"
-        >
-          <a-form ref="formRef" :model="formData">
-            <a-form-item
-              field="quota"
-              :label="$t('user.label.quota')"
-              :rules="[
-                {
-                  required: true,
-                  message: $t('user.error.quota.required'),
-                },
-              ]"
+      <a-modal
+        v-model:visible="grantQuotaVisible"
+        :title="$t('user.form.title.grantQuota')"
+        :ok-text="$t('user.button.save')"
+        @cancel="handleCancel"
+        @before-ok="handleBeforeOk"
+      >
+        <a-form ref="formRef" :model="formData">
+          <a-form-item
+            field="quota"
+            :label="$t('user.label.quota')"
+            :rules="[
+              {
+                required: true,
+                message: $t('user.error.quota.required'),
+              },
+            ]"
+          >
+            <a-input-number
+              v-model="formData.quota"
+              :placeholder="$t('user.placeholder.quota')"
+              :precision="0"
+              :min="-9999999999999"
+              :max="9999999999999"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
+      <a-modal
+        v-model:visible="modelsVisible"
+        :title="$t('user.form.title.models')"
+        :ok-text="$t('user.button.save')"
+        @cancel="modelsHandleCancel"
+        @before-ok="modelsHandleBeforeOk"
+      >
+        <a-form ref="formRef" :model="modelsFormData">
+          <a-form-item field="models" :label="$t('user.label.models')">
+            <a-select
+              v-model="modelsFormData.models"
+              :placeholder="$t('user.placeholder.models')"
+              :max-tag-count="15"
+              multiple
+              allow-clear
             >
-              <a-input-number
-                v-model="formData.quota"
-                :placeholder="$t('user.placeholder.quota')"
-                :precision="0"
-                :min="-9999999999999"
-                :max="9999999999999"
+              <a-option
+                v-for="item in models"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
               />
-            </a-form-item>
-          </a-form>
-        </a-modal>
-        <a-modal
-          v-model:visible="modelsVisible"
-          :title="$t('user.form.title.models')"
-          :ok-text="$t('user.button.save')"
-          @cancel="modelsHandleCancel"
-          @before-ok="modelsHandleBeforeOk"
-        >
-          <a-form ref="formRef" :model="modelsFormData">
-            <a-form-item field="models" :label="$t('user.label.models')">
-              <a-select
-                v-model="modelsFormData.models"
-                :placeholder="$t('user.placeholder.models')"
-                :max-tag-count="15"
-                multiple
-                allow-clear
-              >
-                <a-option
-                  v-for="item in models"
-                  :key="item.id"
-                  :value="item.id"
-                  :label="item.name"
-                />
-              </a-select>
-            </a-form-item>
-          </a-form>
-        </a-modal>
-      </template>
+            </a-select>
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
 </template>

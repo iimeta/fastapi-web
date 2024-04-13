@@ -9,11 +9,10 @@
     </a-breadcrumb>
     <a-card
       class="general-card"
-      :title="$t('menu.chat.list')"
       :bordered="false"
       :header-style="{ padding: '20px' }"
       :body-style="{
-        padding: '0 20px 20px',
+        padding: '25px 20px 20px 20px',
       }"
     >
       <a-row>

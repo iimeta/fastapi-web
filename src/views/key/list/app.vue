@@ -9,11 +9,10 @@
     </a-breadcrumb>
     <a-card
       class="general-card"
-      :title="$t('menu.key.app.list')"
       :bordered="false"
       :header-style="{ padding: '20px' }"
       :body-style="{
-        padding: '0 20px 20px',
+        padding: '25px 20px 20px 20px',
       }"
     >
       <a-row>
@@ -272,92 +271,90 @@
           </a-popconfirm>
         </template>
       </a-table>
-      <template #extra>
-        <a-modal
-          v-model:visible="visible"
-          :title="$t('app.form.title.keyConfig')"
-          :ok-text="$t('app.button.save')"
-          @cancel="handleCancel"
-          @before-ok="handleBeforeOk"
-        >
-          <a-form ref="formRef" :model="formData">
-            <a-form-item field="key" :label="$t('app.label.key')">
-              <a-input
-                v-model="formData.key"
-                :placeholder="$t('app.placeholder.key')"
-                readonly
-              />
-            </a-form-item>
-            <a-form-item
-              field="is_limit_quota"
-              :label="$t('app.label.isLimitQuota')"
+      <a-modal
+        v-model:visible="visible"
+        :title="$t('app.form.title.keyConfig')"
+        :ok-text="$t('app.button.save')"
+        @cancel="handleCancel"
+        @before-ok="handleBeforeOk"
+      >
+        <a-form ref="formRef" :model="formData">
+          <a-form-item field="key" :label="$t('app.label.key')">
+            <a-input
+              v-model="formData.key"
+              :placeholder="$t('app.placeholder.key')"
+              readonly
+            />
+          </a-form-item>
+          <a-form-item
+            field="is_limit_quota"
+            :label="$t('app.label.isLimitQuota')"
+          >
+            <a-switch v-model="formData.is_limit_quota" />
+          </a-form-item>
+          <a-form-item
+            v-if="formData.is_limit_quota"
+            field="quota"
+            :label="$t('app.label.quota')"
+            :rules="[
+              {
+                required: true,
+                message: $t('app.error.quota.required'),
+              },
+            ]"
+          >
+            <a-input-number
+              v-model="formData.quota"
+              :placeholder="$t('app.placeholder.quota')"
+              :precision="0"
+              :min="0"
+              :max="9999999999999"
+            />
+          </a-form-item>
+          <a-form-item field="models" :label="$t('app.label.models')">
+            <a-select
+              v-model="formData.models"
+              :placeholder="$t('app.placeholder.models')"
+              :max-tag-count="3"
+              multiple
+              allow-clear
             >
-              <a-switch v-model="formData.is_limit_quota" />
-            </a-form-item>
-            <a-form-item
-              v-if="formData.is_limit_quota"
-              field="quota"
-              :label="$t('app.label.quota')"
-              :rules="[
-                {
-                  required: true,
-                  message: $t('app.error.quota.required'),
-                },
-              ]"
-            >
-              <a-input-number
-                v-model="formData.quota"
-                :placeholder="$t('app.placeholder.quota')"
-                :precision="0"
-                :min="0"
-                :max="9999999999999"
+              <a-option
+                v-for="item in models"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
               />
-            </a-form-item>
-            <a-form-item field="models" :label="$t('app.label.models')">
-              <a-select
-                v-model="formData.models"
-                :placeholder="$t('app.placeholder.models')"
-                :max-tag-count="3"
-                multiple
-                allow-clear
-              >
-                <a-option
-                  v-for="item in models"
-                  :key="item.id"
-                  :value="item.id"
-                  :label="item.name"
-                />
-              </a-select>
-            </a-form-item>
-            <a-form-item
-              field="ip_whitelist"
-              :label="$t('app.label.ip_whitelist')"
-            >
-              <a-textarea
-                v-model="formData.ip_whitelist"
-                :placeholder="$t('app.placeholder.ip_whitelist')"
-                :auto-size="{ minRows: 5, maxRows: 10 }"
-              />
-            </a-form-item>
-            <a-form-item
-              field="ip_blacklist"
-              :label="$t('app.label.ip_blacklist')"
-            >
-              <a-textarea
-                v-model="formData.ip_blacklist"
-                :placeholder="$t('app.placeholder.ip_blacklist')"
-                :auto-size="{ minRows: 5, maxRows: 10 }"
-              />
-            </a-form-item>
-            <a-form-item field="remark" :label="$t('app.placeholder.remark')">
-              <a-textarea
-                v-model="formData.remark"
-                :placeholder="$t('app.placeholder.remark')"
-              />
-            </a-form-item>
-          </a-form>
-        </a-modal>
-      </template>
+            </a-select>
+          </a-form-item>
+          <a-form-item
+            field="ip_whitelist"
+            :label="$t('app.label.ip_whitelist')"
+          >
+            <a-textarea
+              v-model="formData.ip_whitelist"
+              :placeholder="$t('app.placeholder.ip_whitelist')"
+              :auto-size="{ minRows: 5, maxRows: 10 }"
+            />
+          </a-form-item>
+          <a-form-item
+            field="ip_blacklist"
+            :label="$t('app.label.ip_blacklist')"
+          >
+            <a-textarea
+              v-model="formData.ip_blacklist"
+              :placeholder="$t('app.placeholder.ip_blacklist')"
+              :auto-size="{ minRows: 5, maxRows: 10 }"
+            />
+          </a-form-item>
+          <a-form-item field="remark" :label="$t('app.placeholder.remark')">
+            <a-textarea
+              v-model="formData.remark"
+              :placeholder="$t('app.placeholder.remark')"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -392,6 +389,7 @@
     AppKeyConfig,
   } from '@/api/app';
   import { queryModelList, ModelList } from '@/api/model';
+  import { Message } from '@arco-design/web-vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -718,6 +716,7 @@
     try {
       await submitAppKeyConfig(formData.value); // The mock api default success
       navigator.clipboard.writeText(formData.value.key);
+      Message.success(t('app.success.key_config'));
       done();
       fetchData();
     } catch (err) {
