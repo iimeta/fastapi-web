@@ -81,6 +81,18 @@
         <a-option value="4">图生图</a-option>
       </a-select>
     </a-form-item>
+    <a-form-item field="base_url" :label="$t('model.label.base_url')">
+      <a-input
+        v-model="formData.base_url"
+        :placeholder="$t('model.placeholder.base_url')"
+      />
+    </a-form-item>
+    <a-form-item field="path" :label="$t('model.label.path')">
+      <a-input
+        v-model="formData.path"
+        :placeholder="$t('model.placeholder.path')"
+      />
+    </a-form-item>
     <a-form-item field="prompt" :label="$t('model.label.prompt')">
       <a-textarea
         v-model="formData.prompt"
@@ -124,6 +136,8 @@
     model: '',
     type: '',
     remark: '',
+    base_url: '',
+    path: '',
     prompt: '',
     status: 1,
   });
@@ -140,6 +154,8 @@
       formData.value.model = data.model;
       formData.value.type = String(data.type);
       formData.value.remark = data.remark;
+      formData.value.base_url = data.base_url;
+      formData.value.path = data.path;
       formData.value.prompt = data.prompt;
       formData.value.status = data.status;
     } catch (err) {

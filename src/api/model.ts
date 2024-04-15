@@ -6,6 +6,8 @@ export interface ModelCreateBaseInfo {
   name: string;
   model: string;
   type: string;
+  base_url: string;
+  path: string;
   prompt: string;
   remark: string;
 }
@@ -105,6 +107,8 @@ export interface ModelDetail {
   name: string;
   model: string;
   type: number;
+  base_url: string;
+  path: string;
   prompt: string;
   billing_method: number;
   prompt_ratio: number;
@@ -136,6 +140,8 @@ export interface ModelUpdateBaseInfo {
   name: string;
   model: string;
   type: string;
+  base_url: string;
+  path: string;
   prompt: string;
   remark: string;
   status: number;

@@ -69,6 +69,14 @@
           value: t(`model.dict.type.${renderData.type}`),
         },
         {
+          label: t('model.detail.label.baseUrl'),
+          value: renderData?.base_url || '-',
+        },
+        {
+          label: t('model.detail.label.path'),
+          value: renderData?.path || '-',
+        },
+        {
           label: t('model.detail.label.prompt'),
           value: renderData?.prompt || '-',
         },

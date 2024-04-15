@@ -9,9 +9,6 @@
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card class="general-card" :bordered="false">
-        <template #title>
-          {{ $t('app.title.update') }}
-        </template>
         <div class="wrapper">
           <a-steps
             v-model:current="step"

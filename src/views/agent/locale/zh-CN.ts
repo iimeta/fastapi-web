@@ -19,7 +19,7 @@ export default {
   'model.agent.error.name.required': '请输入代理名称',
   'model.agent.error.name.pattern': '代理名称, 最多100字符',
   'model.agent.label.baseUrl': '代理地址',
-  'model.agent.placeholder.baseUrl': '如: https://api.fastapi.ai/v1',
+  'model.agent.placeholder.baseUrl': '如: https://api.openai.com/v1',
   'model.agent.error.baseUrl.required': '请输入代理地址',
   'model.agent.label.path': '代理路径',
   'model.agent.placeholder.path': '可选, 如: /chat/completions',
