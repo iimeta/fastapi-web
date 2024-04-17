@@ -141,6 +141,93 @@
         />
       </a-select>
     </a-form-item>
+    <a-form-item field="model_forward" :label="$t('model.label.modelForward')">
+      <a-switch v-model="formData.model_forward" />
+    </a-form-item>
+    <a-form-item
+      v-if="formData.model_forward"
+      field="forward_rule"
+      :label="$t('model.label.forwardRule')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.forwardRule.required'),
+        },
+      ]"
+    >
+      <a-select
+        v-model="formData.forward_rule"
+        :placeholder="$t('model.placeholder.forwardRule')"
+      >
+        <a-option value="1">全部转发</a-option>
+        <a-option value="2">按关键字</a-option>
+      </a-select>
+    </a-form-item>
+    <a-form-item
+      v-if="formData.model_forward && formData.forward_rule === '1'"
+      field="target_model"
+      :label="$t('model.label.targetModel')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.targetModel.required'),
+        },
+      ]"
+    >
+      <a-select
+        v-model="formData.target_model"
+        :placeholder="$t('model.placeholder.targetModel')"
+      >
+        <a-option
+          v-for="item in models"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        />
+      </a-select>
+    </a-form-item>
+    <a-form-item
+      v-for="(post, index) of form.keywords"
+      v-show="formData.model_forward && formData.forward_rule === '2'"
+      :key="index"
+      :field="`keywords[${index}]` && `target_models[${index}]`"
+      :label="$t('model.label.keywords') + `${index + 1}`"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.keywordsAndtargetModel.required'),
+        },
+      ]"
+    >
+      <a-input
+        v-model="formData.keywords[index]"
+        :placeholder="$t('model.placeholder.keywords')"
+        style="width: 40%; margin-right: 5px"
+      />
+      <a-select
+        v-model="formData.target_models[index]"
+        :placeholder="$t('model.placeholder.targetModel')"
+        style="width: 40%"
+      >
+        <a-option
+          v-for="item in models"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        />
+      </a-select>
+      <a-button
+        type="primary"
+        shape="circle"
+        style="margin: 0 10px 0 10px"
+        @click="handleAdd"
+      >
+        <icon-plus />
+      </a-button>
+      <a-button type="primary" shape="circle" @click="handleDelete(index)">
+        <icon-minus />
+      </a-button>
+    </a-form-item>
     <a-form-item>
       <a-space>
         <a-button type="secondary" @click="goPrev">
@@ -155,13 +242,44 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, reactive } from 'vue';
   import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { ModelCreateAdvanced } from '@/api/model';
+  import { ModelCreateAdvanced, queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
 
   const { setLoading } = useLoading(true);
+
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelList();
+
+  const form = reactive({
+    keywords: [{ keywords: '', target_models: '' }],
+  });
+
+  const handleAdd = () => {
+    form.keywords.push({
+      keywords: '',
+      target_models: '',
+    });
+  };
+  const handleDelete = (index) => {
+    if (form.keywords.length > 1) {
+      form.keywords.splice(index, 1);
+    }
+  };
 
   const emits = defineEmits(['changeStep']);
   const modelAgents = ref<ModelAgentList[]>([]);
@@ -189,6 +307,11 @@
     is_enable_model_agent: false,
     model_agents: [],
     is_public: true,
+    model_forward: false,
+    forward_rule: '1',
+    target_model: '',
+    keywords: [],
+    target_models: [],
   });
 
   const onNextClick = async () => {

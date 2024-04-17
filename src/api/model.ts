@@ -21,6 +21,11 @@ export interface ModelCreateAdvanced {
   is_enable_model_agent: boolean;
   model_agents: string[];
   is_public: boolean;
+  model_forward: boolean;
+  forward_rule: string;
+  target_model: string;
+  keywords: string[];
+  target_models: string[];
 }
 
 export type ModelCreate = ModelCreateBaseInfo & ModelCreateAdvanced;
