@@ -12,20 +12,24 @@ export interface ModelCreateBaseInfo {
   remark: string;
 }
 
+export interface ForwardConfig {
+  forward_rule: string;
+  target_model: string;
+  keywords: string[];
+  target_models: string[];
+}
+
 export interface ModelCreateAdvanced {
   billing_method: string;
   prompt_ratio: number;
   completion_ratio: number;
   fixed_quota: number;
   data_format: string;
+  is_public: boolean;
   is_enable_model_agent: boolean;
   model_agents: string[];
-  is_public: boolean;
-  model_forward: boolean;
-  forward_rule: string;
-  target_model: string;
-  keywords: string[];
-  target_models: string[];
+  is_forward: boolean;
+  forward_config: ForwardConfig;
 }
 
 export type ModelCreate = ModelCreateBaseInfo & ModelCreateAdvanced;
@@ -120,10 +124,10 @@ export interface ModelDetail {
   completion_ratio: number;
   fixed_quota: number;
   data_format: number;
+  is_public: boolean;
   is_enable_model_agent: boolean;
   model_agents: string[];
   model_agent_names: string[];
-  is_public: boolean;
   status: number;
   remark: string;
   created_at: string;
@@ -158,9 +162,9 @@ export interface ModelUpdateAdvanced {
   completion_ratio: number;
   fixed_quota: number;
   data_format: string;
+  is_public: boolean;
   is_enable_model_agent: boolean;
   model_agents: string[];
-  is_public: boolean;
 }
 
 export type ModelUpdate = ModelUpdateBaseInfo & ModelUpdateAdvanced;

@@ -142,11 +142,11 @@
       </a-select>
     </a-form-item>
     <a-form-item field="model_forward" :label="$t('model.label.modelForward')">
-      <a-switch v-model="formData.model_forward" />
+      <a-switch v-model="formData.is_forward" />
     </a-form-item>
     <a-form-item
-      v-if="formData.model_forward"
-      field="forward_rule"
+      v-if="formData.is_forward"
+      field="forward_config.forward_rule"
       :label="$t('model.label.forwardRule')"
       :rules="[
         {
@@ -156,7 +156,7 @@
       ]"
     >
       <a-select
-        v-model="formData.forward_rule"
+        v-model="formData.forward_config.forward_rule"
         :placeholder="$t('model.placeholder.forwardRule')"
       >
         <a-option value="1">全部转发</a-option>
@@ -164,8 +164,8 @@
       </a-select>
     </a-form-item>
     <a-form-item
-      v-if="formData.model_forward && formData.forward_rule === '1'"
-      field="target_model"
+      v-if="formData.is_forward && formData.forward_config.forward_rule === '1'"
+      field="forward_config.target_model"
       :label="$t('model.label.targetModel')"
       :rules="[
         {
@@ -175,7 +175,7 @@
       ]"
     >
       <a-select
-        v-model="formData.target_model"
+        v-model="formData.forward_config.target_model"
         :placeholder="$t('model.placeholder.targetModel')"
       >
         <a-option
@@ -187,11 +187,16 @@
       </a-select>
     </a-form-item>
     <a-form-item
-      v-for="(post, index) of form.keywords"
-      v-show="formData.model_forward && formData.forward_rule === '2'"
+      v-for="(keywords, index) of formData.forward_config.keywords"
+      v-show="
+        formData.is_forward && formData.forward_config.forward_rule === '2'
+      "
       :key="index"
-      :field="`keywords[${index}]` && `target_models[${index}]`"
-      :label="$t('model.label.keywords') + `${index + 1}`"
+      :field="
+        `forward_config.keywords[${index}]` &&
+        `forward_config.target_models[${index}]`
+      "
+      :label="`${index + 1}. ` + $t('model.label.keywords')"
       :rules="[
         {
           required: true,
@@ -200,12 +205,12 @@
       ]"
     >
       <a-input
-        v-model="formData.keywords[index]"
+        v-model="formData.forward_config.keywords[index]"
         :placeholder="$t('model.placeholder.keywords')"
         style="width: 40%; margin-right: 5px"
       />
       <a-select
-        v-model="formData.target_models[index]"
+        v-model="formData.forward_config.target_models[index]"
         :placeholder="$t('model.placeholder.targetModel')"
         style="width: 40%"
       >
@@ -224,7 +229,7 @@
       >
         <icon-plus />
       </a-button>
-      <a-button type="primary" shape="circle" @click="handleDelete(index)">
+      <a-button type="secondary" shape="circle" @click="handleDelete(index)">
         <icon-minus />
       </a-button>
     </a-form-item>
@@ -242,7 +247,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, reactive } from 'vue';
+  import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { ModelCreateAdvanced, queryModelList, ModelList } from '@/api/model';
@@ -265,21 +270,9 @@
   };
   getModelList();
 
-  const form = reactive({
-    keywords: [{ keywords: '', target_models: '' }],
-  });
-
-  const handleAdd = () => {
-    form.keywords.push({
-      keywords: '',
-      target_models: '',
-    });
-  };
-  const handleDelete = (index) => {
-    if (form.keywords.length > 1) {
-      form.keywords.splice(index, 1);
-    }
-  };
+  // const form = reactive({
+  //   forwardConfig: [{ keywords: '', target_model: '' }],
+  // });
 
   const emits = defineEmits(['changeStep']);
   const modelAgents = ref<ModelAgentList[]>([]);
@@ -307,12 +300,26 @@
     is_enable_model_agent: false,
     model_agents: [],
     is_public: true,
-    model_forward: false,
-    forward_rule: '1',
-    target_model: '',
-    keywords: [],
-    target_models: [],
+    is_forward: false,
+    forward_config: {
+      forward_rule: '1',
+      target_model: '',
+      keywords: [''],
+      target_models: [''],
+    },
   });
+
+  const handleAdd = () => {
+    formData.value.forward_config.keywords.push('');
+    formData.value.forward_config.target_models.push('');
+  };
+
+  const handleDelete = (index: number) => {
+    if (formData.value.forward_config.keywords.length > 1) {
+      formData.value.forward_config.keywords.splice(index, 1);
+      formData.value.forward_config.target_models.splice(index, 1);
+    }
+  };
 
   const onNextClick = async () => {
     const res = await formRef.value?.validate();
