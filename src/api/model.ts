@@ -128,6 +128,8 @@ export interface ModelDetail {
   is_enable_model_agent: boolean;
   model_agents: string[];
   model_agent_names: string[];
+  is_forward: boolean;
+  forward_config: ForwardConfig;
   status: number;
   remark: string;
   created_at: string;
@@ -165,6 +167,8 @@ export interface ModelUpdateAdvanced {
   is_public: boolean;
   is_enable_model_agent: boolean;
   model_agents: string[];
+  is_forward: boolean;
+  forward_config: ForwardConfig;
 }
 
 export type ModelUpdate = ModelUpdateBaseInfo & ModelUpdateAdvanced;

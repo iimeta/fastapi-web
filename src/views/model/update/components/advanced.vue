@@ -131,6 +131,99 @@
         />
       </a-select>
     </a-form-item>
+    <a-form-item field="model_forward" :label="$t('model.label.modelForward')">
+      <a-switch v-model="formData.is_forward" @change="handleChange" />
+    </a-form-item>
+    <a-form-item
+      v-if="formData.is_forward"
+      field="forward_config.forward_rule"
+      :label="$t('model.label.forwardRule')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.forwardRule.required'),
+        },
+      ]"
+    >
+      <a-select
+        v-model="formData.forward_config.forward_rule"
+        :placeholder="$t('model.placeholder.forwardRule')"
+        @change="handleChange"
+      >
+        <a-option value="1">全部转发</a-option>
+        <a-option value="2">按关键字</a-option>
+      </a-select>
+    </a-form-item>
+    <a-form-item
+      v-if="formData.is_forward && formData.forward_config.forward_rule === '1'"
+      field="forward_config.target_model"
+      :label="$t('model.label.targetModel')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.targetModel.required'),
+        },
+      ]"
+    >
+      <a-select
+        v-model="formData.forward_config.target_model"
+        :placeholder="$t('model.placeholder.targetModel')"
+      >
+        <a-option
+          v-for="item in models"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        />
+      </a-select>
+    </a-form-item>
+    <a-form-item
+      v-for="(keywords, index) of formData.forward_config.keywords"
+      v-show="
+        formData.is_forward && formData.forward_config.forward_rule === '2'
+      "
+      :key="index"
+      :field="
+        `forward_config.keywords[${index}]` &&
+        `forward_config.target_models[${index}]`
+      "
+      :label="`${index + 1}. ` + $t('model.label.keywords')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.keywordsAndtargetModel.required'),
+        },
+      ]"
+    >
+      <a-input
+        v-model="formData.forward_config.keywords[index]"
+        :placeholder="$t('model.placeholder.keywords')"
+        style="width: 40%; margin-right: 5px"
+      />
+      <a-select
+        v-model="formData.forward_config.target_models[index]"
+        :placeholder="$t('model.placeholder.targetModel')"
+        style="width: 40%"
+      >
+        <a-option
+          v-for="item in models"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        />
+      </a-select>
+      <a-button
+        type="primary"
+        shape="circle"
+        style="margin: 0 10px 0 10px"
+        @click="handleAdd"
+      >
+        <icon-plus />
+      </a-button>
+      <a-button type="secondary" shape="circle" @click="handleDelete(index)">
+        <icon-minus />
+      </a-button>
+    </a-form-item>
     <a-form-item>
       <a-space>
         <a-button type="secondary" @click="goPrev">
@@ -153,11 +246,28 @@
     ModelUpdateAdvanced,
     queryModelDetail,
     ModelDetailParams,
+    queryModelList,
+    ModelList,
   } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
 
   const { setLoading } = useLoading(true);
   const route = useRoute();
+
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelList();
 
   const emits = defineEmits(['changeStep']);
   const modelAgents = ref<ModelAgentList[]>([]);
@@ -182,10 +292,44 @@
     completion_ratio: 1,
     fixed_quota: 1,
     data_format: '',
+    is_public: true,
     is_enable_model_agent: false,
     model_agents: [],
-    is_public: true,
+    is_forward: false,
+    forward_config: {
+      forward_rule: '1',
+      target_model: '',
+      keywords: [],
+      target_models: [],
+    },
   });
+
+  const handleAdd = () => {
+    formData.value.forward_config.keywords.push('');
+    formData.value.forward_config.target_models.push('');
+  };
+
+  const handleChange = () => {
+    if (!formData.value.is_forward) {
+      formData.value.forward_config.target_model = '';
+      formData.value.forward_config.keywords = [];
+      formData.value.forward_config.target_models = [];
+    } else if (formData.value.forward_config.forward_rule === '2') {
+      formData.value.forward_config.keywords = [''];
+      formData.value.forward_config.target_models = [''];
+      formData.value.forward_config.target_model = '';
+    } else if (formData.value.forward_config.forward_rule === '1') {
+      formData.value.forward_config.keywords = [];
+      formData.value.forward_config.target_models = [];
+    }
+  };
+
+  const handleDelete = (index: number) => {
+    if (formData.value.forward_config.keywords.length > 1) {
+      formData.value.forward_config.keywords.splice(index, 1);
+      formData.value.forward_config.target_models.splice(index, 1);
+    }
+  };
 
   const getModelDetail = async (
     params: ModelDetailParams = { id: route.query.id }
@@ -198,9 +342,18 @@
       formData.value.completion_ratio = data.completion_ratio;
       formData.value.fixed_quota = data.fixed_quota;
       formData.value.data_format = String(data.data_format);
+      formData.value.is_public = data.is_public;
       formData.value.is_enable_model_agent = data.is_enable_model_agent;
       formData.value.model_agents = data.model_agents;
-      formData.value.is_public = data.is_public;
+      formData.value.is_forward = data.is_forward;
+      formData.value.forward_config.forward_rule = String(
+        data.forward_config.forward_rule
+      );
+      formData.value.forward_config.target_model =
+        data.forward_config.target_model;
+      formData.value.forward_config.keywords = data.forward_config.keywords;
+      formData.value.forward_config.target_models =
+        data.forward_config.target_models;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {

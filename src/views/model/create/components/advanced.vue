@@ -142,7 +142,7 @@
       </a-select>
     </a-form-item>
     <a-form-item field="model_forward" :label="$t('model.label.modelForward')">
-      <a-switch v-model="formData.is_forward" />
+      <a-switch v-model="formData.is_forward" @change="handleChange" />
     </a-form-item>
     <a-form-item
       v-if="formData.is_forward"
@@ -158,6 +158,7 @@
       <a-select
         v-model="formData.forward_config.forward_rule"
         :placeholder="$t('model.placeholder.forwardRule')"
+        @change="handleChange"
       >
         <a-option value="1">全部转发</a-option>
         <a-option value="2">按关键字</a-option>
@@ -270,10 +271,6 @@
   };
   getModelList();
 
-  // const form = reactive({
-  //   forwardConfig: [{ keywords: '', target_model: '' }],
-  // });
-
   const emits = defineEmits(['changeStep']);
   const modelAgents = ref<ModelAgentList[]>([]);
 
@@ -297,21 +294,36 @@
     completion_ratio: 1,
     fixed_quota: 1,
     data_format: '1',
+    is_public: true,
     is_enable_model_agent: false,
     model_agents: [],
-    is_public: true,
     is_forward: false,
     forward_config: {
       forward_rule: '1',
       target_model: '',
-      keywords: [''],
-      target_models: [''],
+      keywords: [],
+      target_models: [],
     },
   });
 
   const handleAdd = () => {
     formData.value.forward_config.keywords.push('');
     formData.value.forward_config.target_models.push('');
+  };
+
+  const handleChange = () => {
+    if (!formData.value.is_forward) {
+      formData.value.forward_config.target_model = '';
+      formData.value.forward_config.keywords = [];
+      formData.value.forward_config.target_models = [];
+    } else if (formData.value.forward_config.forward_rule === '2') {
+      formData.value.forward_config.keywords = [''];
+      formData.value.forward_config.target_models = [''];
+      formData.value.forward_config.target_model = '';
+    } else if (formData.value.forward_config.forward_rule === '1') {
+      formData.value.forward_config.keywords = [];
+      formData.value.forward_config.target_models = [];
+    }
   };
 
   const handleDelete = (index: number) => {
@@ -322,6 +334,18 @@
   };
 
   const onNextClick = async () => {
+    if (!formData.value.is_forward) {
+      formData.value.forward_config.forward_rule = '';
+      formData.value.forward_config.target_model = '';
+      formData.value.forward_config.keywords = [];
+      formData.value.forward_config.target_models = [];
+    }
+
+    if (formData.value.forward_config.forward_rule === '1') {
+      formData.value.forward_config.keywords = [];
+      formData.value.forward_config.target_models = [];
+    }
+
     const res = await formRef.value?.validate();
     if (!res) {
       emits('changeStep', 'submit', { ...formData.value });
