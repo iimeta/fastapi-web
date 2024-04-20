@@ -93,6 +93,11 @@ export default {
   'model.detail.label.isPublic': '是否公开',
   'model.detail.label.isEnableModelAgent': '启用代理',
   'model.detail.label.modelAgentNames': '模型代理',
+  'model.detail.label.isForward': '模型转发',
+  'model.detail.label.targetModelName': '全部转发的目标模型',
+  'model.detail.label.forwardRule': '转发规则',
+  'model.detail.label.keywords': '关键字',
+  'model.detail.label.targetModelNames': '按关键字的目标模型',
   'model.detail.label.created_at': '创建时间',
   'model.detail.label.updated_at': '更新时间',
   // search
@@ -151,4 +156,8 @@ export default {
   'model.dict.is_public.false': '私有',
   'model.dict.is_enable_model_agent.true': '启用',
   'model.dict.is_enable_model_agent.false': '禁用',
+  'model.dict.is_forward.true': '启用',
+  'model.dict.is_forward.false': '禁用',
+  'model.dict.forward_rule.1': '全部转发',
+  'model.dict.forward_rule.2': '按关键字',
 };

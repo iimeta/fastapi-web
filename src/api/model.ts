@@ -15,8 +15,10 @@ export interface ModelCreateBaseInfo {
 export interface ForwardConfig {
   forward_rule: string;
   target_model: string;
+  target_model_name?: string;
   keywords: string[];
   target_models: string[];
+  target_model_names?: string[];
 }
 
 export interface ModelCreateAdvanced {

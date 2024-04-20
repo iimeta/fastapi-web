@@ -134,6 +134,33 @@
           label: t('model.detail.label.modelAgentNames'),
           value: renderData?.model_agent_names?.join('\n') || '-',
         },
+        {
+          label: t('model.detail.label.isForward'),
+          value: t(`model.dict.is_forward.${renderData.is_forward || false}`),
+        },
+        {
+          label: t('model.detail.label.forwardRule'),
+          value: renderData?.forward_config?.forward_rule
+            ? t(
+                `model.dict.forward_rule.${
+                  renderData?.forward_config?.forward_rule || 1
+                }`
+              )
+            : '-',
+        },
+        {
+          label: t('model.detail.label.targetModelName'),
+          value: renderData?.forward_config?.target_model_name || '-',
+        },
+        {
+          label: t('model.detail.label.keywords'),
+          value: renderData?.forward_config?.keywords?.join('\n') || '-',
+        },
+        {
+          label: t('model.detail.label.targetModelNames'),
+          value:
+            renderData?.forward_config?.target_model_names?.join('\n') || '-',
+        },
       ] as DescData[],
     });
 

@@ -310,17 +310,30 @@
   };
 
   const handleChange = () => {
-    if (!formData.value.is_forward) {
-      formData.value.forward_config.target_model = '';
+    if (
+      !formData.value.is_forward &&
+      formData.value.forward_config.keywords &&
+      (formData.value.forward_config.keywords[0] === '' ||
+        formData.value.forward_config.target_models[0] === '')
+    ) {
       formData.value.forward_config.keywords = [];
       formData.value.forward_config.target_models = [];
-    } else if (formData.value.forward_config.forward_rule === '2') {
+    } else if (
+      formData.value.forward_config.forward_rule === '2' &&
+      (!formData.value.forward_config.keywords ||
+        formData.value.forward_config.keywords.length === 0)
+    ) {
       formData.value.forward_config.keywords = [''];
       formData.value.forward_config.target_models = [''];
-      formData.value.forward_config.target_model = '';
     } else if (formData.value.forward_config.forward_rule === '1') {
-      formData.value.forward_config.keywords = [];
-      formData.value.forward_config.target_models = [];
+      if (
+        formData.value.forward_config.keywords &&
+        (formData.value.forward_config.keywords[0] === '' ||
+          formData.value.forward_config.target_models[0] === '')
+      ) {
+        formData.value.forward_config.keywords = [];
+        formData.value.forward_config.target_models = [];
+      }
     }
   };
 
@@ -346,14 +359,16 @@
       formData.value.is_enable_model_agent = data.is_enable_model_agent;
       formData.value.model_agents = data.model_agents;
       formData.value.is_forward = data.is_forward;
-      formData.value.forward_config.forward_rule = String(
-        data.forward_config.forward_rule
-      );
-      formData.value.forward_config.target_model =
-        data.forward_config.target_model;
-      formData.value.forward_config.keywords = data.forward_config.keywords;
-      formData.value.forward_config.target_models =
-        data.forward_config.target_models;
+      if (data.forward_config) {
+        formData.value.forward_config.forward_rule = String(
+          data.forward_config.forward_rule
+        );
+        formData.value.forward_config.target_model =
+          data.forward_config?.target_model;
+        formData.value.forward_config.keywords = data.forward_config?.keywords;
+        formData.value.forward_config.target_models =
+          data.forward_config?.target_models;
+      }
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
