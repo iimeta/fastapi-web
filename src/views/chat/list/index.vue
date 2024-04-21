@@ -499,17 +499,23 @@
               </a-skeleton>
               <span v-else>{{ $t(`chat.dict.corp.${currentData.corp}`) }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="模型名称">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.name || '-' }}</span>
-            </a-descriptions-item>
             <a-descriptions-item label="模型类型">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ $t(`chat.dict.type.${currentData.type}`) }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="模型ID">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.model_id || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="模型名称">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.name || '-' }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="模型">
               <a-skeleton v-if="loading" :animation="true">
@@ -524,12 +530,6 @@
               <span v-else>{{
                 $t(`chat.dict.stream.${currentData.stream}`)
               }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="模型ID">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.model_id || '-' }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="启用代理">
               <a-skeleton v-if="loading" :animation="true">
@@ -548,6 +548,44 @@
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData?.model_agent?.name || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="启用模型转发">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                $t(`chat.dict.is_forward.${currentData.is_forward || false}`)
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="转发规则">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                currentData.is_forward
+                  ? $t(
+                      `chat.dict.forward_rule.${
+                        currentData.forward_config.forward_rule || '1'
+                      }`
+                    )
+                  : '-'
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="真实模型名称">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                currentData.is_forward ? currentData.real_model_name : '-'
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="真实模型">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                currentData.is_forward ? currentData.real_model : '-'
+              }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="密钥" :span="2">
               <a-skeleton v-if="loading" :animation="true">

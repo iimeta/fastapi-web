@@ -43,6 +43,15 @@ export interface ChatDetailParams {
   id: any;
 }
 
+export interface ForwardConfig {
+  forward_rule: string;
+  target_model: string;
+  target_model_name?: string;
+  keywords: string[];
+  target_models: string[];
+  target_model_names?: string[];
+}
+
 export interface ChatDetail {
   id: string;
   trace_id: string;
@@ -57,6 +66,11 @@ export interface ChatDetail {
   is_enable_model_agent: boolean;
   model_agent_id: string;
   model_agent: any;
+  is_forward: boolean;
+  forward_config: ForwardConfig;
+  real_model_id: string;
+  real_model_name: string;
+  real_model: string;
   prompt: string;
   completion: string;
   messages: any;
