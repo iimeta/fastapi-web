@@ -130,7 +130,7 @@
           label: t('model.detail.label.fixedPrice'),
           value:
             renderData.billing_method === 2
-              ? `${renderData.fixed_quota}/次`
+              ? `$${renderData.fixed_price}/次`
               : '-',
         },
         {

@@ -52,6 +52,7 @@ export interface ModelPage {
   completion_ratio: number;
   completion_price: number;
   fixed_quota: number;
+  fixed_price: number;
   data_format: number;
   is_public: boolean;
   status: number;
@@ -129,6 +130,7 @@ export interface ModelDetail {
   completion_ratio: number;
   completion_price: number;
   fixed_quota: number;
+  fixed_price: number;
   data_format: number;
   is_public: boolean;
   is_enable_model_agent: boolean;

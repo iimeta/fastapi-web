@@ -210,8 +210,8 @@
             record.billing_method === 1 ? `$${record.completion_price}/k` : '-'
           }}
         </template>
-        <template #fixed_quota="{ record }">
-          {{ record.billing_method === 2 ? `${record.fixed_quota}/次` : '-' }}
+        <template #fixed_price="{ record }">
+          {{ record.billing_method === 2 ? `$${record.fixed_price}/次` : '-' }}
         </template>
         <!-- <template #billingMethod="{ record }">
           {{ $t(`model.dict.billing_method.${record.billing_method}`) }}
@@ -408,8 +408,8 @@
     },
     {
       title: t('model.columns.fixed_price'),
-      dataIndex: 'fixed_quota',
-      slotName: 'fixed_quota',
+      dataIndex: 'fixed_price',
+      slotName: 'fixed_price',
       align: 'center',
     },
     // {
