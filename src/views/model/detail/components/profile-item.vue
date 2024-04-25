@@ -108,13 +108,30 @@
             renderData.billing_method === 1 ? renderData.prompt_ratio : '-',
         },
         {
+          label: t('model.detail.label.promptPrice'),
+          value:
+            renderData.billing_method === 1
+              ? `$${renderData.prompt_price}/k`
+              : '-',
+        },
+        {
           label: t('model.detail.label.completionRatio'),
           value:
             renderData.billing_method === 1 ? renderData.completion_ratio : '-',
         },
         {
-          label: t('model.detail.label.fixedQuota'),
-          value: renderData.billing_method === 2 ? renderData.fixed_quota : '-',
+          label: t('model.detail.label.completionPrice'),
+          value:
+            renderData.billing_method === 1
+              ? `$${renderData.completion_price}/k`
+              : '-',
+        },
+        {
+          label: t('model.detail.label.fixedPrice'),
+          value:
+            renderData.billing_method === 2
+              ? `${renderData.fixed_quota}/次`
+              : '-',
         },
         {
           label: t('model.detail.label.dataFormat'),

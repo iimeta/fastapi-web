@@ -48,7 +48,9 @@ export interface ModelPage {
   type: number;
   billing_method: number;
   prompt_ratio: number;
+  prompt_price: number;
   completion_ratio: number;
+  completion_price: number;
   fixed_quota: number;
   data_format: number;
   is_public: boolean;
@@ -123,7 +125,9 @@ export interface ModelDetail {
   prompt: string;
   billing_method: number;
   prompt_ratio: number;
+  prompt_price: number;
   completion_ratio: number;
+  completion_price: number;
   fixed_quota: number;
   data_format: number;
   is_public: boolean;

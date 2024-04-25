@@ -183,17 +183,19 @@
         <template #corp="{ record }">
           {{ $t(`model.dict.corp.${record.corp}`) }}
         </template>
-        <template #dataFormat="{ record }">
+        <!-- <template #dataFormat="{ record }">
           {{ $t(`model.dict.data_format.${record.data_format}`) }}
+        </template> -->
+        <template #prompt_price="{ record }">
+          {{ record.billing_method === 1 ? `$${record.prompt_price}/k` : '-' }}
         </template>
-        <template #prompt_ratio="{ record }">
-          {{ record.billing_method === 1 ? record.prompt_ratio : '-' }}
-        </template>
-        <template #completion_ratio="{ record }">
-          {{ record.billing_method === 1 ? record.completion_ratio : '-' }}
+        <template #completion_price="{ record }">
+          {{
+            record.billing_method === 1 ? `$${record.completion_price}/k` : '-'
+          }}
         </template>
         <template #fixed_quota="{ record }">
-          {{ record.billing_method === 2 ? record.fixed_quota : '-' }}
+          {{ record.billing_method === 2 ? `${record.fixed_quota}/次` : '-' }}
         </template>
         <template #status="{ record }">
           <span v-if="record.status === 2" class="circle red"></span>
@@ -305,29 +307,29 @@
       align: 'center',
     },
     {
-      title: t('model.columns.prompt_ratio'),
-      dataIndex: 'prompt_ratio',
-      slotName: 'prompt_ratio',
+      title: t('model.columns.prompt_price'),
+      dataIndex: 'prompt_price',
+      slotName: 'prompt_price',
       align: 'center',
     },
     {
-      title: t('model.columns.completion_ratio'),
-      dataIndex: 'completion_ratio',
-      slotName: 'completion_ratio',
+      title: t('model.columns.completion_price'),
+      dataIndex: 'completion_price',
+      slotName: 'completion_price',
       align: 'center',
     },
     {
-      title: t('model.columns.fixed_quota'),
+      title: t('model.columns.fixed_price'),
       dataIndex: 'fixed_quota',
       slotName: 'fixed_quota',
       align: 'center',
     },
-    {
-      title: t('model.columns.data_format'),
-      dataIndex: 'data_format',
-      slotName: 'dataFormat',
-      align: 'center',
-    },
+    // {
+    //   title: t('model.columns.data_format'),
+    //   dataIndex: 'data_format',
+    //   slotName: 'dataFormat',
+    //   align: 'center',
+    // },
     {
       title: t('model.columns.status'),
       dataIndex: 'status',
