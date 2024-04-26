@@ -14,8 +14,11 @@ export interface ModelCreateBaseInfo {
 
 export interface ForwardConfig {
   forward_rule: string;
+  match_rule: string;
   target_model: string;
   target_model_name?: string;
+  decision_model: string;
+  decision_model_name?: string;
   keywords: string[];
   target_models: string[];
   target_model_names?: string[];

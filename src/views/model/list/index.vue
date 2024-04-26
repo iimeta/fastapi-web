@@ -388,12 +388,12 @@
       ellipsis: true,
       tooltip: true,
     },
-    {
-      title: t('model.columns.type'),
-      dataIndex: 'type',
-      slotName: 'type',
-      align: 'center',
-    },
+    // {
+    //   title: t('model.columns.type'),
+    //   dataIndex: 'type',
+    //   slotName: 'type',
+    //   align: 'center',
+    // },
     {
       title: t('model.columns.prompt_price'),
       dataIndex: 'prompt_price',
@@ -436,7 +436,7 @@
       dataIndex: 'updated_at',
       slotName: 'updated_at',
       align: 'center',
-      width: 170,
+      width: 132,
     },
     {
       title: t('model.columns.operations'),

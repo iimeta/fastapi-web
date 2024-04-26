@@ -170,6 +170,20 @@
           value: renderData?.forward_config?.target_model_name || '-',
         },
         {
+          label: t('model.detail.label.matchRule'),
+          value: renderData?.forward_config?.match_rule
+            ? t(
+                `model.dict.match_rule.${
+                  renderData?.forward_config?.match_rule || 1
+                }`
+              )
+            : '-',
+        },
+        {
+          label: t('model.detail.label.decisionModelName'),
+          value: renderData?.forward_config?.decision_model_name || '-',
+        },
+        {
           label: t('model.detail.label.keywords'),
           value: renderData?.forward_config?.keywords?.join('\n') || '-',
         },

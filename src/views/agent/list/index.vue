@@ -437,7 +437,7 @@
       dataIndex: 'updated_at',
       slotName: 'updated_at',
       align: 'center',
-      width: 170,
+      width: 132,
     },
     {
       title: t('model.agent.columns.operations'),

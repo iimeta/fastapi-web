@@ -178,6 +178,56 @@
       </a-select>
     </a-form-item>
     <a-form-item
+      v-if="formData.is_forward && formData.forward_config.forward_rule === '2'"
+      field="forward_config.match_rule"
+      :label="$t('model.label.matchRule')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.matchRule.required'),
+        },
+      ]"
+    >
+      <a-space size="large">
+        <a-radio
+          v-model="formData.forward_config.match_rule"
+          value="1"
+          :default-checked="true"
+          >智能匹配</a-radio
+        >
+        <a-radio v-model="formData.forward_config.match_rule" value="2"
+          >正则匹配</a-radio
+        >
+      </a-space>
+    </a-form-item>
+    <a-form-item
+      v-if="
+        formData.is_forward &&
+        formData.forward_config.forward_rule === '2' &&
+        formData.forward_config.match_rule === '1'
+      "
+      field="forward_config.decision_model"
+      :label="$t('model.label.decisionModel')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.decisionModel.required'),
+        },
+      ]"
+    >
+      <a-select
+        v-model="formData.forward_config.decision_model"
+        :placeholder="$t('model.placeholder.decisionModel')"
+      >
+        <a-option
+          v-for="item in models"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        />
+      </a-select>
+    </a-form-item>
+    <a-form-item
       v-for="(keywords, index) of formData.forward_config.keywords"
       v-show="
         formData.is_forward && formData.forward_config.forward_rule === '2'
@@ -298,7 +348,9 @@
     is_forward: false,
     forward_config: {
       forward_rule: '1',
+      match_rule: '1',
       target_model: '',
+      decision_model: '',
       keywords: [],
       target_models: [],
     },
@@ -363,8 +415,13 @@
         formData.value.forward_config.forward_rule = String(
           data.forward_config.forward_rule
         );
+        formData.value.forward_config.match_rule = String(
+          data.forward_config.match_rule
+        );
         formData.value.forward_config.target_model =
           data.forward_config?.target_model;
+        formData.value.forward_config.decision_model =
+          data.forward_config?.decision_model;
         formData.value.forward_config.keywords = data.forward_config?.keywords;
         formData.value.forward_config.target_models =
           data.forward_config?.target_models;
