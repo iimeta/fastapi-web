@@ -388,6 +388,7 @@
   const onNextClick = async () => {
     if (!formData.value.is_forward) {
       formData.value.forward_config.forward_rule = '';
+      formData.value.forward_config.match_rule = '';
       formData.value.forward_config.target_model = '';
       formData.value.forward_config.keywords = [];
       formData.value.forward_config.target_models = [];

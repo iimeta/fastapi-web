@@ -191,11 +191,10 @@
         </template>
         <template #completion_price="{ record }">
           {{
-            record.billing_method === 1 ? `$${record.completion_price}/k` : '-'
+            record.billing_method === 1
+              ? `$${record.completion_price}/k`
+              : `$${record.fixed_price}/次`
           }}
-        </template>
-        <template #fixed_price="{ record }">
-          {{ record.billing_method === 2 ? `$${record.fixed_price}/次` : '-' }}
         </template>
         <template #status="{ record }">
           <span v-if="record.status === 2" class="circle red"></span>
@@ -289,16 +288,12 @@
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
-      ellipsis: true,
-      tooltip: true,
     },
     {
       title: t('model.columns.model'),
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
-      ellipsis: true,
-      tooltip: true,
     },
     {
       title: t('model.columns.type'),
@@ -316,12 +311,6 @@
       title: t('model.columns.completion_price'),
       dataIndex: 'completion_price',
       slotName: 'completion_price',
-      align: 'center',
-    },
-    {
-      title: t('model.columns.fixed_price'),
-      dataIndex: 'fixed_price',
-      slotName: 'fixed_price',
       align: 'center',
     },
     // {

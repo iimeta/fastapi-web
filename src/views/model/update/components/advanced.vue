@@ -411,7 +411,7 @@
       formData.value.is_enable_model_agent = data.is_enable_model_agent;
       formData.value.model_agents = data.model_agents;
       formData.value.is_forward = data.is_forward;
-      if (data.forward_config) {
+      if (data.is_forward && data.forward_config) {
         formData.value.forward_config.forward_rule = String(
           data.forward_config.forward_rule
         );

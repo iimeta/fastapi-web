@@ -221,10 +221,10 @@
               : '-'
           }}
         </template>
-        <template #total_tokens="{ record }">
+        <template #total_price="{ record }">
           {{
-            record.total_tokens
-              ? record.total_tokens
+            record.total_price
+              ? `$${record.total_price}`
               : record.status === 1 && record.billing_method === 2
               ? 0
               : '-'
@@ -244,6 +244,7 @@
         </template>
         <template #status="{ record }">
           <span v-if="record.status === -1" class="circle red"></span>
+          <span v-else-if="record.status === 2" class="circle yellow"></span>
           <span v-else class="circle"></span>
           {{ $t(`chat.dict.status.${record.status}`) }}
         </template>
@@ -969,9 +970,9 @@
       align: 'center',
     },
     {
-      title: t('chat.columns.total_tokens'),
-      dataIndex: 'total_tokens',
-      slotName: 'total_tokens',
+      title: t('chat.columns.total_price'),
+      dataIndex: 'total_price',
+      slotName: 'total_price',
       align: 'center',
     },
     {
@@ -1035,6 +1036,10 @@
     {
       label: t('chat.dict.status.1'),
       value: 1,
+    },
+    {
+      label: t('chat.dict.status.2'),
+      value: 2,
     },
     {
       label: t('chat.dict.status.-1'),

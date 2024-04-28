@@ -24,6 +24,7 @@ export default {
   'chat.detail.label.prompt_tokens': '提问令牌数',
   'chat.detail.label.completion_tokens': '回答令牌数',
   'chat.detail.label.total_tokens': '总消耗令牌数',
+  'chat.detail.label.total_price': '消费总价',
   'chat.detail.label.status': '结果',
   'chat.detail.label.conn_time': '连接耗时',
   'chat.detail.label.duration': '持续时长',
@@ -57,6 +58,7 @@ export default {
   'chat.columns.prompt_tokens': '提问',
   'chat.columns.completion_tokens': '回答',
   'chat.columns.total_tokens': '总消耗',
+  'chat.columns.total_price': '消费',
   'chat.columns.stream': '流式',
   'chat.columns.conn_time': '连接耗时',
   'chat.columns.duration': '持续时长',
@@ -68,6 +70,7 @@ export default {
   'chat.columns.operations.view': '详情',
   // dict
   'chat.dict.status.1': '成功',
+  'chat.dict.status.2': '中止',
   'chat.dict.status.-1': '失败',
   'chat.dict.stream.true': '是',
   'chat.dict.stream.false': '否',
