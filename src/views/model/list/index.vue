@@ -112,10 +112,70 @@
               type="primary"
               @click="$router.push({ name: 'ModelCreate' })"
             >
-              <template #icon>
-                <icon-plus />
-              </template>
               {{ $t('model.operation.create') }}
+            </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="handleBatchDelete"
+            >
+              启用代理
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="handleBatchDelete"
+            >
+              关闭代理
+            </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="handleBatchDelete"
+            >
+              启用转发
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="handleBatchDelete"
+            >
+              关闭转发
+            </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="handleBatchDelete"
+            >
+              启用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="handleBatchDelete"
+            >
+              禁用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="handleBatchDelete"
+            >
+              删除
             </a-button>
           </a-space>
         </a-col>
@@ -185,6 +245,7 @@
         </a-col>
       </a-row>
       <a-table
+        ref="tableRef"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -195,6 +256,7 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
+        @selection-change="handleSelectionChange"
       >
         <template #type="{ record }">
           {{ $t(`model.dict.type.${record.type}`) }}
@@ -275,7 +337,14 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import {
+    computed,
+    ref,
+    reactive,
+    watch,
+    nextTick,
+    getCurrentInstance,
+  } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
@@ -295,6 +364,8 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+
+  const { proxy } = getCurrentInstance() as any;
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -333,8 +404,11 @@
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
-
   const size = ref<SizeProps>('medium');
+  const ids = ref<Array<string>>([]);
+  const single = ref(true);
+  const multiple = ref(true);
+  const tableRef = ref();
 
   const basePagination: Pagination = {
     current: 1,
@@ -608,6 +682,50 @@
     },
     { deep: true, immediate: true }
   );
+
+  /**
+   * 已选择的数据行发生改变时触发
+   *
+   * @param rowKeys ID 列表
+   */
+  const handleSelectionChange = (rowKeys: Array<any>) => {
+    ids.value = rowKeys;
+    single.value = rowKeys.length !== 1;
+    multiple.value = !rowKeys.length;
+  };
+
+  /**
+   * 删除
+   *
+   * @param ids ID 列表
+   */
+  const handleDelete = (ids: Array<number>) => {
+    // del(ids).then((res) => {
+    //   proxy.$message.success(res.msg);
+    //   getList();
+    //   tableRef.value.selectAll(false);
+    // });
+  };
+
+  /**
+   * 批量删除
+   */
+  const handleBatchDelete = () => {
+    if (ids.value.length === 0) {
+      proxy.$message.info('请选择要删除的数据');
+    } else {
+      proxy.$modal.warning({
+        title: '警告',
+        titleAlign: 'start',
+        content: `是否确定删除所选的${ids.value.length}条数据？`,
+        hideCancel: false,
+        onOk: () => {
+          proxy.$message.success('删除成功');
+          tableRef.value.selectAll(false);
+        },
+      });
+    }
+  };
 </script>
 
 <script lang="ts">
