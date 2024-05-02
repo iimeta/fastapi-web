@@ -196,3 +196,15 @@ export interface ModelChangeStatus {
 export function submitModelChangeStatus(data: ModelChangeStatus) {
   return axios.post('/api/v1/model/change/status', data);
 }
+
+export interface ModelBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+  model_agents?: string[];
+  target_model?: string;
+}
+
+export function submitModelBatchOperate(data: ModelBatchOperate) {
+  return axios.post('/api/v1/model/batch/operate', data);
+}

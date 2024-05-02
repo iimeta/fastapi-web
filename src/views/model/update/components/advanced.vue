@@ -411,13 +411,17 @@
       formData.value.is_enable_model_agent = data.is_enable_model_agent;
       formData.value.model_agents = data.model_agents;
       formData.value.is_forward = data.is_forward;
-      if (data.is_forward && data.forward_config) {
-        formData.value.forward_config.forward_rule = String(
-          data.forward_config.forward_rule
-        );
-        formData.value.forward_config.match_rule = String(
-          data.forward_config.match_rule
-        );
+      if (data.forward_config) {
+        if (data.forward_config.forward_rule) {
+          formData.value.forward_config.forward_rule = String(
+            data.forward_config.forward_rule
+          );
+        }
+        if (data.forward_config.match_rule) {
+          formData.value.forward_config.match_rule = String(
+            data.forward_config.match_rule
+          );
+        }
         formData.value.forward_config.target_model =
           data.forward_config?.target_model;
         formData.value.forward_config.decision_model =

@@ -119,7 +119,26 @@
               status="success"
               :disabled="multiple"
               :title="multiple ? '请选择要操作的数据' : ''"
-              @click="handleBatchDelete"
+              @click="
+                handleBatch({
+                  action: 'agent',
+                  value: 'all',
+                })
+              "
+            >
+              全部代理
+            </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'agent',
+                  value: true,
+                })
+              "
             >
               启用代理
             </a-button>
@@ -128,7 +147,12 @@
               status="danger"
               :disabled="multiple"
               :title="multiple ? '请选择要操作的数据' : ''"
-              @click="handleBatchDelete"
+              @click="
+                handleBatch({
+                  action: 'agent',
+                  value: false,
+                })
+              "
             >
               关闭代理
             </a-button>
@@ -137,7 +161,26 @@
               status="success"
               :disabled="multiple"
               :title="multiple ? '请选择要操作的数据' : ''"
-              @click="handleBatchDelete"
+              @click="
+                handleBatch({
+                  action: 'forward',
+                  value: 'all',
+                })
+              "
+            >
+              全部转发
+            </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'forward',
+                  value: true,
+                })
+              "
             >
               启用转发
             </a-button>
@@ -146,7 +189,12 @@
               status="danger"
               :disabled="multiple"
               :title="multiple ? '请选择要操作的数据' : ''"
-              @click="handleBatchDelete"
+              @click="
+                handleBatch({
+                  action: 'forward',
+                  value: false,
+                })
+              "
             >
               关闭转发
             </a-button>
@@ -155,7 +203,12 @@
               status="success"
               :disabled="multiple"
               :title="multiple ? '请选择要操作的数据' : ''"
-              @click="handleBatchDelete"
+              @click="
+                handleBatch({
+                  action: 'status',
+                  value: 1,
+                })
+              "
             >
               启用
             </a-button>
@@ -164,7 +217,12 @@
               status="danger"
               :disabled="multiple"
               :title="multiple ? '请选择要操作的数据' : ''"
-              @click="handleBatchDelete"
+              @click="
+                handleBatch({
+                  action: 'status',
+                  value: 2,
+                })
+              "
             >
               禁用
             </a-button>
@@ -173,7 +231,11 @@
               status="danger"
               :disabled="multiple"
               :title="multiple ? '请选择要操作的数据' : ''"
-              @click="handleBatchDelete"
+              @click="
+                handleBatch({
+                  action: 'delete',
+                })
+              "
             >
               删除
             </a-button>
@@ -281,9 +343,17 @@
           {{ $t(`model.dict.data_format.${record.data_format}`) }}
         </template> -->
         <template #status="{ record }">
-          <span v-if="record.status === 2" class="circle red"></span>
-          <span v-else class="circle"></span>
-          {{ $t(`model.dict.status.${record.status}`) }}
+          <a-switch
+            v-model="record.status"
+            :checked-value="1"
+            :unchecked-value="2"
+            @change="
+              modelChangeStatus({
+                id: `${record.id}`,
+                status: Number(`${record.status}`),
+              })
+            "
+          />
         </template>
         <template #operations="{ record }">
           <a-button
@@ -310,18 +380,6 @@
           >
             {{ $t('model.columns.operations.update') }}
           </a-button>
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              modelChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
-              })
-            "
-          >
-            {{ $t(`model.columns.operations.status.${record.status}`) }}
-          </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
             @ok="modelDelete({ id: `${record.id}` })"
@@ -332,6 +390,73 @@
           </a-popconfirm>
         </template>
       </a-table>
+      <a-modal
+        v-model:visible="forwardFormVisible"
+        :title="$t('user.form.title.models')"
+        :ok-text="$t('user.button.save')"
+        @cancel="forwardHandleCancel"
+        @before-ok="forwardHandleBeforeOk"
+      >
+        <a-form ref="forwardForm" :model="forwardFormData">
+          <a-form-item
+            field="target_model"
+            :label="$t('user.label.models')"
+            :rules="[
+              {
+                required: true,
+                message: $t('user.error.quota.required'),
+              },
+            ]"
+          >
+            <a-select
+              v-model="forwardFormData.target_model"
+              :placeholder="$t('user.placeholder.models')"
+            >
+              <a-option
+                v-for="item in models"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              />
+            </a-select>
+          </a-form-item>
+        </a-form>
+      </a-modal>
+      <a-modal
+        v-model:visible="agentFormVisible"
+        :title="$t('user.form.title.models')"
+        :ok-text="$t('user.button.save')"
+        @cancel="agentHandleCancel"
+        @before-ok="agentHandleBeforeOk"
+      >
+        <a-form ref="agentForm" :model="agentFormData">
+          <a-form-item
+            field="model_agents"
+            :label="$t('user.label.models')"
+            :rules="[
+              {
+                required: true,
+                message: $t('user.error.quota.required'),
+              },
+            ]"
+          >
+            <a-select
+              v-model="agentFormData.model_agents"
+              :placeholder="$t('user.placeholder.models')"
+              :max-tag-count="15"
+              multiple
+              allow-clear
+            >
+              <a-option
+                v-for="item in modelAgents"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              />
+            </a-select>
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -355,6 +480,10 @@
     ModelDeleteParams,
     ModelChangeStatus,
     submitModelChangeStatus,
+    ModelBatchOperate,
+    submitModelBatchOperate,
+    queryModelList,
+    ModelList,
   } from '@/api/model';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -364,6 +493,8 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { queryModelAgentList, ModelAgentList } from '@/api/agent';
 
   const { proxy } = getCurrentInstance() as any;
 
@@ -375,6 +506,30 @@
     showCheckedAll: true,
     onlyCurrent: false,
   } as TableRowSelection);
+
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelList();
+
+  const modelAgents = ref<ModelAgentList[]>([]);
+
+  const getModelAgentList = async () => {
+    try {
+      const { data } = await queryModelAgentList();
+      modelAgents.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelAgentList();
 
   const modelDelete = async (params: ModelDeleteParams) => {
     setLoading(true);
@@ -406,7 +561,6 @@
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
   const ids = ref<Array<string>>([]);
-  const single = ref(true);
   const multiple = ref(true);
   const tableRef = ref();
 
@@ -506,7 +660,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 220,
+      width: 170,
     },
   ]);
   const corpOptions = computed<SelectOptionData[]>(() => [
@@ -607,7 +761,6 @@
   const modelChangeStatus = async (params: ModelChangeStatus) => {
     setLoading(true);
     try {
-      params.status = params.status === 1 ? 2 : 1;
       await submitModelChangeStatus(params);
       search();
     } catch (err) {
@@ -683,6 +836,52 @@
     { deep: true, immediate: true }
   );
 
+  const forwardForm = ref<FormInstance>();
+  const forwardFormVisible = ref(false);
+  const forwardFormData = ref<ModelBatchOperate>({} as ModelBatchOperate);
+
+  const forwardHandleBeforeOk = async (done: any) => {
+    const res = await forwardForm.value?.validate();
+    if (res) {
+      forwardFormVisible.value = true;
+      done(false);
+      return;
+    }
+    done();
+    handleBatch({
+      action: 'forward',
+      value: 'all',
+      target_model: forwardFormData.value.target_model,
+    });
+  };
+
+  const forwardHandleCancel = () => {
+    forwardFormVisible.value = false;
+  };
+
+  const agentForm = ref<FormInstance>();
+  const agentFormVisible = ref(false);
+  const agentFormData = ref<ModelBatchOperate>({} as ModelBatchOperate);
+
+  const agentHandleBeforeOk = async (done: any) => {
+    const res = await agentForm.value?.validate();
+    if (res) {
+      agentFormVisible.value = true;
+      done(false);
+      return;
+    }
+    done();
+    handleBatch({
+      action: 'agent',
+      value: 'all',
+      model_agents: agentFormData.value.model_agents,
+    });
+  };
+
+  const agentHandleCancel = () => {
+    agentFormVisible.value = false;
+  };
+
   /**
    * 已选择的数据行发生改变时触发
    *
@@ -690,38 +889,85 @@
    */
   const handleSelectionChange = (rowKeys: Array<any>) => {
     ids.value = rowKeys;
-    single.value = rowKeys.length !== 1;
     multiple.value = !rowKeys.length;
   };
 
   /**
-   * 删除
-   *
-   * @param ids ID 列表
+   * 批量操作
    */
-  const handleDelete = (ids: Array<number>) => {
-    // del(ids).then((res) => {
-    //   proxy.$message.success(res.msg);
-    //   getList();
-    //   tableRef.value.selectAll(false);
-    // });
-  };
-
-  /**
-   * 批量删除
-   */
-  const handleBatchDelete = () => {
+  const handleBatch = (params: ModelBatchOperate) => {
     if (ids.value.length === 0) {
-      proxy.$message.info('请选择要删除的数据');
+      proxy.$message.info('请选择要操作的数据');
     } else {
+      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      switch (params.action) {
+        case 'agent':
+          if (params.value === true) {
+            alertContent = `是否确定启用所选${ids.value.length}条数据的模型代理?`;
+          } else if (params.value === false) {
+            alertContent = `是否确定关闭所选${ids.value.length}条数据的模型代理?`;
+          } else if (params.value === 'all') {
+            if (!params.model_agents) {
+              agentFormVisible.value = true;
+            } else {
+              alertContent = `是否确定将所选${ids.value.length}条数据的模型代理启用并使用所选的模型代理?`;
+            }
+          }
+          break;
+        case 'forward':
+          if (params.value === true) {
+            alertContent = `是否确定启用所选${ids.value.length}条数据的模型转发?`;
+          } else if (params.value === false) {
+            alertContent = `是否确定关闭所选${ids.value.length}条数据的模型转发?`;
+          } else if (params.value === 'all') {
+            if (!params.target_model) {
+              forwardFormVisible.value = true;
+            } else {
+              alertContent = `是否确定将所选${ids.value.length}条数据的模型转发启用并全部转发到所选模型?`;
+            }
+          }
+          break;
+        case 'status':
+          if (params.value === 1) {
+            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
+          } else {
+            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
+          }
+          break;
+        case 'delete':
+          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          break;
+        default:
+      }
+
+      if (
+        params.action === 'agent' &&
+        params.value === 'all' &&
+        !params.model_agents
+      ) {
+        return;
+      }
+
+      if (
+        params.action === 'forward' &&
+        params.value === 'all' &&
+        !params.target_model
+      ) {
+        return;
+      }
+
       proxy.$modal.warning({
         title: '警告',
         titleAlign: 'start',
-        content: `是否确定删除所选的${ids.value.length}条数据？`,
+        content: alertContent,
         hideCancel: false,
         onOk: () => {
-          proxy.$message.success('删除成功');
-          tableRef.value.selectAll(false);
+          params.ids = ids.value;
+          submitModelBatchOperate(params).then((res) => {
+            proxy.$message.success('操作成功');
+            search();
+            tableRef.value.selectAll(false);
+          });
         },
       });
     }
