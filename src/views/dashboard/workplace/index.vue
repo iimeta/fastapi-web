@@ -6,7 +6,7 @@
         <DataPanel />
         <DataChart />
       </div>
-      <a-grid :cols="24" :col-gap="16" :row-gap="16" style="margin-top: 16px">
+      <a-grid :cols="24" :col-gap="10" :row-gap="10" style="margin-top: 10px">
         <a-grid-item
           :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
         >
@@ -20,7 +20,7 @@
       </a-grid>
     </div>
     <div class="right-side">
-      <a-grid :cols="24" :row-gap="16">
+      <a-grid :cols="24" :row-gap="10">
         <a-grid-item :span="24">
           <div class="panel moduler-wrap">
             <UserInfo />
@@ -79,7 +79,7 @@
 <style lang="less" scoped>
   .container {
     background-color: var(--color-fill-2);
-    padding: 16px 20px;
+    padding: 10px 10px 20px 10px;
     padding-bottom: 0;
     display: flex;
   }
@@ -90,7 +90,7 @@
 
   .right-side {
     width: 280px;
-    margin-left: 16px;
+    margin-left: 10px;
   }
 
   .panel {
@@ -145,9 +145,7 @@
       border-radius: 4px;
     }
   }
-</style>
 
-<style lang="less" scoped>
   // responsive
   .mobile {
     .container {

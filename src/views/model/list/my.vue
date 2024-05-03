@@ -324,7 +324,7 @@
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
-      width: 80,
+      width: 75,
     },
     {
       title: t('model.columns.updated_at'),
@@ -504,7 +504,7 @@
 
 <style scoped lang="less">
   .container {
-    padding: 0 20px 20px 20px;
+    padding: 0 10px 20px 10px;
   }
   :deep(.arco-table-th) {
     &:last-child {
@@ -538,7 +538,7 @@
     }
   }
   .container-breadcrumb {
-    margin: 16px 0;
+    margin: 6px 0;
     :deep(.arco-breadcrumb-item) {
       color: rgb(var(--gray-6));
       &:last-child {

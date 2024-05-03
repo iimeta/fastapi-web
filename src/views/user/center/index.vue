@@ -40,11 +40,11 @@
 
 <style scoped lang="less">
   .container {
-    padding: 0 20px 20px 20px;
+    padding: 0 10px 20px 10px;
   }
 
   .container-breadcrumb {
-    margin: 16px 0;
+    margin: 6px 0;
     :deep(.arco-breadcrumb-item) {
       color: rgb(var(--gray-6));
       &:last-child {

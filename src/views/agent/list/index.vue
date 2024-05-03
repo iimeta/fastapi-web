@@ -25,13 +25,10 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="app_id"
-                  :label="$t('model.agent.form.appId')"
-                >
+                <a-form-item field="id" :label="$t('model.agent.form.id')">
                   <a-input
-                    v-model="formModel.app_id"
-                    :placeholder="$t('model.agent.form.appId.placeholder')"
+                    v-model="formModel.id"
+                    :placeholder="$t('model.agent.form.id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -47,13 +44,25 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
+                  field="base_url"
+                  :label="$t('model.agent.form.base_url')"
+                >
+                  <a-input
+                    v-model="formModel.base_url"
+                    :placeholder="$t('model.agent.form.base_url.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
                   field="models"
                   :label="$t('model.agent.form.models')"
                 >
                   <a-select
                     v-model="formModel.models"
                     :placeholder="$t('model.agent.form.selectDefault')"
-                    :max-tag-count="3"
+                    :max-tag-count="2"
                     multiple
                     allow-search
                     allow-clear
@@ -65,15 +74,6 @@
                       :label="item.name"
                     />
                   </a-select>
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="key" :label="$t('model.agent.form.key')">
-                  <a-input
-                    v-model="formModel.key"
-                    :placeholder="$t('model.agent.form.key.placeholder')"
-                    allow-clear
-                  />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
@@ -129,10 +129,48 @@
               type="primary"
               @click="$router.push({ name: 'ModelAgentCreate' })"
             >
-              <template #icon>
-                <icon-plus />
-              </template>
               {{ $t('model.agent.operation.create') }}
+            </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'status',
+                  value: 1,
+                })
+              "
+            >
+              启用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'status',
+                  value: 2,
+                })
+              "
+            >
+              禁用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'delete',
+                })
+              "
+            >
+              删除
             </a-button>
           </a-space>
         </a-col>
@@ -202,6 +240,7 @@
         </a-col>
       </a-row>
       <a-table
+        ref="tableRef"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -212,6 +251,7 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
+        @selection-change="handleSelectionChange"
       >
         <template #model_names="{ record }">
           {{ record?.model_names?.join(',') || '-' }}
@@ -220,9 +260,17 @@
           {{ record.weight || '-' }}
         </template>
         <template #status="{ record }">
-          <span v-if="record.status === 2" class="circle red"></span>
-          <span v-else class="circle"></span>
-          {{ $t(`app.dict.status.${record.status}`) }}
+          <a-switch
+            v-model="record.status"
+            :checked-value="1"
+            :unchecked-value="2"
+            @change="
+              modelAgentChangeStatus({
+                id: `${record.id}`,
+                status: Number(`${record.status}`),
+              })
+            "
+          />
         </template>
         <template #operations="{ record }">
           <a-button
@@ -261,18 +309,6 @@
           >
             {{ $t('model.agent.columns.operations.manageKey') }}
           </a-button>
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              modelAgentChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
-              })
-            "
-          >
-            {{ $t(`key.columns.operations.status.${record.status}`) }}
-          </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
             @ok="modelAgentDelete({ id: `${record.id}` })"
@@ -288,7 +324,14 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import {
+    computed,
+    ref,
+    reactive,
+    watch,
+    nextTick,
+    getCurrentInstance,
+  } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
@@ -299,6 +342,8 @@
     ModelAgentDeleteParams,
     ModelAgentChangeStatus,
     submitModelAgentChangeStatus,
+    ModelAgentBatchOperate,
+    submitModelAgentBatchOperate,
   } from '@/api/agent';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -309,6 +354,8 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList } from '@/api/model';
+
+  const { proxy } = getCurrentInstance() as any;
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -345,11 +392,10 @@
 
   const generateFormModel = () => {
     return {
-      app_id: ref(),
+      id: ref(),
       name: '',
+      base_url: '',
       models: [],
-      key: '',
-      type: ref(),
       status: ref(),
       created_at: [],
     };
@@ -360,8 +406,10 @@
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
-
   const size = ref<SizeProps>('medium');
+  const ids = ref<Array<string>>([]);
+  const multiple = ref(true);
+  const tableRef = ref();
 
   const basePagination: Pagination = {
     current: 1,
@@ -430,7 +478,7 @@
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
-      width: 80,
+      width: 65,
     },
     {
       title: t('model.agent.columns.updated_at'),
@@ -444,7 +492,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 290,
+      width: 245,
     },
   ]);
 
@@ -503,7 +551,6 @@
   const modelAgentChangeStatus = async (params: ModelAgentChangeStatus) => {
     setLoading(true);
     try {
-      params.status = params.status === 1 ? 2 : 1;
       await submitModelAgentChangeStatus(params);
       search();
     } catch (err) {
@@ -578,6 +625,57 @@
     },
     { deep: true, immediate: true }
   );
+
+  /**
+   * 已选择的数据行发生改变时触发
+   *
+   * @param rowKeys ID 列表
+   */
+  const handleSelectionChange = (rowKeys: Array<any>) => {
+    ids.value = rowKeys;
+    multiple.value = !rowKeys.length;
+  };
+
+  /**
+   * 批量操作
+   */
+  const handleBatch = (params: ModelAgentBatchOperate) => {
+    if (ids.value.length === 0) {
+      proxy.$message.info('请选择要操作的数据');
+    } else {
+      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      switch (params.action) {
+        case 'status':
+          if (params.value === 1) {
+            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
+          } else {
+            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
+          }
+          break;
+        case 'delete':
+          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          break;
+        default:
+      }
+
+      proxy.$modal.warning({
+        title: '警告',
+        titleAlign: 'start',
+        content: alertContent,
+        hideCancel: false,
+        onOk: () => {
+          setLoading(true);
+          params.ids = ids.value;
+          submitModelAgentBatchOperate(params).then((res) => {
+            setLoading(false);
+            proxy.$message.success('操作成功');
+            search();
+            tableRef.value.selectAll(false);
+          });
+        },
+      });
+    }
+  };
 </script>
 
 <script lang="ts">
@@ -588,7 +686,7 @@
 
 <style scoped lang="less">
   .container {
-    padding: 0 20px 20px 20px;
+    padding: 0 10px 20px 10px;
   }
   :deep(.arco-table-th) {
     &:last-child {
@@ -615,7 +713,7 @@
     }
   }
   .container-breadcrumb {
-    margin: 16px 0;
+    margin: 6px 0;
     :deep(.arco-breadcrumb-item) {
       color: rgb(var(--gray-6));
       &:last-child {

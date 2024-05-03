@@ -41,6 +41,15 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['admin']" :span="8">
+                <a-form-item field="trace_id" :label="$t('chat.form.trace_id')">
+                  <a-input
+                    v-model="formModel.trace_id"
+                    :placeholder="$t('chat.form.trace_id.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['admin']" :span="8">
                 <a-form-item field="user_id" :label="$t('chat.form.user_id')">
                   <a-input
                     v-model="formModel.user_id"
@@ -49,7 +58,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col v-permission="['user']" :span="8">
                 <a-form-item field="key" :label="$t('chat.form.key')">
                   <a-input
                     v-model="formModel.key"
@@ -63,7 +72,7 @@
                   <a-select
                     v-model="formModel.models"
                     :placeholder="$t('chat.form.selectDefault')"
-                    :max-tag-count="3"
+                    :max-tag-count="2"
                     multiple
                     allow-search
                     allow-clear
@@ -893,6 +902,7 @@
   const generateFormModel = () => {
     return {
       app_id: ref(),
+      trace_id: ref(),
       user_id: ref(),
       key: '',
       models: [],
@@ -1207,7 +1217,7 @@
 
 <style scoped lang="less">
   .container {
-    padding: 0 20px 20px 20px;
+    padding: 0 10px 20px 10px;
   }
   :deep(.arco-table-th) {
     &:last-child {
@@ -1234,7 +1244,7 @@
     }
   }
   .container-breadcrumb {
-    margin: 16px 0;
+    margin: 6px 0;
     :deep(.arco-breadcrumb-item) {
       color: rgb(var(--gray-6));
       &:last-child {

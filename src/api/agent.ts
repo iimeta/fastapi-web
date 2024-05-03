@@ -135,3 +135,13 @@ export interface ModelAgentChangeStatus {
 export function submitModelAgentChangeStatus(data: ModelAgentChangeStatus) {
   return axios.post('/api/v1/model/agent/change/status', data);
 }
+
+export interface ModelAgentBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+}
+
+export function submitModelAgentBatchOperate(data: ModelAgentBatchOperate) {
+  return axios.post('/api/v1/model/agent/batch/operate', data);
+}

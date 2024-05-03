@@ -19,7 +19,11 @@
   import { ref } from 'vue';
   import { useRoute } from 'vue-router';
   import useLoading from '@/hooks/loading';
-  import { queryUserDetail, UserDetailParams, UserDetail } from '@/api/admin_user';
+  import {
+    queryUserDetail,
+    UserDetailParams,
+    UserDetail,
+  } from '@/api/admin_user';
   import ProfileItem from './components/profile-item.vue';
 
   const { loading, setLoading } = useLoading(true);
@@ -50,10 +54,10 @@
 
 <style scoped lang="less">
   .container {
-    padding: 0 20px 20px 20px;
+    padding: 0 10px 20px 10px;
   }
   .container-breadcrumb {
-    margin: 16px 0;
+    margin: 6px 0;
     :deep(.arco-breadcrumb-item) {
       color: rgb(var(--gray-6));
       &:last-child {

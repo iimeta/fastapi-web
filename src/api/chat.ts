@@ -3,6 +3,7 @@ import qs from 'query-string';
 
 export interface ChatPage {
   id: string;
+  trace_id: any;
   user_id: any;
   app_id: any;
   model: string;

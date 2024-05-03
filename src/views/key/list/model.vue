@@ -48,7 +48,7 @@
                   <a-select
                     v-model="formModel.models"
                     :placeholder="$t('key.form.selectDefault')"
-                    :max-tag-count="3"
+                    :max-tag-count="2"
                     multiple
                     allow-search
                     allow-clear
@@ -70,7 +70,7 @@
                   <a-select
                     v-model="formModel.model_agents"
                     :placeholder="$t('key.form.selectDefault')"
-                    :max-tag-count="3"
+                    :max-tag-count="2"
                     multiple
                     allow-search
                     allow-clear
@@ -144,10 +144,48 @@
               type="primary"
               @click="$router.push({ name: 'KeyCreate' })"
             >
-              <template #icon>
-                <icon-plus />
-              </template>
               {{ $t('key.operation.create') }}
+            </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'status',
+                  value: 1,
+                })
+              "
+            >
+              启用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'status',
+                  value: 2,
+                })
+              "
+            >
+              禁用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'delete',
+                })
+              "
+            >
+              删除
             </a-button>
           </a-space>
         </a-col>
@@ -217,6 +255,7 @@
         </a-col>
       </a-row>
       <a-table
+        ref="tableRef"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -227,6 +266,7 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
+        @selection-change="handleSelectionChange"
       >
         <template #type="{ record }">
           {{ $t(`key.dict.type.${record.type}`) }}
@@ -244,9 +284,17 @@
           {{ record?.quota || '-' }}
         </template>
         <template #status="{ record }">
-          <span v-if="record.status === 2" class="circle red"></span>
-          <span v-else class="circle"></span>
-          {{ $t(`key.dict.status.${record.status}`) }}
+          <a-switch
+            v-model="record.status"
+            :checked-value="1"
+            :unchecked-value="2"
+            @change="
+              keyChangeStatus({
+                id: `${record.id}`,
+                status: Number(`${record.status}`),
+              })
+            "
+          />
         </template>
         <template #operations="{ record }">
           <a-button
@@ -273,18 +321,6 @@
           >
             {{ $t('key.columns.operations.update') }}
           </a-button>
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              keyChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
-              })
-            "
-          >
-            {{ $t(`key.columns.operations.status.${record.status}`) }}
-          </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
             @ok="keyDelete({ id: `${record.id}` })"
@@ -300,7 +336,14 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import {
+    computed,
+    ref,
+    reactive,
+    watch,
+    nextTick,
+    getCurrentInstance,
+  } from 'vue';
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
@@ -312,6 +355,8 @@
     KeyDeleteParams,
     KeyChangeStatus,
     submitKeyChangeStatus,
+    KeyBatchOperate,
+    submitKeyBatchOperate,
   } from '@/api/key';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -323,6 +368,8 @@
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+
+  const { proxy } = getCurrentInstance() as any;
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -388,8 +435,10 @@
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
-
   const size = ref<SizeProps>('medium');
+  const ids = ref<Array<string>>([]);
+  const multiple = ref(true);
+  const tableRef = ref();
 
   const basePagination: Pagination = {
     current: 1,
@@ -454,7 +503,7 @@
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
-      width: 80,
+      width: 65,
     },
     {
       title: t('key.columns.updated_at'),
@@ -468,7 +517,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 220,
+      width: 170,
     },
   ]);
   const corpOptions = computed<SelectOptionData[]>(() => [
@@ -559,7 +608,6 @@
   const keyChangeStatus = async (params: KeyChangeStatus) => {
     setLoading(true);
     try {
-      params.status = params.status === 1 ? 2 : 1;
       await submitKeyChangeStatus(params);
       search();
     } catch (err) {
@@ -634,6 +682,57 @@
     },
     { deep: true, immediate: true }
   );
+
+  /**
+   * 已选择的数据行发生改变时触发
+   *
+   * @param rowKeys ID 列表
+   */
+  const handleSelectionChange = (rowKeys: Array<any>) => {
+    ids.value = rowKeys;
+    multiple.value = !rowKeys.length;
+  };
+
+  /**
+   * 批量操作
+   */
+  const handleBatch = (params: KeyBatchOperate) => {
+    if (ids.value.length === 0) {
+      proxy.$message.info('请选择要操作的数据');
+    } else {
+      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      switch (params.action) {
+        case 'status':
+          if (params.value === 1) {
+            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
+          } else {
+            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
+          }
+          break;
+        case 'delete':
+          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          break;
+        default:
+      }
+
+      proxy.$modal.warning({
+        title: '警告',
+        titleAlign: 'start',
+        content: alertContent,
+        hideCancel: false,
+        onOk: () => {
+          setLoading(true);
+          params.ids = ids.value;
+          submitKeyBatchOperate(params).then((res) => {
+            setLoading(false);
+            proxy.$message.success('操作成功');
+            search();
+            tableRef.value.selectAll(false);
+          });
+        },
+      });
+    }
+  };
 </script>
 
 <script lang="ts">
@@ -644,7 +743,7 @@
 
 <style scoped lang="less">
   .container {
-    padding: 0 20px 20px 20px;
+    padding: 0 10px 20px 10px;
   }
   :deep(.arco-table-th) {
     &:last-child {
@@ -671,7 +770,7 @@
     }
   }
   .container-breadcrumb {
-    margin: 16px 0;
+    margin: 6px 0;
     :deep(.arco-breadcrumb-item) {
       color: rgb(var(--gray-6));
       &:last-child {

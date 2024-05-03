@@ -391,29 +391,31 @@
         </template>
       </a-table>
       <a-modal
-        v-model:visible="forwardFormVisible"
-        :title="$t('user.form.title.models')"
-        :ok-text="$t('user.button.save')"
-        @cancel="forwardHandleCancel"
-        @before-ok="forwardHandleBeforeOk"
+        v-model:visible="agentFormVisible"
+        :title="$t('model.form.title.model_agent')"
+        @cancel="agentHandleCancel"
+        @before-ok="agentHandleBeforeOk"
       >
-        <a-form ref="forwardForm" :model="forwardFormData">
+        <a-form ref="agentForm" :model="agentFormData">
           <a-form-item
-            field="target_model"
-            :label="$t('user.label.models')"
+            field="model_agents"
+            :label="$t('model.label.model_agents')"
             :rules="[
               {
                 required: true,
-                message: $t('user.error.quota.required'),
+                message: $t('model.error.model_agents.required'),
               },
             ]"
           >
             <a-select
-              v-model="forwardFormData.target_model"
-              :placeholder="$t('user.placeholder.models')"
+              v-model="agentFormData.model_agents"
+              :placeholder="$t('model.placeholder.model_agents')"
+              :max-tag-count="15"
+              multiple
+              allow-clear
             >
               <a-option
-                v-for="item in models"
+                v-for="item in modelAgents"
                 :key="item.id"
                 :value="item.id"
                 :label="item.name"
@@ -423,32 +425,28 @@
         </a-form>
       </a-modal>
       <a-modal
-        v-model:visible="agentFormVisible"
-        :title="$t('user.form.title.models')"
-        :ok-text="$t('user.button.save')"
-        @cancel="agentHandleCancel"
-        @before-ok="agentHandleBeforeOk"
+        v-model:visible="forwardFormVisible"
+        :title="$t('model.form.title.forward')"
+        @cancel="forwardHandleCancel"
+        @before-ok="forwardHandleBeforeOk"
       >
-        <a-form ref="agentForm" :model="agentFormData">
+        <a-form ref="forwardForm" :model="forwardFormData">
           <a-form-item
-            field="model_agents"
-            :label="$t('user.label.models')"
+            field="target_model"
+            :label="$t('model.label.target_model')"
             :rules="[
               {
                 required: true,
-                message: $t('user.error.quota.required'),
+                message: $t('model.error.target_model.required'),
               },
             ]"
           >
             <a-select
-              v-model="agentFormData.model_agents"
-              :placeholder="$t('user.placeholder.models')"
-              :max-tag-count="15"
-              multiple
-              allow-clear
+              v-model="forwardFormData.target_model"
+              :placeholder="$t('model.placeholder.target_model')"
             >
               <a-option
-                v-for="item in modelAgents"
+                v-for="item in models"
                 :key="item.id"
                 :value="item.id"
                 :label="item.name"
@@ -646,7 +644,7 @@
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
-      width: 80,
+      width: 65,
     },
     {
       title: t('model.columns.updated_at'),
@@ -962,8 +960,10 @@
         content: alertContent,
         hideCancel: false,
         onOk: () => {
+          setLoading(true);
           params.ids = ids.value;
           submitModelBatchOperate(params).then((res) => {
+            setLoading(false);
             proxy.$message.success('操作成功');
             search();
             tableRef.value.selectAll(false);
@@ -982,7 +982,7 @@
 
 <style scoped lang="less">
   .container {
-    padding: 0 20px 20px 20px;
+    padding: 0 10px 20px 10px;
   }
   :deep(.arco-table-th) {
     &:last-child {
@@ -1009,7 +1009,7 @@
     }
   }
   .container-breadcrumb {
-    margin: 16px 0;
+    margin: 6px 0;
     :deep(.arco-breadcrumb-item) {
       color: rgb(var(--gray-6));
       &:last-child {

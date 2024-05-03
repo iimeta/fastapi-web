@@ -47,7 +47,7 @@
                   <a-select
                     v-model="formModel.models"
                     :placeholder="$t('app.form.selectDefault')"
-                    :max-tag-count="3"
+                    :max-tag-count="2"
                     multiple
                     allow-search
                     allow-clear
@@ -120,9 +120,6 @@
               type="primary"
               @click="$router.push({ name: 'AppCreate' })"
             >
-              <template #icon>
-                <icon-plus />
-              </template>
               {{ $t('app.operation.create') }}
             </a-button>
           </a-space>
@@ -217,9 +214,17 @@
           <span v-else>{{ $t(`app.columns.quota.no_limit`) }}</span>
         </template>
         <template #status="{ record }">
-          <span v-if="record.status === 2" class="circle red"></span>
-          <span v-else class="circle"></span>
-          {{ $t(`app.dict.status.${record.status}`) }}
+          <a-switch
+            v-model="record.status"
+            :checked-value="1"
+            :unchecked-value="2"
+            @change="
+              appChangeStatus({
+                id: `${record.id}`,
+                status: Number(`${record.status}`),
+              })
+            "
+          />
         </template>
         <template #operations="{ record }">
           <a-button
@@ -264,18 +269,6 @@
             "
           >
             {{ $t('app.columns.operations.manageKey') }}
-          </a-button>
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              appChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
-              })
-            "
-          >
-            {{ $t(`app.columns.operations.status.${record.status}`) }}
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
@@ -523,7 +516,7 @@
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
-      width: 80,
+      width: 65,
     },
     {
       title: t('app.columns.updated_at'),
@@ -537,7 +530,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 370,
+      width: 320,
     },
   ]);
 
@@ -596,7 +589,6 @@
   const appChangeStatus = async (params: AppChangeStatus) => {
     setLoading(true);
     try {
-      params.status = params.status === 1 ? 2 : 1;
       await submitAppChangeStatus(params);
       search();
     } catch (err) {
@@ -725,7 +717,7 @@
 
 <style scoped lang="less">
   .container {
-    padding: 0 20px 20px 20px;
+    padding: 0 10px 20px 10px;
   }
   :deep(.arco-table-th) {
     &:last-child {
@@ -752,7 +744,7 @@
     }
   }
   .container-breadcrumb {
-    margin: 16px 0;
+    margin: 6px 0;
     :deep(.arco-breadcrumb-item) {
       color: rgb(var(--gray-6));
       &:last-child {

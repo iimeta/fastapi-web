@@ -111,9 +111,6 @@
               type="primary"
               @click="$router.push({ name: 'UserCreate' })"
             >
-              <template #icon>
-                <icon-plus />
-              </template>
               {{ $t('user.operation.create') }}
             </a-button>
           </a-space>
@@ -195,13 +192,21 @@
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
       >
-        <template #status="{ record }">
-          <span v-if="record.status === 2" class="circle red"></span>
-          <span v-else class="circle"></span>
-          {{ $t(`user.dict.status.${record.status}`) }}
-        </template>
         <template #quota="{ record }">
           {{ record.quota.toLocaleString() }}
+        </template>
+        <template #status="{ record }">
+          <a-switch
+            v-model="record.status"
+            :checked-value="1"
+            :unchecked-value="2"
+            @change="
+              userChangeStatus({
+                id: `${record.id}`,
+                status: Number(`${record.status}`),
+              })
+            "
+          />
         </template>
         <template #operations="{ record }">
           <a-button
@@ -247,18 +252,6 @@
           >
             {{ $t('user.columns.operations.update') }}
           </a-button> -->
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              userChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
-              })
-            "
-          >
-            {{ $t(`user.columns.operations.status.${record.status}`) }}
-          </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
             @ok="userDelete({ id: `${record.id}` })"
@@ -475,7 +468,7 @@
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
-      width: 80,
+      width: 65,
     },
     {
       title: t('user.columns.updated_at'),
@@ -489,7 +482,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 320,
+      width: 275,
     },
   ]);
 
@@ -548,7 +541,6 @@
   const userChangeStatus = async (params: UserChangeStatus) => {
     setLoading(true);
     try {
-      params.status = params.status === 1 ? 2 : 1;
       await submitUserChangeStatus(params);
       search();
     } catch (err) {
@@ -723,7 +715,7 @@
 
 <style scoped lang="less">
   .container {
-    padding: 0 20px 20px 20px;
+    padding: 0 10px 20px 10px;
   }
   :deep(.arco-table-th) {
     &:last-child {
@@ -750,7 +742,7 @@
     }
   }
   .container-breadcrumb {
-    margin: 16px 0;
+    margin: 6px 0;
     :deep(.arco-breadcrumb-item) {
       color: rgb(var(--gray-6));
       &:last-child {

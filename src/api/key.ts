@@ -124,3 +124,13 @@ export interface KeyChangeStatus {
 export function submitKeyChangeStatus(data: KeyChangeStatus) {
   return axios.post('/api/v1/key/change/status', data);
 }
+
+export interface KeyBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+}
+
+export function submitKeyBatchOperate(data: KeyBatchOperate) {
+  return axios.post('/api/v1/key/batch/operate', data);
+}
