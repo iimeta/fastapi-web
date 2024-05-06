@@ -36,6 +36,11 @@
     {
       type: 'blue',
       label: '通知',
+      content: 'v0.2.0版本发布啦! 啦!! 啦!!!',
+    },
+    {
+      type: 'blue',
+      label: '通知',
       content: 'v0.1.0版本发布啦! 啦!! 啦!!!',
     },
   ];
