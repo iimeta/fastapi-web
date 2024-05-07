@@ -55,6 +55,7 @@ export default {
   'model.label.isPublic': '是否公开',
   'model.label.modelForward': '模型转发',
   'model.label.forwardRule': '转发规则',
+  'model.placeholder.forwardRule': '请选择转发规则',
   'model.error.forwardRule.required': '请选择转发规则',
   'model.label.matchRule': '匹配规则',
   'model.placeholder.matchRule': '匹配规则',
@@ -183,4 +184,6 @@ export default {
   'model.dict.forward_rule.2': '按关键字',
   'model.dict.match_rule.1': '智能匹配',
   'model.dict.match_rule.2': '正则匹配',
+  'model.dict.match_rule.1,2': '智能匹配,正则匹配',
+  'model.dict.match_rule.2,1': '智能匹配,正则匹配',
 };

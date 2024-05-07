@@ -201,14 +201,14 @@
       ]"
     >
       <a-space size="large">
-        <a-radio
+        <a-checkbox
           v-model="formData.forward_config.match_rule"
           value="1"
           :default-checked="true"
-          >智能匹配</a-radio
+          >智能匹配</a-checkbox
         >
-        <a-radio v-model="formData.forward_config.match_rule" value="2"
-          >正则匹配</a-radio
+        <a-checkbox v-model="formData.forward_config.match_rule" value="2"
+          >正则匹配</a-checkbox
         >
       </a-space>
     </a-form-item>
@@ -216,7 +216,7 @@
       v-if="
         formData.is_forward &&
         formData.forward_config.forward_rule === '2' &&
-        formData.forward_config.match_rule === '1'
+        formData.forward_config.match_rule.includes('1')
       "
       field="forward_config.decision_model"
       :label="$t('model.label.decisionModel')"
@@ -360,7 +360,7 @@
     is_forward: false,
     forward_config: {
       forward_rule: '1',
-      match_rule: '1',
+      match_rule: ['2'],
       target_model: '',
       decision_model: '',
       keywords: [],
@@ -430,9 +430,8 @@
           );
         }
         if (data.forward_config.match_rule) {
-          formData.value.forward_config.match_rule = String(
-            data.forward_config.match_rule
-          );
+          formData.value.forward_config.match_rule =
+            data.forward_config.match_rule.map(String);
         }
         formData.value.forward_config.target_model =
           data.forward_config?.target_model;

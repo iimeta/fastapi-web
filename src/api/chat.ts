@@ -7,6 +7,7 @@ export interface ChatPage {
   user_id: any;
   app_id: any;
   model: string;
+  is_smart_match: boolean;
   prompt_tokens: number;
   completion_tokens: number;
   total_tokens: number;
@@ -70,6 +71,7 @@ export interface ChatDetail {
   model_agent: any;
   is_forward: boolean;
   forward_config: ForwardConfig;
+  is_smart_match: boolean;
   real_model_id: string;
   real_model_name: string;
   real_model: string;

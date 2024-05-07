@@ -114,7 +114,11 @@
                   field="req_times"
                   :label="$t('chat.form.req_times')"
                 >
-                  <a-range-picker v-model="formModel.req_times" show-time />
+                  <a-range-picker
+                    v-model="formModel.req_times"
+                    show-time
+                    :placeholder="['开始时间', '结束时间']"
+                  />
                 </a-form-item>
               </a-col>
             </a-row>
@@ -212,6 +216,9 @@
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
       >
+        <template #user_id="{ record }">
+          {{ record.is_smart_match ? '-' : record.user_id }}
+        </template>
         <template #prompt_tokens="{ record }">
           {{
             record.prompt_tokens
@@ -484,8 +491,9 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
-                {{ currentData.creator }}
+                {{ currentData.is_smart_match ? '-' : currentData.creator }}
                 <icon-copy
+                  v-if="!currentData.is_smart_match"
                   class="copy-btn"
                   @click="handleCopy(currentData.creator)"
                 />
@@ -495,13 +503,17 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.user_id || '-' }}</span>
+              <span v-else>{{
+                currentData.is_smart_match ? '-' : currentData.user_id || '-'
+              }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="应用ID">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.app_id || '-' }}</span>
+              <span v-else>{{
+                currentData.is_smart_match ? '-' : currentData.app_id || '-'
+              }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="公司">
               <a-skeleton v-if="loading" :animation="true">
