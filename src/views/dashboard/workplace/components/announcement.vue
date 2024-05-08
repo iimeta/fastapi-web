@@ -5,7 +5,7 @@
     :header-style="{ padding: '20px 20px 0 20px' }"
     :body-style="{ padding: '15px 20px 13px 20px' }"
     :bordered="false"
-    style="height: 194px"
+    style="height: 157px"
   >
     <template #extra>
       <a-link

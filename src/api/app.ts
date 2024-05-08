@@ -26,6 +26,8 @@ export interface AppPage {
   name: string;
   models: string[];
   model_names: string[];
+  quota: number;
+  used_quota: number;
   status: number;
   remark: string;
 }

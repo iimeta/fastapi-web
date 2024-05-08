@@ -45,6 +45,9 @@ export function queryBaseData() {
 
 export interface Expense {
   quota: number;
+  quota_usd: number;
+  used_quota: number;
+  used_quota_usd: number;
 }
 
 export function queryExpense() {

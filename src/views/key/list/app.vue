@@ -248,9 +248,16 @@
       >
         <template #quota="{ record }">
           <span v-if="record.is_limit_quota">
-            {{ record.quota.toLocaleString() }}
+            ${{ parseFloat((record.quota / 500000).toFixed(6)) }}
           </span>
           <span v-else>{{ $t(`key.columns.quota.no_limit`) }}</span>
+        </template>
+        <template #used_quota="{ record }">
+          ${{
+            record.used_quota > 0
+              ? parseFloat((record.used_quota / 500000).toFixed(6))
+              : '0.00'
+          }}
         </template>
         <template #model_names="{ record }">
           <span v-if="record.model_names">{{
@@ -553,7 +560,12 @@
       dataIndex: 'quota',
       slotName: 'quota',
       align: 'center',
-      width: 120,
+    },
+    {
+      title: t('key.columns.used_quota'),
+      dataIndex: 'used_quota',
+      slotName: 'used_quota',
+      align: 'center',
     },
     {
       title: t('key.columns.app.models'),
