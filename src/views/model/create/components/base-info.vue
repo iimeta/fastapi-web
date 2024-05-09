@@ -25,6 +25,7 @@
         <a-option value="Xfyun">科大讯飞</a-option>
         <a-option value="Aliyun">阿里云</a-option>
         <a-option value="ZhipuAI">智谱AI</a-option>
+        <a-option value="Google">Google</a-option>
         <a-option value="Midjourney">Midjourney</a-option>
       </a-select>
     </a-form-item>
