@@ -256,9 +256,9 @@
         <template #model_names="{ record }">
           {{ record?.model_names?.join(',') || '-' }}
         </template>
-        <template #weight="{ record }">
+        <!-- <template #weight="{ record }">
           {{ record.weight || '-' }}
-        </template>
+        </template> -->
         <template #status="{ record }">
           <a-switch
             v-model="record.status"
@@ -466,13 +466,13 @@
       ellipsis: true,
       tooltip: true,
     },
-    {
-      title: t('model.agent.columns.weight'),
-      dataIndex: 'weight',
-      slotName: 'weight',
-      align: 'center',
-      width: 80,
-    },
+    // {
+    //   title: t('model.agent.columns.weight'),
+    //   dataIndex: 'weight',
+    //   slotName: 'weight',
+    //   align: 'center',
+    //   width: 80,
+    // },
     {
       title: t('model.agent.columns.status'),
       dataIndex: 'status',

@@ -280,9 +280,9 @@
         <template #dataFormat="{ record }">
           {{ $t(`key.dict.data_format.${record.data_format}`) }}
         </template>
-        <template #quota="{ record }">
+        <!-- <template #quota="{ record }">
           {{ record?.quota || '-' }}
-        </template>
+        </template> -->
         <template #status="{ record }">
           <a-switch
             v-model="record.status"
@@ -491,13 +491,13 @@
       ellipsis: true,
       tooltip: true,
     },
-    {
-      title: t('key.columns.quota'),
-      dataIndex: 'quota',
-      slotName: 'quota',
-      align: 'center',
-      width: 80,
-    },
+    // {
+    //   title: t('key.columns.quota'),
+    //   dataIndex: 'quota',
+    //   slotName: 'quota',
+    //   align: 'center',
+    //   width: 80,
+    // },
     {
       title: t('key.columns.status'),
       dataIndex: 'status',
