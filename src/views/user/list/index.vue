@@ -294,6 +294,7 @@
         v-model:visible="modelsVisible"
         :title="$t('user.form.title.models')"
         :ok-text="$t('user.button.save')"
+        :width="700"
         @cancel="modelsHandleCancel"
         @before-ok="modelsHandleBeforeOk"
       >
@@ -302,8 +303,8 @@
             <a-select
               v-model="modelsFormData.models"
               :placeholder="$t('user.placeholder.models')"
-              :max-tag-count="15"
               multiple
+              allow-search
               allow-clear
             >
               <a-option

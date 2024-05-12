@@ -29,6 +29,7 @@
                     v-model="formModel.corp"
                     :options="corpOptions"
                     :placeholder="$t('model.form.selectDefault')"
+                    allow-search
                     allow-clear
                   />
                 </a-form-item>
@@ -57,6 +58,7 @@
                     v-model="formModel.type"
                     :options="typeOptions"
                     :placeholder="$t('model.form.selectDefault')"
+                    allow-search
                     allow-clear
                   />
                 </a-form-item>
@@ -354,6 +356,14 @@
     {
       label: t('model.dict.corp.ZhipuAI'),
       value: 'ZhipuAI',
+    },
+    {
+      label: t('model.dict.corp.Google'),
+      value: 'Google',
+    },
+    {
+      label: t('model.dict.corp.DeepSeek'),
+      value: 'DeepSeek',
     },
     {
       label: t('model.dict.corp.Midjourney'),

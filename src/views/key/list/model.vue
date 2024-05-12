@@ -30,6 +30,7 @@
                     v-model="formModel.corp"
                     :options="corpOptions"
                     :placeholder="$t('key.form.selectDefault')"
+                    allow-search
                     allow-clear
                   />
                 </a-form-item>
@@ -540,6 +541,14 @@
     {
       label: t('key.dict.corp.ZhipuAI'),
       value: 'ZhipuAI',
+    },
+    {
+      label: t('key.dict.corp.Google'),
+      value: 'Google',
+    },
+    {
+      label: t('key.dict.corp.DeepSeek'),
+      value: 'DeepSeek',
     },
     {
       label: t('key.dict.corp.Midjourney'),

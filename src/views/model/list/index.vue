@@ -30,6 +30,7 @@
                     v-model="formModel.corp"
                     :options="corpOptions"
                     :placeholder="$t('model.form.selectDefault')"
+                    allow-search
                     allow-clear
                   />
                 </a-form-item>
@@ -58,6 +59,7 @@
                     v-model="formModel.type"
                     :options="typeOptions"
                     :placeholder="$t('model.form.selectDefault')"
+                    allow-search
                     allow-clear
                   />
                 </a-form-item>
@@ -116,7 +118,7 @@
             </a-button>
             <a-button
               type="primary"
-              status="success"
+              status="warning"
               :disabled="multiple"
               :title="multiple ? '请选择要操作的数据' : ''"
               @click="
@@ -158,7 +160,7 @@
             </a-button>
             <a-button
               type="primary"
-              status="success"
+              status="warning"
               :disabled="multiple"
               :title="multiple ? '请选择要操作的数据' : ''"
               @click="
@@ -412,6 +414,7 @@
               :placeholder="$t('model.placeholder.model_agents')"
               :max-tag-count="15"
               multiple
+              allow-search
               allow-clear
             >
               <a-option
@@ -444,6 +447,7 @@
             <a-select
               v-model="forwardFormData.target_model"
               :placeholder="$t('model.placeholder.target_model')"
+              allow-search
             >
               <a-option
                 v-for="item in models"
@@ -681,6 +685,14 @@
     {
       label: t('model.dict.corp.ZhipuAI'),
       value: 'ZhipuAI',
+    },
+    {
+      label: t('model.dict.corp.Google'),
+      value: 'Google',
+    },
+    {
+      label: t('model.dict.corp.DeepSeek'),
+      value: 'DeepSeek',
     },
     {
       label: t('model.dict.corp.Midjourney'),

@@ -143,6 +143,7 @@
         :placeholder="$t('model.placeholder.modelAgents')"
         :max-tag-count="3"
         multiple
+        allow-search
         allow-clear
       >
         <a-option
@@ -190,6 +191,7 @@
       <a-select
         v-model="formData.forward_config.target_model"
         :placeholder="$t('model.placeholder.targetModel')"
+        allow-search
       >
         <a-option
           v-for="item in models"
@@ -240,6 +242,7 @@
       <a-select
         v-model="formData.forward_config.decision_model"
         :placeholder="$t('model.placeholder.decisionModel')"
+        allow-search
       >
         <a-option
           v-for="item in models"
@@ -276,6 +279,7 @@
         v-model="formData.forward_config.target_models[index]"
         :placeholder="$t('model.placeholder.targetModel')"
         style="width: 40%"
+        allow-search
       >
         <a-option
           v-for="item in models"

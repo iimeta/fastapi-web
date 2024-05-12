@@ -54,6 +54,10 @@
       title: t('model.agent.detail.title.baseInfo'),
       data: [
         {
+          label: t('model.agent.detail.label.corp'),
+          value: t(`model.agent.dict.corp.${renderData.corp}`),
+        },
+        {
           label: t('model.agent.detail.label.name'),
           value: renderData.name,
         },

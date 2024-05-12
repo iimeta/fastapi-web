@@ -2,6 +2,7 @@ import axios from 'axios';
 import qs from 'query-string';
 
 export interface ModelAgentCreateBaseInfo {
+  corp: string;
   name: string;
   base_url: string;
   path: string;
@@ -12,6 +13,7 @@ export interface ModelAgentCreateBaseInfo {
 export interface ModelAgentCreateAdvanced {
   models: string[];
   key: string;
+  is_agents_only: boolean;
 }
 
 export type ModelAgentCreate = ModelAgentCreateBaseInfo & ModelAgentCreateAdvanced;
@@ -22,6 +24,7 @@ export function submitModelAgentCreate(data: ModelAgentCreate) {
 
 export interface ModelAgentPage {
   id: string;
+  corp: string;
   name: string;
   base_url: string;
   path: string;
@@ -54,6 +57,7 @@ export function queryModelAgentPage(params: ModelAgentPageParams) {
 
 export interface ModelAgentList {
   id: string;
+  corp: string;
   name: string;
   base_url: string;
   path: string;
@@ -85,6 +89,7 @@ export interface ModelAgentDetailParams {
 
 export interface ModelAgentDetail {
   id: string;
+  corp: string;
   name: string;
   base_url: string;
   path: string;
@@ -109,6 +114,7 @@ export function queryModelAgentDetail(params: ModelAgentDetailParams) {
 
 export interface ModelAgentUpdateBaseInfo {
   id: string;
+  corp: string;
   name: string;
   base_url: string;
   path: string;
@@ -119,6 +125,7 @@ export interface ModelAgentUpdateBaseInfo {
 export interface ModelAgentUpdateAdvanced {
   models: string[];
   key: string;
+  is_agents_only: boolean;
 }
 
 export type ModelAgentUpdate = ModelAgentUpdateBaseInfo & ModelAgentUpdateAdvanced;

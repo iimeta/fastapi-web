@@ -19,6 +19,7 @@
       <a-select
         v-model="formData.corp"
         :placeholder="$t('model.placeholder.corp')"
+        allow-search
       >
         <a-option value="OpenAI">OpenAI</a-option>
         <a-option value="Baidu">百度</a-option>
@@ -26,6 +27,7 @@
         <a-option value="Aliyun">阿里云</a-option>
         <a-option value="ZhipuAI">智谱AI</a-option>
         <a-option value="Google">Google</a-option>
+        <a-option value="DeepSeek">DeepSeek</a-option>
         <a-option value="Midjourney">Midjourney</a-option>
       </a-select>
     </a-form-item>
@@ -72,6 +74,7 @@
       <a-select
         v-model="formData.type"
         :placeholder="$t('model.placeholder.type')"
+        allow-search
       >
         <a-option value="1">文生文</a-option>
         <a-option value="2">文生图</a-option>

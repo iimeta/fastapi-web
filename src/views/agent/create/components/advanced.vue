@@ -20,6 +20,7 @@
         :placeholder="$t('model.agent.placeholder.models')"
         :max-tag-count="3"
         multiple
+        allow-search
         allow-clear
       >
         <a-option
@@ -36,6 +37,12 @@
         :placeholder="$t('model.agent.placeholder.key')"
         :auto-size="{ minRows: 5, maxRows: 10 }"
       />
+    </a-form-item>
+    <a-form-item
+      field="is_agents_only"
+      :label="$t('model.agent.label.isAgentsOnly')"
+    >
+      <a-switch v-model="formData.is_agents_only" />
     </a-form-item>
     <a-form-item>
       <a-space>
@@ -79,6 +86,7 @@
   const formData = ref<ModelAgentCreateAdvanced>({
     models: [],
     key: '',
+    is_agents_only: true,
   });
 
   const onNextClick = async () => {

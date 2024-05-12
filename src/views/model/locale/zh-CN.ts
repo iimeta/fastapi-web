@@ -164,6 +164,7 @@ export default {
   'model.dict.corp.Aliyun': '阿里云',
   'model.dict.corp.ZhipuAI': '智谱AI',
   'model.dict.corp.Google': 'Google',
+  'model.dict.corp.DeepSeek': 'DeepSeek',
   'model.dict.corp.Midjourney': 'Midjourney',
   'model.dict.type.1': '文生文',
   'model.dict.type.2': '文生图',

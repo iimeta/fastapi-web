@@ -20,6 +20,7 @@
         :placeholder="$t('key.placeholder.models')"
         :max-tag-count="3"
         multiple
+        allow-search
         allow-clear
       >
         <a-option
@@ -36,6 +37,7 @@
         :placeholder="$t('key.placeholder.modelAgents')"
         :max-tag-count="3"
         multiple
+        allow-search
         allow-clear
       >
         <a-option

@@ -99,6 +99,7 @@ export default {
   'key.dict.corp.Aliyun': '阿里云',
   'key.dict.corp.ZhipuAI': '智谱AI',
   'key.dict.corp.Google': 'Google',
+  'key.dict.corp.DeepSeek': 'DeepSeek',
   'key.dict.corp.Midjourney': 'Midjourney',
   'key.dict.type.1': '文生文',
   'key.dict.type.2': '文生图',

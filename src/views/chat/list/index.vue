@@ -29,6 +29,7 @@
                   <a-select
                     v-model="formModel.app_id"
                     :placeholder="$t('chat.form.selectDefault')"
+                    allow-search
                     allow-clear
                   >
                     <a-option

@@ -20,6 +20,7 @@
         :placeholder="$t('app.placeholder.models')"
         :max-tag-count="3"
         multiple
+        allow-search
         allow-clear
       >
         <a-option

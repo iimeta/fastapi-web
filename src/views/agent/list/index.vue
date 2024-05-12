@@ -25,10 +25,12 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="id" :label="$t('model.agent.form.id')">
-                  <a-input
-                    v-model="formModel.id"
-                    :placeholder="$t('model.agent.form.id.placeholder')"
+                <a-form-item field="corp" :label="$t('model.agent.form.corp')">
+                  <a-select
+                    v-model="formModel.corp"
+                    :options="corpOptions"
+                    :placeholder="$t('model.agent.form.selectDefault')"
+                    allow-search
                     allow-clear
                   />
                 </a-form-item>
@@ -253,6 +255,9 @@
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
       >
+        <template #corp="{ record }">
+          {{ $t(`model.agent.dict.corp.${record.corp}`) }}
+        </template>
         <template #model_names="{ record }">
           {{ record?.model_names?.join(',') || '-' }}
         </template>
@@ -392,7 +397,7 @@
 
   const generateFormModel = () => {
     return {
-      id: ref(),
+      corp: '',
       name: '',
       base_url: '',
       models: [],
@@ -442,6 +447,13 @@
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
+    {
+      title: t('model.agent.columns.corp'),
+      dataIndex: 'corp',
+      slotName: 'corp',
+      align: 'center',
+      width: 110,
+    },
     {
       title: t('model.agent.columns.name'),
       dataIndex: 'name',
@@ -495,7 +507,40 @@
       width: 245,
     },
   ]);
-
+  const corpOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('model.agent.dict.corp.OpenAI'),
+      value: 'OpenAI',
+    },
+    {
+      label: t('model.agent.dict.corp.Baidu'),
+      value: 'Baidu',
+    },
+    {
+      label: t('model.agent.dict.corp.Xfyun'),
+      value: 'Xfyun',
+    },
+    {
+      label: t('model.agent.dict.corp.Aliyun'),
+      value: 'Aliyun',
+    },
+    {
+      label: t('model.agent.dict.corp.ZhipuAI'),
+      value: 'ZhipuAI',
+    },
+    {
+      label: t('model.agent.dict.corp.Google'),
+      value: 'Google',
+    },
+    {
+      label: t('model.agent.dict.corp.DeepSeek'),
+      value: 'DeepSeek',
+    },
+    {
+      label: t('model.agent.dict.corp.Midjourney'),
+      value: 'Midjourney',
+    },
+  ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('model.agent.dict.status.1'),

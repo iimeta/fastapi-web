@@ -29,6 +29,7 @@
                   <a-select
                     v-model="formModel.app_id"
                     :placeholder="$t('key.form.selectDefault')"
+                    allow-search
                     allow-clear
                   >
                     <a-option
@@ -359,6 +360,7 @@
               :placeholder="$t('app.placeholder.models')"
               :max-tag-count="3"
               multiple
+              allow-search
               allow-clear
             >
               <a-option

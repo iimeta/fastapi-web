@@ -7,6 +7,31 @@
     :wrapper-col-props="{ span: 18 }"
   >
     <a-form-item
+      field="corp"
+      :label="$t('model.agent.label.corp')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.agent.error.corp.required'),
+        },
+      ]"
+    >
+      <a-select
+        v-model="formData.corp"
+        :placeholder="$t('model.agent.placeholder.corp')"
+        allow-search
+      >
+        <a-option value="OpenAI">OpenAI</a-option>
+        <a-option value="Baidu">百度</a-option>
+        <a-option value="Xfyun">科大讯飞</a-option>
+        <a-option value="Aliyun">阿里云</a-option>
+        <a-option value="ZhipuAI">智谱AI</a-option>
+        <a-option value="Google">Google</a-option>
+        <a-option value="DeepSeek">DeepSeek</a-option>
+        <a-option value="Midjourney">Midjourney</a-option>
+      </a-select>
+    </a-form-item>
+    <a-form-item
       field="name"
       :label="$t('model.agent.label.name')"
       :rules="[
@@ -77,6 +102,7 @@
   const emits = defineEmits(['changeStep']);
   const formRef = ref<FormInstance>();
   const formData = ref<ModelAgentCreateBaseInfo>({
+    corp: '',
     name: '',
     base_url: '',
     path: '',
