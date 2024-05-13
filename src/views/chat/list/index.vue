@@ -251,19 +251,66 @@
           {{ $t(`chat.dict.stream.${record.stream}`) }}
         </template>
         <template #conn_time="{ record }">
-          {{ record.conn_time || '-' }}
+          <a-tag v-if="record.conn_time > 10000" color="red">
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag v-else-if="record.conn_time > 5000" color="orange">
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag v-else-if="record.conn_time > 3000" color="gold">
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag v-else color="green">{{ record.conn_time || '-' }}</a-tag>
         </template>
         <template #duration="{ record }">
-          {{ record.duration || '-' }}
+          <a-tag v-if="record.duration > 120000" color="red">
+            {{ record.duration }}
+          </a-tag>
+          <a-tag v-else-if="record.duration > 90000" color="orange">
+            {{ record.duration }}
+          </a-tag>
+          <a-tag v-else-if="record.duration > 60000" color="gold">
+            {{ record.duration }}
+          </a-tag>
+          <a-tag v-else color="green">{{ record.duration || '-' }}</a-tag>
         </template>
         <template #total_time="{ record }">
-          {{ record.total_time || '-' }}
+          <a-tag v-if="record.total_time > 120000" color="red">
+            {{ record.total_time }}
+          </a-tag>
+          <a-tag v-else-if="record.total_time > 90000" color="orange">
+            {{ record.total_time }}
+          </a-tag>
+          <a-tag v-else-if="record.total_time > 60000" color="gold">
+            {{ record.total_time }}
+          </a-tag>
+          <a-tag v-else color="green">{{ record.total_time || '-' }}</a-tag>
+        </template>
+        <template #internal_time="{ record }">
+          <a-tag v-if="record.internal_time > 500" color="red">
+            {{ record.internal_time }}
+          </a-tag>
+          <a-tag v-else-if="record.internal_time > 300" color="orange">
+            {{ record.internal_time }}
+          </a-tag>
+          <a-tag v-else-if="record.internal_time > 100" color="gold">
+            {{ record.internal_time }}
+          </a-tag>
+          <a-tag v-else color="green">{{ record.internal_time || '-' }}</a-tag>
         </template>
         <template #status="{ record }">
-          <span v-if="record.status === -1" class="circle red"></span>
-          <span v-else-if="record.status === 2" class="circle yellow"></span>
-          <span v-else class="circle"></span>
-          {{ $t(`chat.dict.status.${record.status}`) }}
+          <a-tag v-if="record.status === -1" color="red">{{
+            $t(`chat.dict.status.${record.status}`)
+          }}</a-tag>
+          <a-tag v-else-if="record.status === 2" color="gold">{{
+            $t(`chat.dict.status.${record.status}`)
+          }}</a-tag>
+          <a-tag v-else-if="record.status === 3" color="orange">{{
+            $t(`chat.dict.status.${record.status}`)
+          }}</a-tag>
+          <a-tag v-else color="green">{{
+            $t(`chat.dict.status.${record.status}`)
+          }}</a-tag>
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="toDetail(record.id)">
@@ -407,11 +454,14 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
-                <a-tag v-if="currentData.conn_time > 1500" color="red">
-                  {{ currentData.conn_time || '-' }} ms
+                <a-tag v-if="currentData.conn_time > 10000" color="red">
+                  {{ currentData.conn_time }} ms
                 </a-tag>
-                <a-tag v-else-if="currentData.conn_time > 1000" color="orange">
-                  {{ currentData.conn_time || '-' }} ms
+                <a-tag v-else-if="currentData.conn_time > 5000" color="orange">
+                  {{ currentData.conn_time }} ms
+                </a-tag>
+                <a-tag v-else-if="currentData.conn_time > 3000" color="gold">
+                  {{ currentData.conn_time }} ms
                 </a-tag>
                 <a-tag v-else color="green"
                   >{{ currentData.conn_time || '-' }} ms</a-tag
@@ -423,11 +473,14 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
-                <a-tag v-if="currentData.duration > 90000" color="red">
-                  {{ currentData.duration || '-' }} ms
+                <a-tag v-if="currentData.duration > 120000" color="red">
+                  {{ currentData.duration }} ms
                 </a-tag>
-                <a-tag v-else-if="currentData.duration > 60000" color="orange">
-                  {{ currentData.duration || '-' }} ms
+                <a-tag v-else-if="currentData.duration > 90000" color="orange">
+                  {{ currentData.duration }} ms
+                </a-tag>
+                <a-tag v-else-if="currentData.duration > 60000" color="gold">
+                  {{ currentData.duration }} ms
                 </a-tag>
                 <a-tag v-else color="green"
                   >{{ currentData.duration || '-' }} ms</a-tag
@@ -440,13 +493,16 @@
               </a-skeleton>
               <span v-else>
                 <a-tag v-if="currentData.total_time > 120000" color="red">
-                  {{ currentData.total_time || '-' }} ms
+                  {{ currentData.total_time }} ms
                 </a-tag>
                 <a-tag
-                  v-else-if="currentData.total_time > 60000"
+                  v-else-if="currentData.total_time > 90000"
                   color="orange"
                 >
-                  {{ currentData.total_time || '-' }} ms
+                  {{ currentData.total_time }} ms
+                </a-tag>
+                <a-tag v-else-if="currentData.total_time > 60000" color="gold">
+                  {{ currentData.total_time }} ms
                 </a-tag>
                 <a-tag v-else color="green"
                   >{{ currentData.total_time || '-' }} ms</a-tag
@@ -457,9 +513,20 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{
-                $t(`chat.dict.status.${currentData.status}`)
-              }}</span>
+              <span v-else>
+                <a-tag v-if="currentData.status === 1" color="green">
+                  {{ $t(`chat.dict.status.${currentData.status}`) }}
+                </a-tag>
+                <a-tag v-else-if="currentData.status === 2" color="gold">
+                  {{ $t(`chat.dict.status.${currentData.status}`) }}
+                </a-tag>
+                <a-tag v-else-if="currentData.status === 3" color="orange">
+                  {{ $t(`chat.dict.status.${currentData.status}`) }}
+                </a-tag>
+                <a-tag v-else color="red">
+                  {{ $t(`chat.dict.status.${currentData.status}`) }}
+                </a-tag>
+              </span>
             </a-descriptions-item>
             <a-descriptions-item label="客户端IP">
               <a-skeleton v-if="loading" :animation="true">
@@ -472,6 +539,12 @@
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.req_time || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="错误信息" :span="2">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.err_msg || '-' }}</span>
             </a-descriptions-item>
           </a-descriptions>
           <a-descriptions v-permission="['admin']" :column="2" bordered>
@@ -683,11 +756,14 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
-                <a-tag v-if="currentData.conn_time > 1500" color="red">
-                  {{ currentData.conn_time || '-' }} ms
+                <a-tag v-if="currentData.conn_time > 10000" color="red">
+                  {{ currentData.conn_time }} ms
                 </a-tag>
-                <a-tag v-else-if="currentData.conn_time > 1000" color="orange">
-                  {{ currentData.conn_time || '-' }} ms
+                <a-tag v-else-if="currentData.conn_time > 5000" color="orange">
+                  {{ currentData.conn_time }} ms
+                </a-tag>
+                <a-tag v-else-if="currentData.conn_time > 3000" color="gold">
+                  {{ currentData.conn_time }} ms
                 </a-tag>
                 <a-tag v-else color="green"
                   >{{ currentData.conn_time || '-' }} ms</a-tag
@@ -699,11 +775,14 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
-                <a-tag v-if="currentData.duration > 90000" color="red">
-                  {{ currentData.duration || '-' }} ms
+                <a-tag v-if="currentData.duration > 120000" color="red">
+                  {{ currentData.duration }} ms
                 </a-tag>
-                <a-tag v-else-if="currentData.duration > 60000" color="orange">
-                  {{ currentData.duration || '-' }} ms
+                <a-tag v-else-if="currentData.duration > 90000" color="orange">
+                  {{ currentData.duration }} ms
+                </a-tag>
+                <a-tag v-else-if="currentData.duration > 60000" color="gold">
+                  {{ currentData.duration }} ms
                 </a-tag>
                 <a-tag v-else color="green"
                   >{{ currentData.duration || '-' }} ms</a-tag
@@ -716,13 +795,16 @@
               </a-skeleton>
               <span v-else>
                 <a-tag v-if="currentData.total_time > 120000" color="red">
-                  {{ currentData.total_time || '-' }} ms
+                  {{ currentData.total_time }} ms
                 </a-tag>
                 <a-tag
-                  v-else-if="currentData.total_time > 60000"
+                  v-else-if="currentData.total_time > 90000"
                   color="orange"
                 >
-                  {{ currentData.total_time || '-' }} ms
+                  {{ currentData.total_time }} ms
+                </a-tag>
+                <a-tag v-else-if="currentData.total_time > 60000" color="gold">
+                  {{ currentData.total_time }} ms
                 </a-tag>
                 <a-tag v-else color="green"
                   >{{ currentData.total_time || '-' }} ms</a-tag
@@ -735,13 +817,16 @@
               </a-skeleton>
               <span v-else>
                 <a-tag v-if="currentData.internal_time > 500" color="red">
-                  {{ currentData.internal_time || '-' }} ms
+                  {{ currentData.internal_time }} ms
                 </a-tag>
                 <a-tag
-                  v-else-if="currentData.internal_time > 100"
+                  v-else-if="currentData.internal_time > 300"
                   color="orange"
                 >
-                  {{ currentData.internal_time || '-' }} ms
+                  {{ currentData.internal_time }} ms
+                </a-tag>
+                <a-tag v-else-if="currentData.internal_time > 100" color="gold">
+                  {{ currentData.internal_time }} ms
                 </a-tag>
                 <a-tag v-else color="green"
                   >{{ currentData.internal_time || '-' }} ms</a-tag
@@ -752,9 +837,20 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{
-                $t(`chat.dict.status.${currentData.status}`)
-              }}</span>
+              <span v-else>
+                <a-tag v-if="currentData.status === 1" color="green">
+                  {{ $t(`chat.dict.status.${currentData.status}`) }}
+                </a-tag>
+                <a-tag v-else-if="currentData.status === 2" color="gold">
+                  {{ $t(`chat.dict.status.${currentData.status}`) }}
+                </a-tag>
+                <a-tag v-else-if="currentData.status === 3" color="orange">
+                  {{ $t(`chat.dict.status.${currentData.status}`) }}
+                </a-tag>
+                <a-tag v-else color="red">
+                  {{ $t(`chat.dict.status.${currentData.status}`) }}
+                </a-tag>
+              </span>
             </a-descriptions-item>
             <a-descriptions-item label="本地IP">
               <a-skeleton v-if="loading" :animation="true">
@@ -1033,7 +1129,7 @@
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
-      width: 75,
+      width: 65,
     },
     {
       title: t('chat.columns.req_time'),
@@ -1069,6 +1165,14 @@
       value: -1,
     },
   ]);
+
+  if (userRole === 'admin') {
+    statusOptions.value.push({
+      label: t('chat.dict.status.3'),
+      value: 3,
+    });
+  }
+
   const fetchData = async (
     params: ChatPageParams = {
       ...basePagination,
