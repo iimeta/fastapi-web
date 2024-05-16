@@ -716,6 +716,10 @@
       label: t('model.dict.type.4'),
       value: 4,
     },
+    {
+      label: t('model.dict.type.100'),
+      value: 100,
+    },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {

@@ -80,6 +80,7 @@
         <a-option value="2">文生图</a-option>
         <a-option value="3">图生文</a-option>
         <a-option value="4">图生图</a-option>
+        <a-option value="100">多模态</a-option>
       </a-select>
     </a-form-item>
     <a-form-item field="base_url" :label="$t('model.label.base_url')">

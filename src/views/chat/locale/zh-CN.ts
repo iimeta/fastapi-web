@@ -62,8 +62,8 @@ export default {
   'chat.columns.total_tokens': '总消耗',
   'chat.columns.total_price': '花费',
   'chat.columns.stream': '流式',
-  'chat.columns.conn_time': '连接耗时',
-  'chat.columns.duration': '持续时长',
+  'chat.columns.conn_time': '连接',
+  'chat.columns.duration': '持续',
   'chat.columns.total_time': '总耗时(ms)',
   'chat.columns.internal_time': '内耗',
   'chat.columns.status': '结果',
@@ -97,4 +97,5 @@ export default {
   'chat.dict.type.2': '文生图',
   'chat.dict.type.3': '图生文',
   'chat.dict.type.4': '图生图',
+  'chat.dict.type.100': '多模态',
 };

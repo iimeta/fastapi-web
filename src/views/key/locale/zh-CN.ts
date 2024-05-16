@@ -105,6 +105,7 @@ export default {
   'key.dict.type.2': '文生图',
   'key.dict.type.3': '图生文',
   'key.dict.type.4': '图生图',
+  'key.dict.type.100': '多模态',
   'key.dict.data_format.1': '统一格式',
   'key.dict.data_format.2': '官方格式',
   'key.dict.status.1': '正常',
