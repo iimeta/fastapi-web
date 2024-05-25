@@ -627,24 +627,6 @@
                 $t(`chat.dict.stream.${currentData.stream}`)
               }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="启用代理">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{
-                $t(
-                  `chat.dict.is_enable_model_agent.${
-                    currentData.is_enable_model_agent || false
-                  }`
-                )
-              }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="代理名称">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData?.model_agent?.name || '-' }}</span>
-            </a-descriptions-item>
             <a-descriptions-item label="启用模型转发">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
@@ -682,6 +664,24 @@
               <span v-else>{{
                 currentData.is_forward ? currentData.real_model : '-'
               }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="启用代理">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                $t(
+                  `chat.dict.is_enable_model_agent.${
+                    currentData.is_enable_model_agent || false
+                  }`
+                )
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="代理名称">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData?.model_agent?.name || '-' }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="密钥" :span="2">
               <a-skeleton v-if="loading" :animation="true">
