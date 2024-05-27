@@ -11,6 +11,7 @@ import localeModel from '@/views/model/locale/en-US';
 import localeKey from '@/views/key/locale/en-US';
 import localeAgent from '@/views/agent/locale/en-US';
 import localeChat from '@/views/chat/locale/en-US';
+import localeCorp from '@/views/corp/locale/en-US';
 
 import localeSettings from './en-US/settings';
 
@@ -49,4 +50,5 @@ export default {
   ...localeKey,
   ...localeAgent,
   ...localeChat,
+  ...localeCorp,
 };
