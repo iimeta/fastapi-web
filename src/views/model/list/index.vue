@@ -28,11 +28,17 @@
                 <a-form-item field="corp" :label="$t('model.form.corp')">
                   <a-select
                     v-model="formModel.corp"
-                    :options="corpOptions"
                     :placeholder="$t('model.form.selectDefault')"
                     allow-search
                     allow-clear
-                  />
+                  >
+                    <a-option
+                      v-for="item in corps"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    />
+                  </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="8">
@@ -325,9 +331,6 @@
         <template #type="{ record }">
           {{ $t(`model.dict.type.${record.type}`) }}
         </template>
-        <template #corp="{ record }">
-          {{ $t(`model.dict.corp.${record.corp}`) }}
-        </template>
         <template #prompt_price="{ record }">
           {{ record.billing_method === 1 ? `$${record.prompt_price}/k` : '-' }}
         </template>
@@ -497,7 +500,9 @@
   import Sortable from 'sortablejs';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+  import { queryCorpList, CorpList } from '@/api/corp';
 
+  const { loading, setLoading } = useLoading(true);
   const { proxy } = getCurrentInstance() as any;
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -508,6 +513,21 @@
     showCheckedAll: true,
     onlyCurrent: false,
   } as TableRowSelection);
+
+  const corps = ref<CorpList[]>([]);
+
+  const getCorpList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryCorpList();
+      corps.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getCorpList();
 
   const models = ref<ModelList[]>([]);
 
@@ -555,7 +575,6 @@
       created_at: [],
     };
   };
-  const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<ModelPage[]>([]);
   const formModel = ref(generateFormModel());
@@ -665,40 +684,7 @@
       width: 170,
     },
   ]);
-  const corpOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('model.dict.corp.OpenAI'),
-      value: 'OpenAI',
-    },
-    {
-      label: t('model.dict.corp.Baidu'),
-      value: 'Baidu',
-    },
-    {
-      label: t('model.dict.corp.Xfyun'),
-      value: 'Xfyun',
-    },
-    {
-      label: t('model.dict.corp.Aliyun'),
-      value: 'Aliyun',
-    },
-    {
-      label: t('model.dict.corp.ZhipuAI'),
-      value: 'ZhipuAI',
-    },
-    {
-      label: t('model.dict.corp.Google'),
-      value: 'Google',
-    },
-    {
-      label: t('model.dict.corp.DeepSeek'),
-      value: 'DeepSeek',
-    },
-    {
-      label: t('model.dict.corp.Midjourney'),
-      value: 'Midjourney',
-    },
-  ]);
+
   const typeOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('model.dict.type.1'),

@@ -26,7 +26,7 @@
                   message: $t('corp.error.name.required'),
                 },
                 {
-                  match: /^.{1,20}$/,
+                  match: /^.{1,100}$/,
                   message: $t('corp.error.name.pattern'),
                 },
               ]"
@@ -46,7 +46,7 @@
                   message: $t('corp.error.code.required'),
                 },
                 {
-                  match: /^.{1,20}$/,
+                  match: /^.{1,100}$/,
                   message: $t('corp.error.code.pattern'),
                 },
               ]"
@@ -55,6 +55,15 @@
                 v-model="formData.code"
                 :placeholder="$t('corp.placeholder.code')"
                 allow-clear
+              />
+            </a-form-item>
+            <a-form-item field="sort" :label="$t('corp.label.sort')">
+              <a-input-number
+                v-model="formData.sort"
+                :placeholder="$t('corp.placeholder.sort')"
+                :precision="0"
+                :min="-10"
+                :max="999"
               />
             </a-form-item>
             <a-form-item field="remark" :label="$t('corp.label.remark')">
@@ -99,6 +108,7 @@
   const formData = ref<CorpCreate>({
     name: '',
     code: '',
+    sort: 0,
     remark: '',
   });
 

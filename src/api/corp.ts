@@ -4,6 +4,7 @@ import qs from 'query-string';
 export interface CorpCreate {
   name: string;
   code: string;
+  sort: number;
   remark: string;
 }
 
@@ -15,6 +16,7 @@ export interface CorpPage {
   id: string;
   name: string;
   code: string;
+  sort: number;
   status: number;
   remark: string;
 }
@@ -43,6 +45,7 @@ export interface CorpList {
   id: string;
   name: string;
   code: string;
+  sort: number;
   status: number;
   remark: string;
 }
@@ -71,6 +74,7 @@ export interface CorpDetail {
   id: string;
   name: string;
   code: string;
+  sort: number;
   status: number;
   remark: string;
   created_at: string;
@@ -90,6 +94,7 @@ export interface CorpUpdate {
   id: string;
   name: string;
   code: string;
+  sort: number;
   remark: string;
   status: number;
 }

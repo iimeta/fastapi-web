@@ -43,6 +43,24 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
+                <a-form-item field="sort" :label="$t('corp.form.sort')">
+                  <a-input
+                    v-model="formModel.sort"
+                    :placeholder="$t('corp.form.sort.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="remark" :label="$t('corp.form.remark')">
+                  <a-input
+                    v-model="formModel.remark"
+                    :placeholder="$t('corp.form.remark.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
                 <a-form-item field="status" :label="$t('corp.form.status')">
                   <a-select
                     v-model="formModel.status"
@@ -330,6 +348,8 @@
     return {
       name: '',
       code: '',
+      sort: ref(),
+      remark: '',
       status: ref(),
       created_at: [],
     };
@@ -386,6 +406,12 @@
       title: t('corp.columns.code'),
       dataIndex: 'code',
       slotName: 'code',
+      align: 'center',
+    },
+    {
+      title: t('corp.columns.sort'),
+      dataIndex: 'sort',
+      slotName: 'sort',
       align: 'center',
     },
     {

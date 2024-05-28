@@ -21,14 +21,12 @@
         :placeholder="$t('model.placeholder.corp')"
         allow-search
       >
-        <a-option value="OpenAI">OpenAI</a-option>
-        <a-option value="Baidu">百度</a-option>
-        <a-option value="Xfyun">科大讯飞</a-option>
-        <a-option value="Aliyun">阿里云</a-option>
-        <a-option value="ZhipuAI">智谱AI</a-option>
-        <a-option value="Google">Google</a-option>
-        <a-option value="DeepSeek">DeepSeek</a-option>
-        <a-option value="Midjourney">Midjourney</a-option>
+        <a-option
+          v-for="item in corps"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        />
       </a-select>
     </a-form-item>
     <a-form-item
@@ -128,6 +126,7 @@
     queryModelDetail,
     ModelDetailParams,
   } from '@/api/model';
+  import { queryCorpList, CorpList } from '@/api/corp';
 
   const { setLoading } = useLoading(true);
   const route = useRoute();
@@ -146,6 +145,21 @@
     prompt: '',
     status: 1,
   });
+
+  const corps = ref<CorpList[]>([]);
+
+  const getCorpList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryCorpList();
+      corps.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getCorpList();
 
   const getModelDetail = async (
     params: ModelDetailParams = { id: route.query.id }

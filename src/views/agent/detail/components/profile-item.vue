@@ -55,7 +55,7 @@
       data: [
         {
           label: t('model.agent.detail.label.corp'),
-          value: t(`model.agent.dict.corp.${renderData.corp}`),
+          value: renderData.corp,
         },
         {
           label: t('model.agent.detail.label.name'),

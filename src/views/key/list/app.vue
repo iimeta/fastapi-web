@@ -269,9 +269,6 @@
         <template #type="{ record }">
           {{ $t(`key.dict.type.${record.type}`) }}
         </template>
-        <template #corp="{ record }">
-          {{ $t(`key.dict.corp.${record.corp}`) }}
-        </template>
         <template #dataFormat="{ record }">
           {{ $t(`key.dict.data_format.${record.data_format}`) }}
         </template>

@@ -26,7 +26,7 @@
                   message: $t('user.error.name.required'),
                 },
                 {
-                  match: /^.{1,20}$/,
+                  match: /^.{1,30}$/,
                   message: $t('user.error.name.pattern'),
                 },
               ]"
