@@ -24,6 +24,7 @@ export interface KeyPage {
   type: number;
   app_id: any;
   corp: string;
+  corp_name: string;
   key: string;
   quota: number;
   models: string[];
@@ -72,6 +73,7 @@ export interface KeyDetail {
   type: number;
   app_id: number;
   corp: string;
+  corp_name: string;
   key: string;
   quota: number;
   models: string[];

@@ -25,6 +25,7 @@ export function submitModelAgentCreate(data: ModelAgentCreate) {
 export interface ModelAgentPage {
   id: string;
   corp: string;
+  corp_name: string;
   name: string;
   base_url: string;
   path: string;
@@ -90,6 +91,7 @@ export interface ModelAgentDetailParams {
 export interface ModelAgentDetail {
   id: string;
   corp: string;
+  corp_name: string;
   name: string;
   base_url: string;
   path: string;

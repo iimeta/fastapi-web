@@ -54,7 +54,7 @@
       data: [
         {
           label: t('model.detail.label.corp'),
-          value: renderData.corp,
+          value: renderData.corp_name,
         },
         {
           label: t('model.detail.label.name'),

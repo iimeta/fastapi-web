@@ -57,7 +57,8 @@
             renderData.type === 1
               ? t('key.detail.label.app_id')
               : t('key.detail.label.corp'),
-          value: renderData.type === 1 ? renderData.app_id : renderData.corp,
+          value:
+            renderData.type === 1 ? renderData.app_id : renderData.corp_name,
         },
         {
           label: t('key.detail.label.key'),

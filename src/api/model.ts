@@ -46,6 +46,7 @@ export function submitModelCreate(data: ModelCreate) {
 export interface ModelPage {
   id: string;
   corp: string;
+  corp_name: string;
   name: string;
   model: string;
   type: number;
@@ -121,6 +122,7 @@ export interface ModelDetailParams {
 export interface ModelDetail {
   id: string;
   corp: string;
+  corp_name: string;
   name: string;
   model: string;
   type: number;

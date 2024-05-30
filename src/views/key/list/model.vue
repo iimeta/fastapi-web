@@ -490,8 +490,8 @@
   const columns = computed<TableColumnData[]>(() => [
     {
       title: t('key.columns.corp'),
-      dataIndex: 'corp',
-      slotName: 'corp',
+      dataIndex: 'corp_name',
+      slotName: 'corp_name',
       align: 'center',
       width: 110,
     },

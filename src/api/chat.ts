@@ -61,6 +61,7 @@ export interface ChatDetail {
   user_id: any;
   app_id: any;
   corp: string;
+  corp_name: string;
   model_id: string;
   name: string;
   model: string;

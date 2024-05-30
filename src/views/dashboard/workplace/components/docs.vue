@@ -4,7 +4,7 @@
     :title="$t('workplace.docs')"
     :header-style="{ padding: '20px 20px 0 20px' }"
     :body-style="{ padding: '10px 20px' }"
-    style="height: 158px"
+    style="height: 139px"
     :bordered="false"
   >
     <template #extra>
@@ -37,7 +37,7 @@
 
 <style lang="less" scoped>
   .arco-card-body .arco-link {
-    margin: 9px 0;
+    margin: 6px 0;
     color: rgb(var(--gray-8));
   }
 </style>
