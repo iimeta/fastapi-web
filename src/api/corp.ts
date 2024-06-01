@@ -4,7 +4,8 @@ import qs from 'query-string';
 export interface CorpCreate {
   name: string;
   code: string;
-  sort: number;
+  sort: any;
+  is_public: boolean;
   remark: string;
 }
 
@@ -17,6 +18,7 @@ export interface CorpPage {
   name: string;
   code: string;
   sort: number;
+  is_public: boolean;
   status: number;
   remark: string;
 }
@@ -46,6 +48,7 @@ export interface CorpList {
   name: string;
   code: string;
   sort: number;
+  is_public: boolean;
   status: number;
   remark: string;
 }
@@ -76,6 +79,7 @@ export interface CorpDetail {
   code: string;
   sort: number;
   status: number;
+  is_public: boolean;
   remark: string;
   created_at: string;
   updated_at: string;
@@ -95,12 +99,22 @@ export interface CorpUpdate {
   name: string;
   code: string;
   sort: number;
+  is_public: boolean;
   remark: string;
   status: number;
 }
 
 export function submitCorpUpdate(data: CorpUpdate) {
   return axios.post('/api/v1/corp/update', data);
+}
+
+export interface CorpChangePublic {
+  id: string;
+  is_public: any;
+}
+
+export function submitCorpChangePublic(data: CorpChangePublic) {
+  return axios.post('/api/v1/corp/change/public', data);
 }
 
 export interface CorpChangeStatus {

@@ -91,6 +91,49 @@
                 :max="9999999999999"
               />
             </a-form-item>
+            <a-form-item
+              field="quota_expires_at"
+              :label="$t('user.label.quota_expires_at')"
+            >
+              <a-date-picker
+                v-model="formData.quota_expires_at"
+                :placeholder="$t('user.placeholder.quota_expires_at')"
+                :time-picker-props="{ defaultValue: '23:59:59' }"
+                :disabled-date="(current:Date) => dayjs(current).isBefore(dayjs())"
+                style="width: 100%"
+                show-time
+                :shortcuts="[
+                  {
+                    label: '1',
+                    value: () => dayjs().add(1, 'day'),
+                  },
+                  {
+                    label: '7',
+                    value: () => dayjs().add(7, 'day'),
+                  },
+                  {
+                    label: '15',
+                    value: () => dayjs().add(15, 'day'),
+                  },
+                  {
+                    label: '30',
+                    value: () => dayjs().add(30, 'day'),
+                  },
+                  {
+                    label: '90',
+                    value: () => dayjs().add(90, 'day'),
+                  },
+                  {
+                    label: '180',
+                    value: () => dayjs().add(180, 'day'),
+                  },
+                  {
+                    label: '365',
+                    value: () => dayjs().add(365, 'day'),
+                  },
+                ]"
+              />
+            </a-form-item>
             <a-form-item field="remark" :label="$t('user.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -124,6 +167,7 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
+  import dayjs from 'dayjs';
   import { submitUserCreate, UserCreate } from '@/api/admin_user';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter } from 'vue-router';
@@ -136,6 +180,7 @@
     password: '',
     terminal: 'web',
     quota: ref(),
+    quota_expires_at: '',
     remark: '',
   });
 

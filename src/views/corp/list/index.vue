@@ -43,19 +43,23 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="sort" :label="$t('corp.form.sort')">
+                <a-form-item field="remark" :label="$t('corp.form.remark')">
                   <a-input
-                    v-model="formModel.sort"
-                    :placeholder="$t('corp.form.sort.placeholder')"
+                    v-model="formModel.remark"
+                    :placeholder="$t('corp.form.remark.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="remark" :label="$t('corp.form.remark')">
-                  <a-input
-                    v-model="formModel.remark"
-                    :placeholder="$t('corp.form.remark.placeholder')"
+                <a-form-item
+                  field="is_public"
+                  :label="$t('corp.form.is_public')"
+                >
+                  <a-select
+                    v-model="formModel.is_public"
+                    :options="publicOptions"
+                    :placeholder="$t('corp.form.selectDefault')"
                     allow-clear
                   />
                 </a-form-item>
@@ -234,6 +238,19 @@
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
       >
+        <template #is_public="{ record }">
+          <a-switch
+            v-model="record.is_public"
+            :checked-value="true"
+            :unchecked-value="false"
+            @change="
+              corpChangePublic({
+                id: `${record.id}`,
+                is_public: `${record.is_public}`,
+              })
+            "
+          />
+        </template>
         <template #remark="{ record }">
           {{ record.remark || '-' }}
         </template>
@@ -243,7 +260,7 @@
             :checked-value="1"
             :unchecked-value="2"
             @change="
-              modelAgentChangeStatus({
+              corpChangeStatus({
                 id: `${record.id}`,
                 status: Number(`${record.status}`),
               })
@@ -294,6 +311,8 @@
     CorpPageParams,
     submitCorpDelete,
     CorpDeleteParams,
+    CorpChangePublic,
+    submitCorpChangePublic,
     CorpChangeStatus,
     submitCorpChangeStatus,
     CorpBatchOperate,
@@ -348,8 +367,8 @@
     return {
       name: '',
       code: '',
-      sort: ref(),
       remark: '',
+      is_public: ref(),
       status: ref(),
       created_at: [],
     };
@@ -415,6 +434,12 @@
       align: 'center',
     },
     {
+      title: t('corp.columns.is_public'),
+      dataIndex: 'is_public',
+      slotName: 'is_public',
+      align: 'center',
+    },
+    {
       title: t('corp.columns.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
@@ -448,6 +473,16 @@
     {
       label: t('corp.dict.status.2'),
       value: 2,
+    },
+  ]);
+  const publicOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('corp.dict.is_public.true'),
+      value: 'true',
+    },
+    {
+      label: t('corp.dict.is_public.false'),
+      value: 'false',
     },
   ]);
 
@@ -492,7 +527,19 @@
     formModel.value = generateFormModel();
   };
 
-  const modelAgentChangeStatus = async (params: CorpChangeStatus) => {
+  const corpChangePublic = async (params: CorpChangePublic) => {
+    setLoading(true);
+    try {
+      await submitCorpChangePublic(params);
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const corpChangeStatus = async (params: CorpChangeStatus) => {
     setLoading(true);
     try {
       await submitCorpChangeStatus(params);

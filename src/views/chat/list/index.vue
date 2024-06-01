@@ -111,12 +111,9 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="req_times"
-                  :label="$t('chat.form.req_times')"
-                >
+                <a-form-item field="req_time" :label="$t('chat.form.req_time')">
                   <a-range-picker
-                    v-model="formModel.req_times"
+                    v-model="formModel.req_time"
                     show-time
                     :placeholder="['开始时间', '结束时间']"
                   />
@@ -1017,7 +1014,7 @@
       models: [],
       total_time: ref(),
       status: ref(),
-      req_times: [],
+      req_time: [],
     };
   };
   const { loading, setLoading } = useLoading(true);

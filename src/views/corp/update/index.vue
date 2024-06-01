@@ -66,6 +66,9 @@
                 :max="999"
               />
             </a-form-item>
+            <a-form-item field="is_public" :label="$t('corp.label.is_public')">
+              <a-switch v-model="formData.is_public" />
+            </a-form-item>
             <a-form-item field="remark" :label="$t('corp.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -118,6 +121,7 @@
     name: '',
     code: '',
     sort: 0,
+    is_public: true,
     remark: '',
     status: 1,
   });
@@ -132,6 +136,7 @@
       formData.value.name = data.name;
       formData.value.code = data.code;
       formData.value.sort = data.sort;
+      formData.value.is_public = data.is_public;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
     } catch (err) {

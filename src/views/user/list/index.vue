@@ -193,7 +193,68 @@
         @page-size-change="onPageSizeChange"
       >
         <template #quota="{ record }">
-          {{ record.quota.toLocaleString() }}
+          ${{
+            record.quota > 0
+              ? parseFloat((record.quota / 500000).toFixed(6))
+              : '0.00'
+          }}
+        </template>
+        <template #used_quota="{ record }">
+          ${{
+            record.used_quota > 0
+              ? parseFloat((record.used_quota / 500000).toFixed(6))
+              : '0.00'
+          }}
+        </template>
+        <template #quota_expires_at="{ rowIndex }">
+          <a-date-picker
+            v-model="renderData[rowIndex].quota_expires_at"
+            :placeholder="$t('user.placeholder.quota_expires_at')"
+            :time-picker-props="{ defaultValue: '23:59:59' }"
+            :disabled-date="(current:Date) => dayjs(current).isBefore(dayjs())"
+            show-time
+            :shortcuts="[
+              {
+                label: '1',
+                value: () => dayjs().add(1, 'day'),
+              },
+              {
+                label: '7',
+                value: () => dayjs().add(7, 'day'),
+              },
+              {
+                label: '15',
+                value: () => dayjs().add(15, 'day'),
+              },
+              {
+                label: '30',
+                value: () => dayjs().add(30, 'day'),
+              },
+              {
+                label: '90',
+                value: () => dayjs().add(90, 'day'),
+              },
+              {
+                label: '180',
+                value: () => dayjs().add(180, 'day'),
+              },
+              {
+                label: '365',
+                value: () => dayjs().add(365, 'day'),
+              },
+            ]"
+            @change="
+              userChangeQuotaExpire({
+                id: `${renderData[rowIndex].id}`,
+                quota_expires_at: `${renderData[rowIndex].quota_expires_at}`,
+              })
+            "
+          >
+            <a-button style="width: 150px">{{
+              renderData[rowIndex].quota_expires_at ||
+              $t('user.placeholder.quota_expires_at')
+            }}</a-button>
+          </a-date-picker>
         </template>
         <template #status="{ record }">
           <a-switch
@@ -240,7 +301,7 @@
           >
             {{ $t('user.columns.operations.view') }}
           </a-button>
-          <!-- <a-button
+          <a-button
             type="text"
             size="small"
             @click="
@@ -251,7 +312,7 @@
             "
           >
             {{ $t('user.columns.operations.update') }}
-          </a-button> -->
+          </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
             @ok="userDelete({ id: `${record.id}` })"
@@ -322,9 +383,17 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import {
+    computed,
+    ref,
+    reactive,
+    watch,
+    nextTick,
+    getCurrentInstance,
+  } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import {
     queryUserPage,
@@ -335,9 +404,11 @@
     UserGrantQuotaParams,
     submitUserGrantQuota,
     UserGrantQuota,
+    UserChangeQuotaExpire,
+    submitUserChangeQuotaExpire,
     UserChangeStatus,
-    UserModelsParams,
     submitUserChangeStatus,
+    UserModelsParams,
     submitUserModels,
     UserModels,
   } from '@/api/admin_user';
@@ -351,6 +422,8 @@
   import Sortable from 'sortablejs';
   import { Message } from '@arco-design/web-vue';
   import { queryModelList, ModelList } from '@/api/model';
+
+  const { proxy } = getCurrentInstance() as any;
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -465,6 +538,18 @@
       align: 'center',
     },
     {
+      title: t('user.columns.used_quota'),
+      dataIndex: 'used_quota',
+      slotName: 'used_quota',
+      align: 'center',
+    },
+    {
+      title: t('user.columns.quota_expires_at'),
+      dataIndex: 'quota_expires_at',
+      slotName: 'quota_expires_at',
+      align: 'center',
+    },
+    {
       title: t('user.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
@@ -483,7 +568,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 275,
+      width: 318,
     },
   ]);
 
@@ -539,10 +624,24 @@
     formModel.value = generateFormModel();
   };
 
+  const userChangeQuotaExpire = async (params: UserChangeQuotaExpire) => {
+    setLoading(true);
+    try {
+      await submitUserChangeQuotaExpire(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const userChangeStatus = async (params: UserChangeStatus) => {
     setLoading(true);
     try {
       await submitUserChangeStatus(params);
+      proxy.$message.success('操作成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other

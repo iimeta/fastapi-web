@@ -58,6 +58,10 @@
           value: renderData.user_id,
         },
         {
+          label: t('user.detail.label.account'),
+          value: renderData.account,
+        },
+        {
           label: t('user.detail.label.name'),
           value: renderData.name,
         },
@@ -68,6 +72,14 @@
         {
           label: t('user.detail.label.quota'),
           value: renderData.quota,
+        },
+        {
+          label: t('user.detail.label.used_quota'),
+          value: renderData.used_quota,
+        },
+        {
+          label: t('user.detail.label.quota_expires_at'),
+          value: renderData.quota_expires_at || '-',
         },
         {
           label: t('user.detail.label.models'),

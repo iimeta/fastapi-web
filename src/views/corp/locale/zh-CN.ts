@@ -14,6 +14,7 @@ export default {
   'corp.error.code.pattern': '代码, 最多100字符',
   'corp.label.sort': '排序',
   'corp.placeholder.sort': '排序号',
+  'corp.label.is_public': '公开',
   'corp.label.remark': '备注',
   'corp.placeholder.remark': '备注',
   'corp.success.title': '提交成功',
@@ -31,8 +32,7 @@ export default {
   'corp.form.name.placeholder': '请输入名称',
   'corp.form.code': '代码',
   'corp.form.code.placeholder': '请输入代码',
-  'corp.form.sort': '排序',
-  'corp.form.sort.placeholder': '排序大于等于',
+  'corp.form.is_public': '是否公开',
   'corp.form.remark': '备注',
   'corp.form.remark.placeholder': '请输入备注',
   'corp.form.status': '状态',
@@ -48,6 +48,7 @@ export default {
   'corp.columns.name': '名称',
   'corp.columns.code': '代码',
   'corp.columns.sort': '排序',
+  'corp.columns.is_public': '公开',
   'corp.columns.status': '状态',
   'corp.columns.remark': '备注',
   'corp.columns.updated_at': '更新时间',
@@ -61,4 +62,6 @@ export default {
   // dict
   'corp.dict.status.1': '正常',
   'corp.dict.status.2': '禁用',
+  'corp.dict.is_public.true': '公开',
+  'corp.dict.is_public.false': '私有',
 };

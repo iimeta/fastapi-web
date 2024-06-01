@@ -66,6 +66,9 @@
                 :max="999"
               />
             </a-form-item>
+            <a-form-item field="is_public" :label="$t('corp.label.is_public')">
+              <a-switch v-model="formData.is_public" />
+            </a-form-item>
             <a-form-item field="remark" :label="$t('corp.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -108,7 +111,8 @@
   const formData = ref<CorpCreate>({
     name: '',
     code: '',
-    sort: 0,
+    sort: ref(),
+    is_public: true,
     remark: '',
   });
 

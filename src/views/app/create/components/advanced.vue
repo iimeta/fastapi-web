@@ -6,15 +6,7 @@
     :label-col-props="{ span: 4 }"
     :wrapper-col-props="{ span: 18 }"
   >
-    <a-form-item
-      field="models"
-      :label="$t('app.label.models')"
-      :rules="[
-        {
-          required: false,
-        },
-      ]"
-    >
+    <a-form-item field="models" :label="$t('app.label.models')">
       <a-select
         v-model="formData.models"
         :placeholder="$t('app.placeholder.models')"
@@ -54,29 +46,57 @@
       />
     </a-form-item>
     <a-form-item
-      field="ip_whitelist"
-      :label="$t('app.label.ip_whitelist')"
-      :rules="[
-        {
-          required: false,
-        },
-      ]"
+      v-if="formData.is_limit_quota"
+      field="quota_expires_at"
+      :label="$t('app.label.quota_expires_at')"
     >
+      <a-date-picker
+        v-model="formData.quota_expires_at"
+        :placeholder="$t('app.placeholder.quota_expires_at')"
+        :time-picker-props="{ defaultValue: '23:59:59' }"
+        :disabled-date="(current:Date) => dayjs(current).isBefore(dayjs())"
+        style="width: 100%"
+        show-time
+        :shortcuts="[
+          {
+            label: '1',
+            value: () => dayjs().add(1, 'day'),
+          },
+          {
+            label: '7',
+            value: () => dayjs().add(7, 'day'),
+          },
+          {
+            label: '15',
+            value: () => dayjs().add(15, 'day'),
+          },
+          {
+            label: '30',
+            value: () => dayjs().add(30, 'day'),
+          },
+          {
+            label: '90',
+            value: () => dayjs().add(90, 'day'),
+          },
+          {
+            label: '180',
+            value: () => dayjs().add(180, 'day'),
+          },
+          {
+            label: '365',
+            value: () => dayjs().add(365, 'day'),
+          },
+        ]"
+      />
+    </a-form-item>
+    <a-form-item field="ip_whitelist" :label="$t('app.label.ip_whitelist')">
       <a-textarea
         v-model="formData.ip_whitelist"
         :placeholder="$t('app.placeholder.ip_whitelist')"
         :auto-size="{ minRows: 5, maxRows: 10 }"
       />
     </a-form-item>
-    <a-form-item
-      field="ip_blacklist"
-      :label="$t('app.label.ip_blacklist')"
-      :rules="[
-        {
-          required: false,
-        },
-      ]"
-    >
+    <a-form-item field="ip_blacklist" :label="$t('app.label.ip_blacklist')">
       <a-textarea
         v-model="formData.ip_blacklist"
         :placeholder="$t('app.placeholder.ip_blacklist')"
@@ -99,6 +119,7 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
+  import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { AppCreateAdvanced } from '@/api/app';
   import { queryModelList, ModelList } from '@/api/model';
@@ -126,6 +147,7 @@
     models: [],
     is_limit_quota: false,
     quota: ref(),
+    quota_expires_at: '',
     ip_whitelist: '',
     ip_blacklist: '',
   });

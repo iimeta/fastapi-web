@@ -260,17 +260,14 @@
               : '0.00'
           }}
         </template>
+        <template #quota_expires_at="{ record }">
+          {{ record.is_limit_quota ? record.quota_expires_at || '-' : '-' }}
+        </template>
         <template #model_names="{ record }">
           <span v-if="record.model_names">{{
             record.model_names.join(',')
           }}</span>
           <span v-else>{{ $t(`key.columns.app.models.no_limit`) }}</span>
-        </template>
-        <template #type="{ record }">
-          {{ $t(`key.dict.type.${record.type}`) }}
-        </template>
-        <template #dataFormat="{ record }">
-          {{ $t(`key.dict.data_format.${record.data_format}`) }}
         </template>
         <template #status="{ record }">
           <a-switch
@@ -351,6 +348,50 @@
               :max="9999999999999"
             />
           </a-form-item>
+          <a-form-item
+            v-if="formData.is_limit_quota"
+            field="quota_expires_at"
+            :label="$t('app.label.quota_expires_at')"
+          >
+            <a-date-picker
+              v-model="formData.quota_expires_at"
+              :placeholder="$t('app.placeholder.quota_expires_at')"
+              :time-picker-props="{ defaultValue: '23:59:59' }"
+              :disabled-date="(current:Date) => dayjs(current).isBefore(dayjs())"
+              style="width: 100%"
+              show-time
+              :shortcuts="[
+                {
+                  label: '1',
+                  value: () => dayjs().add(1, 'day'),
+                },
+                {
+                  label: '7',
+                  value: () => dayjs().add(7, 'day'),
+                },
+                {
+                  label: '15',
+                  value: () => dayjs().add(15, 'day'),
+                },
+                {
+                  label: '30',
+                  value: () => dayjs().add(30, 'day'),
+                },
+                {
+                  label: '90',
+                  value: () => dayjs().add(90, 'day'),
+                },
+                {
+                  label: '180',
+                  value: () => dayjs().add(180, 'day'),
+                },
+                {
+                  label: '365',
+                  value: () => dayjs().add(365, 'day'),
+                },
+              ]"
+            />
+          </a-form-item>
           <a-form-item field="models" :label="$t('app.label.models')">
             <a-select
               v-model="formData.models"
@@ -412,6 +453,7 @@
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import {
     queryKeyPage,
@@ -564,6 +606,12 @@
       title: t('key.columns.used_quota'),
       dataIndex: 'used_quota',
       slotName: 'used_quota',
+      align: 'center',
+    },
+    {
+      title: t('key.columns.quota_expires_at'),
+      dataIndex: 'quota_expires_at',
+      slotName: 'quota_expires_at',
       align: 'center',
     },
     {
@@ -737,6 +785,7 @@
     key: string;
     is_limit_quota: boolean;
     quota: number;
+    quota_expires_at: string;
     models: string[];
     ip_whitelist: string[];
     ip_blacklist: string[];
@@ -750,6 +799,7 @@
       formData.value.key = params.key;
       formData.value.is_limit_quota = params.is_limit_quota;
       formData.value.quota = params.quota;
+      formData.value.quota_expires_at = params.quota_expires_at;
       formData.value.models = params.models;
       formData.value.ip_whitelist = params.ip_whitelist?.join('\n') || '';
       formData.value.ip_blacklist = params.ip_blacklist?.join('\n') || '';

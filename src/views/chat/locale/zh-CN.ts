@@ -49,7 +49,7 @@ export default {
   'chat.form.total_time': '耗时大于',
   'chat.form.total_time.placeholder': '请输入总耗时(ms)',
   'chat.form.status': '状态',
-  'chat.form.req_times': '请求时间',
+  'chat.form.req_time': '请求时间',
   'chat.form.search': '查询',
   'chat.form.reset': '重置',
   'chat.form.selectDefault': '全部',

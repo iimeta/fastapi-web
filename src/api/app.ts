@@ -10,6 +10,7 @@ export interface AppCreateAdvanced {
   models: string[];
   is_limit_quota: boolean;
   quota: any;
+  quota_expires_at: string;
   ip_whitelist: string;
   ip_blacklist: string;
 }
@@ -28,6 +29,7 @@ export interface AppPage {
   model_names: string[];
   quota: number;
   used_quota: number;
+  quota_expires_at: string;
   status: number;
   remark: string;
 }
@@ -89,6 +91,8 @@ export interface AppDetail {
   model_names: string[];
   is_limit_quota: boolean;
   quota: number;
+  used_quota: number;
+  quota_expires_at: string;
   ip_whitelist: string[];
   ip_blacklist: string[];
   status: number;
@@ -117,6 +121,7 @@ export interface AppUpdateAdvanced {
   models: string[];
   is_limit_quota: boolean;
   quota: any;
+  quota_expires_at: string;
   ip_whitelist: string;
   ip_blacklist: string;
 }
@@ -150,6 +155,7 @@ export interface AppKeyConfig {
   key: string;
   is_limit_quota: boolean;
   quota: number;
+  quota_expires_at: string;
   models: string[];
   ip_whitelist: string;
   ip_blacklist: string;

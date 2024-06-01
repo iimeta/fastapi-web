@@ -7,6 +7,7 @@ export interface UserCreate {
   password: string;
   terminal: string;
   quota: any;
+  quota_expires_at: string;
   remark: string;
 }
 
@@ -19,8 +20,9 @@ export interface UserPage {
   user_id: number;
   name: string;
   email: string;
-  phone: string;
   quota: number;
+  used_quota: number;
+  quota_expires_at: string;
   models: string[];
   remark: string;
   status: number;
@@ -79,9 +81,11 @@ export interface UserDetail {
   id: string;
   user_id: number;
   name: string;
-  phone: string;
+  account: string;
   email: string;
   quota: number;
+  used_quota: number;
+  quota_expires_at: string;
   model_names: string[];
   status: number;
   remark: string;
@@ -98,23 +102,27 @@ export function queryUserDetail(params: UserDetailParams) {
   });
 }
 
-export interface UserUpdateBaseInfo {
+export interface UserUpdate {
   id: string;
   name: string;
+  account: string;
+  terminal: string;
+  quota_expires_at: string;
   remark: string;
+  status: number;
 }
-export interface UserUpdateAdvanced {
-  models: string[];
-  is_limit_quota: boolean;
-  quota: any;
-  ip_whitelist: string;
-  ip_blacklist: string;
-}
-
-export type UserUpdate = UserUpdateBaseInfo & UserUpdateAdvanced;
 
 export function submitUserUpdate(data: UserUpdate) {
   return axios.post('/api/v1/admin/user/update', data);
+}
+
+export interface UserChangeQuotaExpire {
+  id: string;
+  quota_expires_at: string;
+}
+
+export function submitUserChangeQuotaExpire(data: UserChangeQuotaExpire) {
+  return axios.post('/api/v1/admin/user/change/quota/expire', data);
 }
 
 export interface UserChangeStatus {

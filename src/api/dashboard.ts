@@ -48,7 +48,7 @@ export interface Expense {
   quota_usd: number;
   used_quota: number;
   used_quota_usd: number;
-  expires_at: string;
+  quota_expires_at: string;
 }
 
 export function queryExpense() {

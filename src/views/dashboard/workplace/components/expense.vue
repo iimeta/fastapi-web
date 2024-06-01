@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="expires_at">
-        过期时间: {{ expense.expires_at || '2099-12-31 23:59:59' }}
+        额度过期时间: {{ expense.quota_expires_at || '2099-12-31 23:59:59' }}
       </div>
     </div>
   </a-card>
@@ -44,7 +44,7 @@
       expense.quota_usd = data.quota_usd;
       expense.used_quota = data.used_quota;
       expense.used_quota_usd = data.used_quota_usd;
-      expense.expires_at = data.expires_at;
+      expense.quota_expires_at = data.quota_expires_at;
     } catch (err) {
       // you can report use errorHandler or other
     }

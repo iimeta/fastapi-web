@@ -220,6 +220,9 @@
               : '0.00'
           }}
         </template>
+        <template #quota_expires_at="{ record }">
+          {{ record.is_limit_quota ? record.quota_expires_at || '-' : '-' }}
+        </template>
         <template #status="{ record }">
           <a-switch
             v-model="record.status"
@@ -327,6 +330,50 @@
               :max="9999999999999"
             />
           </a-form-item>
+          <a-form-item
+            v-if="formData.is_limit_quota"
+            field="quota_expires_at"
+            :label="$t('app.label.quota_expires_at')"
+          >
+            <a-date-picker
+              v-model="formData.quota_expires_at"
+              :placeholder="$t('app.placeholder.quota_expires_at')"
+              :time-picker-props="{ defaultValue: '23:59:59' }"
+              :disabled-date="(current:Date) => dayjs(current).isBefore(dayjs())"
+              style="width: 100%"
+              show-time
+              :shortcuts="[
+                {
+                  label: '1',
+                  value: () => dayjs().add(1, 'day'),
+                },
+                {
+                  label: '7',
+                  value: () => dayjs().add(7, 'day'),
+                },
+                {
+                  label: '15',
+                  value: () => dayjs().add(15, 'day'),
+                },
+                {
+                  label: '30',
+                  value: () => dayjs().add(30, 'day'),
+                },
+                {
+                  label: '90',
+                  value: () => dayjs().add(90, 'day'),
+                },
+                {
+                  label: '180',
+                  value: () => dayjs().add(180, 'day'),
+                },
+                {
+                  label: '365',
+                  value: () => dayjs().add(365, 'day'),
+                },
+              ]"
+            />
+          </a-form-item>
           <a-form-item field="models" :label="$t('app.label.models')">
             <a-select
               v-model="formData.models"
@@ -380,6 +427,7 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import {
     queryAppPage,
@@ -522,6 +570,12 @@
       title: t('app.columns.used_quota'),
       dataIndex: 'used_quota',
       slotName: 'used_quota',
+      align: 'center',
+    },
+    {
+      title: t('app.columns.quota_expires_at'),
+      dataIndex: 'quota_expires_at',
+      slotName: 'quota_expires_at',
       align: 'center',
     },
     {
