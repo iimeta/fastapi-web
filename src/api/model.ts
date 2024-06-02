@@ -24,6 +24,11 @@ export interface ForwardConfig {
   target_model_names?: string[];
 }
 
+export interface FallbackConfig {
+  fallback_model: string;
+  fallback_model_name?: string;
+}
+
 export interface ModelCreateAdvanced {
   billing_method: string;
   prompt_ratio: number;
@@ -33,8 +38,10 @@ export interface ModelCreateAdvanced {
   is_public: boolean;
   is_enable_model_agent: boolean;
   model_agents: string[];
-  is_forward: boolean;
+  is_enable_forward: boolean;
   forward_config: ForwardConfig;
+  is_enable_fallback: boolean;
+  fallback_config: FallbackConfig;
 }
 
 export type ModelCreate = ModelCreateBaseInfo & ModelCreateAdvanced;
@@ -141,8 +148,10 @@ export interface ModelDetail {
   is_enable_model_agent: boolean;
   model_agents: string[];
   model_agent_names: string[];
-  is_forward: boolean;
+  is_enable_forward: boolean;
   forward_config: ForwardConfig;
+  is_enable_fallback: boolean;
+  fallback_config: FallbackConfig;
   status: number;
   remark: string;
   created_at: string;
@@ -180,8 +189,10 @@ export interface ModelUpdateAdvanced {
   is_public: boolean;
   is_enable_model_agent: boolean;
   model_agents: string[];
-  is_forward: boolean;
+  is_enable_forward: boolean;
   forward_config: ForwardConfig;
+  is_enable_fallback: boolean;
+  fallback_config: FallbackConfig;
 }
 
 export type ModelUpdate = ModelUpdateBaseInfo & ModelUpdateAdvanced;

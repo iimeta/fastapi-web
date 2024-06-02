@@ -145,10 +145,10 @@
       </a-select>
     </a-form-item>
     <a-form-item field="model_forward" :label="$t('model.label.modelForward')">
-      <a-switch v-model="formData.is_forward" @change="handleChange" />
+      <a-switch v-model="formData.is_enable_forward" @change="handleChange" />
     </a-form-item>
     <a-form-item
-      v-if="formData.is_forward"
+      v-if="formData.is_enable_forward"
       field="forward_config.forward_rule"
       :label="$t('model.label.forwardRule')"
       :rules="[
@@ -168,7 +168,10 @@
       </a-select>
     </a-form-item>
     <a-form-item
-      v-if="formData.is_forward && formData.forward_config.forward_rule === '1'"
+      v-if="
+        formData.is_enable_forward &&
+        formData.forward_config.forward_rule === '1'
+      "
       field="forward_config.target_model"
       :label="$t('model.label.targetModel')"
       :rules="[
@@ -192,7 +195,10 @@
       </a-select>
     </a-form-item>
     <a-form-item
-      v-if="formData.is_forward && formData.forward_config.forward_rule === '2'"
+      v-if="
+        formData.is_enable_forward &&
+        formData.forward_config.forward_rule === '2'
+      "
       field="forward_config.match_rule"
       :label="$t('model.label.matchRule')"
       :rules="[
@@ -216,7 +222,7 @@
     </a-form-item>
     <a-form-item
       v-if="
-        formData.is_forward &&
+        formData.is_enable_forward &&
         formData.forward_config.forward_rule === '2' &&
         formData.forward_config.match_rule.includes('1')
       "
@@ -245,7 +251,8 @@
     <a-form-item
       v-for="(keywords, index) of formData.forward_config.keywords"
       v-show="
-        formData.is_forward && formData.forward_config.forward_rule === '2'
+        formData.is_enable_forward &&
+        formData.forward_config.forward_rule === '2'
       "
       :key="index"
       :field="
@@ -289,6 +296,36 @@
       <a-button type="secondary" shape="circle" @click="handleDelete(index)">
         <icon-minus />
       </a-button>
+    </a-form-item>
+    <a-form-item
+      field="is_enable_fallback"
+      :label="$t('model.label.is_enable_fallback')"
+    >
+      <a-switch v-model="formData.is_enable_fallback" />
+    </a-form-item>
+    <a-form-item
+      v-if="formData.is_enable_fallback"
+      field="fallback_config.fallback_model"
+      :label="$t('model.label.fallback_model')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.fallback_model.required'),
+        },
+      ]"
+    >
+      <a-select
+        v-model="formData.fallback_config.fallback_model"
+        :placeholder="$t('model.placeholder.fallback_model')"
+        allow-search
+      >
+        <a-option
+          v-for="item in models"
+          :key="item.id"
+          :value="item.id"
+          :label="item.name"
+        />
+      </a-select>
     </a-form-item>
     <a-form-item>
       <a-space>
@@ -361,7 +398,7 @@
     is_public: true,
     is_enable_model_agent: false,
     model_agents: [],
-    is_forward: false,
+    is_enable_forward: false,
     forward_config: {
       forward_rule: '1',
       match_rule: ['2'],
@@ -369,6 +406,10 @@
       decision_model: '',
       keywords: [],
       target_models: [],
+    },
+    is_enable_fallback: false,
+    fallback_config: {
+      fallback_model: '',
     },
   });
 
@@ -379,7 +420,7 @@
 
   const handleChange = () => {
     if (
-      !formData.value.is_forward &&
+      !formData.value.is_enable_forward &&
       formData.value.forward_config.keywords &&
       (formData.value.forward_config.keywords[0] === '' ||
         formData.value.forward_config.target_models[0] === '')
@@ -426,7 +467,7 @@
       formData.value.is_public = data.is_public;
       formData.value.is_enable_model_agent = data.is_enable_model_agent;
       formData.value.model_agents = data.model_agents;
-      formData.value.is_forward = data.is_forward;
+      formData.value.is_enable_forward = data.is_enable_forward;
       if (data.forward_config) {
         if (data.forward_config.forward_rule) {
           formData.value.forward_config.forward_rule = String(
@@ -444,6 +485,11 @@
         formData.value.forward_config.keywords = data.forward_config?.keywords;
         formData.value.forward_config.target_models =
           data.forward_config?.target_models;
+      }
+      formData.value.is_enable_fallback = data.is_enable_fallback;
+      if (data.fallback_config) {
+        formData.value.fallback_config.fallback_model =
+          data.fallback_config?.fallback_model;
       }
     } catch (err) {
       // you can report use errorHandler or other

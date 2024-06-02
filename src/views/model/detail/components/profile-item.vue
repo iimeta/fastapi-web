@@ -152,8 +152,12 @@
           value: renderData?.model_agent_names?.join('\n') || '-',
         },
         {
-          label: t('model.detail.label.isForward'),
-          value: t(`model.dict.is_forward.${renderData.is_forward || false}`),
+          label: t('model.detail.label.isEnableForward'),
+          value: t(
+            `model.dict.is_enable_forward.${
+              renderData.is_enable_forward || false
+            }`
+          ),
         },
         {
           label: t('model.detail.label.forwardRule'),
@@ -191,6 +195,18 @@
           label: t('model.detail.label.targetModelNames'),
           value:
             renderData?.forward_config?.target_model_names?.join('\n') || '-',
+        },
+        {
+          label: t('model.detail.label.is_enable_fallback'),
+          value: t(
+            `model.dict.is_enable_fallback.${
+              renderData.is_enable_fallback || false
+            }`
+          ),
+        },
+        {
+          label: t('model.detail.label.fallback_model_name'),
+          value: renderData?.fallback_config?.fallback_model_name || '-',
         },
       ] as DescData[],
     });

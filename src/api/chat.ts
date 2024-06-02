@@ -69,7 +69,7 @@ export interface ChatDetail {
   is_enable_model_agent: boolean;
   model_agent_id: string;
   model_agent: any;
-  is_forward: boolean;
+  is_enable_forward: boolean;
   forward_config: ForwardConfig;
   is_smart_match: boolean;
   real_model_id: string;

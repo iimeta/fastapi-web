@@ -245,7 +245,7 @@
           }}
         </template>
         <template #stream="{ record }">
-          {{ $t(`chat.dict.stream.${record.stream}`) }}
+          {{ $t(`chat.dict.stream.${record.stream || false}`) }}
         </template>
         <template #conn_time="{ record }">
           <a-tag v-if="record.conn_time > 10000" color="red">
@@ -387,7 +387,7 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{
-                $t(`chat.dict.stream.${currentData.stream}`)
+                $t(`chat.dict.stream.${currentData.stream || false}`)
               }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="提问" :span="2">
@@ -621,7 +621,7 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{
-                $t(`chat.dict.stream.${currentData.stream}`)
+                $t(`chat.dict.stream.${currentData.stream || false}`)
               }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="启用模型转发">
@@ -629,7 +629,11 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{
-                $t(`chat.dict.is_forward.${currentData.is_forward || false}`)
+                $t(
+                  `chat.dict.is_enable_forward.${
+                    currentData.is_enable_forward || false
+                  }`
+                )
               }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="转发规则">
@@ -637,7 +641,7 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{
-                currentData.is_forward
+                currentData.is_enable_forward
                   ? $t(
                       `chat.dict.forward_rule.${
                         currentData.forward_config.forward_rule || '1'
@@ -651,7 +655,9 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{
-                currentData.is_forward ? currentData.real_model_name : '-'
+                currentData.is_enable_forward
+                  ? currentData.real_model_name
+                  : '-'
               }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="真实模型">
@@ -659,7 +665,7 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{
-                currentData.is_forward ? currentData.real_model : '-'
+                currentData.is_enable_forward ? currentData.real_model : '-'
               }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="启用代理">
