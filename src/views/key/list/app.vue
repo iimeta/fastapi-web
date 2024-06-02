@@ -249,7 +249,11 @@
       >
         <template #quota="{ record }">
           <span v-if="record.is_limit_quota">
-            ${{ parseFloat((record.quota / 500000).toFixed(6)) }}
+            ${{
+              record.quota !== 0
+                ? parseFloat((record.quota / 500000).toFixed(6))
+                : '0.00'
+            }}
           </span>
           <span v-else>{{ $t(`key.columns.quota.no_limit`) }}</span>
         </template>
@@ -501,6 +505,9 @@
     try {
       const { data } = await queryAppList();
       apps.value = data.items;
+      if (route.query.app_id) {
+        formModel.value.app_id = Number(route.query.app_id);
+      }
     } catch (err) {
       // you can report use errorHandler or other
     }
@@ -523,6 +530,7 @@
     setLoading(true);
     try {
       await submitKeyDelete(params);
+      proxy.$message.success('删除成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -701,6 +709,7 @@
     setLoading(true);
     try {
       await submitKeyChangeStatus(params);
+      proxy.$message.success('操作成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other

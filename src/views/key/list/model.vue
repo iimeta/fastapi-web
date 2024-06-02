@@ -420,6 +420,12 @@
     try {
       const { data } = await queryModelAgentList();
       modelAgents.value = data.items;
+
+      const modelAgentId = new Array(0);
+      if (route.query.agent_id) {
+        modelAgentId[0] = route.query.agent_id;
+        formModel.value.model_agents = modelAgentId;
+      }
     } catch (err) {
       // you can report use errorHandler or other
     }
@@ -430,6 +436,7 @@
     setLoading(true);
     try {
       await submitKeyDelete(params);
+      proxy.$message.success('删除成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -444,7 +451,7 @@
       corp: '',
       key: '',
       models: [],
-      model_agents: [],
+      model_agents: ref(),
       quota: ref(),
       status: ref(),
       created_at: [],
@@ -604,6 +611,7 @@
     setLoading(true);
     try {
       await submitKeyChangeStatus(params);
+      proxy.$message.success('操作成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other

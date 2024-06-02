@@ -100,11 +100,13 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
   import { submitCorpCreate, CorpCreate } from '@/api/corp';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter } from 'vue-router';
+
+  const { proxy } = getCurrentInstance() as any;
 
   const router = useRouter();
   const formRef = ref<FormInstance>();
@@ -123,6 +125,7 @@
       setLoading(true);
       try {
         await submitCorpCreate(formData.value).then(() => {
+          proxy.$message.success('新建成功');
           router.push({
             name: 'CorpList',
           });

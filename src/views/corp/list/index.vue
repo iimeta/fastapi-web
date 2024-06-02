@@ -282,7 +282,7 @@
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="modelAgentDelete({ id: `${record.id}` })"
+            @ok="corpDelete({ id: `${record.id}` })"
           >
             <a-button type="text" size="small">
               {{ $t('corp.columns.operations.delete') }}
@@ -351,10 +351,11 @@
   };
   getModelList();
 
-  const modelAgentDelete = async (params: CorpDeleteParams) => {
+  const corpDelete = async (params: CorpDeleteParams) => {
     setLoading(true);
     try {
       await submitCorpDelete(params);
+      proxy.$message.success('删除成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -531,6 +532,7 @@
     setLoading(true);
     try {
       await submitCorpChangePublic(params);
+      proxy.$message.success('操作成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -543,6 +545,7 @@
     setLoading(true);
     try {
       await submitCorpChangeStatus(params);
+      proxy.$message.success('操作成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other

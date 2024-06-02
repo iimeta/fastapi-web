@@ -67,31 +67,52 @@
                 :shortcuts="[
                   {
                     label: '1',
-                    value: () => dayjs().add(1, 'day'),
+                    value: () =>
+                      dayjs(
+                        new Date(formData.quota_expires_at || new Date())
+                      ).add(1, 'day'),
                   },
                   {
                     label: '7',
-                    value: () => dayjs().add(7, 'day'),
+                    value: () =>
+                      dayjs(
+                        new Date(formData.quota_expires_at || new Date())
+                      ).add(7, 'day'),
                   },
                   {
                     label: '15',
-                    value: () => dayjs().add(15, 'day'),
+                    value: () =>
+                      dayjs(
+                        new Date(formData.quota_expires_at || new Date())
+                      ).add(15, 'day'),
                   },
                   {
                     label: '30',
-                    value: () => dayjs().add(30, 'day'),
+                    value: () =>
+                      dayjs(
+                        new Date(formData.quota_expires_at || new Date())
+                      ).add(30, 'day'),
                   },
                   {
                     label: '90',
-                    value: () => dayjs().add(90, 'day'),
+                    value: () =>
+                      dayjs(
+                        new Date(formData.quota_expires_at || new Date())
+                      ).add(90, 'day'),
                   },
                   {
                     label: '180',
-                    value: () => dayjs().add(180, 'day'),
+                    value: () =>
+                      dayjs(
+                        new Date(formData.quota_expires_at || new Date())
+                      ).add(180, 'day'),
                   },
                   {
                     label: '365',
-                    value: () => dayjs().add(365, 'day'),
+                    value: () =>
+                      dayjs(
+                        new Date(formData.quota_expires_at || new Date())
+                      ).add(365, 'day'),
                   },
                 ]"
               />
@@ -127,7 +148,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import {
@@ -138,6 +159,8 @@
   } from '@/api/admin_user';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter, useRoute } from 'vue-router';
+
+  const { proxy } = getCurrentInstance() as any;
 
   const { loading, setLoading } = useLoading(false);
   const route = useRoute();
@@ -179,6 +202,7 @@
       setLoading(true);
       try {
         await submitUserUpdate(formData.value).then(() => {
+          proxy.$message.success('更新成功');
           router.push({
             name: 'UserList',
           });

@@ -22,7 +22,7 @@ export interface UserPage {
   email: string;
   quota: number;
   used_quota: number;
-  quota_expires_at: string;
+  quota_expires_at: any;
   models: string[];
   remark: string;
   status: number;
@@ -136,12 +136,14 @@ export function submitUserChangeStatus(data: UserChangeStatus) {
 
 export interface UserGrantQuotaParams {
   user_id: any;
+  quota_expires_at: string;
 }
 
 export interface UserGrantQuota {
   id: string;
   user_id: number;
-  quota: number;
+  quota: any;
+  quota_expires_at: string;
 }
 
 export function submitUserGrantQuota(data: UserGrantQuota) {

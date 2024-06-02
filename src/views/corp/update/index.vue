@@ -100,7 +100,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
   import {
     submitCorpUpdate,
@@ -110,6 +110,8 @@
   } from '@/api/corp';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter, useRoute } from 'vue-router';
+
+  const { proxy } = getCurrentInstance() as any;
 
   const { loading, setLoading } = useLoading(false);
 
@@ -153,6 +155,7 @@
       setLoading(true);
       try {
         await submitCorpUpdate(formData.value).then(() => {
+          proxy.$message.success('更新成功');
           router.push({
             name: 'CorpList',
           });

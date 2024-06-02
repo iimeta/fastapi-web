@@ -408,6 +408,7 @@
     setLoading(true);
     try {
       await submitModelAgentDelete(params);
+      proxy.$message.success('删除成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -584,6 +585,7 @@
     setLoading(true);
     try {
       await submitModelAgentChangeStatus(params);
+      proxy.$message.success('操作成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other

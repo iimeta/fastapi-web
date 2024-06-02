@@ -17,8 +17,7 @@ export interface ChatPage {
   duration: number;
   total_time: number;
   internal_time: number;
-  req_time: string;
-  req_time: string[];
+  req_time: any;
 }
 
 export interface Paging {

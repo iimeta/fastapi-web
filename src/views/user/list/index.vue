@@ -53,11 +53,13 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="key" :label="$t('user.form.key')">
-                  <a-input
-                    v-model="formModel.key"
-                    :placeholder="$t('user.form.key.placeholder')"
-                    allow-clear
+                <a-form-item
+                  field="quota_expires_at"
+                  :label="$t('user.form.quota_expires_at')"
+                >
+                  <a-range-picker
+                    v-model="formModel.quota_expires_at"
+                    style="width: 100%"
                   />
                 </a-form-item>
               </a-col>
@@ -73,11 +75,11 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="created_at"
-                  :label="$t('user.form.created_at')"
+                  field="updated_at"
+                  :label="$t('user.form.updated_at')"
                 >
                   <a-range-picker
-                    v-model="formModel.created_at"
+                    v-model="formModel.updated_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -194,7 +196,7 @@
       >
         <template #quota="{ record }">
           ${{
-            record.quota > 0
+            record.quota !== 0
               ? parseFloat((record.quota / 500000).toFixed(6))
               : '0.00'
           }}
@@ -209,38 +211,73 @@
         <template #quota_expires_at="{ rowIndex }">
           <a-date-picker
             v-model="renderData[rowIndex].quota_expires_at"
-            :placeholder="$t('user.placeholder.quota_expires_at')"
+            :placeholder="$t('user.columns.placeholder.quota_expires_at')"
             :time-picker-props="{ defaultValue: '23:59:59' }"
             :disabled-date="(current:Date) => dayjs(current).isBefore(dayjs())"
             show-time
             :shortcuts="[
               {
                 label: '1',
-                value: () => dayjs().add(1, 'day'),
+                value: () =>
+                  dayjs(
+                    new Date(
+                      renderData[rowIndex].quota_expires_at || new Date()
+                    )
+                  ).add(1, 'day'),
               },
               {
                 label: '7',
-                value: () => dayjs().add(7, 'day'),
+                value: () =>
+                  dayjs(
+                    new Date(
+                      renderData[rowIndex].quota_expires_at || new Date()
+                    )
+                  ).add(7, 'day'),
               },
               {
                 label: '15',
-                value: () => dayjs().add(15, 'day'),
+                value: () =>
+                  dayjs(
+                    new Date(
+                      renderData[rowIndex].quota_expires_at || new Date()
+                    )
+                  ).add(15, 'day'),
               },
               {
                 label: '30',
-                value: () => dayjs().add(30, 'day'),
+                value: () =>
+                  dayjs(
+                    new Date(
+                      renderData[rowIndex].quota_expires_at || new Date()
+                    )
+                  ).add(30, 'day'),
               },
               {
                 label: '90',
-                value: () => dayjs().add(90, 'day'),
+                value: () =>
+                  dayjs(
+                    new Date(
+                      renderData[rowIndex].quota_expires_at || new Date()
+                    )
+                  ).add(90, 'day'),
               },
               {
                 label: '180',
-                value: () => dayjs().add(180, 'day'),
+                value: () =>
+                  dayjs(
+                    new Date(
+                      renderData[rowIndex].quota_expires_at || new Date()
+                    )
+                  ).add(180, 'day'),
               },
               {
                 label: '365',
-                value: () => dayjs().add(365, 'day'),
+                value: () =>
+                  dayjs(
+                    new Date(
+                      renderData[rowIndex].quota_expires_at || new Date()
+                    )
+                  ).add(365, 'day'),
               },
             ]"
             @change="
@@ -252,7 +289,7 @@
           >
             <a-button style="width: 150px">{{
               renderData[rowIndex].quota_expires_at ||
-              $t('user.placeholder.quota_expires_at')
+              $t('user.columns.placeholder.quota_expires_at')
             }}</a-button>
           </a-date-picker>
         </template>
@@ -273,7 +310,12 @@
           <a-button
             type="text"
             size="small"
-            @click="grantQuota({ user_id: `${record.user_id}` })"
+            @click="
+              grantQuota({
+                user_id: `${record.user_id}`,
+                quota_expires_at: `${record.quota_expires_at}`,
+              })
+            "
           >
             {{ $t('user.columns.operations.grantQuota') }}
           </a-button>
@@ -343,10 +385,74 @@
           >
             <a-input-number
               v-model="formData.quota"
-              :placeholder="$t('user.placeholder.quota')"
+              :placeholder="$t('user.placeholder.grant_quota')"
               :precision="0"
               :min="-9999999999999"
               :max="9999999999999"
+            />
+          </a-form-item>
+          <a-form-item
+            field="quota_expires_at"
+            :label="$t('user.label.quota_expires_at')"
+          >
+            <a-date-picker
+              v-model="formData.quota_expires_at"
+              :placeholder="$t('user.placeholder.quota_expires_at')"
+              :time-picker-props="{ defaultValue: '23:59:59' }"
+              :disabled-date="(current:Date) => dayjs(current).isBefore(dayjs())"
+              style="width: 100%"
+              show-time
+              :shortcuts="[
+                {
+                  label: '1',
+                  value: () =>
+                    dayjs(
+                      new Date(formData.quota_expires_at || new Date())
+                    ).add(1, 'day'),
+                },
+                {
+                  label: '7',
+                  value: () =>
+                    dayjs(
+                      new Date(formData.quota_expires_at || new Date())
+                    ).add(7, 'day'),
+                },
+                {
+                  label: '15',
+                  value: () =>
+                    dayjs(
+                      new Date(formData.quota_expires_at || new Date())
+                    ).add(15, 'day'),
+                },
+                {
+                  label: '30',
+                  value: () =>
+                    dayjs(
+                      new Date(formData.quota_expires_at || new Date())
+                    ).add(30, 'day'),
+                },
+                {
+                  label: '90',
+                  value: () =>
+                    dayjs(
+                      new Date(formData.quota_expires_at || new Date())
+                    ).add(90, 'day'),
+                },
+                {
+                  label: '180',
+                  value: () =>
+                    dayjs(
+                      new Date(formData.quota_expires_at || new Date())
+                    ).add(180, 'day'),
+                },
+                {
+                  label: '365',
+                  value: () =>
+                    dayjs(
+                      new Date(formData.quota_expires_at || new Date())
+                    ).add(365, 'day'),
+                },
+              ]"
             />
           </a-form-item>
         </a-form>
@@ -359,7 +465,7 @@
         @cancel="modelsHandleCancel"
         @before-ok="modelsHandleBeforeOk"
       >
-        <a-form ref="formRef" :model="modelsFormData">
+        <a-form ref="modelsFormRef" :model="modelsFormData">
           <a-form-item field="models" :label="$t('user.label.models')">
             <a-select
               v-model="modelsFormData.models"
@@ -450,6 +556,7 @@
     setLoading(true);
     try {
       await submitUserDelete(params);
+      proxy.$message.success('删除成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -463,9 +570,9 @@
       user_id: ref(),
       name: '',
       email: '',
-      key: '',
+      quota_expires_at: [],
       status: ref(),
-      created_at: [],
+      updated_at: [],
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -556,13 +663,13 @@
       align: 'center',
       width: 65,
     },
-    {
-      title: t('user.columns.updated_at'),
-      dataIndex: 'updated_at',
-      slotName: 'updated_at',
-      align: 'center',
-      width: 132,
-    },
+    // {
+    //   title: t('user.columns.updated_at'),
+    //   dataIndex: 'updated_at',
+    //   slotName: 'updated_at',
+    //   align: 'center',
+    //   width: 132,
+    // },
     {
       title: t('user.columns.operations'),
       dataIndex: 'operations',
@@ -721,12 +828,15 @@
 
   const formRef = ref<FormInstance>();
   const formData = ref<UserGrantQuota>({} as UserGrantQuota);
+  const modelsFormRef = ref<FormInstance>();
   const modelsFormData = ref<UserModels>({} as UserModels);
 
   const grantQuota = async (params: UserGrantQuotaParams) => {
     setLoading(true);
     try {
+      formData.value.quota = ref();
       formData.value.user_id = params.user_id;
+      formData.value.quota_expires_at = params.quota_expires_at;
       grantQuotaVisible.value = true;
     } catch (err) {
       // you can report use errorHandler or other
@@ -782,7 +892,7 @@
   };
 
   const modelsHandleBeforeOk = async (done: any) => {
-    const res = await formRef.value?.validate();
+    const res = await modelsFormRef.value?.validate();
     if (res) {
       modelsVisible.value = true;
       done(false);

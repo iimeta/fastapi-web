@@ -209,7 +209,11 @@
         </template>
         <template #quota="{ record }">
           <span v-if="record.is_limit_quota">
-            ${{ parseFloat((record.quota / 500000).toFixed(6)) }}
+            ${{
+              record.quota !== 0
+                ? parseFloat((record.quota / 500000).toFixed(6))
+                : '0.00'
+            }}
           </span>
           <span v-else>{{ $t(`app.columns.quota.no_limit`) }}</span>
         </template>
@@ -424,7 +428,14 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import {
+    computed,
+    ref,
+    reactive,
+    watch,
+    nextTick,
+    getCurrentInstance,
+  } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
@@ -453,6 +464,8 @@
   import { queryModelList, ModelList } from '@/api/model';
   import { Message } from '@arco-design/web-vue';
 
+  const { proxy } = getCurrentInstance() as any;
+
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
@@ -478,6 +491,7 @@
     setLoading(true);
     try {
       await submitAppDelete(params);
+      proxy.$message.success('删除成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -657,6 +671,7 @@
     setLoading(true);
     try {
       await submitAppChangeStatus(params);
+      proxy.$message.success('操作成功');
       search();
     } catch (err) {
       // you can report use errorHandler or other
