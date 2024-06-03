@@ -83,6 +83,8 @@ export default {
   'chat.dict.is_enable_model_agent.false': '否',
   'chat.dict.is_enable_forward.true': '是',
   'chat.dict.is_enable_forward.false': '否',
+  'chat.dict.is_enable_fallback.true': '是',
+  'chat.dict.is_enable_fallback.false': '否',
   'chat.dict.forward_rule.1': '全部转发',
   'chat.dict.forward_rule.2': '按关键字',
   'chat.dict.type.1': '文生文',

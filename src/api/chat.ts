@@ -54,6 +54,11 @@ export interface ForwardConfig {
   target_model_names?: string[];
 }
 
+export interface FallbackConfig {
+  fallback_model: string;
+  fallback_model_name?: string;
+}
+
 export interface ChatDetail {
   id: string;
   trace_id: string;
@@ -66,15 +71,17 @@ export interface ChatDetail {
   model: string;
   type: number;
   key: string;
+  real_model_id: string;
+  real_model_name: string;
+  real_model: string;
   is_enable_model_agent: boolean;
   model_agent_id: string;
   model_agent: any;
   is_enable_forward: boolean;
   forward_config: ForwardConfig;
   is_smart_match: boolean;
-  real_model_id: string;
-  real_model_name: string;
-  real_model: string;
+  is_enable_fallback: boolean;
+  fallback_config: FallbackConfig;
   prompt: string;
   completion: string;
   messages: any;

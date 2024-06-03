@@ -216,6 +216,7 @@ export interface ModelBatchOperate {
   value?: any;
   model_agents?: string[];
   target_model?: string;
+  fallback_model?: string;
 }
 
 export function submitModelBatchOperate(data: ModelBatchOperate) {

@@ -115,7 +115,7 @@
       <a-divider style="margin-top: 0; margin-bottom: 16px" />
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
-          <a-space>
+          <a-space class="handle-batch">
             <a-button
               type="primary"
               @click="$router.push({ name: 'ModelCreate' })"
@@ -205,6 +205,48 @@
               "
             >
               关闭转发
+            </a-button>
+            <a-button
+              type="primary"
+              status="warning"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'fallback',
+                  value: 'all',
+                })
+              "
+            >
+              全部后备
+            </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'fallback',
+                  value: true,
+                })
+              "
+            >
+              启用后备
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'fallback',
+                  value: false,
+                })
+              "
+            >
+              关闭后备
             </a-button>
             <a-button
               type="primary"
@@ -341,12 +383,6 @@
               : `$${record.fixed_price}/次`
           }}
         </template>
-        <!-- <template #billingMethod="{ record }">
-          {{ $t(`model.dict.billing_method.${record.billing_method}`) }}
-        </template>
-        <template #dataFormat="{ record }">
-          {{ $t(`model.dict.data_format.${record.data_format}`) }}
-        </template> -->
         <template #status="{ record }">
           <a-switch
             v-model="record.status"
@@ -450,6 +486,38 @@
             <a-select
               v-model="forwardFormData.target_model"
               :placeholder="$t('model.placeholder.target_model')"
+              allow-search
+            >
+              <a-option
+                v-for="item in models"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              />
+            </a-select>
+          </a-form-item>
+        </a-form>
+      </a-modal>
+      <a-modal
+        v-model:visible="fallbackFormVisible"
+        :title="$t('model.form.title.fallback')"
+        @cancel="fallbackHandleCancel"
+        @before-ok="fallbackHandleBeforeOk"
+      >
+        <a-form ref="fallbackForm" :model="fallbackFormData">
+          <a-form-item
+            field="fallback_model"
+            :label="$t('model.label.fallback_model')"
+            :rules="[
+              {
+                required: true,
+                message: $t('model.error.fallback_model.required'),
+              },
+            ]"
+          >
+            <a-select
+              v-model="fallbackFormData.fallback_model"
+              :placeholder="$t('model.placeholder.fallback_model')"
               allow-search
             >
               <a-option
@@ -651,18 +719,6 @@
       slotName: 'completion_price',
       align: 'center',
     },
-    // {
-    //   title: t('model.columns.billing_method'),
-    //   dataIndex: 'billing_method',
-    //   slotName: 'billingMethod',
-    //   align: 'center',
-    // },
-    // {
-    //   title: t('model.columns.data_format'),
-    //   dataIndex: 'data_format',
-    //   slotName: 'dataFormat',
-    //   align: 'center',
-    // },
     {
       title: t('model.columns.status'),
       dataIndex: 'status',
@@ -838,6 +894,29 @@
     { deep: true, immediate: true }
   );
 
+  const agentForm = ref<FormInstance>();
+  const agentFormVisible = ref(false);
+  const agentFormData = ref<ModelBatchOperate>({} as ModelBatchOperate);
+
+  const agentHandleBeforeOk = async (done: any) => {
+    const res = await agentForm.value?.validate();
+    if (res) {
+      agentFormVisible.value = true;
+      done(false);
+      return;
+    }
+    done();
+    handleBatch({
+      action: 'agent',
+      value: 'all',
+      model_agents: agentFormData.value.model_agents,
+    });
+  };
+
+  const agentHandleCancel = () => {
+    agentFormVisible.value = false;
+  };
+
   const forwardForm = ref<FormInstance>();
   const forwardFormVisible = ref(false);
   const forwardFormData = ref<ModelBatchOperate>({} as ModelBatchOperate);
@@ -861,27 +940,27 @@
     forwardFormVisible.value = false;
   };
 
-  const agentForm = ref<FormInstance>();
-  const agentFormVisible = ref(false);
-  const agentFormData = ref<ModelBatchOperate>({} as ModelBatchOperate);
+  const fallbackForm = ref<FormInstance>();
+  const fallbackFormVisible = ref(false);
+  const fallbackFormData = ref<ModelBatchOperate>({} as ModelBatchOperate);
 
-  const agentHandleBeforeOk = async (done: any) => {
-    const res = await agentForm.value?.validate();
+  const fallbackHandleBeforeOk = async (done: any) => {
+    const res = await fallbackForm.value?.validate();
     if (res) {
-      agentFormVisible.value = true;
+      fallbackFormVisible.value = true;
       done(false);
       return;
     }
     done();
     handleBatch({
-      action: 'agent',
+      action: 'fallback',
       value: 'all',
-      model_agents: agentFormData.value.model_agents,
+      fallback_model: fallbackFormData.value.fallback_model,
     });
   };
 
-  const agentHandleCancel = () => {
-    agentFormVisible.value = false;
+  const fallbackHandleCancel = () => {
+    fallbackFormVisible.value = false;
   };
 
   /**
@@ -929,6 +1008,19 @@
             }
           }
           break;
+        case 'fallback':
+          if (params.value === true) {
+            alertContent = `是否确定启用所选${ids.value.length}条数据的后备模型?`;
+          } else if (params.value === false) {
+            alertContent = `是否确定关闭所选${ids.value.length}条数据的后备模型?`;
+          } else if (params.value === 'all') {
+            if (!params.fallback_model) {
+              fallbackFormVisible.value = true;
+            } else {
+              alertContent = `是否确定将所选${ids.value.length}条数据的后备模型启用并全部后备到所选模型?`;
+            }
+          }
+          break;
         case 'status':
           if (params.value === 1) {
             alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
@@ -954,6 +1046,14 @@
         params.action === 'forward' &&
         params.value === 'all' &&
         !params.target_model
+      ) {
+        return;
+      }
+
+      if (
+        params.action === 'fallback' &&
+        params.value === 'all' &&
+        !params.fallback_model
       ) {
         return;
       }
@@ -1023,5 +1123,8 @@
   }
   .arco-btn-size-small {
     padding: 0 8px;
+  }
+  .handle-batch .arco-btn-size-medium {
+    padding: 0 10px;
   }
 </style>

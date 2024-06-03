@@ -137,6 +137,7 @@ export default {
   'model.label.target_model': '目标模型',
   'model.placeholder.target_model': '请选择目标模型',
   'model.error.target_model.required': '请选择目标模型',
+  'model.form.title.fallback': '全部后备',
   // operation
   'model.operation.create': '新建',
   'model.operation.import': '批量导入',

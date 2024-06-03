@@ -598,33 +598,59 @@
               </a-skeleton>
               <span v-else>{{ $t(`chat.dict.type.${currentData.type}`) }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="模型ID">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :widths="['200px']" :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.model_id || '-' }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="模型名称">
+            <a-descriptions-item label="请求模型名称">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.name || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="模型">
+            <a-descriptions-item label="请求模型">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.model || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="流式">
+            <a-descriptions-item label="真实模型名称">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.real_model_name }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="真实模型">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.real_model }}</span>
+            </a-descriptions-item>
+            <!-- <a-descriptions-item label="流式">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{
                 $t(`chat.dict.stream.${currentData.stream || false}`)
               }}</span>
+            </a-descriptions-item> -->
+            <a-descriptions-item label="启用后备">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                $t(
+                  `chat.dict.is_enable_fallback.${
+                    currentData.is_enable_fallback || false
+                  }`
+                )
+              }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="启用模型转发">
+            <a-descriptions-item label="后备模型">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                currentData?.fallback_config?.fallback_model || '-'
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="启用转发">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -648,24 +674,6 @@
                       }`
                     )
                   : '-'
-              }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="真实模型名称">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{
-                currentData.is_enable_forward
-                  ? currentData.real_model_name
-                  : '-'
-              }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="真实模型">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{
-                currentData.is_enable_forward ? currentData.real_model : '-'
               }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="启用代理">

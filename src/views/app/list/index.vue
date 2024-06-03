@@ -599,13 +599,13 @@
       align: 'center',
       width: 65,
     },
-    {
-      title: t('app.columns.updated_at'),
-      dataIndex: 'updated_at',
-      slotName: 'updated_at',
-      align: 'center',
-      width: 132,
-    },
+    // {
+    //   title: t('app.columns.updated_at'),
+    //   dataIndex: 'updated_at',
+    //   slotName: 'updated_at',
+    //   align: 'center',
+    //   width: 132,
+    // },
     {
       title: t('app.columns.operations'),
       dataIndex: 'operations',

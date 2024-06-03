@@ -637,13 +637,13 @@
       align: 'center',
       width: 65,
     },
-    {
-      title: t('key.columns.updated_at'),
-      dataIndex: 'updated_at',
-      slotName: 'updated_at',
-      align: 'center',
-      width: 132,
-    },
+    // {
+    //   title: t('key.columns.updated_at'),
+    //   dataIndex: 'updated_at',
+    //   slotName: 'updated_at',
+    //   align: 'center',
+    //   width: 132,
+    // },
     {
       title: t('key.columns.operations'),
       dataIndex: 'operations',
