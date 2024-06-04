@@ -5,7 +5,7 @@
     :header-style="{ padding: '20px 20px 0 20px' }"
     :body-style="{ padding: '15px 20px 13px 20px' }"
     :bordered="false"
-    style="height: 145px"
+    style="height: 160px"
   >
     <template #extra>
       <a-link
@@ -36,12 +36,17 @@
     {
       type: 'blue',
       label: '通知',
-      content: 'v0.2.0版本发布啦! 啦!! 啦!!!',
+      content: 'v0.3.0 版本发布啦! 啦!! 啦!!!',
     },
     {
       type: 'blue',
       label: '通知',
-      content: 'v0.1.0版本发布啦! 啦!! 啦!!!',
+      content: 'v0.2.0 版本发布啦! 啦!! 啦!!!',
+    },
+    {
+      type: 'blue',
+      label: '通知',
+      content: 'v0.1.0 版本发布啦! 啦!! 啦!!!',
     },
   ];
 </script>

@@ -23,6 +23,7 @@ export default {
   'workplace.keyManagement': '密钥管理',
   'workplace.agentManagement': '代理管理',
   'workplace.userManagement': '用户管理',
+  'workplace.corpManagement': '公司管理',
   'workplace.chatManagement': '聊天管理',
   'workplace.contentStatistical': '内容分析',
   'workplace.advanced': '高级管理',

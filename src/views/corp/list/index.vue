@@ -326,7 +326,6 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { queryModelList, ModelList } from '@/api/model';
 
   const { proxy } = getCurrentInstance() as any;
 
@@ -338,18 +337,6 @@
     showCheckedAll: true,
     onlyCurrent: false,
   } as TableRowSelection);
-
-  const models = ref<ModelList[]>([]);
-
-  const getModelList = async () => {
-    try {
-      const { data } = await queryModelList();
-      models.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelList();
 
   const corpDelete = async (params: CorpDeleteParams) => {
     setLoading(true);

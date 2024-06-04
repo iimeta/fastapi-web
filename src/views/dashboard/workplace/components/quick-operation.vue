@@ -73,6 +73,12 @@
       permission: ['admin'],
     },
     {
+      text: 'workplace.corpManagement',
+      icon: 'icon-bar-chart',
+      router: 'CorpList',
+      permission: ['admin'],
+    },
+    {
       text: 'workplace.chatManagement',
       icon: 'icon-wechat',
       router: 'ChatList',

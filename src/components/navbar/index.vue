@@ -107,6 +107,20 @@
         </a-popover>
       </li> -->
       <li>
+        <a-tooltip content="版本: v0.3.0">
+          <a-link
+            target="_blank"
+            href="https://github.com/iimeta/fastapi-admin/releases"
+          >
+            <a-button class="nav-btn" type="outline" :shape="'circle'">
+              <template #icon>
+                <icon-info-circle />
+              </template>
+            </a-button>
+          </a-link>
+        </a-tooltip>
+      </li>
+      <li>
         <a-tooltip
           :content="
             isFullscreen

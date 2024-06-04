@@ -115,7 +115,7 @@
       <a-divider style="margin-top: 0; margin-bottom: 16px" />
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
-          <a-space class="handle-batch">
+          <a-space>
             <a-button
               type="primary"
               @click="$router.push({ name: 'ModelCreate' })"
@@ -1123,8 +1123,5 @@
   }
   .arco-btn-size-small {
     padding: 0 8px;
-  }
-  .handle-batch .arco-btn-size-medium {
-    padding: 0 10px;
   }
 </style>

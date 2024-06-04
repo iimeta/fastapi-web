@@ -114,8 +114,11 @@
                 <a-form-item field="req_time" :label="$t('chat.form.req_time')">
                   <a-range-picker
                     v-model="formModel.req_time"
-                    show-time
                     :placeholder="['开始时间', '结束时间']"
+                    :time-picker-props="{
+                      defaultValue: ['00:00:00', '23:59:59'],
+                    }"
+                    show-time
                   />
                 </a-form-item>
               </a-col>
@@ -965,6 +968,7 @@
   } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import dayjs from 'dayjs';
   import {
     queryChatPage,
     ChatPage,
@@ -1339,7 +1343,7 @@
 
 <script lang="ts">
   export default {
-    name: 'AppChatList',
+    name: 'ChatList',
   };
 </script>
 
