@@ -5,11 +5,13 @@ const CORP: AppRouteRecordRaw = {
   path: '/corp',
   name: 'corp',
   component: DEFAULT_LAYOUT,
+  redirect: '/corp/list',
   meta: {
     locale: 'menu.corp',
     requiresAuth: true,
     icon: 'icon-bar-chart',
-    order: 8,
+    order: 7,
+    hideChildrenInMenu: true,
   },
   children: [
     {
@@ -20,6 +22,7 @@ const CORP: AppRouteRecordRaw = {
         locale: 'menu.corp.list',
         requiresAuth: true,
         roles: ['admin'],
+        activeMenu: 'corp',
       },
     },
     {

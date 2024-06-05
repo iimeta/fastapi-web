@@ -67,15 +67,15 @@
       permission: ['admin'],
     },
     {
-      text: 'workplace.userManagement',
-      icon: 'icon-user',
-      router: 'UserList',
-      permission: ['admin'],
-    },
-    {
       text: 'workplace.corpManagement',
       icon: 'icon-bar-chart',
       router: 'CorpList',
+      permission: ['admin'],
+    },
+    {
+      text: 'workplace.userManagement',
+      icon: 'icon-user',
+      router: 'UserList',
       permission: ['admin'],
     },
     {
