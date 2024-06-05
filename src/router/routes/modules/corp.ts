@@ -12,6 +12,7 @@ const CORP: AppRouteRecordRaw = {
     icon: 'icon-bar-chart',
     order: 7,
     hideChildrenInMenu: true,
+    roles: ['admin'],
   },
   children: [
     {
