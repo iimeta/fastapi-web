@@ -5,11 +5,14 @@ const MODEL: AppRouteRecordRaw = {
   path: '/model',
   name: 'model',
   component: DEFAULT_LAYOUT,
+  redirect: '/model/list',
   meta: {
     locale: 'menu.model',
     requiresAuth: true,
     icon: 'icon-common',
     order: 2,
+    hideChildrenInMenu: true,
+    roles: ['admin'],
   },
   children: [
     {
@@ -20,6 +23,7 @@ const MODEL: AppRouteRecordRaw = {
         locale: 'menu.model.list',
         requiresAuth: true,
         roles: ['admin'],
+        activeMenu: 'model',
       },
     },
     {

@@ -659,13 +659,14 @@
       dataIndex: 'quota_expires_at',
       slotName: 'quota_expires_at',
       align: 'center',
-      width: 160,
+      width: 170,
     },
     {
       title: t('user.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
+      width: 65,
     },
     // {
     //   title: t('user.columns.updated_at'),

@@ -148,6 +148,7 @@
           method: 'code',
         })
         .then(() => {
+          window.localStorage.setItem('userRole', 'user');
           const { redirect, ...othersQuery } = router.currentRoute.value.query;
           router.push({
             name: (redirect as string) || 'Workplace',

@@ -5,11 +5,14 @@ const AGENT: AppRouteRecordRaw = {
   path: '/agent',
   name: 'agent',
   component: DEFAULT_LAYOUT,
+  redirect: '/agent/list',
   meta: {
     locale: 'menu.agent',
     requiresAuth: true,
     icon: 'icon-bug',
     order: 5,
+    hideChildrenInMenu: true,
+    roles: ['admin'],
   },
   children: [
     {
@@ -20,6 +23,7 @@ const AGENT: AppRouteRecordRaw = {
         locale: 'menu.model.agent.list',
         requiresAuth: true,
         roles: ['admin'],
+        activeMenu: 'agent',
       },
     },
     {

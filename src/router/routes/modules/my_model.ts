@@ -1,9 +1,9 @@
 import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
-const MY: AppRouteRecordRaw = {
+const MY_MODEL: AppRouteRecordRaw = {
   path: '/my',
-  name: 'my',
+  name: 'my_model',
   component: DEFAULT_LAYOUT,
   redirect: '/my/model',
   meta: {
@@ -17,16 +17,16 @@ const MY: AppRouteRecordRaw = {
   children: [
     {
       path: 'model',
-      name: 'MyModel',
+      name: 'MyModelList',
       component: () => import('@/views/model/list/my.vue'),
       meta: {
         locale: 'menu.model.list',
         requiresAuth: true,
         roles: ['user'],
-        activeMenu: 'my',
+        activeMenu: 'my_model',
       },
     },
   ],
 };
 
-export default MY;
+export default MY_MODEL;

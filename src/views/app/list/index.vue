@@ -277,7 +277,7 @@
             size="small"
             @click="
               $router.push({
-                name: 'KeyAppList',
+                name: 'AppKeyList',
                 query: { app_id: `${record.app_id}` },
               })
             "

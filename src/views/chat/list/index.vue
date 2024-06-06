@@ -95,6 +95,7 @@
                   <a-input-number
                     v-model="formModel.total_time"
                     :precision="0"
+                    :min="1"
                     :placeholder="$t('chat.form.total_time.placeholder')"
                     allow-clear
                   />

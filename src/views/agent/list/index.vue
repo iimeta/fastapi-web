@@ -310,7 +310,7 @@
             size="small"
             @click="
               $router.push({
-                name: 'KeyModelList',
+                name: 'ModelKeyList',
                 query: { agent_id: `${record.id}` },
               })
             "

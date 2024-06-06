@@ -51,13 +51,13 @@
     {
       text: 'workplace.keyManagement',
       icon: 'icon-safe',
-      router: 'KeyAppList',
+      router: 'AppKeyList',
       permission: ['user'],
     },
     {
       text: 'workplace.keyManagement',
       icon: 'icon-safe',
-      router: 'KeyModelList',
+      router: 'ModelKeyList',
       permission: ['admin'],
     },
     {

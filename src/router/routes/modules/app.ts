@@ -5,11 +5,14 @@ const APP: AppRouteRecordRaw = {
   path: '/app',
   name: 'app',
   component: DEFAULT_LAYOUT,
+  redirect: '/app/list',
   meta: {
     locale: 'menu.app',
     requiresAuth: true,
     icon: 'icon-apps',
     order: 2,
+    hideChildrenInMenu: true,
+    roles: ['user'],
   },
   children: [
     {
@@ -20,6 +23,7 @@ const APP: AppRouteRecordRaw = {
         locale: 'menu.app.list',
         requiresAuth: true,
         roles: ['user'],
+        activeMenu: 'app',
       },
     },
     {

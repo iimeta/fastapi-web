@@ -91,6 +91,7 @@
           method: 'account',
         })
         .then(() => {
+          window.localStorage.setItem('userRole', 'admin');
           const { redirect, ...othersQuery } = router.currentRoute.value.query;
           router.push({
             name: (redirect as string) || 'Workplace',
@@ -98,7 +99,6 @@
               ...othersQuery,
             },
           });
-          window.localStorage.setItem('userRole', 'admin');
           proxy.$message.success(t('login.success'));
         })
         .catch(() => {})

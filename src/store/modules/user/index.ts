@@ -5,7 +5,7 @@ import {
   getUserInfo,
   LoginData,
 } from '@/api/user';
-import { setToken, clearToken, clearRole } from '@/utils/auth';
+import { setToken, clearToken, clearRole, setRole } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
 import { UserState } from './types';
 import useAppStore from '../app';
@@ -56,6 +56,7 @@ const useUserStore = defineStore('user', {
       try {
         const res = await userLogin(loginForm);
         setToken(res.data.token);
+        setRole(loginForm.channel);
       } catch (err) {
         clearToken();
         throw err;

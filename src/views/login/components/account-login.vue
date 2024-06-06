@@ -103,6 +103,7 @@
           method: 'account',
         })
         .then(() => {
+          window.localStorage.setItem('userRole', 'user');
           const { redirect, ...othersQuery } = router.currentRoute.value.query;
           router.push({
             name: (redirect as string) || 'Workplace',
@@ -113,7 +114,6 @@
           const { rememberMe } = loginConfig.value;
           const { username } = values;
           loginConfig.value.username = rememberMe ? username : '';
-          window.localStorage.setItem('userRole', 'user');
           proxy.$message.success(t('login.success'));
         })
         .catch(() => {})

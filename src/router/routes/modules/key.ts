@@ -5,31 +5,25 @@ const KEY: AppRouteRecordRaw = {
   path: '/key',
   name: 'key',
   component: DEFAULT_LAYOUT,
+  redirect: '/key/list',
   meta: {
     locale: 'menu.key',
     requiresAuth: true,
     icon: 'icon-safe',
     order: 4,
+    hideChildrenInMenu: true,
+    roles: ['admin'],
   },
   children: [
     {
-      path: 'model/list',
-      name: 'KeyModelList',
+      path: 'list',
+      name: 'ModelKeyList',
       component: () => import('@/views/key/list/model.vue'),
       meta: {
         locale: 'menu.key.model.list',
         requiresAuth: true,
         roles: ['admin'],
-      },
-    },
-    {
-      path: 'app/list',
-      name: 'KeyAppList',
-      component: () => import('@/views/key/list/app.vue'),
-      meta: {
-        locale: 'menu.key.app.list',
-        requiresAuth: true,
-        roles: ['user'],
+        activeMenu: 'key',
       },
     },
     {
