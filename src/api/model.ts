@@ -1,6 +1,16 @@
 import axios from 'axios';
 import qs from 'query-string';
 
+export interface ModelInit {
+  url: string;
+  key: string;
+  is_config_model_agent: boolean;
+}
+
+export function submitModelInit(data: ModelInit) {
+  return axios.post('/api/v1/model/init', data);
+}
+
 export interface ModelCreateBaseInfo {
   corp: string;
   name: string;

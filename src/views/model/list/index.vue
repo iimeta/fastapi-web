@@ -123,6 +123,15 @@
               {{ $t('model.operation.create') }}
             </a-button>
             <a-button
+              v-if="initBtn"
+              type="primary"
+              status="warning"
+              @click="initModel()"
+            >
+              初始化
+            </a-button>
+            <a-button
+              v-if="renderData.length !== 0"
               type="primary"
               status="warning"
               :disabled="multiple"
@@ -137,6 +146,7 @@
               全部代理
             </a-button>
             <a-button
+              v-if="renderData.length !== 0"
               type="primary"
               status="success"
               :disabled="multiple"
@@ -151,6 +161,7 @@
               启用代理
             </a-button>
             <a-button
+              v-if="renderData.length !== 0"
               type="primary"
               status="danger"
               :disabled="multiple"
@@ -165,6 +176,7 @@
               关闭代理
             </a-button>
             <a-button
+              v-if="renderData.length !== 0"
               type="primary"
               status="warning"
               :disabled="multiple"
@@ -179,6 +191,7 @@
               全部转发
             </a-button>
             <a-button
+              v-if="renderData.length !== 0"
               type="primary"
               status="success"
               :disabled="multiple"
@@ -193,6 +206,7 @@
               启用转发
             </a-button>
             <a-button
+              v-if="renderData.length !== 0"
               type="primary"
               status="danger"
               :disabled="multiple"
@@ -207,6 +221,7 @@
               关闭转发
             </a-button>
             <a-button
+              v-if="renderData.length !== 0"
               type="primary"
               status="warning"
               :disabled="multiple"
@@ -221,6 +236,7 @@
               全部后备
             </a-button>
             <a-button
+              v-if="renderData.length !== 0"
               type="primary"
               status="success"
               :disabled="multiple"
@@ -235,6 +251,7 @@
               启用后备
             </a-button>
             <a-button
+              v-if="renderData.length !== 0"
               type="primary"
               status="danger"
               :disabled="multiple"
@@ -249,6 +266,7 @@
               关闭后备
             </a-button>
             <a-button
+              v-if="renderData.length !== 0"
               type="primary"
               status="success"
               :disabled="multiple"
@@ -263,6 +281,7 @@
               启用
             </a-button>
             <a-button
+              v-if="renderData.length !== 0"
               type="primary"
               status="danger"
               :disabled="multiple"
@@ -277,6 +296,7 @@
               禁用
             </a-button>
             <a-button
+              v-if="renderData.length !== 0"
               type="primary"
               status="danger"
               :disabled="multiple"
@@ -432,6 +452,53 @@
         </template>
       </a-table>
       <a-modal
+        v-model:visible="initModelVisible"
+        :title="$t('model.form.title.init_model')"
+        @cancel="initHandleCancel"
+        @before-ok="initHandleBeforeOk"
+      >
+        <a-form ref="initForm" :model="initFormData">
+          <a-form-item
+            field="url"
+            :label="$t('model.label.url')"
+            :rules="[
+              {
+                required: true,
+                message: $t('model.error.url.required'),
+              },
+            ]"
+          >
+            <a-input
+              v-model="initFormData.url"
+              :placeholder="$t('model.placeholder.url')"
+              allow-clear
+            />
+          </a-form-item>
+          <a-form-item
+            field="key"
+            :label="$t('model.label.key')"
+            :rules="[
+              {
+                required: true,
+                message: $t('model.error.key.required'),
+              },
+            ]"
+          >
+            <a-input
+              v-model="initFormData.key"
+              :placeholder="$t('model.placeholder.key')"
+              allow-clear
+            />
+          </a-form-item>
+          <a-form-item
+            field="is_config_model_agent"
+            :label="$t('model.label.is_config_model_agent')"
+          >
+            <a-switch v-model="initFormData.is_config_model_agent" />
+          </a-form-item>
+        </a-form>
+      </a-modal>
+      <a-modal
         v-model:visible="agentFormVisible"
         :title="$t('model.form.title.model_agent')"
         @cancel="agentHandleCancel"
@@ -546,6 +613,8 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
+    ModelInit,
+    submitModelInit,
     queryModelPage,
     ModelPage,
     ModelPageParams,
@@ -653,16 +722,20 @@
   const ids = ref<Array<string>>([]);
   const multiple = ref(true);
   const tableRef = ref();
+  let initBtn = false;
 
   const basePagination: Pagination = {
     current: 1,
     pageSize: 10,
     showTotal: true,
     showPageSize: true,
+    pageSizeOptions: [10, 50, 100, 500, 1000],
   };
+
   const pagination = reactive({
     ...basePagination,
   });
+
   const densityList = computed(() => [
     {
       name: t('searchTable.size.mini'),
@@ -786,6 +859,7 @@
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
       pagination.total = data.paging.total;
+      initBtn = data.items.length === 0;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -894,9 +968,51 @@
     { deep: true, immediate: true }
   );
 
+  const initModelVisible = ref(false);
+  const initForm = ref<FormInstance>();
+  const initFormData = ref<ModelInit>({} as ModelInit);
+
   const agentForm = ref<FormInstance>();
   const agentFormVisible = ref(false);
   const agentFormData = ref<ModelBatchOperate>({} as ModelBatchOperate);
+
+  const initModel = async () => {
+    setLoading(true);
+    try {
+      initFormData.value.url = '';
+      initFormData.value.key = '';
+      initFormData.value.is_config_model_agent = true;
+      initModelVisible.value = true;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const initHandleBeforeOk = async (done: any) => {
+    const res = await initForm.value?.validate();
+    if (res) {
+      initModelVisible.value = true;
+      done(false);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await submitModelInit(initFormData.value); // The mock api default success
+      done();
+      window.location.reload();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const initHandleCancel = () => {
+    initModelVisible.value = false;
+  };
 
   const agentHandleBeforeOk = async (done: any) => {
     const res = await agentForm.value?.validate();

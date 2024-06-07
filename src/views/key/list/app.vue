@@ -566,10 +566,13 @@
     pageSize: 10,
     showTotal: true,
     showPageSize: true,
+    pageSizeOptions: [10, 50, 100, 500, 1000],
   };
+
   const pagination = reactive({
     ...basePagination,
   });
+
   const densityList = computed(() => [
     {
       name: t('searchTable.size.mini'),

@@ -400,6 +400,7 @@
               :placeholder="$t('user.placeholder.quota_expires_at')"
               :time-picker-props="{ defaultValue: '23:59:59' }"
               :disabled-date="(current:Date) => dayjs(current).isBefore(dayjs())"
+              position="tl"
               style="width: 100%"
               show-time
               :shortcuts="[
@@ -589,6 +590,7 @@
     pageSize: 10,
     showTotal: true,
     showPageSize: true,
+    pageSizeOptions: [10, 50, 100, 500, 1000],
   };
 
   const pagination = reactive({
