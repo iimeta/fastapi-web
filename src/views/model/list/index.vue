@@ -125,7 +125,7 @@
             <a-button
               v-if="initBtn"
               type="primary"
-              status="warning"
+              status="success"
               @click="initModel()"
             >
               初始化

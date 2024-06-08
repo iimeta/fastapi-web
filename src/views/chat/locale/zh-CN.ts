@@ -75,6 +75,7 @@ export default {
   'chat.dict.status.2': '中止',
   'chat.dict.status.3': '重试',
   'chat.dict.status.-1': '失败',
+  'chat.dict.status.-100': '异常',
   'chat.dict.stream.true': '是',
   'chat.dict.stream.false': '否',
   'chat.dict.billing_method.1': '倍率',

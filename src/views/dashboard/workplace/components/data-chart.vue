@@ -80,6 +80,7 @@
   const tokensStatisticsData = ref<number[]>([]);
   const userStatisticsData = ref<number[]>([]);
   const appStatisticsData = ref<number[]>([]);
+  const abnormalStatisticsData = ref<number[]>([]);
   const graphicElements = ref([
     graphicFactory({ left: '50' }),
     graphicFactory({ right: 8 }),
@@ -240,6 +241,23 @@
             },
           },
         },
+        {
+          name: '异常数',
+          data: abnormalStatisticsData.value,
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          color: isDark ? '#F8BB20' : '#F8BB20',
+          symbol: 'circle',
+          symbolSize: 10,
+          emphasis: {
+            focus: 'series',
+            itemStyle: {
+              borderWidth: 2,
+              borderColor: '#E2F2FF',
+            },
+          },
+        },
       ],
     };
   });
@@ -252,6 +270,7 @@
       tokensStatisticsData.value = [];
       userStatisticsData.value = [];
       appStatisticsData.value = [];
+      abnormalStatisticsData.value = [];
       const { data: chartData } = await queryCallData(days);
       chartData.items.forEach((el: CallData, idx: number) => {
         xAxis.value.push(el.date);
@@ -259,6 +278,7 @@
         tokensStatisticsData.value.push(el.tokens);
         userStatisticsData.value.push(el.user);
         appStatisticsData.value.push(el.app);
+        abnormalStatisticsData.value.push(el.abnormal);
         if (idx === 0) {
           graphicElements.value[0].style.text = el.date;
         }

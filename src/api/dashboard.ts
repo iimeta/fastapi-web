@@ -18,6 +18,7 @@ export interface CallData {
   tokens: number;
   user: number;
   app: number;
+  abnormal: number;
 }
 
 export interface CallDataRes {

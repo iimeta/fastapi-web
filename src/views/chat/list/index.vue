@@ -1186,10 +1186,16 @@
   ]);
 
   if (userRole === 'admin') {
-    statusOptions.value.push({
-      label: t('chat.dict.status.3'),
-      value: 3,
-    });
+    statusOptions.value.push(
+      {
+        label: t('chat.dict.status.3'),
+        value: 3,
+      },
+      {
+        label: t('chat.dict.status.-100'),
+        value: -100,
+      }
+    );
   }
 
   const fetchData = async (

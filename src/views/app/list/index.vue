@@ -332,7 +332,29 @@
               :precision="0"
               :min="0"
               :max="9999999999999"
+              style="margin-right: 10px"
             />
+            <div>
+              ${{
+                formData.quota
+                  ? parseFloat((formData.quota / 500000).toFixed(6))
+                  : '0.00'
+              }}</div
+            >
+          </a-form-item>
+          <a-form-item v-if="formData.is_limit_quota">
+            <a-radio-group
+              type="button"
+              @change="handleQuotaQuickChange as any"
+            >
+              <a-radio :value="1"> $1 </a-radio>
+              <a-radio :value="5"> $5 </a-radio>
+              <a-radio :value="10"> $10 </a-radio>
+              <a-radio :value="20"> $20 </a-radio>
+              <a-radio :value="100"> $100 </a-radio>
+              <a-radio :value="500"> $500 </a-radio>
+              <a-radio :value="1000"> $1000 </a-radio>
+            </a-radio-group>
           </a-form-item>
           <a-form-item
             v-if="formData.is_limit_quota"
@@ -757,6 +779,10 @@
 
   const formRef = ref<FormInstance>();
   const formData = ref<AppKeyConfig>({} as AppKeyConfig);
+
+  const handleQuotaQuickChange = (quota: number) => {
+    formData.value.quota = quota * 500000;
+  };
 
   const createKey = async (params: AppCreateKeyParams) => {
     setLoading(true);
