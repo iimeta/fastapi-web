@@ -18,6 +18,7 @@
     - 模型转发功能, 支持智能匹配和正则匹配, 重点!重点!!重点!!!
   - 密钥管理
   - 代理管理
+  - 公司管理
   - 用户管理
   - 聊天管理
 - 用户端
@@ -77,7 +78,7 @@ https://files.fastapi.ai/public/video/install.mp4
 <img src="https://iim.ai/public/images/Author.png?t=20231207" width="320" alt="作者"/>
 
 ## 交流群
-<img src="https://iim.ai/public/images/WeChatGroup.jpg?t=20240603" width="320" alt="交流群"/>
+<img src="https://iim.ai/public/images/WeChatGroup.jpg?t=20240610" width="320" alt="交流群"/>
 
 ## 参考项目
 ### [continew-admin-ui-arco](https://github.com/Charles7c/continew-admin-ui-arco)
