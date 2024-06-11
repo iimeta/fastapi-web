@@ -252,52 +252,204 @@
           {{ $t(`chat.dict.stream.${record.stream || false}`) }}
         </template>
         <template #conn_time="{ record }">
-          <a-tag v-if="record.conn_time > 10000" color="red">
+          <a-tag
+            v-if="record.conn_time > 30000"
+            v-permission="['user']"
+            color="red"
+          >
             {{ record.conn_time }}
           </a-tag>
-          <a-tag v-else-if="record.conn_time > 5000" color="orange">
+          <a-tag
+            v-else-if="record.conn_time > 15000"
+            v-permission="['user']"
+            color="orange"
+          >
             {{ record.conn_time }}
           </a-tag>
-          <a-tag v-else-if="record.conn_time > 3000" color="gold">
+          <a-tag
+            v-else-if="record.conn_time > 5000"
+            v-permission="['user']"
+            color="gold"
+          >
             {{ record.conn_time }}
           </a-tag>
-          <a-tag v-else color="green">{{ record.conn_time || '-' }}</a-tag>
+          <a-tag v-else v-permission="['user']" color="green">{{
+            record.conn_time || '-'
+          }}</a-tag>
+          <a-tag
+            v-if="record.conn_time > 10000"
+            v-permission="['admin']"
+            color="red"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.conn_time > 5000"
+            v-permission="['admin']"
+            color="orange"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.conn_time > 3000"
+            v-permission="['admin']"
+            color="gold"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">{{
+            record.conn_time || '-'
+          }}</a-tag>
         </template>
         <template #duration="{ record }">
-          <a-tag v-if="record.duration > 120000" color="red">
+          <a-tag
+            v-if="record.duration > 180000"
+            v-permission="['user']"
+            color="red"
+          >
             {{ record.duration }}
           </a-tag>
-          <a-tag v-else-if="record.duration > 90000" color="orange">
+          <a-tag
+            v-else-if="record.duration > 120000"
+            v-permission="['user']"
+            color="orange"
+          >
             {{ record.duration }}
           </a-tag>
-          <a-tag v-else-if="record.duration > 60000" color="gold">
+          <a-tag
+            v-else-if="record.duration > 90000"
+            v-permission="['user']"
+            color="gold"
+          >
             {{ record.duration }}
           </a-tag>
-          <a-tag v-else color="green">{{ record.duration || '-' }}</a-tag>
+          <a-tag v-else v-permission="['user']" color="green">{{
+            record.duration || '-'
+          }}</a-tag>
+          <a-tag
+            v-if="record.duration > 120000"
+            v-permission="['admin']"
+            color="red"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.duration > 90000"
+            v-permission="['admin']"
+            color="orange"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.duration > 60000"
+            v-permission="['admin']"
+            color="gold"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">{{
+            record.duration || '-'
+          }}</a-tag>
         </template>
         <template #total_time="{ record }">
-          <a-tag v-if="record.total_time > 120000" color="red">
+          <a-tag
+            v-if="record.total_time > 180000"
+            v-permission="['user']"
+            color="red"
+          >
             {{ record.total_time }}
           </a-tag>
-          <a-tag v-else-if="record.total_time > 90000" color="orange">
+          <a-tag
+            v-else-if="record.total_time > 120000"
+            v-permission="['user']"
+            color="orange"
+          >
             {{ record.total_time }}
           </a-tag>
-          <a-tag v-else-if="record.total_time > 60000" color="gold">
+          <a-tag
+            v-else-if="record.total_time > 90000"
+            v-permission="['user']"
+            color="gold"
+          >
             {{ record.total_time }}
           </a-tag>
-          <a-tag v-else color="green">{{ record.total_time || '-' }}</a-tag>
+          <a-tag v-else v-permission="['user']" color="green">{{
+            record.total_time || '-'
+          }}</a-tag>
+          <a-tag
+            v-if="record.total_time > 120000"
+            v-permission="['admin']"
+            color="red"
+          >
+            {{ record.total_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.total_time > 90000"
+            v-permission="['admin']"
+            color="orange"
+          >
+            {{ record.total_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.total_time > 60000"
+            v-permission="['admin']"
+            color="gold"
+          >
+            {{ record.total_time }}
+          </a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">{{
+            record.total_time || '-'
+          }}</a-tag>
         </template>
         <template #internal_time="{ record }">
-          <a-tag v-if="record.internal_time > 500" color="red">
+          <a-tag
+            v-if="record.internal_time > 1000"
+            v-permission="['user']"
+            color="red"
+          >
             {{ record.internal_time }}
           </a-tag>
-          <a-tag v-else-if="record.internal_time > 300" color="orange">
+          <a-tag
+            v-else-if="record.internal_time > 500"
+            v-permission="['user']"
+            color="orange"
+          >
             {{ record.internal_time }}
           </a-tag>
-          <a-tag v-else-if="record.internal_time > 100" color="gold">
+          <a-tag
+            v-else-if="record.internal_time > 300"
+            v-permission="['user']"
+            color="gold"
+          >
             {{ record.internal_time }}
           </a-tag>
-          <a-tag v-else color="green">{{ record.internal_time || '-' }}</a-tag>
+          <a-tag v-else v-permission="['user']" color="green">{{
+            record.internal_time || '-'
+          }}</a-tag>
+          <a-tag
+            v-if="record.internal_time > 500"
+            v-permission="['admin']"
+            color="red"
+          >
+            {{ record.internal_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.internal_time > 300"
+            v-permission="['admin']"
+            color="orange"
+          >
+            {{ record.internal_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.internal_time > 100"
+            v-permission="['admin']"
+            color="gold"
+          >
+            {{ record.internal_time }}
+          </a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">{{
+            record.internal_time || '-'
+          }}</a-tag>
         </template>
         <template #status="{ record }">
           <a-tag v-if="record.status === -1" color="red">{{
@@ -455,13 +607,13 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
-                <a-tag v-if="currentData.conn_time > 10000" color="red">
+                <a-tag v-if="currentData.conn_time > 30000" color="red">
                   {{ currentData.conn_time }} ms
                 </a-tag>
-                <a-tag v-else-if="currentData.conn_time > 5000" color="orange">
+                <a-tag v-else-if="currentData.conn_time > 15000" color="orange">
                   {{ currentData.conn_time }} ms
                 </a-tag>
-                <a-tag v-else-if="currentData.conn_time > 3000" color="gold">
+                <a-tag v-else-if="currentData.conn_time > 5000" color="gold">
                   {{ currentData.conn_time }} ms
                 </a-tag>
                 <a-tag v-else color="green"
@@ -474,13 +626,13 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
-                <a-tag v-if="currentData.duration > 120000" color="red">
+                <a-tag v-if="currentData.duration > 180000" color="red">
                   {{ currentData.duration }} ms
                 </a-tag>
-                <a-tag v-else-if="currentData.duration > 90000" color="orange">
+                <a-tag v-else-if="currentData.duration > 120000" color="orange">
                   {{ currentData.duration }} ms
                 </a-tag>
-                <a-tag v-else-if="currentData.duration > 60000" color="gold">
+                <a-tag v-else-if="currentData.duration > 90000" color="gold">
                   {{ currentData.duration }} ms
                 </a-tag>
                 <a-tag v-else color="green"
@@ -493,16 +645,16 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
-                <a-tag v-if="currentData.total_time > 120000" color="red">
+                <a-tag v-if="currentData.total_time > 180000" color="red">
                   {{ currentData.total_time }} ms
                 </a-tag>
                 <a-tag
-                  v-else-if="currentData.total_time > 90000"
+                  v-else-if="currentData.total_time > 120000"
                   color="orange"
                 >
                   {{ currentData.total_time }} ms
                 </a-tag>
-                <a-tag v-else-if="currentData.total_time > 60000" color="gold">
+                <a-tag v-else-if="currentData.total_time > 90000" color="gold">
                   {{ currentData.total_time }} ms
                 </a-tag>
                 <a-tag v-else color="green"

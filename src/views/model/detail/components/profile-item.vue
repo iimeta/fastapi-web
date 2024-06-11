@@ -174,6 +174,10 @@
           value: renderData?.forward_config?.target_model_name || '-',
         },
         {
+          label: t('model.detail.label.content_length'),
+          value: renderData?.forward_config?.content_length || '-',
+        },
+        {
           label: t('model.detail.label.matchRule'),
           value: renderData?.forward_config?.match_rule
             ? t(

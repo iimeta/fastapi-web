@@ -88,6 +88,7 @@ export default {
   'chat.dict.is_enable_fallback.false': '否',
   'chat.dict.forward_rule.1': '全部转发',
   'chat.dict.forward_rule.2': '按关键字',
+  'chat.dict.forward_rule.3': '内容长度',
   'chat.dict.type.1': '文生文',
   'chat.dict.type.2': '文生图',
   'chat.dict.type.3': '图生文',

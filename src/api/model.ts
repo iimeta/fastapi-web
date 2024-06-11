@@ -32,6 +32,7 @@ export interface ForwardConfig {
   keywords: string[];
   target_models: string[];
   target_model_names?: string[];
+  content_length: any;
 }
 
 export interface FallbackConfig {

@@ -165,12 +165,35 @@
       >
         <a-option value="1">全部转发</a-option>
         <a-option value="2">按关键字</a-option>
+        <a-option value="3">内容长度</a-option>
       </a-select>
     </a-form-item>
     <a-form-item
       v-if="
         formData.is_enable_forward &&
-        formData.forward_config.forward_rule === '1'
+        formData.forward_config.forward_rule === '3'
+      "
+      field="forward_config.content_length"
+      :label="$t('model.label.content_length')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.content_length.required'),
+        },
+      ]"
+    >
+      <a-input-number
+        v-model="formData.forward_config.content_length"
+        :min="1"
+        :max="9999999999999"
+        :placeholder="$t('model.placeholder.content_length')"
+      />
+    </a-form-item>
+    <a-form-item
+      v-if="
+        formData.is_enable_forward &&
+        (formData.forward_config.forward_rule === '1' ||
+          formData.forward_config.forward_rule === '3')
       "
       field="forward_config.target_model"
       :label="$t('model.label.targetModel')"
@@ -406,6 +429,7 @@
       decision_model: '',
       keywords: [],
       target_models: [],
+      content_length: ref(),
     },
     is_enable_fallback: false,
     fallback_config: {
@@ -434,7 +458,10 @@
     ) {
       formData.value.forward_config.keywords = [''];
       formData.value.forward_config.target_models = [''];
-    } else if (formData.value.forward_config.forward_rule === '1') {
+    } else if (
+      formData.value.forward_config.forward_rule === '1' ||
+      formData.value.forward_config.forward_rule === '3'
+    ) {
       if (
         formData.value.forward_config.keywords &&
         (formData.value.forward_config.keywords[0] === '' ||
@@ -478,6 +505,8 @@
           formData.value.forward_config.match_rule =
             data.forward_config.match_rule.map(String);
         }
+        formData.value.forward_config.content_length =
+          data.forward_config?.content_length;
         formData.value.forward_config.target_model =
           data.forward_config?.target_model;
         formData.value.forward_config.decision_model =
