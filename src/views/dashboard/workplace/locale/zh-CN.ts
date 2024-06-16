@@ -47,7 +47,7 @@ export default {
   'workplace.pecs': '个',
   'workplace.author': '作者',
   'workplace.expense': '费用',
-  'workplace.current.quota': '当前额度(tokens)',
+  'workplace.current.quota': '当前额度 (500000 = $1)',
   'workplace.dateRange7': '近7天',
   'workplace.dateRange15': '近15天',
   'workplace.dateRange30': '近30天',

@@ -80,6 +80,7 @@ export default {
   'model.success.create.subTitle': '模型新建成功',
   'model.success.update.subTitle': '模型修改成功',
   'model.button.submit': '提交',
+  'model.button.cancel': '取消',
   'model.button.again': '再次新建',
   'model.button.finish': '新建完成',
   'model.button.view': '查看详情',

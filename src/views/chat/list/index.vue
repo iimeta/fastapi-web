@@ -146,8 +146,12 @@
       </a-row>
       <a-divider style="margin-top: 0" />
       <a-row style="margin-bottom: 16px">
+        <a-col :span="12">
+          花费 = ( 提问 × 提问倍率 + 回答 × 回答倍率 ) ÷ 500000
+          &nbsp;&nbsp;或&nbsp;&nbsp; 回答 ÷ 500000
+        </a-col>
         <a-col
-          :span="24"
+          :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
           <a-tooltip :content="$t('searchTable.actions.refresh')">

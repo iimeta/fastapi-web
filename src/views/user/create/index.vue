@@ -8,7 +8,11 @@
       <a-breadcrumb-item>{{ $t('menu.user.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
-      <a-card class="general-card" :bordered="false">
+      <a-card
+        class="general-card"
+        :body-style="{ padding: '0 20px 20px 20px' }"
+        :bordered="false"
+      >
         <div class="wrapper">
           <a-form
             ref="formRef"
@@ -140,8 +144,8 @@
                 :placeholder="$t('user.placeholder.remark')"
               />
             </a-form-item>
-            <a-form-item>
-              <a-space>
+            <a-space>
+              <div class="submit-btn">
                 <a-button
                   type="secondary"
                   @click="
@@ -150,13 +154,13 @@
                     })
                   "
                 >
-                  {{ $t('user.button.cancel') }}
+                  {{ $t('model.button.cancel') }}
                 </a-button>
                 <a-button type="primary" @click="submitForm">
-                  {{ $t('user.button.submit') }}
+                  {{ $t('model.button.submit') }}
                 </a-button>
-              </a-space>
-            </a-form-item>
+              </div>
+            </a-space>
           </a-form>
         </div>
       </a-card>
@@ -217,20 +221,7 @@
   .container {
     padding: 0 10px 20px 10px;
   }
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 64px 0;
-    background-color: var(--color-bg-2);
-    :deep(.arco-form) {
-      .arco-form-item {
-        &:last-child {
-          margin-top: 20px;
-        }
-      }
-    }
-  }
+
   .container-breadcrumb {
     margin: 6px 0;
     :deep(.arco-breadcrumb-item) {
@@ -240,14 +231,38 @@
       }
     }
   }
+
+  .general-card {
+    &:first-child {
+      padding-top: 61px;
+    }
+  }
+
   .wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 64px 0;
     background-color: var(--color-bg-2);
+    :deep(.arco-form) {
+      .arco-form-item {
+        width: 700px;
+        &:first-child {
+          margin-top: 20px;
+        }
+      }
+    }
   }
+
   .form {
-    width: 500px;
+    align-items: center;
+  }
+
+  .submit-btn {
+    width: 300px;
+    display: flex;
+    button {
+      flex: 1;
+      margin: 20px 30px;
+    }
   }
 </style>
