@@ -393,14 +393,18 @@
         <template #type="{ record }">
           {{ $t(`model.dict.type.${record.type}`) }}
         </template>
-        <template #prompt_price="{ record }">
-          {{ record.billing_method === 1 ? `$${record.prompt_price}/k` : '-' }}
-        </template>
-        <template #completion_price="{ record }">
+        <template #prompt_ratio="{ record }">
           {{
             record.billing_method === 1
-              ? `$${record.completion_price}/k`
-              : `$${record.fixed_price}/次`
+              ? `$${priceConv(record.prompt_ratio)}/k`
+              : '-'
+          }}
+        </template>
+        <template #completion_ratio="{ record }">
+          {{
+            record.billing_method === 1
+              ? `$${priceConv(record.completion_ratio)}/k`
+              : `$${quotaConv(record.fixed_quota)}/次`
           }}
         </template>
         <template #status="{ record }">
@@ -612,6 +616,7 @@
   } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { priceConv, quotaConv } from '@/utils/common';
   import {
     ModelInit,
     submitModelInit,
@@ -782,14 +787,14 @@
     // },
     {
       title: t('model.columns.prompt_price'),
-      dataIndex: 'prompt_price',
-      slotName: 'prompt_price',
+      dataIndex: 'prompt_ratio',
+      slotName: 'prompt_ratio',
       align: 'center',
     },
     {
       title: t('model.columns.completion_price'),
-      dataIndex: 'completion_price',
-      slotName: 'completion_price',
+      dataIndex: 'completion_ratio',
+      slotName: 'completion_ratio',
       align: 'center',
     },
     {

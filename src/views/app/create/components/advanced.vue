@@ -45,13 +45,7 @@
         :max="9999999999999"
         style="margin-right: 10px"
       />
-      <div>
-        ${{
-          formData.quota
-            ? parseFloat((formData.quota / 500000).toFixed(6))
-            : '0'
-        }}</div
-      >
+      <div> ${{ formData.quota ? quotaConv(formData.quota) : '0' }}</div>
     </a-form-item>
     <a-form-item v-if="formData.is_limit_quota">
       <a-radio-group type="button" @change="handleQuotaQuickChange as any">
@@ -140,6 +134,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { quotaConv } from '@/utils/common';
   import { AppCreateAdvanced } from '@/api/app';
   import { queryModelList, ModelList } from '@/api/model';
 

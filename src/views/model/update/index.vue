@@ -165,13 +165,7 @@
                 :placeholder="$t('model.placeholder.promptRatio')"
                 style="width: 90%; margin-right: 5px"
               />
-              <div>
-                ${{
-                  parseFloat(
-                    (1000 / (500000 / formData.prompt_ratio)).toFixed(6)
-                  )
-                }}/k
-              </div>
+              <div> ${{ priceConv(formData.prompt_ratio) }}/k </div>
             </a-form-item>
             <a-form-item
               v-if="formData.billing_method === '1'"
@@ -190,13 +184,7 @@
                 :placeholder="$t('model.placeholder.completionRatio')"
                 style="width: 90%; margin-right: 5px"
               />
-              <div>
-                ${{
-                  parseFloat(
-                    (1000 / (500000 / formData.completion_ratio)).toFixed(6)
-                  )
-                }}/k
-              </div>
+              <div> ${{ priceConv(formData.completion_ratio) }}/k </div>
             </a-form-item>
             <a-form-item
               v-if="formData.billing_method === '2'"
@@ -510,10 +498,10 @@
                     })
                   "
                 >
-                  {{ $t('model.button.cancel') }}
+                  {{ $t('form.button.cancel') }}
                 </a-button>
                 <a-button type="primary" @click="submitForm">
-                  {{ $t('model.button.submit') }}
+                  {{ $t('form.button.submit') }}
                 </a-button>
               </div>
             </a-space>
@@ -529,6 +517,7 @@
   import useLoading from '@/hooks/loading';
   import { useRoute, useRouter } from 'vue-router';
   import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { priceConv } from '@/utils/common';
   import {
     submitModelUpdate,
     ModelUpdate,

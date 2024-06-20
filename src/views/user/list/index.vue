@@ -195,18 +195,10 @@
         @page-size-change="onPageSizeChange"
       >
         <template #quota="{ record }">
-          ${{
-            record.quota !== 0
-              ? parseFloat((record.quota / 500000).toFixed(6))
-              : '0.00'
-          }}
+          ${{ record.quota !== 0 ? quotaConv(record.quota) : '0.00' }}
         </template>
         <template #used_quota="{ record }">
-          ${{
-            record.used_quota > 0
-              ? parseFloat((record.used_quota / 500000).toFixed(6))
-              : '0.00'
-          }}
+          ${{ record.used_quota > 0 ? quotaConv(record.used_quota) : '0.00' }}
         </template>
         <template #quota_expires_at="{ rowIndex }">
           <a-date-picker
@@ -392,11 +384,7 @@
               style="margin-right: 10px"
             />
             <div>
-              ${{
-                formData.quota
-                  ? parseFloat((formData.quota / 500000).toFixed(6))
-                  : '0.00'
-              }}</div
+              ${{ formData.quota ? quotaConv(formData.quota) : '0.00' }}</div
             >
           </a-form-item>
           <a-form-item>
@@ -525,6 +513,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { quotaConv } from '@/utils/common';
   import {
     queryUserPage,
     UserPage,

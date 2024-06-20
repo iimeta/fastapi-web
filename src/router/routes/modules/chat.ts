@@ -8,7 +8,7 @@ const CHAT: AppRouteRecordRaw = {
   meta: {
     locale: 'menu.chat',
     requiresAuth: true,
-    icon: 'icon-wechat',
+    icon: 'icon-message',
     order: 9,
   },
   children: [

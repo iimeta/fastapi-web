@@ -191,14 +191,18 @@
         <!-- <template #dataFormat="{ record }">
           {{ $t(`model.dict.data_format.${record.data_format}`) }}
         </template> -->
-        <template #prompt_price="{ record }">
-          {{ record.billing_method === 1 ? `$${record.prompt_price}/k` : '-' }}
-        </template>
-        <template #completion_price="{ record }">
+        <template #prompt_ratio="{ record }">
           {{
             record.billing_method === 1
-              ? `$${record.completion_price}/k`
-              : `$${record.fixed_price}/次`
+              ? `$${priceConv(record.prompt_ratio)}/k`
+              : '-'
+          }}
+        </template>
+        <template #completion_ratio="{ record }">
+          {{
+            record.billing_method === 1
+              ? `$${priceConv(record.completion_ratio)}/k`
+              : `$${quotaConv(record.fixed_quota)}/次`
           }}
         </template>
         <template #status="{ record }">
@@ -224,6 +228,7 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { priceConv, quotaConv } from '@/utils/common';
   import { queryCorpList, CorpList } from '@/api/corp';
 
   const { loading, setLoading } = useLoading(true);
@@ -329,14 +334,14 @@
     },
     {
       title: t('model.columns.prompt_price'),
-      dataIndex: 'prompt_price',
-      slotName: 'prompt_price',
+      dataIndex: 'prompt_ratio',
+      slotName: 'prompt_ratio',
       align: 'center',
     },
     {
       title: t('model.columns.completion_price'),
-      dataIndex: 'completion_price',
-      slotName: 'completion_price',
+      dataIndex: 'completion_ratio',
+      slotName: 'completion_ratio',
       align: 'center',
     },
     // {

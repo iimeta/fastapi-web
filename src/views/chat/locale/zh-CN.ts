@@ -1,5 +1,5 @@
 export default {
-  'menu.chat': '聊天管理',
+  'menu.chat': '日志管理',
   'menu.chat.list': '调用日志',
   'menu.chat.detail': '日志详情',
   // detail

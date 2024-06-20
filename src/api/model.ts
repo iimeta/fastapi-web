@@ -35,6 +35,13 @@ export interface ForwardConfig {
   content_length: any;
 }
 
+export interface ImageQuota {
+  fixed_quota: any;
+  width: any;
+  height: any;
+  is_default: string;
+}
+
 export interface FallbackConfig {
   fallback_model: string;
   fallback_model_name?: string;
@@ -45,6 +52,7 @@ export interface ModelCreateAdvanced {
   prompt_ratio: number;
   completion_ratio: number;
   fixed_quota: number;
+  image_quotas: ImageQuota[];
   data_format: string;
   is_public: boolean;
   is_enable_model_agent: boolean;
@@ -70,11 +78,8 @@ export interface ModelPage {
   type: number;
   billing_method: number;
   prompt_ratio: number;
-  prompt_price: number;
   completion_ratio: number;
-  completion_price: number;
   fixed_quota: number;
-  fixed_price: number;
   data_format: number;
   is_public: boolean;
   status: number;
@@ -149,11 +154,8 @@ export interface ModelDetail {
   prompt: string;
   billing_method: number;
   prompt_ratio: number;
-  prompt_price: number;
   completion_ratio: number;
-  completion_price: number;
   fixed_quota: number;
-  fixed_price: number;
   data_format: number;
   is_public: boolean;
   is_enable_model_agent: boolean;

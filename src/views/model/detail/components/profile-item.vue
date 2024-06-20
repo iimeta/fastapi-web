@@ -30,6 +30,7 @@
   import { useI18n } from 'vue-i18n';
   import { ModelDetail } from '@/api/model';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
+  import { priceConv, quotaConv } from '@/utils/common';
 
   const props = defineProps({
     type: {
@@ -111,7 +112,7 @@
           label: t('model.detail.label.promptPrice'),
           value:
             renderData.billing_method === 1
-              ? `$${renderData.prompt_price}/k`
+              ? `$${priceConv(renderData.prompt_ratio)}/k`
               : '-',
         },
         {
@@ -123,14 +124,14 @@
           label: t('model.detail.label.completionPrice'),
           value:
             renderData.billing_method === 1
-              ? `$${renderData.completion_price}/k`
+              ? `$${priceConv(renderData.completion_ratio)}/k`
               : '-',
         },
         {
           label: t('model.detail.label.fixedPrice'),
           value:
             renderData.billing_method === 2
-              ? `$${renderData.fixed_price}/次`
+              ? `$${quotaConv(renderData.fixed_quota)}/次`
               : '-',
         },
         {

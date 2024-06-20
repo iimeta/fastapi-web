@@ -21,9 +21,9 @@
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
           >
-            <a-divider orientation="left">{{
+            <!-- <a-divider orientation="left">{{
               $t('model.title.baseInfo')
-            }}</a-divider>
+            }}</a-divider> -->
             <a-form-item
               field="name"
               :label="$t('app.label.name')"
@@ -57,9 +57,9 @@
                 :placeholder="$t('app.placeholder.remark')"
               />
             </a-form-item>
-            <a-divider orientation="left">{{
+            <!-- <a-divider orientation="left">{{
               $t('model.title.advanced')
-            }}</a-divider>
+            }}</a-divider> -->
             <a-form-item field="models" :label="$t('app.label.models')">
               <a-select
                 v-model="formData.models"
@@ -103,11 +103,7 @@
                 style="margin-right: 10px"
               />
               <div>
-                ${{
-                  formData.quota
-                    ? parseFloat((formData.quota / 500000).toFixed(6))
-                    : '0'
-                }}</div
+                ${{ formData.quota ? quotaConv(formData.quota) : '0' }}</div
               >
             </a-form-item>
             <a-form-item v-if="formData.is_limit_quota">
@@ -200,10 +196,10 @@
                     })
                   "
                 >
-                  {{ $t('model.button.cancel') }}
+                  {{ $t('form.button.cancel') }}
                 </a-button>
                 <a-button type="primary" @click="submitForm">
-                  {{ $t('model.button.submit') }}
+                  {{ $t('form.button.submit') }}
                 </a-button>
               </div>
             </a-space>
@@ -220,6 +216,7 @@
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter } from 'vue-router';
   import dayjs from 'dayjs';
+  import { quotaConv } from '@/utils/common';
   import { submitAppCreate, AppCreate } from '@/api/app';
   import { queryModelList, ModelList } from '@/api/model';
 
@@ -300,7 +297,7 @@
 
   .general-card {
     &:first-child {
-      padding-top: 20px;
+      padding-top: 61px;
     }
   }
 

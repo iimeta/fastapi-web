@@ -11,7 +11,6 @@ export interface ChatPage {
   prompt_tokens: number;
   completion_tokens: number;
   total_tokens: number;
-  total_price: number;
   stream: boolean;
   conn_time: number;
   duration: number;
@@ -91,7 +90,6 @@ export interface ChatDetail {
   prompt_tokens: number;
   completion_tokens: number;
   total_tokens: number;
-  total_price: number;
   stream: boolean;
   conn_time: number;
   duration: number;

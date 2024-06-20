@@ -137,10 +137,10 @@
                     })
                   "
                 >
-                  {{ $t('model.button.cancel') }}
+                  {{ $t('form.button.cancel') }}
                 </a-button>
                 <a-button type="primary" @click="submitForm">
-                  {{ $t('model.button.submit') }}
+                  {{ $t('form.button.submit') }}
                 </a-button>
               </div>
             </a-space>

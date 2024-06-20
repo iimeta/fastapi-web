@@ -165,13 +165,7 @@
                 :placeholder="$t('model.placeholder.promptRatio')"
                 style="width: 90%; margin-right: 5px"
               />
-              <div>
-                ${{
-                  parseFloat(
-                    (1000 / (500000 / formData.prompt_ratio)).toFixed(6)
-                  )
-                }}/k
-              </div>
+              <div> ${{ priceConv(formData.prompt_ratio) }}/k </div>
             </a-form-item>
             <a-form-item
               v-if="formData.billing_method === '1'"
@@ -190,13 +184,7 @@
                 :placeholder="$t('model.placeholder.completionRatio')"
                 style="width: 90%; margin-right: 5px"
               />
-              <div>
-                ${{
-                  parseFloat(
-                    (1000 / (500000 / formData.completion_ratio)).toFixed(6)
-                  )
-                }}/k
-              </div>
+              <div> ${{ priceConv(formData.completion_ratio) }}/k </div>
             </a-form-item>
             <a-form-item
               v-if="formData.billing_method === '2'"
@@ -215,6 +203,55 @@
                 :max="9999999999999"
                 :placeholder="$t('model.placeholder.fixedQuota')"
               />
+            </a-form-item>
+            <a-form-item
+              v-for="(image_quotas, index) of formData.image_quotas"
+              :key="index"
+              :label="`${index + 1}. ` + $t('model.label.image_quotas')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.image_quotas.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.image_quotas[index].width"
+                :placeholder="$t('model.placeholder.image_quotas.width')"
+                style="width: 118px; margin-right: 5px"
+              />
+              ×
+              <a-input-number
+                v-model="formData.image_quotas[index].height"
+                :placeholder="$t('model.placeholder.image_quotas.height')"
+                style="width: 118px; margin-left: 5px; margin-right: 5px"
+              />
+              <a-input-number
+                v-model="formData.image_quotas[index].fixed_quota"
+                :placeholder="$t('model.placeholder.image_quotas.fixed_quota')"
+                style="width: 118px; margin-right: 5px"
+              />
+              <a-radio
+                v-model="formData.image_quotas[index].is_default"
+                value="1"
+                style="width: 60px"
+                >默认</a-radio
+              >
+              <a-button
+                type="primary"
+                shape="circle"
+                style="margin: 0 10px 0 10px"
+                @click="handleImageQuotaAdd"
+              >
+                <icon-plus />
+              </a-button>
+              <a-button
+                type="secondary"
+                shape="circle"
+                @click="handleImageQuotaDel(index)"
+              >
+                <icon-minus />
+              </a-button>
             </a-form-item>
             <a-form-item
               field="data_format"
@@ -458,14 +495,14 @@
                 type="primary"
                 shape="circle"
                 style="margin: 0 10px 0 10px"
-                @click="handleAdd"
+                @click="handleKeywordsAdd"
               >
                 <icon-plus />
               </a-button>
               <a-button
                 type="secondary"
                 shape="circle"
-                @click="handleDelete(index)"
+                @click="handleKeywordsDel(index)"
               >
                 <icon-minus />
               </a-button>
@@ -510,10 +547,10 @@
                     })
                   "
                 >
-                  {{ $t('model.button.cancel') }}
+                  {{ $t('form.button.cancel') }}
                 </a-button>
                 <a-button type="primary" @click="submitForm">
-                  {{ $t('model.button.submit') }}
+                  {{ $t('form.button.submit') }}
                 </a-button>
               </div>
             </a-space>
@@ -529,11 +566,13 @@
   import useLoading from '@/hooks/loading';
   import { useRouter } from 'vue-router';
   import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { priceConv } from '@/utils/common';
   import {
     submitModelCreate,
     ModelCreate,
     queryModelList,
     ModelList,
+    ImageQuota,
   } from '@/api/model';
   import { queryCorpList, CorpList } from '@/api/corp';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
@@ -598,6 +637,7 @@
     prompt_ratio: 1,
     completion_ratio: 1,
     fixed_quota: 1,
+    image_quotas: [],
     data_format: '1',
     is_public: true,
     is_enable_model_agent: false,
@@ -654,11 +694,6 @@
     }
   };
 
-  const handleAdd = () => {
-    formData.value.forward_config.keywords.push('');
-    formData.value.forward_config.target_models.push('');
-  };
-
   const handleChange = () => {
     if (!formData.value.is_enable_forward) {
       formData.value.forward_config.target_model = '';
@@ -679,7 +714,28 @@
     }
   };
 
-  const handleDelete = (index: number) => {
+  const handleImageQuotaAdd = () => {
+    const imageQuota: ImageQuota = {
+      fixed_quota: ref(),
+      width: ref(),
+      height: ref(),
+      is_default: String(formData.value.image_quotas.length + 1),
+    };
+    formData.value.image_quotas.push(imageQuota);
+  };
+  handleImageQuotaAdd();
+  const handleImageQuotaDel = (index: number) => {
+    if (formData.value.image_quotas.length > 1) {
+      formData.value.image_quotas.splice(index, 1);
+    }
+  };
+
+  const handleKeywordsAdd = () => {
+    formData.value.forward_config.keywords.push('');
+    formData.value.forward_config.target_models.push('');
+  };
+
+  const handleKeywordsDel = (index: number) => {
     if (formData.value.forward_config.keywords.length > 1) {
       formData.value.forward_config.keywords.splice(index, 1);
       formData.value.forward_config.target_models.splice(index, 1);
@@ -756,3 +812,4 @@
     }
   }
 </style>
+@/utils/comamon@/utils/common

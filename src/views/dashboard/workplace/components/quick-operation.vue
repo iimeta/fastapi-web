@@ -80,7 +80,7 @@
     },
     {
       text: 'workplace.chatManagement',
-      icon: 'icon-wechat',
+      icon: 'icon-message',
       router: 'ChatList',
       permission: ['user', 'admin'],
     },

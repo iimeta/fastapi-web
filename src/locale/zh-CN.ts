@@ -39,6 +39,11 @@ export default {
   'searchTable.actions.refresh': '刷新',
   'searchTable.actions.density': '密度',
   'searchTable.actions.columnSetting': '列设置',
+  // button
+  'form.button.submit': '提交',
+  'form.button.cancel': '取消',
+  'form.button.next': '下一步',
+  'form.button.prev': '上一步',
   ...localeSettings,
   ...localeMessageBox,
   ...localeLogin,

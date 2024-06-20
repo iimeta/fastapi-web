@@ -243,10 +243,10 @@
               : '-'
           }}
         </template>
-        <template #total_price="{ record }">
+        <template #total_tokens="{ record }">
           {{
-            record.total_price
-              ? `$${record.total_price}`
+            record.total_tokens
+              ? `$${quotaConv(record.total_tokens)}`
               : record.status === 1 && record.billing_method === 2
               ? 0
               : '-'
@@ -1125,7 +1125,7 @@
   } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import dayjs from 'dayjs';
+  import { quotaConv } from '@/utils/common';
   import {
     queryChatPage,
     ChatPage,
@@ -1265,8 +1265,8 @@
     },
     {
       title: t('chat.columns.total_price'),
-      dataIndex: 'total_price',
-      slotName: 'total_price',
+      dataIndex: 'total_tokens',
+      slotName: 'total_tokens',
       align: 'center',
     },
     {
