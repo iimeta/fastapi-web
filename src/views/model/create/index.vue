@@ -127,7 +127,7 @@
               $t('model.title.advanced')
             }}</a-divider>
             <a-form-item
-              field="billing_method"
+              field="text_quota.billing_method"
               :label="$t('model.label.billingMethod')"
               :rules="[
                 {
@@ -138,19 +138,19 @@
             >
               <a-space size="large">
                 <a-radio
-                  v-model="formData.billing_method"
+                  v-model="formData.text_quota.billing_method"
                   value="1"
                   :default-checked="true"
                   >倍率</a-radio
                 >
-                <a-radio v-model="formData.billing_method" value="2"
+                <a-radio v-model="formData.text_quota.billing_method" value="2"
                   >固定额度</a-radio
                 >
               </a-space>
             </a-form-item>
             <a-form-item
-              v-if="formData.billing_method === '1'"
-              field="prompt_ratio"
+              v-if="formData.text_quota.billing_method === '1'"
+              field="text_quota.prompt_ratio"
               :label="$t('model.label.promptRatio')"
               :rules="[
                 {
@@ -160,16 +160,16 @@
               ]"
             >
               <a-input-number
-                v-model="formData.prompt_ratio"
+                v-model="formData.text_quota.prompt_ratio"
                 :min="0.001"
                 :placeholder="$t('model.placeholder.promptRatio')"
                 style="width: 90%; margin-right: 5px"
               />
-              <div> ${{ priceConv(formData.prompt_ratio) }}/k </div>
+              <div> ${{ priceConv(formData.text_quota.prompt_ratio) }}/k </div>
             </a-form-item>
             <a-form-item
-              v-if="formData.billing_method === '1'"
-              field="completion_ratio"
+              v-if="formData.text_quota.billing_method === '1'"
+              field="text_quota.completion_ratio"
               :label="$t('model.label.completionRatio')"
               :rules="[
                 {
@@ -179,16 +179,18 @@
               ]"
             >
               <a-input-number
-                v-model="formData.completion_ratio"
+                v-model="formData.text_quota.completion_ratio"
                 :min="0.001"
                 :placeholder="$t('model.placeholder.completionRatio')"
                 style="width: 90%; margin-right: 5px"
               />
-              <div> ${{ priceConv(formData.completion_ratio) }}/k </div>
+              <div>
+                ${{ priceConv(formData.text_quota.completion_ratio) }}/k
+              </div>
             </a-form-item>
             <a-form-item
-              v-if="formData.billing_method === '2'"
-              field="fixed_quota"
+              v-if="formData.text_quota.billing_method === '2'"
+              field="text_quota.fixed_quota"
               :label="$t('model.label.fixedQuota')"
               :rules="[
                 {
@@ -198,7 +200,7 @@
               ]"
             >
               <a-input-number
-                v-model="formData.fixed_quota"
+                v-model="formData.text_quota.fixed_quota"
                 :min="0"
                 :max="9999999999999"
                 :placeholder="$t('model.placeholder.fixedQuota')"
@@ -235,6 +237,7 @@
                 v-model="formData.image_quotas[index].is_default"
                 value="1"
                 style="width: 60px"
+                @change="handleIsDefaultChange(index)"
                 >默认</a-radio
               >
               <a-button
@@ -633,10 +636,12 @@
     path: '',
     prompt: '',
     remark: '',
-    billing_method: '1',
-    prompt_ratio: 1,
-    completion_ratio: 1,
-    fixed_quota: 1,
+    text_quota: {
+      billing_method: '1',
+      prompt_ratio: 1,
+      completion_ratio: 1,
+      fixed_quota: 1,
+    },
     image_quotas: [],
     data_format: '1',
     is_public: true,
@@ -719,14 +724,28 @@
       fixed_quota: ref(),
       width: ref(),
       height: ref(),
-      is_default: String(formData.value.image_quotas.length + 1),
+      is_default: formData.value.image_quotas.length === 0 ? '1' : '',
     };
     formData.value.image_quotas.push(imageQuota);
   };
   handleImageQuotaAdd();
+
   const handleImageQuotaDel = (index: number) => {
     if (formData.value.image_quotas.length > 1) {
+      if (formData.value.image_quotas[index].is_default === '1') {
+        formData.value.image_quotas[index === 0 ? 1 : 0].is_default = '1';
+      }
       formData.value.image_quotas.splice(index, 1);
+    }
+  };
+
+  const handleIsDefaultChange = (index: number) => {
+    for (let i = 0; i < formData.value.image_quotas.length; i += 1) {
+      if (i === index) {
+        formData.value.image_quotas[i].is_default = '1';
+      } else {
+        formData.value.image_quotas[i].is_default = '';
+      }
     }
   };
 
@@ -812,4 +831,3 @@
     }
   }
 </style>
-@/utils/comamon@/utils/common

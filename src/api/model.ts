@@ -35,6 +35,13 @@ export interface ForwardConfig {
   content_length: any;
 }
 
+export interface TextQuota {
+  billing_method: string;
+  prompt_ratio: number;
+  completion_ratio: number;
+  fixed_quota: number;
+}
+
 export interface ImageQuota {
   fixed_quota: any;
   width: any;
@@ -48,10 +55,7 @@ export interface FallbackConfig {
 }
 
 export interface ModelCreateAdvanced {
-  billing_method: string;
-  prompt_ratio: number;
-  completion_ratio: number;
-  fixed_quota: number;
+  text_quota: TextQuota;
   image_quotas: ImageQuota[];
   data_format: string;
   is_public: boolean;
