@@ -44,7 +44,7 @@
           <Announcement />
         </a-grid-item>
         <a-grid-item v-permission="['admin']" class="panel" :span="24">
-          <Carousel />
+          <Sponsor />
         </a-grid-item>
         <a-grid-item class="panel" :span="24">
           <Docs />
@@ -65,7 +65,7 @@
   import UserInfo from './components/user-info.vue';
   import Expense from './components/expense.vue';
   import Author from './components/author.vue';
-  import Carousel from './components/carousel.vue';
+  import Sponsor from './components/sponsor.vue';
   import Announcement from './components/announcement.vue';
   import Docs from './components/docs.vue';
 </script>
