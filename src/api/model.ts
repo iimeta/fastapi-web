@@ -11,7 +11,8 @@ export function submitModelInit(data: ModelInit) {
   return axios.post('/api/v1/model/init', data);
 }
 
-export interface ModelCreateBaseInfo {
+export interface ModelBaseInfo {
+  id?: string;
   corp: string;
   name: string;
   model: string;
@@ -20,6 +21,7 @@ export interface ModelCreateBaseInfo {
   path: string;
   prompt: string;
   remark: string;
+  status?: number,
 }
 
 export interface ForwardConfig {
@@ -36,7 +38,7 @@ export interface ForwardConfig {
 }
 
 export interface TextQuota {
-  billing_method: string;
+  billing_method: any;
   prompt_ratio: number;
   completion_ratio: number;
   fixed_quota: number;
@@ -54,7 +56,7 @@ export interface FallbackConfig {
   fallback_model_name?: string;
 }
 
-export interface ModelCreateAdvanced {
+export interface ModelAdvanced {
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
   data_format: string;
@@ -67,7 +69,7 @@ export interface ModelCreateAdvanced {
   fallback_config: FallbackConfig;
 }
 
-export type ModelCreate = ModelCreateBaseInfo & ModelCreateAdvanced;
+export type ModelCreate = ModelBaseInfo & ModelAdvanced;
 
 export function submitModelCreate(data: ModelCreate) {
   return axios.post('/api/v1/model/create', data);
@@ -80,10 +82,8 @@ export interface ModelPage {
   name: string;
   model: string;
   type: number;
-  billing_method: number;
-  prompt_ratio: number;
-  completion_ratio: number;
-  fixed_quota: number;
+  text_quota: TextQuota;
+  image_quotas: ImageQuota[];
   data_format: number;
   is_public: boolean;
   status: number;
@@ -156,10 +156,8 @@ export interface ModelDetail {
   base_url: string;
   path: string;
   prompt: string;
-  billing_method: number;
-  prompt_ratio: number;
-  completion_ratio: number;
-  fixed_quota: number;
+  text_quota: TextQuota;
+  image_quotas: ImageQuota[];
   data_format: number;
   is_public: boolean;
   is_enable_model_agent: boolean;
@@ -184,35 +182,7 @@ export function queryModelDetail(params: ModelDetailParams) {
   });
 }
 
-export interface ModelUpdateBaseInfo {
-  id: string;
-  corp: string;
-  name: string;
-  model: string;
-  type: string;
-  base_url: string;
-  path: string;
-  prompt: string;
-  remark: string;
-  status: number;
-}
-
-export interface ModelUpdateAdvanced {
-  billing_method: string;
-  prompt_ratio: number;
-  completion_ratio: number;
-  fixed_quota: number;
-  data_format: string;
-  is_public: boolean;
-  is_enable_model_agent: boolean;
-  model_agents: string[];
-  is_enable_forward: boolean;
-  forward_config: ForwardConfig;
-  is_enable_fallback: boolean;
-  fallback_config: FallbackConfig;
-}
-
-export type ModelUpdate = ModelUpdateBaseInfo & ModelUpdateAdvanced;
+export type ModelUpdate = ModelBaseInfo & ModelAdvanced;
 
 export function submitModelUpdate(data: ModelUpdate) {
   return axios.post('/api/v1/model/update', data);

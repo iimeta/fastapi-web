@@ -48,7 +48,7 @@ export default {
   'model.error.fixedQuota.required': '请输入额度',
   'model.label.image_quotas': '图像额度',
   'model.placeholder.image_quotas': '额度',
-  'model.error.image_quotas.required': '请输入图像额度',
+  'model.error.image_quotas.required': '请输入图像宽高和额度',
   'model.placeholder.image_quotas.width': '请输入宽度',
   'model.placeholder.image_quotas.height': '请输入高度',
   'model.placeholder.image_quotas.fixed_quota': '请输入额度',

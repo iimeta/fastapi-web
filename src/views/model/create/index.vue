@@ -91,6 +91,7 @@
                 v-model="formData.type"
                 :placeholder="$t('model.placeholder.type')"
                 allow-search
+                @change="handleTypeChange"
               >
                 <a-option value="1">文生文</a-option>
                 <a-option value="2">文生图</a-option>
@@ -141,6 +142,7 @@
                   v-model="formData.text_quota.billing_method"
                   value="1"
                   :default-checked="true"
+                  :disabled="formData.type === '2'"
                   >倍率</a-radio
                 >
                 <a-radio v-model="formData.text_quota.billing_method" value="2"
@@ -189,7 +191,10 @@
               </div>
             </a-form-item>
             <a-form-item
-              v-if="formData.text_quota.billing_method === '2'"
+              v-if="
+                formData.text_quota.billing_method === '2' &&
+                formData.type !== '2'
+              "
               field="text_quota.fixed_quota"
               :label="$t('model.label.fixedQuota')"
               :rules="[
@@ -208,7 +213,13 @@
             </a-form-item>
             <a-form-item
               v-for="(image_quotas, index) of formData.image_quotas"
+              v-show="formData.type === '2'"
               :key="index"
+              :field="
+                `image_quotas[${index}].width` &&
+                `image_quotas[${index}].height` &&
+                `image_quotas[${index}].fixed_quota`
+              "
               :label="`${index + 1}. ` + $t('model.label.image_quotas')"
               :rules="[
                 {
@@ -328,7 +339,7 @@
             >
               <a-switch
                 v-model="formData.is_enable_forward"
-                @change="handleChange"
+                @change="handleForwardRuleChange"
               />
             </a-form-item>
             <a-form-item
@@ -345,7 +356,7 @@
               <a-select
                 v-model="formData.forward_config.forward_rule"
                 :placeholder="$t('model.placeholder.forwardRule')"
-                @change="handleChange"
+                @change="handleForwardRuleChange"
               >
                 <a-option value="1">全部转发</a-option>
                 <a-option value="2">按关键字</a-option>
@@ -699,7 +710,16 @@
     }
   };
 
-  const handleChange = () => {
+  const handleTypeChange = () => {
+    if (formData.value.type === '2') {
+      formData.value.text_quota.billing_method = '2';
+      if (formData.value.image_quotas.length === 0) {
+        handleImageQuotaAdd();
+      }
+    }
+  };
+
+  const handleForwardRuleChange = () => {
     if (!formData.value.is_enable_forward) {
       formData.value.forward_config.target_model = '';
       formData.value.forward_config.keywords = [];
@@ -728,7 +748,6 @@
     };
     formData.value.image_quotas.push(imageQuota);
   };
-  handleImageQuotaAdd();
 
   const handleImageQuotaDel = (index: number) => {
     if (formData.value.image_quotas.length > 1) {

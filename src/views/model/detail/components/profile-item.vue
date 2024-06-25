@@ -101,37 +101,43 @@
       data: [
         {
           label: t('model.detail.label.billingMethod'),
-          value: t(`model.dict.billing_method.${renderData.billing_method}`),
+          value: t(
+            `model.dict.billing_method.${renderData.text_quota.billing_method}`
+          ),
         },
         {
           label: t('model.detail.label.promptRatio'),
           value:
-            renderData.billing_method === 1 ? renderData.prompt_ratio : '-',
+            renderData.text_quota.billing_method === 1
+              ? renderData.text_quota.prompt_ratio
+              : '-',
         },
         {
           label: t('model.detail.label.promptPrice'),
           value:
-            renderData.billing_method === 1
-              ? `$${priceConv(renderData.prompt_ratio)}/k`
+            renderData.text_quota.billing_method === 1
+              ? `$${priceConv(renderData.text_quota.prompt_ratio)}/k`
               : '-',
         },
         {
           label: t('model.detail.label.completionRatio'),
           value:
-            renderData.billing_method === 1 ? renderData.completion_ratio : '-',
+            renderData.text_quota.billing_method === 1
+              ? renderData.text_quota.completion_ratio
+              : '-',
         },
         {
           label: t('model.detail.label.completionPrice'),
           value:
-            renderData.billing_method === 1
-              ? `$${priceConv(renderData.completion_ratio)}/k`
+            renderData.text_quota.billing_method === 1
+              ? `$${priceConv(renderData.text_quota.completion_ratio)}/k`
               : '-',
         },
         {
           label: t('model.detail.label.fixedPrice'),
           value:
-            renderData.billing_method === 2
-              ? `$${quotaConv(renderData.fixed_quota)}/次`
+            renderData.text_quota.billing_method === 2
+              ? `$${quotaConv(renderData.text_quota.fixed_quota)}/次`
               : '-',
         },
         {

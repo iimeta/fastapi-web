@@ -395,16 +395,16 @@
         </template>
         <template #prompt_ratio="{ record }">
           {{
-            record.billing_method === 1
-              ? `$${priceConv(record.prompt_ratio)}/k`
+            record.text_quota.billing_method === 1
+              ? `$${priceConv(record.text_quota.prompt_ratio)}/k`
               : '-'
           }}
         </template>
         <template #completion_ratio="{ record }">
           {{
-            record.billing_method === 1
-              ? `$${priceConv(record.completion_ratio)}/k`
-              : `$${quotaConv(record.fixed_quota)}/次`
+            record.text_quota.billing_method === 1
+              ? `$${priceConv(record.text_quota.completion_ratio)}/k`
+              : `$${quotaConv(record.text_quota.fixed_quota)}/次`
           }}
         </template>
         <template #status="{ record }">
