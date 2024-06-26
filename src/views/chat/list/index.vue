@@ -567,7 +567,9 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{
-                $t(`chat.dict.billing_method.${currentData.billing_method}`)
+                $t(
+                  `chat.dict.billing_method.${currentData.text_quota.billing_method}`
+                )
               }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="总消耗令牌数">
@@ -577,7 +579,8 @@
               <span v-else>{{
                 currentData.total_tokens
                   ? currentData.total_tokens
-                  : currentData.status === 1 && currentData.billing_method === 2
+                  : currentData.status === 1 &&
+                    currentData.text_quota.billing_method === 2
                   ? 0
                   : '-'
               }}</span>
@@ -586,13 +589,17 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.prompt_ratio || '-' }}</span>
+              <span v-else>{{
+                currentData.text_quota.prompt_ratio || '-'
+              }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="回答倍率">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.completion_ratio || '-' }}</span>
+              <span v-else>{{
+                currentData.text_quota.completion_ratio || '-'
+              }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="提问令牌数">
               <a-skeleton v-if="loading" :animation="true">
@@ -883,7 +890,9 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{
-                $t(`chat.dict.billing_method.${currentData.billing_method}`)
+                $t(
+                  `chat.dict.billing_method.${currentData.text_quota.billing_method}`
+                )
               }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="总消耗令牌数">
@@ -893,7 +902,8 @@
               <span v-else>{{
                 currentData.total_tokens
                   ? currentData.total_tokens
-                  : currentData.status === 1 && currentData.billing_method === 2
+                  : currentData.status === 1 &&
+                    currentData.text_quota.billing_method === 2
                   ? 0
                   : '-'
               }}</span>
@@ -902,13 +912,17 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.prompt_ratio || '-' }}</span>
+              <span v-else>{{
+                currentData.text_quota.prompt_ratio || '-'
+              }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="回答倍率">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.completion_ratio || '-' }}</span>
+              <span v-else>{{
+                currentData.text_quota.completion_ratio || '-'
+              }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="提问令牌数">
               <a-skeleton v-if="loading" :animation="true">

@@ -78,10 +78,6 @@
           value: renderData?.path || '-',
         },
         {
-          label: t('model.detail.label.prompt'),
-          value: renderData?.prompt || '-',
-        },
-        {
           label: t('model.detail.label.remark'),
           value: renderData?.remark || '-',
         },
@@ -99,47 +95,47 @@
     result.push({
       title: t('model.detail.title.advanced'),
       data: [
-        {
-          label: t('model.detail.label.billingMethod'),
-          value: t(
-            `model.dict.billing_method.${renderData.text_quota.billing_method}`
-          ),
-        },
-        {
-          label: t('model.detail.label.promptRatio'),
-          value:
-            renderData.text_quota.billing_method === 1
-              ? renderData.text_quota.prompt_ratio
-              : '-',
-        },
-        {
-          label: t('model.detail.label.promptPrice'),
-          value:
-            renderData.text_quota.billing_method === 1
-              ? `$${priceConv(renderData.text_quota.prompt_ratio)}/k`
-              : '-',
-        },
-        {
-          label: t('model.detail.label.completionRatio'),
-          value:
-            renderData.text_quota.billing_method === 1
-              ? renderData.text_quota.completion_ratio
-              : '-',
-        },
-        {
-          label: t('model.detail.label.completionPrice'),
-          value:
-            renderData.text_quota.billing_method === 1
-              ? `$${priceConv(renderData.text_quota.completion_ratio)}/k`
-              : '-',
-        },
-        {
-          label: t('model.detail.label.fixedPrice'),
-          value:
-            renderData.text_quota.billing_method === 2
-              ? `$${quotaConv(renderData.text_quota.fixed_quota)}/次`
-              : '-',
-        },
+        // {
+        //   label: t('model.detail.label.billingMethod'),
+        //   value: t(
+        //     `model.dict.billing_method.${renderData.text_quota.billing_method}`
+        //   ),
+        // },
+        // {
+        //   label: t('model.detail.label.promptRatio'),
+        //   value:
+        //     renderData.text_quota.billing_method === 1
+        //       ? renderData.text_quota.prompt_ratio
+        //       : '-',
+        // },
+        // {
+        //   label: t('model.detail.label.promptPrice'),
+        //   value:
+        //     renderData.text_quota.billing_method === 1
+        //       ? `$${priceConv(renderData.text_quota.prompt_ratio)}/k`
+        //       : '-',
+        // },
+        // {
+        //   label: t('model.detail.label.completionRatio'),
+        //   value:
+        //     renderData.text_quota.billing_method === 1
+        //       ? renderData.text_quota.completion_ratio
+        //       : '-',
+        // },
+        // {
+        //   label: t('model.detail.label.completionPrice'),
+        //   value:
+        //     renderData.text_quota.billing_method === 1
+        //       ? `$${priceConv(renderData.text_quota.completion_ratio)}/k`
+        //       : '-',
+        // },
+        // {
+        //   label: t('model.detail.label.fixedPrice'),
+        //   value:
+        //     renderData.text_quota.billing_method === 2
+        //       ? `$${quotaConv(renderData.text_quota.fixed_quota)}/次`
+        //       : '-',
+        // },
         {
           label: t('model.detail.label.dataFormat'),
           value: t(`model.dict.data_format.${renderData.data_format}`),

@@ -44,6 +44,20 @@ export interface ChatDetailParams {
   id: any;
 }
 
+export interface TextQuota {
+  billing_method: number;
+  prompt_ratio: number;
+  completion_ratio: number;
+  fixed_quota: number;
+}
+
+export interface ImageQuota {
+  fixed_quota: number;
+  width: number;
+  height: number;
+  is_default: boolean;
+}
+
 export interface ForwardConfig {
   forward_rule: string;
   target_model: string;
@@ -84,9 +98,7 @@ export interface ChatDetail {
   prompt: string;
   completion: string;
   messages: any;
-  billing_method: number;
-  prompt_ratio: number;
-  completion_ratio: number;
+  text_quota: TextQuota;
   prompt_tokens: number;
   completion_tokens: number;
   total_tokens: number;

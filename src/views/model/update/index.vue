@@ -112,12 +112,6 @@
                 :placeholder="$t('model.placeholder.path')"
               />
             </a-form-item>
-            <a-form-item field="prompt" :label="$t('model.label.prompt')">
-              <a-textarea
-                v-model="formData.prompt"
-                :placeholder="$t('model.placeholder.prompt')"
-              />
-            </a-form-item>
             <a-form-item field="remark" :label="$t('model.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -299,6 +293,56 @@
               ]"
             >
               <a-switch v-model="formData.is_public" />
+            </a-form-item>
+            <a-form-item
+              field="is_enable_preset_config"
+              :label="$t('model.label.is_enable_preset_config')"
+            >
+              <a-switch v-model="formData.is_enable_preset_config" />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_enable_preset_config"
+              field="preset_config.is_support_system_role"
+              :label="$t('model.label.preset_config.is_support_system_role')"
+            >
+              <a-switch
+                v-model="formData.preset_config.is_support_system_role"
+              />
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_preset_config &&
+                formData.preset_config.is_support_system_role
+              "
+              field="preset_config.system_role_prompt"
+              :label="$t('model.label.preset_config.system_role_prompt')"
+            >
+              <a-textarea
+                v-model="formData.preset_config.system_role_prompt"
+                :placeholder="
+                  $t('model.placeholder.preset_config.system_role_prompt')
+                "
+              />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_enable_preset_config"
+              :field="`preset_config.min_tokens` && `preset_config.max_tokens`"
+              :label="$t('model.label.preset_config.max_tokens.range')"
+            >
+              <a-input-number
+                v-model="formData.preset_config.min_tokens"
+                :placeholder="$t('model.placeholder.preset_config.min_tokens')"
+                style="width: 260px; margin-right: 5px"
+                :min="0"
+                :max="2097152"
+              />
+              <a-input-number
+                v-model="formData.preset_config.max_tokens"
+                :placeholder="$t('model.placeholder.preset_config.max_tokens')"
+                style="width: 260px"
+                :min="0"
+                :max="2097152"
+              />
             </a-form-item>
             <a-form-item
               field="is_enable_model_agent"
@@ -647,11 +691,17 @@
     name: '',
     model: '',
     type: '',
-    remark: '',
     base_url: '',
     path: '',
-    prompt: '',
+    remark: '',
     status: 1,
+    is_enable_preset_config: false,
+    preset_config: {
+      is_support_system_role: true,
+      system_role_prompt: '',
+      min_tokens: ref(),
+      max_tokens: ref(),
+    },
     text_quota: {
       billing_method: '1',
       prompt_ratio: 1,
@@ -709,13 +759,14 @@
       formData.value.name = data.name;
       formData.value.model = data.model;
       formData.value.type = String(data.type);
-      formData.value.remark = data.remark;
       formData.value.base_url = data.base_url;
       formData.value.path = data.path;
-      formData.value.prompt = data.prompt;
+      formData.value.remark = data.remark;
       formData.value.status = data.status;
       formData.value.data_format = String(data.data_format);
       formData.value.is_public = data.is_public;
+      formData.value.is_enable_preset_config = data.is_enable_preset_config;
+      formData.value.preset_config = data.preset_config;
       formData.value.is_enable_model_agent = data.is_enable_model_agent;
       formData.value.model_agents = data.model_agents;
       formData.value.is_enable_forward = data.is_enable_forward;

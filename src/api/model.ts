@@ -19,9 +19,15 @@ export interface ModelBaseInfo {
   type: string;
   base_url: string;
   path: string;
-  prompt: string;
   remark: string;
-  status?: number,
+  status?: number;
+}
+
+export interface PresetConfig {
+  is_support_system_role: boolean;
+  system_role_prompt: string;
+  min_tokens: any;
+  max_tokens: any;
 }
 
 export interface ForwardConfig {
@@ -57,6 +63,8 @@ export interface FallbackConfig {
 }
 
 export interface ModelAdvanced {
+  is_enable_preset_config: boolean;
+  preset_config: PresetConfig;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
   data_format: string;
@@ -155,7 +163,8 @@ export interface ModelDetail {
   type: number;
   base_url: string;
   path: string;
-  prompt: string;
+  is_enable_preset_config: boolean;
+  preset_config: PresetConfig;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
   data_format: number;
