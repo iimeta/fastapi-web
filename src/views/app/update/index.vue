@@ -43,20 +43,6 @@
                 :placeholder="$t('app.placeholder.name')"
               />
             </a-form-item>
-            <a-form-item
-              field="remark"
-              :label="$t('app.label.remark')"
-              :rules="[
-                {
-                  required: false,
-                },
-              ]"
-            >
-              <a-textarea
-                v-model="formData.remark"
-                :placeholder="$t('app.placeholder.remark')"
-              />
-            </a-form-item>
             <!-- <a-divider orientation="left">{{
               $t('model.title.advanced')
             }}</a-divider> -->
@@ -100,7 +86,7 @@
                 :precision="0"
                 :min="0"
                 :max="9999999999999"
-                style="margin-right: 10px"
+                style="width: 492px; margin-right: 10px"
               />
               <div>
                 ${{ formData.quota ? quotaConv(formData.quota) : '0' }}</div
@@ -184,6 +170,20 @@
                 v-model="formData.ip_blacklist"
                 :placeholder="$t('app.placeholder.ip_blacklist')"
                 :auto-size="{ minRows: 5, maxRows: 10 }"
+              />
+            </a-form-item>
+            <a-form-item
+              field="remark"
+              :label="$t('app.label.remark')"
+              :rules="[
+                {
+                  required: false,
+                },
+              ]"
+            >
+              <a-textarea
+                v-model="formData.remark"
+                :placeholder="$t('app.placeholder.remark')"
               />
             </a-form-item>
             <a-space>

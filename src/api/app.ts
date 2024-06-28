@@ -1,21 +1,17 @@
 import axios from 'axios';
 import qs from 'query-string';
 
-export interface AppCreateBaseInfo {
+export interface AppCreate {
   name: string;
-  remark: string;
-}
-
-export interface AppCreateAdvanced {
   models: string[];
   is_limit_quota: boolean;
   quota: any;
   quota_expires_at: string;
   ip_whitelist: string;
   ip_blacklist: string;
+  is_create_key: boolean;
+  remark: string;
 }
-
-export type AppCreate = AppCreateBaseInfo & AppCreateAdvanced;
 
 export function submitAppCreate(data: AppCreate) {
   return axios.post('/api/v1/app/create', data);

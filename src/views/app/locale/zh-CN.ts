@@ -34,6 +34,7 @@ export default {
   'app.label.quota_expires_at': '过期时间',
   'app.placeholder.quota_expires_at': '请输入额度过期时间',
   'app.error.quota.required': '请输入额度',
+  'app.label.is_create_key': '创建密钥',
   'app.success.title': '提交成功',
   'app.success.create.subTitle': '应用新建成功',
   'app.success.update.subTitle': '应用修改成功',

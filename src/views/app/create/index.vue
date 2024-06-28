@@ -43,20 +43,6 @@
                 :placeholder="$t('app.placeholder.name')"
               />
             </a-form-item>
-            <a-form-item
-              field="remark"
-              :label="$t('app.label.remark')"
-              :rules="[
-                {
-                  required: false,
-                },
-              ]"
-            >
-              <a-textarea
-                v-model="formData.remark"
-                :placeholder="$t('app.placeholder.remark')"
-              />
-            </a-form-item>
             <!-- <a-divider orientation="left">{{
               $t('model.title.advanced')
             }}</a-divider> -->
@@ -100,7 +86,7 @@
                 :precision="0"
                 :min="0"
                 :max="9999999999999"
-                style="margin-right: 10px"
+                style="width: 492px; margin-right: 10px"
               />
               <div>
                 ${{ formData.quota ? quotaConv(formData.quota) : '0' }}</div
@@ -186,6 +172,26 @@
                 :auto-size="{ minRows: 5, maxRows: 10 }"
               />
             </a-form-item>
+            <a-form-item
+              field="is_create_key"
+              :label="$t('app.label.is_create_key')"
+            >
+              <a-switch v-model="formData.is_create_key" />
+            </a-form-item>
+            <a-form-item
+              field="remark"
+              :label="$t('app.label.remark')"
+              :rules="[
+                {
+                  required: false,
+                },
+              ]"
+            >
+              <a-textarea
+                v-model="formData.remark"
+                :placeholder="$t('app.placeholder.remark')"
+              />
+            </a-form-item>
             <a-space>
               <div class="submit-btn">
                 <a-button
@@ -216,6 +222,7 @@
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter } from 'vue-router';
   import dayjs from 'dayjs';
+  import { Message } from '@arco-design/web-vue';
   import { quotaConv } from '@/utils/common';
   import { submitAppCreate, AppCreate } from '@/api/app';
   import { queryModelList, ModelList } from '@/api/model';
@@ -241,13 +248,14 @@
   const formRef = ref<FormInstance>();
   const formData = ref<AppCreate>({
     name: '',
-    remark: '',
     models: [],
     is_limit_quota: false,
     quota: ref(),
     quota_expires_at: '',
     ip_whitelist: '',
     ip_blacklist: '',
+    is_create_key: true,
+    remark: '',
   });
 
   const submitForm = async () => {
@@ -255,11 +263,15 @@
     if (!res) {
       setLoading(true);
       try {
-        await submitAppCreate(formData.value).then(() => {
+        const { data } = await submitAppCreate(formData.value);
+        if (data.key) {
+          navigator.clipboard.writeText(data.key);
+          Message.success('新建成功, 密钥已复制到剪贴板');
+        } else {
           proxy.$message.success('新建成功');
-          router.push({
-            name: 'AppList',
-          });
+        }
+        router.push({
+          name: 'AppList',
         });
       } catch (err) {
         // you can report use errorHandler or other
