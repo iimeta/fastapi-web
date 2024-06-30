@@ -249,7 +249,7 @@
                 type="primary"
                 shape="circle"
                 style="margin: 0 10px 0 10px"
-                @click="handleImageQuotaAdd"
+                @click="handleImageQuotaAdd()"
               >
                 <icon-plus />
               </a-button>
@@ -764,8 +764,14 @@
     if (formData.value.type === '2') {
       formData.value.text_quota.billing_method = '2';
       if (formData.value.image_quotas.length === 0) {
-        handleImageQuotaAdd();
+        const widths = [256, 512, 1024, 1024, 1792];
+        const heights = [256, 512, 1024, 1792, 1024];
+        for (let i = 0; i < widths.length; i += 1) {
+          handleImageQuotaAdd(widths[i], heights[i]);
+        }
       }
+    } else {
+      formData.value.image_quotas = [];
     }
   };
 
@@ -789,11 +795,11 @@
     }
   };
 
-  const handleImageQuotaAdd = () => {
+  const handleImageQuotaAdd = (w?: number, h?: number) => {
     const imageQuota: ImageQuota = {
       fixed_quota: ref(),
-      width: ref(),
-      height: ref(),
+      width: w,
+      height: h,
       is_default: formData.value.image_quotas.length === 0 ? '1' : '',
     };
     formData.value.image_quotas.push(imageQuota);
