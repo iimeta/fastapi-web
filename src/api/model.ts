@@ -100,6 +100,7 @@ export interface ModelPage {
   type: number;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
+  midjourney_quotas: MidjourneyQuota[];
   data_format: number;
   is_public: boolean;
   status: number;
@@ -175,6 +176,7 @@ export interface ModelDetail {
   preset_config: PresetConfig;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
+  midjourney_quotas: MidjourneyQuota[];
   data_format: number;
   is_public: boolean;
   is_enable_model_agent: boolean;
