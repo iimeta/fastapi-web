@@ -51,10 +51,17 @@ export interface TextQuota {
 }
 
 export interface ImageQuota {
-  fixed_quota: any;
   width: any;
   height: any;
+  fixed_quota: any;
   is_default: string;
+}
+
+export interface MidjourneyQuota {
+  name: any;
+  action: any;
+  path: any;
+  fixed_quota: any;
 }
 
 export interface FallbackConfig {
@@ -67,6 +74,7 @@ export interface ModelAdvanced {
   preset_config: PresetConfig;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
+  midjourney_quotas: MidjourneyQuota[];
   data_format: string;
   is_public: boolean;
   is_enable_model_agent: boolean;

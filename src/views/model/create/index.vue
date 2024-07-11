@@ -35,6 +35,7 @@
               ]"
             >
               <a-select
+                id="corp"
                 v-model="formData.corp"
                 :placeholder="$t('model.placeholder.corp')"
                 allow-search
@@ -257,6 +258,62 @@
                 type="secondary"
                 shape="circle"
                 @click="handleImageQuotaDel(index)"
+              >
+                <icon-minus />
+              </a-button>
+            </a-form-item>
+            <a-form-item
+              v-for="(midjourney_quotas, index) of formData.midjourney_quotas"
+              v-show="isShowMidjourneyQuota"
+              :key="index"
+              :field="
+                `midjourney_quotas[${index}].name` &&
+                `midjourney_quotas[${index}].action` &&
+                `midjourney_quotas[${index}].path` &&
+                `midjourney_quotas[${index}].fixed_quota`
+              "
+              :label="`${index + 1}. ` + $t('model.label.midjourney_quotas')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.midjourney_quotas.required'),
+                },
+              ]"
+            >
+              <a-input
+                v-model="formData.midjourney_quotas[index].name"
+                :placeholder="$t('model.placeholder.midjourney_quotas.name')"
+                style="width: 53px; margin-right: 5px"
+              />
+              <a-input
+                v-model="formData.midjourney_quotas[index].action"
+                :placeholder="$t('model.placeholder.midjourney_quotas.action')"
+                style="width: 100px; margin-right: 5px"
+              />
+              <a-input
+                v-model="formData.midjourney_quotas[index].path"
+                :placeholder="$t('model.placeholder.midjourney_quotas.path')"
+                style="width: 178px; margin-right: 5px"
+              />
+              <a-input-number
+                v-model="formData.midjourney_quotas[index].fixed_quota"
+                :placeholder="
+                  $t('model.placeholder.midjourney_quotas.fixed_quota')
+                "
+                style="width: 95px"
+              />
+              <a-button
+                type="primary"
+                shape="circle"
+                style="margin: 0 10px 0 10px"
+                @click="handleMidjourneyQuotaAdd()"
+              >
+                <icon-plus />
+              </a-button>
+              <a-button
+                type="secondary"
+                shape="circle"
+                @click="handleMidjourneyQuotaDel(index)"
               >
                 <icon-minus />
               </a-button>
@@ -631,6 +688,7 @@
     queryModelList,
     ModelList,
     ImageQuota,
+    MidjourneyQuota,
   } from '@/api/model';
   import { queryCorpList, CorpList } from '@/api/corp';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
@@ -704,6 +762,7 @@
       fixed_quota: 1,
     },
     image_quotas: [],
+    midjourney_quotas: [],
     data_format: '1',
     is_public: true,
     is_enable_model_agent: false,
@@ -760,10 +819,23 @@
     }
   };
 
+  let isShowMidjourneyQuota = false;
   const handleTypeChange = () => {
+    isShowMidjourneyQuota = false;
+    const selectElement = document.getElementById('corp') as HTMLElement;
     if (formData.value.type === '2') {
       formData.value.text_quota.billing_method = '2';
-      if (formData.value.image_quotas.length === 0) {
+      if (selectElement.textContent === 'Midjourney') {
+        isShowMidjourneyQuota = true;
+        if (formData.value.midjourney_quotas.length === 0) {
+          const names = ['绘图'];
+          const actions = ['IMAGINE'];
+          const paths = ['/submit/imagine'];
+          for (let i = 0; i < names.length; i += 1) {
+            handleMidjourneyQuotaAdd(names[i], actions[i], paths[i]);
+          }
+        }
+      } else if (formData.value.image_quotas.length === 0) {
         const widths = [256, 512, 1024, 1024, 1792];
         const heights = [256, 512, 1024, 1792, 1024];
         for (let i = 0; i < widths.length; i += 1) {
@@ -797,9 +869,9 @@
 
   const handleImageQuotaAdd = (w?: number, h?: number) => {
     const imageQuota: ImageQuota = {
-      fixed_quota: ref(),
       width: w,
       height: h,
+      fixed_quota: ref(),
       is_default: formData.value.image_quotas.length === 0 ? '1' : '',
     };
     formData.value.image_quotas.push(imageQuota);
@@ -811,6 +883,22 @@
         formData.value.image_quotas[index === 0 ? 1 : 0].is_default = '1';
       }
       formData.value.image_quotas.splice(index, 1);
+    }
+  };
+
+  const handleMidjourneyQuotaAdd = (n?: string, a?: string, p?: string) => {
+    const midjourneyQuota: MidjourneyQuota = {
+      name: n,
+      action: a,
+      path: p,
+      fixed_quota: ref(),
+    };
+    formData.value.midjourney_quotas.push(midjourneyQuota);
+  };
+
+  const handleMidjourneyQuotaDel = (index: number) => {
+    if (formData.value.midjourney_quotas.length > 1) {
+      formData.value.midjourney_quotas.splice(index, 1);
     }
   };
 

@@ -35,6 +35,7 @@
               ]"
             >
               <a-select
+                id="corp"
                 v-model="formData.corp"
                 :placeholder="$t('model.placeholder.corp')"
                 allow-search
@@ -709,6 +710,7 @@
       fixed_quota: 1,
     },
     image_quotas: [],
+    midjourney_quotas: [],
     data_format: '',
     is_public: true,
     is_enable_model_agent: false,
@@ -822,7 +824,11 @@
   getModelDetail();
 
   const handleTypeChange = () => {
-    if (formData.value.type === '2') {
+    const selectElement = document.getElementById('corp') as HTMLElement;
+    if (
+      formData.value.type === '2' &&
+      selectElement.textContent !== 'Midjourney'
+    ) {
       formData.value.text_quota.billing_method = '2';
       if (formData.value.image_quotas.length === 0) {
         const widths = [256, 512, 1024, 1024, 1792];
