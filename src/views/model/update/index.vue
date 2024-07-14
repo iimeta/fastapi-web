@@ -838,11 +838,7 @@
         );
       }
 
-      if (
-        formData.value.type === '2' &&
-        data.image_quotas &&
-        data.corp_code !== 'Midjourney'
-      ) {
+      if (data.image_quotas) {
         isShowImageQuota.value =
           formData.value.type === '2' && data.corp_code !== 'Midjourney';
         formData.value.image_quotas = data.image_quotas;
@@ -854,11 +850,7 @@
         }
       }
 
-      if (
-        formData.value.type === '2' &&
-        data.midjourney_quotas &&
-        data.corp_code === 'Midjourney'
-      ) {
+      if (data.midjourney_quotas) {
         isShowMidjourneyQuota.value =
           formData.value.type === '2' && data.corp_code === 'Midjourney';
         formData.value.midjourney_quotas = data.midjourney_quotas;
