@@ -39,6 +39,7 @@
                 v-model="formData.corp"
                 :placeholder="$t('model.placeholder.corp')"
                 allow-search
+                @change="handleCorpChange"
               >
                 <a-option
                   v-for="item in corps"
@@ -208,7 +209,7 @@
             </a-form-item>
             <a-form-item
               v-for="(image_quotas, index) of formData.image_quotas"
-              v-show="formData.type === '2'"
+              v-show="isShowImageQuota"
               :key="index"
               :field="
                 `image_quotas[${index}].width` &&
@@ -283,24 +284,24 @@
               <a-input
                 v-model="formData.midjourney_quotas[index].name"
                 :placeholder="$t('model.placeholder.midjourney_quotas.name')"
-                style="width: 53px; margin-right: 5px"
+                style="width: 95px; margin-right: 5px"
               />
               <a-input
                 v-model="formData.midjourney_quotas[index].action"
                 :placeholder="$t('model.placeholder.midjourney_quotas.action')"
-                style="width: 100px; margin-right: 5px"
+                style="width: 102px; margin-right: 5px"
               />
               <a-input
                 v-model="formData.midjourney_quotas[index].path"
                 :placeholder="$t('model.placeholder.midjourney_quotas.path')"
-                style="width: 178px; margin-right: 5px"
+                style="width: 138px; margin-right: 5px"
               />
               <a-input-number
                 v-model="formData.midjourney_quotas[index].fixed_quota"
                 :placeholder="
                   $t('model.placeholder.midjourney_quotas.fixed_quota')
                 "
-                style="width: 95px"
+                style="width: 90px"
               />
               <a-button
                 type="primary"
@@ -837,7 +838,13 @@
         );
       }
 
-      if (data.image_quotas) {
+      if (
+        formData.value.type === '2' &&
+        data.image_quotas &&
+        data.corp_code !== 'Midjourney'
+      ) {
+        isShowImageQuota.value =
+          formData.value.type === '2' && data.corp_code !== 'Midjourney';
         formData.value.image_quotas = data.image_quotas;
         for (let i = 0; i < formData.value.image_quotas.length; i += 1) {
           if (formData.value.image_quotas[i].is_default) {
@@ -847,8 +854,13 @@
         }
       }
 
-      if (data.midjourney_quotas) {
-        isShowMidjourneyQuota = true;
+      if (
+        formData.value.type === '2' &&
+        data.midjourney_quotas &&
+        data.corp_code === 'Midjourney'
+      ) {
+        isShowMidjourneyQuota.value =
+          formData.value.type === '2' && data.corp_code === 'Midjourney';
         formData.value.midjourney_quotas = data.midjourney_quotas;
       }
 
@@ -885,31 +897,112 @@
   };
   getModelDetail();
 
-  let isShowMidjourneyQuota = false;
+  const handleCorpChange = () => {
+    isShowMidjourneyQuota.value = false;
+    isShowImageQuota.value = false;
+    for (let i = 0; i < corps.value.length; i += 1) {
+      if (
+        corps.value[i].id === formData.value.corp &&
+        corps.value[i].code === 'Midjourney'
+      ) {
+        handleMidjourneyQuota();
+        return;
+      }
+    }
+    handleTypeChange();
+  };
+
+  const isShowImageQuota = ref(false);
   const handleTypeChange = () => {
-    isShowMidjourneyQuota = false;
-    const selectElement = document.getElementById('corp') as HTMLElement;
+    isShowImageQuota.value = false;
+    isShowMidjourneyQuota.value = false;
     if (formData.value.type === '2') {
-      formData.value.text_quota.billing_method = '2';
-      if (selectElement.textContent === 'Midjourney') {
-        isShowMidjourneyQuota = true;
-        if (formData.value.midjourney_quotas.length === 0) {
-          const names = ['绘图'];
-          const actions = ['IMAGINE'];
-          const paths = ['/submit/imagine'];
-          for (let i = 0; i < names.length; i += 1) {
-            handleMidjourneyQuotaAdd(names[i], actions[i], paths[i]);
-          }
+      for (let i = 0; i < corps.value.length; i += 1) {
+        if (
+          corps.value[i].id === formData.value.corp &&
+          corps.value[i].code === 'Midjourney'
+        ) {
+          handleMidjourneyQuota();
+          return;
         }
-      } else if (formData.value.image_quotas.length === 0) {
+      }
+
+      isShowImageQuota.value = true;
+      formData.value.text_quota.billing_method = '2';
+      if (formData.value.image_quotas.length === 0) {
         const widths = [256, 512, 1024, 1024, 1792];
         const heights = [256, 512, 1024, 1792, 1024];
         for (let i = 0; i < widths.length; i += 1) {
           handleImageQuotaAdd(widths[i], heights[i]);
         }
       }
-    } else {
-      formData.value.image_quotas = [];
+    }
+  };
+
+  const isShowMidjourneyQuota = ref(false);
+  const handleMidjourneyQuota = () => {
+    isShowImageQuota.value = false;
+    isShowMidjourneyQuota.value = true;
+    formData.value.type = '2';
+    formData.value.text_quota.billing_method = '2';
+    if (formData.value.midjourney_quotas.length === 0) {
+      const names = [
+        '绘图',
+        '放大',
+        '变换',
+        '强变换',
+        '弱变换',
+        '描述',
+        '混图',
+        '重绘',
+        '局部重绘',
+        '变焦',
+        '自定义变焦',
+        '平移',
+        '缩词',
+        '窗口',
+        '换脸',
+        '任务',
+      ];
+      const actions = [
+        'IMAGINE',
+        'UPSCALE',
+        'VARIATION',
+        'HIGH_VARIATION',
+        'LOW_VARIATION',
+        'DESCRIBE',
+        'BLEND',
+        'REROLL',
+        'INPAINT',
+        'ZOOM',
+        'CUSTOM_ZOOM',
+        'PAN',
+        'SHORTEN',
+        'MODAL',
+        'SWAP_FACE',
+        'TASK',
+      ];
+      const paths = [
+        '/submit/imagine',
+        '/submit/change',
+        '/submit/change',
+        '/submit/action',
+        '/submit/action',
+        '/submit/describe',
+        '/submit/blend',
+        '/submit/action',
+        '/submit/action',
+        '/submit/action',
+        '/submit/action',
+        '/submit/action',
+        '/submit/shorten',
+        '/submit/modal',
+        '/insight-face/swap',
+        '/task/*',
+      ];
+      for (let i = 0; i < names.length; i += 1) {
+        handleMidjourneyQuotaAdd(names[i], actions[i], paths[i]);
+      }
     }
   };
 

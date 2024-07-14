@@ -50,7 +50,7 @@ export default {
   'model.placeholder.image_quotas.width': '请输入宽度',
   'model.placeholder.image_quotas.height': '请输入高度',
   'model.placeholder.image_quotas.fixed_quota': '请输入额度',
-  'model.label.midjourney_quotas': 'MJ额度',
+  'model.label.midjourney_quotas': 'MJ接口额度',
   'model.placeholder.midjourney_quotas': '额度',
   'model.error.midjourney_quotas.required': '请输入名称、动作、路径和额度',
   'model.placeholder.midjourney_quotas.name': '名称',

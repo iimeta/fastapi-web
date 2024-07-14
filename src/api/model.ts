@@ -167,6 +167,7 @@ export interface ModelDetail {
   id: string;
   corp: string;
   corp_name: string;
+  corp_code: string;
   name: string;
   model: string;
   type: number;
