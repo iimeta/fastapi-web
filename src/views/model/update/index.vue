@@ -35,7 +35,6 @@
               ]"
             >
               <a-select
-                id="corp"
                 v-model="formData.corp"
                 :placeholder="$t('model.placeholder.corp')"
                 allow-search
@@ -702,11 +701,15 @@
   const router = useRouter();
 
   const corps = ref<CorpList[]>([]);
+  const corpMap = new Map();
   const getCorpList = async () => {
     setLoading(true);
     try {
       const { data } = await queryCorpList();
       corps.value = data.items;
+      for (let i = 0; i < corps.value.length; i += 1) {
+        corpMap.set(corps.value[i].id, corps.value[i]);
+      }
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -892,14 +895,10 @@
   const handleCorpChange = () => {
     isShowMidjourneyQuota.value = false;
     isShowImageQuota.value = false;
-    for (let i = 0; i < corps.value.length; i += 1) {
-      if (
-        corps.value[i].id === formData.value.corp &&
-        corps.value[i].code === 'Midjourney'
-      ) {
-        handleMidjourneyQuota();
-        return;
-      }
+    const corp = corpMap.get(formData.value.corp);
+    if (corp && corp.code === 'Midjourney') {
+      handleMidjourneyQuota();
+      return;
     }
     handleTypeChange();
   };
@@ -909,14 +908,10 @@
     isShowImageQuota.value = false;
     isShowMidjourneyQuota.value = false;
     if (formData.value.type === '2') {
-      for (let i = 0; i < corps.value.length; i += 1) {
-        if (
-          corps.value[i].id === formData.value.corp &&
-          corps.value[i].code === 'Midjourney'
-        ) {
-          handleMidjourneyQuota();
-          return;
-        }
+      const corp = corpMap.get(formData.value.corp);
+      if (corp && corp.code === 'Midjourney') {
+        handleMidjourneyQuota();
+        return;
       }
 
       isShowImageQuota.value = true;
