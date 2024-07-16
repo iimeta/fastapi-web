@@ -1092,7 +1092,7 @@
                       :data="currentData.messages"
                       :show-length="true"
                     />
-                    <span v-else>无</span>
+                    <span v-else>-</span>
                   </a-space>
                 </a-tab-pane>
               </a-tabs>
@@ -1116,7 +1116,7 @@
                       :data="currentData.model_agent"
                       :show-length="true"
                     />
-                    <span v-else>无</span>
+                    <span v-else>-</span>
                   </a-space>
                 </a-tab-pane>
               </a-tabs>
@@ -1139,6 +1139,7 @@
   } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import dayjs from 'dayjs';
   import { quotaConv } from '@/utils/common';
   import {
     queryChatPage,
@@ -1203,7 +1204,10 @@
       models: [],
       total_time: ref(),
       status: ref(),
-      req_time: [],
+      req_time: [
+        dayjs().format('YYYY-MM-DD 00:00:00'),
+        dayjs().format('YYYY-MM-DD 23:59:59'),
+      ],
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -1371,6 +1375,7 @@
   const fetchData = async (
     params: ChatPageParams = {
       ...basePagination,
+      ...formModel.value,
     }
   ) => {
     setLoading(true);
