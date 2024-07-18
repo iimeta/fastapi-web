@@ -2,10 +2,9 @@
   <a-card
     class="general-card"
     :title="$t('workplace.announcement')"
-    :header-style="{ padding: '20px 20px 0 20px' }"
-    :body-style="{ padding: '15px 20px 13px 20px' }"
+    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
+    :body-style="{ padding: '10px 20px 7px 20px' }"
     :bordered="false"
-    style="height: 160px"
   >
     <template #extra>
       <a-link
@@ -36,17 +35,17 @@
     {
       type: 'blue',
       label: '通知',
+      content: 'v0.4.0 版本发布啦! 啦!! 啦!!!',
+    },
+    {
+      type: 'blue',
+      label: '通知',
       content: 'v0.3.0 版本发布啦! 啦!! 啦!!!',
     },
     {
       type: 'blue',
       label: '通知',
       content: 'v0.2.0 版本发布啦! 啦!! 啦!!!',
-    },
-    {
-      type: 'blue',
-      label: '通知',
-      content: 'v0.1.0 版本发布啦! 啦!! 啦!!!',
     },
   ];
 </script>

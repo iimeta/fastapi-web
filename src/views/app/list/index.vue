@@ -391,7 +391,7 @@
           <a-form-item field="models" :label="$t('app.label.models')">
             <a-select
               v-model="formData.models"
-              :placeholder="$t('app.placeholder.models')"
+              :placeholder="$t('app.placeholder.key.models')"
               :max-tag-count="3"
               multiple
               allow-search

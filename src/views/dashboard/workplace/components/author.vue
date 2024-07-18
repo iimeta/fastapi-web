@@ -2,8 +2,8 @@
   <a-card
     class="general-card"
     :title="$t('workplace.author')"
-    :header-style="{ padding: '20px 20px 0 20px' }"
-    :body-style="{ padding: '20px' }"
+    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
+    :body-style="{ padding: '10px 20px 15px 20px' }"
     :bordered="false"
   >
     <a-carousel

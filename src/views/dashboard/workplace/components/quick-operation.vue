@@ -2,8 +2,8 @@
   <a-card
     class="general-card"
     :title="$t('workplace.quick.operation')"
-    :header-style="{ padding: '20px 20px 0 20px' }"
-    :body-style="{ padding: '24px 20px 0 20px' }"
+    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
+    :body-style="{ padding: '10px 20px 2px 20px' }"
     :bordered="false"
   >
     <template #extra>
@@ -84,12 +84,31 @@
       router: 'ChatList',
       permission: ['user', 'admin'],
     },
-    // {
-    //   text: 'workplace.advanced',
-    //   icon: 'icon-settings',
-    //   permission: ['user', 'admin'],
-    // },
+    {
+      text: 'workplace.chatManagement',
+      icon: 'icon-message',
+      router: 'ChatList',
+      permission: ['user', 'admin'],
+    },
+    {
+      text: 'workplace.chatManagement',
+      icon: 'icon-message',
+      router: 'ChatList',
+      permission: ['user', 'admin'],
+    },
+    {
+      text: 'workplace.chatManagement',
+      icon: 'icon-message',
+      router: 'ChatList',
+      permission: ['user', 'admin'],
+    },
   ];
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+  .moduler-wrap .wrapper {
+    margin-top: 10px;
+    text-align: center;
+    cursor: pointer;
+  }
+</style>

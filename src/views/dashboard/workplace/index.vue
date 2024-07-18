@@ -34,8 +34,15 @@
         >
           <Expense />
         </a-grid-item>
-        <a-grid-item class="panel moduler-wrap" :span="24">
+        <a-grid-item
+          v-permission="['admin']"
+          class="panel moduler-wrap"
+          :span="24"
+        >
           <QuickOperation />
+        </a-grid-item>
+        <a-grid-item class="panel" :span="24">
+          <Sponsor />
         </a-grid-item>
         <a-grid-item class="panel" :span="24">
           <Author />
@@ -43,9 +50,7 @@
         <a-grid-item class="panel" :span="24">
           <Announcement />
         </a-grid-item>
-        <a-grid-item v-permission="['admin']" class="panel" :span="24">
-          <Sponsor />
-        </a-grid-item>
+
         <a-grid-item class="panel" :span="24">
           <Docs />
         </a-grid-item>

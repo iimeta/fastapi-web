@@ -2,8 +2,8 @@
   <a-card
     class="general-card"
     :title="$t('workplace.sponsor')"
-    :header-style="{ padding: '20px 20px 0 20px' }"
-    :body-style="{ padding: '20px' }"
+    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
+    :body-style="{ padding: '10px 20px 20px 20px' }"
     :bordered="false"
   >
     <a-carousel
@@ -23,10 +23,15 @@
 
 <script lang="ts" setup>
   const imageSrc = [
-    'https://www.fastapi.ai/public/images/yunapi.png',
+    'https://www.fastapi.ai/public/images/fastapi.png',
+    'https://www.fastapi.ai/public/images/iimyun.png',
     'https://www.fastapi.ai/public/images/yunapi.png',
   ];
-  const urlSrc = ['https://api.zyai.online', 'https://api.zyai.online'];
+  const urlSrc = [
+    'https://www.fastapi.ai',
+    'https://www.iimyun.com/cart?fid=3&gid=11',
+    'https://api.zyai.online',
+  ];
 </script>
 
 <style lang="less" scoped>
