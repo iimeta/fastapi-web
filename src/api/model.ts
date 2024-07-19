@@ -51,10 +51,16 @@ export interface TextQuota {
 }
 
 export interface ImageQuota {
-  width: any;
-  height: any;
+  width?: any;
+  height?: any;
   fixed_quota: any;
+  mode?: string;
   is_default: string;
+}
+
+export interface MultimodalQuota {
+  text_quota: TextQuota;
+  image_quotas: ImageQuota[];
 }
 
 export interface MidjourneyQuota {
@@ -74,6 +80,7 @@ export interface ModelAdvanced {
   preset_config: PresetConfig;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
+  multimodal_quota: MultimodalQuota;
   midjourney_quotas: MidjourneyQuota[];
   data_format: string;
   is_public: boolean;
@@ -177,6 +184,7 @@ export interface ModelDetail {
   preset_config: PresetConfig;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
+  multimodal_quota: MultimodalQuota;
   midjourney_quotas: MidjourneyQuota[];
   data_format: number;
   is_public: boolean;

@@ -5,7 +5,7 @@
         <icon-common />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.model') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.model.create') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.model.update') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -123,6 +123,7 @@
               $t('model.title.advanced')
             }}</a-divider>
             <a-form-item
+              v-if="!isShowMultimodalTextQuota"
               field="text_quota.billing_method"
               :label="$t('model.label.billingMethod')"
               :rules="[
@@ -146,7 +147,10 @@
               </a-space>
             </a-form-item>
             <a-form-item
-              v-if="formData.text_quota.billing_method === '1'"
+              v-if="
+                !isShowMultimodalTextQuota &&
+                formData.text_quota.billing_method === '1'
+              "
               field="text_quota.prompt_ratio"
               :label="$t('model.label.promptRatio')"
               :rules="[
@@ -165,7 +169,10 @@
               <div> ${{ priceConv(formData.text_quota.prompt_ratio) }}/k </div>
             </a-form-item>
             <a-form-item
-              v-if="formData.text_quota.billing_method === '1'"
+              v-if="
+                !isShowMultimodalTextQuota &&
+                formData.text_quota.billing_method === '1'
+              "
               field="text_quota.completion_ratio"
               :label="$t('model.label.completionRatio')"
               :rules="[
@@ -187,6 +194,7 @@
             </a-form-item>
             <a-form-item
               v-if="
+                !isShowMultimodalTextQuota &&
                 formData.text_quota.billing_method === '2' &&
                 formData.type !== '2'
               "
@@ -243,7 +251,7 @@
                 v-model="formData.image_quotas[index].is_default"
                 value="1"
                 style="width: 60px"
-                @change="handleIsDefaultChange(index)"
+                @change="handleImageQuotaIsDefaultChange(index)"
                 >默认</a-radio
               >
               <a-button
@@ -258,6 +266,161 @@
                 type="secondary"
                 shape="circle"
                 @click="handleImageQuotaDel(index)"
+              >
+                <icon-minus />
+              </a-button>
+            </a-form-item>
+            <a-form-item
+              v-if="isShowMultimodalTextQuota"
+              field="multimodal_quota.text_quota.billing_method"
+              :label="$t('model.label.billingMethod')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.billingMethod.required'),
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.multimodal_quota.text_quota.billing_method"
+                  value="1"
+                  :default-checked="true"
+                  :disabled="formData.type === '2'"
+                  >倍率</a-radio
+                >
+                <a-radio
+                  v-model="formData.multimodal_quota.text_quota.billing_method"
+                  value="2"
+                  >固定额度</a-radio
+                >
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowMultimodalTextQuota &&
+                formData.multimodal_quota.text_quota.billing_method === '1'
+              "
+              field="multimodal_quota.text_quota.prompt_ratio"
+              :label="$t('model.label.promptRatio')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.promptRatio.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.multimodal_quota.text_quota.prompt_ratio"
+                :min="0.001"
+                :placeholder="$t('model.placeholder.promptRatio')"
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  priceConv(formData.multimodal_quota.text_quota.prompt_ratio)
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowMultimodalTextQuota &&
+                formData.multimodal_quota.text_quota.billing_method === '1'
+              "
+              field="multimodal_quota.text_quota.completion_ratio"
+              :label="$t('model.label.completionRatio')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.completionRatio.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.multimodal_quota.text_quota.completion_ratio"
+                :min="0.001"
+                :placeholder="$t('model.placeholder.completionRatio')"
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  priceConv(
+                    formData.multimodal_quota.text_quota.completion_ratio
+                  )
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowMultimodalTextQuota &&
+                formData.multimodal_quota.text_quota.billing_method === '2'
+              "
+              field="multimodal_quota.text_quota.fixed_quota"
+              :label="$t('model.label.fixedQuota')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.fixedQuota.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.multimodal_quota.text_quota.fixed_quota"
+                :min="0"
+                :max="9999999999999"
+                :placeholder="$t('model.placeholder.fixedQuota')"
+              />
+            </a-form-item>
+            <a-form-item
+              v-for="(image_quotas, index) of formData.multimodal_quota
+                .image_quotas"
+              v-show="isShowMultimodalImageQuota"
+              :key="index"
+              :field="
+                `multimodal_quota.image_quotas[${index}].mode` &&
+                `multimodal_quota.image_quotas[${index}].fixed_quota`
+              "
+              :label="`${index + 1}. ` + $t('model.label.image_mode_quotas')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.image_mode_quotas.required'),
+                },
+              ]"
+            >
+              <a-input
+                v-model="formData.multimodal_quota.image_quotas[index].mode"
+                :placeholder="$t('model.placeholder.image_quotas.mode')"
+                style="width: 185px; margin-right: 5px"
+              />
+              <a-input-number
+                v-model="
+                  formData.multimodal_quota.image_quotas[index].fixed_quota
+                "
+                :placeholder="$t('model.placeholder.image_quotas.fixed_quota')"
+                style="width: 185px; margin-right: 5px"
+              />
+              <a-radio
+                v-model="
+                  formData.multimodal_quota.image_quotas[index].is_default
+                "
+                value="1"
+                style="width: 60px"
+                @change="handleMultimodalImageQuotaIsDefaultChange(index)"
+                >默认</a-radio
+              >
+              <a-button
+                type="primary"
+                shape="circle"
+                style="margin: 0 10px 0 10px"
+                @click="handleMultimodalImageQuotaAdd()"
+              >
+                <icon-plus />
+              </a-button>
+              <a-button
+                type="secondary"
+                shape="circle"
+                @click="handleMultimodalImageQuotaDel(index)"
               >
                 <icon-minus />
               </a-button>
@@ -335,9 +498,9 @@
                   :default-checked="true"
                   >统一格式</a-radio
                 >
-                <a-radio v-model="formData.data_format" value="2"
+                <!-- <a-radio v-model="formData.data_format" value="2"
                   >官方格式</a-radio
-                >
+                > -->
               </a-space>
             </a-form-item>
             <a-form-item
@@ -771,6 +934,15 @@
       fixed_quota: 1,
     },
     image_quotas: [],
+    multimodal_quota: {
+      text_quota: {
+        billing_method: '1',
+        prompt_ratio: 1,
+        completion_ratio: 1,
+        fixed_quota: 1,
+      },
+      image_quotas: [],
+    },
     midjourney_quotas: [],
     data_format: '',
     is_public: true,
@@ -793,6 +965,24 @@
   });
 
   const submitForm = async () => {
+    if (formData.value.type === '2') {
+      const corp = corpMap.get(formData.value.corp);
+      if (corp && corp.code === 'Midjourney') {
+        formData.value.image_quotas = [];
+        formData.value.multimodal_quota.image_quotas = [];
+      } else {
+        formData.value.multimodal_quota.image_quotas = [];
+        formData.value.midjourney_quotas = [];
+      }
+    } else if (formData.value.type === '100') {
+      formData.value.image_quotas = [];
+      formData.value.midjourney_quotas = [];
+    } else {
+      formData.value.image_quotas = [];
+      formData.value.multimodal_quota.image_quotas = [];
+      formData.value.midjourney_quotas = [];
+    }
+
     const res = await formRef.value?.validate();
     if (!res) {
       setLoading(true);
@@ -845,11 +1035,38 @@
         isShowImageQuota.value =
           formData.value.type === '2' && data.corp_code !== 'Midjourney';
         formData.value.image_quotas = data.image_quotas;
+
         for (let i = 0; i < formData.value.image_quotas.length; i += 1) {
           if (formData.value.image_quotas[i].is_default) {
             formData.value.image_quotas[i].is_default = '1';
             break;
           }
+        }
+      }
+
+      if (data.multimodal_quota) {
+        isShowMultimodalTextQuota.value =
+          formData.value.type === '100' && data.corp_code !== 'Midjourney';
+        isShowMultimodalImageQuota.value =
+          formData.value.type === '100' && data.corp_code !== 'Midjourney';
+        formData.value.multimodal_quota = data.multimodal_quota;
+        formData.value.multimodal_quota.text_quota.billing_method = String(
+          formData.value.multimodal_quota.text_quota.billing_method
+        );
+
+        if (formData.value.multimodal_quota.image_quotas) {
+          for (
+            let i = 0;
+            i < formData.value.multimodal_quota.image_quotas.length;
+            i += 1
+          ) {
+            if (formData.value.multimodal_quota.image_quotas[i].is_default) {
+              formData.value.multimodal_quota.image_quotas[i].is_default = '1';
+              break;
+            }
+          }
+        } else {
+          formData.value.multimodal_quota.image_quotas = [];
         }
       }
 
@@ -904,9 +1121,17 @@
   };
 
   const isShowImageQuota = ref(false);
+  const isShowMultimodalTextQuota = ref(false);
+  const isShowMultimodalImageQuota = ref(false);
+  const isShowMidjourneyQuota = ref(false);
+
   const handleTypeChange = () => {
     isShowImageQuota.value = false;
+    isShowMultimodalTextQuota.value = false;
+    isShowMultimodalImageQuota.value = false;
     isShowMidjourneyQuota.value = false;
+    formData.value.text_quota.billing_method = '1';
+
     if (formData.value.type === '2') {
       const corp = corpMap.get(formData.value.corp);
       if (corp && corp.code === 'Midjourney') {
@@ -923,10 +1148,85 @@
           handleImageQuotaAdd(widths[i], heights[i]);
         }
       }
+    } else if (formData.value.type === '100') {
+      isShowMultimodalTextQuota.value = true;
+      isShowMultimodalImageQuota.value = true;
+
+      if (formData.value.multimodal_quota.image_quotas.length === 0) {
+        const modes = ['auto', 'high', 'low'];
+        for (let i = 0; i < modes.length; i += 1) {
+          handleMultimodalImageQuotaAdd(modes[i]);
+        }
+      }
     }
   };
 
-  const isShowMidjourneyQuota = ref(false);
+  const handleImageQuotaAdd = (w?: number, h?: number) => {
+    const imageQuota: ImageQuota = {
+      width: w,
+      height: h,
+      fixed_quota: ref(),
+      is_default: formData.value.image_quotas.length === 0 ? '1' : '',
+    };
+    formData.value.image_quotas.push(imageQuota);
+  };
+
+  const handleImageQuotaDel = (index: number) => {
+    if (formData.value.image_quotas.length > 1) {
+      if (formData.value.image_quotas[index].is_default === '1') {
+        formData.value.image_quotas[index === 0 ? 1 : 0].is_default = '1';
+      }
+      formData.value.image_quotas.splice(index, 1);
+    }
+  };
+
+  const handleImageQuotaIsDefaultChange = (index: number) => {
+    for (let i = 0; i < formData.value.image_quotas.length; i += 1) {
+      if (i === index) {
+        formData.value.image_quotas[i].is_default = '1';
+      } else {
+        formData.value.image_quotas[i].is_default = '';
+      }
+    }
+  };
+
+  const handleMultimodalImageQuotaAdd = (m?: string) => {
+    const imageQuota: ImageQuota = {
+      mode: m,
+      fixed_quota: ref(),
+      is_default:
+        formData.value.multimodal_quota.image_quotas.length === 0 ? '1' : '',
+    };
+    formData.value.multimodal_quota.image_quotas.push(imageQuota);
+  };
+
+  const handleMultimodalImageQuotaDel = (index: number) => {
+    if (formData.value.multimodal_quota.image_quotas.length > 1) {
+      if (
+        formData.value.multimodal_quota.image_quotas[index].is_default === '1'
+      ) {
+        formData.value.multimodal_quota.image_quotas[
+          index === 0 ? 1 : 0
+        ].is_default = '1';
+      }
+      formData.value.multimodal_quota.image_quotas.splice(index, 1);
+    }
+  };
+
+  const handleMultimodalImageQuotaIsDefaultChange = (index: number) => {
+    for (
+      let i = 0;
+      i < formData.value.multimodal_quota.image_quotas.length;
+      i += 1
+    ) {
+      if (i === index) {
+        formData.value.multimodal_quota.image_quotas[i].is_default = '1';
+      } else {
+        formData.value.multimodal_quota.image_quotas[i].is_default = '';
+      }
+    }
+  };
+
   const handleMidjourneyQuota = () => {
     isShowImageQuota.value = false;
     isShowMidjourneyQuota.value = true;
@@ -993,6 +1293,22 @@
     }
   };
 
+  const handleMidjourneyQuotaAdd = (n?: string, a?: string, p?: string) => {
+    const midjourneyQuota: MidjourneyQuota = {
+      name: n,
+      action: a,
+      path: p,
+      fixed_quota: ref(),
+    };
+    formData.value.midjourney_quotas.push(midjourneyQuota);
+  };
+
+  const handleMidjourneyQuotaDel = (index: number) => {
+    if (formData.value.midjourney_quotas.length > 1) {
+      formData.value.midjourney_quotas.splice(index, 1);
+    }
+  };
+
   const handleForwardRuleChange = () => {
     if (
       !formData.value.is_enable_forward &&
@@ -1020,51 +1336,6 @@
       ) {
         formData.value.forward_config.keywords = [];
         formData.value.forward_config.target_models = [];
-      }
-    }
-  };
-
-  const handleImageQuotaAdd = (w?: number, h?: number) => {
-    const imageQuota: ImageQuota = {
-      fixed_quota: ref(),
-      width: w,
-      height: h,
-      is_default: formData.value.image_quotas.length === 0 ? '1' : '',
-    };
-    formData.value.image_quotas.push(imageQuota);
-  };
-
-  const handleImageQuotaDel = (index: number) => {
-    if (formData.value.image_quotas.length > 1) {
-      if (formData.value.image_quotas[index].is_default === '1') {
-        formData.value.image_quotas[index === 0 ? 1 : 0].is_default = '1';
-      }
-      formData.value.image_quotas.splice(index, 1);
-    }
-  };
-
-  const handleMidjourneyQuotaAdd = (n?: string, a?: string, p?: string) => {
-    const midjourneyQuota: MidjourneyQuota = {
-      name: n,
-      action: a,
-      path: p,
-      fixed_quota: ref(),
-    };
-    formData.value.midjourney_quotas.push(midjourneyQuota);
-  };
-
-  const handleMidjourneyQuotaDel = (index: number) => {
-    if (formData.value.midjourney_quotas.length > 1) {
-      formData.value.midjourney_quotas.splice(index, 1);
-    }
-  };
-
-  const handleIsDefaultChange = (index: number) => {
-    for (let i = 0; i < formData.value.image_quotas.length; i += 1) {
-      if (i === index) {
-        formData.value.image_quotas[i].is_default = '1';
-      } else {
-        formData.value.image_quotas[i].is_default = '';
       }
     }
   };
