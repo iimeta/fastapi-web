@@ -2,7 +2,7 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-wechat />
+        <icon-message />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.chat') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.chat.list') }}</a-breadcrumb-item>
