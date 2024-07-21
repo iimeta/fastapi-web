@@ -1159,7 +1159,7 @@
     ChatPageParams,
     queryChatDetail,
     ChatDetail,
-  } from '@/api/chat';
+  } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -1596,3 +1596,4 @@
     color: rgb(var(--arcoblue-6));
   }
 </style>
+@/api/log

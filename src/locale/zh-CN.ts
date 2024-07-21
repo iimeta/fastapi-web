@@ -10,8 +10,9 @@ import localeApp from '@/views/app/locale/zh-CN';
 import localeModel from '@/views/model/locale/zh-CN';
 import localeKey from '@/views/key/locale/zh-CN';
 import localeAgent from '@/views/agent/locale/zh-CN';
-import localeChat from '@/views/chat/locale/zh-CN';
 import localeCorp from '@/views/corp/locale/zh-CN';
+import localeChat from '@/views/log/chat/locale/zh-CN';
+import localeImage from '@/views/log/image/locale/zh-CN';
 
 import localeSettings from './zh-CN/settings';
 
@@ -54,6 +55,7 @@ export default {
   ...localeModel,
   ...localeKey,
   ...localeAgent,
-  ...localeChat,
   ...localeCorp,
+  ...localeChat,
+  ...localeImage,
 };
