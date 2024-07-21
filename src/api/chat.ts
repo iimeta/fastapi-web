@@ -52,10 +52,23 @@ export interface TextQuota {
 }
 
 export interface ImageQuota {
-  fixed_quota: number;
-  width: number;
-  height: number;
-  is_default: boolean;
+  width?: any;
+  height?: any;
+  fixed_quota: any;
+  mode?: string;
+  is_default: string;
+}
+
+export interface MultimodalQuota {
+  text_quota: TextQuota;
+  image_quotas: ImageQuota[];
+}
+
+export interface MidjourneyQuota {
+  name: any;
+  action: any;
+  path: any;
+  fixed_quota: any;
 }
 
 export interface ForwardConfig {
@@ -99,6 +112,7 @@ export interface ChatDetail {
   completion: string;
   messages: any;
   text_quota: TextQuota;
+  multimodal_quota: MultimodalQuota;
   prompt_tokens: number;
   completion_tokens: number;
   total_tokens: number;

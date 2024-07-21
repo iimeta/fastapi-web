@@ -286,13 +286,7 @@
                   v-model="formData.multimodal_quota.text_quota.billing_method"
                   value="1"
                   :default-checked="true"
-                  :disabled="formData.type === '2'"
                   >倍率</a-radio
-                >
-                <a-radio
-                  v-model="formData.multimodal_quota.text_quota.billing_method"
-                  value="2"
-                  >固定额度</a-radio
                 >
               </a-space>
             </a-form-item>

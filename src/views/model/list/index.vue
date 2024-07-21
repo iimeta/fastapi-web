@@ -395,16 +395,26 @@
         </template>
         <template #prompt_ratio="{ record }">
           {{
-            record.text_quota.billing_method === 1
-              ? `$${priceConv(record.text_quota.prompt_ratio)}/k`
+            record.type !== 100
+              ? record.text_quota.billing_method === 1
+                ? `$${priceConv(record.text_quota.prompt_ratio)}/k`
+                : '-'
+              : record.multimodal_quota.text_quota.billing_method === 1
+              ? `$${priceConv(
+                  record.multimodal_quota.text_quota.prompt_ratio
+                )}/k`
               : '-'
           }}
         </template>
         <template #completion_ratio="{ record }">
           {{
-            record.text_quota.billing_method === 1
-              ? `$${priceConv(record.text_quota.completion_ratio)}/k`
-              : `$${quotaConv(record.text_quota.fixed_quota)}/次`
+            record.type !== 100
+              ? record.text_quota.billing_method === 1
+                ? `$${priceConv(record.text_quota.completion_ratio)}/k`
+                : `$${quotaConv(record.text_quota.fixed_quota)}/次`
+              : `$${priceConv(
+                  record.multimodal_quota.text_quota.completion_ratio
+                )}/k`
           }}
         </template>
         <template #status="{ record }">

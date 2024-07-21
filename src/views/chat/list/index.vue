@@ -590,16 +590,23 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{
-                currentData.text_quota.prompt_ratio || '-'
+                currentData.type !== 100
+                  ? currentData.text_quota.prompt_ratio || '-'
+                  : currentData.multimodal_quota.text_quota.prompt_ratio || '-'
               }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="回答倍率">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{
-                currentData.text_quota.completion_ratio || '-'
-              }}</span>
+              <span v-else
+                >{{
+                  currentData.type !== 100
+                    ? currentData.text_quota.completion_ratio || '-'
+                    : currentData.multimodal_quota.text_quota
+                        .completion_ratio || '-'
+                }}
+              </span>
             </a-descriptions-item>
             <a-descriptions-item label="提问令牌数">
               <a-skeleton v-if="loading" :animation="true">
@@ -913,7 +920,9 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{
-                currentData.text_quota.prompt_ratio || '-'
+                currentData.type !== 100
+                  ? currentData.text_quota.prompt_ratio || '-'
+                  : currentData.multimodal_quota.text_quota.prompt_ratio || '-'
               }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="回答倍率">
@@ -921,7 +930,10 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{
-                currentData.text_quota.completion_ratio || '-'
+                currentData.type !== 100
+                  ? currentData.text_quota.completion_ratio || '-'
+                  : currentData.multimodal_quota.text_quota.completion_ratio ||
+                    '-'
               }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="提问令牌数">
