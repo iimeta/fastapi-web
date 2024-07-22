@@ -797,7 +797,7 @@
 
     setLoading(true);
     try {
-      await submitAppKeyConfig(formData.value); // The mock api default success
+      await submitAppKeyConfig(formData.value);
       navigator.clipboard.writeText(formData.value.key);
       Message.success(t('app.success.key_config'));
       done();

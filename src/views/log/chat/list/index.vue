@@ -1596,4 +1596,3 @@
     color: rgb(var(--arcoblue-6));
   }
 </style>
-@/api/log

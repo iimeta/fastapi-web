@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-message />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.chat') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.chat.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.image') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.image.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -146,12 +146,8 @@
       </a-row>
       <a-divider style="margin-top: 0" />
       <a-row style="margin-bottom: 16px">
-        <a-col :span="12">
-          花费 = ( 提问 × 提问倍率 + 回答 × 回答倍率 ) ÷ 500000
-          &nbsp;&nbsp;或&nbsp;&nbsp; 回答 ÷ 500000
-        </a-col>
         <a-col
-          :span="12"
+          :span="24"
           style="display: flex; align-items: center; justify-content: end"
         >
           <a-tooltip :content="$t('searchTable.actions.refresh')">
@@ -225,23 +221,15 @@
         <template #user_id="{ record }">
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
-        <template #prompt_tokens="{ record }">
-          {{
-            record.prompt_tokens
-              ? record.prompt_tokens
-              : record.status === 1 && record.billing_method === 2
-              ? 0
-              : '-'
-          }}
-        </template>
-        <template #completion_tokens="{ record }">
-          {{
-            record.completion_tokens
-              ? record.completion_tokens
-              : record.status === 1 && record.billing_method === 2
-              ? 0
-              : '-'
-          }}
+        <template #images="{ record }">
+          <a-button type="text" size="small" @click="viewImage(record.id)"
+            >查看</a-button
+          >
+          <a-image-preview-group
+            v-if="imageVisibleId === record.id"
+            v-model:visible="imageVisible"
+            :src-list="record.images"
+          />
         </template>
         <template #total_tokens="{ record }">
           {{
@@ -251,109 +239,6 @@
               ? 0
               : '-'
           }}
-        </template>
-        <template #stream="{ record }">
-          {{ $t(`chat.dict.stream.${record.stream || false}`) }}
-        </template>
-        <template #conn_time="{ record }">
-          <a-tag
-            v-if="record.conn_time > 30000"
-            v-permission="['user']"
-            color="red"
-          >
-            {{ record.conn_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.conn_time > 15000"
-            v-permission="['user']"
-            color="orange"
-          >
-            {{ record.conn_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.conn_time > 5000"
-            v-permission="['user']"
-            color="gold"
-          >
-            {{ record.conn_time }}
-          </a-tag>
-          <a-tag v-else v-permission="['user']" color="green">{{
-            record.conn_time || '-'
-          }}</a-tag>
-          <a-tag
-            v-if="record.conn_time > 10000"
-            v-permission="['admin']"
-            color="red"
-          >
-            {{ record.conn_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.conn_time > 5000"
-            v-permission="['admin']"
-            color="orange"
-          >
-            {{ record.conn_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.conn_time > 3000"
-            v-permission="['admin']"
-            color="gold"
-          >
-            {{ record.conn_time }}
-          </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">{{
-            record.conn_time || '-'
-          }}</a-tag>
-        </template>
-        <template #duration="{ record }">
-          <a-tag
-            v-if="record.duration > 180000"
-            v-permission="['user']"
-            color="red"
-          >
-            {{ record.duration }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.duration > 120000"
-            v-permission="['user']"
-            color="orange"
-          >
-            {{ record.duration }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.duration > 90000"
-            v-permission="['user']"
-            color="gold"
-          >
-            {{ record.duration }}
-          </a-tag>
-          <a-tag v-else v-permission="['user']" color="green">{{
-            record.duration || '-'
-          }}</a-tag>
-          <a-tag
-            v-if="record.duration > 120000"
-            v-permission="['admin']"
-            color="red"
-          >
-            {{ record.duration }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.duration > 90000"
-            v-permission="['admin']"
-            color="orange"
-          >
-            {{ record.duration }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.duration > 60000"
-            v-permission="['admin']"
-            color="gold"
-          >
-            {{ record.duration }}
-          </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">{{
-            record.duration || '-'
-          }}</a-tag>
         </template>
         <template #total_time="{ record }">
           <a-tag
@@ -1154,11 +1039,11 @@
   import dayjs from 'dayjs';
   import { quotaConv } from '@/utils/common';
   import {
-    queryChatPage,
-    ChatPage,
-    ChatPageParams,
-    queryChatDetail,
-    ChatDetail,
+    queryImagePage,
+    ImagePage,
+    ImagePageParams,
+    queryImageDetail,
+    ImageDetail,
   } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
   import { Pagination } from '@/types/global';
@@ -1224,7 +1109,7 @@
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<ChatPage[]>([]);
+  const renderData = ref<ImagePage[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -1282,39 +1167,23 @@
       align: 'center',
     },
     {
-      title: t('chat.columns.prompt_tokens'),
-      dataIndex: 'prompt_tokens',
-      slotName: 'prompt_tokens',
+      title: t('chat.columns.prompt'),
+      dataIndex: 'prompt',
+      slotName: 'prompt',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
-      title: t('chat.columns.completion_tokens'),
-      dataIndex: 'completion_tokens',
-      slotName: 'completion_tokens',
+      title: t('chat.columns.images'),
+      dataIndex: 'images',
+      slotName: 'images',
       align: 'center',
     },
     {
       title: t('chat.columns.total_price'),
       dataIndex: 'total_tokens',
       slotName: 'total_tokens',
-      align: 'center',
-    },
-    {
-      title: t('chat.columns.stream'),
-      dataIndex: 'stream',
-      slotName: 'stream',
-      align: 'center',
-    },
-    {
-      title: t('chat.columns.conn_time'),
-      dataIndex: 'conn_time',
-      slotName: 'conn_time',
-      align: 'center',
-    },
-    {
-      title: t('chat.columns.duration'),
-      dataIndex: 'duration',
-      slotName: 'duration',
       align: 'center',
     },
     {
@@ -1385,14 +1254,14 @@
   }
 
   const fetchData = async (
-    params: ChatPageParams = {
+    params: ImagePageParams = {
       ...basePagination,
       ...formModel.value,
     }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryChatPage(params);
+      const { data } = await queryImagePage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
@@ -1408,7 +1277,7 @@
     fetchData({
       ...basePagination,
       ...formModel.value,
-    } as unknown as ChatPageParams);
+    } as unknown as ImagePageParams);
   };
 
   const onPageChange = (current: number) => {
@@ -1495,7 +1364,7 @@
   const visible = ref(false);
   const { copy, copied } = useClipboard();
   const { proxy } = getCurrentInstance() as any;
-  const currentData = ref<ChatDetail>({} as ChatDetail);
+  const currentData = ref<ImageDetail>({} as ImageDetail);
 
   /**
    * 查看详情
@@ -1507,7 +1376,7 @@
     loading.value = true;
 
     try {
-      const { data } = await queryChatDetail({ id });
+      const { data } = await queryImageDetail({ id });
       currentData.value = data;
     } catch (err) {
       // you can report use errorHandler or other
@@ -1536,6 +1405,13 @@
       proxy.$message.success('复制成功');
     }
   });
+
+  const imageVisibleId = ref();
+  const imageVisible = ref(false);
+  const viewImage = (id: any) => {
+    imageVisibleId.value = id;
+    imageVisible.value = true;
+  };
 </script>
 
 <script lang="ts">
@@ -1596,4 +1472,3 @@
     color: rgb(var(--arcoblue-6));
   }
 </style>
-@/api/log

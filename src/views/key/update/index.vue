@@ -57,9 +57,9 @@
                 },
               ]"
             >
-              <a-textarea
+              <a-input
                 v-model="formData.key"
-                :placeholder="$t('key.placeholder.key')"
+                :placeholder="$t('key.placeholder.update.key')"
                 :auto-size="{ minRows: 5, maxRows: 10 }"
               />
             </a-form-item>
