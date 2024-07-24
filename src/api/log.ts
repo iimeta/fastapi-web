@@ -197,16 +197,10 @@ export interface ImageDetail {
   is_enable_fallback: boolean;
   fallback_config: FallbackConfig;
   prompt: string;
-  completion: string;
-  messages: any;
+  image_data: any;
   text_quota: TextQuota;
   multimodal_quota: MultimodalQuota;
-  prompt_tokens: number;
-  completion_tokens: number;
   total_tokens: number;
-  stream: boolean;
-  conn_time: number;
-  duration: number;
   total_time: number;
   internal_time: number;
   req_time: string;

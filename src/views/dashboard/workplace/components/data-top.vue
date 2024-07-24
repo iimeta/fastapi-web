@@ -15,6 +15,9 @@
           type="button"
           @change="handleDateRangeChange as any"
         >
+          <a-radio :value="1">
+            {{ $t('workplace.dateRange1') }}
+          </a-radio>
           <a-radio :value="7">
             {{ $t('workplace.dateRange7') }}
           </a-radio>

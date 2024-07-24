@@ -49,6 +49,7 @@ export default {
   'workplace.expense': '费用',
   'workplace.sponsor': '赞助商',
   'workplace.current.quota': '当前额度 (500000 = $1)',
+  'workplace.dateRange1': '今天',
   'workplace.dateRange7': '近7天',
   'workplace.dateRange15': '近15天',
   'workplace.dateRange30': '近30天',

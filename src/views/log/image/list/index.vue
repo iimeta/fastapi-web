@@ -427,14 +427,6 @@
               </a-skeleton>
               <span v-else>{{ $t(`chat.dict.type.${currentData.type}`) }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="流式">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{
-                $t(`chat.dict.stream.${currentData.stream || false}`)
-              }}</span>
-            </a-descriptions-item>
             <a-descriptions-item label="提问" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
@@ -445,17 +437,7 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.completion || '-' }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="计费方式">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{
-                $t(
-                  `chat.dict.billing_method.${currentData.text_quota.billing_method}`
-                )
-              }}</span>
+              <span v-else>{{ currentData.image_data || '-' }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="总消耗令牌数">
               <a-skeleton v-if="loading" :animation="true">
@@ -469,79 +451,6 @@
                   ? 0
                   : '-'
               }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="提问倍率">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{
-                currentData.type !== 100
-                  ? currentData.text_quota.prompt_ratio || '-'
-                  : currentData.multimodal_quota.text_quota.prompt_ratio || '-'
-              }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="回答倍率">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else
-                >{{
-                  currentData.type !== 100
-                    ? currentData.text_quota.completion_ratio || '-'
-                    : currentData.multimodal_quota.text_quota
-                        .completion_ratio || '-'
-                }}
-              </span>
-            </a-descriptions-item>
-            <a-descriptions-item label="提问令牌数">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.prompt_tokens || '-' }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="回答令牌数">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.completion_tokens || '-' }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="连接耗时">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>
-                <a-tag v-if="currentData.conn_time > 30000" color="red">
-                  {{ currentData.conn_time }} ms
-                </a-tag>
-                <a-tag v-else-if="currentData.conn_time > 15000" color="orange">
-                  {{ currentData.conn_time }} ms
-                </a-tag>
-                <a-tag v-else-if="currentData.conn_time > 5000" color="gold">
-                  {{ currentData.conn_time }} ms
-                </a-tag>
-                <a-tag v-else color="green"
-                  >{{ currentData.conn_time || '-' }} ms</a-tag
-                >
-              </span>
-            </a-descriptions-item>
-            <a-descriptions-item label="持续时长">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>
-                <a-tag v-if="currentData.duration > 180000" color="red">
-                  {{ currentData.duration }} ms
-                </a-tag>
-                <a-tag v-else-if="currentData.duration > 120000" color="orange">
-                  {{ currentData.duration }} ms
-                </a-tag>
-                <a-tag v-else-if="currentData.duration > 90000" color="gold">
-                  {{ currentData.duration }} ms
-                </a-tag>
-                <a-tag v-else color="green"
-                  >{{ currentData.duration || '-' }} ms</a-tag
-                >
-              </span>
             </a-descriptions-item>
             <a-descriptions-item label="总耗时">
               <a-skeleton v-if="loading" :animation="true">
@@ -681,14 +590,6 @@
               </a-skeleton>
               <span v-else>{{ currentData.real_model }}</span>
             </a-descriptions-item>
-            <!-- <a-descriptions-item label="流式">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{
-                $t(`chat.dict.stream.${currentData.stream || false}`)
-              }}</span>
-            </a-descriptions-item> -->
             <a-descriptions-item label="启用后备">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
@@ -765,7 +666,7 @@
                 />
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="提问" :span="2">
+            <a-descriptions-item label="提示词" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -775,17 +676,7 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.completion || '-' }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="计费方式">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{
-                $t(
-                  `chat.dict.billing_method.${currentData.text_quota.billing_method}`
-                )
-              }}</span>
+              <span v-else>{{ currentData.image_data || '-' }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="总消耗令牌数">
               <a-skeleton v-if="loading" :animation="true">
@@ -799,77 +690,6 @@
                   ? 0
                   : '-'
               }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="提问倍率">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{
-                currentData.type !== 100
-                  ? currentData.text_quota.prompt_ratio || '-'
-                  : currentData.multimodal_quota.text_quota.prompt_ratio || '-'
-              }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="回答倍率">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{
-                currentData.type !== 100
-                  ? currentData.text_quota.completion_ratio || '-'
-                  : currentData.multimodal_quota.text_quota.completion_ratio ||
-                    '-'
-              }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="提问令牌数">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.prompt_tokens || '-' }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="回答令牌数">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.completion_tokens || '-' }}</span>
-            </a-descriptions-item>
-            <a-descriptions-item label="连接耗时">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>
-                <a-tag v-if="currentData.conn_time > 10000" color="red">
-                  {{ currentData.conn_time }} ms
-                </a-tag>
-                <a-tag v-else-if="currentData.conn_time > 5000" color="orange">
-                  {{ currentData.conn_time }} ms
-                </a-tag>
-                <a-tag v-else-if="currentData.conn_time > 3000" color="gold">
-                  {{ currentData.conn_time }} ms
-                </a-tag>
-                <a-tag v-else color="green"
-                  >{{ currentData.conn_time || '-' }} ms</a-tag
-                >
-              </span>
-            </a-descriptions-item>
-            <a-descriptions-item label="持续时长">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>
-                <a-tag v-if="currentData.duration > 120000" color="red">
-                  {{ currentData.duration }} ms
-                </a-tag>
-                <a-tag v-else-if="currentData.duration > 90000" color="orange">
-                  {{ currentData.duration }} ms
-                </a-tag>
-                <a-tag v-else-if="currentData.duration > 60000" color="gold">
-                  {{ currentData.duration }} ms
-                </a-tag>
-                <a-tag v-else color="green"
-                  >{{ currentData.duration || '-' }} ms</a-tag
-                >
-              </span>
             </a-descriptions-item>
             <a-descriptions-item label="总耗时">
               <a-skeleton v-if="loading" :animation="true">
@@ -969,30 +789,6 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.err_msg || '-' }}</span>
-            </a-descriptions-item>
-          </a-descriptions>
-          <a-descriptions
-            layout="inline-vertical"
-            :column="2"
-            style="margin-top: 10px; position: relative"
-          >
-            <a-descriptions-item :span="2">
-              <a-tabs type="card">
-                <a-tab-pane key="1" title="提问上下文">
-                  <a-skeleton v-if="loading" :animation="true">
-                    <a-skeleton-line :rows="3" />
-                  </a-skeleton>
-                  <a-space v-else>
-                    <VueJsonPretty
-                      v-if="currentData.messages"
-                      :path="'res'"
-                      :data="currentData.messages"
-                      :show-length="true"
-                    />
-                    <span v-else>-</span>
-                  </a-space>
-                </a-tab-pane>
-              </a-tabs>
             </a-descriptions-item>
           </a-descriptions>
           <a-descriptions
@@ -1222,7 +1018,7 @@
   ]);
 
   if (userRole === 'user') {
-    columns.value.splice(9, 1);
+    columns.value.splice(6, 1);
   }
 
   const statusOptions = computed<SelectOptionData[]>(() => [
