@@ -89,3 +89,12 @@ export interface ModelPercentRes {
 export function queryModelPercent(days: number) {
   return axios.get<ModelPercentRes>(`/api/v1/dashboard/model/percent/${days}`);
 }
+
+export interface PerMinuteRes {
+  rpm: number;
+  tpm: number;
+}
+
+export function queryPerMinute() {
+  return axios.get<PerMinuteRes>(`/api/v1/dashboard/per/minute`);
+}

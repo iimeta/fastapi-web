@@ -146,12 +146,18 @@
       </a-row>
       <a-divider style="margin-top: 0" />
       <a-row style="margin-bottom: 16px">
-        <a-col :span="12">
+        <a-col :span="10">
           花费 = ( 提问 × 提问倍率 + 回答 × 回答倍率 ) ÷ 500000
           &nbsp;&nbsp;或&nbsp;&nbsp; 回答 ÷ 500000
         </a-col>
+        <a-col :span="6">
+          当前每分钟请求数(RPM): &nbsp;{{ rpm.toLocaleString() }}
+        </a-col>
+        <a-col :span="6">
+          当前每分钟令牌数(TPM): &nbsp;{{ tpm.toLocaleString() }}
+        </a-col>
         <a-col
-          :span="12"
+          :span="2"
           style="display: flex; align-items: center; justify-content: end"
         >
           <a-tooltip :content="$t('searchTable.actions.refresh')">
@@ -1161,6 +1167,7 @@
     ChatDetail,
   } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
+  import { queryPerMinute } from '@/api/dashboard';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -1384,6 +1391,9 @@
     );
   }
 
+  const rpm = ref(0);
+  const tpm = ref(0);
+
   const fetchData = async (
     params: ChatPageParams = {
       ...basePagination,
@@ -1391,12 +1401,23 @@
     }
   ) => {
     setLoading(true);
+
     try {
       const { data } = await queryChatPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
       pagination.total = data.paging.total;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+
+    try {
+      const { data } = await queryPerMinute();
+      rpm.value = data.rpm;
+      tpm.value = data.tpm;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
