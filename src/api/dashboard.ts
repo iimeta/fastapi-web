@@ -90,11 +90,22 @@ export function queryModelPercent(days: number) {
   return axios.get<ModelPercentRes>(`/api/v1/dashboard/model/percent/${days}`);
 }
 
+export interface PerMinuteParams {
+  app_id: any;
+  trace_id: any;
+  user_id: any;
+  key: string;
+  models: never[];
+  total_time: any;
+  status: any;
+  req_time: string[];
+}
+
 export interface PerMinuteRes {
   rpm: number;
   tpm: number;
 }
 
-export function queryPerMinute() {
-  return axios.get<PerMinuteRes>(`/api/v1/dashboard/per/minute`);
+export function queryPerMinute(params: PerMinuteParams) {
+  return axios.post<PerMinuteRes>(`/api/v1/dashboard/per/minute`, params);
 }

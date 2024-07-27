@@ -1167,7 +1167,7 @@
     ChatDetail,
   } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
-  import { queryPerMinute } from '@/api/dashboard';
+  import { queryPerMinute, PerMinuteParams } from '@/api/dashboard';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -1413,16 +1413,6 @@
     } finally {
       setLoading(false);
     }
-
-    try {
-      const { data } = await queryPerMinute();
-      rpm.value = data.rpm;
-      tpm.value = data.tpm;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
   };
 
   const search = () => {
@@ -1557,6 +1547,18 @@
       proxy.$message.success('复制成功');
     }
   });
+
+  const getPerMinute = async (
+    params: PerMinuteParams = {
+      ...formModel.value,
+    }
+  ) => {
+    const { data } = await queryPerMinute(params);
+    rpm.value = data.rpm;
+    tpm.value = data.tpm;
+  };
+  getPerMinute();
+  setInterval(getPerMinute, 3000);
 </script>
 
 <script lang="ts">
