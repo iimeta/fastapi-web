@@ -95,7 +95,7 @@ export interface PerMinuteParams {
   trace_id: any;
   user_id: any;
   key: string;
-  models: never[];
+  models: string[];
   total_time: any;
   status: any;
   req_time: string[];
