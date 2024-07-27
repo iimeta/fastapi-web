@@ -285,6 +285,9 @@
             }}</a-button>
           </a-date-picker>
         </template>
+        <template #remark="{ record }">
+          {{ record.remark || '-' }}
+        </template>
         <template #status="{ record }">
           <a-switch
             v-model="record.status"
@@ -674,6 +677,14 @@
       slotName: 'quota_expires_at',
       align: 'center',
       width: 170,
+    },
+    {
+      title: t('user.columns.remark'),
+      dataIndex: 'remark',
+      slotName: 'remark',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('user.columns.status'),
