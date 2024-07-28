@@ -82,7 +82,7 @@ export default {
   'user.form.search': '查询',
   'user.form.reset': '重置',
   'user.form.selectDefault': '全部',
-  'user.form.title.grantQuota': '授予额度',
+  'user.form.title.grantQuota': '充值额度',
   'user.form.title.models': '模型权限',
   // operation
   'user.operation.create': '新建',
@@ -103,7 +103,7 @@ export default {
   'user.columns.operations.view': '查看',
   'user.columns.operations.update': '修改',
   'user.columns.operations.delete': '删除',
-  'user.columns.operations.grantQuota': '授予额度',
+  'user.columns.operations.grantQuota': '充值额度',
   'user.columns.operations.models': '模型权限',
   'user.columns.operations.manageKey': '管理密钥',
   'user.columns.operations.status.1': '禁用',

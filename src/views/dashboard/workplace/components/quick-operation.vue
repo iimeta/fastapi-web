@@ -2,7 +2,7 @@
   <a-card
     class="general-card"
     :title="$t('workplace.quick.operation')"
-    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
+    :header-style="{ padding: '10px 20px 0 20px', height: '37px' }"
     :body-style="{ padding: '10px 20px 2px 20px' }"
     :bordered="false"
   >
@@ -107,7 +107,7 @@
 
 <style scoped lang="less">
   .moduler-wrap .wrapper {
-    margin-top: 10px;
+    margin-top: 7px;
     text-align: center;
     cursor: pointer;
   }

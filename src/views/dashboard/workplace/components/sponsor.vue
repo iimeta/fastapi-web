@@ -10,7 +10,7 @@
       indicator-type="slider"
       show-arrow="hover"
       auto-play
-      style="height: 167px"
+      style="height: 197px"
     >
       <a-carousel-item v-for="(src, idx) in imageSrc" :key="idx">
         <a-link :href="urlSrc[idx]" target="_blank">

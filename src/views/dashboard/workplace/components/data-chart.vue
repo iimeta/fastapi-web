@@ -2,9 +2,9 @@
   <a-spin :loading="loading" style="width: 100%">
     <a-card
       class="general-card"
-      :header-style="{ padding: '20px 20px 8px 20px' }"
+      :header-style="{ padding: '15px 20px 8px 20px' }"
       :body-style="{
-        padding: '20px',
+        padding: '10px 20px',
       }"
       :title="$t('workplace.callData')"
       :bordered="false"
@@ -26,7 +26,7 @@
           </a-radio>
         </a-radio-group>
       </template>
-      <Chart height="380px" :option="chartOption" />
+      <Chart height="372px" :option="chartOption" />
     </a-card>
   </a-spin>
 </template>

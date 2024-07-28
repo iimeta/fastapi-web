@@ -150,11 +150,17 @@
           花费 = ( 提问 × 提问倍率 + 回答 × 回答倍率 ) ÷ 500000
           &nbsp;&nbsp;或&nbsp;&nbsp; 回答 ÷ 500000
         </a-col>
-        <a-col :span="6">
-          当前每分钟请求数(RPM): &nbsp;{{ rpm.toLocaleString() }}
+        <a-col :span="3">
+          每秒钟请求数(RPS): &nbsp;{{ rps.toLocaleString() }}
         </a-col>
-        <a-col :span="6">
-          当前每分钟令牌数(TPM): &nbsp;{{ tpm.toLocaleString() }}
+        <a-col :span="3">
+          每秒钟令牌数(TPS): &nbsp;{{ tps.toLocaleString() }}
+        </a-col>
+        <a-col :span="3">
+          每分钟请求数(RPM): &nbsp;{{ rpm.toLocaleString() }}
+        </a-col>
+        <a-col :span="3">
+          每分钟令牌数(TPM): &nbsp;{{ tpm.toLocaleString() }}
         </a-col>
         <a-col
           :span="2"
@@ -1167,7 +1173,12 @@
     ChatDetail,
   } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
-  import { queryPerMinute, PerMinuteParams } from '@/api/dashboard';
+  import {
+    queryPerSecond,
+    PerSecondParams,
+    queryPerMinute,
+    PerMinuteParams,
+  } from '@/api/dashboard';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -1391,9 +1402,6 @@
     );
   }
 
-  const rpm = ref(0);
-  const tpm = ref(0);
-
   const fetchData = async (
     params: ChatPageParams = {
       ...basePagination,
@@ -1548,6 +1556,22 @@
     }
   });
 
+  const rps = ref(0);
+  const tps = ref(0);
+  const getPerSecond = async (
+    params: PerSecondParams = {
+      ...formModel.value,
+    }
+  ) => {
+    const { data } = await queryPerSecond(params);
+    rps.value = data.rps;
+    tps.value = data.tps;
+  };
+  getPerSecond();
+  setInterval(getPerSecond, 1000);
+
+  const rpm = ref(0);
+  const tpm = ref(0);
   const getPerMinute = async (
     params: PerMinuteParams = {
       ...formModel.value,

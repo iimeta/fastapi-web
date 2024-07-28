@@ -11,6 +11,7 @@ import localeModel from '@/views/model/locale/en-US';
 import localeKey from '@/views/key/locale/en-US';
 import localeAgent from '@/views/agent/locale/en-US';
 import localeCorp from '@/views/corp/locale/en-US';
+import localeFinance from '@/views/finance/locale/en-US';
 import localeChat from '@/views/log/chat/locale/en-US';
 import localeImage from '@/views/log/image/locale/en-US';
 
@@ -51,6 +52,7 @@ export default {
   ...localeKey,
   ...localeAgent,
   ...localeCorp,
+  ...localeFinance,
   ...localeChat,
   ...localeImage,
 };

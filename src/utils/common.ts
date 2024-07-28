@@ -6,4 +6,8 @@ const quotaConv = (quota: number) => {
   return parseFloat((quota / 500000).toFixed(6));
 };
 
-export { priceConv, quotaConv };
+const quotaConv4 = (quota: number) => {
+  return parseFloat((quota / 500000).toFixed(4));
+};
+
+export { priceConv, quotaConv, quotaConv4 };

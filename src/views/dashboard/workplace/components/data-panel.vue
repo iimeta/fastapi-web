@@ -1,5 +1,5 @@
 <template>
-  <a-grid :cols="24" :row-gap="12" class="panel">
+  <a-grid :cols="24" :row-gap="8" class="panel">
     <a-grid-item
       class="panel-col"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
@@ -139,92 +139,76 @@
         </a-statistic>
       </a-space>
     </a-grid-item>
-    <!-- <a-grid-item v-permission="['admin']" :span="24">
+    <a-grid-item :span="24">
       <a-divider class="panel-border" />
     </a-grid-item>
     <a-grid-item
-      v-permission="['admin']"
       class="panel-col"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/c8b36e26d2b9bb5dbf9b74dd6d7345af.svg~tplv-49unhts6dw-image.image"
-          />
+          <img alt="avatar" src="@/assets/images/rps.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.user')"
-          :value="baseData.user"
+          title="每秒钟请求数(RPS)"
+          :value="rps"
           show-group-separator
         >
         </a-statistic>
       </a-space>
     </a-grid-item>
     <a-grid-item
-      v-permission="['admin']"
       class="panel-col"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
       style="border-right: none"
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/c8b36e26d2b9bb5dbf9b74dd6d7345af.svg~tplv-49unhts6dw-image.image"
-          />
+          <img alt="avatar" src="@/assets/images/tps.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.todayUser')"
-          :value="baseData.today_user"
+          title="每秒钟令牌数(TPS)"
+          :value="tps"
           show-group-separator
         >
         </a-statistic>
       </a-space>
     </a-grid-item>
     <a-grid-item
-      v-permission="['admin']"
       class="panel-col"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
       style="border-right: none; border-left: 1px solid rgb(var(--gray-2))"
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/fdc66b07224cdf18843c6076c2587eb5.svg~tplv-49unhts6dw-image.image"
-          />
+          <img alt="avatar" src="@/assets/images/rpm.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.model')"
-          :value="baseData.model"
+          title="每分钟请求数(RPM)"
+          :value="rpm"
           show-group-separator
         >
         </a-statistic>
       </a-space>
     </a-grid-item>
     <a-grid-item
-      v-permission="['admin']"
       class="panel-col"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
       style="border-right: none; border-left: 1px solid rgb(var(--gray-2))"
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
-          <img
-            alt="avatar"
-            src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/77d74c9a245adeae1ec7fb5d4539738d.svg~tplv-49unhts6dw-image.image"
-          />
+          <img alt="avatar" src="@/assets/images/tpm.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.modelKey')"
-          :value="baseData.model_key"
+          title="每分钟令牌数(TPM)"
+          :value="tpm"
           show-group-separator
         >
         </a-statistic>
       </a-space>
-    </a-grid-item> -->
+    </a-grid-item>
     <a-grid-item :span="24">
       <a-divider class="panel-border" />
     </a-grid-item>
@@ -232,8 +216,13 @@
 </template>
 
 <script lang="ts" setup>
-  import { reactive } from 'vue';
-  import { queryBaseData, BaseDataRecord } from '@/api/dashboard';
+  import { ref, reactive } from 'vue';
+  import {
+    queryBaseData,
+    BaseDataRecord,
+    queryPerSecond,
+    queryPerMinute,
+  } from '@/api/dashboard';
 
   const baseData = reactive({}) as BaseDataRecord;
 
@@ -253,12 +242,32 @@
     }
   };
   getBaseData();
+
+  const rps = ref(0);
+  const tps = ref(0);
+  const getPerSecond = async () => {
+    const { data } = await queryPerSecond();
+    rps.value = data.rps;
+    tps.value = data.tps;
+  };
+  getPerSecond();
+  setInterval(getPerSecond, 1000);
+
+  const rpm = ref(0);
+  const tpm = ref(0);
+  const getPerMinute = async () => {
+    const { data } = await queryPerMinute();
+    rpm.value = data.rpm;
+    tpm.value = data.tpm;
+  };
+  getPerMinute();
+  setInterval(getPerMinute, 3000);
 </script>
 
 <style lang="less" scoped>
   .arco-grid.panel {
     margin-bottom: 0;
-    padding: 12px 20px 0 20px;
+    padding: 8px 20px 0 20px;
   }
   .panel-col {
     padding-left: 43px;

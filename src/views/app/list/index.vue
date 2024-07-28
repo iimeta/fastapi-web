@@ -209,7 +209,13 @@
         </template>
         <template #quota="{ record }">
           <span v-if="record.is_limit_quota">
-            ${{ record.quota !== 0 ? quotaConv(record.quota) : '0.00' }}
+            {{
+              record.quota > 0
+                ? `$${quotaConv(record.quota)}`
+                : record.quota < 0
+                ? `-$${quotaConv(-record.quota)}`
+                : '$0.00'
+            }}
           </span>
           <span v-else>{{ $t(`app.columns.quota.no_limit`) }}</span>
         </template>

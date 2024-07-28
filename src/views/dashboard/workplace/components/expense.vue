@@ -17,7 +17,13 @@
       <div class="quota-box">
         <div class="quota-usd-box">
           <div class="quota">剩余额度</div>
-          <div class="quota-usd">${{ expense.quota_usd }}</div>
+          <div class="quota-usd">{{
+            expense.quota > 0
+              ? `$${quotaConv4(expense.quota)}`
+              : expense.quota < 0
+              ? `-$${quotaConv4(-expense.quota)}`
+              : '$0.00'
+          }}</div>
         </div>
         <div>
           <div class="used-quota">已用额度</div>
@@ -33,6 +39,7 @@
 
 <script lang="ts" setup>
   import { reactive } from 'vue';
+  import { quotaConv4 } from '@/utils/common';
   import { queryExpense, Expense } from '@/api/dashboard';
 
   const expense = reactive({}) as Expense;

@@ -195,7 +195,13 @@
         @page-size-change="onPageSizeChange"
       >
         <template #quota="{ record }">
-          ${{ record.quota !== 0 ? quotaConv(record.quota) : '0.00' }}
+          {{
+            record.quota > 0
+              ? `$${quotaConv(record.quota)}`
+              : record.quota < 0
+              ? `-$${quotaConv(-record.quota)}`
+              : '$0.00'
+          }}
         </template>
         <template #used_quota="{ record }">
           ${{ record.used_quota > 0 ? quotaConv(record.used_quota) : '0.00' }}
