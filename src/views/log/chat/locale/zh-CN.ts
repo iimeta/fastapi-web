@@ -23,7 +23,7 @@ export default {
   'chat.detail.label.completion_ratio': '回答倍率',
   'chat.detail.label.prompt_tokens': '提问令牌数',
   'chat.detail.label.completion_tokens': '回答令牌数',
-  'chat.detail.label.total_tokens': '总消耗令牌数',
+  'chat.detail.label.total_tokens': '花费令牌数',
   'chat.detail.label.total_price': '消费总价',
   'chat.detail.label.status': '结果',
   'chat.detail.label.conn_time': '连接耗时',

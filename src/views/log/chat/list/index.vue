@@ -150,18 +150,10 @@
           花费 = ( 提问 × 提问倍率 + 回答 × 回答倍率 ) ÷ 500000
           &nbsp;&nbsp;或&nbsp;&nbsp; 回答 ÷ 500000
         </a-col>
-        <a-col :span="3">
-          每秒钟请求数(RPS): &nbsp;{{ rps.toLocaleString() }}
-        </a-col>
-        <a-col :span="3">
-          每秒钟令牌数(TPS): &nbsp;{{ tps.toLocaleString() }}
-        </a-col>
-        <a-col :span="3">
-          每分钟请求数(RPM): &nbsp;{{ rpm.toLocaleString() }}
-        </a-col>
-        <a-col :span="3">
-          每分钟令牌数(TPM): &nbsp;{{ tpm.toLocaleString() }}
-        </a-col>
+        <a-col :span="3"> RPS: &nbsp;{{ rps.toLocaleString() }} </a-col>
+        <a-col :span="3"> TPS: &nbsp;{{ tps.toLocaleString() }} </a-col>
+        <a-col :span="3"> RPM: &nbsp;{{ rpm.toLocaleString() }} </a-col>
+        <a-col :span="3"> TPM: &nbsp;{{ tpm.toLocaleString() }} </a-col>
         <a-col
           :span="2"
           style="display: flex; align-items: center; justify-content: end"
@@ -584,7 +576,7 @@
                 )
               }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="总消耗令牌数">
+            <a-descriptions-item label="花费令牌数">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -914,7 +906,7 @@
                 )
               }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="总消耗令牌数">
+            <a-descriptions-item label="花费令牌数">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
