@@ -254,7 +254,7 @@
     padding: 8px 20px 0 20px;
   }
   .panel-col {
-    padding-left: 43px;
+    padding-left: 15px;
     height: 50px;
     border-right: 1px solid rgb(var(--gray-2));
   }

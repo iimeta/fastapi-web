@@ -94,6 +94,26 @@
                 :min="-9999999999999"
                 :max="9999999999999"
               />
+              <div style="margin-left: 10px">
+                ${{ formData.quota ? quotaConv(formData.quota) : '0' }}</div
+              >
+            </a-form-item>
+            <a-form-item>
+              <a-radio-group
+                type="button"
+                @change="handleQuotaQuickChange as any"
+              >
+                <a-radio :value="1"> $1 </a-radio>
+                <a-radio :value="2"> $2 </a-radio>
+                <a-radio :value="5"> $5 </a-radio>
+                <a-radio :value="10"> $10 </a-radio>
+                <a-radio :value="20"> $20 </a-radio>
+                <a-radio :value="50"> $50 </a-radio>
+                <a-radio :value="100"> $100 </a-radio>
+                <a-radio :value="200"> $200 </a-radio>
+                <a-radio :value="500"> $500 </a-radio>
+                <a-radio :value="1000"> $1000 </a-radio>
+              </a-radio-group>
             </a-form-item>
             <a-form-item
               field="quota_expires_at"
@@ -172,6 +192,7 @@
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
+  import { quotaConv } from '@/utils/common';
   import { submitUserCreate, UserCreate } from '@/api/admin_user';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter } from 'vue-router';
@@ -208,6 +229,9 @@
         setLoading(false);
       }
     }
+  };
+  const handleQuotaQuickChange = (quota: number) => {
+    formData.value.quota = quota * 500000;
   };
 </script>
 
