@@ -659,7 +659,14 @@
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>
-                {{ currentData.key || '-' }}
+                {{
+                  currentData.key
+                    ? currentData.key.length > 31
+                      ? currentData.key.substr(0, 30) +
+                        currentData.key.substr(-30)
+                      : currentData.key
+                    : '-'
+                }}
                 <icon-copy
                   class="copy-btn"
                   @click="handleCopy(currentData.key)"

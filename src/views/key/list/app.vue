@@ -275,6 +275,9 @@
           }}</span>
           <span v-else>{{ $t(`key.columns.app.models.no_limit`) }}</span>
         </template>
+        <template #remark="{ record }">
+          {{ record.remark || '-' }}
+        </template>
         <template #status="{ record }">
           <a-switch
             v-model="record.status"
@@ -627,6 +630,7 @@
       dataIndex: 'key',
       slotName: 'key',
       align: 'center',
+      width: 200,
     },
     {
       title: t('key.columns.quota'),
@@ -656,6 +660,14 @@
       title: t('key.columns.app.models'),
       dataIndex: 'model_names',
       slotName: 'model_names',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
+      title: t('key.columns.remark'),
+      dataIndex: 'remark',
+      slotName: 'remark',
       align: 'center',
       ellipsis: true,
       tooltip: true,

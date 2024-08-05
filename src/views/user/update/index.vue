@@ -58,6 +58,22 @@
               />
             </a-form-item>
             <a-form-item
+              field="password"
+              :label="$t('user.label.password')"
+              :rules="[
+                {
+                  match: /^.{6,}$/,
+                  message: $t('user.error.password.pattern'),
+                },
+              ]"
+            >
+              <a-input
+                v-model="formData.password"
+                :placeholder="$t('user.update.placeholder.password')"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
               field="quota_expires_at"
               :label="$t('user.label.quota_expires_at')"
             >
@@ -174,6 +190,7 @@
     id: '',
     name: '',
     account: '',
+    password: '',
     terminal: 'web',
     quota_expires_at: '',
     remark: '',

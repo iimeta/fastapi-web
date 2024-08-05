@@ -275,8 +275,12 @@
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
       >
-        <template #type="{ record }">
-          {{ $t(`key.dict.type.${record.type}`) }}
+        <template #key="{ record }">
+          {{
+            record.key.length > 11
+              ? record.key.substr(0, 10) + record.key.substr(-10)
+              : record.key
+          }}
         </template>
         <template #model_names="{ record }">
           {{ record?.model_names?.join(',') || '-' }}
@@ -287,6 +291,9 @@
         <!-- <template #quota="{ record }">
           {{ record?.quota || '-' }}
         </template> -->
+        <template #remark="{ record }">
+          {{ record.remark || '-' }}
+        </template>
         <template #status="{ record }">
           <a-switch
             v-model="record.status"
@@ -510,8 +517,6 @@
       dataIndex: 'key',
       slotName: 'key',
       align: 'center',
-      ellipsis: true,
-      tooltip: true,
     },
     {
       title: t('key.columns.models'),
@@ -528,6 +533,12 @@
     //   align: 'center',
     //   width: 80,
     // },
+    {
+      title: t('key.columns.remark'),
+      dataIndex: 'remark',
+      slotName: 'remark',
+      align: 'center',
+    },
     {
       title: t('key.columns.status'),
       dataIndex: 'status',

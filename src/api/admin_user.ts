@@ -106,6 +106,7 @@ export interface UserUpdate {
   id: string;
   name: string;
   account: string;
+  password: string;
   terminal: string;
   quota_expires_at: string;
   remark: string;
