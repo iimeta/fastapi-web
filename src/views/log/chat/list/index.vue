@@ -158,7 +158,7 @@
           :span="2"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button type="primary"> 导出 </a-button>
+          <!-- <a-button type="primary"> 导出 </a-button> -->
           <a-tooltip :content="$t('searchTable.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
