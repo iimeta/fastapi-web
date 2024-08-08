@@ -880,9 +880,19 @@
               <span v-else>
                 {{
                   currentData.key
-                    ? currentData.key.length > 31
-                      ? currentData.key.substr(0, 30) +
-                        currentData.key.substr(-30)
+                    ? currentData.key.length > 0
+                      ? currentData.key.substr(
+                          0,
+                          currentData.key.length / 2 > 10
+                            ? 10
+                            : currentData.key.length / 2
+                        ) +
+                        '************************************' +
+                        currentData.key.substr(
+                          -(currentData.key.length / 2 > 5
+                            ? 5
+                            : currentData.key.length / 2)
+                        )
                       : currentData.key
                     : '-'
                 }}

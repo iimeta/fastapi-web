@@ -158,6 +158,87 @@
                 ]"
               />
             </a-form-item>
+            <a-form-item field="rps" :label="$t('user.label.rps')">
+              <a-input-number
+                v-model="formData.rps"
+                :placeholder="$t('user.placeholder.rps')"
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
+              />
+            </a-form-item>
+            <a-form-item field="rpm" :label="$t('user.label.rpm')">
+              <a-input-number
+                v-model="formData.rpm"
+                :placeholder="$t('user.placeholder.rpm')"
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
+              />
+            </a-form-item>
+            <a-form-item field="rpd" :label="$t('user.label.rpd')">
+              <a-input-number
+                v-model="formData.rpd"
+                :placeholder="$t('user.placeholder.rpd')"
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
+              />
+            </a-form-item>
+            <a-form-item field="tps" :label="$t('user.label.tps')">
+              <a-input-number
+                v-model="formData.tps"
+                :placeholder="$t('user.placeholder.tps')"
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
+              />
+            </a-form-item>
+            <a-form-item field="tpm" :label="$t('user.label.tpm')">
+              <a-input-number
+                v-model="formData.tpm"
+                :placeholder="$t('user.placeholder.tpm')"
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
+              />
+            </a-form-item>
+            <a-form-item field="tpd" :label="$t('user.label.tpd')">
+              <a-input-number
+                v-model="formData.tpd"
+                :placeholder="$t('user.placeholder.tpd')"
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
+              />
+            </a-form-item>
+            <a-form-item field="ips" :label="$t('user.label.ips')">
+              <a-input-number
+                v-model="formData.ips"
+                :placeholder="$t('user.placeholder.ips')"
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
+              />
+            </a-form-item>
+            <a-form-item field="ipm" :label="$t('user.label.ipm')">
+              <a-input-number
+                v-model="formData.ipm"
+                :placeholder="$t('user.placeholder.ipm')"
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
+              />
+            </a-form-item>
+            <a-form-item field="ipd" :label="$t('user.label.ipd')">
+              <a-input-number
+                v-model="formData.ipd"
+                :placeholder="$t('user.placeholder.ipd')"
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
+              />
+            </a-form-item>
             <a-form-item field="remark" :label="$t('user.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -208,6 +289,15 @@
     terminal: 'web',
     quota: ref(),
     quota_expires_at: '',
+    rps: ref(),
+    rpm: ref(),
+    rpd: ref(),
+    tps: ref(),
+    tpm: ref(),
+    tpd: ref(),
+    ips: ref(),
+    ipm: ref(),
+    ipd: ref(),
     remark: '',
   });
 

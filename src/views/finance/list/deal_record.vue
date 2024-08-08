@@ -399,7 +399,7 @@
 
 <script lang="ts">
   export default {
-    name: 'CorpList',
+    name: 'DealRecordList',
   };
 </script>
 
