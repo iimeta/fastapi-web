@@ -13,6 +13,16 @@ const FINANCE: AppRouteRecordRaw = {
   },
   children: [
     {
+      path: 'bill_list',
+      name: 'BillList',
+      component: () => import('@/views/finance/list/bill_list.vue'),
+      meta: {
+        locale: 'menu.bill_list.list',
+        requiresAuth: true,
+        roles: ['admin'],
+      },
+    },
+    {
       path: 'deal_record',
       name: 'DealRecordList',
       component: () => import('@/views/finance/list/deal_record.vue'),

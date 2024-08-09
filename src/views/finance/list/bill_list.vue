@@ -35,22 +35,12 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('finance.form.status')">
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('finance.form.selectDefault')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
                 <a-form-item
-                  field="created_at"
-                  :label="$t('finance.form.created_at')"
+                  field="stat_date"
+                  :label="$t('finance.form.stat_date')"
                 >
                   <a-range-picker
-                    v-model="formModel.created_at"
+                    v-model="formModel.stat_date"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -159,22 +149,8 @@
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
       >
-        <template #quota="{ record }">
-          {{
-            record.quota > 0
-              ? `$${quotaConv(record.quota)}`
-              : record.quota < 0
-              ? `-$${quotaConv(-record.quota)}`
-              : '$0.00'
-          }}
-        </template>
-        <template #remark="{ record }">
-          {{ record.remark || '-' }}
-        </template>
-        <template #status="{ record }">
-          <span v-if="record.status === 2" class="circle red"></span>
-          <span v-else class="circle"></span>
-          {{ $t(`finance.dict.status.${record.status}`) }}
+        <template #tokens="{ record }">
+          {{ record.tokens > 0 ? `$${quotaConv(record.tokens)}` : '$0.00' }}
         </template>
       </a-table>
     </a-card>
@@ -186,13 +162,8 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { quotaConv } from '@/utils/common';
-  import {
-    queryDealRecordPage,
-    DealRecordPage,
-    DealRecordPageParams,
-  } from '@/api/finance';
+  import { queryBillPage, BillPage, BillPageParams } from '@/api/finance';
   import { Pagination } from '@/types/global';
-  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
     TableColumnData,
     TableRowSelection,
@@ -212,14 +183,13 @@
   const generateFormModel = () => {
     return {
       user_id: ref(),
-      status: ref(),
-      created_at: [],
+      stat_date: [],
     };
   };
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<DealRecordPage[]>([]);
+  const renderData = ref<BillPage[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -265,39 +235,39 @@
       align: 'center',
     },
     {
-      title: t('finance.columns.quota'),
-      dataIndex: 'quota',
-      slotName: 'quota',
+      title: t('finance.columns.total'),
+      dataIndex: 'total',
+      slotName: 'total',
       align: 'center',
     },
     {
-      title: t('finance.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
+      title: t('finance.columns.models'),
+      dataIndex: 'models',
+      slotName: 'models',
       align: 'center',
     },
     {
-      title: t('finance.columns.created_at'),
-      dataIndex: 'created_at',
-      slotName: 'created_at',
+      title: t('finance.columns.tokens'),
+      dataIndex: 'tokens',
+      slotName: 'tokens',
       align: 'center',
     },
-  ]);
-  const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('finance.dict.status.1'),
-      value: 1,
+      title: t('finance.columns.stat_date'),
+      dataIndex: 'stat_date',
+      slotName: 'stat_date',
+      align: 'center',
     },
   ]);
 
   const fetchData = async (
-    params: DealRecordPageParams = {
+    params: BillPageParams = {
       ...basePagination,
     }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryDealRecordPage(params);
+      const { data } = await queryBillPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
@@ -313,7 +283,7 @@
     fetchData({
       ...basePagination,
       ...formModel.value,
-    } as unknown as DealRecordPageParams);
+    } as unknown as BillPageParams);
   };
 
   const onPageChange = (current: number) => {
@@ -400,7 +370,7 @@
 
 <script lang="ts">
   export default {
-    name: 'DealRecordList',
+    name: 'BillList',
   };
 </script>
 
