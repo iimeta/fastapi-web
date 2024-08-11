@@ -5,7 +5,7 @@
         <icon-wechatpay />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.finance') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.deal_record.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.bill.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"

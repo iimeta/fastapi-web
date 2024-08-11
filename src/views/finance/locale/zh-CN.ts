@@ -1,6 +1,6 @@
 export default {
   'menu.finance': '财务中心',
-  'menu.bill_list.list': '账单明细',
+  'menu.bill.list': '账单明细',
   'menu.deal_record.list': '交易记录',
   // detail
   'finance.detail.title.baseInfo': '基础信息',
@@ -32,7 +32,7 @@ export default {
   'finance.columns.total': '调用数',
   'finance.columns.models': '模型数',
   'finance.columns.tokens': '花费',
-  'finance.columns.stat_date': '日期',
+  'finance.columns.stat_date': '账单日期',
   'finance.columns.operations': '操作',
   'finance.columns.operations.view': '查看',
   'finance.columns.operations.update': '修改',

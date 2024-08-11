@@ -17,7 +17,7 @@ const FINANCE: AppRouteRecordRaw = {
       name: 'BillList',
       component: () => import('@/views/finance/list/bill_list.vue'),
       meta: {
-        locale: 'menu.bill_list.list',
+        locale: 'menu.bill.list',
         requiresAuth: true,
         roles: ['admin'],
       },
