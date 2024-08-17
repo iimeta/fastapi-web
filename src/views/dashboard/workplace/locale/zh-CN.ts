@@ -13,7 +13,7 @@ export default {
   'workplace.todayUser': '今日新增用户数',
   'workplace.call': '总调用数',
   'workplace.minute': '分钟',
-  'workplace.docs': '帮助文档',
+  'workplace.docs': '使用指南',
   'workplace.docs.productOverview': '产品概要',
   'workplace.docs.userGuide': '使用指南',
   'workplace.docs.workflow': '接入流程',
