@@ -151,7 +151,7 @@
             <a-button
               v-permission="['admin']"
               type="primary"
-              @click="handleChatExport"
+              @click="handleChatExport({})"
             >
               导出
             </a-button>

@@ -76,7 +76,7 @@
             <a-button
               v-permission="['admin']"
               type="primary"
-              @click="handleBillExport"
+              @click="handleBillExport({})"
             >
               导出
             </a-button>
