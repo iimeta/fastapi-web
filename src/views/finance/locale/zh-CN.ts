@@ -18,6 +18,8 @@ export default {
   'finance.form.search': '查询',
   'finance.form.reset': '重置',
   'finance.form.selectDefault': '全部',
+  'finance.form.title.bill_export': '导出账单明细',
+  'finance.error.stat_date.required': '请选择账单日期',
   // operation
   'finance.operation.create': '新建',
   'finance.operation.import': '批量导入',

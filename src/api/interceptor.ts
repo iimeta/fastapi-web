@@ -38,6 +38,9 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (response: AxiosResponse<HttpResponse>) => {
     const res = response.data;
+    if (res instanceof Blob) {
+      return response;
+    }
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 0) {
       Message.error({

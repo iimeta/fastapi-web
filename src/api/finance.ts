@@ -26,6 +26,17 @@ export function queryBillPage(params: BillPageParams) {
   return axios.post<BillPageRes>('/api/v1/finance/bill', params);
 }
 
+export interface BillExportParams {
+  ids?: string[];
+  stat_date?: any;
+}
+
+export function submitBillExport(params: BillExportParams) {
+  return axios.post('/api/v1/finance/bill/export', params, {
+    responseType: 'blob',
+  });
+}
+
 export interface DealRecordPage {
   id: string;
   user_id: string;

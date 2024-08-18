@@ -2,7 +2,7 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-wechatpay />
+        <icon-webillpay />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.finance') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.bill.list') }}</a-breadcrumb-item>
@@ -71,8 +71,19 @@
         style="margin-top: 0; margin-bottom: 16px"
       />
       <a-row style="margin-bottom: 16px">
+        <a-col :span="12">
+          <a-space>
+            <a-button
+              v-permission="['admin']"
+              type="primary"
+              @click="handleBillExport"
+            >
+              导出
+            </a-button>
+          </a-space>
+        </a-col>
         <a-col
-          :span="24"
+          :span="12"
           style="
             display: flex;
             height: 32px;
@@ -148,21 +159,59 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
+        @selection-change="handleSelectionChange"
       >
         <template #tokens="{ record }">
           {{ record.tokens > 0 ? `$${quotaConv(record.tokens)}` : '$0.00' }}
         </template>
       </a-table>
+      <a-modal
+        v-model:visible="billExportFormVisible"
+        :title="$t('finance.form.title.bill_export')"
+        @cancel="billExportHandleCancel"
+        @before-ok="billExportHandleBeforeOk"
+      >
+        <a-form ref="billExportForm" :model="billExportFormData">
+          <a-form-item
+            field="stat_date"
+            :label="$t('finance.form.stat_date')"
+            :rules="[
+              {
+                required: true,
+                message: $t('finance.error.stat_date.required'),
+              },
+            ]"
+          >
+            <a-range-picker
+              v-model="billExportFormData.stat_date"
+              style="width: 100%"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import {
+    computed,
+    ref,
+    reactive,
+    watch,
+    nextTick,
+    getCurrentInstance,
+  } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { quotaConv } from '@/utils/common';
-  import { queryBillPage, BillPage, BillPageParams } from '@/api/finance';
+  import {
+    queryBillPage,
+    BillPage,
+    BillPageParams,
+    BillExportParams,
+    submitBillExport,
+  } from '@/api/finance';
   import { Pagination } from '@/types/global';
   import type {
     TableColumnData,
@@ -170,6 +219,7 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { FormInstance } from '@arco-design/web-vue/es/form';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -195,6 +245,8 @@
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
   const tableRef = ref();
+  const ids = ref<Array<string>>([]);
+  const multiple = ref(true);
 
   const basePagination: Pagination = {
     current: 1,
@@ -366,6 +418,79 @@
     },
     { deep: true, immediate: true }
   );
+
+  const { proxy } = getCurrentInstance() as any;
+
+  /**
+   * 已选择的数据行发生改变时触发
+   *
+   * @param rowKeys ID 列表
+   */
+  const handleSelectionChange = (rowKeys: Array<any>) => {
+    ids.value = rowKeys;
+    multiple.value = !rowKeys.length;
+  };
+
+  const billExportForm = ref<FormInstance>();
+  const billExportFormVisible = ref(false);
+  const billExportFormData = ref<BillExportParams>({} as BillExportParams);
+
+  const billExportHandleBeforeOk = async (done: any) => {
+    const res = await billExportForm.value?.validate();
+    if (res) {
+      billExportFormVisible.value = true;
+      done(false);
+      return;
+    }
+    done();
+    handleBillExport({
+      stat_date: billExportFormData.value.stat_date,
+    });
+  };
+
+  const billExportHandleCancel = () => {
+    billExportFormVisible.value = false;
+  };
+
+  /**
+   * 导出操作
+   */
+  const handleBillExport = (params: BillExportParams) => {
+    if (ids.value.length === 0 && !params.stat_date) {
+      billExportFormVisible.value = true;
+      return;
+    }
+
+    setLoading(true);
+    params.ids = ids.value;
+    submitBillExport(params)
+      .then((res) => {
+        setLoading(false);
+        proxy.$message.success('导出成功');
+        tableRef.value.selectAll(false);
+        // 创建一个新的Blob对象，使用后端返回的文件流
+        const blob = new Blob([res.data], { type: 'application/vnd.ms-excel' });
+
+        // 创建一个指向该Blob的URL
+        const url = window.URL.createObjectURL(blob);
+
+        // 创建一个a标签用于下载文件
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', '账单明细.xlsx'); // 设置下载文件名
+        document.body.appendChild(link);
+
+        // 触发a标签的点击事件，开始下载
+        link.click();
+
+        // 清理并释放资源
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        proxy.$message.error('导出失败, 请联系管理员', error);
+      });
+  };
 </script>
 
 <script lang="ts">

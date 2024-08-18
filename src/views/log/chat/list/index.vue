@@ -146,19 +146,39 @@
       </a-row>
       <a-divider style="margin-top: 0; margin-bottom: 16px" />
       <a-row style="margin-bottom: 16px; align-items: center">
-        <a-col :span="10">
+        <a-col :span="4">
+          <a-space>
+            <a-button
+              v-permission="['admin']"
+              type="primary"
+              @click="handleChatExport"
+            >
+              导出
+            </a-button>
+            <a-button
+              v-permission="['admin']"
+              type="primary"
+              status="danger"
+              @click="
+                handleBatch({
+                  action: 'delete',
+                })
+              "
+            >
+              删除
+            </a-button>
+          </a-space>
+        </a-col>
+        <a-col :span="12">
           花费 = ( 提问 × 提问倍率 + 回答 × 回答倍率 ) ÷ 500000
           &nbsp;&nbsp;或&nbsp;&nbsp; 回答 ÷ 500000
         </a-col>
-        <a-col :span="3"> RPS: &nbsp;{{ rps.toLocaleString() }} </a-col>
-        <a-col :span="3"> TPS: &nbsp;{{ tps.toLocaleString() }} </a-col>
         <a-col :span="3"> RPM: &nbsp;{{ rpm.toLocaleString() }} </a-col>
         <a-col :span="3"> TPM: &nbsp;{{ tpm.toLocaleString() }} </a-col>
         <a-col
           :span="2"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <!-- <a-button type="primary"> 导出 </a-button> -->
           <a-tooltip :content="$t('searchTable.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -216,6 +236,7 @@
         </a-col>
       </a-row>
       <a-table
+        ref="tableRef"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -226,6 +247,7 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
+        @selection-change="handleSelectionChange"
       >
         <template #user_id="{ record }">
           {{ record.is_smart_match ? '-' : record.user_id }}
@@ -1158,6 +1180,62 @@
           </a-descriptions>
         </div>
       </a-drawer>
+      <a-modal
+        v-model:visible="chatExportFormVisible"
+        :title="$t('chat.form.title.chat_export')"
+        @cancel="chatExportHandleCancel"
+        @before-ok="chatExportHandleBeforeOk"
+      >
+        <a-form ref="chatExportForm" :model="chatExportFormData">
+          <a-form-item
+            field="req_time"
+            :label="$t('chat.form.req_time')"
+            :rules="[
+              {
+                required: true,
+                message: $t('chat.error.req_time.required'),
+              },
+            ]"
+          >
+            <a-range-picker
+              v-model="chatExportFormData.req_time"
+              :placeholder="['开始时间', '结束时间']"
+              :time-picker-props="{
+                defaultValue: ['00:00:00', '23:59:59'],
+              }"
+              show-time
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
+      <a-modal
+        v-model:visible="chatDelFormVisible"
+        :title="$t('chat.form.title.chat_del')"
+        @cancel="chatDelHandleCancel"
+        @before-ok="chatDelHandleBeforeOk"
+      >
+        <a-form ref="chatDelForm" :model="chatDelFormData">
+          <a-form-item
+            field="value"
+            :label="$t('chat.form.req_time')"
+            :rules="[
+              {
+                required: true,
+                message: $t('chat.error.req_time.required'),
+              },
+            ]"
+          >
+            <a-range-picker
+              v-model="chatDelFormData.value"
+              :placeholder="['开始时间', '结束时间']"
+              :time-picker-props="{
+                defaultValue: ['00:00:00', '23:59:59'],
+              }"
+              show-time
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -1181,14 +1259,13 @@
     ChatPageParams,
     queryChatDetail,
     ChatDetail,
+    ChatExportParams,
+    submitChatExport,
+    ChatBatchOperate,
+    submitChatBatchOperate,
   } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
-  import {
-    queryPerSecond,
-    PerSecondParams,
-    queryPerMinute,
-    PerMinuteParams,
-  } from '@/api/dashboard';
+  import { queryPerMinute, PerMinuteParams } from '@/api/dashboard';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -1197,6 +1274,7 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { FormInstance } from '@arco-design/web-vue/es/form';
   import { queryModelList, ModelList } from '@/api/model';
   import { useClipboard } from '@vueuse/core';
   import VueJsonPretty from 'vue-json-pretty';
@@ -1256,8 +1334,10 @@
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
-
   const size = ref<SizeProps>('medium');
+  const ids = ref<Array<string>>([]);
+  const multiple = ref(true);
+  const tableRef = ref();
 
   const basePagination: Pagination = {
     current: 1,
@@ -1566,20 +1646,6 @@
     }
   });
 
-  const rps = ref(0);
-  const tps = ref(0);
-  const getPerSecond = async (
-    params: PerSecondParams = {
-      ...formModel.value,
-    }
-  ) => {
-    const { data } = await queryPerSecond(params);
-    rps.value = data.rps;
-    tps.value = data.tps;
-  };
-  getPerSecond();
-  setInterval(getPerSecond, 1000);
-
   const rpm = ref(0);
   const tpm = ref(0);
   const getPerMinute = async (
@@ -1592,7 +1658,159 @@
     tpm.value = data.tpm;
   };
   getPerMinute();
-  setInterval(getPerMinute, 3000);
+  // setInterval(getPerMinute, 3000);
+
+  // 定时器的标识符
+  let intervalId: number | undefined;
+
+  // 设置定时器并保存其标识符
+  intervalId = setInterval(() => {
+    // 定时执行的代码
+    getPerMinute();
+  }, 3000); // 每3000毫秒执行一次
+
+  // 当用户离开页面时清除定时器
+  window.onblur = () => {
+    clearInterval(intervalId);
+  };
+
+  // 当用户回到页面时重新设置定时器
+  window.onfocus = () => {
+    intervalId = setInterval(() => {
+      // 定时执行的代码
+      getPerMinute();
+    }, 3000);
+  };
+
+  const chatExportForm = ref<FormInstance>();
+  const chatExportFormVisible = ref(false);
+  const chatExportFormData = ref<ChatExportParams>({} as ChatExportParams);
+
+  const chatExportHandleBeforeOk = async (done: any) => {
+    const res = await chatExportForm.value?.validate();
+    if (res) {
+      chatExportFormVisible.value = true;
+      done(false);
+      return;
+    }
+    done();
+    handleChatExport({
+      req_time: chatExportFormData.value.req_time,
+    });
+  };
+
+  const chatExportHandleCancel = () => {
+    chatExportFormVisible.value = false;
+  };
+
+  /**
+   * 导出操作
+   */
+  const handleChatExport = (params: ChatExportParams) => {
+    if (ids.value.length === 0 && !params.req_time) {
+      chatExportFormVisible.value = true;
+      return;
+    }
+
+    setLoading(true);
+    params.ids = ids.value;
+    submitChatExport(params)
+      .then((res) => {
+        setLoading(false);
+        proxy.$message.success('导出成功');
+        tableRef.value.selectAll(false);
+        // 创建一个新的Blob对象，使用后端返回的文件流
+        const blob = new Blob([res.data], { type: 'application/vnd.ms-excel' });
+
+        // 创建一个指向该Blob的URL
+        const url = window.URL.createObjectURL(blob);
+
+        // 创建一个a标签用于下载文件
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', '聊天日志.xlsx'); // 设置下载文件名
+        document.body.appendChild(link);
+
+        // 触发a标签的点击事件，开始下载
+        link.click();
+
+        // 清理并释放资源
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        proxy.$message.error('导出失败, 请联系管理员', error);
+      });
+  };
+
+  const chatDelForm = ref<FormInstance>();
+  const chatDelFormVisible = ref(false);
+  const chatDelFormData = ref<ChatBatchOperate>({} as ChatBatchOperate);
+
+  const chatDelHandleBeforeOk = async (done: any) => {
+    const res = await chatDelForm.value?.validate();
+    if (res) {
+      chatDelFormVisible.value = true;
+      done(false);
+      return;
+    }
+    done();
+    handleBatch({
+      action: 'time',
+      value: chatDelFormData.value.value,
+    });
+  };
+
+  const chatDelHandleCancel = () => {
+    chatDelFormVisible.value = false;
+  };
+
+  /**
+   * 已选择的数据行发生改变时触发
+   *
+   * @param rowKeys ID 列表
+   */
+  const handleSelectionChange = (rowKeys: Array<any>) => {
+    ids.value = rowKeys;
+    multiple.value = !rowKeys.length;
+  };
+
+  /**
+   * 批量操作
+   */
+  const handleBatch = (params: ChatBatchOperate) => {
+    if (ids.value.length === 0 && !params.value) {
+      chatDelFormVisible.value = true;
+    } else {
+      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      switch (params.action) {
+        case 'delete':
+          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          break;
+        case 'time':
+          alertContent = `是否确定删除${params.value[0]}至${params.value[1]}的数据?`;
+          break;
+        default:
+      }
+
+      proxy.$modal.warning({
+        title: '警告',
+        titleAlign: 'start',
+        content: alertContent,
+        hideCancel: false,
+        onOk: () => {
+          setLoading(true);
+          params.ids = ids.value;
+          submitChatBatchOperate(params).then((res) => {
+            setLoading(false);
+            proxy.$message.success('操作成功');
+            search();
+            tableRef.value.selectAll(false);
+          });
+        },
+      });
+    }
+  };
 </script>
 
 <script lang="ts">

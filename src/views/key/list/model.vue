@@ -285,12 +285,12 @@
         <template #model_names="{ record }">
           {{ record?.model_names?.join(',') || '-' }}
         </template>
-        <template #dataFormat="{ record }">
-          {{ $t(`key.dict.data_format.${record.data_format}`) }}
+        <template #model_agent_names="{ record }">
+          {{ record?.model_agent_names?.join(',') || '-' }}
         </template>
-        <!-- <template #quota="{ record }">
-          {{ record?.quota || '-' }}
-        </template> -->
+        <template #used_quota="{ record }">
+          ${{ record.used_quota > 0 ? quotaConv(record.used_quota) : '0.00' }}
+        </template>
         <template #remark="{ record }">
           {{ record.remark || '-' }}
         </template>
@@ -358,6 +358,7 @@
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { quotaConv } from '@/utils/common';
   import {
     queryKeyPage,
     KeyPage,
@@ -526,13 +527,22 @@
       ellipsis: true,
       tooltip: true,
     },
-    // {
-    //   title: t('key.columns.quota'),
-    //   dataIndex: 'quota',
-    //   slotName: 'quota',
-    //   align: 'center',
-    //   width: 80,
-    // },
+    {
+      title: t('key.columns.model_agents'),
+      dataIndex: 'model_agent_names',
+      slotName: 'model_agent_names',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
+      title: t('key.columns.used_quota'),
+      dataIndex: 'used_quota',
+      slotName: 'used_quota',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
     {
       title: t('key.columns.remark'),
       dataIndex: 'remark',

@@ -82,14 +82,14 @@
   const appStatisticsData = ref<number[]>([]);
   const abnormalStatisticsData = ref<number[]>([]);
   const graphicElements = ref([
-    graphicFactory({ left: '50' }),
+    graphicFactory({ left: '52' }),
     graphicFactory({ right: 8 }),
   ]);
 
   const { chartOption } = useChartOption((isDark) => {
     return {
       grid: {
-        left: '50',
+        left: '52',
         right: '8',
         top: '10',
         bottom: '50',

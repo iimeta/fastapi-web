@@ -83,6 +83,7 @@ export default {
   'key.columns.quota_expires_at': '过期时间',
   'key.columns.quota.no_limit': '不限',
   'key.columns.models': '模型',
+  'key.columns.model_agents': '代理',
   'key.columns.app.models': '模型权限',
   'key.columns.app.models.no_limit': '不限',
   'key.columns.status': '状态',

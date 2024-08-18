@@ -222,3 +222,24 @@ export function queryImageDetail(params: DetailParams) {
     },
   });
 }
+
+export interface ChatExportParams {
+  ids?: string[];
+  req_time?: any;
+}
+
+export function submitChatExport(params: ChatExportParams) {
+  return axios.post('/api/v1/log/chat/export', params, {
+    responseType: 'blob',
+  });
+}
+
+export interface ChatBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+}
+
+export function submitChatBatchOperate(data: ChatBatchOperate) {
+  return axios.post('/api/v1/log/chat/batch/operate', data);
+}

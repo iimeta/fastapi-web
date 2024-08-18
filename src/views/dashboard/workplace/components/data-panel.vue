@@ -235,7 +235,7 @@
     tps.value = data.tps;
   };
   getPerSecond();
-  setInterval(getPerSecond, 1000);
+  // setInterval(getPerSecond, 1000);
 
   const rpm = ref(0);
   const tpm = ref(0);
@@ -245,7 +245,43 @@
     tpm.value = data.tpm;
   };
   getPerMinute();
-  setInterval(getPerMinute, 3000);
+  // setInterval(getPerMinute, 3000);
+
+  // 定时器的标识符
+  let getPerSecondIntervalId: number | undefined;
+
+  // 设置定时器并保存其标识符
+  getPerSecondIntervalId = setInterval(() => {
+    // 定时执行的代码
+    getPerSecond();
+  }, 1000); // 每1000毫秒执行一次
+
+  // 定时器的标识符
+  let getPerMinuteIntervalId: number | undefined;
+
+  // 设置定时器并保存其标识符
+  getPerMinuteIntervalId = setInterval(() => {
+    // 定时执行的代码
+    getPerMinute();
+  }, 3000); // 每3000毫秒执行一次
+
+  // 当用户离开页面时清除定时器
+  window.onblur = () => {
+    clearInterval(getPerSecondIntervalId);
+    clearInterval(getPerMinuteIntervalId);
+  };
+
+  // 当用户回到页面时重新设置定时器
+  window.onfocus = () => {
+    getPerSecondIntervalId = setInterval(() => {
+      // 定时执行的代码
+      getPerSecond();
+    }, 1000);
+    getPerMinuteIntervalId = setInterval(() => {
+      // 定时执行的代码
+      getPerMinute();
+    }, 3000);
+  };
 </script>
 
 <style lang="less" scoped>

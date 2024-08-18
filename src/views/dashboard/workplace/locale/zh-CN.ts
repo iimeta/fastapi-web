@@ -15,7 +15,7 @@ export default {
   'workplace.minute': '分钟',
   'workplace.docs': '使用指南',
   'workplace.docs.productOverview': '产品概要',
-  'workplace.docs.userGuide': '使用指南',
+  'workplace.docs.userGuide': '帮助文档',
   'workplace.docs.workflow': '接入流程',
   'workplace.docs.interfaceDocs': '接口文档',
   'workplace.appManagement': '应用管理',

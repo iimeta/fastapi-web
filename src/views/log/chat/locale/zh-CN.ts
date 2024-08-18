@@ -53,6 +53,9 @@ export default {
   'chat.form.search': '查询',
   'chat.form.reset': '重置',
   'chat.form.selectDefault': '全部',
+  'chat.form.title.chat_export': '导出聊天日志',
+  'chat.form.title.chat_del': '删除聊天日志',
+  'chat.error.req_time.required': '请选择请求时间',
   // columns
   'chat.columns.user_id': '用户ID',
   'chat.columns.app_id': '应用ID',
