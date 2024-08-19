@@ -2,7 +2,7 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-webillpay />
+        <icon-wechatpay />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.finance') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.bill.list') }}</a-breadcrumb-item>
