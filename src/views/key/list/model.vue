@@ -518,6 +518,7 @@
       dataIndex: 'key',
       slotName: 'key',
       align: 'center',
+      width: 200,
     },
     {
       title: t('key.columns.models'),
