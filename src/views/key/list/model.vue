@@ -518,7 +518,7 @@
       dataIndex: 'key',
       slotName: 'key',
       align: 'center',
-      width: 200,
+      width: 210,
     },
     {
       title: t('key.columns.models'),
@@ -549,6 +549,8 @@
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('key.columns.status'),

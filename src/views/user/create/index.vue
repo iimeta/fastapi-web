@@ -158,7 +158,7 @@
                 ]"
               />
             </a-form-item>
-            <a-form-item field="rps" :label="$t('user.label.rps')">
+            <!-- <a-form-item field="rps" :label="$t('user.label.rps')">
               <a-input-number
                 v-model="formData.rps"
                 :placeholder="$t('user.placeholder.rps')"
@@ -238,7 +238,7 @@
                 :min="0"
                 :max="9999999999999"
               />
-            </a-form-item>
+            </a-form-item> -->
             <a-form-item field="remark" :label="$t('user.label.remark')">
               <a-textarea
                 v-model="formData.remark"

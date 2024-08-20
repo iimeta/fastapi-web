@@ -19,7 +19,7 @@ const FINANCE: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.bill.list',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['admin', 'user'],
       },
     },
     {

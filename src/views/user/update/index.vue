@@ -73,85 +73,47 @@
                 allow-clear
               />
             </a-form-item>
-            <a-form-item field="rps" :label="$t('user.label.rps')">
-              <a-input-number
-                v-model="formData.rps"
-                :placeholder="$t('user.placeholder.rps')"
-                :precision="0"
-                :min="0"
-                :max="9999999999999"
-              />
-            </a-form-item>
-            <a-form-item field="rpm" :label="$t('user.label.rpm')">
-              <a-input-number
-                v-model="formData.rpm"
-                :placeholder="$t('user.placeholder.rpm')"
-                :precision="0"
-                :min="0"
-                :max="9999999999999"
-              />
-            </a-form-item>
-            <a-form-item field="rpd" :label="$t('user.label.rpd')">
-              <a-input-number
-                v-model="formData.rpd"
-                :placeholder="$t('user.placeholder.rpd')"
-                :precision="0"
-                :min="0"
-                :max="9999999999999"
-              />
-            </a-form-item>
-            <a-form-item field="tps" :label="$t('user.label.tps')">
-              <a-input-number
-                v-model="formData.tps"
-                :placeholder="$t('user.placeholder.tps')"
-                :precision="0"
-                :min="0"
-                :max="9999999999999"
-              />
-            </a-form-item>
-            <a-form-item field="tpm" :label="$t('user.label.tpm')">
-              <a-input-number
-                v-model="formData.tpm"
-                :placeholder="$t('user.placeholder.tpm')"
-                :precision="0"
-                :min="0"
-                :max="9999999999999"
-              />
-            </a-form-item>
-            <a-form-item field="tpd" :label="$t('user.label.tpd')">
-              <a-input-number
-                v-model="formData.tpd"
-                :placeholder="$t('user.placeholder.tpd')"
-                :precision="0"
-                :min="0"
-                :max="9999999999999"
-              />
-            </a-form-item>
-            <a-form-item field="ips" :label="$t('user.label.ips')">
-              <a-input-number
-                v-model="formData.ips"
-                :placeholder="$t('user.placeholder.ips')"
-                :precision="0"
-                :min="0"
-                :max="9999999999999"
-              />
-            </a-form-item>
-            <a-form-item field="ipm" :label="$t('user.label.ipm')">
-              <a-input-number
-                v-model="formData.ipm"
-                :placeholder="$t('user.placeholder.ipm')"
-                :precision="0"
-                :min="0"
-                :max="9999999999999"
-              />
-            </a-form-item>
-            <a-form-item field="ipd" :label="$t('user.label.ipd')">
-              <a-input-number
-                v-model="formData.ipd"
-                :placeholder="$t('user.placeholder.ipd')"
-                :precision="0"
-                :min="0"
-                :max="9999999999999"
+            <a-form-item
+              field="quota_expires_at"
+              :label="$t('user.label.quota_expires_at')"
+            >
+              <a-date-picker
+                v-model="formData.quota_expires_at"
+                :placeholder="$t('user.placeholder.quota_expires_at')"
+                :time-picker-props="{ defaultValue: '23:59:59' }"
+                :disabled-date="(current:Date) => dayjs(current).isBefore(dayjs())"
+                style="width: 100%"
+                show-time
+                :shortcuts="[
+                  {
+                    label: '1',
+                    value: () => dayjs().add(1, 'day'),
+                  },
+                  {
+                    label: '7',
+                    value: () => dayjs().add(7, 'day'),
+                  },
+                  {
+                    label: '15',
+                    value: () => dayjs().add(15, 'day'),
+                  },
+                  {
+                    label: '30',
+                    value: () => dayjs().add(30, 'day'),
+                  },
+                  {
+                    label: '90',
+                    value: () => dayjs().add(90, 'day'),
+                  },
+                  {
+                    label: '180',
+                    value: () => dayjs().add(180, 'day'),
+                  },
+                  {
+                    label: '365',
+                    value: () => dayjs().add(365, 'day'),
+                  },
+                ]"
               />
             </a-form-item>
             <a-form-item field="remark" :label="$t('user.label.remark')">
@@ -187,6 +149,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
+  import dayjs from 'dayjs';
   import {
     submitUserUpdate,
     UserUpdate,

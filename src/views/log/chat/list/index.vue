@@ -148,11 +148,7 @@
       <a-row style="margin-bottom: 16px; align-items: center">
         <a-col :span="4">
           <a-space>
-            <a-button
-              v-permission="['admin']"
-              type="primary"
-              @click="handleChatExport({})"
-            >
+            <a-button type="primary" @click="handleChatExport({})">
               导出
             </a-button>
             <a-button

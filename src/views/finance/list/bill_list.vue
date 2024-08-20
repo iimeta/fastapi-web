@@ -73,11 +73,7 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button
-              v-permission="['admin']"
-              type="primary"
-              @click="handleBillExport({})"
-            >
+            <a-button type="primary" @click="handleBillExport({})">
               导出
             </a-button>
           </a-space>
