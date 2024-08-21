@@ -407,15 +407,30 @@
           }}
         </template>
         <template #completion_ratio="{ record }">
-          {{
-            record.type !== 100
-              ? record.text_quota.billing_method === 1
+          <span v-if="record.type === 2">
+            <a-button
+              type="text"
+              size="small"
+              @click="viewImageQuota(record.image_quotas)"
+            >
+              查看
+            </a-button>
+          </span>
+          <span v-else-if="record.type === 5">-</span>
+          <span v-else-if="record.type !== 100">
+            {{
+              record.text_quota.billing_method === 1
                 ? `$${priceConv(record.text_quota.completion_ratio)}/k`
                 : `$${quotaConv(record.text_quota.fixed_quota)}/次`
-              : `$${priceConv(
-                  record.multimodal_quota.text_quota.completion_ratio
-                )}/k`
-          }}
+            }}
+          </span>
+          <span v-else>
+            {{
+              `$${priceConv(
+                record.multimodal_quota.text_quota.completion_ratio
+              )}/k`
+            }}
+          </span>
         </template>
         <template #status="{ record }">
           <a-switch
@@ -611,6 +626,39 @@
           </a-form-item>
         </a-form>
       </a-modal>
+      <a-modal
+        v-model:visible="imageQuotaVisible"
+        :title="$t('model.columns.completion_price')"
+        width="500px"
+        hide-cancel
+        simple
+      >
+        <a-table :data="imageQuotas" :pagination="false" :bordered="false">
+          <template #columns>
+            <a-table-column
+              title="宽度"
+              data-index="width"
+              align="center"
+            ></a-table-column>
+            <a-table-column title="高度" data-index="height" align="center">
+            </a-table-column>
+            <a-table-column
+              title="价格"
+              data-index="fixed_quota"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${quotaConv(record.fixed_quota)}/张` }}
+              </template>
+            </a-table-column>
+            <a-table-column title="默认" data-index="is_default" align="center">
+              <template #cell="{ record }">
+                {{ record.is_default ? '是' : '-' }}
+              </template>
+            </a-table-column>
+          </template>
+        </a-table>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -641,6 +689,7 @@
     submitModelBatchOperate,
     queryModelList,
     ModelList,
+    ImageQuota,
   } from '@/api/model';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -1206,6 +1255,13 @@
         },
       });
     }
+  };
+
+  const imageQuotaVisible = ref(false);
+  const imageQuotas = ref<ImageQuota[]>([]);
+  const viewImageQuota = (params: ImageQuota[]) => {
+    imageQuotas.value = params;
+    imageQuotaVisible.value = true;
   };
 </script>
 

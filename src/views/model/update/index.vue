@@ -98,6 +98,8 @@
                 <a-option value="2">文生图</a-option>
                 <a-option value="3">图生文</a-option>
                 <a-option value="4">图生图</a-option>
+                <a-option value="5">文生语音</a-option>
+                <a-option value="6">语音生文</a-option>
                 <a-option value="100">多模态</a-option>
               </a-select>
             </a-form-item>
@@ -171,7 +173,8 @@
             <a-form-item
               v-if="
                 !isShowMultimodalTextQuota &&
-                formData.text_quota.billing_method === '1'
+                formData.text_quota.billing_method === '1' &&
+                formData.type !== '5'
               "
               field="text_quota.completion_ratio"
               :label="$t('model.label.completionRatio')"

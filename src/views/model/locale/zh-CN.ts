@@ -201,6 +201,8 @@ export default {
   'model.dict.type.2': '文生图',
   'model.dict.type.3': '图生文',
   'model.dict.type.4': '图生图',
+  'model.dict.type.5': '文生语音',
+  'model.dict.type.6': '语音生文',
   'model.dict.type.100': '多模态',
   'model.dict.data_format.1': '统一格式',
   'model.dict.data_format.2': '官方格式',

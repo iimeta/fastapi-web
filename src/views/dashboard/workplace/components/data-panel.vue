@@ -235,7 +235,6 @@
     tps.value = data.tps;
   };
   getPerSecond();
-  // setInterval(getPerSecond, 1000);
 
   const rpm = ref(0);
   const tpm = ref(0);
@@ -245,7 +244,15 @@
     tpm.value = data.tpm;
   };
   getPerMinute();
-  // setInterval(getPerMinute, 3000);
+
+  // 定时器的标识符
+  let getBaseDataIntervalId: number | undefined;
+
+  // 设置定时器并保存其标识符
+  getBaseDataIntervalId = setInterval(() => {
+    // 定时执行的代码
+    getBaseData();
+  }, 180 * 1000); // 每180秒执行一次
 
   // 定时器的标识符
   let getPerSecondIntervalId: number | undefined;
@@ -267,12 +274,17 @@
 
   // 当用户离开页面时清除定时器
   window.onblur = () => {
+    clearInterval(getBaseDataIntervalId);
     clearInterval(getPerSecondIntervalId);
     clearInterval(getPerMinuteIntervalId);
   };
 
   // 当用户回到页面时重新设置定时器
   window.onfocus = () => {
+    getBaseDataIntervalId = setInterval(() => {
+      // 定时执行的代码
+      getBaseData();
+    }, 180 * 1000);
     getPerSecondIntervalId = setInterval(() => {
       // 定时执行的代码
       getPerSecond();

@@ -96,5 +96,7 @@ export default {
   'chat.dict.type.2': '文生图',
   'chat.dict.type.3': '图生文',
   'chat.dict.type.4': '图生图',
+  'chat.dict.type.5': '文生语音',
+  'chat.dict.type.6': '语音生文',
   'chat.dict.type.100': '多模态',
 };
