@@ -1672,6 +1672,7 @@
 
   // 当用户回到页面时重新设置定时器
   window.onfocus = () => {
+    getPerMinute();
     intervalId = setInterval(() => {
       // 定时执行的代码
       getPerMinute();
