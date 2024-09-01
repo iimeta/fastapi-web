@@ -394,17 +394,27 @@
           {{ $t(`model.dict.type.${record.type}`) }}
         </template>
         <template #prompt_ratio="{ record }">
-          {{
-            record.type !== 100
-              ? record.text_quota.billing_method === 1
-                ? `$${priceConv(record.text_quota.prompt_ratio)}/k`
+          <span v-if="record.type === 5">
+            {{
+              record.audio_quota.billing_method === 1
+                ? `$${priceConv(record.audio_quota.prompt_ratio)}/k`
                 : '-'
-              : record.multimodal_quota.text_quota.billing_method === 1
+            }}
+          </span>
+          <span v-else-if="record.type === 6">-</span>
+          <span v-else-if="record.type !== 100">{{
+            record.text_quota.billing_method === 1
+              ? `$${priceConv(record.text_quota.prompt_ratio)}/k`
+              : '-'
+          }}</span>
+          <span v-else-if="record.type === 100">{{
+            record.multimodal_quota.text_quota.billing_method === 1
               ? `$${priceConv(
                   record.multimodal_quota.text_quota.prompt_ratio
                 )}/k`
               : '-'
-          }}
+          }}</span>
+          <span v-else> - </span>
         </template>
         <template #completion_ratio="{ record }">
           <span v-if="record.type === 2">
@@ -417,6 +427,13 @@
             </a-button>
           </span>
           <span v-else-if="record.type === 5">-</span>
+          <span v-else-if="record.type === 6">
+            {{
+              record.audio_quota.billing_method === 1
+                ? `$${priceConv(record.audio_quota.completion_ratio)}/min`
+                : `$${quotaConv(record.audio_quota.fixed_quota)}/次`
+            }}</span
+          >
           <span v-else-if="record.type !== 100">
             {{
               record.text_quota.billing_method === 1

@@ -125,7 +125,7 @@
               $t('model.title.advanced')
             }}</a-divider>
             <a-form-item
-              v-if="!isShowMultimodalTextQuota"
+              v-if="!isShowMultimodalTextQuota && !isShowAudioQuota"
               field="text_quota.billing_method"
               :label="$t('model.label.billingMethod')"
               :rules="[
@@ -151,6 +151,7 @@
             <a-form-item
               v-if="
                 !isShowMultimodalTextQuota &&
+                !isShowAudioQuota &&
                 formData.text_quota.billing_method === '1'
               "
               field="text_quota.prompt_ratio"
@@ -173,8 +174,8 @@
             <a-form-item
               v-if="
                 !isShowMultimodalTextQuota &&
-                formData.text_quota.billing_method === '1' &&
-                formData.type !== '5'
+                !isShowAudioQuota &&
+                formData.text_quota.billing_method === '1'
               "
               field="text_quota.completion_ratio"
               :label="$t('model.label.completionRatio')"
@@ -198,6 +199,7 @@
             <a-form-item
               v-if="
                 !isShowMultimodalTextQuota &&
+                !isShowAudioQuota &&
                 formData.text_quota.billing_method === '2' &&
                 formData.type !== '2'
               "
@@ -272,6 +274,99 @@
               >
                 <icon-minus />
               </a-button>
+            </a-form-item>
+            <a-form-item
+              v-if="isShowAudioQuota"
+              field="audio_quota.billing_method"
+              :label="$t('model.label.billingMethod')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.billingMethod.required'),
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.audio_quota.billing_method"
+                  value="1"
+                  :default-checked="true"
+                  >倍率</a-radio
+                >
+                <a-radio v-model="formData.audio_quota.billing_method" value="2"
+                  >固定额度</a-radio
+                >
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowAudioQuota &&
+                formData.audio_quota.billing_method === '1' &&
+                formData.type != '6'
+              "
+              field="audio_quota.prompt_ratio"
+              :label="$t('model.label.promptRatio')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.promptRatio.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.audio_quota.prompt_ratio"
+                :min="0.001"
+                :placeholder="$t('model.placeholder.promptRatio')"
+                style="width: 90%; margin-right: 5px"
+              />
+              <div> ${{ priceConv(formData.audio_quota.prompt_ratio) }}/k </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowAudioQuota &&
+                formData.audio_quota.billing_method === '1' &&
+                formData.type != '5'
+              "
+              field="audio_quota.completion_ratio"
+              :label="$t('model.label.completionRatio')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.completionRatio.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.audio_quota.completion_ratio"
+                :min="0.001"
+                :placeholder="$t('model.placeholder.completionRatio')"
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{ priceConv(formData.audio_quota.completion_ratio) }}/min
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowAudioQuota &&
+                formData.audio_quota.billing_method === '2' &&
+                formData.type !== '2'
+              "
+              field="audio_quota.fixed_quota"
+              :label="$t('model.label.fixedQuota')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.fixedQuota.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.audio_quota.fixed_quota"
+                :min="0"
+                :max="9999999999999"
+                :placeholder="$t('model.placeholder.fixedQuota')"
+              />
             </a-form-item>
             <a-form-item
               v-if="isShowMultimodalTextQuota"
@@ -931,6 +1026,12 @@
       fixed_quota: 1,
     },
     image_quotas: [],
+    audio_quota: {
+      billing_method: '1',
+      prompt_ratio: 1,
+      completion_ratio: 1,
+      fixed_quota: 1,
+    },
     multimodal_quota: {
       text_quota: {
         billing_method: '1',
@@ -1041,6 +1142,15 @@
         }
       }
 
+      if (data.audio_quota) {
+        isShowAudioQuota.value =
+          formData.value.type === '5' || formData.value.type === '6';
+        formData.value.audio_quota = data.audio_quota;
+        formData.value.audio_quota.billing_method = String(
+          formData.value.audio_quota.billing_method
+        );
+      }
+
       if (data.multimodal_quota) {
         isShowMultimodalTextQuota.value =
           formData.value.type === '100' && data.corp_code !== 'Midjourney';
@@ -1109,6 +1219,7 @@
   const handleCorpChange = () => {
     isShowMidjourneyQuota.value = false;
     isShowImageQuota.value = false;
+    isShowAudioQuota.value = false;
     const corp = corpMap.get(formData.value.corp);
     if (corp && corp.code === 'Midjourney') {
       handleMidjourneyQuota();
@@ -1118,12 +1229,14 @@
   };
 
   const isShowImageQuota = ref(false);
+  const isShowAudioQuota = ref(false);
   const isShowMultimodalTextQuota = ref(false);
   const isShowMultimodalImageQuota = ref(false);
   const isShowMidjourneyQuota = ref(false);
 
   const handleTypeChange = () => {
     isShowImageQuota.value = false;
+    isShowAudioQuota.value = false;
     isShowMultimodalTextQuota.value = false;
     isShowMultimodalImageQuota.value = false;
     isShowMidjourneyQuota.value = false;
@@ -1145,6 +1258,8 @@
           handleImageQuotaAdd(widths[i], heights[i]);
         }
       }
+    } else if (formData.value.type === '5' || formData.value.type === '6') {
+      isShowAudioQuota.value = true;
     } else if (formData.value.type === '100') {
       isShowMultimodalTextQuota.value = true;
       isShowMultimodalImageQuota.value = true;
@@ -1226,6 +1341,9 @@
 
   const handleMidjourneyQuota = () => {
     isShowImageQuota.value = false;
+    isShowAudioQuota.value = false;
+    isShowMultimodalTextQuota.value = false;
+    isShowMultimodalImageQuota.value = false;
     isShowMidjourneyQuota.value = true;
     formData.value.type = '2';
     formData.value.text_quota.billing_method = '2';

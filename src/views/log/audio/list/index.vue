@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-message />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.image') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.image.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.audio') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.audio.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -221,15 +221,11 @@
         <template #user_id="{ record }">
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
-        <template #images="{ record }">
-          <a-button type="text" size="small" @click="viewImage(record.id)"
-            >查看</a-button
-          >
-          <a-image-preview-group
-            v-if="imageVisibleId === record.id"
-            v-model:visible="imageVisible"
-            :src-list="record.images"
-          />
+        <template #characters="{ record }">
+          {{ record.characters || '-' }}
+        </template>
+        <template #minute="{ record }">
+          {{ record.minute || '-' }}
         </template>
         <template #total_tokens="{ record }">
           {{
@@ -427,17 +423,27 @@
               </a-skeleton>
               <span v-else>{{ $t(`chat.dict.type.${currentData.type}`) }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="提示词" :span="2">
+            <a-descriptions-item label="提问" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.prompt || '-' }}</span>
+              <span v-else>{{ currentData.input || '-' }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="回答" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.image_data || '-' }}</span>
+              <span v-else>{{ currentData.text || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="计费方式">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                $t(
+                  `chat.dict.billing_method.${currentData.audio_quota.billing_method}`
+                )
+              }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="花费令牌数">
               <a-skeleton v-if="loading" :animation="true">
@@ -447,10 +453,42 @@
                 currentData.total_tokens
                   ? currentData.total_tokens
                   : currentData.status === 1 &&
-                    currentData.text_quota.billing_method === 2
+                    currentData.audio_quota.billing_method === 2
                   ? 0
                   : '-'
               }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="提问倍率">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                currentData.type !== 6
+                  ? currentData.audio_quota.prompt_ratio || '-'
+                  : '-'
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="回答倍率">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                currentData.type !== 5
+                  ? currentData.audio_quota.completion_ratio || '-'
+                  : '-'
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="提问字符数">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.characters || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="回答分钟数">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.minute || '-' }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="总耗时">
               <a-skeleton v-if="loading" :animation="true">
@@ -683,17 +721,27 @@
                 />
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="提示词" :span="2">
+            <a-descriptions-item label="提问" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.prompt || '-' }}</span>
+              <span v-else>{{ currentData.input || '-' }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="回答" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.image_data || '-' }}</span>
+              <span v-else>{{ currentData.text || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="计费方式">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                $t(
+                  `chat.dict.billing_method.${currentData.audio_quota.billing_method}`
+                )
+              }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="花费令牌数">
               <a-skeleton v-if="loading" :animation="true">
@@ -703,10 +751,42 @@
                 currentData.total_tokens
                   ? currentData.total_tokens
                   : currentData.status === 1 &&
-                    currentData.text_quota.billing_method === 2
+                    currentData.audio_quota.billing_method === 2
                   ? 0
                   : '-'
               }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="提问倍率">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                currentData.type !== 6
+                  ? currentData.audio_quota.prompt_ratio || '-'
+                  : '-'
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="回答倍率">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{
+                currentData.type !== 5
+                  ? currentData.audio_quota.completion_ratio || '-'
+                  : '-'
+              }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="提问字符数">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.characters || '-' }}</span>
+            </a-descriptions-item>
+            <a-descriptions-item label="回答分钟数">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ currentData.minute || '-' }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="总耗时">
               <a-skeleton v-if="loading" :animation="true">
@@ -852,11 +932,11 @@
   import dayjs from 'dayjs';
   import { quotaConv } from '@/utils/common';
   import {
-    queryImagePage,
-    ImagePage,
-    ImagePageParams,
-    queryImageDetail,
-    ImageDetail,
+    queryAudioPage,
+    AudioPage,
+    AudioPageParams,
+    queryAudioDetail,
+    AudioDetail,
   } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
   import { Pagination } from '@/types/global';
@@ -922,7 +1002,7 @@
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<ImagePage[]>([]);
+  const renderData = ref<AudioPage[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -980,17 +1060,17 @@
       align: 'center',
     },
     {
-      title: t('chat.columns.prompt'),
-      dataIndex: 'prompt',
-      slotName: 'prompt',
+      title: t('chat.columns.characters'),
+      dataIndex: 'characters',
+      slotName: 'characters',
       align: 'center',
       ellipsis: true,
       tooltip: true,
     },
     {
-      title: t('chat.columns.images'),
-      dataIndex: 'images',
-      slotName: 'images',
+      title: t('chat.columns.minute'),
+      dataIndex: 'minute',
+      slotName: 'minute',
       align: 'center',
     },
     {
@@ -1067,14 +1147,14 @@
   }
 
   const fetchData = async (
-    params: ImagePageParams = {
+    params: AudioPageParams = {
       ...basePagination,
       ...formModel.value,
     }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryImagePage(params);
+      const { data } = await queryAudioPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
@@ -1090,7 +1170,7 @@
     fetchData({
       ...basePagination,
       ...formModel.value,
-    } as unknown as ImagePageParams);
+    } as unknown as AudioPageParams);
   };
 
   const onPageChange = (current: number) => {
@@ -1177,7 +1257,7 @@
   const visible = ref(false);
   const { copy, copied } = useClipboard();
   const { proxy } = getCurrentInstance() as any;
-  const currentData = ref<ImageDetail>({} as ImageDetail);
+  const currentData = ref<AudioDetail>({} as AudioDetail);
 
   /**
    * 查看详情
@@ -1189,7 +1269,7 @@
     loading.value = true;
 
     try {
-      const { data } = await queryImageDetail({ id });
+      const { data } = await queryAudioDetail({ id });
       currentData.value = data;
     } catch (err) {
       // you can report use errorHandler or other
@@ -1218,13 +1298,6 @@
       proxy.$message.success('复制成功');
     }
   });
-
-  const imageVisibleId = ref();
-  const imageVisible = ref(false);
-  const viewImage = (id: any) => {
-    imageVisibleId.value = id;
-    imageVisible.value = true;
-  };
 </script>
 
 <script lang="ts">

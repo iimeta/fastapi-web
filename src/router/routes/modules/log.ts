@@ -32,6 +32,16 @@ const LOG: AppRouteRecordRaw = {
         roles: ['admin', 'user'],
       },
     },
+    {
+      path: 'audio',
+      name: 'AudioList',
+      component: () => import('@/views/log/audio/list/index.vue'),
+      meta: {
+        locale: 'menu.audio.list',
+        requiresAuth: true,
+        roles: ['admin', 'user'],
+      },
+    },
   ],
 };
 

@@ -58,6 +58,13 @@ export interface ImageQuota {
   is_default: string;
 }
 
+export interface AudioQuota {
+  billing_method: any;
+  prompt_ratio: number;
+  completion_ratio: number;
+  fixed_quota: number;
+}
+
 export interface MultimodalQuota {
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
@@ -80,6 +87,7 @@ export interface ModelAdvanced {
   preset_config: PresetConfig;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
+  audio_quota: AudioQuota;
   multimodal_quota: MultimodalQuota;
   midjourney_quotas: MidjourneyQuota[];
   data_format: string;
@@ -107,6 +115,7 @@ export interface ModelPage {
   type: number;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
+  audio_quota: AudioQuota;
   midjourney_quotas: MidjourneyQuota[];
   data_format: number;
   is_public: boolean;
@@ -184,6 +193,7 @@ export interface ModelDetail {
   preset_config: PresetConfig;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
+  audio_quota: AudioQuota;
   multimodal_quota: MultimodalQuota;
   midjourney_quotas: MidjourneyQuota[];
   data_format: number;

@@ -7,7 +7,6 @@ export interface ChatPage {
   user_id: any;
   app_id: any;
   model: string;
-  is_smart_match: boolean;
   prompt_tokens: number;
   completion_tokens: number;
   total_tokens: number;
@@ -57,6 +56,13 @@ export interface ImageQuota {
   fixed_quota: any;
   mode?: string;
   is_default: string;
+}
+
+export interface AudioQuota {
+  billing_method: any;
+  prompt_ratio: number;
+  completion_ratio: number;
+  fixed_quota: number;
 }
 
 export interface MultimodalQuota {
@@ -147,13 +153,7 @@ export interface ImagePage {
   user_id: any;
   app_id: any;
   model: string;
-  is_smart_match: boolean;
-  prompt_tokens: number;
-  completion_tokens: number;
   total_tokens: number;
-  stream: boolean;
-  conn_time: number;
-  duration: number;
   total_time: number;
   internal_time: number;
   req_time: any;
@@ -216,6 +216,83 @@ export interface ImageDetail {
 
 export function queryImageDetail(params: DetailParams) {
   return axios.get<ImageDetail>('/api/v1/log/image/detail', {
+    params,
+    paramsSerializer: (obj) => {
+      return qs.stringify(obj);
+    },
+  });
+}
+
+export interface AudioPage {
+  id: string;
+  trace_id: any;
+  user_id: any;
+  app_id: any;
+  model: string;
+  total_tokens: number;
+  total_time: number;
+  internal_time: number;
+  req_time: any;
+}
+
+export interface AudioPageParams extends Partial<AudioPage> {
+  current: number;
+  pageSize: number;
+}
+
+export interface AudioPageRes {
+  items: AudioPage[];
+  paging: Paging;
+}
+
+export function queryAudioPage(params: AudioPageParams) {
+  return axios.post<AudioPageRes>('/api/v1/log/audio/page', params);
+}
+
+export interface AudioDetail {
+  id: string;
+  trace_id: string;
+  user_id: any;
+  app_id: any;
+  corp: string;
+  corp_name: string;
+  model_id: string;
+  name: string;
+  model: string;
+  type: number;
+  key: string;
+  real_model_id: string;
+  real_model_name: string;
+  real_model: string;
+  is_enable_model_agent: boolean;
+  model_agent_id: string;
+  model_agent: any;
+  is_enable_forward: boolean;
+  forward_config: ForwardConfig;
+  is_smart_match: boolean;
+  is_enable_fallback: boolean;
+  fallback_config: FallbackConfig;
+  input: string;
+  text: string;
+  characters: number;
+  minute: number;
+  audio_quota: AudioQuota;
+  total_tokens: number;
+  total_time: number;
+  internal_time: number;
+  req_time: string;
+  client_ip: string;
+  remote_ip: string;
+  local_ip: string;
+  err_msg: string;
+  status: number;
+  creator: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export function queryAudioDetail(params: DetailParams) {
+  return axios.get<AudioDetail>('/api/v1/log/audio/detail', {
     params,
     paramsSerializer: (obj) => {
       return qs.stringify(obj);
