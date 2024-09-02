@@ -389,7 +389,7 @@
                 {{ currentData.creator }}
                 <icon-copy
                   class="copy-btn"
-                  @click="handleCopy(currentData.creator)"
+                  @click="handleCopyField(currentData.id, 'creator')"
                 />
               </span>
             </a-descriptions-item>
@@ -572,7 +572,7 @@
                 <icon-copy
                   v-if="!currentData.is_smart_match"
                   class="copy-btn"
-                  @click="handleCopy(currentData.creator)"
+                  @click="handleCopyField(currentData.id, 'creator')"
                 />
               </span>
             </a-descriptions-item>
@@ -717,7 +717,7 @@
                 }}
                 <icon-copy
                   class="copy-btn"
-                  @click="handleCopy(currentData.key)"
+                  @click="handleCopyField(currentData.id, 'key')"
                 />
               </span>
             </a-descriptions-item>
@@ -937,6 +937,7 @@
     AudioPageParams,
     queryAudioDetail,
     AudioDetail,
+    audioCopyField,
   } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
   import { Pagination } from '@/types/global';
@@ -1298,6 +1299,14 @@
       proxy.$message.success('复制成功');
     }
   });
+
+  /**
+   * 复制字段值
+   */
+  const handleCopyField = async (id: string, field: string) => {
+    const { data } = await audioCopyField({ id, field });
+    copy(data.value);
+  };
 </script>
 
 <script lang="ts">

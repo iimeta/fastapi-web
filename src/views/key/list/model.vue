@@ -281,6 +281,7 @@
               ? record.key.substr(0, 10) + record.key.substr(-10)
               : record.key
           }}
+          <icon-copy class="copy-btn" @click="handleCopy(record.id)" />
         </template>
         <template #model_names="{ record }">
           {{ record?.model_names?.join(',') || '-' }}
@@ -369,6 +370,7 @@
     submitKeyChangeStatus,
     KeyBatchOperate,
     submitKeyBatchOperate,
+    queryKeyDetail,
   } from '@/api/key';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -381,6 +383,7 @@
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { queryCorpList, CorpList } from '@/api/corp';
+  import { useClipboard } from '@vueuse/core';
 
   const { loading, setLoading } = useLoading(true);
   const { proxy } = getCurrentInstance() as any;
@@ -763,6 +766,21 @@
       });
     }
   };
+  /**
+   * 复制内容
+   *
+   * @param content 内容
+   */
+  const { copy, copied } = useClipboard();
+  const handleCopy = async (id: string) => {
+    const { data } = await queryKeyDetail({ id });
+    copy(data.key);
+  };
+  watch(copied, () => {
+    if (copied.value) {
+      proxy.$message.success('复制成功');
+    }
+  });
 </script>
 
 <script lang="ts">
@@ -810,5 +828,12 @@
   }
   .arco-btn-size-small {
     padding: 0 8px;
+  }
+  .copy-btn {
+    color: gray;
+    cursor: pointer;
+  }
+  .copy-btn:hover {
+    color: rgb(var(--arcoblue-6));
   }
 </style>

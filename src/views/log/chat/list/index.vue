@@ -531,7 +531,7 @@
                 {{ currentData.creator }}
                 <icon-copy
                   class="copy-btn"
-                  @click="handleCopy(currentData.creator)"
+                  @click="handleCopyField(currentData.id, 'creator')"
                 />
               </span>
             </a-descriptions-item>
@@ -763,7 +763,7 @@
                 <icon-copy
                   v-if="!currentData.is_smart_match"
                   class="copy-btn"
-                  @click="handleCopy(currentData.creator)"
+                  @click="handleCopyField(currentData.id, 'creator')"
                 />
               </span>
             </a-descriptions-item>
@@ -916,7 +916,7 @@
                 }}
                 <icon-copy
                   class="copy-btn"
-                  @click="handleCopy(currentData.key)"
+                  @click="handleCopyField(currentData.id, 'key')"
                 />
               </span>
             </a-descriptions-item>
@@ -1259,6 +1259,7 @@
     submitChatExport,
     ChatBatchOperate,
     submitChatBatchOperate,
+    chatCopyField,
   } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
   import { queryPerMinute, PerMinuteParams } from '@/api/dashboard';
@@ -1641,6 +1642,14 @@
       proxy.$message.success('复制成功');
     }
   });
+
+  /**
+   * 复制字段值
+   */
+  const handleCopyField = async (id: string, field: string) => {
+    const { data } = await chatCopyField({ id, field });
+    copy(data.value);
+  };
 
   const rpm = ref(0);
   const tpm = ref(0);

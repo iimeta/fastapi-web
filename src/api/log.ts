@@ -147,6 +147,19 @@ export function queryChatDetail(params: DetailParams) {
   });
 }
 
+export interface ChatCopyFieldParams {
+  id: string;
+  field: string;
+}
+
+export interface ChatCopyFieldRes {
+  value: string;
+}
+
+export function chatCopyField(params: ChatCopyFieldParams) {
+  return axios.post<ChatCopyFieldRes>('/api/v1/log/chat/copy/field', params);
+}
+
 export interface ImagePage {
   id: string;
   trace_id: any;
@@ -221,6 +234,19 @@ export function queryImageDetail(params: DetailParams) {
       return qs.stringify(obj);
     },
   });
+}
+
+export interface ImageCopyFieldParams {
+  id: string;
+  field: string;
+}
+
+export interface ImageCopyFieldRes {
+  value: string;
+}
+
+export function imageCopyField(params: ImageCopyFieldParams) {
+  return axios.post<ImageCopyFieldRes>('/api/v1/log/image/copy/field', params);
 }
 
 export interface AudioPage {
@@ -298,6 +324,19 @@ export function queryAudioDetail(params: DetailParams) {
       return qs.stringify(obj);
     },
   });
+}
+
+export interface AudioCopyFieldParams {
+  id: string;
+  field: string;
+}
+
+export interface AudioCopyFieldRes {
+  value: string;
+}
+
+export function audioCopyField(params: AudioCopyFieldParams) {
+  return axios.post<AudioCopyFieldRes>('/api/v1/log/audio/copy/field', params);
 }
 
 export interface ChatExportParams {

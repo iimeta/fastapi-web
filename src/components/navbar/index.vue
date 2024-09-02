@@ -107,7 +107,7 @@
         </a-dropdown>
       </li> -->
       <li>
-        <a-tooltip content="版本: v0.4.0">
+        <a-tooltip content="版本: v0.5.0">
           <a-link
             target="_blank"
             href="https://github.com/iimeta/fastapi-admin/releases"
