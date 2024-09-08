@@ -22,6 +22,7 @@ export function submitKeyCreate(data: KeyCreate) {
 export interface KeyPage {
   id: string;
   type: number;
+  user_id: any;
   app_id: any;
   corp: string;
   corp_name: string;
@@ -35,6 +36,7 @@ export interface KeyPage {
   status: number;
   remark: string;
 }
+
 export interface Paging {
   page: number;
   page_size: number;
@@ -71,6 +73,7 @@ export interface KeyDetailParams {
 export interface KeyDetail {
   id: string;
   type: number;
+  user_id: number;
   app_id: number;
   corp: string;
   corp_name: string;

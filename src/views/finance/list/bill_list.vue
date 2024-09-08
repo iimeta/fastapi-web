@@ -157,6 +157,9 @@
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
       >
+        <template #total="{ record }">
+          {{ record.total.toLocaleString() }}
+        </template>
         <template #tokens="{ record }">
           {{ record.tokens > 0 ? `$${quotaConv(record.tokens)}` : '$0.00' }}
         </template>
@@ -246,10 +249,10 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 10,
+    pageSize: 20,
     showTotal: true,
     showPageSize: true,
-    pageSizeOptions: [10, 50, 100, 500, 1000],
+    pageSizeOptions: [20, 50, 100, 500, 1000],
   };
 
   const pagination = reactive({

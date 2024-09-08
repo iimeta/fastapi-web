@@ -25,6 +25,23 @@
               $t('model.title.baseInfo')
             }}</a-divider> -->
             <a-form-item
+              v-permission="['admin']"
+              field="user_id"
+              :label="$t('app.label.user_id')"
+              :rules="[
+                {
+                  required: userStore.role === 'admin',
+                  message: $t('app.error.user_id.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.user_id"
+                :placeholder="$t('app.placeholder.user_id')"
+                :min="1"
+              />
+            </a-form-item>
+            <a-form-item
               field="name"
               :label="$t('app.label.name')"
               :rules="[
@@ -226,10 +243,12 @@
   import { quotaConv } from '@/utils/common';
   import { submitAppCreate, AppCreate } from '@/api/app';
   import { queryModelList, ModelList } from '@/api/model';
+  import { useUserStore } from '@/store';
 
   const { loading, setLoading } = useLoading(false);
   const { proxy } = getCurrentInstance() as any;
   const router = useRouter();
+  const userStore = useUserStore();
 
   const models = ref<ModelList[]>([]);
   const getModelList = async () => {
@@ -247,6 +266,7 @@
 
   const formRef = ref<FormInstance>();
   const formData = ref<AppCreate>({
+    user_id: ref(),
     name: '',
     models: [],
     is_limit_quota: false,

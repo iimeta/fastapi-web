@@ -10,7 +10,7 @@ const CORP: AppRouteRecordRaw = {
     locale: 'menu.corp',
     requiresAuth: true,
     icon: 'icon-bar-chart',
-    order: 7,
+    order: 6,
     hideChildrenInMenu: true,
     roles: ['admin'],
   },

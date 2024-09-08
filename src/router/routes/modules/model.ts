@@ -10,7 +10,7 @@ const MODEL: AppRouteRecordRaw = {
     locale: 'menu.model',
     requiresAuth: true,
     icon: 'icon-common',
-    order: 2,
+    order: 3,
     hideChildrenInMenu: true,
     roles: ['admin'],
   },

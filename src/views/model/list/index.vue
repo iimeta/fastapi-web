@@ -807,10 +807,10 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 10,
+    pageSize: 20,
     showTotal: true,
     showPageSize: true,
-    pageSizeOptions: [10, 50, 100, 500, 1000],
+    pageSizeOptions: [20, 50, 100, 500, 1000],
   };
 
   const pagination = reactive({

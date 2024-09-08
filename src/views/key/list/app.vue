@@ -4,7 +4,7 @@
       <a-breadcrumb-item>
         <icon-safe />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.key') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.key.app') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.key.app.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
@@ -24,7 +24,29 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="8">
+              <a-col v-permission="['admin']" :span="8">
+                <a-form-item field="user_id" :label="$t('key.form.userId')">
+                  <a-input-number
+                    v-model="formModel.user_id"
+                    :placeholder="$t('key.form.userId.placeholder')"
+                    :min="1"
+                    :max="9999999999999"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['admin']" :span="8">
+                <a-form-item field="app_id" :label="$t('key.form.appId')">
+                  <a-input-number
+                    v-model="formModel.app_id"
+                    :placeholder="$t('key.form.appId.placeholder')"
+                    :min="1"
+                    :max="9999999999999"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['user']" :span="8">
                 <a-form-item field="app_id" :label="$t('key.form.app')">
                   <a-select
                     v-model="formModel.app_id"
@@ -42,16 +64,16 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="key" :label="$t('key.form.key')">
+                <a-form-item field="key" :label="$t('key.form.appkey')">
                   <a-input
                     v-model="formModel.key"
-                    :placeholder="$t('key.form.key.placeholder')"
+                    :placeholder="$t('key.form.appkey.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item field="models" :label="$t('key.form.models')">
+              <a-col v-permission="['user']" :span="8">
+                <a-form-item field="models" :label="$t('key.form.app.models')">
                   <a-select
                     v-model="formModel.models"
                     :placeholder="$t('key.form.selectDefault')"
@@ -73,8 +95,9 @@
                 <a-form-item field="quota" :label="$t('key.form.quota')">
                   <a-input-number
                     v-model="formModel.quota"
-                    :precision="0"
                     :placeholder="$t('key.form.quota.placeholder')"
+                    :min="0.000001"
+                    :max="9999999999999"
                     allow-clear
                   />
                 </a-form-item>
@@ -91,11 +114,11 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="created_at"
-                  :label="$t('key.form.created_at')"
+                  field="quota_expires_at"
+                  :label="$t('key.form.quota_expires_at')"
                 >
                   <a-range-picker
-                    v-model="formModel.created_at"
+                    v-model="formModel.quota_expires_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -568,10 +591,12 @@
   const generateFormModel = () => {
     return {
       type: 1,
+      user_id: ref(),
       app_id: ref(),
       key: '',
       models: [],
       quota: ref(),
+      quota_expires_at: [],
       status: ref(),
       created_at: [],
     };
@@ -589,10 +614,10 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 10,
+    pageSize: 20,
     showTotal: true,
     showPageSize: true,
-    pageSizeOptions: [10, 50, 100, 500, 1000],
+    pageSizeOptions: [20, 50, 100, 500, 1000],
   };
 
   const pagination = reactive({
@@ -618,6 +643,13 @@
     },
   ]);
   const columns = computed<TableColumnData[]>(() => [
+    {
+      title: t('key.columns.user_id'),
+      dataIndex: 'user_id',
+      slotName: 'user_id',
+      align: 'center',
+      width: 80,
+    },
     {
       title: t('key.columns.app_id'),
       dataIndex: 'app_id',
@@ -694,6 +726,12 @@
       width: 170,
     },
   ]);
+
+  const userRole = localStorage.getItem('userRole');
+  if (userRole === 'user') {
+    columns.value.splice(0, 1);
+  }
+
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('key.dict.status.1'),

@@ -2,6 +2,7 @@ import axios from 'axios';
 import qs from 'query-string';
 
 export interface AppCreate {
+  user_id: any;
   name: string;
   models: string[];
   is_limit_quota: boolean;
@@ -19,13 +20,14 @@ export function submitAppCreate(data: AppCreate) {
 
 export interface AppPage {
   id: string;
+  user_id: number;
   app_id: number;
   name: string;
   models: string[];
   model_names: string[];
   quota: number;
   used_quota: number;
-  quota_expires_at: string;
+  quota_expires_at: any;
   status: number;
   remark: string;
 }
@@ -81,6 +83,7 @@ export interface AppDetailParams {
 
 export interface AppDetail {
   id: string;
+  user_id: number;
   app_id: number;
   name: string;
   models: string[];

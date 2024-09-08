@@ -6,9 +6,9 @@
     :body-style="{ padding: '10px 20px 2px 20px' }"
     :bordered="false"
   >
-    <template #extra>
+    <!-- <template #extra>
       <a-link>{{ $t('workplace.quickOperation.setup') }}</a-link>
-    </template>
+    </template> -->
     <a-row :gutter="8">
       <a-col
         v-for="link in links"
@@ -49,7 +49,7 @@
       permission: ['admin'],
     },
     {
-      text: 'workplace.keyManagement',
+      text: 'workplace.appKeyManagement',
       icon: 'icon-safe',
       router: 'AppKeyList',
       permission: ['user'],
@@ -79,22 +79,22 @@
       permission: ['admin'],
     },
     {
-      text: 'workplace.chatManagement',
-      icon: 'icon-message',
-      router: 'ChatList',
-      permission: ['user', 'admin'],
+      text: 'workplace.appManagement',
+      icon: 'icon-apps',
+      router: 'AppList',
+      permission: ['admin'],
     },
     {
-      text: 'workplace.chatManagement',
-      icon: 'icon-message',
-      router: 'ChatList',
-      permission: ['user', 'admin'],
+      text: 'workplace.appKeyManagement',
+      icon: 'icon-safe',
+      router: 'AppKeyList',
+      permission: ['admin'],
     },
     {
-      text: 'workplace.chatManagement',
-      icon: 'icon-message',
-      router: 'ChatList',
-      permission: ['user', 'admin'],
+      text: 'workplace.financeCenter',
+      icon: 'icon-wechatpay',
+      router: 'BillList',
+      permission: ['admin'],
     },
     {
       text: 'workplace.chatManagement',

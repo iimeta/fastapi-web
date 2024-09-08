@@ -24,11 +24,24 @@
             label-align="left"
           >
             <a-row :gutter="16">
+              <a-col v-permission="['admin']" :span="8">
+                <a-form-item field="user_id" :label="$t('app.form.userId')">
+                  <a-input-number
+                    v-model="formModel.user_id"
+                    :placeholder="$t('app.form.userId.placeholder')"
+                    :min="1"
+                    :max="9999999999999"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
               <a-col :span="8">
                 <a-form-item field="app_id" :label="$t('app.form.appId')">
-                  <a-input
+                  <a-input-number
                     v-model="formModel.app_id"
                     :placeholder="$t('app.form.appId.placeholder')"
+                    :min="1"
+                    :max="9999999999999"
                     allow-clear
                   />
                 </a-form-item>
@@ -42,7 +55,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col v-permission="['user']" :span="8">
                 <a-form-item field="models" :label="$t('app.form.models')">
                   <a-select
                     v-model="formModel.models"
@@ -64,7 +77,7 @@
               <a-col :span="8">
                 <a-form-item field="key" :label="$t('app.form.key')">
                   <a-input
-                    v-model="formModel.key"
+                    v-model="formModel.app_key"
                     :placeholder="$t('app.form.key.placeholder')"
                     allow-clear
                   />
@@ -82,11 +95,11 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="created_at"
-                  :label="$t('app.form.created_at')"
+                  field="quota_expires_at"
+                  :label="$t('app.form.quota_expires_at')"
                 >
                   <a-range-picker
-                    v-model="formModel.created_at"
+                    v-model="formModel.quota_expires_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -519,12 +532,14 @@
 
   const generateFormModel = () => {
     return {
+      user_id: ref(),
       app_id: ref(),
       name: '',
       models: [],
-      key: '',
+      app_key: '',
       type: ref(),
       status: ref(),
+      quota_expires_at: [],
       created_at: [],
     };
   };
@@ -539,10 +554,10 @@
 
   const basePagination: Pagination = {
     current: 1,
-    pageSize: 10,
+    pageSize: 20,
     showTotal: true,
     showPageSize: true,
-    pageSizeOptions: [10, 50, 100, 500, 1000],
+    pageSizeOptions: [20, 50, 100, 500, 1000],
   };
 
   const pagination = reactive({
@@ -569,6 +584,13 @@
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
+    {
+      title: t('app.columns.userId'),
+      dataIndex: 'user_id',
+      slotName: 'user_id',
+      align: 'center',
+      width: 80,
+    },
     {
       title: t('app.columns.appId'),
       dataIndex: 'app_id',
@@ -638,6 +660,11 @@
       width: 320,
     },
   ]);
+
+  const userRole = localStorage.getItem('userRole');
+  if (userRole === 'user') {
+    columns.value.splice(0, 1);
+  }
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
