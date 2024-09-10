@@ -176,7 +176,7 @@
               <a-textarea
                 v-model="formData.ip_whitelist"
                 :placeholder="$t('app.placeholder.ip_whitelist')"
-                :auto-size="{ minRows: 5, maxRows: 10 }"
+                :auto-size="{ minRows: 5, maxRows: 5 }"
               />
             </a-form-item>
             <a-form-item
@@ -186,7 +186,7 @@
               <a-textarea
                 v-model="formData.ip_blacklist"
                 :placeholder="$t('app.placeholder.ip_blacklist')"
-                :auto-size="{ minRows: 5, maxRows: 10 }"
+                :auto-size="{ minRows: 5, maxRows: 5 }"
               />
             </a-form-item>
             <a-form-item
