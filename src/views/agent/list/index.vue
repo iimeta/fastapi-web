@@ -281,16 +281,7 @@
           />
         </template>
         <template #operations="{ record }">
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              $router.push({
-                name: 'ModelAgentDetail',
-                query: { id: `${record.id}` },
-              })
-            "
-          >
+          <a-button type="text" size="small" @click="detailHandle(record.id)">
             {{ $t('model.agent.columns.operations.view') }}
           </a-button>
           <a-button
@@ -327,6 +318,18 @@
           </a-popconfirm>
         </template>
       </a-table>
+
+      <a-drawer
+        :title="$t('menu.model.agent.detail')"
+        unmount-on-close
+        render-to-body
+        :width="700"
+        :footer="false"
+        :visible="detailVisible"
+        @cancel="detailHandleCancel"
+      >
+        <Detail :id="recordId" />
+      </a-drawer>
     </a-card>
   </div>
 </template>
@@ -363,6 +366,7 @@
   import Sortable from 'sortablejs';
   import { queryCorpList, CorpList } from '@/api/corp';
   import { queryModelList, ModelList } from '@/api/model';
+  import Detail from '../detail/index.vue';
 
   const { loading, setLoading } = useLoading(true);
 
@@ -710,6 +714,17 @@
         },
       });
     }
+  };
+
+  const detailVisible = ref(false);
+  const recordId = ref();
+
+  const detailHandle = (id: string) => {
+    detailVisible.value = true;
+    recordId.value = id;
+  };
+  const detailHandleCancel = () => {
+    detailVisible.value = false;
   };
 </script>
 

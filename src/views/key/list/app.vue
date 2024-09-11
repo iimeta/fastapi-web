@@ -315,16 +315,7 @@
           />
         </template>
         <template #operations="{ record }">
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              $router.push({
-                name: 'KeyDetail',
-                query: { id: `${record.id}` },
-              })
-            "
-          >
+          <a-button type="text" size="small" @click="detailHandle(record.id)">
             {{ $t('key.columns.operations.view') }}
           </a-button>
           <a-button type="text" size="small" @click="updateKey(record)">
@@ -340,6 +331,19 @@
           </a-popconfirm>
         </template>
       </a-table>
+
+      <a-drawer
+        :title="$t('menu.key.detail')"
+        unmount-on-close
+        render-to-body
+        :width="700"
+        :footer="false"
+        :visible="detailVisible"
+        @cancel="detailHandleCancel"
+      >
+        <Detail :id="recordId" />
+      </a-drawer>
+
       <a-modal
         v-model:visible="visible"
         :title="$t('app.form.title.keyConfig')"
@@ -535,6 +539,7 @@
   import { queryModelList, ModelList } from '@/api/model';
   import { Message } from '@arco-design/web-vue';
   import { useClipboard } from '@vueuse/core';
+  import Detail from '../detail/index.vue';
 
   const { proxy } = getCurrentInstance() as any;
 
@@ -997,6 +1002,17 @@
       proxy.$message.success('复制成功');
     }
   });
+
+  const detailVisible = ref(false);
+  const recordId = ref();
+
+  const detailHandle = (id: string) => {
+    detailVisible.value = true;
+    recordId.value = id;
+  };
+  const detailHandleCancel = () => {
+    detailVisible.value = false;
+  };
 </script>
 
 <script lang="ts">

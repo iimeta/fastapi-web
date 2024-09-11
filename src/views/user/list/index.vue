@@ -333,16 +333,7 @@
           >
             {{ $t('user.columns.operations.models') }}
           </a-button>
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              $router.push({
-                name: 'UserDetail',
-                query: { id: `${record.id}` },
-              })
-            "
-          >
+          <a-button type="text" size="small" @click="detailHandle(record.id)">
             {{ $t('user.columns.operations.view') }}
           </a-button>
           <a-button
@@ -367,6 +358,19 @@
           </a-popconfirm>
         </template>
       </a-table>
+
+      <a-drawer
+        :title="$t('menu.user.detail')"
+        unmount-on-close
+        render-to-body
+        :width="700"
+        :footer="false"
+        :visible="detailVisible"
+        @cancel="detailHandleCancel"
+      >
+        <Detail :id="recordId" />
+      </a-drawer>
+
       <a-modal
         v-model:visible="grantQuotaVisible"
         :title="$t('user.form.title.grantQuota')"
@@ -551,6 +555,7 @@
   import Sortable from 'sortablejs';
   import { Message } from '@arco-design/web-vue';
   import { queryModelList, ModelList } from '@/api/model';
+  import Detail from '../detail/index.vue';
 
   const { proxy } = getCurrentInstance() as any;
 
@@ -957,6 +962,17 @@
 
   const modelsHandleCancel = () => {
     modelsVisible.value = false;
+  };
+
+  const detailVisible = ref(false);
+  const recordId = ref();
+
+  const detailHandle = (id: string) => {
+    detailVisible.value = true;
+    recordId.value = id;
+  };
+  const detailHandleCancel = () => {
+    detailVisible.value = false;
   };
 </script>
 

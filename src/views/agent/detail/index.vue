@@ -1,12 +1,5 @@
 <template>
   <div class="container">
-    <a-breadcrumb class="container-breadcrumb">
-      <a-breadcrumb-item>
-        <icon-bug />
-      </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.agent') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.model.agent.detail') }}</a-breadcrumb-item>
-    </a-breadcrumb>
     <a-space direction="vertical" :size="16" fill>
       <a-card class="general-card" :bordered="false">
         <ProfileItem :loading="loading" :render-data="currentData" />
@@ -30,8 +23,15 @@
   const route = useRoute();
   const currentData = ref<ModelAgentDetail>({} as ModelAgentDetail);
 
+  const props = defineProps({
+    id: {
+      type: String,
+      default: '',
+    },
+  });
+
   const getModelAgentDetail = async (
-    params: ModelAgentDetailParams = { id: route.query.id }
+    params: ModelAgentDetailParams = { id: props.id }
   ) => {
     setLoading(true);
     try {

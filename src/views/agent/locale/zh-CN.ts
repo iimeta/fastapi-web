@@ -85,7 +85,7 @@ export default {
   'model.agent.columns.remark': '备注',
   'model.agent.columns.updated_at': '更新时间',
   'model.agent.columns.operations': '操作',
-  'model.agent.columns.operations.view': '查看',
+  'model.agent.columns.operations.view': '详情',
   'model.agent.columns.operations.update': '修改',
   'model.agent.columns.operations.delete': '删除',
   'model.agent.columns.operations.manageKey': '管理密钥',

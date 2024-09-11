@@ -119,7 +119,7 @@ export default {
   'user.columns.remark': '备注',
   'user.columns.updated_at': '更新时间',
   'user.columns.operations': '操作',
-  'user.columns.operations.view': '查看',
+  'user.columns.operations.view': '详情',
   'user.columns.operations.update': '修改',
   'user.columns.operations.delete': '删除',
   'user.columns.operations.grantQuota': '充值额度',

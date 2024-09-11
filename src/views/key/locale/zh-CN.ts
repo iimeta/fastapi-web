@@ -100,7 +100,7 @@ export default {
   'key.columns.remark': '备注',
   'key.columns.updated_at': '更新时间',
   'key.columns.operations': '操作',
-  'key.columns.operations.view': '查看',
+  'key.columns.operations.view': '详情',
   'key.columns.operations.update': '修改',
   'key.columns.operations.status.1': '禁用',
   'key.columns.operations.status.2': '启用',

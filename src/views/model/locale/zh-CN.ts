@@ -191,7 +191,7 @@ export default {
   'model.columns.remark': '备注',
   'model.columns.updated_at': '更新时间',
   'model.columns.operations': '操作',
-  'model.columns.operations.view': '查看',
+  'model.columns.operations.view': '详情',
   'model.columns.operations.update': '修改',
   'model.columns.operations.delete': '删除',
   'model.columns.operations.status.1': '禁用',

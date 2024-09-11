@@ -1,12 +1,5 @@
 <template>
   <div class="container">
-    <a-breadcrumb class="container-breadcrumb">
-      <a-breadcrumb-item>
-        <icon-apps />
-      </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app.detail') }}</a-breadcrumb-item>
-    </a-breadcrumb>
     <a-space direction="vertical" :size="16" fill>
       <a-card class="general-card" :bordered="false">
         <ProfileItem :loading="loading" :render-data="currentData" />
@@ -25,10 +18,14 @@
   const { loading, setLoading } = useLoading(true);
   const route = useRoute();
   const currentData = ref<AppDetail>({} as AppDetail);
+  const props = defineProps({
+    id: {
+      type: String,
+      default: '',
+    },
+  });
 
-  const getAppDetail = async (
-    params: AppDetailParams = { id: route.query.id }
-  ) => {
+  const getAppDetail = async (params: AppDetailParams = { id: props.id }) => {
     setLoading(true);
     try {
       const { data } = await queryAppDetail(params);

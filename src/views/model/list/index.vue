@@ -463,16 +463,7 @@
           />
         </template>
         <template #operations="{ record }">
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              $router.push({
-                name: 'ModelDetail',
-                query: { id: `${record.id}` },
-              })
-            "
-          >
+          <a-button type="text" size="small" @click="detailHandle(record.id)">
             {{ $t('model.columns.operations.view') }}
           </a-button>
           <a-button
@@ -497,6 +488,19 @@
           </a-popconfirm>
         </template>
       </a-table>
+
+      <a-drawer
+        :title="$t('menu.model.detail')"
+        unmount-on-close
+        render-to-body
+        :width="700"
+        :footer="false"
+        :visible="detailVisible"
+        @cancel="detailHandleCancel"
+      >
+        <Detail :id="recordId" />
+      </a-drawer>
+
       <a-modal
         v-model:visible="initModelVisible"
         :title="$t('model.form.title.init_model')"
@@ -544,6 +548,7 @@
           </a-form-item>
         </a-form>
       </a-modal>
+
       <a-modal
         v-model:visible="agentFormVisible"
         :title="$t('model.form.title.model_agent')"
@@ -579,6 +584,7 @@
           </a-form-item>
         </a-form>
       </a-modal>
+
       <a-modal
         v-model:visible="forwardFormVisible"
         :title="$t('model.form.title.forward')"
@@ -611,6 +617,7 @@
           </a-form-item>
         </a-form>
       </a-modal>
+
       <a-modal
         v-model:visible="fallbackFormVisible"
         :title="$t('model.form.title.fallback')"
@@ -643,6 +650,7 @@
           </a-form-item>
         </a-form>
       </a-modal>
+
       <a-modal
         v-model:visible="imageQuotaVisible"
         :title="$t('model.columns.completion_price')"
@@ -719,6 +727,7 @@
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { queryCorpList, CorpList } from '@/api/corp';
+  import Detail from '../detail/index.vue';
 
   const { loading, setLoading } = useLoading(true);
   const { proxy } = getCurrentInstance() as any;
@@ -1279,6 +1288,17 @@
   const viewImageQuota = (params: ImageQuota[]) => {
     imageQuotas.value = params;
     imageQuotaVisible.value = true;
+  };
+
+  const detailVisible = ref(false);
+  const recordId = ref();
+
+  const detailHandle = (id: string) => {
+    detailVisible.value = true;
+    recordId.value = id;
+  };
+  const detailHandleCancel = () => {
+    detailVisible.value = false;
   };
 </script>
 
