@@ -1,4 +1,5 @@
 export default {
+  'menu.dashboard': '仪表盘',
   'menu.dashboard.workplace': '控制台',
   'workplace.welcome': '欢迎回来',
   'workplace.balance': '余额（元）',

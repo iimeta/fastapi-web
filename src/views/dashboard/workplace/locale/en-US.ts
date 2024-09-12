@@ -1,4 +1,5 @@
 export default {
+  'menu.dashboard': 'Dashboard',
   'menu.dashboard.workplace': 'Workplace',
   'workplace.welcome': 'Welcome!',
   'workplace.balance': 'Balance (CNY)',
