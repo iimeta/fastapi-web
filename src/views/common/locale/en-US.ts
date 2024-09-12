@@ -13,12 +13,12 @@ export default {
   'navbar.docs': 'Docs',
   'navbar.action.locale': 'Switch to English',
   // size
-  'searchTable.size.mini': 'mini',
-  'searchTable.size.small': 'small',
-  'searchTable.size.medium': 'middle',
-  'searchTable.size.large': 'large',
+  'size.mini': 'mini',
+  'size.small': 'small',
+  'size.medium': 'middle',
+  'size.large': 'large',
   // actions
-  'searchTable.actions.refresh': 'refresh',
-  'searchTable.actions.density': 'density',
-  'searchTable.actions.columnSetting': 'columnSetting',
+  'actions.refresh': 'refresh',
+  'actions.density': 'density',
+  'actions.column_setting': 'columnSetting',
 };

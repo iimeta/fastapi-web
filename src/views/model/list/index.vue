@@ -320,13 +320,13 @@
             justify-content: end;
           "
         >
-          <a-tooltip :content="$t('searchTable.actions.refresh')">
+          <a-tooltip :content="$t('actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <a-tooltip :content="$t('searchTable.actions.density')">
+            <a-tooltip :content="$t('actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
             <template #content>
@@ -340,7 +340,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('searchTable.actions.columnSetting')">
+          <a-tooltip :content="$t('actions.column_setting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -828,19 +828,19 @@
 
   const densityList = computed(() => [
     {
-      name: t('searchTable.size.mini'),
+      name: t('size.mini'),
       value: 'mini',
     },
     {
-      name: t('searchTable.size.small'),
+      name: t('size.small'),
       value: 'small',
     },
     {
-      name: t('searchTable.size.medium'),
+      name: t('size.medium'),
       value: 'medium',
     },
     {
-      name: t('searchTable.size.large'),
+      name: t('size.large'),
       value: 'large',
     },
   ]);
