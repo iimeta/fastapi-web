@@ -345,7 +345,8 @@
       </a-drawer>
 
       <a-modal
-        v-model:visible="visible"
+        :visible="visible"
+        :width="600"
         :title="$t('app.form.title.keyConfig')"
         :ok-text="$t('app.button.save')"
         @cancel="handleCancel"
