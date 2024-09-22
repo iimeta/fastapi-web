@@ -163,7 +163,25 @@
         <template #tokens="{ record }">
           {{ record.tokens > 0 ? `$${quotaConv(record.tokens)}` : '$0.00' }}
         </template>
+        <template #operations="{ record }">
+          <a-button type="text" size="small" @click="detailHandle(record.id)">
+            {{ $t('operations.view') }}
+          </a-button>
+        </template>
       </a-table>
+
+      <a-drawer
+        :title="$t('menu.model.detail')"
+        unmount-on-close
+        render-to-body
+        :width="700"
+        :footer="false"
+        :visible="detailVisible"
+        @cancel="detailHandleCancel"
+      >
+        <Detail :id="recordId" />
+      </a-drawer>
+
       <a-modal
         v-model:visible="billExportFormVisible"
         :title="$t('finance.form.title.bill_export')"
@@ -219,6 +237,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { FormInstance } from '@arco-design/web-vue/es/form';
+  import Detail from '../detail/bill.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -308,6 +327,13 @@
       dataIndex: 'stat_date',
       slotName: 'stat_date',
       align: 'center',
+    },
+    {
+      title: t('common.operations'),
+      dataIndex: 'operations',
+      slotName: 'operations',
+      align: 'center',
+      width: 75,
     },
   ]);
 
@@ -489,6 +515,17 @@
       .catch((error) => {
         proxy.$message.error('导出失败, 请联系管理员', error);
       });
+  };
+
+  const detailVisible = ref(false);
+  const recordId = ref();
+
+  const detailHandle = (id: string) => {
+    detailVisible.value = true;
+    recordId.value = id;
+  };
+  const detailHandleCancel = () => {
+    detailVisible.value = false;
   };
 </script>
 

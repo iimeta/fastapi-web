@@ -841,7 +841,7 @@
       Message.success(t('app.success.key_config'));
       done();
     } catch (err) {
-      // you can report use errorHandler or other
+      done(false);
     } finally {
       setLoading(false);
     }

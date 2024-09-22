@@ -705,13 +705,6 @@
       align: 'center',
       width: 65,
     },
-    // {
-    //   title: t('user.columns.updated_at'),
-    //   dataIndex: 'updated_at',
-    //   slotName: 'updated_at',
-    //   align: 'center',
-    //   width: 132,
-    // },
     {
       title: t('user.columns.operations'),
       dataIndex: 'operations',
@@ -924,12 +917,12 @@
 
     setLoading(true);
     try {
-      await submitUserGrantQuota(formData.value); // The mock api default success
+      await submitUserGrantQuota(formData.value);
       Message.success(t('user.success.grantQuota'));
       done();
       fetchData();
     } catch (err) {
-      // you can report use errorHandler or other
+      done(false);
     } finally {
       setLoading(false);
     }
@@ -949,12 +942,12 @@
 
     setLoading(true);
     try {
-      await submitUserModels(modelsFormData.value); // The mock api default success
+      await submitUserModels(modelsFormData.value);
       Message.success(t('user.success.models'));
       done();
       fetchData();
     } catch (err) {
-      // you can report use errorHandler or other
+      done(false);
     } finally {
       setLoading(false);
     }

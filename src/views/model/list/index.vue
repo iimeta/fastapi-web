@@ -1090,11 +1090,11 @@
 
     setLoading(true);
     try {
-      await submitModelInit(initFormData.value); // The mock api default success
+      await submitModelInit(initFormData.value);
       done();
       window.location.reload();
     } catch (err) {
-      // you can report use errorHandler or other
+      done(false);
     } finally {
       setLoading(false);
     }

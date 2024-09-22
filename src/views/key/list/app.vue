@@ -927,7 +927,7 @@
       done();
       fetchData();
     } catch (err) {
-      // you can report use errorHandler or other
+      done(false);
     } finally {
       setLoading(false);
     }

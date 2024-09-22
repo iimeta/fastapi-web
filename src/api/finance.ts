@@ -1,4 +1,39 @@
 import axios from 'axios';
+import qs from 'query-string';
+
+export interface BillDetailParams {
+  id: any;
+}
+
+export interface ModelStat {
+  model_id: string;
+  model: string;
+  total: number;
+  tokens: number;
+  abnormal: number;
+  abnormal_tokens: number;
+}
+
+export interface StatisticsUser {
+  id: string;
+  user_id: number;
+  stat_date: string;
+  stat_time: number;
+  total: number;
+  tokens: number;
+  abnormal: number;
+  abnormal_tokens: number;
+  model_stats: ModelStat[];
+}
+
+export function queryBillDetail(params: BillDetailParams) {
+  return axios.get<StatisticsUser>('/api/v1/finance/bill/detail', {
+    params,
+    paramsSerializer: (obj) => {
+      return qs.stringify(obj);
+    },
+  });
+}
 
 export interface Paging {
   page: number;
@@ -23,7 +58,7 @@ export interface BillPageRes {
 }
 
 export function queryBillPage(params: BillPageParams) {
-  return axios.post<BillPageRes>('/api/v1/finance/bill', params);
+  return axios.post<BillPageRes>('/api/v1/finance/bill/page', params);
 }
 
 export interface BillExportParams {
@@ -55,5 +90,8 @@ export interface DealRecordPageRes {
 }
 
 export function queryDealRecordPage(params: DealRecordPageParams) {
-  return axios.post<DealRecordPageRes>('/api/v1/finance/deal/record', params);
+  return axios.post<DealRecordPageRes>(
+    '/api/v1/finance/deal/record/page',
+    params
+  );
 }
