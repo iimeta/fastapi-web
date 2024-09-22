@@ -45,22 +45,22 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="email" :label="$t('user.form.email')">
+                <a-form-item field="account" :label="$t('user.form.account')">
                   <a-input
-                    v-model="formModel.email"
-                    :placeholder="$t('user.form.email.placeholder')"
+                    v-model="formModel.account"
+                    :placeholder="$t('user.form.account.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="quota_expires_at"
-                  :label="$t('user.form.quota_expires_at')"
-                >
-                  <a-range-picker
-                    v-model="formModel.quota_expires_at"
-                    style="width: 100%"
+                <a-form-item field="quota" :label="$t('user.form.quota')">
+                  <a-input-number
+                    v-model="formModel.quota"
+                    :placeholder="$t('user.form.quota.placeholder')"
+                    :min="0.000001"
+                    :max="9999999999999"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -76,11 +76,11 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="updated_at"
-                  :label="$t('user.form.updated_at')"
+                  field="quota_expires_at"
+                  :label="$t('user.form.quota_expires_at')"
                 >
                   <a-range-picker
-                    v-model="formModel.updated_at"
+                    v-model="formModel.quota_expires_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -597,10 +597,10 @@
     return {
       user_id: ref(),
       name: '',
-      email: '',
-      quota_expires_at: [],
+      account: '',
+      quota: ref(),
       status: ref(),
-      updated_at: [],
+      quota_expires_at: [],
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -660,9 +660,9 @@
       tooltip: true,
     },
     {
-      title: t('user.columns.email'),
-      dataIndex: 'email',
-      slotName: 'email',
+      title: t('user.columns.account'),
+      dataIndex: 'account',
+      slotName: 'account',
       align: 'center',
       ellipsis: true,
       tooltip: true,
