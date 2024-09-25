@@ -93,6 +93,7 @@ export interface FallbackConfig {
 
 export interface ChatDetail {
   id: string;
+  host: string;
   trace_id: string;
   user_id: any;
   app_id: any;
@@ -189,6 +190,7 @@ export function queryImagePage(params: ImagePageParams) {
 export interface ImageDetail {
   id: string;
   trace_id: string;
+  host: string;
   user_id: any;
   app_id: any;
   corp: string;
@@ -278,6 +280,7 @@ export function queryAudioPage(params: AudioPageParams) {
 export interface AudioDetail {
   id: string;
   trace_id: string;
+  host: string;
   user_id: any;
   app_id: any;
   corp: string;

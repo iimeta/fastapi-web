@@ -171,7 +171,7 @@
       </a-table>
 
       <a-drawer
-        :title="$t('menu.model.detail')"
+        :title="$t('menu.bill.detail')"
         unmount-on-close
         render-to-body
         :width="700"

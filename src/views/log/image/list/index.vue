@@ -385,6 +385,14 @@
                 />
               </span>
             </a-descriptions-item>
+            <a-descriptions-item label="Host" :span="2">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>
+                {{ currentData.host || '-' }}
+              </span>
+            </a-descriptions-item>
             <a-descriptions-item label="调用密钥" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
@@ -523,6 +531,14 @@
                   class="copy-btn"
                   @click="handleCopy(currentData.trace_id)"
                 />
+              </span>
+            </a-descriptions-item>
+            <a-descriptions-item label="Host" :span="2">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>
+                {{ currentData.host || '-' }}
               </span>
             </a-descriptions-item>
             <a-descriptions-item label="调用密钥" :span="2">
