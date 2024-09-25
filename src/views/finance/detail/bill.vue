@@ -1,80 +1,79 @@
 <template>
-  <div class="container">
-    <a-space direction="vertical" :size="16" fill>
-      <a-descriptions :column="2" bordered>
-        <a-descriptions-item :label="t('bill.detail.label.stat_date')">
-          <a-skeleton v-if="loading" :animation="true">
-            <a-skeleton-line :rows="1" />
-          </a-skeleton>
-          <span v-else>
-            {{ currentData.stat_date || '-' }}
-          </span>
-        </a-descriptions-item>
-        <a-descriptions-item :label="t('bill.detail.label.user_id')">
-          <a-skeleton v-if="loading" :animation="true">
-            <a-skeleton-line :rows="1" />
-          </a-skeleton>
-          <span v-else>
-            {{ currentData.user_id || '-' }}
-          </span>
-        </a-descriptions-item>
-        <a-descriptions-item :label="t('bill.detail.label.total')">
-          <a-skeleton v-if="loading" :animation="true">
-            <a-skeleton-line :rows="1" />
-          </a-skeleton>
-          <span v-else>
-            {{ currentData.total || '-' }}
-          </span>
-        </a-descriptions-item>
-        <a-descriptions-item :label="t('bill.detail.label.tokens')">
-          <a-skeleton v-if="loading" :animation="true">
-            <a-skeleton-line :rows="1" />
-          </a-skeleton>
-          <span v-else>
-            {{
-              currentData.tokens > 0
-                ? `$${quotaConv(currentData.tokens)}`
-                : '$0.00'
-            }}
-          </span>
-        </a-descriptions-item>
-      </a-descriptions>
-      <a-table
-        :data="currentData.model_stats"
-        :pagination="false"
-        :bordered="false"
-      >
-        <template #columns>
-          <a-table-column
-            :title="t('bill.detail.label.model')"
-            data-index="model"
-            align="center"
-          >
-            <template #cell="{ record }">
-              {{ record.model || '-' }}
-            </template>
-          </a-table-column>
-          <a-table-column
-            :title="t('bill.detail.label.total')"
-            data-index="total"
-            align="center"
-          >
-            <template #cell="{ record }">
-              {{ record.total || '-' }}
-            </template>
-          </a-table-column>
-          <a-table-column
-            :title="t('bill.detail.label.tokens')"
-            data-index="tokens"
-            align="center"
-          >
-            <template #cell="{ record }">
-              {{ record.tokens > 0 ? `$${quotaConv(record.tokens)}` : '$0.00' }}
-            </template>
-          </a-table-column>
-        </template>
-      </a-table>
-    </a-space>
+  <div style="margin: 10px 0 0 10px">
+    <a-descriptions :column="2" bordered>
+      <a-descriptions-item :label="t('bill.detail.label.stat_date')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.stat_date || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('bill.detail.label.user_id')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.user_id || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('bill.detail.label.total')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.total || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('bill.detail.label.tokens')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.tokens > 0
+              ? `$${quotaConv(currentData.tokens)}`
+              : '$0.00'
+          }}
+        </span>
+      </a-descriptions-item>
+    </a-descriptions>
+    <a-table
+      style="margin-top: 15px"
+      :data="currentData.model_stats"
+      :pagination="false"
+      :bordered="false"
+    >
+      <template #columns>
+        <a-table-column
+          :title="t('bill.detail.label.model')"
+          data-index="model"
+          align="center"
+        >
+          <template #cell="{ record }">
+            {{ record.model || '-' }}
+          </template>
+        </a-table-column>
+        <a-table-column
+          :title="t('bill.detail.label.total')"
+          data-index="total"
+          align="center"
+        >
+          <template #cell="{ record }">
+            {{ record.total || '-' }}
+          </template>
+        </a-table-column>
+        <a-table-column
+          :title="t('bill.detail.label.tokens')"
+          data-index="tokens"
+          align="center"
+        >
+          <template #cell="{ record }">
+            {{ record.tokens > 0 ? `$${quotaConv(record.tokens)}` : '$0.00' }}
+          </template>
+        </a-table-column>
+      </template>
+    </a-table>
   </div>
 </template>
 
@@ -120,17 +119,4 @@
   };
 </script>
 
-<style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
-</style>
+<style scoped lang="less"></style>
