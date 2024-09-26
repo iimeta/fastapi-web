@@ -1,22 +1,153 @@
 <template>
-  <div class="container">
-    <a-space direction="vertical" :size="16" fill>
-      <a-card class="general-card" :bordered="false">
-        <ProfileItem :loading="loading" :render-data="currentData" />
-      </a-card>
-    </a-space>
+  <div style="margin: 10px 0 0 10px">
+    <a-descriptions :column="2" bordered>
+      <a-descriptions-item :label="t('app.detail.label.app_id')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.app_id }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('app.detail.label.name')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.name }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('app.detail.label.is_limit_quota')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            t(`app.dict.is_limit_quota.${currentData?.is_limit_quota || false}`)
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('app.detail.label.quota')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData?.is_limit_quota
+              ? currentData.quota > 0
+                ? `$${quotaConv(currentData.quota)}`
+                : '$0.00'
+              : '不限'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('app.detail.label.used_quota')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.used_quota > 0
+              ? `$${quotaConv(currentData.used_quota)}`
+              : '$0.00'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="t('app.detail.label.quota_expires_at')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData?.is_limit_quota
+              ? currentData.quota_expires_at || '-'
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('app.detail.label.models')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData?.model_names?.join('\n') || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="t('app.detail.label.ip_whitelist')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData?.ip_whitelist?.join('\n') || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="t('app.detail.label.ip_blacklist')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData?.ip_blacklist?.join('\n') || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('app.detail.label.remark')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.remark || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('app.detail.label.status')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.status === 1" color="green">
+            {{ $t(`dict.status.${currentData.status}`) }}
+          </a-tag>
+          <a-tag v-else color="red">
+            {{ $t(`dict.status.${currentData.status}`) }}
+          </a-tag>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('app.detail.label.created_at')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.created_at }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('app.detail.label.updated_at')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.updated_at }}
+        </span>
+      </a-descriptions-item>
+    </a-descriptions>
   </div>
 </template>
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { quotaConv } from '@/utils/common';
   import { queryAppDetail, AppDetailParams, AppDetail } from '@/api/app';
-  import ProfileItem from './components/profile-item.vue';
 
+  const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
-  const route = useRoute();
   const currentData = ref<AppDetail>({} as AppDetail);
   const props = defineProps({
     id: {
@@ -45,17 +176,4 @@
   };
 </script>
 
-<style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
-</style>
+<style scoped lang="less"></style>

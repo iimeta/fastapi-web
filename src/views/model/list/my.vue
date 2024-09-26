@@ -70,23 +70,21 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
+                <a-form-item field="remark" :label="$t('model.form.desc')">
+                  <a-input
+                    v-model="formModel.remark"
+                    :placeholder="$t('model.form.desc.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
                 <a-form-item field="status" :label="$t('model.form.status')">
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('model.form.selectDefault')"
                     allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="created_at"
-                  :label="$t('model.form.created_at')"
-                >
-                  <a-range-picker
-                    v-model="formModel.created_at"
-                    style="width: 100%"
                   />
                 </a-form-item>
               </a-col>
@@ -244,6 +242,9 @@
             }}
           </span>
         </template>
+        <template #remark="{ record }">
+          {{ record.remark || '-' }}
+        </template>
         <template #status="{ record }">
           <span v-if="record.status === 2" class="circle red"></span>
           <span v-else class="circle"></span>
@@ -325,8 +326,8 @@
       name: '',
       model: '',
       type: ref(),
+      remark: '',
       status: ref(),
-      created_at: [],
     };
   };
 
@@ -421,25 +422,20 @@
       slotName: 'completion_ratio',
       align: 'center',
     },
-    // {
-    //   title: t('model.columns.data_format'),
-    //   dataIndex: 'data_format',
-    //   slotName: 'dataFormat',
-    //   align: 'center',
-    // },
+    {
+      title: t('model.columns.desc'),
+      dataIndex: 'remark',
+      slotName: 'remark',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
     {
       title: t('model.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 75,
-    },
-    {
-      title: t('model.columns.updated_at'),
-      dataIndex: 'updated_at',
-      slotName: 'updated_at',
-      align: 'center',
-      width: 132,
     },
   ]);
 

@@ -48,17 +48,6 @@ const APP: AppRouteRecordRaw = {
         hideInMenu: true,
       },
     },
-    {
-      path: 'detail',
-      name: 'AppDetail',
-      component: () => import('@/views/app/detail/index.vue'),
-      meta: {
-        locale: 'menu.app.detail',
-        requiresAuth: true,
-        roles: ['admin', 'user'],
-        hideInMenu: true,
-      },
-    },
   ],
 };
 

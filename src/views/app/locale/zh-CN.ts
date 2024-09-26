@@ -52,17 +52,17 @@ export default {
   'app.button.prev': '上一步',
   'app.button.save': '保存',
   // detail
-  'app.detail.title.baseInfo': '基础信息',
-  'app.detail.title.advanced': '高级配置',
-  'app.detail.label.appId': '应用ID',
+  'app.detail.label.app_id': '应用ID',
   'app.detail.label.name': '应用名称',
   'app.detail.label.remark': '备注',
   'app.detail.label.models': '模型权限',
-  'app.detail.label.isLimitQuota': '限制额度',
-  'app.detail.label.quota': '额度',
-  'app.detail.label.quota_expires_at': '额度过期时间',
+  'app.detail.label.is_limit_quota': '限制额度',
+  'app.detail.label.quota': '当前额度',
+  'app.detail.label.used_quota': '已用额度',
+  'app.detail.label.quota_expires_at': '过期时间',
   'app.detail.label.ip_whitelist': 'IP白名单',
   'app.detail.label.ip_blacklist': 'IP黑名单',
+  'app.detail.label.status': '状态',
   'app.detail.label.created_at': '创建时间',
   'app.detail.label.updated_at': '更新时间',
   // search
@@ -110,6 +110,6 @@ export default {
   // dict
   'app.dict.status.1': '正常',
   'app.dict.status.2': '禁用',
-  'app.dict.isLimitQuota.true': '是',
-  'app.dict.isLimitQuota.false': '否',
+  'app.dict.is_limit_quota.true': '是',
+  'app.dict.is_limit_quota.false': '否',
 };

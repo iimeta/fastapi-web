@@ -88,16 +88,15 @@
     StatisticsUser,
   } from '@/api/finance';
 
+  const { t } = useI18n();
+  const { loading, setLoading } = useLoading(true);
+  const currentData = ref<StatisticsUser>({} as StatisticsUser);
   const props = defineProps({
     id: {
       type: String,
       default: '',
     },
   });
-
-  const { t } = useI18n();
-  const { loading, setLoading } = useLoading(true);
-  const currentData = ref<StatisticsUser>({} as StatisticsUser);
 
   const getBillDetail = async (params: BillDetailParams = { id: props.id }) => {
     setLoading(true);

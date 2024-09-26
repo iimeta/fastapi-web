@@ -35,20 +35,20 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item field="name" :label="$t('user.form.name')">
-                  <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('user.form.name.placeholder')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
+              <a-col :span="7">
                 <a-form-item field="account" :label="$t('user.form.account')">
                   <a-input
                     v-model="formModel.account"
                     :placeholder="$t('user.form.account.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="9">
+                <a-form-item field="name" :label="$t('user.form.name')">
+                  <a-input
+                    v-model="formModel.name"
+                    :placeholder="$t('user.form.name.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -64,7 +64,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="7">
                 <a-form-item field="status" :label="$t('user.form.status')">
                   <a-select
                     v-model="formModel.status"
@@ -74,7 +74,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="9">
                 <a-form-item
                   field="quota_expires_at"
                   :label="$t('user.form.quota_expires_at')"
