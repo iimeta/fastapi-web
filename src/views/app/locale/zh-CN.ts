@@ -52,9 +52,7 @@ export default {
   'app.button.prev': '上一步',
   'app.button.save': '保存',
   // detail
-  'app.detail.label.app_id': '应用ID',
   'app.detail.label.name': '应用名称',
-  'app.detail.label.remark': '备注',
   'app.detail.label.models': '模型权限',
   'app.detail.label.is_limit_quota': '限制额度',
   'app.detail.label.quota': '当前额度',
@@ -62,9 +60,6 @@ export default {
   'app.detail.label.quota_expires_at': '过期时间',
   'app.detail.label.ip_whitelist': 'IP白名单',
   'app.detail.label.ip_blacklist': 'IP黑名单',
-  'app.detail.label.status': '状态',
-  'app.detail.label.created_at': '创建时间',
-  'app.detail.label.updated_at': '更新时间',
   // search
   'app.form.userId': '用户ID',
   'app.form.userId.placeholder': '请输入用户ID',

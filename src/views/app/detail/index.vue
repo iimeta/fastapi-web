@@ -1,7 +1,11 @@
 <template>
   <div style="margin: 10px 0 0 10px">
-    <a-descriptions :column="2" bordered>
-      <a-descriptions-item :label="t('app.detail.label.app_id')">
+    <a-descriptions
+      :column="2"
+      bordered
+      :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
+    >
+      <a-descriptions-item :label="t('common.app_id')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -22,9 +26,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            t(`app.dict.is_limit_quota.${currentData?.is_limit_quota || false}`)
-          }}
+          {{ t(`dict.${currentData?.is_limit_quota || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('app.detail.label.quota')">
@@ -53,10 +55,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('app.detail.label.quota_expires_at')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('app.detail.label.quota_expires_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -72,41 +71,35 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
+        <span v-else style="max-height: 220px; display: block; overflow: auto">
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('app.detail.label.ip_whitelist')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('app.detail.label.ip_whitelist')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
           {{ currentData?.ip_whitelist?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('app.detail.label.ip_blacklist')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('app.detail.label.ip_blacklist')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
           {{ currentData?.ip_blacklist?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.remark')">
+      <a-descriptions-item :label="t('common.remark')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.status')" :span="2">
+      <a-descriptions-item :label="t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -119,7 +112,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.created_at')">
+      <a-descriptions-item :label="t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -127,7 +120,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.updated_at')">
+      <a-descriptions-item :label="t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
