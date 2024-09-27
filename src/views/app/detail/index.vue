@@ -106,7 +106,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.status')">
+      <a-descriptions-item :label="t('app.detail.label.status')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
