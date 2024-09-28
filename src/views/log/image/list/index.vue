@@ -372,7 +372,12 @@
         @cancel="handleCancel"
       >
         <div style="margin: 10px 0 0 10px">
-          <a-descriptions v-permission="['user']" :column="2" bordered>
+          <a-descriptions
+            v-permission="['user']"
+            :column="2"
+            bordered
+            :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
+          >
             <a-descriptions-item label="Trace ID" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
@@ -411,18 +416,18 @@
               </a-skeleton>
               <span v-else>{{ currentData.user_id || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="应用ID">
+            <a-descriptions-item label="应用ID" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.app_id || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="公司">
+            <!-- <a-descriptions-item label="公司">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.corp_name }}</span>
-            </a-descriptions-item>
+            </a-descriptions-item> -->
             <a-descriptions-item label="模型">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
@@ -439,15 +444,25 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.prompt || '-' }}</span>
+              <span
+                v-else
+                style="max-height: 220px; display: block; overflow: auto"
+              >
+                {{ currentData.prompt || '-' }}
+              </span>
             </a-descriptions-item>
-            <a-descriptions-item label="回答" :span="2">
+            <a-descriptions-item label="回答">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.image_data || '-' }}</span>
+              <span
+                v-else
+                style="max-height: 220px; display: block; overflow: auto"
+              >
+                {{ currentData.image_data || '-' }}
+              </span>
             </a-descriptions-item>
-            <a-descriptions-item label="花费令牌数">
+            <a-descriptions-item label="花费令牌数" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -460,7 +475,7 @@
                   : '-'
               }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="总耗时">
+            <a-descriptions-item label="总耗时" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -482,7 +497,7 @@
                 >
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="结果">
+            <a-descriptions-item label="结果" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -501,13 +516,13 @@
                 </a-tag>
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="客户端IP">
+            <a-descriptions-item label="客户端IP" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.client_ip || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="请求时间">
+            <a-descriptions-item label="请求时间" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
@@ -520,7 +535,13 @@
               <span v-else>{{ currentData.err_msg || '-' }}</span>
             </a-descriptions-item>
           </a-descriptions>
-          <a-descriptions v-permission="['admin']" :column="2" bordered>
+
+          <a-descriptions
+            v-permission="['admin']"
+            :column="2"
+            bordered
+            :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
+          >
             <a-descriptions-item label="Trace ID" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
@@ -533,7 +554,7 @@
                 />
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="Host" :span="2">
+            <a-descriptions-item label="Host">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -562,7 +583,7 @@
                 currentData.is_smart_match ? '-' : currentData.user_id || '-'
               }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="应用ID">
+            <a-descriptions-item label="应用ID" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
@@ -652,7 +673,7 @@
                   : '-'
               }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="启用代理">
+            <a-descriptions-item label="启用代理" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -670,7 +691,7 @@
               </a-skeleton>
               <span v-else>{{ currentData?.model_agent?.name || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="密钥" :span="2">
+            <a-descriptions-item label="密钥">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -703,13 +724,29 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.prompt || '-' }}</span>
+              <span
+                v-else
+                style="max-height: 220px; display: block; overflow: auto"
+              >
+                {{ currentData.prompt || '-' }}
+              </span>
             </a-descriptions-item>
-            <a-descriptions-item label="回答" :span="2">
+            <a-descriptions-item label="回答">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.image_data || '-' }}</span>
+              <span
+                v-else
+                style="max-height: 220px; display: block; overflow: auto"
+              >
+                {{ currentData.image_data || '-' }}
+              </span>
+            </a-descriptions-item>
+            <a-descriptions-item label="计费方式" :span="2">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :rows="1" />
+              </a-skeleton>
+              <span v-else>{{ $t(`chat.dict.billing_method.2`) }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="花费令牌数">
               <a-skeleton v-if="loading" :animation="true">
@@ -724,7 +761,7 @@
                   : '-'
               }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="总耗时">
+            <a-descriptions-item label="总耗时" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -768,7 +805,7 @@
                 >
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="结果">
+            <a-descriptions-item label="结果" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -787,31 +824,31 @@
                 </a-tag>
               </span>
             </a-descriptions-item>
-            <a-descriptions-item label="本地IP">
+            <a-descriptions-item label="本地IP" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.local_ip || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="客户端IP">
+            <a-descriptions-item label="客户端IP" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.client_ip || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="远程IP">
+            <a-descriptions-item label="远程IP" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.remote_ip || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="请求时间">
+            <a-descriptions-item label="请求时间" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
               <span v-else>{{ currentData.req_time || '-' }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="创建时间">
+            <a-descriptions-item label="创建时间" :span="2">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
