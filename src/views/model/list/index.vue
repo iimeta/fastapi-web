@@ -81,13 +81,11 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="created_at"
-                  :label="$t('model.form.created_at')"
-                >
-                  <a-range-picker
-                    v-model="formModel.created_at"
-                    style="width: 100%"
+                <a-form-item field="remark" :label="$t('model.form.remark')">
+                  <a-input
+                    v-model="formModel.remark"
+                    :placeholder="$t('model.form.remark.placeholder')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -800,7 +798,7 @@
       model: '',
       type: ref(),
       status: ref(),
-      created_at: [],
+      remark: '',
     };
   };
   const { t } = useI18n();
@@ -857,12 +855,16 @@
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('model.columns.model'),
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     // {
     //   title: t('model.columns.type'),

@@ -14,6 +14,7 @@ export function queryPopularList(params: { type: string }) {
 
 export interface CallData {
   date: string;
+  spend: number;
   call: number;
   tokens: number;
   user: number;

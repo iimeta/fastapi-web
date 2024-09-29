@@ -70,20 +70,20 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="remark" :label="$t('model.form.desc')">
-                  <a-input
-                    v-model="formModel.remark"
-                    :placeholder="$t('model.form.desc.placeholder')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
                 <a-form-item field="status" :label="$t('model.form.status')">
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('model.form.selectDefault')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="remark" :label="$t('model.form.remark')">
+                  <a-input
+                    v-model="formModel.remark"
+                    :placeholder="$t('model.form.remark.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -397,12 +397,16 @@
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('model.columns.model'),
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('model.columns.type'),
@@ -423,7 +427,7 @@
       align: 'center',
     },
     {
-      title: t('model.columns.desc'),
+      title: t('model.columns.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',

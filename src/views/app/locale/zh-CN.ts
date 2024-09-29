@@ -22,7 +22,7 @@ export default {
   'app.error.name.required': '请输入应用名称',
   'app.error.name.pattern': '应用名称, 最多100字符',
   'app.label.remark': '备注',
-  'app.placeholder.remark': '备注',
+  'app.placeholder.remark': '请输入备注',
   'app.label.models': '模型权限',
   'app.placeholder.models': '此应用可使用的模型, 为空则不限制',
   'app.label.isLimitQuota': '限制额度',

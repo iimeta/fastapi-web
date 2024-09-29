@@ -38,7 +38,6 @@
   import useChartOption from '@/hooks/chart-option';
   import { ToolTipFormatterParams } from '@/types/echarts';
   import { AnyObject } from '@/types/global';
-  import { quotaConv } from '@/utils/common';
 
   const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
     return items
@@ -78,7 +77,7 @@
   const dateRange = ref(15);
   const xAxis = ref<string[]>([]);
   const countStatisticsData = ref<number[]>([]);
-  const spendStatisticsData = ref<string[]>([]);
+  const spendStatisticsData = ref<number[]>([]);
   const tokensStatisticsData = ref<number[]>([]);
   const userStatisticsData = ref<number[]>([]);
   const appStatisticsData = ref<number[]>([]);
@@ -295,7 +294,7 @@
       chartData.items.forEach((el: CallData, idx: number) => {
         xAxis.value.push(el.date);
         countStatisticsData.value.push(el.call);
-        spendStatisticsData.value.push(quotaConv(el.tokens));
+        spendStatisticsData.value.push(el.spend);
         tokensStatisticsData.value.push(el.tokens);
         userStatisticsData.value.push(el.user);
         appStatisticsData.value.push(el.app);
