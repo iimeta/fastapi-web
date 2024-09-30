@@ -24,6 +24,7 @@ export default {
   'app.label.remark': '备注',
   'app.placeholder.remark': '备注',
   'app.label.models': '模型权限',
+  'app.label.selectAll': '全选',
   'app.placeholder.models': '此应用可使用的模型, 为空则不限制',
   'app.label.isLimitQuota': '限制额度',
   'app.label.ip_whitelist': 'IP白名单',
