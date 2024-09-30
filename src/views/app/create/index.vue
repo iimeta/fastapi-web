@@ -72,11 +72,6 @@
                 allow-search
                 allow-clear
               >
-              <a-option
-              :value="undefined"
-              :label="$t('app.label.selectAll')"
-              @click="toggleSelectAll"
-            />
                 <a-option
                   v-for="item in models"
                   :key="item.id"
@@ -84,6 +79,11 @@
                   :label="item.name"
                 />
               </a-select>
+              <a-button
+                :style="{ backgroundColor: buttonColor }"
+                @click="toggleSelectAll"
+                >✅</a-button
+              >
             </a-form-item>
             <a-form-item
               field="is_limit_quota"
@@ -309,15 +309,18 @@
   const handleQuotaQuickChange = (quota: number) => {
     formData.value.quota = quota * 500000;
   };
+  const buttonColor = ref('');
   const isSelectAll = ref(false); // 维护全选状态
-const toggleSelectAll = () => {
-  if (isSelectAll.value) {
-    formData.value.models = []; // 取消全选
-  } else {
-    formData.value.models = models.value.map(item => item.id); // 全选
-  }
-  isSelectAll.value = !isSelectAll.value; // 切换全选状态
-};
+  const toggleSelectAll = () => {
+    if (isSelectAll.value) {
+      formData.value.models = []; // 取消全选
+    } else {
+      formData.value.models = models.value.map((item) => item.id); // 全选
+    }
+    isSelectAll.value = !isSelectAll.value; // 切换全选状态
+    // 更新全选选项的背景颜色
+    buttonColor.value = isSelectAll.value ? 'blue' : '';
+  };
 </script>
 
 <script lang="ts">
