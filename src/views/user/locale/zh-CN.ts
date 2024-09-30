@@ -25,7 +25,7 @@ export default {
   'user.error.password.pattern': '密码不得低于6位',
   'user.error.quota.required': '请输入额度',
   'user.label.remark': '备注',
-  'user.placeholder.remark': '备注',
+  'user.placeholder.remark': '请输入备注',
   'user.label.models': '模型',
   'user.placeholder.models': '可同时授权多个模型',
   'user.label.isLimitQuota': '限制额度',

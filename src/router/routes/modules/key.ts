@@ -48,17 +48,6 @@ const KEY: AppRouteRecordRaw = {
         hideInMenu: true,
       },
     },
-    {
-      path: 'detail',
-      name: 'KeyDetail',
-      component: () => import('@/views/key/detail/index.vue'),
-      meta: {
-        locale: 'menu.key.detail',
-        requiresAuth: true,
-        roles: ['admin', 'user'],
-        hideInMenu: true,
-      },
-    },
   ],
 };
 

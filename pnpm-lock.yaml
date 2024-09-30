@@ -7,8 +7,8 @@ overrides:
 
 dependencies:
   '@arco-design/web-vue':
-    specifier: ^2.44.7
-    version: 2.45.0(vue@3.2.47)
+    specifier: ^2.56.2
+    version: 2.56.2(vue@3.2.47)
   '@vueuse/core':
     specifier: ^9.3.0
     version: 9.13.0(vue@3.2.47)
@@ -218,8 +218,8 @@ packages:
       color: 3.2.1
     dev: false
 
-  /@arco-design/web-vue@2.45.0(vue@3.2.47):
-    resolution: {integrity: sha512-+AkoOWTRz1ZeU2NTWXTEGmrJfV3/9uWhXpJ5hcPU41ynQ0GHilAlzCEt9B6hFd79QhGEHl2gRq6GJFki0Bo0Hg==}
+  /@arco-design/web-vue@2.56.2(vue@3.2.47):
+    resolution: {integrity: sha512-tKSED9mGWaaJ1QUHhJtk0o/N9LHMiShVJwZRUynk2UxEnwMpQ81rI5LRDE0DbJl9GEIRMEiXVP3scp7g3Oe8yA==}
     peerDependencies:
       vue: ^3.1.0
     dependencies:

@@ -99,12 +99,13 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="created_at"
-                  :label="$t('model.agent.form.created_at')"
+                  field="remark"
+                  :label="$t('model.agent.form.remark')"
                 >
-                  <a-range-picker
-                    v-model="formModel.created_at"
-                    style="width: 100%"
+                  <a-input
+                    v-model="formModel.remark"
+                    :placeholder="$t('model.agent.form.remark.placeholder')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -264,9 +265,9 @@
         <template #model_names="{ record }">
           {{ record?.model_names?.join(',') || '-' }}
         </template>
-        <!-- <template #weight="{ record }">
-          {{ record.weight || '-' }}
-        </template> -->
+        <template #remark="{ record }">
+          {{ record.remark || '-' }}
+        </template>
         <template #status="{ record }">
           <a-switch
             v-model="record.status"
@@ -428,7 +429,7 @@
       base_url: '',
       models: [],
       status: ref(),
-      created_at: [],
+      remark: '',
     };
   };
   const { t } = useI18n();
@@ -504,13 +505,14 @@
       ellipsis: true,
       tooltip: true,
     },
-    // {
-    //   title: t('model.agent.columns.weight'),
-    //   dataIndex: 'weight',
-    //   slotName: 'weight',
-    //   align: 'center',
-    //   width: 80,
-    // },
+    {
+      title: t('model.agent.columns.remark'),
+      dataIndex: 'remark',
+      slotName: 'remark',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
     {
       title: t('model.agent.columns.status'),
       dataIndex: 'status',

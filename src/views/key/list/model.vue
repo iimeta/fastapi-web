@@ -91,16 +91,6 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <!-- <a-col :span="8">
-                <a-form-item field="quota" :label="$t('key.form.quota')">
-                  <a-input-number
-                    v-model="formModel.quota"
-                    :precision="0"
-                    :placeholder="$t('key.form.quota.placeholder')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col> -->
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('key.form.status')">
                   <a-select
@@ -112,13 +102,11 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="created_at"
-                  :label="$t('key.form.created_at')"
-                >
-                  <a-range-picker
-                    v-model="formModel.created_at"
-                    style="width: 100%"
+                <a-form-item field="remark" :label="$t('key.form.remark')">
+                  <a-input
+                    v-model="formModel.remark"
+                    :placeholder="$t('key.form.remark.placeholder')"
+                    allow-clear
                   />
                 </a-form-item>
               </a-col>
@@ -469,7 +457,7 @@
       model_agents: ref(),
       quota: ref(),
       status: ref(),
-      created_at: [],
+      remark: '',
     };
   };
   const { t } = useI18n();

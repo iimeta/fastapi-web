@@ -412,7 +412,7 @@
               v-model="formData.quota_expires_at"
               :placeholder="$t('app.placeholder.quota_expires_at')"
               :time-picker-props="{ defaultValue: '23:59:59' }"
-              :disabled-date="(current:Date) => dayjs(current).isBefore(dayjs())"
+              :disabled-date="(current) => dayjs(current).isBefore(dayjs())"
               style="width: 100%"
               show-time
               :shortcuts="[
@@ -450,7 +450,7 @@
           <a-form-item field="models" :label="$t('app.label.models')">
             <a-select
               v-model="formData.models"
-              :placeholder="$t('app.placeholder.models')"
+              :placeholder="$t('app.placeholder.key.models')"
               :max-tag-count="3"
               multiple
               allow-search

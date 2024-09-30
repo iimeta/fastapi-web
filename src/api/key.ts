@@ -79,15 +79,20 @@ export interface KeyDetail {
   corp_name: string;
   key: string;
   quota: number;
+  used_quota: number;
+  quota_expires_at: string;
   models: string[];
   model_names: string[];
   model_agents: string[];
   model_agent_names: string[];
+  is_limit_quota: boolean;
   is_agents_only: boolean;
   ip_whitelist: string[];
   ip_blacklist: string[];
   status: number;
   remark: string;
+  is_auto_disabled: boolean;
+  auto_disabled_reason: string;
   created_at: string;
   updated_at: string;
 }

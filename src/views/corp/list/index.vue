@@ -76,11 +76,11 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="created_at"
-                  :label="$t('corp.form.created_at')"
+                  field="updated_at"
+                  :label="$t('corp.form.updated_at')"
                 >
                   <a-range-picker
-                    v-model="formModel.created_at"
+                    v-model="formModel.updated_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -358,7 +358,7 @@
       remark: '',
       is_public: ref(),
       status: ref(),
-      created_at: [],
+      updated_at: [],
     };
   };
   const { loading, setLoading } = useLoading(true);

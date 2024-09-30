@@ -77,6 +77,7 @@
   const dateRange = ref(15);
   const xAxis = ref<string[]>([]);
   const countStatisticsData = ref<number[]>([]);
+  const spendStatisticsData = ref<number[]>([]);
   const tokensStatisticsData = ref<number[]>([]);
   const userStatisticsData = ref<number[]>([]);
   const appStatisticsData = ref<number[]>([]);
@@ -188,6 +189,23 @@
       },
       series: [
         {
+          name: '花费($)',
+          data: spendStatisticsData.value,
+          type: 'line',
+          smooth: true,
+          showSymbol: false,
+          color: isDark ? '#EA8D24' : '#EA8D24',
+          symbol: 'circle',
+          symbolSize: 10,
+          emphasis: {
+            focus: 'series',
+            itemStyle: {
+              borderWidth: 2,
+              borderColor: '#E2F2FF',
+            },
+          },
+        },
+        {
           name: '调用数',
           data: countStatisticsData.value,
           type: 'line',
@@ -267,6 +285,7 @@
     try {
       xAxis.value = [];
       countStatisticsData.value = [];
+      spendStatisticsData.value = [];
       tokensStatisticsData.value = [];
       userStatisticsData.value = [];
       appStatisticsData.value = [];
@@ -275,6 +294,7 @@
       chartData.items.forEach((el: CallData, idx: number) => {
         xAxis.value.push(el.date);
         countStatisticsData.value.push(el.call);
+        spendStatisticsData.value.push(el.spend);
         tokensStatisticsData.value.push(el.tokens);
         userStatisticsData.value.push(el.user);
         appStatisticsData.value.push(el.app);
