@@ -72,6 +72,11 @@
                 allow-search
                 allow-clear
               >
+              <a-option
+              :value="undefined"
+              :label="$t('app.label.selectAll')"
+              @click="toggleSelectAll"
+            />
                 <a-option
                   v-for="item in models"
                   :key="item.id"
@@ -304,6 +309,15 @@
   const handleQuotaQuickChange = (quota: number) => {
     formData.value.quota = quota * 500000;
   };
+  const isSelectAll = ref(false); // 维护全选状态
+const toggleSelectAll = () => {
+  if (isSelectAll.value) {
+    formData.value.models = []; // 取消全选
+  } else {
+    formData.value.models = models.value.map(item => item.id); // 全选
+  }
+  isSelectAll.value = !isSelectAll.value; // 切换全选状态
+};
 </script>
 
 <script lang="ts">
