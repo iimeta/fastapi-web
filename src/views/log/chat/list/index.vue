@@ -1291,6 +1291,8 @@
     watch,
     nextTick,
     getCurrentInstance,
+    onBeforeMount,
+    onBeforeUnmount,
   } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
@@ -1710,30 +1712,61 @@
     tpm.value = data.tpm;
   };
   getPerMinute();
-  // setInterval(getPerMinute, 3000);
 
   // 定时器的标识符
-  let intervalId: number | undefined;
+  let intervalId: ReturnType<typeof setInterval> | undefined;
 
-  // 设置定时器并保存其标识符
-  intervalId = setInterval(() => {
-    // 定时执行的代码
-    getPerMinute();
-  }, 3000); // 每3000毫秒执行一次
-
-  // 当用户离开页面时清除定时器
-  window.onblur = () => {
+  const clearTimers = () => {
     clearInterval(intervalId);
   };
 
-  // 当用户回到页面时重新设置定时器
-  window.onfocus = () => {
-    getPerMinute();
-    intervalId = setInterval(() => {
-      // 定时执行的代码
-      getPerMinute();
-    }, 3000);
+  /**
+   * 设置定时器
+   *
+   * 此函数负责初始化多个定时器，用于定期执行特定的操作
+   * 它包括获取基础数据、每秒执行一次的操作、每分钟执行一次的操作
+   * 并且为每个操作设置了一个定时器，以确保它们能够按预期的频率自动执行
+   */
+  const setTimers = () => {
+    intervalId = setInterval(getPerMinute, 3000);
   };
+
+  /**
+   * 处理页面可见性变化的函数
+   * 当页面的可见性状态发生改变时，此函数会被调用
+   * 主要作用是根据页面是否可见来启动或停止定时器
+   */
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === 'hidden') {
+      clearTimers();
+    } else {
+      setTimers();
+    }
+  };
+
+  /**
+   * 在组件挂载前设置定时器并监听页面可见性变化
+   *
+   * 此生命周期钩子会在组件即将被挂载到 DOM 前执行以下操作：
+   * - 调用 `setTimers` 函数来启动定时器
+   * - 添加一个事件监听器，用于监听页面的可见性变化
+   */
+  onBeforeMount(() => {
+    setTimers();
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+  });
+
+  /**
+   * 在组件卸载前清除定时器并移除页面可见性变化监听
+   *
+   * 此生命周期钩子会在组件即将从 DOM 中卸载前执行以下操作：
+   * - 调用 `clearTimers` 函数来停止所有定时器
+   * - 移除页面可见性变化的事件监听器
+   */
+  onBeforeUnmount(() => {
+    clearTimers();
+    document.removeEventListener('visibilitychange', handleVisibilityChange);
+  });
 
   const chatExportForm = ref<FormInstance>();
   const chatExportFormVisible = ref(false);
