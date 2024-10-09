@@ -94,13 +94,14 @@
                 allow-search
                 @change="handleTypeChange"
               >
-                <a-option value="1">文生文</a-option>
-                <a-option value="2">文生图</a-option>
-                <a-option value="3">图生文</a-option>
-                <a-option value="4">图生图</a-option>
-                <a-option value="5">文生语音</a-option>
-                <a-option value="6">语音生文</a-option>
-                <a-option value="100">多模态</a-option>
+                <a-option value="1">{{ $t('dict.model_type.1') }}</a-option>
+                <a-option value="2">{{ $t('dict.model_type.2') }}</a-option>
+                <a-option value="3">{{ $t('dict.model_type.3') }}</a-option>
+                <a-option value="4">{{ $t('dict.model_type.4') }}</a-option>
+                <a-option value="5">{{ $t('dict.model_type.5') }}</a-option>
+                <a-option value="6">{{ $t('dict.model_type.6') }}</a-option>
+                <a-option value="100">{{ $t('dict.model_type.100') }}</a-option>
+                <a-option value="101">{{ $t('dict.model_type.101') }}</a-option>
               </a-select>
             </a-form-item>
             <a-form-item field="base_url" :label="$t('model.label.base_url')">
@@ -125,7 +126,11 @@
               $t('model.title.advanced')
             }}</a-divider>
             <a-form-item
-              v-if="!isShowMultimodalTextQuota && !isShowAudioQuota"
+              v-if="
+                !isShowMultimodalTextQuota &&
+                !isShowAudioQuota &&
+                !isShowRealtimeQuota
+              "
               field="text_quota.billing_method"
               :label="$t('model.label.billingMethod')"
               :rules="[
@@ -152,6 +157,7 @@
               v-if="
                 !isShowMultimodalTextQuota &&
                 !isShowAudioQuota &&
+                !isShowRealtimeQuota &&
                 formData.text_quota.billing_method === '1'
               "
               field="text_quota.prompt_ratio"
@@ -175,6 +181,7 @@
               v-if="
                 !isShowMultimodalTextQuota &&
                 !isShowAudioQuota &&
+                !isShowRealtimeQuota &&
                 formData.text_quota.billing_method === '1'
               "
               field="text_quota.completion_ratio"
@@ -200,6 +207,7 @@
               v-if="
                 !isShowMultimodalTextQuota &&
                 !isShowAudioQuota &&
+                !isShowRealtimeQuota &&
                 formData.text_quota.billing_method === '2' &&
                 formData.type !== '2'
               "
@@ -516,6 +524,209 @@
               >
                 <icon-minus />
               </a-button>
+            </a-form-item>
+            <a-form-item
+              v-if="isShowRealtimeQuota"
+              field="realtime_quota.text_quota.billing_method"
+              :label="$t('model.label.billingMethod')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.billingMethod.required'),
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.realtime_quota.text_quota.billing_method"
+                  value="1"
+                  :default-checked="true"
+                  >倍率</a-radio
+                >
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowRealtimeQuota &&
+                formData.realtime_quota.text_quota.billing_method === '1'
+              "
+              field="realtime_quota.text_quota.prompt_ratio"
+              :label="$t('model.label.realtime_quota.text_quota.promptRatio')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.realtime_quota.text_quota.promptRatio.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.realtime_quota.text_quota.prompt_ratio"
+                :min="0.001"
+                :placeholder="
+                  $t('model.placeholder.realtime_quota.text_quota.promptRatio')
+                "
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  priceConv(formData.realtime_quota.text_quota.prompt_ratio)
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowRealtimeQuota &&
+                formData.realtime_quota.text_quota.billing_method === '1'
+              "
+              field="realtime_quota.text_quota.completion_ratio"
+              :label="
+                $t('model.label.realtime_quota.text_quota.completionRatio')
+              "
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.realtime_quota.text_quota.completionRatio.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.realtime_quota.text_quota.completion_ratio"
+                :min="0.001"
+                :placeholder="
+                  $t(
+                    'model.placeholder.realtime_quota.text_quota.completionRatio'
+                  )
+                "
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  priceConv(
+                    formData.realtime_quota.text_quota.completion_ratio
+                  )
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowRealtimeQuota &&
+                formData.realtime_quota.text_quota.billing_method === '2'
+              "
+              field="realtime_quota.text_quota.fixed_quota"
+              :label="$t('model.label.realtime_quota.text_quota.fixedQuota')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.realtime_quota.text_quota.fixedQuota.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.realtime_quota.text_quota.fixed_quota"
+                :min="0"
+                :max="9999999999999"
+                :placeholder="
+                  $t('model.placeholder.realtime_quota.text_quota.fixedQuota')
+                "
+              />
+            </a-form-item>
+
+            <a-form-item
+              v-if="
+                isShowRealtimeQuota &&
+                formData.realtime_quota.audio_quota.billing_method === '1'
+              "
+              field="realtime_quota.audio_quota.prompt_ratio"
+              :label="$t('model.label.realtime_quota.audio_quota.promptRatio')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.realtime_quota.audio_quota.promptRatio.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.realtime_quota.audio_quota.prompt_ratio"
+                :min="0.001"
+                :placeholder="
+                  $t('model.placeholder.realtime_quota.audio_quota.promptRatio')
+                "
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  priceConv(formData.realtime_quota.audio_quota.prompt_ratio)
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowRealtimeQuota &&
+                formData.realtime_quota.audio_quota.billing_method === '1'
+              "
+              field="realtime_quota.audio_quota.completion_ratio"
+              :label="
+                $t('model.label.realtime_quota.audio_quota.completionRatio')
+              "
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.realtime_quota.audio_quota.completionRatio.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.realtime_quota.audio_quota.completion_ratio"
+                :min="0.001"
+                :placeholder="
+                  $t(
+                    'model.placeholder.realtime_quota.audio_quota.completionRatio'
+                  )
+                "
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  priceConv(
+                    formData.realtime_quota.audio_quota.completion_ratio
+                  )
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowRealtimeQuota &&
+                formData.realtime_quota.audio_quota.billing_method === '2'
+              "
+              field="realtime_quota.audio_quota.fixed_quota"
+              :label="$t('model.label.realtime_quota.audio_quota.fixedQuota')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.realtime_quota.audio_quota.fixedQuota.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.realtime_quota.audio_quota.fixed_quota"
+                :min="0"
+                :max="9999999999999"
+                :placeholder="
+                  $t('model.placeholder.realtime_quota.audio_quota.fixedQuota')
+                "
+              />
             </a-form-item>
             <a-form-item
               v-for="(midjourney_quotas, index) of formData.midjourney_quotas"
@@ -1036,6 +1247,21 @@
       },
       image_quotas: [],
     },
+    realtime_quota: {
+      text_quota: {
+        billing_method: '1',
+        prompt_ratio: 1,
+        completion_ratio: 1,
+        fixed_quota: 1,
+      },
+      audio_quota: {
+        billing_method: '1',
+        prompt_ratio: 1,
+        completion_ratio: 1,
+        fixed_quota: 1,
+      },
+      fixed_quota: 1,
+    },
     midjourney_quotas: [],
     data_format: '1',
     is_public: true,
@@ -1112,9 +1338,10 @@
   };
 
   const handleCorpChange = () => {
-    isShowMidjourneyQuota.value = false;
     isShowImageQuota.value = false;
     isShowAudioQuota.value = false;
+    isShowRealtimeQuota.value = false;
+    isShowMidjourneyQuota.value = false;
     const corp = corpMap.get(formData.value.corp);
     if (corp && corp.code === 'Midjourney') {
       handleMidjourneyQuota();
@@ -1127,6 +1354,7 @@
   const isShowAudioQuota = ref(false);
   const isShowMultimodalTextQuota = ref(false);
   const isShowMultimodalImageQuota = ref(false);
+  const isShowRealtimeQuota = ref(false);
   const isShowMidjourneyQuota = ref(false);
 
   const handleTypeChange = () => {
@@ -1134,6 +1362,7 @@
     isShowAudioQuota.value = false;
     isShowMultimodalTextQuota.value = false;
     isShowMultimodalImageQuota.value = false;
+    isShowRealtimeQuota.value = false;
     isShowMidjourneyQuota.value = false;
     formData.value.text_quota.billing_method = '1';
 
@@ -1165,6 +1394,8 @@
           handleMultimodalImageQuotaAdd(modes[i]);
         }
       }
+    } else if (formData.value.type === '101') {
+      isShowRealtimeQuota.value = true;
     }
   };
 
@@ -1239,6 +1470,7 @@
     isShowAudioQuota.value = false;
     isShowMultimodalTextQuota.value = false;
     isShowMultimodalImageQuota.value = false;
+    isShowRealtimeQuota.value = false;
     isShowMidjourneyQuota.value = true;
     formData.value.type = '2';
     formData.value.text_quota.billing_method = '2';

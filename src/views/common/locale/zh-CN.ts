@@ -106,6 +106,7 @@ export default {
   'dict.model_type.5': '文生语音',
   'dict.model_type.6': '语音生文',
   'dict.model_type.100': '多模态',
+  'dict.model_type.101': '多模态实时',
   'dict.data_format.1': '统一格式',
   'dict.data_format.2': '官方格式',
   'dict.billing_method.1': '倍率',

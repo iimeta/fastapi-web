@@ -70,6 +70,12 @@ export interface MultimodalQuota {
   image_quotas: ImageQuota[];
 }
 
+export interface RealtimeQuota {
+  text_quota: TextQuota;
+  audio_quota: AudioQuota;
+  fixed_quota: number;
+}
+
 export interface MidjourneyQuota {
   name: any;
   action: any;
@@ -120,6 +126,7 @@ export interface ChatDetail {
   messages: any;
   text_quota: TextQuota;
   multimodal_quota: MultimodalQuota;
+  realtime_quota: RealtimeQuota;
   prompt_tokens: number;
   completion_tokens: number;
   total_tokens: number;

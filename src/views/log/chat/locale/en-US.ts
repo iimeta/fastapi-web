@@ -80,4 +80,5 @@ export default {
   'chat.dict.type.5': '文生语音',
   'chat.dict.type.6': '语音生文',
   'chat.dict.type.100': '多模态',
+  'chat.dict.type.101': '多模态实时',
 };

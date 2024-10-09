@@ -195,6 +195,15 @@
             }}
           </span>
           <span v-else-if="record.type === 6">-</span>
+          <span v-else-if="record.type === 101">
+            <a-button
+              type="text"
+              size="small"
+              @click="viewRealtimeQuota(record.realtime_quota)"
+            >
+              查看
+            </a-button>
+          </span>
           <span v-else-if="record.type !== 100">{{
             record.text_quota.billing_method === 1
               ? `$${priceConv(record.text_quota.prompt_ratio)}/k`
@@ -227,6 +236,15 @@
                 : `$${quotaConv(record.audio_quota.fixed_quota)}/次`
             }}</span
           >
+          <span v-else-if="record.type === 101">
+            <a-button
+              type="text"
+              size="small"
+              @click="viewRealtimeQuota(record.realtime_quota)"
+            >
+              查看
+            </a-button>
+          </span>
           <span v-else-if="record.type !== 100">
             {{
               record.text_quota.billing_method === 1
@@ -284,6 +302,55 @@
           </template>
         </a-table>
       </a-modal>
+
+      <a-modal
+        v-model:visible="realtimeQuotaVisible"
+        :title="$t('model.columns.realtime_price')"
+        width="550px"
+        hide-cancel
+        simple
+      >
+        <a-table :data="realtimeQuotas" :pagination="false" :bordered="false">
+          <template #columns>
+            <a-table-column
+              title="文本提问价格"
+              data-index="text_quota.prompt_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.text_quota.prompt_ratio)}/k` }}
+              </template>
+            </a-table-column>
+            <a-table-column
+              title="文本回答价格"
+              data-index="text_quota.completion_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.text_quota.completion_ratio)}/k` }}
+              </template>
+            </a-table-column>
+            <a-table-column
+              title="音频提问价格"
+              data-index="audio_quota.prompt_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.audio_quota.prompt_ratio)}/k` }}
+              </template>
+            </a-table-column>
+            <a-table-column
+              title="音频回答价格"
+              data-index="audio_quota.completion_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.audio_quota.completion_ratio)}/k` }}
+              </template>
+            </a-table-column>
+          </template>
+        </a-table>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -297,6 +364,7 @@
     ModelPage,
     ModelPageParams,
     ImageQuota,
+    RealtimeQuota,
   } from '@/api/model';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -587,6 +655,13 @@
   const viewImageQuota = (params: ImageQuota[]) => {
     imageQuotas.value = params;
     imageQuotaVisible.value = true;
+  };
+
+  const realtimeQuotaVisible = ref(false);
+  const realtimeQuotas = ref<RealtimeQuota[]>([]);
+  const viewRealtimeQuota = (params: RealtimeQuota) => {
+    realtimeQuotas.value[0] = params;
+    realtimeQuotaVisible.value = true;
   };
 </script>
 
