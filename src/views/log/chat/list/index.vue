@@ -1184,7 +1184,10 @@
                   <a-skeleton v-if="loading" :animation="true">
                     <a-skeleton-line :rows="3" />
                   </a-skeleton>
-                  <a-space v-else>
+                  <a-space
+                    v-else
+                    style="max-height: 220px; display: block; overflow: auto"
+                  >
                     <VueJsonPretty
                       v-if="currentData.messages"
                       :path="'res'"
@@ -1434,6 +1437,8 @@
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('chat.columns.prompt_tokens'),
