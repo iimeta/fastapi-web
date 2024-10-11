@@ -1463,6 +1463,7 @@
       dataIndex: 'stream',
       slotName: 'stream',
       align: 'center',
+      width: 60,
     },
     {
       title: t('chat.columns.conn_time'),

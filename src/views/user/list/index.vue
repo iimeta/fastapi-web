@@ -499,6 +499,7 @@
               multiple
               allow-search
               allow-clear
+              style="max-height: 220px; display: block; overflow: auto"
             >
               <a-option
                 v-for="item in models"
@@ -710,7 +711,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 318,
+      width: 262,
     },
   ]);
 
@@ -1014,5 +1015,8 @@
   }
   .arco-btn-size-small {
     padding: 0 8px;
+  }
+  .arco-row-align-start {
+    align-items: center;
   }
 </style>
