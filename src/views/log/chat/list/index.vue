@@ -1445,12 +1445,14 @@
       dataIndex: 'prompt_tokens',
       slotName: 'prompt_tokens',
       align: 'center',
+      width: 75,
     },
     {
       title: t('chat.columns.completion_tokens'),
       dataIndex: 'completion_tokens',
       slotName: 'completion_tokens',
       align: 'center',
+      width: 75,
     },
     {
       title: t('chat.columns.total_price'),
