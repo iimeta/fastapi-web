@@ -101,6 +101,8 @@ export interface ModelAgentDetail {
   key: string;
   status: number;
   remark: string;
+  is_auto_disabled: boolean;
+  auto_disabled_reason: string;
   created_at: string;
   updated_at: string;
 }

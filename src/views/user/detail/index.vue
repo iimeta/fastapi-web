@@ -1,26 +1,138 @@
 <template>
-  <div class="container">
-    <a-space direction="vertical" :size="16" fill>
-      <a-card class="general-card" :bordered="false">
-        <ProfileItem :loading="loading" :render-data="currentData" />
-      </a-card>
-    </a-space>
+  <div style="margin: 10px 0 0 10px">
+    <a-descriptions
+      :column="2"
+      bordered
+      :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
+    >
+      <a-descriptions-item :label="t('common.user_id')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.user_id }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.account')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.account }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.name')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.name }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.email')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.email }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('user.detail.label.quota')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.quota > 0
+              ? `$${quotaConv(currentData.quota)}`
+              : currentData.quota < 0
+              ? `-$${quotaConv(-currentData.quota)}`
+              : '$0.00'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('user.detail.label.used_quota')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.used_quota > 0
+              ? `$${quotaConv(currentData.used_quota)}`
+              : '$0.00'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('user.detail.label.quota_expires_at')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.quota_expires_at || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.status')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.status === 1" color="green">
+            {{ $t(`dict.status.${currentData.status}`) }}
+          </a-tag>
+          <a-tag v-else color="red">
+            {{ $t(`dict.status.${currentData.status}`) }}
+          </a-tag>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('user.detail.label.models')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else style="max-height: 220px; display: block; overflow: auto">
+          {{ currentData?.model_names?.join('\n') || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.remark')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
+          {{ currentData.remark || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.created_at')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.created_at }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.updated_at')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.updated_at }}
+        </span>
+      </a-descriptions-item>
+    </a-descriptions>
   </div>
 </template>
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { quotaConv } from '@/utils/common';
   import {
     queryUserDetail,
     UserDetailParams,
     UserDetail,
   } from '@/api/admin_user';
-  import ProfileItem from './components/profile-item.vue';
 
+  const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
-  const route = useRoute();
   const currentData = ref<UserDetail>({} as UserDetail);
   const props = defineProps({
     id: {
@@ -49,17 +161,4 @@
   };
 </script>
 
-<style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
-</style>
+<style scoped lang="less"></style>

@@ -1,20 +1,18 @@
-const priceConv = (ratio: number) => {
+export function priceConv(ratio: number) {
   return parseFloat((1000 / (500000 / ratio)).toFixed(6)).toLocaleString(
     undefined,
     { maximumFractionDigits: 6 }
   );
-};
+}
 
-const quotaConv = (quota: number) => {
+export function quotaConv(quota: number) {
   return parseFloat((quota / 500000).toFixed(6)).toLocaleString(undefined, {
     maximumFractionDigits: 6,
   });
-};
+}
 
-const quotaConv4 = (quota: number) => {
+export function quotaConv4(quota: number) {
   return parseFloat((quota / 500000).toFixed(4)).toLocaleString(undefined, {
     maximumFractionDigits: 4,
   });
-};
-
-export { priceConv, quotaConv, quotaConv4 };
+}

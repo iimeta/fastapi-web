@@ -54,6 +54,7 @@ export default {
   'model.agent.detail.label.baseUrl': '代理地址',
   'model.agent.detail.label.path': '代理路径',
   'model.agent.detail.label.weight': '权重',
+  'model.agent.detail.label.key': '密钥',
   'model.agent.detail.label.remark': '备注',
   'model.agent.detail.label.models': '绑定模型',
   'model.agent.detail.label.created_at': '创建时间',

@@ -83,7 +83,7 @@ export default {
   'user.detail.label.remark': '备注',
   'user.detail.label.quota': '当前额度',
   'user.detail.label.used_quota': '已用额度',
-  'user.detail.label.quota_expires_at': '额度过期时间',
+  'user.detail.label.quota_expires_at': '过期时间',
   'user.detail.label.models': '模型权限',
   'user.detail.label.created_at': '创建时间',
   'user.detail.label.updated_at': '更新时间',

@@ -89,8 +89,6 @@ export interface FallbackConfig {
 }
 
 export interface ModelAdvanced {
-  is_enable_preset_config: boolean;
-  preset_config: PresetConfig;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
   audio_quota: AudioQuota;
@@ -99,6 +97,8 @@ export interface ModelAdvanced {
   midjourney_quotas: MidjourneyQuota[];
   data_format: string;
   is_public: boolean;
+  is_enable_preset_config: boolean;
+  preset_config: PresetConfig;
   is_enable_model_agent: boolean;
   model_agents: string[];
   is_enable_forward: boolean;
@@ -198,8 +198,6 @@ export interface ModelDetail {
   type: number;
   base_url: string;
   path: string;
-  is_enable_preset_config: boolean;
-  preset_config: PresetConfig;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
   audio_quota: AudioQuota;
@@ -208,6 +206,8 @@ export interface ModelDetail {
   midjourney_quotas: MidjourneyQuota[];
   data_format: number;
   is_public: boolean;
+  is_enable_preset_config: boolean;
+  preset_config: PresetConfig;
   is_enable_model_agent: boolean;
   model_agents: string[];
   model_agent_names: string[];

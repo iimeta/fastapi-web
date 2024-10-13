@@ -1,6 +1,10 @@
 <template>
   <div style="margin: 10px 0 0 10px">
-    <a-descriptions :column="2" bordered>
+    <a-descriptions
+      :column="2"
+      bordered
+      :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
+    >
       <a-descriptions-item :label="t('bill.detail.label.stat_date')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

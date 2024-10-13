@@ -484,7 +484,7 @@
               :auto-size="{ minRows: 5, maxRows: 5 }"
             />
           </a-form-item>
-          <a-form-item field="remark" :label="$t('app.placeholder.remark')">
+          <a-form-item field="remark" :label="$t('common.remark')">
             <a-textarea
               v-model="formData.remark"
               :placeholder="$t('app.placeholder.remark')"

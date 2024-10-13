@@ -6,9 +6,6 @@
     :body-style="{ padding: '10px 20px 2px 20px' }"
     :bordered="false"
   >
-    <!-- <template #extra>
-      <a-link>{{ $t('workplace.quickOperation.setup') }}</a-link>
-    </template> -->
     <a-row :gutter="8">
       <a-col
         v-for="link in links"
@@ -30,7 +27,6 @@
         </a-typography-paragraph>
       </a-col>
     </a-row>
-    <!-- <a-divider class="split-line" style="margin: 0" /> -->
   </a-card>
 </template>
 

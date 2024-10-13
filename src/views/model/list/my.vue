@@ -191,10 +191,19 @@
             {{
               record.audio_quota.billing_method === 1
                 ? `$${priceConv(record.audio_quota.prompt_ratio)}/k`
-                : '-'
+                : `$${quotaConv(record.audio_quota.fixed_quota)}/次`
             }}
           </span>
           <span v-else-if="record.type === 6">-</span>
+          <span v-else-if="record.type === 100">
+            <a-button
+              type="text"
+              size="small"
+              @click="viewMultimodalQuota(record.multimodal_quota)"
+            >
+              查看
+            </a-button>
+          </span>
           <span v-else-if="record.type === 101">
             <a-button
               type="text"
@@ -204,19 +213,11 @@
               查看
             </a-button>
           </span>
-          <span v-else-if="record.type !== 100">{{
+          <span v-else>{{
             record.text_quota.billing_method === 1
               ? `$${priceConv(record.text_quota.prompt_ratio)}/k`
               : '-'
           }}</span>
-          <span v-else-if="record.type === 100">{{
-            record.multimodal_quota.text_quota.billing_method === 1
-              ? `$${priceConv(
-                  record.multimodal_quota.text_quota.prompt_ratio
-                )}/k`
-              : '-'
-          }}</span>
-          <span v-else> - </span>
         </template>
         <template #completion_ratio="{ record }">
           <span v-if="record.type === 2">
@@ -236,6 +237,15 @@
                 : `$${quotaConv(record.audio_quota.fixed_quota)}/次`
             }}</span
           >
+          <span v-else-if="record.type === 100">
+            <a-button
+              type="text"
+              size="small"
+              @click="viewMultimodalQuota(record.multimodal_quota)"
+            >
+              查看
+            </a-button>
+          </span>
           <span v-else-if="record.type === 101">
             <a-button
               type="text"
@@ -245,18 +255,11 @@
               查看
             </a-button>
           </span>
-          <span v-else-if="record.type !== 100">
+          <span v-else>
             {{
               record.text_quota.billing_method === 1
                 ? `$${priceConv(record.text_quota.completion_ratio)}/k`
                 : `$${quotaConv(record.text_quota.fixed_quota)}/次`
-            }}
-          </span>
-          <span v-else>
-            {{
-              `$${priceConv(
-                record.multimodal_quota.text_quota.completion_ratio
-              )}/k`
             }}
           </span>
         </template>
@@ -271,7 +274,7 @@
       </a-table>
       <a-modal
         v-model:visible="imageQuotaVisible"
-        :title="$t('model.columns.completion_price')"
+        :title="$t('model.columns.image_price')"
         width="500px"
         hide-cancel
         simple
@@ -287,6 +290,70 @@
             </a-table-column>
             <a-table-column
               title="价格"
+              data-index="fixed_quota"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${quotaConv(record.fixed_quota)}/张` }}
+              </template>
+            </a-table-column>
+            <a-table-column title="默认" data-index="is_default" align="center">
+              <template #cell="{ record }">
+                {{ record.is_default ? '是' : '-' }}
+              </template>
+            </a-table-column>
+          </template>
+        </a-table>
+      </a-modal>
+
+      <a-modal
+        v-model:visible="multimodalQuotaVisible"
+        :title="$t('model.columns.multimodal_price')"
+        width="550px"
+        hide-cancel
+        simple
+      >
+        <a-table
+          :data="multimodalTextQuotas"
+          :pagination="false"
+          :bordered="false"
+        >
+          <template #columns>
+            <a-table-column
+              title="文本提问价格"
+              data-index="prompt_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.prompt_ratio)}/k` }}
+              </template>
+            </a-table-column>
+            <a-table-column
+              title="文本回答价格"
+              data-index="completion_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.completion_ratio)}/k` }}
+              </template>
+            </a-table-column>
+          </template>
+        </a-table>
+
+        <a-table
+          style="margin-top: 15px"
+          :data="multimodalImageQuotas"
+          :pagination="false"
+          :bordered="false"
+        >
+          <template #columns>
+            <a-table-column
+              title="识图模式"
+              data-index="mode"
+              align="center"
+            ></a-table-column>
+            <a-table-column
+              title="识图价格"
               data-index="fixed_quota"
               align="center"
             >
@@ -363,7 +430,9 @@
     queryModelPage,
     ModelPage,
     ModelPageParams,
+    TextQuota,
     ImageQuota,
+    MultimodalQuota,
     RealtimeQuota,
   } from '@/api/model';
   import { Pagination } from '@/types/global';
@@ -655,6 +724,15 @@
   const viewImageQuota = (params: ImageQuota[]) => {
     imageQuotas.value = params;
     imageQuotaVisible.value = true;
+  };
+
+  const multimodalQuotaVisible = ref(false);
+  const multimodalTextQuotas = ref<TextQuota[]>([]);
+  const multimodalImageQuotas = ref<ImageQuota[]>([]);
+  const viewMultimodalQuota = (params: MultimodalQuota) => {
+    multimodalQuotaVisible.value = true;
+    multimodalTextQuotas.value[0] = params.text_quota;
+    multimodalImageQuotas.value = params.image_quotas;
   };
 
   const realtimeQuotaVisible = ref(false);
