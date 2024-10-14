@@ -1,9 +1,10 @@
 <template>
-  <div style="margin: 10px 0 0 10px">
+  <div style="margin: 10px 0 30px 10px">
     <a-descriptions
       :column="2"
       bordered
-      :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
+      :label-style="{ padding: '5px 8px 5px 15px' }"
+      :value-style="{ width: '350px', padding: '5px 8px 5px 15px' }"
     >
       <a-descriptions-item :label="t('common.corp')">
         <a-skeleton v-if="loading" :animation="true">
@@ -103,11 +104,12 @@
       </a-descriptions-item>
       <a-descriptions-item
         :label="t('model.detail.label.preset_config.system_role_prompt')"
+        :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
           {{ currentData?.preset_config?.system_role_prompt || '-' }}
         </span>
       </a-descriptions-item>
@@ -147,7 +149,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
           {{ currentData?.model_agent_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
@@ -181,20 +183,20 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.targetModelName')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData?.forward_config?.target_model_name || '-' }}
-        </span>
-      </a-descriptions-item>
       <a-descriptions-item :label="t('model.detail.label.content_length')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           {{ currentData?.forward_config?.content_length || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('model.detail.label.targetModelName')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData?.forward_config?.target_model_name || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('model.detail.label.matchRule')">
@@ -225,7 +227,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
           {{ currentData?.forward_config?.keywords?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
@@ -233,7 +235,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
           {{
             currentData?.forward_config?.target_model_names?.join('\n') || '-'
           }}
@@ -261,6 +263,16 @@
           {{ currentData?.fallback_config?.fallback_model_name || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="t('model.detail.label.billingMethod')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            $t(`model.dict.billing_method.${currentData.billing_method || 1}`)
+          }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -274,7 +286,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.remark')" :span="2">
+      <a-descriptions-item :label="t('model.detail.label.remark')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -282,7 +294,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')">
+      <a-descriptions-item :label="t('common.created_at')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -567,6 +579,7 @@
         imageQuotaVisible.value = true;
         imageQuotas.value = data.image_quotas;
       } else if (data.type === 5 || data.type === 6) {
+        currentData.value.billing_method = data.audio_quota.billing_method;
         audioQuotaVisible.value = true;
         audioQuotas.value[0] = data.audio_quota;
       } else if (data.type === 100) {
@@ -577,6 +590,7 @@
         realtimeQuotaVisible.value = true;
         realtimeQuotas.value[0] = data.realtime_quota;
       } else {
+        currentData.value.billing_method = data.text_quota.billing_method;
         textQuotaVisible.value = true;
         textQuotas.value[0] = data.text_quota;
       }

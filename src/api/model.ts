@@ -198,6 +198,7 @@ export interface ModelDetail {
   type: number;
   base_url: string;
   path: string;
+  billing_method: any;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
   audio_quota: AudioQuota;
