@@ -492,7 +492,11 @@
         @before-ok="modelsHandleBeforeOk"
       >
         <a-form ref="modelsFormRef" :model="modelsFormData">
-          <a-form-item field="models" :label="$t('user.label.models')">
+          <a-form-item
+            field="models"
+            :label="$t('user.label.models')"
+            style="align-items: center"
+          >
             <a-select
               v-model="modelsFormData.models"
               :placeholder="$t('user.placeholder.models')"
@@ -1015,8 +1019,5 @@
   }
   .arco-btn-size-small {
     padding: 0 8px;
-  }
-  .arco-row-align-start {
-    align-items: center;
   }
 </style>
