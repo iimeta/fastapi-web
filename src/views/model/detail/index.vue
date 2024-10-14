@@ -576,6 +576,7 @@
       currentData.value = data;
 
       if (data.type === 2) {
+        currentData.value.billing_method = 2;
         imageQuotaVisible.value = true;
         imageQuotas.value = data.image_quotas;
       } else if (data.type === 5 || data.type === 6) {
