@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 10px 0 0 10px">
+  <div style="margin: 10px 0 30px 10px">
     <a-descriptions
       :column="2"
       bordered

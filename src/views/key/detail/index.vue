@@ -1,5 +1,5 @@
 <template>
-  <div v-show="currentData.type === 1" style="margin: 10px 0 0 10px">
+  <div v-show="currentData.type === 1" style="margin: 10px 0 30px 10px">
     <a-descriptions
       :column="2"
       bordered
@@ -142,7 +142,7 @@
     </a-descriptions>
   </div>
 
-  <div v-show="currentData.type === 2" style="margin: 10px 0 0 10px">
+  <div v-show="currentData.type === 2" style="margin: 10px 0 30px 10px">
     <a-descriptions
       :column="2"
       bordered

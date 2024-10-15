@@ -367,7 +367,7 @@
         render-to-body
         @cancel="handleCancel"
       >
-        <div style="margin: 10px 0 0 10px">
+        <div style="margin: 10px 0 30px 10px">
           <a-descriptions
             v-permission="['user']"
             :column="2"
