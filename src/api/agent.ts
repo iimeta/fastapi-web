@@ -98,6 +98,8 @@ export interface ModelAgentDetail {
   weight: number;
   models: string[];
   model_names: string[];
+  fallback_names: string[];
+  fallback_model_names: string[];
   key: string;
   status: number;
   remark: string;

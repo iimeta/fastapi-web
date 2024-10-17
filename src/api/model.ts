@@ -84,8 +84,10 @@ export interface MidjourneyQuota {
 }
 
 export interface FallbackConfig {
-  fallback_model: string;
-  fallback_model_name?: string;
+  model_agent?: string;
+  model_agent_name?: string;
+  model?: string;
+  model_name?: string;
 }
 
 export interface ModelAdvanced {
@@ -252,7 +254,7 @@ export interface ModelBatchOperate {
   value?: any;
   model_agents?: string[];
   target_model?: string;
-  fallback_model?: string;
+  fallback_config?: FallbackConfig;
 }
 
 export function submitModelBatchOperate(data: ModelBatchOperate) {

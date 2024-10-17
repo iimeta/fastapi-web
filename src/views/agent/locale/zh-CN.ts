@@ -57,6 +57,7 @@ export default {
   'model.agent.detail.label.key': '密钥',
   'model.agent.detail.label.remark': '备注',
   'model.agent.detail.label.models': '绑定模型',
+  'model.agent.detail.label.fallback_models': '后备模型',
   'model.agent.detail.label.created_at': '创建时间',
   'model.agent.detail.label.updated_at': '更新时间',
   // search
@@ -83,6 +84,7 @@ export default {
   'model.agent.columns.name': '代理名称',
   'model.agent.columns.baseUrl': '代理地址',
   'model.agent.columns.models': '绑定模型',
+  'model.agent.columns.fallback_models': '后备模型',
   'model.agent.columns.weight': '权重',
   'model.agent.columns.status': '状态',
   'model.agent.columns.remark': '备注',

@@ -93,8 +93,10 @@ export interface ForwardConfig {
 }
 
 export interface FallbackConfig {
-  fallback_model: string;
-  fallback_model_name?: string;
+  model_agent: string;
+  model_agent_name?: string;
+  model: string;
+  model_name?: string;
 }
 
 export interface ChatDetail {

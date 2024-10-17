@@ -532,7 +532,12 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.err_msg || '-' }}</span>
+              <span
+                v-else
+                style="max-height: 220px; display: block; overflow: auto"
+              >
+                {{ currentData.err_msg || '-' }}
+              </span>
             </a-descriptions-item>
           </a-descriptions>
 
@@ -627,25 +632,35 @@
               </a-skeleton>
               <span v-else>{{ currentData.real_model }}</span>
             </a-descriptions-item>
-            <a-descriptions-item label="启用后备">
+            <!-- <a-descriptions-item label="启用后备">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{
-                $t(
-                  `chat.dict.is_enable_fallback.${
-                    currentData.is_enable_fallback || false
-                  }`
-                )
-              }}</span>
+              <span v-else>
+                {{
+                  $t(
+                    `chat.dict.is_enable_fallback.${
+                      currentData.is_enable_fallback || false
+                    }`
+                  )
+                }}
+              </span>
+            </a-descriptions-item> -->
+            <a-descriptions-item label="后备代理">
+              <a-skeleton v-if="loading" :animation="true">
+                <a-skeleton-line :widths="['200px']" :rows="1" />
+              </a-skeleton>
+              <span v-else>
+                {{ currentData?.fallback_config?.model_agent_name || '-' }}
+              </span>
             </a-descriptions-item>
             <a-descriptions-item label="后备模型">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :widths="['200px']" :rows="1" />
               </a-skeleton>
-              <span v-else>{{
-                currentData?.fallback_config?.fallback_model || '-'
-              }}</span>
+              <span v-else>
+                {{ currentData?.fallback_config?.model || '-' }}
+              </span>
             </a-descriptions-item>
             <a-descriptions-item label="启用转发">
               <a-skeleton v-if="loading" :animation="true">
@@ -858,7 +873,12 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.err_msg || '-' }}</span>
+              <span
+                v-else
+                style="max-height: 220px; display: block; overflow: auto"
+              >
+                {{ currentData.err_msg || '-' }}
+              </span>
             </a-descriptions-item>
           </a-descriptions>
           <a-descriptions

@@ -255,15 +255,25 @@
           }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item
+        :label="t('model.detail.label.fallback_model_agent_name')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData?.fallback_config?.model_agent_name || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="t('model.detail.label.fallback_model_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData?.fallback_config?.fallback_model_name || '-' }}
+          {{ currentData?.fallback_config?.model_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.billingMethod')">
+      <!-- <a-descriptions-item :label="t('model.detail.label.billingMethod')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -272,7 +282,7 @@
             $t(`model.dict.billing_method.${currentData.billing_method || 1}`)
           }}
         </span>
-      </a-descriptions-item>
+      </a-descriptions-item> -->
       <a-descriptions-item :label="t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

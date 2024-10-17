@@ -265,6 +265,9 @@
         <template #model_names="{ record }">
           {{ record?.model_names?.join(',') || '-' }}
         </template>
+        <template #fallback_model_names="{ record }">
+          {{ record?.fallback_model_names?.join(',') || '-' }}
+        </template>
         <template #remark="{ record }">
           {{ record.remark || '-' }}
         </template>
@@ -489,18 +492,26 @@
       ellipsis: true,
       tooltip: true,
     },
+    // {
+    //   title: t('model.agent.columns.baseUrl'),
+    //   dataIndex: 'base_url',
+    //   slotName: 'base_url',
+    //   align: 'center',
+    //   ellipsis: true,
+    //   tooltip: true,
+    // },
     {
-      title: t('model.agent.columns.baseUrl'),
-      dataIndex: 'base_url',
-      slotName: 'base_url',
+      title: t('model.agent.columns.models'),
+      dataIndex: 'model_names',
+      slotName: 'model_names',
       align: 'center',
       ellipsis: true,
       tooltip: true,
     },
     {
-      title: t('model.agent.columns.models'),
-      dataIndex: 'model_names',
-      slotName: 'model_names',
+      title: t('model.agent.columns.fallback_models'),
+      dataIndex: 'fallback_model_names',
+      slotName: 'fallback_model_names',
       align: 'center',
       ellipsis: true,
       tooltip: true,

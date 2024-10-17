@@ -645,19 +645,48 @@
       >
         <a-form ref="fallbackForm" :model="fallbackFormData">
           <a-form-item
-            field="fallback_model"
-            :label="$t('model.label.fallback_model')"
+            field="model_agent"
+            :label="$t('model.label.fallback_model_agent')"
             :rules="[
               {
-                required: true,
-                message: $t('model.error.fallback_model.required'),
+                required:
+                  (!fallbackFormData.model_agent && !fallbackFormData.model) ||
+                  !fallbackFormData.model,
+                message: $t('model.error.fallback.required'),
               },
             ]"
           >
             <a-select
-              v-model="fallbackFormData.fallback_model"
+              v-model="fallbackFormData.model_agent"
+              :placeholder="$t('model.placeholder.fallback_model_agent')"
+              allow-search
+              allow-clear
+            >
+              <a-option
+                v-for="item in modelAgents"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              />
+            </a-select>
+          </a-form-item>
+          <a-form-item
+            field="model"
+            :label="$t('model.label.fallback_model')"
+            :rules="[
+              {
+                required:
+                  (!fallbackFormData.model_agent && !fallbackFormData.model) ||
+                  !fallbackFormData.model_agent,
+                message: $t('model.error.fallback.required'),
+              },
+            ]"
+          >
+            <a-select
+              v-model="fallbackFormData.model"
               :placeholder="$t('model.placeholder.fallback_model')"
               allow-search
+              allow-clear
             >
               <a-option
                 v-for="item in models"
@@ -850,6 +879,7 @@
     ImageQuota,
     MultimodalQuota,
     RealtimeQuota,
+    FallbackConfig,
   } from '@/api/model';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -1287,7 +1317,7 @@
 
   const fallbackForm = ref<FormInstance>();
   const fallbackFormVisible = ref(false);
-  const fallbackFormData = ref<ModelBatchOperate>({} as ModelBatchOperate);
+  const fallbackFormData = ref<FallbackConfig>({} as FallbackConfig);
 
   const fallbackHandleBeforeOk = async (done: any) => {
     const res = await fallbackForm.value?.validate();
@@ -1300,7 +1330,10 @@
     handleBatch({
       action: 'fallback',
       value: 'all',
-      fallback_model: fallbackFormData.value.fallback_model,
+      fallback_config: {
+        model_agent: fallbackFormData.value.model_agent,
+        model: fallbackFormData.value.model,
+      },
     });
   };
 
@@ -1359,10 +1392,10 @@
           } else if (params.value === false) {
             alertContent = `是否确定关闭所选${ids.value.length}条数据的后备模型?`;
           } else if (params.value === 'all') {
-            if (!params.fallback_model) {
+            if (!params.fallback_config) {
               fallbackFormVisible.value = true;
             } else {
-              alertContent = `是否确定将所选${ids.value.length}条数据的后备模型启用并全部后备到所选模型?`;
+              alertContent = `是否确定将所选${ids.value.length}条数据的后备配置启用并全部后备到所选配置?`;
             }
           }
           break;
@@ -1398,7 +1431,7 @@
       if (
         params.action === 'fallback' &&
         params.value === 'all' &&
-        !params.fallback_model
+        !params.fallback_config
       ) {
         return;
       }

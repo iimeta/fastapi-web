@@ -1096,19 +1096,51 @@
             </a-form-item>
             <a-form-item
               v-if="formData.is_enable_fallback"
-              field="fallback_config.fallback_model"
-              :label="$t('model.label.fallback_model')"
+              field="fallback_config.model_agent"
+              :label="$t('model.label.fallback_model_agent')"
               :rules="[
                 {
-                  required: true,
-                  message: $t('model.error.fallback_model.required'),
+                  required:
+                    (!formData.fallback_config.model_agent &&
+                      !formData.fallback_config.model) ||
+                    !formData.fallback_config.model,
+                  message: $t('model.error.fallback.required'),
                 },
               ]"
             >
               <a-select
-                v-model="formData.fallback_config.fallback_model"
+                v-model="formData.fallback_config.model_agent"
+                :placeholder="$t('model.placeholder.fallback_model_agent')"
+                allow-search
+                allow-clear
+              >
+                <a-option
+                  v-for="item in modelAgents"
+                  :key="item.id"
+                  :value="item.id"
+                  :label="item.name"
+                />
+              </a-select>
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_enable_fallback"
+              field="fallback_config.model"
+              :label="$t('model.label.fallback_model')"
+              :rules="[
+                {
+                  required:
+                    (!formData.fallback_config.model_agent &&
+                      !formData.fallback_config.model) ||
+                    !formData.fallback_config.model_agent,
+                  message: $t('model.error.fallback.required'),
+                },
+              ]"
+            >
+              <a-select
+                v-model="formData.fallback_config.model"
                 :placeholder="$t('model.placeholder.fallback_model')"
                 allow-search
+                allow-clear
               >
                 <a-option
                   v-for="item in models"
@@ -1284,7 +1316,8 @@
     },
     is_enable_fallback: false,
     fallback_config: {
-      fallback_model: '',
+      model_agent: '',
+      model: '',
     },
   });
 
@@ -1443,8 +1476,9 @@
       }
       formData.value.is_enable_fallback = data.is_enable_fallback;
       if (data.fallback_config) {
-        formData.value.fallback_config.fallback_model =
-          data.fallback_config?.fallback_model;
+        formData.value.fallback_config.model_agent =
+          data.fallback_config?.model_agent;
+        formData.value.fallback_config.model = data.fallback_config?.model;
       }
     } catch (err) {
       // you can report use errorHandler or other
