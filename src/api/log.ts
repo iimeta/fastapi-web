@@ -354,6 +354,7 @@ export function audioCopyField(params: AudioCopyFieldParams) {
 export interface ChatExportParams {
   ids?: string[];
   req_time?: any;
+  user_id?: number;
 }
 
 export function submitChatExport(params: ChatExportParams) {
@@ -366,6 +367,7 @@ export interface ChatBatchOperate {
   action: string;
   ids?: string[];
   value?: any;
+  user_id?: number;
 }
 
 export function submitChatBatchOperate(data: ChatBatchOperate) {

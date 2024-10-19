@@ -52,9 +52,10 @@
               </a-col>
               <a-col v-permission="['admin']" :span="8">
                 <a-form-item field="user_id" :label="$t('chat.form.user_id')">
-                  <a-input
+                  <a-input-number
                     v-model="formModel.user_id"
                     :placeholder="$t('chat.form.user_id.placeholder')"
+                    :min="1"
                     allow-clear
                   />
                 </a-form-item>
@@ -1272,6 +1273,18 @@
               show-time
             />
           </a-form-item>
+          <a-form-item
+            v-permission="['admin']"
+            field="user_id"
+            :label="$t('chat.form.user_id')"
+          >
+            <a-input-number
+              v-model="chatExportFormData.user_id"
+              :placeholder="$t('chat.form.user_id.placeholder')"
+              :min="1"
+              allow-clear
+            />
+          </a-form-item>
         </a-form>
       </a-modal>
       <a-modal
@@ -1298,6 +1311,14 @@
                 defaultValue: ['00:00:00', '23:59:59'],
               }"
               show-time
+            />
+          </a-form-item>
+          <a-form-item field="user_id" :label="$t('chat.form.user_id')">
+            <a-input-number
+              v-model="chatDelFormData.user_id"
+              :placeholder="$t('chat.form.user_id.placeholder')"
+              :min="1"
+              allow-clear
             />
           </a-form-item>
         </a-form>
@@ -1810,6 +1831,7 @@
     done();
     handleChatExport({
       req_time: chatExportFormData.value.req_time,
+      user_id: chatExportFormData.value.user_id,
     });
   };
 
@@ -1872,6 +1894,7 @@
     handleBatch({
       action: 'time',
       value: chatDelFormData.value.value,
+      user_id: chatDelFormData.value.user_id,
     });
   };
 
@@ -1902,14 +1925,18 @@
           alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
           break;
         case 'time':
-          alertContent = `是否确定删除${params.value[0]}至${params.value[1]}的数据?`;
+          if (params.user_id) {
+            alertContent = `是否确定删除用户ID: ${params.user_id} 请求时间: ${params.value[0]} 至 ${params.value[1]} 的数据?`;
+          } else {
+            alertContent = `是否确定删除请求时间: ${params.value[0]} 至 ${params.value[1]} 的数据?`;
+          }
           break;
         default:
       }
 
       proxy.$modal.warning({
         title: '警告',
-        titleAlign: 'start',
+        titleAlign: 'center',
         content: alertContent,
         hideCancel: false,
         onOk: () => {

@@ -642,7 +642,7 @@
 
       proxy.$modal.warning({
         title: '警告',
-        titleAlign: 'start',
+        titleAlign: 'center',
         content: alertContent,
         hideCancel: false,
         onOk: () => {

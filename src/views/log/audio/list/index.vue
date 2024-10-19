@@ -52,9 +52,10 @@
               </a-col>
               <a-col v-permission="['admin']" :span="8">
                 <a-form-item field="user_id" :label="$t('chat.form.user_id')">
-                  <a-input
+                  <a-input-number
                     v-model="formModel.user_id"
                     :placeholder="$t('chat.form.user_id.placeholder')"
+                    :min="1"
                     allow-clear
                   />
                 </a-form-item>
