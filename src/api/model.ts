@@ -76,6 +76,12 @@ export interface RealtimeQuota {
   fixed_quota: number;
 }
 
+export interface MultimodalAudioQuota {
+  text_quota: TextQuota;
+  audio_quota: AudioQuota;
+  fixed_quota: number;
+}
+
 export interface MidjourneyQuota {
   name: any;
   action: any;
@@ -96,6 +102,7 @@ export interface ModelAdvanced {
   audio_quota: AudioQuota;
   multimodal_quota: MultimodalQuota;
   realtime_quota: RealtimeQuota;
+  multimodal_audio_quota: MultimodalAudioQuota;
   midjourney_quotas: MidjourneyQuota[];
   data_format: string;
   is_public: boolean;
@@ -127,6 +134,7 @@ export interface ModelPage {
   audio_quota: AudioQuota;
   multimodal_quota: MultimodalQuota;
   realtime_quota: RealtimeQuota;
+  multimodal_audio_quota: MultimodalAudioQuota;
   midjourney_quotas: MidjourneyQuota[];
   data_format: number;
   is_public: boolean;
@@ -206,6 +214,7 @@ export interface ModelDetail {
   audio_quota: AudioQuota;
   multimodal_quota: MultimodalQuota;
   realtime_quota: RealtimeQuota;
+  multimodal_audio_quota: MultimodalAudioQuota;
   midjourney_quotas: MidjourneyQuota[];
   data_format: number;
   is_public: boolean;

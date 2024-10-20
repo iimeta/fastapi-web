@@ -435,7 +435,9 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ $t(`chat.dict.type.${currentData.type}`) }}</span>
+              <span v-else>{{
+                $t(`dict.model_type.${currentData.type}`)
+              }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="提问" :span="2">
               <a-skeleton v-if="loading" :animation="true">
@@ -645,7 +647,9 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ $t(`chat.dict.type.${currentData.type}`) }}</span>
+              <span v-else>{{
+                $t(`dict.model_type.${currentData.type}`)
+              }}</span>
             </a-descriptions-item>
             <a-descriptions-item label="请求模型名称">
               <a-skeleton v-if="loading" :animation="true">

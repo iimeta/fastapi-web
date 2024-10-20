@@ -199,8 +199,8 @@
   </a-grid>
 </template>
 
-<!-- <script lang="ts" setup>
-  import { ref, reactive } from 'vue';
+<script lang="ts" setup>
+  import { ref, reactive, onBeforeMount, onBeforeUnmount } from 'vue';
   import {
     queryBaseData,
     BaseDataRecord,
@@ -210,216 +210,102 @@
 
   const baseData = reactive({}) as BaseDataRecord;
 
+  const rps = ref(0);
+  const tps = ref(0);
+  const rpm = ref(0);
+  const tpm = ref(0);
+
+  let getBaseDataIntervalId: ReturnType<typeof setInterval> | undefined;
+  let getPerSecondIntervalId: ReturnType<typeof setInterval> | undefined;
+  let getPerMinuteIntervalId: ReturnType<typeof setInterval> | undefined;
+
   const getBaseData = async () => {
     try {
       const { data } = await queryBaseData();
-      baseData.app = data.app;
-      baseData.today_app = data.today_app;
-      baseData.model = data.model;
-      baseData.app_key = data.app_key;
-      baseData.model_key = data.model_key;
-      baseData.user = data.user;
-      baseData.today_user = data.today_user;
-      baseData.call = data.call;
+      Object.assign(baseData, data);
     } catch (err) {
-      // you can report use errorHandler or other
+      // Handle error
     }
   };
-  getBaseData();
 
-  const rps = ref(0);
-  const tps = ref(0);
   const getPerSecond = async () => {
     const { data } = await queryPerSecond();
     rps.value = data.rps;
     tps.value = data.tps;
   };
-  getPerSecond();
 
-  const rpm = ref(0);
-  const tpm = ref(0);
   const getPerMinute = async () => {
     const { data } = await queryPerMinute();
     rpm.value = data.rpm;
     tpm.value = data.tpm;
   };
-  getPerMinute();
 
-  // 定时器的标识符
-  let getBaseDataIntervalId: number | undefined;
-
-  // 设置定时器并保存其标识符
-  getBaseDataIntervalId = setInterval(() => {
-    // 定时执行的代码
-    getBaseData();
-  }, 180 * 1000); // 每180秒执行一次
-
-  // 定时器的标识符
-  let getPerSecondIntervalId: number | undefined;
-
-  // 设置定时器并保存其标识符
-  getPerSecondIntervalId = setInterval(() => {
-    // 定时执行的代码
-    getPerSecond();
-  }, 1000); // 每1000毫秒执行一次
-
-  // 定时器的标识符
-  let getPerMinuteIntervalId: number | undefined;
-
-  // 设置定时器并保存其标识符
-  getPerMinuteIntervalId = setInterval(() => {
-    // 定时执行的代码
-    getPerMinute();
-  }, 3000); // 每3000毫秒执行一次
-
-  // 当用户离开页面时清除定时器
-  window.onblur = () => {
+  const clearTimers = () => {
     clearInterval(getBaseDataIntervalId);
     clearInterval(getPerSecondIntervalId);
     clearInterval(getPerMinuteIntervalId);
   };
 
-  // 当用户回到页面时重新设置定时器
-  window.onfocus = () => {
+  /**
+   * 设置定时器
+   *
+   * 此函数负责初始化多个定时器，用于定期执行特定的操作
+   * 它包括获取基础数据、每秒执行一次的操作、每分钟执行一次的操作
+   * 并且为每个操作设置了一个定时器，以确保它们能够按预期的频率自动执行
+   */
+  const setTimers = () => {
+    // 获取基础数据
     getBaseData();
+    // 每秒执行一次的操作
     getPerSecond();
+    // 每分钟执行一次的操作
     getPerMinute();
-    getBaseDataIntervalId = setInterval(() => {
-      // 定时执行的代码
-      getBaseData();
-    }, 180 * 1000);
-    getPerSecondIntervalId = setInterval(() => {
-      // 定时执行的代码
-      getPerSecond();
-    }, 1000);
-    getPerMinuteIntervalId = setInterval(() => {
-      // 定时执行的代码
-      getPerMinute();
-    }, 3000);
+    // 设置定时器，每180分钟获取一次基础数据
+    getBaseDataIntervalId = setInterval(getBaseData, 180 * 1000);
+    // 设置定时器，每1秒执行一次getPerSecond函数
+    getPerSecondIntervalId = setInterval(getPerSecond, 1000);
+    // 设置定时器，每5分钟执行一次getPerMinute函数
+    getPerMinuteIntervalId = setInterval(getPerMinute, 3000);
   };
-</script> -->
-<script lang="ts" setup>
-import { ref, reactive, onBeforeMount, onBeforeUnmount } from 'vue';
-import {
-  queryBaseData,
-  BaseDataRecord,
-  queryPerSecond,
-  queryPerMinute,
-} from '@/api/dashboard';
 
-const baseData = reactive({}) as BaseDataRecord;
+  /**
+   * 处理页面可见性变化的函数
+   * 当页面的可见性状态发生改变时，此函数会被调用
+   * 主要作用是根据页面是否可见来启动或停止定时器
+   */
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === 'hidden') {
+      clearTimers();
+    } else {
+      setTimers();
+    }
+  };
 
-// const getBaseData = async () => {
-//   try {
-//     const { data } = await queryBaseData();
-//     baseData.app = data.app;
-//     baseData.today_app = data.today_app;
-//     baseData.model = data.model;
-//     baseData.app_key = data.app_key;
-//     baseData.model_key = data.model_key;
-//     baseData.user = data.user;
-//     baseData.today_user = data.today_user;
-//     baseData.call = data.call;
-//   } catch (err) {
-//     // you can report use errorHandler or other
-//   }
-// };
-
-const rps = ref(0);
-const tps = ref(0);
-const rpm = ref(0);
-const tpm = ref(0);
-
-let getBaseDataIntervalId: ReturnType<typeof setInterval> | undefined;
-let getPerSecondIntervalId: ReturnType<typeof setInterval> | undefined;
-let getPerMinuteIntervalId: ReturnType<typeof setInterval> | undefined;
-
-const getBaseData = async () => {
-  try {
-    const { data } = await queryBaseData();
-    Object.assign(baseData, data);
-  } catch (err) {
-    // Handle error
-  }
-};
-
-const getPerSecond = async () => {
-  const { data } = await queryPerSecond();
-  rps.value = data.rps;
-  tps.value = data.tps;
-};
-
-const getPerMinute = async () => {
-  const { data } = await queryPerMinute();
-  rpm.value = data.rpm;
-  tpm.value = data.tpm;
-};
-
-const clearTimers = () => {
-  clearInterval(getBaseDataIntervalId);
-  clearInterval(getPerSecondIntervalId);
-  clearInterval(getPerMinuteIntervalId);
-};/**
- * 设置定时器
- * 
- * 此函数负责初始化多个定时器，用于定期执行特定的操作
- * 它包括获取基础数据、每秒执行一次的操作、每分钟执行一次的操作
- * 并且为每个操作设置了一个定时器，以确保它们能够按预期的频率自动执行
- */
-const setTimers = () => {
-  // 获取基础数据
-  getBaseData();
-  // 每秒执行一次的操作
-  getPerSecond();
-  // 每分钟执行一次的操作
-  getPerMinute();
-  // 设置定时器，每180分钟获取一次基础数据
-  getBaseDataIntervalId = setInterval(getBaseData, 180 * 1000);
-  // 设置定时器，每1秒执行一次getPerSecond函数
-  getPerSecondIntervalId = setInterval(getPerSecond, 1000);
-  // 设置定时器，每5分钟执行一次getPerMinute函数
-  getPerMinuteIntervalId = setInterval(getPerMinute, 3000);
-};
-
-let isPageVisible = true;
-/**
- * 处理页面可见性变化的函数
- * 当页面的可见性状态发生改变时，此函数会被调用
- * 主要作用是根据页面是否可见来启动或停止定时器
- */
-const handleVisibilityChange = () => {
-  if (document.visibilityState === 'hidden') {
-    isPageVisible = false;
-    clearTimers();
-  } else {
-    isPageVisible = true;
+  /**
+   * 在组件挂载前设置定时器并监听页面可见性变化
+   *
+   * 此生命周期钩子会在组件即将被挂载到 DOM 前执行以下操作：
+   * - 调用 `setTimers` 函数来启动定时器
+   * - 添加一个事件监听器，用于监听页面的可见性变化
+   */
+  onBeforeMount(() => {
     setTimers();
-  }
-};
-/**
- * 在组件挂载前设置定时器并监听页面可见性变化
- * 
- * 此生命周期钩子会在组件即将被挂载到 DOM 前执行以下操作：
- * - 调用 `setTimers` 函数来启动定时器
- * - 添加一个事件监听器，用于监听页面的可见性变化
- */
- onBeforeMount(() => {
-  setTimers();
-  document.addEventListener("visibilitychange", handleVisibilityChange);
-});
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+  });
 
-/**
- * 在组件卸载前清除定时器并移除页面可见性变化监听
- * 
- * 此生命周期钩子会在组件即将从 DOM 中卸载前执行以下操作：
- * - 调用 `clearTimers` 函数来停止所有定时器
- * - 移除页面可见性变化的事件监听器
- */
-onBeforeUnmount(() => {
-  clearTimers();
-  document.removeEventListener("visibilitychange", handleVisibilityChange);
-});
+  /**
+   * 在组件卸载前清除定时器并移除页面可见性变化监听
+   *
+   * 此生命周期钩子会在组件即将从 DOM 中卸载前执行以下操作：
+   * - 调用 `clearTimers` 函数来停止所有定时器
+   * - 移除页面可见性变化的事件监听器
+   */
+  onBeforeUnmount(() => {
+    clearTimers();
+    document.removeEventListener('visibilitychange', handleVisibilityChange);
+  });
 </script>
+
 <style lang="less" scoped>
   .arco-grid.panel {
     margin-bottom: 0;

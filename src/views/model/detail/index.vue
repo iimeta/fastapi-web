@@ -35,7 +35,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`model.dict.type.${currentData.type}`) }}
+          {{ t(`dict.model_type.${currentData.type}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('model.detail.label.baseUrl')">
@@ -322,6 +322,7 @@
       </a-descriptions-item>
     </a-descriptions>
 
+    <!-- 文本额度 -->
     <a-table
       v-if="textQuotaVisible"
       style="margin-top: 15px"
@@ -359,6 +360,7 @@
       </template>
     </a-table>
 
+    <!-- 图像额度 -->
     <a-table
       v-if="imageQuotaVisible"
       style="margin-top: 15px"
@@ -387,6 +389,7 @@
       </template>
     </a-table>
 
+    <!-- 音频额度 -->
     <a-table
       v-if="audioQuotaVisible"
       style="margin-top: 15px"
@@ -428,6 +431,7 @@
       </template>
     </a-table>
 
+    <!-- 多模态额度 -->
     <a-table
       v-if="multimodalQuotaVisible"
       style="margin-top: 15px"
@@ -457,6 +461,7 @@
       </template>
     </a-table>
 
+    <!-- 多模态识图额度 -->
     <a-table
       v-if="multimodalQuotaVisible"
       style="margin-top: 15px"
@@ -487,10 +492,59 @@
       </template>
     </a-table>
 
+    <!-- 多模态实时额度 -->
     <a-table
       v-if="realtimeQuotaVisible"
       style="margin-top: 15px"
       :data="realtimeQuotas"
+      :pagination="false"
+      :bordered="false"
+    >
+      <template #columns>
+        <a-table-column
+          title="文本提问价格"
+          data-index="text_quota.prompt_ratio"
+          align="center"
+        >
+          <template #cell="{ record }">
+            {{ `$${priceConv(record.text_quota.prompt_ratio)}/k` }}
+          </template>
+        </a-table-column>
+        <a-table-column
+          title="文本回答价格"
+          data-index="text_quota.completion_ratio"
+          align="center"
+        >
+          <template #cell="{ record }">
+            {{ `$${priceConv(record.text_quota.completion_ratio)}/k` }}
+          </template>
+        </a-table-column>
+        <a-table-column
+          title="音频提问价格"
+          data-index="audio_quota.prompt_ratio"
+          align="center"
+        >
+          <template #cell="{ record }">
+            {{ `$${priceConv(record.audio_quota.prompt_ratio)}/k` }}
+          </template>
+        </a-table-column>
+        <a-table-column
+          title="音频回答价格"
+          data-index="audio_quota.completion_ratio"
+          align="center"
+        >
+          <template #cell="{ record }">
+            {{ `$${priceConv(record.audio_quota.completion_ratio)}/k` }}
+          </template>
+        </a-table-column>
+      </template>
+    </a-table>
+
+    <!-- 多模态语音额度 -->
+    <a-table
+      v-if="multimodalAudioQuotaVisible"
+      style="margin-top: 15px"
+      :data="multimodalAudioQuotas"
       :pagination="false"
       :bordered="false"
     >
@@ -549,6 +603,7 @@
     ImageQuota,
     AudioQuota,
     RealtimeQuota,
+    MultimodalAudioQuota,
   } from '@/api/model';
 
   const { t } = useI18n();
@@ -577,6 +632,9 @@
   const realtimeQuotaVisible = ref(false);
   const realtimeQuotas = ref<RealtimeQuota[]>([]);
 
+  const multimodalAudioQuotaVisible = ref(false);
+  const multimodalAudioQuotas = ref<MultimodalAudioQuota[]>([]);
+
   const getModelDetail = async (
     params: ModelDetailParams = { id: props.id }
   ) => {
@@ -600,6 +658,9 @@
       } else if (data.type === 101) {
         realtimeQuotaVisible.value = true;
         realtimeQuotas.value[0] = data.realtime_quota;
+      } else if (data.type === 102) {
+        multimodalAudioQuotaVisible.value = true;
+        multimodalAudioQuotas.value[0] = data.multimodal_audio_quota;
       } else {
         currentData.value.billing_method = data.text_quota.billing_method;
         textQuotaVisible.value = true;

@@ -73,12 +73,4 @@ export default {
   'chat.dict.stream.false': '否',
   'chat.dict.is_enable_model_agent.true': '是',
   'chat.dict.is_enable_model_agent.false': '否',
-  'chat.dict.type.1': '文生文',
-  'chat.dict.type.2': '文生图',
-  'chat.dict.type.3': '图生文',
-  'chat.dict.type.4': '图生图',
-  'chat.dict.type.5': '文生语音',
-  'chat.dict.type.6': '语音生文',
-  'chat.dict.type.100': '多模态',
-  'chat.dict.type.101': '多模态实时',
 };

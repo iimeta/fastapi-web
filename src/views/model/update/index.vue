@@ -102,6 +102,7 @@
                 <a-option value="6">{{ $t('dict.model_type.6') }}</a-option>
                 <a-option value="100">{{ $t('dict.model_type.100') }}</a-option>
                 <a-option value="101">{{ $t('dict.model_type.101') }}</a-option>
+                <a-option value="102">{{ $t('dict.model_type.102') }}</a-option>
               </a-select>
             </a-form-item>
             <a-form-item field="base_url" :label="$t('model.label.base_url')">
@@ -125,11 +126,14 @@
             <a-divider orientation="left">{{
               $t('model.title.advanced')
             }}</a-divider>
+
+            <!-- 文本额度 -->
             <a-form-item
               v-if="
                 !isShowMultimodalTextQuota &&
                 !isShowAudioQuota &&
-                !isShowRealtimeQuota
+                !isShowRealtimeQuota &&
+                !isShowMultimodalAudioQuota
               "
               field="text_quota.billing_method"
               :label="$t('model.label.billingMethod')"
@@ -158,6 +162,7 @@
                 !isShowMultimodalTextQuota &&
                 !isShowAudioQuota &&
                 !isShowRealtimeQuota &&
+                !isShowMultimodalAudioQuota &&
                 formData.text_quota.billing_method === '1'
               "
               field="text_quota.prompt_ratio"
@@ -182,6 +187,7 @@
                 !isShowMultimodalTextQuota &&
                 !isShowAudioQuota &&
                 !isShowRealtimeQuota &&
+                !isShowMultimodalAudioQuota &&
                 formData.text_quota.billing_method === '1'
               "
               field="text_quota.completion_ratio"
@@ -208,6 +214,7 @@
                 !isShowMultimodalTextQuota &&
                 !isShowAudioQuota &&
                 !isShowRealtimeQuota &&
+                !isShowMultimodalAudioQuota &&
                 formData.text_quota.billing_method === '2' &&
                 formData.type !== '2'
               "
@@ -227,6 +234,8 @@
                 :placeholder="$t('model.placeholder.fixedQuota')"
               />
             </a-form-item>
+
+            <!-- 图像额度 -->
             <a-form-item
               v-for="(image_quotas, index) of formData.image_quotas"
               v-show="isShowImageQuota"
@@ -283,6 +292,8 @@
                 <icon-minus />
               </a-button>
             </a-form-item>
+
+            <!-- 音频额度 -->
             <a-form-item
               v-if="isShowAudioQuota"
               field="audio_quota.billing_method"
@@ -376,6 +387,8 @@
                 :placeholder="$t('model.placeholder.fixedQuota')"
               />
             </a-form-item>
+
+            <!-- 多模态额度 -->
             <a-form-item
               v-if="isShowMultimodalTextQuota"
               field="multimodal_quota.text_quota.billing_method"
@@ -525,6 +538,8 @@
                 <icon-minus />
               </a-button>
             </a-form-item>
+
+            <!-- 多模态实时额度 -->
             <a-form-item
               v-if="isShowRealtimeQuota"
               field="realtime_quota.text_quota.billing_method"
@@ -728,6 +743,255 @@
                 "
               />
             </a-form-item>
+
+            <!-- 多模态语音额度 -->
+            <a-form-item
+              v-if="isShowMultimodalAudioQuota"
+              field="multimodal_audio_quota.text_quota.billing_method"
+              :label="$t('model.label.billingMethod')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.billingMethod.required'),
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="
+                    formData.multimodal_audio_quota.text_quota.billing_method
+                  "
+                  value="1"
+                  :default-checked="true"
+                  >倍率</a-radio
+                >
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowMultimodalAudioQuota &&
+                formData.multimodal_audio_quota.text_quota.billing_method ===
+                  '1'
+              "
+              field="multimodal_audio_quota.text_quota.prompt_ratio"
+              :label="
+                $t('model.label.multimodal_audio_quota.text_quota.promptRatio')
+              "
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.multimodal_audio_quota.text_quota.promptRatio.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="
+                  formData.multimodal_audio_quota.text_quota.prompt_ratio
+                "
+                :min="0.001"
+                :placeholder="
+                  $t(
+                    'model.placeholder.multimodal_audio_quota.text_quota.promptRatio'
+                  )
+                "
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  priceConv(
+                    formData.multimodal_audio_quota.text_quota.prompt_ratio
+                  )
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowMultimodalAudioQuota &&
+                formData.multimodal_audio_quota.text_quota.billing_method ===
+                  '1'
+              "
+              field="multimodal_audio_quota.text_quota.completion_ratio"
+              :label="
+                $t(
+                  'model.label.multimodal_audio_quota.text_quota.completionRatio'
+                )
+              "
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.multimodal_audio_quota.text_quota.completionRatio.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="
+                  formData.multimodal_audio_quota.text_quota.completion_ratio
+                "
+                :min="0.001"
+                :placeholder="
+                  $t(
+                    'model.placeholder.multimodal_audio_quota.text_quota.completionRatio'
+                  )
+                "
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  priceConv(
+                    formData.multimodal_audio_quota.text_quota.completion_ratio
+                  )
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowMultimodalAudioQuota &&
+                formData.multimodal_audio_quota.text_quota.billing_method ===
+                  '2'
+              "
+              field="multimodal_audio_quota.text_quota.fixed_quota"
+              :label="
+                $t('model.label.multimodal_audio_quota.text_quota.fixedQuota')
+              "
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.multimodal_audio_quota.text_quota.fixedQuota.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.multimodal_audio_quota.text_quota.fixed_quota"
+                :min="0"
+                :max="9999999999999"
+                :placeholder="
+                  $t(
+                    'model.placeholder.multimodal_audio_quota.text_quota.fixedQuota'
+                  )
+                "
+              />
+            </a-form-item>
+
+            <a-form-item
+              v-if="
+                isShowMultimodalAudioQuota &&
+                formData.multimodal_audio_quota.audio_quota.billing_method ===
+                  '1'
+              "
+              field="multimodal_audio_quota.audio_quota.prompt_ratio"
+              :label="
+                $t('model.label.multimodal_audio_quota.audio_quota.promptRatio')
+              "
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.multimodal_audio_quota.audio_quota.promptRatio.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="
+                  formData.multimodal_audio_quota.audio_quota.prompt_ratio
+                "
+                :min="0.001"
+                :placeholder="
+                  $t(
+                    'model.placeholder.multimodal_audio_quota.audio_quota.promptRatio'
+                  )
+                "
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  priceConv(
+                    formData.multimodal_audio_quota.audio_quota.prompt_ratio
+                  )
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowMultimodalAudioQuota &&
+                formData.multimodal_audio_quota.audio_quota.billing_method ===
+                  '1'
+              "
+              field="multimodal_audio_quota.audio_quota.completion_ratio"
+              :label="
+                $t(
+                  'model.label.multimodal_audio_quota.audio_quota.completionRatio'
+                )
+              "
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.multimodal_audio_quota.audio_quota.completionRatio.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="
+                  formData.multimodal_audio_quota.audio_quota.completion_ratio
+                "
+                :min="0.001"
+                :placeholder="
+                  $t(
+                    'model.placeholder.multimodal_audio_quota.audio_quota.completionRatio'
+                  )
+                "
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  priceConv(
+                    formData.multimodal_audio_quota.audio_quota.completion_ratio
+                  )
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowMultimodalAudioQuota &&
+                formData.multimodal_audio_quota.audio_quota.billing_method ===
+                  '2'
+              "
+              field="multimodal_audio_quota.audio_quota.fixed_quota"
+              :label="
+                $t('model.label.multimodal_audio_quota.audio_quota.fixedQuota')
+              "
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.multimodal_audio_quota.audio_quota.fixedQuota.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="
+                  formData.multimodal_audio_quota.audio_quota.fixed_quota
+                "
+                :min="0"
+                :max="9999999999999"
+                :placeholder="
+                  $t(
+                    'model.placeholder.multimodal_audio_quota.audio_quota.fixedQuota'
+                  )
+                "
+              />
+            </a-form-item>
+
+            <!-- Midjourney额度 -->
             <a-form-item
               v-for="(midjourney_quotas, index) of formData.midjourney_quotas"
               v-show="isShowMidjourneyQuota"
@@ -1299,6 +1563,21 @@
       },
       fixed_quota: 1,
     },
+    multimodal_audio_quota: {
+      text_quota: {
+        billing_method: '1',
+        prompt_ratio: 1,
+        completion_ratio: 1,
+        fixed_quota: 1,
+      },
+      audio_quota: {
+        billing_method: '1',
+        prompt_ratio: 1,
+        completion_ratio: 1,
+        fixed_quota: 1,
+      },
+      fixed_quota: 1,
+    },
     midjourney_quotas: [],
     data_format: '',
     is_public: true,
@@ -1448,6 +1727,20 @@
         );
       }
 
+      if (data.multimodal_audio_quota) {
+        isShowMultimodalAudioQuota.value =
+          formData.value.type === '102' && data.corp_code !== 'Midjourney';
+        formData.value.multimodal_audio_quota = data.multimodal_audio_quota;
+        formData.value.multimodal_audio_quota.text_quota.billing_method =
+          String(
+            formData.value.multimodal_audio_quota.text_quota.billing_method
+          );
+        formData.value.multimodal_audio_quota.audio_quota.billing_method =
+          String(
+            formData.value.multimodal_audio_quota.audio_quota.billing_method
+          );
+      }
+
       if (data.midjourney_quotas) {
         isShowMidjourneyQuota.value =
           formData.value.type === '2' && data.corp_code === 'Midjourney';
@@ -1492,6 +1785,7 @@
     isShowImageQuota.value = false;
     isShowAudioQuota.value = false;
     isShowRealtimeQuota.value = false;
+    isShowMultimodalAudioQuota.value = false;
     isShowMidjourneyQuota.value = false;
     const corp = corpMap.get(formData.value.corp);
     if (corp && corp.code === 'Midjourney') {
@@ -1506,6 +1800,7 @@
   const isShowMultimodalTextQuota = ref(false);
   const isShowMultimodalImageQuota = ref(false);
   const isShowRealtimeQuota = ref(false);
+  const isShowMultimodalAudioQuota = ref(false);
   const isShowMidjourneyQuota = ref(false);
 
   const handleTypeChange = () => {
@@ -1514,6 +1809,7 @@
     isShowMultimodalTextQuota.value = false;
     isShowMultimodalImageQuota.value = false;
     isShowRealtimeQuota.value = false;
+    isShowMultimodalAudioQuota.value = false;
     isShowMidjourneyQuota.value = false;
     formData.value.text_quota.billing_method = '1';
 
@@ -1547,6 +1843,8 @@
       }
     } else if (formData.value.type === '101') {
       isShowRealtimeQuota.value = true;
+    } else if (formData.value.type === '102') {
+      isShowMultimodalAudioQuota.value = true;
     }
   };
 
@@ -1622,6 +1920,7 @@
     isShowMultimodalTextQuota.value = false;
     isShowMultimodalImageQuota.value = false;
     isShowRealtimeQuota.value = false;
+    isShowMultimodalAudioQuota.value = false;
     isShowMidjourneyQuota.value = true;
     formData.value.type = '2';
     formData.value.text_quota.billing_method = '2';

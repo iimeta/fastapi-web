@@ -184,7 +184,7 @@
         @page-size-change="onPageSizeChange"
       >
         <template #type="{ record }">
-          {{ $t(`model.dict.type.${record.type}`) }}
+          {{ $t(`dict.model_type.${record.type}`) }}
         </template>
         <template #prompt_ratio="{ record }">
           <span v-if="record.type === 5">
@@ -209,6 +209,15 @@
               type="text"
               size="small"
               @click="viewRealtimeQuota(record.realtime_quota)"
+            >
+              查看
+            </a-button>
+          </span>
+          <span v-else-if="record.type === 102">
+            <a-button
+              type="text"
+              size="small"
+              @click="viewMultimodalAudioQuota(record.multimodal_audio_quota)"
             >
               查看
             </a-button>
@@ -251,6 +260,15 @@
               type="text"
               size="small"
               @click="viewRealtimeQuota(record.realtime_quota)"
+            >
+              查看
+            </a-button>
+          </span>
+          <span v-else-if="record.type === 102">
+            <a-button
+              type="text"
+              size="small"
+              @click="viewMultimodalAudioQuota(record.multimodal_audio_quota)"
             >
               查看
             </a-button>
@@ -418,6 +436,59 @@
           </template>
         </a-table>
       </a-modal>
+
+      <a-modal
+        v-model:visible="multimodalAudioQuotaVisible"
+        :title="$t('model.columns.multimodal_audio_price')"
+        width="550px"
+        hide-cancel
+        simple
+      >
+        <a-table
+          :data="multimodalAudioQuotas"
+          :pagination="false"
+          :bordered="false"
+        >
+          <template #columns>
+            <a-table-column
+              title="文本提问价格"
+              data-index="text_quota.prompt_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.text_quota.prompt_ratio)}/k` }}
+              </template>
+            </a-table-column>
+            <a-table-column
+              title="文本回答价格"
+              data-index="text_quota.completion_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.text_quota.completion_ratio)}/k` }}
+              </template>
+            </a-table-column>
+            <a-table-column
+              title="音频提问价格"
+              data-index="audio_quota.prompt_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.audio_quota.prompt_ratio)}/k` }}
+              </template>
+            </a-table-column>
+            <a-table-column
+              title="音频回答价格"
+              data-index="audio_quota.completion_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.audio_quota.completion_ratio)}/k` }}
+              </template>
+            </a-table-column>
+          </template>
+        </a-table>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -434,6 +505,7 @@
     ImageQuota,
     MultimodalQuota,
     RealtimeQuota,
+    MultimodalAudioQuota,
   } from '@/api/model';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -582,24 +654,32 @@
 
   const typeOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('model.dict.type.1'),
+      label: t('dict.model_type.1'),
       value: 1,
     },
     {
-      label: t('model.dict.type.2'),
+      label: t('dict.model_type.2'),
       value: 2,
     },
     {
-      label: t('model.dict.type.3'),
+      label: t('dict.model_type.3'),
       value: 3,
     },
     {
-      label: t('model.dict.type.4'),
+      label: t('dict.model_type.4'),
       value: 4,
     },
     {
-      label: t('model.dict.type.100'),
+      label: t('dict.model_type.100'),
       value: 100,
+    },
+    {
+      label: t('dict.model_type.101'),
+      value: 101,
+    },
+    {
+      label: t('dict.model_type.102'),
+      value: 102,
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
@@ -740,6 +820,13 @@
   const viewRealtimeQuota = (params: RealtimeQuota) => {
     realtimeQuotas.value[0] = params;
     realtimeQuotaVisible.value = true;
+  };
+
+  const multimodalAudioQuotaVisible = ref(false);
+  const multimodalAudioQuotas = ref<MultimodalAudioQuota[]>([]);
+  const viewMultimodalAudioQuota = (params: MultimodalAudioQuota) => {
+    multimodalAudioQuotas.value[0] = params;
+    multimodalAudioQuotaVisible.value = true;
   };
 </script>
 
