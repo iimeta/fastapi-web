@@ -85,6 +85,8 @@ export default {
   'user.detail.label.used_quota': '已用额度',
   'user.detail.label.quota_expires_at': '过期时间',
   'user.detail.label.models': '模型权限',
+  'user.detail.label.login_ip': '登录IP',
+  'user.detail.label.login_time': '登录时间',
   'user.detail.label.created_at': '创建时间',
   'user.detail.label.updated_at': '更新时间',
   // search

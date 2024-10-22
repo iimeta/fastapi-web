@@ -107,6 +107,8 @@ export interface UserDetail {
   ipd: number;
   remark: string;
   status: number;
+  login_ip: string;
+  login_time: string;
   created_at: string;
   updated_at: string;
 }

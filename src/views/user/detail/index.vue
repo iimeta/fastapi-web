@@ -100,7 +100,23 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')" :span="2">
+      <a-descriptions-item :label="t('user.detail.label.login_ip')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.login_ip }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('user.detail.label.login_time')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.login_time }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
