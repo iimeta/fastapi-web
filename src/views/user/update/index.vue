@@ -172,15 +172,6 @@
     password: '',
     terminal: 'web',
     quota_expires_at: '',
-    rps: ref(),
-    rpm: ref(),
-    rpd: ref(),
-    tps: ref(),
-    tpm: ref(),
-    tpd: ref(),
-    ips: ref(),
-    ipm: ref(),
-    ipd: ref(),
     remark: '',
     status: 1,
   });
@@ -195,15 +186,6 @@
       formData.value.name = data.name;
       formData.value.account = data.account;
       formData.value.quota_expires_at = data.quota_expires_at;
-      formData.value.rps = data.rps;
-      formData.value.rpm = data.rpm;
-      formData.value.rpd = data.rpd;
-      formData.value.tps = data.tps;
-      formData.value.tpm = data.tpm;
-      formData.value.tpd = data.tpd;
-      formData.value.ips = data.ips;
-      formData.value.ipm = data.ipm;
-      formData.value.ipd = data.ipd;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
     } catch (err) {

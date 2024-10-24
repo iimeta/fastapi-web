@@ -8,15 +8,6 @@ export interface UserCreate {
   terminal: string;
   quota: any;
   quota_expires_at: string;
-  rps: any;
-  rpm: any;
-  rpd: any;
-  tps: any;
-  tpm: any;
-  tpd: any;
-  ips: any;
-  ipm: any;
-  ipd: any;
   remark: string;
 }
 
@@ -96,15 +87,6 @@ export interface UserDetail {
   used_quota: number;
   quota_expires_at: string;
   model_names: string[];
-  rps: number;
-  rpm: number;
-  rpd: number;
-  tps: number;
-  tpm: number;
-  tpd: number;
-  ips: number;
-  ipm: number;
-  ipd: number;
   remark: string;
   status: number;
   login_ip: string;
@@ -129,15 +111,6 @@ export interface UserUpdate {
   password: string;
   terminal: string;
   quota_expires_at: string;
-  rps: any;
-  rpm: any;
-  rpd: any;
-  tps: any;
-  tpm: any;
-  tpd: any;
-  ips: any;
-  ipm: any;
-  ipd: any;
   remark: string;
   status: number;
 }
