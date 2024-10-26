@@ -47,7 +47,9 @@ export interface TextQuota {
   billing_method: any;
   prompt_ratio: number;
   completion_ratio: number;
-  fixed_quota: number;
+  fixed_quota: any;
+  prompt_price: any;
+  completion_price: any;
 }
 
 export interface ImageQuota {
@@ -62,7 +64,9 @@ export interface AudioQuota {
   billing_method: any;
   prompt_ratio: number;
   completion_ratio: number;
-  fixed_quota: number;
+  fixed_quota: any;
+  prompt_price: any;
+  completion_price: any;
 }
 
 export interface MultimodalQuota {
@@ -73,13 +77,13 @@ export interface MultimodalQuota {
 export interface RealtimeQuota {
   text_quota: TextQuota;
   audio_quota: AudioQuota;
-  fixed_quota: number;
+  fixed_quota: any;
 }
 
 export interface MultimodalAudioQuota {
   text_quota: TextQuota;
   audio_quota: AudioQuota;
-  fixed_quota: number;
+  fixed_quota: any;
 }
 
 export interface MidjourneyQuota {
