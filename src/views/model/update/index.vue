@@ -165,22 +165,22 @@
                 !isShowMultimodalAudioQuota &&
                 formData.text_quota.billing_method === '1'
               "
-              field="text_quota.prompt_ratio"
-              :label="$t('model.label.promptRatio')"
+              field="text_quota.prompt_price"
+              :label="$t('model.label.prompt_price')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.promptRatio.required'),
+                  message: $t('model.error.prompt_price.required'),
                 },
               ]"
             >
               <a-input-number
-                v-model="formData.text_quota.prompt_ratio"
-                :min="0.001"
-                :placeholder="$t('model.placeholder.promptRatio')"
+                v-model="formData.text_quota.prompt_price"
+                :min="0.000001"
+                :placeholder="$t('model.placeholder.prompt_price')"
                 style="width: 90%; margin-right: 5px"
               />
-              <div> ${{ priceConv(formData.text_quota.prompt_ratio) }}/k </div>
+              <div> ${{ formData.text_quota.prompt_price || '0.00' }}/k </div>
             </a-form-item>
             <a-form-item
               v-if="
@@ -190,23 +190,23 @@
                 !isShowMultimodalAudioQuota &&
                 formData.text_quota.billing_method === '1'
               "
-              field="text_quota.completion_ratio"
-              :label="$t('model.label.completionRatio')"
+              field="text_quota.completion_price"
+              :label="$t('model.label.completion_price')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.completionRatio.required'),
+                  message: $t('model.error.completion_price.required'),
                 },
               ]"
             >
               <a-input-number
-                v-model="formData.text_quota.completion_ratio"
-                :min="0.001"
-                :placeholder="$t('model.placeholder.completionRatio')"
+                v-model="formData.text_quota.completion_price"
+                :min="0.000001"
+                :placeholder="$t('model.placeholder.completion_price')"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
-                ${{ priceConv(formData.text_quota.completion_ratio) }}/k
+                ${{ formData.text_quota.completion_price || '0.00' }}/k
               </div>
             </a-form-item>
             <a-form-item
@@ -232,7 +232,15 @@
                 :min="0"
                 :max="9999999999999"
                 :placeholder="$t('model.placeholder.fixedQuota')"
+                style="width: 86%; margin-right: 5px"
               />
+              <div>
+                ${{
+                  formData.text_quota.fixed_quota
+                    ? quotaConv(formData.text_quota.fixed_quota)
+                    : '0.00'
+                }}/次
+              </div>
             </a-form-item>
 
             <!-- 图像额度 -->
@@ -323,22 +331,22 @@
                 formData.audio_quota.billing_method === '1' &&
                 formData.type != '6'
               "
-              field="audio_quota.prompt_ratio"
-              :label="$t('model.label.promptRatio')"
+              field="audio_quota.prompt_price"
+              :label="$t('model.label.prompt_price')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.promptRatio.required'),
+                  message: $t('model.error.prompt_price.required'),
                 },
               ]"
             >
               <a-input-number
-                v-model="formData.audio_quota.prompt_ratio"
+                v-model="formData.audio_quota.prompt_price"
                 :min="0.001"
-                :placeholder="$t('model.placeholder.promptRatio')"
+                :placeholder="$t('model.placeholder.prompt_price')"
                 style="width: 90%; margin-right: 5px"
               />
-              <div> ${{ priceConv(formData.audio_quota.prompt_ratio) }}/k </div>
+              <div> ${{ formData.audio_quota.prompt_price || '0.00' }}/k </div>
             </a-form-item>
             <a-form-item
               v-if="
@@ -346,23 +354,23 @@
                 formData.audio_quota.billing_method === '1' &&
                 formData.type != '5'
               "
-              field="audio_quota.completion_ratio"
-              :label="$t('model.label.completionRatio')"
+              field="audio_quota.completion_price"
+              :label="$t('model.label.completion_price')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.completionRatio.required'),
+                  message: $t('model.error.completion_price.required'),
                 },
               ]"
             >
               <a-input-number
-                v-model="formData.audio_quota.completion_ratio"
+                v-model="formData.audio_quota.completion_price"
                 :min="0.001"
-                :placeholder="$t('model.placeholder.completionRatio')"
+                :placeholder="$t('model.placeholder.completion_price')"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
-                ${{ priceConv(formData.audio_quota.completion_ratio) }}/min
+                ${{ formData.audio_quota.completion_price || '0.00' }}/min
               </div>
             </a-form-item>
             <a-form-item
@@ -385,7 +393,15 @@
                 :min="0"
                 :max="9999999999999"
                 :placeholder="$t('model.placeholder.fixedQuota')"
+                style="width: 86%; margin-right: 5px"
               />
+              <div>
+                ${{
+                  formData.audio_quota.fixed_quota
+                    ? quotaConv(formData.audio_quota.fixed_quota)
+                    : '0.00'
+                }}/次
+              </div>
             </a-form-item>
 
             <!-- 多模态额度 -->
@@ -414,24 +430,24 @@
                 isShowMultimodalTextQuota &&
                 formData.multimodal_quota.text_quota.billing_method === '1'
               "
-              field="multimodal_quota.text_quota.prompt_ratio"
-              :label="$t('model.label.promptRatio')"
+              field="multimodal_quota.text_quota.prompt_price"
+              :label="$t('model.label.prompt_price')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.promptRatio.required'),
+                  message: $t('model.error.prompt_price.required'),
                 },
               ]"
             >
               <a-input-number
-                v-model="formData.multimodal_quota.text_quota.prompt_ratio"
+                v-model="formData.multimodal_quota.text_quota.prompt_price"
                 :min="0.001"
-                :placeholder="$t('model.placeholder.promptRatio')"
+                :placeholder="$t('model.placeholder.prompt_price')"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
                 ${{
-                  priceConv(formData.multimodal_quota.text_quota.prompt_ratio)
+                  formData.multimodal_quota.text_quota.prompt_price || '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -440,26 +456,25 @@
                 isShowMultimodalTextQuota &&
                 formData.multimodal_quota.text_quota.billing_method === '1'
               "
-              field="multimodal_quota.text_quota.completion_ratio"
-              :label="$t('model.label.completionRatio')"
+              field="multimodal_quota.text_quota.completion_price"
+              :label="$t('model.label.completion_price')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.completionRatio.required'),
+                  message: $t('model.error.completion_price.required'),
                 },
               ]"
             >
               <a-input-number
-                v-model="formData.multimodal_quota.text_quota.completion_ratio"
+                v-model="formData.multimodal_quota.text_quota.completion_price"
                 :min="0.001"
-                :placeholder="$t('model.placeholder.completionRatio')"
+                :placeholder="$t('model.placeholder.completion_price')"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
                 ${{
-                  priceConv(
-                    formData.multimodal_quota.text_quota.completion_ratio
-                  )
+                  formData.multimodal_quota.text_quota.completion_price ||
+                  '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -482,7 +497,17 @@
                 :min="0"
                 :max="9999999999999"
                 :placeholder="$t('model.placeholder.fixedQuota')"
+                style="width: 86%; margin-right: 5px"
               />
+              <div>
+                ${{
+                  formData.multimodal_quota.text_quota.fixed_quota
+                    ? quotaConv(
+                        formData.multimodal_quota.text_quota.fixed_quota
+                      )
+                    : '0.00'
+                }}/次
+              </div>
             </a-form-item>
             <a-form-item
               v-for="(image_quotas, index) of formData.multimodal_quota
@@ -565,28 +590,28 @@
                 isShowRealtimeQuota &&
                 formData.realtime_quota.text_quota.billing_method === '1'
               "
-              field="realtime_quota.text_quota.prompt_ratio"
-              :label="$t('model.label.realtime_quota.text_quota.promptRatio')"
+              field="realtime_quota.text_quota.prompt_price"
+              :label="$t('model.label.realtime_quota.text_quota.prompt_price')"
               :rules="[
                 {
                   required: true,
                   message: $t(
-                    'model.error.realtime_quota.text_quota.promptRatio.required'
+                    'model.error.realtime_quota.text_quota.prompt_price.required'
                   ),
                 },
               ]"
             >
               <a-input-number
-                v-model="formData.realtime_quota.text_quota.prompt_ratio"
+                v-model="formData.realtime_quota.text_quota.prompt_price"
                 :min="0.001"
                 :placeholder="
-                  $t('model.placeholder.realtime_quota.text_quota.promptRatio')
+                  $t('model.placeholder.realtime_quota.text_quota.prompt_price')
                 "
                 style="width: 90%; margin-right: 5px"
               />
               <div>
                 ${{
-                  priceConv(formData.realtime_quota.text_quota.prompt_ratio)
+                  formData.realtime_quota.text_quota.prompt_price || '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -595,34 +620,32 @@
                 isShowRealtimeQuota &&
                 formData.realtime_quota.text_quota.billing_method === '1'
               "
-              field="realtime_quota.text_quota.completion_ratio"
+              field="realtime_quota.text_quota.completion_price"
               :label="
-                $t('model.label.realtime_quota.text_quota.completionRatio')
+                $t('model.label.realtime_quota.text_quota.completion_price')
               "
               :rules="[
                 {
                   required: true,
                   message: $t(
-                    'model.error.realtime_quota.text_quota.completionRatio.required'
+                    'model.error.realtime_quota.text_quota.completion_price.required'
                   ),
                 },
               ]"
             >
               <a-input-number
-                v-model="formData.realtime_quota.text_quota.completion_ratio"
+                v-model="formData.realtime_quota.text_quota.completion_price"
                 :min="0.001"
                 :placeholder="
                   $t(
-                    'model.placeholder.realtime_quota.text_quota.completionRatio'
+                    'model.placeholder.realtime_quota.text_quota.completion_price'
                   )
                 "
                 style="width: 90%; margin-right: 5px"
               />
               <div>
                 ${{
-                  priceConv(
-                    formData.realtime_quota.text_quota.completion_ratio
-                  )
+                  formData.realtime_quota.text_quota.completion_price || '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -649,36 +672,45 @@
                 :placeholder="
                   $t('model.placeholder.realtime_quota.text_quota.fixedQuota')
                 "
+                style="width: 86%; margin-right: 5px"
               />
+              <div>
+                ${{
+                  formData.realtime_quota.text_quota.fixed_quota
+                    ? quotaConv(formData.realtime_quota.text_quota.fixed_quota)
+                    : '0.00'
+                }}/次
+              </div>
             </a-form-item>
-
             <a-form-item
               v-if="
                 isShowRealtimeQuota &&
                 formData.realtime_quota.audio_quota.billing_method === '1'
               "
-              field="realtime_quota.audio_quota.prompt_ratio"
-              :label="$t('model.label.realtime_quota.audio_quota.promptRatio')"
+              field="realtime_quota.audio_quota.prompt_price"
+              :label="$t('model.label.realtime_quota.audio_quota.prompt_price')"
               :rules="[
                 {
                   required: true,
                   message: $t(
-                    'model.error.realtime_quota.audio_quota.promptRatio.required'
+                    'model.error.realtime_quota.audio_quota.prompt_price.required'
                   ),
                 },
               ]"
             >
               <a-input-number
-                v-model="formData.realtime_quota.audio_quota.prompt_ratio"
+                v-model="formData.realtime_quota.audio_quota.prompt_price"
                 :min="0.001"
                 :placeholder="
-                  $t('model.placeholder.realtime_quota.audio_quota.promptRatio')
+                  $t(
+                    'model.placeholder.realtime_quota.audio_quota.prompt_price'
+                  )
                 "
                 style="width: 90%; margin-right: 5px"
               />
               <div>
                 ${{
-                  priceConv(formData.realtime_quota.audio_quota.prompt_ratio)
+                  formData.realtime_quota.audio_quota.prompt_price || '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -687,34 +719,33 @@
                 isShowRealtimeQuota &&
                 formData.realtime_quota.audio_quota.billing_method === '1'
               "
-              field="realtime_quota.audio_quota.completion_ratio"
+              field="realtime_quota.audio_quota.completion_price"
               :label="
-                $t('model.label.realtime_quota.audio_quota.completionRatio')
+                $t('model.label.realtime_quota.audio_quota.completion_price')
               "
               :rules="[
                 {
                   required: true,
                   message: $t(
-                    'model.error.realtime_quota.audio_quota.completionRatio.required'
+                    'model.error.realtime_quota.audio_quota.completion_price.required'
                   ),
                 },
               ]"
             >
               <a-input-number
-                v-model="formData.realtime_quota.audio_quota.completion_ratio"
+                v-model="formData.realtime_quota.audio_quota.completion_price"
                 :min="0.001"
                 :placeholder="
                   $t(
-                    'model.placeholder.realtime_quota.audio_quota.completionRatio'
+                    'model.placeholder.realtime_quota.audio_quota.completion_price'
                   )
                 "
                 style="width: 90%; margin-right: 5px"
               />
               <div>
                 ${{
-                  priceConv(
-                    formData.realtime_quota.audio_quota.completion_ratio
-                  )
+                  formData.realtime_quota.audio_quota.completion_price ||
+                  '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -741,7 +772,15 @@
                 :placeholder="
                   $t('model.placeholder.realtime_quota.audio_quota.fixedQuota')
                 "
+                style="width: 86%; margin-right: 5px"
               />
+              <div>
+                ${{
+                  formData.realtime_quota.audio_quota.fixed_quota
+                    ? quotaConv(formData.realtime_quota.audio_quota.fixed_quota)
+                    : '0.00'
+                }}/次
+              </div>
             </a-form-item>
 
             <!-- 多模态语音额度 -->
@@ -773,36 +812,35 @@
                 formData.multimodal_audio_quota.text_quota.billing_method ===
                   '1'
               "
-              field="multimodal_audio_quota.text_quota.prompt_ratio"
+              field="multimodal_audio_quota.text_quota.prompt_price"
               :label="
-                $t('model.label.multimodal_audio_quota.text_quota.promptRatio')
+                $t('model.label.multimodal_audio_quota.text_quota.prompt_price')
               "
               :rules="[
                 {
                   required: true,
                   message: $t(
-                    'model.error.multimodal_audio_quota.text_quota.promptRatio.required'
+                    'model.error.multimodal_audio_quota.text_quota.prompt_price.required'
                   ),
                 },
               ]"
             >
               <a-input-number
                 v-model="
-                  formData.multimodal_audio_quota.text_quota.prompt_ratio
+                  formData.multimodal_audio_quota.text_quota.prompt_price
                 "
                 :min="0.001"
                 :placeholder="
                   $t(
-                    'model.placeholder.multimodal_audio_quota.text_quota.promptRatio'
+                    'model.placeholder.multimodal_audio_quota.text_quota.prompt_price'
                   )
                 "
                 style="width: 90%; margin-right: 5px"
               />
               <div>
                 ${{
-                  priceConv(
-                    formData.multimodal_audio_quota.text_quota.prompt_ratio
-                  )
+                  formData.multimodal_audio_quota.text_quota.prompt_price ||
+                  '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -812,38 +850,37 @@
                 formData.multimodal_audio_quota.text_quota.billing_method ===
                   '1'
               "
-              field="multimodal_audio_quota.text_quota.completion_ratio"
+              field="multimodal_audio_quota.text_quota.completion_price"
               :label="
                 $t(
-                  'model.label.multimodal_audio_quota.text_quota.completionRatio'
+                  'model.label.multimodal_audio_quota.text_quota.completion_price'
                 )
               "
               :rules="[
                 {
                   required: true,
                   message: $t(
-                    'model.error.multimodal_audio_quota.text_quota.completionRatio.required'
+                    'model.error.multimodal_audio_quota.text_quota.completion_price.required'
                   ),
                 },
               ]"
             >
               <a-input-number
                 v-model="
-                  formData.multimodal_audio_quota.text_quota.completion_ratio
+                  formData.multimodal_audio_quota.text_quota.completion_price
                 "
                 :min="0.001"
                 :placeholder="
                   $t(
-                    'model.placeholder.multimodal_audio_quota.text_quota.completionRatio'
+                    'model.placeholder.multimodal_audio_quota.text_quota.completion_price'
                   )
                 "
                 style="width: 90%; margin-right: 5px"
               />
               <div>
                 ${{
-                  priceConv(
-                    formData.multimodal_audio_quota.text_quota.completion_ratio
-                  )
+                  formData.multimodal_audio_quota.text_quota.completion_price ||
+                  '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -875,45 +912,55 @@
                     'model.placeholder.multimodal_audio_quota.text_quota.fixedQuota'
                   )
                 "
+                style="width: 86%; margin-right: 5px"
               />
+              <div>
+                ${{
+                  formData.multimodal_audio_quota.text_quota.fixed_quota
+                    ? quotaConv(
+                        formData.multimodal_audio_quota.text_quota.fixed_quota
+                      )
+                    : '0.00'
+                }}/次
+              </div>
             </a-form-item>
-
             <a-form-item
               v-if="
                 isShowMultimodalAudioQuota &&
                 formData.multimodal_audio_quota.audio_quota.billing_method ===
                   '1'
               "
-              field="multimodal_audio_quota.audio_quota.prompt_ratio"
+              field="multimodal_audio_quota.audio_quota.prompt_price"
               :label="
-                $t('model.label.multimodal_audio_quota.audio_quota.promptRatio')
+                $t(
+                  'model.label.multimodal_audio_quota.audio_quota.prompt_price'
+                )
               "
               :rules="[
                 {
                   required: true,
                   message: $t(
-                    'model.error.multimodal_audio_quota.audio_quota.promptRatio.required'
+                    'model.error.multimodal_audio_quota.audio_quota.prompt_price.required'
                   ),
                 },
               ]"
             >
               <a-input-number
                 v-model="
-                  formData.multimodal_audio_quota.audio_quota.prompt_ratio
+                  formData.multimodal_audio_quota.audio_quota.prompt_price
                 "
                 :min="0.001"
                 :placeholder="
                   $t(
-                    'model.placeholder.multimodal_audio_quota.audio_quota.promptRatio'
+                    'model.placeholder.multimodal_audio_quota.audio_quota.prompt_price'
                   )
                 "
                 style="width: 90%; margin-right: 5px"
               />
               <div>
                 ${{
-                  priceConv(
-                    formData.multimodal_audio_quota.audio_quota.prompt_ratio
-                  )
+                  formData.multimodal_audio_quota.audio_quota.prompt_price ||
+                  '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -923,38 +970,37 @@
                 formData.multimodal_audio_quota.audio_quota.billing_method ===
                   '1'
               "
-              field="multimodal_audio_quota.audio_quota.completion_ratio"
+              field="multimodal_audio_quota.audio_quota.completion_price"
               :label="
                 $t(
-                  'model.label.multimodal_audio_quota.audio_quota.completionRatio'
+                  'model.label.multimodal_audio_quota.audio_quota.completion_price'
                 )
               "
               :rules="[
                 {
                   required: true,
                   message: $t(
-                    'model.error.multimodal_audio_quota.audio_quota.completionRatio.required'
+                    'model.error.multimodal_audio_quota.audio_quota.completion_price.required'
                   ),
                 },
               ]"
             >
               <a-input-number
                 v-model="
-                  formData.multimodal_audio_quota.audio_quota.completion_ratio
+                  formData.multimodal_audio_quota.audio_quota.completion_price
                 "
                 :min="0.001"
                 :placeholder="
                   $t(
-                    'model.placeholder.multimodal_audio_quota.audio_quota.completionRatio'
+                    'model.placeholder.multimodal_audio_quota.audio_quota.completion_price'
                   )
                 "
                 style="width: 90%; margin-right: 5px"
               />
               <div>
                 ${{
-                  priceConv(
-                    formData.multimodal_audio_quota.audio_quota.completion_ratio
-                  )
+                  formData.multimodal_audio_quota.audio_quota
+                    .completion_price || '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -988,7 +1034,17 @@
                     'model.placeholder.multimodal_audio_quota.audio_quota.fixedQuota'
                   )
                 "
+                style="width: 86%; margin-right: 5px"
               />
+              <div>
+                ${{
+                  formData.multimodal_audio_quota.audio_quota.fixed_quota
+                    ? quotaConv(
+                        formData.multimodal_audio_quota.audio_quota.fixed_quota
+                      )
+                    : '0.00'
+                }}/次
+              </div>
             </a-form-item>
 
             <!-- Midjourney额度 -->
@@ -1443,7 +1499,7 @@
   import useLoading from '@/hooks/loading';
   import { useRoute, useRouter } from 'vue-router';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { priceConv } from '@/utils/common';
+  import { quotaConv } from '@/utils/common';
   import {
     submitModelUpdate,
     ModelUpdate,
@@ -1514,11 +1570,10 @@
     corp: '',
     name: '',
     model: '',
-    type: '',
+    type: '1',
     base_url: '',
     path: '',
     remark: '',
-    status: 1,
     is_enable_preset_config: false,
     preset_config: {
       is_support_system_role: true,
@@ -1530,21 +1585,27 @@
       billing_method: '1',
       prompt_ratio: 1,
       completion_ratio: 1,
-      fixed_quota: 1,
+      fixed_quota: ref(),
+      prompt_price: ref(),
+      completion_price: ref(),
     },
     image_quotas: [],
     audio_quota: {
       billing_method: '1',
       prompt_ratio: 1,
       completion_ratio: 1,
-      fixed_quota: 1,
+      fixed_quota: ref(),
+      prompt_price: ref(),
+      completion_price: ref(),
     },
     multimodal_quota: {
       text_quota: {
         billing_method: '1',
         prompt_ratio: 1,
         completion_ratio: 1,
-        fixed_quota: 1,
+        fixed_quota: ref(),
+        prompt_price: ref(),
+        completion_price: ref(),
       },
       image_quotas: [],
     },
@@ -1553,33 +1614,41 @@
         billing_method: '1',
         prompt_ratio: 1,
         completion_ratio: 1,
-        fixed_quota: 1,
+        fixed_quota: ref(),
+        prompt_price: ref(),
+        completion_price: ref(),
       },
       audio_quota: {
         billing_method: '1',
         prompt_ratio: 1,
         completion_ratio: 1,
-        fixed_quota: 1,
+        fixed_quota: ref(),
+        prompt_price: ref(),
+        completion_price: ref(),
       },
-      fixed_quota: 1,
+      fixed_quota: ref(),
     },
     multimodal_audio_quota: {
       text_quota: {
         billing_method: '1',
         prompt_ratio: 1,
         completion_ratio: 1,
-        fixed_quota: 1,
+        fixed_quota: ref(),
+        prompt_price: ref(),
+        completion_price: ref(),
       },
       audio_quota: {
         billing_method: '1',
         prompt_ratio: 1,
         completion_ratio: 1,
-        fixed_quota: 1,
+        fixed_quota: ref(),
+        prompt_price: ref(),
+        completion_price: ref(),
       },
-      fixed_quota: 1,
+      fixed_quota: ref(),
     },
     midjourney_quotas: [],
-    data_format: '',
+    data_format: '1',
     is_public: true,
     is_enable_model_agent: false,
     model_agents: [],

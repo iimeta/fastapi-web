@@ -1499,7 +1499,7 @@
   import useLoading from '@/hooks/loading';
   import { useRouter } from 'vue-router';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { priceConv, quotaConv } from '@/utils/common';
+  import { quotaConv } from '@/utils/common';
   import {
     submitModelCreate,
     ModelCreate,
