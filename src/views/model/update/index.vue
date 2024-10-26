@@ -1499,7 +1499,7 @@
   import useLoading from '@/hooks/loading';
   import { useRoute, useRouter } from 'vue-router';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { quotaConv } from '@/utils/common';
+  import { quotaConv, priceConv, ratioConv } from '@/utils/common';
   import {
     submitModelUpdate,
     ModelUpdate,
@@ -1692,6 +1692,97 @@
     if (!res) {
       setLoading(true);
       try {
+        if (formData.value.text_quota.prompt_price) {
+          formData.value.text_quota.prompt_ratio = ratioConv(
+            formData.value.text_quota.prompt_price
+          );
+        }
+
+        if (formData.value.text_quota.completion_price) {
+          formData.value.text_quota.completion_ratio = ratioConv(
+            formData.value.text_quota.completion_price
+          );
+        }
+
+        if (formData.value.audio_quota.prompt_price) {
+          formData.value.audio_quota.prompt_ratio = ratioConv(
+            formData.value.audio_quota.prompt_price
+          );
+        }
+
+        if (formData.value.audio_quota.completion_price) {
+          formData.value.audio_quota.completion_ratio = ratioConv(
+            formData.value.audio_quota.completion_price
+          );
+        }
+
+        if (formData.value.multimodal_quota.text_quota.prompt_price) {
+          formData.value.multimodal_quota.text_quota.prompt_ratio = ratioConv(
+            formData.value.multimodal_quota.text_quota.prompt_price
+          );
+        }
+
+        if (formData.value.multimodal_quota.text_quota.completion_price) {
+          formData.value.multimodal_quota.text_quota.completion_ratio =
+            ratioConv(
+              formData.value.multimodal_quota.text_quota.completion_price
+            );
+        }
+
+        if (formData.value.realtime_quota.text_quota.prompt_price) {
+          formData.value.realtime_quota.text_quota.prompt_ratio = ratioConv(
+            formData.value.realtime_quota.text_quota.prompt_price
+          );
+        }
+
+        if (formData.value.realtime_quota.text_quota.completion_price) {
+          formData.value.realtime_quota.text_quota.completion_ratio = ratioConv(
+            formData.value.realtime_quota.text_quota.completion_price
+          );
+        }
+
+        if (formData.value.realtime_quota.audio_quota.prompt_price) {
+          formData.value.realtime_quota.audio_quota.prompt_ratio = ratioConv(
+            formData.value.realtime_quota.audio_quota.prompt_price
+          );
+        }
+
+        if (formData.value.realtime_quota.audio_quota.completion_price) {
+          formData.value.realtime_quota.audio_quota.completion_ratio =
+            ratioConv(
+              formData.value.realtime_quota.audio_quota.completion_price
+            );
+        }
+
+        if (formData.value.multimodal_audio_quota.text_quota.prompt_price) {
+          formData.value.multimodal_audio_quota.text_quota.prompt_ratio =
+            ratioConv(
+              formData.value.multimodal_audio_quota.text_quota.prompt_price
+            );
+        }
+
+        if (formData.value.multimodal_audio_quota.text_quota.completion_price) {
+          formData.value.multimodal_audio_quota.text_quota.completion_ratio =
+            ratioConv(
+              formData.value.multimodal_audio_quota.text_quota.completion_price
+            );
+        }
+
+        if (formData.value.multimodal_audio_quota.audio_quota.prompt_price) {
+          formData.value.multimodal_audio_quota.audio_quota.prompt_ratio =
+            ratioConv(
+              formData.value.multimodal_audio_quota.audio_quota.prompt_price
+            );
+        }
+
+        if (
+          formData.value.multimodal_audio_quota.audio_quota.completion_price
+        ) {
+          formData.value.multimodal_audio_quota.audio_quota.completion_ratio =
+            ratioConv(
+              formData.value.multimodal_audio_quota.audio_quota.completion_price
+            );
+        }
         await submitModelUpdate(formData.value).then(() => {
           proxy.$message.success('更新成功');
           router.push({
@@ -1731,6 +1822,12 @@
 
       if (data.text_quota) {
         formData.value.text_quota = data.text_quota;
+        formData.value.text_quota.prompt_price = Number(
+          priceConv(data.text_quota.prompt_ratio)
+        );
+        formData.value.text_quota.completion_price = Number(
+          priceConv(data.text_quota.completion_ratio)
+        );
         formData.value.text_quota.billing_method = String(
           formData.value.text_quota.billing_method
         );
@@ -1753,6 +1850,12 @@
         isShowAudioQuota.value =
           formData.value.type === '5' || formData.value.type === '6';
         formData.value.audio_quota = data.audio_quota;
+        formData.value.audio_quota.prompt_price = Number(
+          priceConv(data.audio_quota.prompt_ratio)
+        );
+        formData.value.audio_quota.completion_price = Number(
+          priceConv(data.audio_quota.completion_ratio)
+        );
         formData.value.audio_quota.billing_method = String(
           formData.value.audio_quota.billing_method
         );
@@ -1764,6 +1867,12 @@
         isShowMultimodalImageQuota.value =
           formData.value.type === '100' && data.corp_code !== 'Midjourney';
         formData.value.multimodal_quota = data.multimodal_quota;
+        formData.value.multimodal_quota.text_quota.prompt_price = Number(
+          priceConv(data.multimodal_quota.text_quota.prompt_ratio)
+        );
+        formData.value.multimodal_quota.text_quota.completion_price = Number(
+          priceConv(data.multimodal_quota.text_quota.completion_ratio)
+        );
         formData.value.multimodal_quota.text_quota.billing_method = String(
           formData.value.multimodal_quota.text_quota.billing_method
         );
@@ -1788,6 +1897,18 @@
         isShowRealtimeQuota.value =
           formData.value.type === '101' && data.corp_code !== 'Midjourney';
         formData.value.realtime_quota = data.realtime_quota;
+        formData.value.realtime_quota.text_quota.prompt_price = Number(
+          priceConv(data.realtime_quota.text_quota.prompt_ratio)
+        );
+        formData.value.realtime_quota.text_quota.completion_price = Number(
+          priceConv(data.realtime_quota.text_quota.completion_ratio)
+        );
+        formData.value.realtime_quota.audio_quota.prompt_price = Number(
+          priceConv(data.realtime_quota.audio_quota.prompt_ratio)
+        );
+        formData.value.realtime_quota.audio_quota.completion_price = Number(
+          priceConv(data.realtime_quota.audio_quota.completion_ratio)
+        );
         formData.value.realtime_quota.text_quota.billing_method = String(
           formData.value.realtime_quota.text_quota.billing_method
         );
@@ -1800,6 +1921,20 @@
         isShowMultimodalAudioQuota.value =
           formData.value.type === '102' && data.corp_code !== 'Midjourney';
         formData.value.multimodal_audio_quota = data.multimodal_audio_quota;
+        formData.value.multimodal_audio_quota.text_quota.prompt_price = Number(
+          priceConv(data.multimodal_audio_quota.text_quota.prompt_ratio)
+        );
+        formData.value.multimodal_audio_quota.text_quota.completion_price =
+          Number(
+            priceConv(data.multimodal_audio_quota.text_quota.completion_ratio)
+          );
+        formData.value.multimodal_audio_quota.audio_quota.prompt_price = Number(
+          priceConv(data.multimodal_audio_quota.audio_quota.prompt_ratio)
+        );
+        formData.value.multimodal_audio_quota.audio_quota.completion_price =
+          Number(
+            priceConv(data.multimodal_audio_quota.audio_quota.completion_ratio)
+          );
         formData.value.multimodal_audio_quota.text_quota.billing_method =
           String(
             formData.value.multimodal_audio_quota.text_quota.billing_method

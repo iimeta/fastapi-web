@@ -16,3 +16,7 @@ export function quotaConv4(quota: number) {
     maximumFractionDigits: 4,
   });
 }
+
+export function ratioConv(price: number) {
+  return price * 500;
+}

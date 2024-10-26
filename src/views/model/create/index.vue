@@ -1499,7 +1499,7 @@
   import useLoading from '@/hooks/loading';
   import { useRouter } from 'vue-router';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { quotaConv } from '@/utils/common';
+  import { quotaConv, ratioConv } from '@/utils/common';
   import {
     submitModelCreate,
     ModelCreate,
@@ -1705,6 +1705,98 @@
     if (!res) {
       setLoading(true);
       try {
+        if (formData.value.text_quota.prompt_price) {
+          formData.value.text_quota.prompt_ratio = ratioConv(
+            formData.value.text_quota.prompt_price
+          );
+        }
+
+        if (formData.value.text_quota.completion_price) {
+          formData.value.text_quota.completion_ratio = ratioConv(
+            formData.value.text_quota.completion_price
+          );
+        }
+
+        if (formData.value.audio_quota.prompt_price) {
+          formData.value.audio_quota.prompt_ratio = ratioConv(
+            formData.value.audio_quota.prompt_price
+          );
+        }
+
+        if (formData.value.audio_quota.completion_price) {
+          formData.value.audio_quota.completion_ratio = ratioConv(
+            formData.value.audio_quota.completion_price
+          );
+        }
+
+        if (formData.value.multimodal_quota.text_quota.prompt_price) {
+          formData.value.multimodal_quota.text_quota.prompt_ratio = ratioConv(
+            formData.value.multimodal_quota.text_quota.prompt_price
+          );
+        }
+
+        if (formData.value.multimodal_quota.text_quota.completion_price) {
+          formData.value.multimodal_quota.text_quota.completion_ratio =
+            ratioConv(
+              formData.value.multimodal_quota.text_quota.completion_price
+            );
+        }
+
+        if (formData.value.realtime_quota.text_quota.prompt_price) {
+          formData.value.realtime_quota.text_quota.prompt_ratio = ratioConv(
+            formData.value.realtime_quota.text_quota.prompt_price
+          );
+        }
+
+        if (formData.value.realtime_quota.text_quota.completion_price) {
+          formData.value.realtime_quota.text_quota.completion_ratio = ratioConv(
+            formData.value.realtime_quota.text_quota.completion_price
+          );
+        }
+
+        if (formData.value.realtime_quota.audio_quota.prompt_price) {
+          formData.value.realtime_quota.audio_quota.prompt_ratio = ratioConv(
+            formData.value.realtime_quota.audio_quota.prompt_price
+          );
+        }
+
+        if (formData.value.realtime_quota.audio_quota.completion_price) {
+          formData.value.realtime_quota.audio_quota.completion_ratio =
+            ratioConv(
+              formData.value.realtime_quota.audio_quota.completion_price
+            );
+        }
+
+        if (formData.value.multimodal_audio_quota.text_quota.prompt_price) {
+          formData.value.multimodal_audio_quota.text_quota.prompt_ratio =
+            ratioConv(
+              formData.value.multimodal_audio_quota.text_quota.prompt_price
+            );
+        }
+
+        if (formData.value.multimodal_audio_quota.text_quota.completion_price) {
+          formData.value.multimodal_audio_quota.text_quota.completion_ratio =
+            ratioConv(
+              formData.value.multimodal_audio_quota.text_quota.completion_price
+            );
+        }
+
+        if (formData.value.multimodal_audio_quota.audio_quota.prompt_price) {
+          formData.value.multimodal_audio_quota.audio_quota.prompt_ratio =
+            ratioConv(
+              formData.value.multimodal_audio_quota.audio_quota.prompt_price
+            );
+        }
+
+        if (
+          formData.value.multimodal_audio_quota.audio_quota.completion_price
+        ) {
+          formData.value.multimodal_audio_quota.audio_quota.completion_ratio =
+            ratioConv(
+              formData.value.multimodal_audio_quota.audio_quota.completion_price
+            );
+        }
+
         await submitModelCreate(formData.value).then(() => {
           proxy.$message.success('新建成功');
           router.push({
