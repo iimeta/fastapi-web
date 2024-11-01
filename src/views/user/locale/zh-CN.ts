@@ -39,7 +39,7 @@ export default {
   'user.placeholder.quota': '请输入额度',
   'user.placeholder.grant_quota': '正数为加额度, 负数为减额度, $1=500000',
   'user.label.quota_expires_at': '过期时间',
-  'user.placeholder.quota_expires_at': '请输入额度过期时间',
+  'user.placeholder.quota_expires_at': '请设置额度过期时间',
   'user.success.title': '提交成功',
   'user.success.create.subTitle': '用户新建成功',
   'user.success.update.subTitle': '用户修改成功',

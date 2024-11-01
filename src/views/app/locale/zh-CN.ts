@@ -36,7 +36,7 @@ export default {
   'app.label.quota': '额度',
   'app.placeholder.quota': '请输入可使用的限额',
   'app.label.quota_expires_at': '过期时间',
-  'app.placeholder.quota_expires_at': '请输入额度过期时间',
+  'app.placeholder.quota_expires_at': '请设置额度过期时间',
   'app.error.quota.required': '请输入额度',
   'app.placeholder.key.models': '此密钥可使用的模型, 为空则使用应用所选的模型',
   'app.label.is_create_key': '创建密钥',
