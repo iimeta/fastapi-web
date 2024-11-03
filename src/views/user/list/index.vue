@@ -497,21 +497,16 @@
             :label="$t('user.label.models')"
             style="align-items: center"
           >
-            <a-select
+            <a-tree-select
               v-model="modelsFormData.models"
+              :allow-search="true"
+              :allow-clear="true"
+              :tree-checkable="true"
+              tree-checked-strategy="child"
+              :data="treeData"
               :placeholder="$t('user.placeholder.models')"
-              multiple
-              allow-search
-              allow-clear
               style="max-height: 220px; display: block; overflow: auto"
-            >
-              <a-option
-                v-for="item in models"
-                :key="item.id"
-                :value="item.id"
-                :label="item.name"
-              />
-            </a-select>
+            />
           </a-form-item>
         </a-form>
       </a-modal>
@@ -559,10 +554,12 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { Message } from '@arco-design/web-vue';
-  import { queryModelList, ModelList } from '@/api/model';
+  import { queryModelTree, Tree } from '@/api/model';
   import Detail from '../detail/index.vue';
 
   const { proxy } = getCurrentInstance() as any;
+  const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -573,17 +570,19 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const models = ref<ModelList[]>([]);
-
-  const getModelList = async () => {
+  const treeData = ref<Tree[]>([]);
+  const getModelTree = async () => {
+    setLoading(true);
     try {
-      const { data } = await queryModelList();
-      models.value = data.items;
+      const { data } = await queryModelTree();
+      treeData.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
     }
   };
-  getModelList();
+  getModelTree();
 
   const userDelete = async (params: UserDeleteParams) => {
     setLoading(true);
@@ -608,8 +607,7 @@
       quota_expires_at: [],
     };
   };
-  const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
+
   const renderData = ref<UserPage[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);

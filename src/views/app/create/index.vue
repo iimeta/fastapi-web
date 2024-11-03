@@ -64,26 +64,16 @@
               $t('model.title.advanced')
             }}</a-divider> -->
             <a-form-item field="models" :label="$t('app.label.models')">
-              <a-select
+              <a-tree-select
                 v-model="formData.models"
+                :allow-search="true"
+                :allow-clear="true"
+                :tree-checkable="true"
+                tree-checked-strategy="child"
+                :data="treeData"
                 :placeholder="$t('app.placeholder.models')"
                 :max-tag-count="3"
-                multiple
-                allow-search
-                allow-clear
-              >
-                <a-option
-                  v-for="item in models"
-                  :key="item.id"
-                  :value="item.id"
-                  :label="item.name"
-                />
-              </a-select>
-              <a-button
-                :style="{ backgroundColor: buttonColor }"
-                @click="toggleSelectAll"
-                >✅</a-button
-              >
+              />
             </a-form-item>
             <a-form-item
               field="is_limit_quota"
@@ -247,7 +237,7 @@
   import { Message } from '@arco-design/web-vue';
   import { quotaConv } from '@/utils/common';
   import { submitAppCreate, AppCreate } from '@/api/app';
-  import { queryModelList, ModelList } from '@/api/model';
+  import { queryModelTree, Tree } from '@/api/model';
   import { useUserStore } from '@/store';
 
   const { loading, setLoading } = useLoading(false);
@@ -255,19 +245,19 @@
   const router = useRouter();
   const userStore = useUserStore();
 
-  const models = ref<ModelList[]>([]);
-  const getModelList = async () => {
+  const treeData = ref<Tree[]>([]);
+  const getModelTree = async () => {
     setLoading(true);
     try {
-      const { data } = await queryModelList();
-      models.value = data.items;
+      const { data } = await queryModelTree();
+      treeData.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }
   };
-  getModelList();
+  getModelTree();
 
   const formRef = ref<FormInstance>();
   const formData = ref<AppCreate>({
@@ -308,18 +298,6 @@
 
   const handleQuotaQuickChange = (quota: number) => {
     formData.value.quota = quota * 500000;
-  };
-  const buttonColor = ref('');
-  const isSelectAll = ref(false); // 维护全选状态
-  const toggleSelectAll = () => {
-    if (isSelectAll.value) {
-      formData.value.models = []; // 取消全选
-    } else {
-      formData.value.models = models.value.map((item) => item.id); // 全选
-    }
-    isSelectAll.value = !isSelectAll.value; // 切换全选状态
-    // 更新全选选项的背景颜色
-    buttonColor.value = isSelectAll.value ? 'blue' : '';
   };
 </script>
 

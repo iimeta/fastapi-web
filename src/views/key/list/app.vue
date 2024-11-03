@@ -448,21 +448,16 @@
             />
           </a-form-item>
           <a-form-item field="models" :label="$t('app.label.models')">
-            <a-select
+            <a-tree-select
               v-model="formData.models"
+              :allow-search="true"
+              :allow-clear="true"
+              :tree-checkable="true"
+              tree-checked-strategy="child"
+              :data="treeData"
               :placeholder="$t('app.placeholder.key.models')"
               :max-tag-count="3"
-              multiple
-              allow-search
-              allow-clear
-            >
-              <a-option
-                v-for="item in models"
-                :key="item.id"
-                :value="item.id"
-                :label="item.name"
-              />
-            </a-select>
+            />
           </a-form-item>
           <a-form-item
             field="ip_whitelist"
@@ -537,12 +532,14 @@
     submitAppKeyConfig,
     AppKeyConfig,
   } from '@/api/app';
-  import { queryModelList, ModelList } from '@/api/model';
+  import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { Message } from '@arco-design/web-vue';
   import { useClipboard } from '@vueuse/core';
   import Detail from '../detail/index.vue';
 
   const { proxy } = getCurrentInstance() as any;
+  const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -570,7 +567,6 @@
   getAppList();
 
   const models = ref<ModelList[]>([]);
-
   const getModelList = async () => {
     try {
       const { data } = await queryModelList();
@@ -580,6 +576,20 @@
     }
   };
   getModelList();
+
+  const treeData = ref<Tree[]>([]);
+  const getModelTree = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelTree();
+      treeData.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelTree();
 
   const keyDelete = async (params: KeyDeleteParams) => {
     setLoading(true);
@@ -607,8 +617,7 @@
       created_at: [],
     };
   };
-  const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
+
   const renderData = ref<KeyPage[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);

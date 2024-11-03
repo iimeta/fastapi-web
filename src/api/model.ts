@@ -273,3 +273,18 @@ export interface ModelBatchOperate {
 export function submitModelBatchOperate(data: ModelBatchOperate) {
   return axios.post('/api/v1/model/batch/operate', data);
 }
+
+export interface Tree {
+  title: string;
+  value: string;
+  key: string;
+  children: Tree[];
+}
+
+export interface ModelTreeRes {
+  items: Tree[];
+}
+
+export function queryModelTree() {
+  return axios.get<ModelTreeRes>('/api/v1/model/tree');
+}

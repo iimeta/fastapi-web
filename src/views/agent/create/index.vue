@@ -114,21 +114,16 @@
                 },
               ]"
             >
-              <a-select
+              <a-tree-select
                 v-model="formData.models"
+                :allow-search="true"
+                :allow-clear="true"
+                :tree-checkable="true"
+                tree-checked-strategy="child"
+                :data="treeData"
                 :placeholder="$t('model.agent.placeholder.models')"
                 :max-tag-count="3"
-                multiple
-                allow-search
-                allow-clear
-              >
-                <a-option
-                  v-for="item in models"
-                  :key="item.id"
-                  :value="item.id"
-                  :label="item.name"
-                />
-              </a-select>
+              />
             </a-form-item>
             <a-form-item field="key" :label="$t('model.agent.label.key')">
               <a-textarea
@@ -174,7 +169,7 @@
   import { useRouter } from 'vue-router';
   import { submitModelAgentCreate, ModelAgentCreate } from '@/api/agent';
   import { queryCorpList, CorpList } from '@/api/corp';
-  import { queryModelList, ModelList } from '@/api/model';
+  import { queryModelTree, Tree } from '@/api/model';
 
   const { loading, setLoading } = useLoading(false);
   const { proxy } = getCurrentInstance() as any;
@@ -194,19 +189,19 @@
   };
   getCorpList();
 
-  const models = ref<ModelList[]>([]);
-  const getModelList = async () => {
+  const treeData = ref<Tree[]>([]);
+  const getModelTree = async () => {
     setLoading(true);
     try {
-      const { data } = await queryModelList();
-      models.value = data.items;
+      const { data } = await queryModelTree();
+      treeData.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }
   };
-  getModelList();
+  getModelTree();
 
   const formRef = ref<FormInstance>();
   const formData = ref<ModelAgentCreate>({
