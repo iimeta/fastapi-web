@@ -30,7 +30,7 @@
   const urlSrc = [
     'https://www.fastapi.ai',
     'https://www.iimyun.com/cart?fid=3&gid=11',
-    'https://api.zyai.online',
+    'https://yun.yunai.xyz',
   ];
 </script>
 

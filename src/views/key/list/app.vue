@@ -360,6 +360,18 @@
               readonly
             />
           </a-form-item>
+          <a-form-item field="models" :label="$t('app.label.models')">
+            <a-tree-select
+              v-model="formData.models"
+              :allow-search="true"
+              :allow-clear="true"
+              :tree-checkable="true"
+              tree-checked-strategy="child"
+              :data="treeData"
+              :placeholder="$t('app.placeholder.key.models')"
+              :max-tag-count="3"
+            />
+          </a-form-item>
           <a-form-item
             field="is_limit_quota"
             :label="$t('app.label.isLimitQuota')"
@@ -445,18 +457,6 @@
                   value: () => dayjs().add(365, 'day'),
                 },
               ]"
-            />
-          </a-form-item>
-          <a-form-item field="models" :label="$t('app.label.models')">
-            <a-tree-select
-              v-model="formData.models"
-              :allow-search="true"
-              :allow-clear="true"
-              :tree-checkable="true"
-              tree-checked-strategy="child"
-              :data="treeData"
-              :placeholder="$t('app.placeholder.key.models')"
-              :max-tag-count="3"
             />
           </a-form-item>
           <a-form-item

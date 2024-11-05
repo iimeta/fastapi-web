@@ -599,7 +599,7 @@
       dataIndex: 'corp_name',
       slotName: 'corp_name',
       align: 'center',
-      width: 110,
+      width: 120,
     },
     {
       title: t('model.columns.name'),
@@ -624,21 +624,21 @@
       dataIndex: 'type',
       slotName: 'type',
       align: 'center',
-      width: 110,
+      width: 120,
     },
     {
       title: t('model.columns.prompt_price'),
       dataIndex: 'prompt_ratio',
       slotName: 'prompt_ratio',
       align: 'center',
-      width: 110,
+      width: 120,
     },
     {
       title: t('model.columns.completion_price'),
       dataIndex: 'completion_ratio',
       slotName: 'completion_ratio',
       align: 'center',
-      width: 110,
+      width: 120,
     },
     {
       title: t('model.columns.remark'),

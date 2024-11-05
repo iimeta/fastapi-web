@@ -222,23 +222,23 @@
             },
           },
         },
-        {
-          name: '令牌数',
-          data: tokensStatisticsData.value,
-          type: 'line',
-          smooth: true,
-          showSymbol: false,
-          color: isDark ? '#A079DC' : '#246EFF',
-          symbol: 'circle',
-          symbolSize: 10,
-          emphasis: {
-            focus: 'series',
-            itemStyle: {
-              borderWidth: 2,
-              borderColor: '#E2F2FF',
-            },
-          },
-        },
+        // {
+        //   name: '令牌数',
+        //   data: tokensStatisticsData.value,
+        //   type: 'line',
+        //   smooth: true,
+        //   showSymbol: false,
+        //   color: isDark ? '#A079DC' : '#246EFF',
+        //   symbol: 'circle',
+        //   symbolSize: 10,
+        //   emphasis: {
+        //     focus: 'series',
+        //     itemStyle: {
+        //       borderWidth: 2,
+        //       borderColor: '#E2F2FF',
+        //     },
+        //   },
+        // },
         {
           name: userRole === 'admin' ? '用户数' : '应用数',
           data:
