@@ -80,6 +80,45 @@
             <a-divider orientation="left">{{
               $t('model.title.advanced')
             }}</a-divider>
+            <a-form-item
+              field="lb_strategy"
+              :label="$t('model.agent.label.lb_strategy')"
+              :rules="[
+                {
+                  required: true,
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.lb_strategy"
+                  value="1"
+                  :default-checked="true"
+                >
+                  轮询
+                </a-radio>
+                <a-radio v-model="formData.lb_strategy" value="2">权重</a-radio>
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="formData.lb_strategy === '2'"
+              field="weight"
+              :label="$t('model.agent.label.weight')"
+              :rules="[
+                {
+                  required: formData.lb_strategy === '2',
+                  message: $t('model.agent.error.weight.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.weight"
+                :precision="0"
+                :min="1"
+                :max="100"
+                :placeholder="$t('model.agent.placeholder.weight')"
+              />
+            </a-form-item>
             <a-form-item field="models" :label="$t('key.label.models')">
               <a-tree-select
                 v-model="formData.models"
@@ -203,6 +242,8 @@
     corp: '',
     key: '',
     remark: '',
+    lb_strategy: '1',
+    weight: ref(20),
     models: [],
     model_agents: [],
     is_agents_only: false,

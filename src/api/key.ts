@@ -8,6 +8,8 @@ export interface KeyCreateBaseInfo {
 }
 
 export interface KeyCreateAdvanced {
+  lb_strategy: string;
+  weight: any;
   models: string[];
   model_agents: string[];
   is_agents_only: boolean;
@@ -81,6 +83,8 @@ export interface KeyDetail {
   quota: number;
   used_quota: number;
   quota_expires_at: string;
+  lb_strategy: number;
+  weight: number;
   models: string[];
   model_names: string[];
   model_agents: string[];
@@ -115,6 +119,8 @@ export interface KeyUpdateBaseInfo {
 }
 
 export interface KeyUpdateAdvanced {
+  lb_strategy: string;
+  weight: any;
   models: string[];
   model_agents: string[];
   is_agents_only: boolean;

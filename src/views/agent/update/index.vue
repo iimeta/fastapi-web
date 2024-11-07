@@ -87,15 +87,6 @@
                 :placeholder="$t('model.agent.placeholder.path')"
               />
             </a-form-item>
-            <a-form-item field="weight" :label="$t('model.agent.label.weight')">
-              <a-input-number
-                v-model="formData.weight"
-                :precision="0"
-                :min="0"
-                :max="99999"
-                :placeholder="$t('model.agent.placeholder.weight')"
-              />
-            </a-form-item>
             <a-form-item field="remark" :label="$t('model.agent.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -105,6 +96,45 @@
             <a-divider orientation="left">{{
               $t('model.title.advanced')
             }}</a-divider>
+            <a-form-item
+              field="lb_strategy"
+              :label="$t('model.agent.label.lb_strategy')"
+              :rules="[
+                {
+                  required: true,
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.lb_strategy"
+                  value="1"
+                  :default-checked="true"
+                >
+                  轮询
+                </a-radio>
+                <a-radio v-model="formData.lb_strategy" value="2">权重</a-radio>
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="formData.lb_strategy === '2'"
+              field="weight"
+              :label="$t('model.agent.label.weight')"
+              :rules="[
+                {
+                  required: formData.lb_strategy === '2',
+                  message: $t('model.agent.error.weight.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.weight"
+                :precision="0"
+                :min="0"
+                :max="999"
+                :placeholder="$t('model.agent.placeholder.weight')"
+              />
+            </a-form-item>
             <a-form-item
               field="models"
               :label="$t('model.agent.label.models')"
@@ -216,7 +246,8 @@
     name: '',
     base_url: '',
     path: '',
-    weight: ref(),
+    lb_strategy: '',
+    weight: ref(20),
     remark: '',
     status: 1,
     models: [],
@@ -254,6 +285,7 @@
       formData.value.name = data.name;
       formData.value.base_url = data.base_url;
       formData.value.path = data.path;
+      formData.value.lb_strategy = String(data.lb_strategy);
       formData.value.weight = data.weight;
       formData.value.remark = data.remark;
       formData.value.status = data.status;

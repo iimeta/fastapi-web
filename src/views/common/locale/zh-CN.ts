@@ -120,4 +120,6 @@ export default {
   'dict.corp.Google': 'Google',
   'dict.corp.DeepSeek': 'DeepSeek',
   'dict.corp.Midjourney': 'Midjourney',
+  'dict.lb_strategy.1': '轮询',
+  'dict.lb_strategy.2': '权重',
 };

@@ -176,6 +176,22 @@
           }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="t('model.agent.detail.label.lb_strategy')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.lb_strategy.${currentData.lb_strategy || 1}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('model.agent.detail.label.weight')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.lb_strategy === 2 ? currentData.weight : '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="t('key.detail.label.bind.models')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

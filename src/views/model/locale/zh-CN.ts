@@ -28,7 +28,7 @@ export default {
   'model.placeholder.type': '选择模型类型',
   'model.error.type.required': '请选择模型类型',
   'model.label.base_url': '模型地址',
-  'model.placeholder.base_url': '如: https://api.openai.com/v1',
+  'model.placeholder.base_url': '如: https://api.abc.com/v1',
   'model.label.path': '模型路径',
   'model.placeholder.path': '如: /chat/completions',
   'model.label.remark': '说明',

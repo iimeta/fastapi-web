@@ -6,11 +6,12 @@ export interface ModelAgentCreateBaseInfo {
   name: string;
   base_url: string;
   path: string;
-  weight: any;
   remark: string;
 }
 
 export interface ModelAgentCreateAdvanced {
+  lb_strategy: string;
+  weight: any;
   models: string[];
   key: string;
   is_agents_only: boolean;
@@ -95,6 +96,7 @@ export interface ModelAgentDetail {
   name: string;
   base_url: string;
   path: string;
+  lb_strategy: number;
   weight: number;
   models: string[];
   model_names: string[];
@@ -124,11 +126,13 @@ export interface ModelAgentUpdateBaseInfo {
   name: string;
   base_url: string;
   path: string;
-  weight: any;
   remark: string;
   status: number;
 }
+
 export interface ModelAgentUpdateAdvanced {
+  lb_strategy: string;
+  weight: any;
   models: string[];
   key: string;
   is_agents_only: boolean;
