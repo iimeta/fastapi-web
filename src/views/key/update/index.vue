@@ -22,7 +22,7 @@
             :wrapper-col-props="{ span: 18 }"
           >
             <a-divider orientation="left">{{
-              $t('model.title.baseInfo')
+              $t('common.title.baseInfo')
             }}</a-divider>
             <a-form-item
               field="corp"
@@ -63,54 +63,7 @@
                 :auto-size="{ minRows: 5, maxRows: 10 }"
               />
             </a-form-item>
-            <a-form-item
-              field="remark"
-              :label="$t('key.label.remark')"
-              :rules="[
-                {
-                  required: false,
-                },
-              ]"
-            >
-              <a-textarea
-                v-model="formData.remark"
-                :placeholder="$t('key.placeholder.remark')"
-              />
-            </a-form-item>
-            <a-divider orientation="left">{{
-              $t('model.title.advanced')
-            }}</a-divider>
-            <a-form-item
-              field="lb_strategy"
-              :label="$t('model.agent.label.lb_strategy')"
-              :rules="[
-                {
-                  required: true,
-                },
-              ]"
-            >
-              <a-space size="large">
-                <a-radio
-                  v-model="formData.lb_strategy"
-                  value="1"
-                  :default-checked="true"
-                >
-                  轮询
-                </a-radio>
-                <a-radio v-model="formData.lb_strategy" value="2">权重</a-radio>
-              </a-space>
-            </a-form-item>
-            <a-form-item
-              v-if="formData.lb_strategy === '2'"
-              field="weight"
-              :label="$t('model.agent.label.weight')"
-              :rules="[
-                {
-                  required: formData.lb_strategy === '2',
-                  message: $t('model.agent.error.weight.required'),
-                },
-              ]"
-            >
+            <a-form-item field="weight" :label="$t('model.agent.label.weight')">
               <a-input-number
                 v-model="formData.weight"
                 :precision="0"
@@ -119,6 +72,15 @@
                 :placeholder="$t('model.agent.placeholder.weight')"
               />
             </a-form-item>
+            <a-form-item field="remark" :label="$t('key.label.remark')">
+              <a-textarea
+                v-model="formData.remark"
+                :placeholder="$t('key.placeholder.remark')"
+              />
+            </a-form-item>
+            <a-divider orientation="left">
+              {{ $t('common.title.advanced') }}
+            </a-divider>
             <a-form-item field="models" :label="$t('key.label.models')">
               <a-tree-select
                 v-model="formData.models"
@@ -248,9 +210,8 @@
     id: '',
     corp: '',
     key: '',
-    remark: '',
-    lb_strategy: '1',
     weight: ref(20),
+    remark: '',
     status: 1,
     models: [],
     model_agents: [],
@@ -285,10 +246,9 @@
       formData.value.id = data.id;
       formData.value.corp = data.corp;
       formData.value.key = data.key;
+      formData.value.weight = data.weight;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
-      formData.value.lb_strategy = String(data.lb_strategy);
-      formData.value.weight = data.weight;
       formData.value.models = data.models;
       formData.value.model_agents = data.model_agents;
       formData.value.is_agents_only = data.is_agents_only;

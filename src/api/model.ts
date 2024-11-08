@@ -113,6 +113,7 @@ export interface ModelAdvanced {
   is_enable_preset_config: boolean;
   preset_config: PresetConfig;
   is_enable_model_agent: boolean;
+  lb_strategy: string;
   model_agents: string[];
   is_enable_forward: boolean;
   forward_config: ForwardConfig;
@@ -225,6 +226,7 @@ export interface ModelDetail {
   is_enable_preset_config: boolean;
   preset_config: PresetConfig;
   is_enable_model_agent: boolean;
+  lb_strategy: number;
   model_agents: string[];
   model_agent_names: string[];
   is_enable_forward: boolean;

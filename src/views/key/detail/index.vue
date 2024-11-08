@@ -176,20 +176,25 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.agent.detail.label.lb_strategy')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ $t(`dict.lb_strategy.${currentData.lb_strategy || 1}`) }}
-        </span>
-      </a-descriptions-item>
       <a-descriptions-item :label="t('model.agent.detail.label.weight')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.lb_strategy === 2 ? currentData.weight : '-' }}
+          {{ currentData.weight || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.status')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.status === 1" color="green">
+            {{ $t(`dict.status.${currentData.status}`) }}
+          </a-tag>
+          <a-tag v-else color="red">
+            {{ $t(`dict.status.${currentData.status}`) }}
+          </a-tag>
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('key.detail.label.bind.models')" :span="2">
@@ -233,10 +238,7 @@
           {{ t(`dict.${currentData?.is_auto_disabled || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('key.detail.label.auto_disabled_reason')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('key.detail.label.auto_disabled_reason')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -250,19 +252,6 @@
         </a-skeleton>
         <span v-else style="max-height: 110px; display: block; overflow: auto">
           {{ currentData.remark || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          <a-tag v-if="currentData.status === 1" color="green">
-            {{ $t(`dict.status.${currentData.status}`) }}
-          </a-tag>
-          <a-tag v-else color="red">
-            {{ $t(`dict.status.${currentData.status}`) }}
-          </a-tag>
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('common.created_at')">

@@ -145,6 +145,14 @@
           }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="t('model.detail.label.lb_strategy')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.lb_strategy.${currentData.lb_strategy || 1}`) }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="t('model.detail.label.modelAgentNames')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -153,7 +161,10 @@
           {{ currentData?.model_agent_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.isEnableForward')">
+      <a-descriptions-item
+        :label="t('model.detail.label.isEnableForward')"
+        :span="2"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -273,7 +284,7 @@
           {{ currentData?.fallback_config?.model_name || '-' }}
         </span>
       </a-descriptions-item>
-      <!-- <a-descriptions-item :label="t('model.detail.label.billingMethod')">
+      <a-descriptions-item :label="t('model.detail.label.billingMethod')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -282,7 +293,15 @@
             $t(`model.dict.billing_method.${currentData.billing_method || 1}`)
           }}
         </span>
-      </a-descriptions-item> -->
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('model.detail.label.remark')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
+          {{ currentData.remark || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -296,15 +315,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.remark')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.remark || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')" :span="2">
+      <a-descriptions-item :label="t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

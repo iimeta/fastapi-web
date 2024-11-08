@@ -1,21 +1,22 @@
 import axios from 'axios';
 import qs from 'query-string';
 
-export interface KeyCreateBaseInfo {
+export interface KeyBaseInfo {
+  id?: string;
   corp: string;
   key: string;
   remark: string;
+  status?: number;
 }
 
-export interface KeyCreateAdvanced {
-  lb_strategy: string;
+export interface KeyAdvanced {
   weight: any;
   models: string[];
   model_agents: string[];
   is_agents_only: boolean;
 }
 
-export type KeyCreate = KeyCreateBaseInfo & KeyCreateAdvanced;
+export type KeyCreate = KeyBaseInfo & KeyAdvanced;
 
 export function submitKeyCreate(data: KeyCreate) {
   return axios.post('/api/v1/key/create', data);
@@ -83,7 +84,6 @@ export interface KeyDetail {
   quota: number;
   used_quota: number;
   quota_expires_at: string;
-  lb_strategy: number;
   weight: number;
   models: string[];
   model_names: string[];
@@ -110,23 +110,7 @@ export function queryKeyDetail(params: KeyDetailParams) {
   });
 }
 
-export interface KeyUpdateBaseInfo {
-  id: string;
-  corp: string;
-  key: string;
-  remark: string;
-  status: number;
-}
-
-export interface KeyUpdateAdvanced {
-  lb_strategy: string;
-  weight: any;
-  models: string[];
-  model_agents: string[];
-  is_agents_only: boolean;
-}
-
-export type KeyUpdate = KeyUpdateBaseInfo & KeyUpdateAdvanced;
+export type KeyUpdate = KeyBaseInfo & KeyAdvanced;
 
 export function submitKeyUpdate(data: KeyUpdate) {
   return axios.post('/api/v1/key/update', data);

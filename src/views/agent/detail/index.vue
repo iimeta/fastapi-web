@@ -47,17 +47,6 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('model.agent.detail.label.lb_strategy')"
-        :span="2"
-      >
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ $t(`dict.lb_strategy.${currentData.lb_strategy || 1}`) }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item
         :label="t('model.agent.detail.label.weight')"
         :span="2"
       >
@@ -88,6 +77,17 @@
         </a-skeleton>
         <span v-else style="max-height: 220px; display: block; overflow: auto">
           {{ currentData?.fallback_model_names?.join('\n') || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="t('model.agent.detail.label.lb_strategy')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.lb_strategy.${currentData.lb_strategy || 1}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('model.agent.detail.label.key')" :span="2">

@@ -37,7 +37,7 @@ export default {
   'common.remote_ip': '远程IP',
   'common.err_msg': '错误信息',
   'common.operations': '操作',
-  'common.title.base': '基础信息',
+  'common.title.baseInfo': '基础信息',
   'common.title.advanced': '高级配置',
   'common.rps': 'RPS',
   'common.placeholder.rps': '每秒钟请求数, 为空或者0则不限制',

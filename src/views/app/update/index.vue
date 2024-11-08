@@ -22,7 +22,7 @@
             :wrapper-col-props="{ span: 18 }"
           >
             <!-- <a-divider orientation="left">{{
-              $t('model.title.baseInfo')
+              $t('common.title.baseInfo')
             }}</a-divider> -->
             <a-form-item
               field="name"
@@ -44,7 +44,7 @@
               />
             </a-form-item>
             <!-- <a-divider orientation="left">{{
-              $t('model.title.advanced')
+              $t('common.title.advanced')
             }}</a-divider> -->
             <a-form-item field="models" :label="$t('app.label.models')">
               <a-tree-select

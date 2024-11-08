@@ -22,7 +22,7 @@
             :wrapper-col-props="{ span: 18 }"
           >
             <a-divider orientation="left">{{
-              $t('model.title.baseInfo')
+              $t('common.title.baseInfo')
             }}</a-divider>
             <a-form-item
               field="corp"
@@ -124,7 +124,7 @@
               />
             </a-form-item>
             <a-divider orientation="left">{{
-              $t('model.title.advanced')
+              $t('common.title.advanced')
             }}</a-divider>
 
             <!-- 文本额度 -->
@@ -1195,6 +1195,27 @@
             </a-form-item>
             <a-form-item
               v-if="formData.is_enable_model_agent"
+              field="lb_strategy"
+              :label="$t('model.label.lb_strategy')"
+              :rules="[
+                {
+                  required: true,
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.lb_strategy"
+                  value="1"
+                  :default-checked="true"
+                >
+                  轮询
+                </a-radio>
+                <a-radio v-model="formData.lb_strategy" value="2">权重</a-radio>
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_enable_model_agent"
               field="model_agents"
               :label="$t('model.label.modelAgents')"
               :rules="[
@@ -1651,6 +1672,7 @@
     data_format: '1',
     is_public: true,
     is_enable_model_agent: false,
+    lb_strategy: '1',
     model_agents: [],
     is_enable_forward: false,
     forward_config: {
@@ -1817,6 +1839,7 @@
       formData.value.is_enable_preset_config = data.is_enable_preset_config;
       formData.value.preset_config = data.preset_config;
       formData.value.is_enable_model_agent = data.is_enable_model_agent;
+      formData.value.lb_strategy = String(data.lb_strategy);
       formData.value.model_agents = data.model_agents;
       formData.value.is_enable_forward = data.is_enable_forward;
 

@@ -1,23 +1,25 @@
 import axios from 'axios';
 import qs from 'query-string';
 
-export interface ModelAgentCreateBaseInfo {
+export interface ModelAgentBaseInfo {
+  id?: string;
   corp: string;
   name: string;
   base_url: string;
   path: string;
   remark: string;
+  status?: number;
 }
 
-export interface ModelAgentCreateAdvanced {
-  lb_strategy: string;
+export interface ModelAgentAdvanced {
   weight: any;
   models: string[];
+  lb_strategy: string;
   key: string;
   is_agents_only: boolean;
 }
 
-export type ModelAgentCreate = ModelAgentCreateBaseInfo & ModelAgentCreateAdvanced;
+export type ModelAgentCreate = ModelAgentBaseInfo & ModelAgentAdvanced;
 
 export function submitModelAgentCreate(data: ModelAgentCreate) {
   return axios.post('/api/v1/model/agent/create', data);
@@ -96,12 +98,12 @@ export interface ModelAgentDetail {
   name: string;
   base_url: string;
   path: string;
-  lb_strategy: number;
   weight: number;
   models: string[];
   model_names: string[];
   fallback_names: string[];
   fallback_model_names: string[];
+  lb_strategy: number;
   key: string;
   status: number;
   remark: string;
@@ -120,25 +122,7 @@ export function queryModelAgentDetail(params: ModelAgentDetailParams) {
   });
 }
 
-export interface ModelAgentUpdateBaseInfo {
-  id: string;
-  corp: string;
-  name: string;
-  base_url: string;
-  path: string;
-  remark: string;
-  status: number;
-}
-
-export interface ModelAgentUpdateAdvanced {
-  lb_strategy: string;
-  weight: any;
-  models: string[];
-  key: string;
-  is_agents_only: boolean;
-}
-
-export type ModelAgentUpdate = ModelAgentUpdateBaseInfo & ModelAgentUpdateAdvanced;
+export type ModelAgentUpdate = ModelAgentBaseInfo & ModelAgentAdvanced;
 
 export function submitModelAgentUpdate(data: ModelAgentUpdate) {
   return axios.post('/api/v1/model/agent/update', data);
