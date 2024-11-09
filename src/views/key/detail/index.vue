@@ -181,7 +181,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.weight || '-' }}
+          {{ currentData.weight }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('common.status')">
@@ -238,7 +238,10 @@
           {{ t(`dict.${currentData?.is_auto_disabled || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('key.detail.label.auto_disabled_reason')">
+      <a-descriptions-item
+        :label="t('key.detail.label.auto_disabled_reason')"
+        :span="2"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -246,7 +249,7 @@
           {{ currentData.auto_disabled_reason || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.remark')">
+      <a-descriptions-item :label="t('common.remark')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -254,7 +257,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')">
+      <a-descriptions-item :label="t('common.created_at')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -262,7 +265,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')">
+      <a-descriptions-item :label="t('common.updated_at')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
