@@ -85,7 +85,7 @@ export default {
   'model.agent.columns.operations.view': '详情',
   'model.agent.columns.operations.update': '修改',
   'model.agent.columns.operations.delete': '删除',
-  'model.agent.columns.operations.manageKey': '管理密钥',
+  'model.agent.columns.operations.manageKey': '密钥',
   'model.agent.columns.operations.status.1': '禁用',
   'model.agent.columns.operations.status.2': '启用',
   // dict

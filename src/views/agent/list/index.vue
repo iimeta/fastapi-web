@@ -268,6 +268,9 @@
         <template #fallback_model_names="{ record }">
           {{ record?.fallback_model_names?.join(',') || '-' }}
         </template>
+        <template #lb_strategy="{ record }">
+          {{ $t(`dict.lb_strategy.${record.lb_strategy || 1}`) }}
+        </template>
         <template #remark="{ record }">
           {{ record.remark || '-' }}
         </template>
@@ -492,14 +495,6 @@
       ellipsis: true,
       tooltip: true,
     },
-    // {
-    //   title: t('model.agent.columns.baseUrl'),
-    //   dataIndex: 'base_url',
-    //   slotName: 'base_url',
-    //   align: 'center',
-    //   ellipsis: true,
-    //   tooltip: true,
-    // },
     {
       title: t('model.agent.columns.models'),
       dataIndex: 'model_names',
@@ -515,6 +510,20 @@
       align: 'center',
       ellipsis: true,
       tooltip: true,
+    },
+    {
+      title: t('common.weight'),
+      dataIndex: 'weight',
+      slotName: 'weight',
+      align: 'center',
+      width: 60,
+    },
+    {
+      title: t('model.columns.lb_strategy'),
+      dataIndex: 'lb_strategy',
+      slotName: 'lb_strategy',
+      align: 'center',
+      width: 88,
     },
     {
       title: t('model.agent.columns.remark'),
@@ -543,7 +552,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 245,
+      width: 216,
     },
   ]);
 

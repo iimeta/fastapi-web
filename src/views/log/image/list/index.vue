@@ -23,8 +23,8 @@
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
           >
-            <a-row :gutter="16">
-              <a-col v-permission="['user']" :span="8">
+            <a-row v-permission="['user']" :gutter="16">
+              <a-col :span="8">
                 <a-form-item field="app_id" :label="$t('chat.form.app_id')">
                   <a-select
                     v-model="formModel.app_id"
@@ -41,30 +41,25 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col v-permission="['admin']" :span="8">
-                <a-form-item field="trace_id" :label="$t('chat.form.trace_id')">
-                  <a-input
-                    v-model="formModel.trace_id"
-                    :placeholder="$t('chat.form.trace_id.placeholder')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col v-permission="['admin']" :span="8">
-                <a-form-item field="user_id" :label="$t('chat.form.user_id')">
-                  <a-input-number
-                    v-model="formModel.user_id"
-                    :placeholder="$t('chat.form.user_id.placeholder')"
-                    :min="1"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col v-permission="['user']" :span="8">
+              <a-col :span="8">
                 <a-form-item field="key" :label="$t('chat.form.key')">
                   <a-input
                     v-model="formModel.key"
                     :placeholder="$t('chat.form.key.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="total_time"
+                  :label="$t('chat.form.total_time')"
+                >
+                  <a-input-number
+                    v-model="formModel.total_time"
+                    :precision="0"
+                    :min="1"
+                    :placeholder="$t('chat.form.total_time.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -89,6 +84,79 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
+                <a-form-item field="status" :label="$t('chat.form.status')">
+                  <a-select
+                    v-model="formModel.status"
+                    :options="statusOptions"
+                    :placeholder="$t('chat.form.selectDefault')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="req_time" :label="$t('chat.form.req_time')">
+                  <a-range-picker
+                    v-model="formModel.req_time"
+                    :placeholder="['开始时间', '结束时间']"
+                    :time-picker-props="{
+                      defaultValue: ['00:00:00', '23:59:59'],
+                    }"
+                    show-time
+                  />
+                </a-form-item>
+              </a-col>
+            </a-row>
+            <a-row v-permission="['admin']" :gutter="16">
+              <a-col :span="6">
+                <a-form-item
+                  field="trace_id"
+                  :label="$t('chat.form.trace_id')"
+                  :label-col-props="{ span: 6 }"
+                >
+                  <a-input
+                    v-model="formModel.trace_id"
+                    :placeholder="$t('chat.form.trace_id.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="5">
+                <a-form-item
+                  field="models"
+                  :label="$t('chat.form.models')"
+                  :label-col-props="{ span: 6 }"
+                >
+                  <a-select
+                    v-model="formModel.models"
+                    :placeholder="$t('chat.form.selectDefault')"
+                    :max-tag-count="2"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in models"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="5">
+                <a-form-item
+                  field="key"
+                  :label="$t('chat.form.key')"
+                  :label-col-props="{ span: 6 }"
+                >
+                  <a-input
+                    v-model="formModel.key"
+                    :placeholder="$t('chat.form.key.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
                 <a-form-item
                   field="total_time"
                   :label="$t('chat.form.total_time')"
@@ -102,8 +170,49 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item field="status" :label="$t('chat.form.status')">
+              <a-col :span="6">
+                <a-form-item
+                  field="user_id"
+                  :label="$t('chat.form.user_id')"
+                  :label-col-props="{ span: 6 }"
+                >
+                  <a-input-number
+                    v-model="formModel.user_id"
+                    :placeholder="$t('chat.form.user_id.placeholder')"
+                    :min="1"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="5">
+                <a-form-item
+                  field="model_agents"
+                  :label="$t('key.form.modelAgents')"
+                  :label-col-props="{ span: 6 }"
+                >
+                  <a-select
+                    v-model="formModel.model_agents"
+                    :placeholder="$t('key.form.selectDefault')"
+                    :max-tag-count="2"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in modelAgents"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="5">
+                <a-form-item
+                  field="status"
+                  :label="$t('chat.form.status')"
+                  :label-col-props="{ span: 6 }"
+                >
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
@@ -947,12 +1056,15 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList } from '@/api/model';
+  import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { useClipboard } from '@vueuse/core';
   import VueJsonPretty from 'vue-json-pretty';
   import 'vue-json-pretty/lib/styles.css';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
+
+  const userRole = localStorage.getItem('userRole');
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -970,7 +1082,10 @@
       // you can report use errorHandler or other
     }
   };
-  getAppList();
+
+  if (userRole === 'user') {
+    getAppList();
+  }
 
   const models = ref<ModelList[]>([]);
 
@@ -984,6 +1099,21 @@
   };
   getModelList();
 
+  const modelAgents = ref<ModelAgentList[]>([]);
+
+  const getModelAgentList = async () => {
+    try {
+      const { data } = await queryModelAgentList();
+      modelAgents.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+
+  if (userRole === 'admin') {
+    getModelAgentList();
+  }
+
   const generateFormModel = () => {
     return {
       app_id: ref(),
@@ -991,6 +1121,7 @@
       user_id: ref(),
       key: '',
       models: [],
+      model_agents: [],
       total_time: ref(),
       status: ref(),
       req_time: [
@@ -1038,8 +1169,6 @@
       value: 'large',
     },
   ]);
-
-  const userRole = localStorage.getItem('userRole');
 
   const columns = computed<TableColumnData[]>(() => [
     {

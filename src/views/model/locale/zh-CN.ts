@@ -220,6 +220,7 @@ export default {
   'model.columns.fixed_quota': '固定额度',
   'model.columns.fixed_price': '固定价格',
   'model.columns.data_format': '数据格式',
+  'model.columns.lb_strategy': '负载策略',
   'model.columns.status': '状态',
   'model.columns.remark': '说明',
   'model.columns.updated_at': '更新时间',

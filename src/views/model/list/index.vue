@@ -486,6 +486,13 @@
             }}
           </span>
         </template>
+        <template #lb_strategy="{ record }">
+          {{
+            record.is_enable_model_agent
+              ? $t(`dict.lb_strategy.${record.lb_strategy || 1}`)
+              : '-'
+          }}
+        </template>
         <template #status="{ record }">
           <a-switch
             v-model="record.status"
@@ -593,6 +600,28 @@
         @before-ok="agentHandleBeforeOk"
       >
         <a-form ref="agentForm" :model="agentFormData">
+          <a-form-item
+            field="lb_strategy"
+            :label="$t('model.label.lb_strategy')"
+            :rules="[
+              {
+                required: true,
+              },
+            ]"
+          >
+            <a-space size="large">
+              <a-radio
+                v-model="agentFormData.lb_strategy"
+                value="1"
+                :default-checked="true"
+              >
+                轮询
+              </a-radio>
+              <a-radio v-model="agentFormData.lb_strategy" value="2"
+                >权重</a-radio
+              >
+            </a-space>
+          </a-form-item>
           <a-form-item
             field="model_agents"
             :label="$t('model.label.model_agents')"
@@ -1090,14 +1119,6 @@
       width: 110,
     },
     {
-      title: t('model.columns.name'),
-      dataIndex: 'name',
-      slotName: 'name',
-      align: 'center',
-      ellipsis: true,
-      tooltip: true,
-    },
-    {
       title: t('model.columns.model'),
       dataIndex: 'model',
       slotName: 'model',
@@ -1105,12 +1126,6 @@
       ellipsis: true,
       tooltip: true,
     },
-    // {
-    //   title: t('model.columns.type'),
-    //   dataIndex: 'type',
-    //   slotName: 'type',
-    //   align: 'center',
-    // },
     {
       title: t('model.columns.prompt_price'),
       dataIndex: 'prompt_ratio',
@@ -1121,6 +1136,12 @@
       title: t('model.columns.completion_price'),
       dataIndex: 'completion_ratio',
       slotName: 'completion_ratio',
+      align: 'center',
+    },
+    {
+      title: t('model.columns.lb_strategy'),
+      dataIndex: 'lb_strategy',
+      slotName: 'lb_strategy',
       align: 'center',
     },
     {
@@ -1314,6 +1335,7 @@
   const agentForm = ref<FormInstance>();
   const agentFormVisible = ref(false);
   const agentFormData = ref<ModelBatchOperate>({} as ModelBatchOperate);
+  agentFormData.value.lb_strategy = '1';
 
   const initModel = async () => {
     setLoading(true);
@@ -1364,6 +1386,7 @@
     handleBatch({
       action: 'agent',
       value: 'all',
+      lb_strategy: agentFormData.value.lb_strategy,
       model_agents: agentFormData.value.model_agents,
     });
   };

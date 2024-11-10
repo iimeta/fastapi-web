@@ -540,6 +540,13 @@
       tooltip: true,
     },
     {
+      title: t('common.weight'),
+      dataIndex: 'weight',
+      slotName: 'weight',
+      align: 'center',
+      width: 60,
+    },
+    {
       title: t('key.columns.remark'),
       dataIndex: 'remark',
       slotName: 'remark',

@@ -39,7 +39,7 @@ export default {
   'chat.detail.label.model_agent': '模型代理',
   // search
   'chat.form.app_id': '应用',
-  'chat.form.trace_id': 'Trace ID',
+  'chat.form.trace_id': 'TraceID',
   'chat.form.trace_id.placeholder': '请输入Trace ID',
   'chat.form.user_id': '用户ID',
   'chat.form.user_id.placeholder': '请输入用户ID',

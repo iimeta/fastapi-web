@@ -26,7 +26,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.total || '-' }}
+          {{ currentData.total.toLocaleString() }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('bill.detail.label.tokens')">
@@ -64,7 +64,7 @@
           align="center"
         >
           <template #cell="{ record }">
-            {{ record.total || '-' }}
+            {{ record.total.toLocaleString() }}
           </template>
         </a-table-column>
         <a-table-column

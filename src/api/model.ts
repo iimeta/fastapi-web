@@ -267,6 +267,7 @@ export interface ModelBatchOperate {
   action: string;
   ids?: string[];
   value?: any;
+  lb_strategy?: string;
   model_agents?: string[];
   target_model?: string;
   fallback_config?: FallbackConfig;
