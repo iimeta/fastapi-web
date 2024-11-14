@@ -52,7 +52,9 @@ export default {
   'key.detail.label.is_limit_quota': '限制额度',
   'key.detail.label.quota': '当前额度',
   'key.detail.label.used_quota': '已用额度',
+  'key.detail.label.quota_expires_rule': '过期规则',
   'key.detail.label.quota_expires_at': '过期时间',
+  'key.detail.label.quota_expires_minutes': '过期时长',
   'key.detail.label.ip_whitelist': 'IP白名单',
   'key.detail.label.ip_blacklist': 'IP黑名单',
   'key.detail.label.is_auto_disabled': '自动禁用',
@@ -113,4 +115,6 @@ export default {
   'key.dict.status.2': '禁用',
   'key.dict.is_agents_only.true': '是',
   'key.dict.is_agents_only.false': '否',
+  'key.dict.quota_expires_rule.1': '固定',
+  'key.dict.quota_expires_rule.2': '时长',
 };

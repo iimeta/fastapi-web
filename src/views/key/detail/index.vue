@@ -63,6 +63,22 @@
           }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="t('key.detail.label.quota_expires_rule')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData?.is_limit_quota
+              ? $t(
+                  `key.dict.quota_expires_rule.${
+                    currentData.quota_expires_rule || 1
+                  }`
+                ) || '-'
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="t('key.detail.label.quota_expires_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -71,6 +87,18 @@
           {{
             currentData?.is_limit_quota
               ? currentData.quota_expires_at || '-'
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('key.detail.label.quota_expires_minutes')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData?.is_limit_quota
+              ? currentData.quota_expires_minutes || '-'
               : '-'
           }}
         </span>

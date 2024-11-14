@@ -83,7 +83,9 @@ export interface KeyDetail {
   key: string;
   quota: number;
   used_quota: number;
+  quota_expires_rule: number;
   quota_expires_at: string;
+  quota_expires_minutes: number;
   weight: number;
   models: string[];
   model_names: string[];

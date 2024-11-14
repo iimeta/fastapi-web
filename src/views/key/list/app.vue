@@ -417,6 +417,26 @@
           </a-form-item>
           <a-form-item
             v-if="formData.is_limit_quota"
+            field="quota_expires_rule"
+            :label="$t('app.label.quota_expires_rule')"
+          >
+            <a-space size="large">
+              <a-radio
+                v-model="formData.quota_expires_rule"
+                value="1"
+                :default-checked="true"
+              >
+                固定
+              </a-radio>
+              <a-radio v-model="formData.quota_expires_rule" value="2"
+                >时长</a-radio
+              >
+            </a-space>
+          </a-form-item>
+          <a-form-item
+            v-if="
+              formData.is_limit_quota && formData.quota_expires_rule === '1'
+            "
             field="quota_expires_at"
             :label="$t('app.label.quota_expires_at')"
           >
@@ -457,6 +477,21 @@
                   value: () => dayjs().add(365, 'day'),
                 },
               ]"
+            />
+          </a-form-item>
+          <a-form-item
+            v-if="
+              formData.is_limit_quota && formData.quota_expires_rule === '2'
+            "
+            field="quota_expires_minutes"
+            :label="$t('app.label.quota_expires_minutes')"
+          >
+            <a-input-number
+              v-model="formData.quota_expires_minutes"
+              :placeholder="$t('app.placeholder.quota_expires_minutes')"
+              :precision="0"
+              :min="1"
+              :max="9999999999999"
             />
           </a-form-item>
           <a-form-item
@@ -893,7 +928,9 @@
     key: string;
     is_limit_quota: boolean;
     quota: number;
+    quota_expires_rule: string;
     quota_expires_at: string;
+    quota_expires_minutes: any;
     models: string[];
     ip_whitelist: string[];
     ip_blacklist: string[];
@@ -907,7 +944,10 @@
       formData.value.key = params.key;
       formData.value.is_limit_quota = params.is_limit_quota;
       formData.value.quota = params.quota;
+      formData.value.quota_expires_rule =
+        String(params.quota_expires_rule) || '1';
       formData.value.quota_expires_at = params.quota_expires_at;
+      formData.value.quota_expires_minutes = params.quota_expires_minutes;
       formData.value.models = params.models;
       formData.value.ip_whitelist = params.ip_whitelist?.join('\n') || '';
       formData.value.ip_blacklist = params.ip_blacklist?.join('\n') || '';
@@ -929,6 +969,12 @@
     }
 
     setLoading(true);
+    if (formData.value.quota_expires_rule === '1') {
+      formData.value.quota_expires_minutes = '';
+    }
+    if (formData.value.quota_expires_rule === '2') {
+      formData.value.quota_expires_at = '';
+    }
     try {
       const { data } = await submitAppKeyConfig(formData.value);
       navigator.clipboard.writeText(data.key);

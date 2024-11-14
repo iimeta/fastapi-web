@@ -154,7 +154,9 @@ export interface AppKeyConfig {
   key: string;
   is_limit_quota: boolean;
   quota: number;
+  quota_expires_rule: string;
   quota_expires_at: string;
+  quota_expires_minutes: any;
   models: string[];
   ip_whitelist: string;
   ip_blacklist: string;
