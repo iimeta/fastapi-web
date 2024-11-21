@@ -51,15 +51,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="total_time"
-                  :label="$t('chat.form.total_time')"
-                >
-                  <a-input-number
-                    v-model="formModel.total_time"
-                    :precision="0"
-                    :min="1"
-                    :placeholder="$t('chat.form.total_time.placeholder')"
+                <a-form-item field="trace_id" :label="$t('chat.form.trace_id')">
+                  <a-input
+                    v-model="formModel.trace_id"
+                    :placeholder="$t('chat.form.trace_id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
