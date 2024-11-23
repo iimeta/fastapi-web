@@ -1,9 +1,9 @@
 export default {
   'menu.chat': '日志管理',
   'menu.chat.list': '聊天日志',
-  'menu.chat.detail': '日志详情',
+  'menu.chat.detail': '聊天详情',
   // detail
-  'chat.detail.title.chatInfo': '日志详情',
+  'chat.detail.title.chatInfo': '聊天详情',
   'chat.detail.label.trace_id': 'Trace ID',
   'chat.detail.label.creator': '调用密钥',
   'chat.detail.label.user_id': '用户ID',
@@ -41,7 +41,7 @@ export default {
   'chat.form.app_id': '应用',
   'chat.form.trace_id': 'TraceID',
   'chat.form.trace_id.placeholder': '请输入Trace ID',
-  'chat.form.user_id': '用户ID',
+  'chat.form.user_id': 'UserID',
   'chat.form.user_id.placeholder': '请输入用户ID',
   'chat.form.key': '密钥',
   'chat.form.key.placeholder': '请输入密钥',

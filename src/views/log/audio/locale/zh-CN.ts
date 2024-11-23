@@ -1,6 +1,7 @@
 export default {
   'menu.audio': '日志管理',
   'menu.audio.list': '音频日志',
+  'menu.audio.detail': '音频详情',
   // detail
   'chat.detail.title.audioInfo': '音频详情',
   // search
