@@ -51,7 +51,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="trace_id" :label="$t('chat.form.trace_id')">
+                <a-form-item
+                  field="trace_id"
+                  :label="$t('chat.form.user.trace_id')"
+                >
                   <a-input
                     v-model="formModel.trace_id"
                     :placeholder="$t('chat.form.trace_id.placeholder')"
