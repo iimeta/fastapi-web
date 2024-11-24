@@ -16,7 +16,7 @@
           <template #trigger-icon>
             <icon-settings />
           </template>
-          <img :src="userInfo.avatar || 'https://www.fastapi.ai/logo.png'" />
+          <img :src="userInfo.avatar || '/avatar.png'" />
         </a-avatar>
         <a-typography-title :heading="6" style="margin: 0">
           {{ userInfo.name }}

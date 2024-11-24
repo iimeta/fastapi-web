@@ -1,7 +1,7 @@
 <template>
   <div class="root">
     <div class="logo">
-      <img alt="logo" src="https://www.fastapi.ai/logo.png" />
+      <img alt="logo" src="/logo.png" />
       <div class="logo-text">智元 Fast API</div>
     </div>
     <div class="container">
@@ -69,7 +69,7 @@
 
 <style lang="less" scoped>
   .root {
-    background-image: url(https://www.fastapi.ai/bgimg.jpg);
+    background-image: url(/bgimg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 100vh;

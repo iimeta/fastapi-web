@@ -35,15 +35,8 @@
         }"
       >
         <template #label="{ label }">{{ $t(label) }} :</template>
-        <template #value="{ value, data }">
-          <a-tag
-            v-if="data.label === 'userCenter.label.certification'"
-            color="green"
-            size="small"
-          >
-            已认证
-          </a-tag>
-          <span v-else>{{ value }}</span>
+        <template #value="{ value }">
+          {{ value }}
         </template>
       </a-descriptions>
     </a-space>
@@ -64,7 +57,7 @@
   const file = {
     uid: '-2',
     name: 'avatar.png',
-    url: userStore.avatar || 'https://www.fastapi.ai/logo.png',
+    url: userStore.avatar || '/avatar.png',
   };
   const renderData = [
     {
