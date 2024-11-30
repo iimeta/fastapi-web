@@ -52,7 +52,7 @@
 - 管理端: https://demo.fastapi.ai/admin
 - 账号/密码: admin/admin123
 
-## 专业版项目预览
+## 专业版预览
 
 - 用户端: https://demo.fastapi.pro/login
 - 账号/密码: user@fastapi.pro/user@fastapi.pro
