@@ -106,7 +106,7 @@ https://files.fastapi.ai/public/video/install.mp4
 <img src="https://iim.ai/public/images/Author.png?t=20231207" width="320" alt="作者"/>
 
 ## 交流群
-<img src="https://iim.ai/public/images/WeChatGroup.jpg?t=20241205" width="320" alt="交流群"/>
+<img src="https://iim.ai/public/images/WeChatGroup.jpg?t=20241212" width="320" alt="交流群"/>
 
 ## 参考项目
 ### [continew-admin-ui-arco](https://github.com/Charles7c/continew-admin-ui-arco)
