@@ -342,7 +342,7 @@
             >
               <a-input-number
                 v-model="formData.audio_quota.prompt_price"
-                :min="0.001"
+                :min="0.000001"
                 :placeholder="$t('model.placeholder.prompt_price')"
                 style="width: 90%; margin-right: 5px"
               />
@@ -365,7 +365,7 @@
             >
               <a-input-number
                 v-model="formData.audio_quota.completion_price"
-                :min="0.001"
+                :min="0.000001"
                 :placeholder="$t('model.placeholder.completion_price')"
                 style="width: 90%; margin-right: 5px"
               />
@@ -441,7 +441,7 @@
             >
               <a-input-number
                 v-model="formData.multimodal_quota.text_quota.prompt_price"
-                :min="0.001"
+                :min="0.000001"
                 :placeholder="$t('model.placeholder.prompt_price')"
                 style="width: 90%; margin-right: 5px"
               />
@@ -467,7 +467,7 @@
             >
               <a-input-number
                 v-model="formData.multimodal_quota.text_quota.completion_price"
-                :min="0.001"
+                :min="0.000001"
                 :placeholder="$t('model.placeholder.completion_price')"
                 style="width: 90%; margin-right: 5px"
               />
@@ -603,7 +603,7 @@
             >
               <a-input-number
                 v-model="formData.realtime_quota.text_quota.prompt_price"
-                :min="0.001"
+                :min="0.000001"
                 :placeholder="
                   $t('model.placeholder.realtime_quota.text_quota.prompt_price')
                 "
@@ -635,7 +635,7 @@
             >
               <a-input-number
                 v-model="formData.realtime_quota.text_quota.completion_price"
-                :min="0.001"
+                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.realtime_quota.text_quota.completion_price'
@@ -700,7 +700,7 @@
             >
               <a-input-number
                 v-model="formData.realtime_quota.audio_quota.prompt_price"
-                :min="0.001"
+                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.realtime_quota.audio_quota.prompt_price'
@@ -734,7 +734,7 @@
             >
               <a-input-number
                 v-model="formData.realtime_quota.audio_quota.completion_price"
-                :min="0.001"
+                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.realtime_quota.audio_quota.completion_price'
@@ -829,7 +829,7 @@
                 v-model="
                   formData.multimodal_audio_quota.text_quota.prompt_price
                 "
-                :min="0.001"
+                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.multimodal_audio_quota.text_quota.prompt_price'
@@ -869,7 +869,7 @@
                 v-model="
                   formData.multimodal_audio_quota.text_quota.completion_price
                 "
-                :min="0.001"
+                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.multimodal_audio_quota.text_quota.completion_price'
@@ -949,7 +949,7 @@
                 v-model="
                   formData.multimodal_audio_quota.audio_quota.prompt_price
                 "
-                :min="0.001"
+                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.multimodal_audio_quota.audio_quota.prompt_price'
@@ -989,7 +989,7 @@
                 v-model="
                   formData.multimodal_audio_quota.audio_quota.completion_price
                 "
-                :min="0.001"
+                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.multimodal_audio_quota.audio_quota.completion_price'
