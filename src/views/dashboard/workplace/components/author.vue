@@ -23,8 +23,8 @@
 
 <script lang="ts" setup>
   const imageSrc = [
-    'https://www.fastapi.ai/Author.png',
-    'https://www.fastapi.ai/AuthorQQ.png',
+    'https://fastapi.ai/Author.png',
+    'https://fastapi.ai/AuthorQQ.png',
   ];
 </script>
 

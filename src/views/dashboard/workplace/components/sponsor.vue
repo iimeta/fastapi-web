@@ -23,9 +23,9 @@
 
 <script lang="ts" setup>
   const imageSrc = [
-    'https://www.fastapi.ai/public/images/fastapi.png',
-    'https://www.fastapi.ai/public/images/iimyun.png',
-    'https://www.fastapi.ai/public/images/yunapi.png',
+    'https://fastapi.ai/public/images/fastapi.png',
+    'https://fastapi.ai/public/images/iimyun.png',
+    'https://fastapi.ai/public/images/yunapi.png',
   ];
   const urlSrc = [
     'https://www.fastapi.ai',
