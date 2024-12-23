@@ -3,6 +3,7 @@ import axios from 'axios';
 export interface CaptchaData {
   email: string;
   channel: string;
+  domain?: string;
 }
 
 export function getCaptcha(data: CaptchaData) {

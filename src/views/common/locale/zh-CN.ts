@@ -1,4 +1,6 @@
 export default {
+  // menu
+  'menu.sys': '系统管理',
   // common
   'common.user_id': '用户ID',
   'common.user_name': '用户名称',

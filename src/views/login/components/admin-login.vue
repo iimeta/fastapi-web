@@ -89,6 +89,7 @@
           terminal: 'web',
           channel: 'admin',
           method: 'account',
+          domain: window.location.hostname,
         })
         .then(() => {
           window.localStorage.setItem('userRole', 'admin');

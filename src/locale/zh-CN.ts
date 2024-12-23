@@ -17,6 +17,7 @@ import localeFinance from '@/views/finance/locale/zh-CN';
 import localeChat from '@/views/log/chat/locale/zh-CN';
 import localeImage from '@/views/log/image/locale/zh-CN';
 import localeAudio from '@/views/log/audio/locale/zh-CN';
+import localeSiteConfig from '@/views/system/site_config/locale/zh-CN';
 
 import localeSettings from './zh-CN/settings';
 
@@ -37,4 +38,5 @@ export default {
   ...localeChat,
   ...localeImage,
   ...localeAudio,
+  ...localeSiteConfig,
 };

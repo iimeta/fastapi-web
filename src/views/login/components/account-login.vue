@@ -101,6 +101,7 @@
           terminal: 'web',
           channel: 'user',
           method: 'account',
+          domain: window.location.hostname,
         })
         .then(() => {
           window.localStorage.setItem('userRole', 'user');

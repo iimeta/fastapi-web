@@ -2,12 +2,12 @@
   <div class="navbar">
     <div class="left-side">
       <a-space>
-        <img alt="logo" class="logo" src="/logo.png" />
+        <img alt="logo" class="logo" :src="appStore.getLogo" />
         <a-typography-title
           :style="{ margin: 0, fontSize: '24px' }"
           :heading="5"
         >
-          智元 Fast API
+          {{ appStore.getTitle }}
         </a-typography-title>
         <icon-menu-fold
           v-if="!topMenu && appStore.device === 'mobile'"
@@ -107,7 +107,7 @@
         </a-dropdown>
       </li> -->
       <li>
-        <a-tooltip content="版本: v0.5.0">
+        <a-tooltip content="版本: v1.0.0">
           <a-link
             target="_blank"
             href="https://github.com/iimeta/fastapi-admin/releases"
@@ -172,7 +172,7 @@
             :size="32"
             :style="{ marginRight: '8px', cursor: 'pointer' }"
           >
-            <img alt="avatar" :src="avatar || '/avatar.png'" />
+            <img alt="avatar" :src="avatar || appStore.getAvatar" />
           </a-avatar>
           <template #content>
             <!-- <a-doption>

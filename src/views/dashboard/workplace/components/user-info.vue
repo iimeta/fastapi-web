@@ -16,7 +16,7 @@
           <template #trigger-icon>
             <icon-settings />
           </template>
-          <img :src="userInfo.avatar || '/avatar.png'" />
+          <img :src="userInfo.avatar || appStore.getAvatar" />
         </a-avatar>
         <a-typography-title :heading="6" style="margin: 0">
           {{ userInfo.name }}
@@ -35,9 +35,10 @@
 </template>
 
 <script lang="ts" setup>
-  import { useUserStore } from '@/store';
+  import { useUserStore, useAppStore } from '@/store';
 
   const userInfo = useUserStore();
+  const appStore = useAppStore();
 </script>
 
 <style lang="less" scoped>

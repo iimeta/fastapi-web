@@ -4,10 +4,11 @@ import type { NotificationReturn } from '@arco-design/web-vue/es/notification/in
 import type { RouteRecordNormalized } from 'vue-router';
 import defaultSettings from '@/config/settings.json';
 import { getMenuList } from '@/api/user';
+import { querySite } from '@/api/site_config';
 import { AppState } from './types';
 
 const useAppStore = defineStore('app', {
-  state: (): AppState => ({ ...defaultSettings }),
+  state: (): AppState => ({ ...defaultSettings, config: {} }),
 
   getters: {
     appCurrentSetting(state: AppState): AppState {
@@ -18,6 +19,39 @@ const useAppStore = defineStore('app', {
     },
     appAsyncMenus(state: AppState): RouteRecordNormalized[] {
       return state.serverMenu as unknown as RouteRecordNormalized[];
+    },
+    getTitle(state: AppState): string | undefined {
+      return state.config?.title || '智元 Fast API';
+    },
+    getLogo(state: AppState): string | undefined {
+      return state.config?.logo || '/logo.png';
+    },
+    getFavicon(state: AppState): string | undefined {
+      return state.config?.favicon || '/favicon.ico';
+    },
+    getAvatar(state: AppState): string | undefined {
+      return state.config?.avatar || '/avatar.png';
+    },
+    getBgImg(state: AppState): string | undefined {
+      return state.config?.bg_img || '/bgimg.jpg';
+    },
+    getCopyright(state: AppState): string | undefined {
+      return (
+        state.config?.copyright ||
+        'Copyright © 2023-2025 IIM. All Rights Reserved.'
+      );
+    },
+    getJumpUrl(state: AppState): string | undefined {
+      return state.config?.jump_url;
+    },
+    getIcpBeian(state: AppState): string | undefined {
+      return state.config?.icp_beian;
+    },
+    getGaBeian(state: AppState): string | undefined {
+      return state.config?.ga_beian;
+    },
+    getRegisterTips(state: AppState): string {
+      return state.config?.register_tips || '';
     },
   },
 
@@ -70,6 +104,39 @@ const useAppStore = defineStore('app', {
     },
     clearServerMenu() {
       this.serverMenu = [];
+    },
+    /**
+     * 初始化系统配置信息
+     */
+    init() {
+      querySite({
+        domain: window.location.hostname,
+      }).then((res) => {
+        this.config = {
+          title: res.data.title,
+          logo: res.data.logo,
+          favicon: res.data.favicon,
+          avatar: res.data.avatar,
+          bg_img: res.data.bg_img,
+          copyright: res.data.copyright,
+          jump_url: res.data.jump_url,
+          keywords: res.data.keywords,
+          description: res.data.description,
+          icp_beian: res.data.icp_beian,
+          ga_beian: res.data.ga_beian,
+          register_tips: res.data.register_tips,
+        };
+        document.title = res.data.title || '智元 Fast API';
+        document
+          .querySelector('link[rel="shortcut icon"]')
+          ?.setAttribute('href', res.data.favicon || '/favicon.ico');
+        document
+          .querySelector('meta[name="keywords"]')
+          ?.setAttribute('content', res.data.keywords);
+        document
+          .querySelector('meta[name="description"]')
+          ?.setAttribute('content', res.data.description);
+      });
     },
   },
 });

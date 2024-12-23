@@ -1,6 +1,6 @@
 export default {
-  'login.welcome': '智元 Fast API 欢迎您',
-  'login.admin.welcome': '智元 Fast API 管理端',
+  'login.welcome': ' 欢迎您',
+  'login.admin.welcome': ' 管理端',
   'login.account': '账密登录',
   'login.email': '邮箱登录',
   'login.other': '其他登录方式',

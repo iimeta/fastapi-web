@@ -106,6 +106,7 @@
         getCaptcha({
           email: form.value.email,
           channel: 'register',
+          domain: window.location.hostname,
         })
           .then(() => {
             captchaLoading.value = false;
@@ -152,6 +153,7 @@
         password: values.password,
         terminal: 'web',
         code: values.captcha,
+        domain: window.location.hostname,
       })
         .then(() => {
           proxy.$message.success(t('register.success'));

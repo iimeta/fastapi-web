@@ -44,13 +44,14 @@
   import { useI18n } from 'vue-i18n';
   import { useRouter } from 'vue-router';
   import { ValidatedError } from '@arco-design/web-vue';
-  import { useUserStore } from '@/store';
+  import { useUserStore, useAppStore } from '@/store';
   import { getCaptcha } from '@/api/common';
 
   const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
   const router = useRouter();
   const userStore = useUserStore();
+  const appStore = useAppStore();
   const loading = ref(false);
   const captchaLoading = ref(false);
   const captchaDisable = ref(false);
@@ -98,6 +99,7 @@
         getCaptcha({
           email: form.value.email,
           channel: 'login',
+          domain: window.location.hostname,
         })
           .then(() => {
             captchaLoading.value = false;
@@ -146,6 +148,7 @@
           terminal: 'web',
           channel: 'user',
           method: 'code',
+          domain: window.location.hostname,
         })
         .then(() => {
           window.localStorage.setItem('userRole', 'user');

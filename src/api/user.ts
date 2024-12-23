@@ -9,6 +9,7 @@ export interface LoginData {
   terminal: string;
   channel: string;
   method: string;
+  domain?: string;
 }
 
 export interface LoginRes {
@@ -35,6 +36,7 @@ export interface RegisterData {
   password: string;
   terminal: string;
   code: string;
+  domain?: string;
 }
 
 export function register(data: RegisterData) {
@@ -45,7 +47,9 @@ export interface ForgetData {
   account: string;
   password: string;
   terminal: string;
+  channel: string;
   code: string;
+  domain?: string;
 }
 
 export function forget(data: ForgetData) {

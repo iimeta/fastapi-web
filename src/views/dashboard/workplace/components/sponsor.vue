@@ -23,14 +23,14 @@
 
 <script lang="ts" setup>
   const imageSrc = [
-    'https://fastapi.ai/public/images/fastapi.png',
     'https://fastapi.ai/public/images/iimyun.png',
-    'https://fastapi.ai/public/images/yunapi.png',
+    'https://fastapi.ai/public/images/iimyun.png',
+    'https://fastapi.ai/public/images/iimyun.png',
   ];
   const urlSrc = [
-    'https://www.fastapi.ai',
     'https://www.iimyun.com/cart?fid=3&gid=11',
-    'https://yun.yunai.xyz',
+    'https://www.iimyun.com/cart?fid=3&gid=11',
+    'https://www.iimyun.com/cart?fid=3&gid=11',
   ];
 </script>
 

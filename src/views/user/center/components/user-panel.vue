@@ -49,15 +49,17 @@
     FileItem,
     RequestOption,
   } from '@arco-design/web-vue/es/upload/interfaces';
-  import { useUserStore } from '@/store';
+  import { useUserStore, useAppStore } from '@/store';
   import { changeAvatar } from '@/api/user-center';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
   const userStore = useUserStore();
+  const appStore = useAppStore();
+
   const file = {
     uid: '-2',
     name: 'avatar.png',
-    url: userStore.avatar || '/avatar.png',
+    url: userStore.avatar || appStore.getAvatar,
   };
   const renderData = [
     {

@@ -106,6 +106,7 @@
         getCaptcha({
           email: form.value.email,
           channel: 'forget_account',
+          domain: window.location.hostname,
         })
           .then(() => {
             captchaLoading.value = false;
@@ -151,7 +152,9 @@
         account: values.email,
         password: values.password,
         terminal: 'web',
+        channel: 'user',
         code: values.captcha,
+        domain: window.location.hostname,
       })
         .then(() => {
           proxy.$message.success(t('forget.success'));
