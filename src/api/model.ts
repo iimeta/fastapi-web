@@ -72,6 +72,7 @@ export interface AudioQuota {
 export interface MultimodalQuota {
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
+  search_quota: any;
 }
 
 export interface RealtimeQuota {

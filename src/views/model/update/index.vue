@@ -563,6 +563,32 @@
                 <icon-minus />
               </a-button>
             </a-form-item>
+            <a-form-item
+              v-if="isShowSearchQuota"
+              field="multimodal_quota.search_quota"
+              :label="$t('model.label.search_quota')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.search_quota.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.multimodal_quota.search_quota"
+                :min="0"
+                :max="9999999999999"
+                :placeholder="$t('model.placeholder.search_quota')"
+                style="width: 86%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  formData.multimodal_quota.search_quota
+                    ? quotaConv(formData.multimodal_quota.search_quota)
+                    : '0.00'
+                }}/次
+              </div>
+            </a-form-item>
 
             <!-- 多模态实时额度 -->
             <a-form-item
@@ -1629,6 +1655,7 @@
         completion_price: ref(),
       },
       image_quotas: [],
+      search_quota: ref(),
     },
     realtime_quota: {
       text_quota: {
@@ -1889,6 +1916,8 @@
           formData.value.type === '100' && data.corp_code !== 'Midjourney';
         isShowMultimodalImageQuota.value =
           formData.value.type === '100' && data.corp_code !== 'Midjourney';
+        isShowSearchQuota.value =
+          formData.value.type === '100' && data.corp_code === 'Google';
         formData.value.multimodal_quota = data.multimodal_quota;
         formData.value.multimodal_quota.text_quota.prompt_price = Number(
           priceConv(data.multimodal_quota.text_quota.prompt_ratio)
@@ -2014,6 +2043,7 @@
     isShowRealtimeQuota.value = false;
     isShowMultimodalAudioQuota.value = false;
     isShowMidjourneyQuota.value = false;
+    isShowSearchQuota.value = false;
     const corp = corpMap.get(formData.value.corp);
     if (corp && corp.code === 'Midjourney') {
       handleMidjourneyQuota();
@@ -2029,6 +2059,7 @@
   const isShowRealtimeQuota = ref(false);
   const isShowMultimodalAudioQuota = ref(false);
   const isShowMidjourneyQuota = ref(false);
+  const isShowSearchQuota = ref(false);
 
   const handleTypeChange = () => {
     isShowImageQuota.value = false;
@@ -2038,6 +2069,7 @@
     isShowRealtimeQuota.value = false;
     isShowMultimodalAudioQuota.value = false;
     isShowMidjourneyQuota.value = false;
+    isShowSearchQuota.value = false;
     formData.value.text_quota.billing_method = '1';
 
     if (formData.value.type === '2') {
@@ -2067,6 +2099,11 @@
         for (let i = 0; i < modes.length; i += 1) {
           handleMultimodalImageQuotaAdd(modes[i]);
         }
+      }
+
+      const corp = corpMap.get(formData.value.corp);
+      if (corp && corp.code === 'Google') {
+        isShowSearchQuota.value = true;
       }
     } else if (formData.value.type === '101') {
       isShowRealtimeQuota.value = true;
@@ -2149,6 +2186,7 @@
     isShowRealtimeQuota.value = false;
     isShowMultimodalAudioQuota.value = false;
     isShowMidjourneyQuota.value = true;
+    isShowSearchQuota.value = false;
     formData.value.type = '2';
     formData.value.text_quota.billing_method = '2';
     if (formData.value.midjourney_quotas.length === 0) {

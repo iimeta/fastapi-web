@@ -503,6 +503,27 @@
       </template>
     </a-table>
 
+    <!-- 多模态搜索额度 -->
+    <a-table
+      v-if="isShowSearchQuota"
+      style="margin-top: 15px"
+      :data="multimodalSearchQuotas"
+      :pagination="false"
+      :bordered="false"
+    >
+      <template #columns>
+        <a-table-column
+          title="搜索价格"
+          data-index="search_quota"
+          align="center"
+        >
+          <template #cell="{ record }">
+            {{ `$${quotaConv(record.search_quota)}/次` }}
+          </template>
+        </a-table-column>
+      </template>
+    </a-table>
+
     <!-- 多模态实时额度 -->
     <a-table
       v-if="realtimeQuotaVisible"
@@ -614,6 +635,7 @@
     ImageQuota,
     AudioQuota,
     RealtimeQuota,
+    MultimodalQuota,
     MultimodalAudioQuota,
   } from '@/api/model';
 
@@ -637,8 +659,10 @@
   const audioQuotas = ref<AudioQuota[]>([]);
 
   const multimodalQuotaVisible = ref(false);
+  const isShowSearchQuota = ref(false);
   const multimodalTextQuotas = ref<TextQuota[]>([]);
   const multimodalImageQuotas = ref<ImageQuota[]>([]);
+  const multimodalSearchQuotas = ref<MultimodalQuota[]>([]);
 
   const realtimeQuotaVisible = ref(false);
   const realtimeQuotas = ref<RealtimeQuota[]>([]);
@@ -666,6 +690,10 @@
         multimodalQuotaVisible.value = true;
         multimodalTextQuotas.value[0] = data.multimodal_quota.text_quota;
         multimodalImageQuotas.value = data.multimodal_quota.image_quotas;
+        if (data.multimodal_quota.search_quota > 0) {
+          isShowSearchQuota.value = true;
+          multimodalSearchQuotas.value[0] = data.multimodal_quota;
+        }
       } else if (data.type === 101) {
         realtimeQuotaVisible.value = true;
         realtimeQuotas.value[0] = data.realtime_quota;

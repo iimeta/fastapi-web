@@ -386,6 +386,26 @@
             </a-table-column>
           </template>
         </a-table>
+
+        <a-table
+          v-if="isShowSearchQuota"
+          style="margin-top: 15px"
+          :data="multimodalSearchQuotas"
+          :pagination="false"
+          :bordered="false"
+        >
+          <template #columns>
+            <a-table-column
+              title="搜索价格"
+              data-index="search_quota"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${quotaConv(record.search_quota)}/次` }}
+              </template>
+            </a-table-column>
+          </template>
+        </a-table>
       </a-modal>
 
       <a-modal
@@ -810,12 +830,19 @@
   };
 
   const multimodalQuotaVisible = ref(false);
+  const isShowSearchQuota = ref(false);
   const multimodalTextQuotas = ref<TextQuota[]>([]);
   const multimodalImageQuotas = ref<ImageQuota[]>([]);
+  const multimodalSearchQuotas = ref<MultimodalQuota[]>([]);
   const viewMultimodalQuota = (params: MultimodalQuota) => {
     multimodalQuotaVisible.value = true;
+    isShowSearchQuota.value = false;
     multimodalTextQuotas.value[0] = params.text_quota;
     multimodalImageQuotas.value = params.image_quotas;
+    if (params.search_quota > 0) {
+      isShowSearchQuota.value = true;
+      multimodalSearchQuotas.value[0] = params;
+    }
   };
 
   const realtimeQuotaVisible = ref(false);
