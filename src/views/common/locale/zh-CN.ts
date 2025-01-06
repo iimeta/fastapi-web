@@ -14,6 +14,7 @@ export default {
   'common.key': '密钥',
   'common.corp': '公司',
   'common.model': '模型',
+  'common.models': '模型权限',
   'common.model_name': '模型名称',
   'common.model_type': '模型类型',
   'common.is_public': '是否公开',

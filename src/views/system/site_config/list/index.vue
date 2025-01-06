@@ -61,7 +61,7 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 42px" direction="vertical" />
+        <a-divider style="height: 32px" direction="vertical" />
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">

@@ -272,7 +272,12 @@
           <icon-copy class="copy-btn" @click="handleCopy(record.id)" />
         </template>
         <template #model_names="{ record }">
-          {{ record?.model_names?.join(',') || '-' }}
+          <span v-if="record.model_names">
+            <a-button type="text" size="small" @click="modelsHandle(record.id)">
+              查看
+            </a-button>
+          </span>
+          <span v-else>{{ '-' }}</span>
         </template>
         <template #model_agent_names="{ record }">
           {{ record?.model_agent_names?.join(',') || '-' }}
@@ -334,6 +339,22 @@
       >
         <Detail :id="recordId" />
       </a-drawer>
+
+      <!-- 模型 -->
+      <a-modal
+        v-model:visible="modelsVisible"
+        title="模型"
+        :modal-style="{
+          padding: '25px 15px 20px 15px',
+        }"
+        unmount-on-close
+        hide-cancel
+        simple
+        width="920px"
+        ok-text="关闭"
+      >
+        <Models :id="recordId" :action="action" />
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -375,6 +396,7 @@
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { queryCorpList, CorpList } from '@/api/corp';
   import { useClipboard } from '@vueuse/core';
+  import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
 
   const { loading, setLoading } = useLoading(true);
@@ -790,6 +812,15 @@
   };
   const detailHandleCancel = () => {
     detailVisible.value = false;
+  };
+
+  const modelsVisible = ref(false);
+  const action = ref();
+
+  const modelsHandle = (id: string) => {
+    modelsVisible.value = true;
+    recordId.value = id;
+    action.value = 'key';
   };
 </script>
 

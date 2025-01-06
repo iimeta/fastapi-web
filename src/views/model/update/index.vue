@@ -2102,7 +2102,7 @@
       }
 
       const corp = corpMap.get(formData.value.corp);
-      if (corp && corp.code === 'Google') {
+      if (corp && (corp.code === 'Google' || corp.name === 'Google')) {
         isShowSearchQuota.value = true;
       }
     } else if (formData.value.type === '101') {

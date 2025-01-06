@@ -292,3 +292,26 @@ export interface ModelTreeRes {
 export function queryModelTree() {
   return axios.get<ModelTreeRes>('/api/v1/model/tree');
 }
+
+export interface ModelPermissionsParams {
+  id: any;
+  action: string;
+}
+
+export interface ModelPermissions {
+  id: string;
+  corp: string;
+  name: string;
+  model: string;
+  type: number;
+  status: number;
+  remark: string;
+}
+
+export interface ModelPermissionsRes {
+  items: ModelPermissions[];
+}
+
+export function queryModelPermissions(params: ModelPermissionsParams) {
+  return axios.post('/api/v1/model/permissions', params);
+}

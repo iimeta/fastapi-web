@@ -263,10 +263,24 @@
         @selection-change="handleSelectionChange"
       >
         <template #model_names="{ record }">
-          {{ record?.model_names?.join(',') || '-' }}
+          <span v-if="record.model_names">
+            <a-button type="text" size="small" @click="modelsHandle(record.id)">
+              查看
+            </a-button>
+          </span>
+          <span v-else>{{ '-' }}</span>
         </template>
         <template #fallback_model_names="{ record }">
-          {{ record?.fallback_model_names?.join(',') || '-' }}
+          <span v-if="record.fallback_model_names">
+            <a-button
+              type="text"
+              size="small"
+              @click="fallbackModelsHandle(record.id)"
+            >
+              查看
+            </a-button>
+          </span>
+          <span v-else>{{ '-' }}</span>
         </template>
         <template #lb_strategy="{ record }">
           {{ $t(`dict.lb_strategy.${record.lb_strategy || 1}`) }}
@@ -337,6 +351,38 @@
       >
         <Detail :id="recordId" />
       </a-drawer>
+
+      <!-- 绑定模型 -->
+      <a-modal
+        v-model:visible="modelsVisible"
+        title="绑定模型"
+        :modal-style="{
+          padding: '25px 15px 20px 15px',
+        }"
+        unmount-on-close
+        hide-cancel
+        simple
+        width="920px"
+        ok-text="关闭"
+      >
+        <Models :id="recordId" :action="action" />
+      </a-modal>
+
+      <!-- 后备模型 -->
+      <a-modal
+        v-model:visible="fallbackModelsVisible"
+        title="后备模型"
+        :modal-style="{
+          padding: '25px 15px 20px 15px',
+        }"
+        unmount-on-close
+        hide-cancel
+        simple
+        width="920px"
+        ok-text="关闭"
+      >
+        <Models :id="recordId" :action="action" />
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -373,6 +419,7 @@
   import Sortable from 'sortablejs';
   import { queryCorpList, CorpList } from '@/api/corp';
   import { queryModelList, ModelList } from '@/api/model';
+  import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
 
   const { loading, setLoading } = useLoading(true);
@@ -516,14 +563,12 @@
       dataIndex: 'weight',
       slotName: 'weight',
       align: 'center',
-      width: 60,
     },
     {
       title: t('model.columns.lb_strategy'),
       dataIndex: 'lb_strategy',
       slotName: 'lb_strategy',
       align: 'center',
-      width: 88,
     },
     {
       title: t('model.agent.columns.remark'),
@@ -747,6 +792,22 @@
   };
   const detailHandleCancel = () => {
     detailVisible.value = false;
+  };
+
+  const modelsVisible = ref(false);
+  const fallbackModelsVisible = ref(false);
+  const action = ref();
+
+  const modelsHandle = (id: string) => {
+    modelsVisible.value = true;
+    recordId.value = id;
+    action.value = 'agent';
+  };
+
+  const fallbackModelsHandle = (id: string) => {
+    fallbackModelsVisible.value = true;
+    recordId.value = id;
+    action.value = 'fallback';
   };
 </script>
 

@@ -215,9 +215,11 @@
         @page-size-change="onPageSizeChange"
       >
         <template #model_names="{ record }">
-          <span v-if="record.model_names">{{
-            record.model_names.join(',')
-          }}</span>
+          <span v-if="record.model_names">
+            <a-button type="text" size="small" @click="modelsHandle(record.id)">
+              查看
+            </a-button>
+          </span>
           <span v-else>{{ $t(`app.columns.models.no_limit`) }}</span>
         </template>
         <template #quota="{ record }">
@@ -308,7 +310,6 @@
       >
         <Detail :id="recordId" />
       </a-drawer>
-
       <a-modal
         v-model:visible="visible"
         :width="600"
@@ -487,6 +488,22 @@
           </a-form-item>
         </a-form>
       </a-modal>
+
+      <!-- 模型权限 -->
+      <a-modal
+        v-model:visible="modelsVisible"
+        :title="$t('common.models')"
+        :modal-style="{
+          padding: '25px 15px 20px 15px',
+        }"
+        unmount-on-close
+        hide-cancel
+        simple
+        width="920px"
+        ok-text="关闭"
+      >
+        <Models :id="recordId" :action="action" />
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -528,6 +545,7 @@
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { Message } from '@arco-design/web-vue';
+  import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
 
   const { proxy } = getCurrentInstance() as any;
@@ -913,6 +931,15 @@
   };
   const detailHandleCancel = () => {
     detailVisible.value = false;
+  };
+
+  const modelsVisible = ref(false);
+  const action = ref();
+
+  const modelsHandle = (id: string) => {
+    modelsVisible.value = true;
+    recordId.value = id;
+    action.value = 'app';
   };
 </script>
 
