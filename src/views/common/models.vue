@@ -218,7 +218,7 @@
 
 <script lang="ts">
   export default {
-    name: 'Permissions',
+    name: 'Models',
   };
 </script>
 
