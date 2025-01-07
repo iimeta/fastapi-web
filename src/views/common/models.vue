@@ -85,7 +85,7 @@
         :bordered="false"
         :size="size"
         :scroll="{
-          y: '520px',
+          y: '380px',
         }"
       >
       </a-table>
