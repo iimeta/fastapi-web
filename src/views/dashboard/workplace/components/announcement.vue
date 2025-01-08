@@ -35,17 +35,17 @@
     {
       type: 'blue',
       label: '通知',
+      content: 'v1.1.0 版本发布啦! 啦!! 啦!!!',
+    },
+    {
+      type: 'blue',
+      label: '通知',
       content: 'v1.0.0 版本发布啦! 啦!! 啦!!!',
     },
     {
       type: 'blue',
       label: '通知',
       content: 'v0.5.0 版本发布啦! 啦!! 啦!!!',
-    },
-    {
-      type: 'blue',
-      label: '通知',
-      content: 'v0.4.0 版本发布啦! 啦!! 啦!!!',
     },
   ];
 </script>
