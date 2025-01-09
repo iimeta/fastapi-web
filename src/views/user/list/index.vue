@@ -374,7 +374,7 @@
       <a-modal
         v-model:visible="grantQuotaVisible"
         :title="$t('user.form.title.grantQuota')"
-        :ok-text="$t('user.button.save')"
+        :ok-text="$t('button.ok')"
         @cancel="handleCancel"
         @before-ok="handleBeforeOk"
       >

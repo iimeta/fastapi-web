@@ -43,7 +43,7 @@ export default {
   'user.success.title': '提交成功',
   'user.success.create.subTitle': '用户新建成功',
   'user.success.update.subTitle': '用户修改成功',
-  'user.success.grantQuota': '授予成功',
+  'user.success.grantQuota': '充值成功',
   'user.success.models': '保存成功',
   'user.button.submit': '提交',
   'user.button.cancel': '取消',
