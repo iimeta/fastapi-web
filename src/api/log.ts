@@ -138,6 +138,9 @@ export interface ChatDetail {
   multimodal_audio_quota: MultimodalAudioQuota;
   prompt_tokens: number;
   completion_tokens: number;
+  search_tokens: number;
+  cache_write_tokens: number;
+  cache_hit_tokens: number;
   total_tokens: number;
   stream: boolean;
   conn_time: number;

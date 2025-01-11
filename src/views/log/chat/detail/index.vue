@@ -92,17 +92,19 @@
           {{ currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="计费方式" :span="2">
+      <!-- <a-descriptions-item label="计费方式" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>{{
-          $t(
-            `chat.dict.billing_method.${currentData.text_quota.billing_method}`
-          )
-        }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="花费令牌数" :span="2">
+        <span v-else>
+          {{
+            $t(
+              `chat.dict.billing_method.${currentData.text_quota.billing_method}`
+            )
+          }}
+        </span>
+      </a-descriptions-item> -->
+      <a-descriptions-item label="花费令牌数">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -125,7 +127,7 @@
             : currentData.multimodal_quota.text_quota.prompt_ratio || '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答倍率" :span="2">
+      <a-descriptions-item label="回答倍率">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -143,13 +145,31 @@
         </a-skeleton>
         <span v-else>{{ currentData.prompt_tokens || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答令牌数" :span="2">
+      <a-descriptions-item label="回答令牌数">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.completion_tokens || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="连接耗时" :span="2">
+      <a-descriptions-item label="搜索令牌数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.search_tokens || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="缓存写入令牌数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.cache_write_tokens || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="缓存命中令牌数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.cache_hit_tokens || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="连接耗时">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -168,7 +188,7 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="持续时长" :span="2">
+      <a-descriptions-item label="持续时长">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -187,7 +207,7 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="总耗时" :span="2">
+      <a-descriptions-item label="总耗时">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -206,7 +226,7 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="结果" :span="2">
+      <a-descriptions-item label="结果">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -225,19 +245,19 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="客户端IP" :span="2">
+      <a-descriptions-item label="客户端IP">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.client_ip || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="请求时间" :span="2">
+      <a-descriptions-item label="请求时间">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.req_time || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="错误信息" :span="2">
+      <a-descriptions-item label="错误信息">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -465,7 +485,7 @@
           {{ currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="计费方式" :span="2">
+      <!-- <a-descriptions-item label="计费方式" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -474,8 +494,8 @@
             `chat.dict.billing_method.${currentData.text_quota.billing_method}`
           )
         }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="花费令牌数">
+      </a-descriptions-item> -->
+      <a-descriptions-item label="花费令牌数" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -488,7 +508,7 @@
             : '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="提问倍率" :span="2">
+      <a-descriptions-item label="提问倍率">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -498,7 +518,7 @@
             : currentData.multimodal_quota.text_quota.prompt_ratio || '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答倍率">
+      <a-descriptions-item label="回答倍率" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -508,17 +528,35 @@
             : currentData.multimodal_quota.text_quota.completion_ratio || '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="提问令牌数" :span="2">
+      <a-descriptions-item label="提问令牌数">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.prompt_tokens || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答令牌数">
+      <a-descriptions-item label="回答令牌数" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.completion_tokens || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="搜索令牌数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.search_tokens || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="缓存写入令牌数" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.cache_write_tokens || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="缓存命中令牌数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.cache_hit_tokens || '-' }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="连接耗时" :span="2">
         <a-skeleton v-if="loading" :animation="true">
