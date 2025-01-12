@@ -24,7 +24,6 @@
         <a-grid-item :span="24">
           <div class="panel moduler-wrap">
             <UserInfo />
-            <!-- <RecentlyVisited /> -->
           </div>
         </a-grid-item>
         <a-grid-item
@@ -65,7 +64,6 @@
   import DataChart from './components/data-chart.vue';
   import DataTop from './components/data-top.vue';
   import ModelPercent from './components/model-percent.vue';
-  // import RecentlyVisited from './components/recently-visited.vue';
   import QuickOperation from './components/quick-operation.vue';
   import UserInfo from './components/user-info.vue';
   import Expense from './components/expense.vue';

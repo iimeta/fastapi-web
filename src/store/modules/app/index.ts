@@ -4,7 +4,7 @@ import type { NotificationReturn } from '@arco-design/web-vue/es/notification/in
 import type { RouteRecordNormalized } from 'vue-router';
 import defaultSettings from '@/config/settings.json';
 import { getMenuList } from '@/api/user';
-import { querySite } from '@/api/site_config';
+import { querySite, Carousel, Announcement } from '@/api/site_config';
 import { AppState } from './types';
 
 const useAppStore = defineStore('app', {
@@ -52,6 +52,36 @@ const useAppStore = defineStore('app', {
     },
     getRegisterTips(state: AppState): string {
       return state.config?.register_tips || '';
+    },
+    getCarousel1Title(state: AppState): string | undefined {
+      return state.config?.carousel1_title || '赞助商';
+    },
+    getCarousels1(state: AppState): Carousel[] | undefined {
+      return state.config?.carousels1;
+    },
+    getCarousel2Title(state: AppState): string | undefined {
+      return state.config?.carousel2_title || '作者';
+    },
+    getCarousels2(state: AppState): Carousel[] | undefined {
+      return state.config?.carousels2;
+    },
+    getAnnouncementTitle(state: AppState): string | undefined {
+      return state.config?.announcement_title || '公告';
+    },
+    getAnnouncementMoreUrl(state: AppState): string | undefined {
+      return state.config?.announcement_more_url;
+    },
+    getAnnouncements(state: AppState): Announcement[] | undefined {
+      return state.config?.announcements;
+    },
+    getDocumentTitle(state: AppState): string | undefined {
+      return state.config?.document_title || '使用指南';
+    },
+    getDocumentMoreUrl(state: AppState): string | undefined {
+      return state.config?.document_more_url;
+    },
+    getDocuments(state: AppState): Document[] | undefined {
+      return state.config?.documents;
     },
   },
 

@@ -274,6 +274,200 @@
                 allow-clear
               />
             </a-form-item>
+            <a-form-item
+              field="carousel1_title"
+              :label="$t('site.config.label.carousel1_title')"
+            >
+              <a-input
+                v-model="formData.carousel1_title"
+                :placeholder="$t('site.config.placeholder.carousel1_title')"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              v-for="(carousels, index) of formData.carousels1"
+              :key="index"
+              :label="`${index + 1}. ` + $t('site.config.label.carousels1')"
+            >
+              <a-input
+                v-model="formData.carousels1[index].image_url"
+                :placeholder="
+                  $t('site.config.placeholder.carousels1.image_url')
+                "
+                style="width: 220px; margin-right: 5px"
+              />
+              <a-input
+                v-model="formData.carousels1[index].jump_url"
+                :placeholder="$t('site.config.placeholder.carousels1.jump_url')"
+                style="width: 220px"
+              />
+              <a-button
+                type="primary"
+                shape="circle"
+                style="margin: 0 10px 0 10px"
+                @click="handleCarousels1Add()"
+              >
+                <icon-plus />
+              </a-button>
+              <a-button
+                type="secondary"
+                shape="circle"
+                @click="handleCarousels1Del(index)"
+              >
+                <icon-minus />
+              </a-button>
+            </a-form-item>
+            <a-form-item
+              field="carousel2_title"
+              :label="$t('site.config.label.carousel2_title')"
+            >
+              <a-input
+                v-model="formData.carousel2_title"
+                :placeholder="$t('site.config.placeholder.carousel2_title')"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              v-for="(carousels, index) of formData.carousels2"
+              :key="index"
+              :label="`${index + 1}. ` + $t('site.config.label.carousels2')"
+            >
+              <a-input
+                v-model="formData.carousels2[index].image_url"
+                :placeholder="
+                  $t('site.config.placeholder.carousels2.image_url')
+                "
+                style="width: 220px; margin-right: 5px"
+              />
+              <a-input
+                v-model="formData.carousels2[index].jump_url"
+                :placeholder="$t('site.config.placeholder.carousels2.jump_url')"
+                style="width: 220px"
+              />
+              <a-button
+                type="primary"
+                shape="circle"
+                style="margin: 0 10px 0 10px"
+                @click="handleCarousels2Add()"
+              >
+                <icon-plus />
+              </a-button>
+              <a-button
+                type="secondary"
+                shape="circle"
+                @click="handleCarousels2Del(index)"
+              >
+                <icon-minus />
+              </a-button>
+            </a-form-item>
+            <a-form-item
+              field="announcement_title"
+              :label="$t('site.config.label.announcement_title')"
+            >
+              <a-input
+                v-model="formData.announcement_title"
+                :placeholder="$t('site.config.placeholder.announcement_title')"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              field="announcement_more_url"
+              :label="$t('site.config.label.announcement_more_url')"
+            >
+              <a-input
+                v-model="formData.announcement_more_url"
+                :placeholder="
+                  $t('site.config.placeholder.announcement_more_url')
+                "
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              v-for="(announcements, index) of formData.announcements"
+              :key="index"
+              :label="`${index + 1}. ` + $t('site.config.label.announcements')"
+            >
+              <a-input
+                v-model="formData.announcements[index].content"
+                :placeholder="
+                  $t('site.config.placeholder.announcements.content')
+                "
+                style="width: 220px; margin-right: 5px"
+              />
+              <a-input
+                v-model="formData.announcements[index].jump_url"
+                :placeholder="
+                  $t('site.config.placeholder.announcements.jump_url')
+                "
+                style="width: 220px"
+              />
+              <a-button
+                type="primary"
+                shape="circle"
+                style="margin: 0 10px 0 10px"
+                @click="handleAnnouncementsAdd()"
+              >
+                <icon-plus />
+              </a-button>
+              <a-button
+                type="secondary"
+                shape="circle"
+                @click="handleAnnouncementsDel(index)"
+              >
+                <icon-minus />
+              </a-button>
+            </a-form-item>
+            <a-form-item
+              field="document_title"
+              :label="$t('site.config.label.document_title')"
+            >
+              <a-input
+                v-model="formData.document_title"
+                :placeholder="$t('site.config.placeholder.document_title')"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              field="document_more_url"
+              :label="$t('site.config.label.document_more_url')"
+            >
+              <a-input
+                v-model="formData.document_more_url"
+                :placeholder="$t('site.config.placeholder.document_more_url')"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              v-for="(documents, index) of formData.documents"
+              :key="index"
+              :label="`${index + 1}. ` + $t('site.config.label.documents')"
+            >
+              <a-input
+                v-model="formData.documents[index].title"
+                :placeholder="$t('site.config.placeholder.documents.title')"
+                style="width: 220px; margin-right: 5px"
+              />
+              <a-input
+                v-model="formData.documents[index].jump_url"
+                :placeholder="$t('site.config.placeholder.documents.jump_url')"
+                style="width: 220px"
+              />
+              <a-button
+                type="primary"
+                shape="circle"
+                style="margin: 0 10px 0 10px"
+                @click="handleDocumentsAdd()"
+              >
+                <icon-plus />
+              </a-button>
+              <a-button
+                type="secondary"
+                shape="circle"
+                @click="handleDocumentsDel(index)"
+              >
+                <icon-minus />
+              </a-button>
+            </a-form-item>
             <a-form-item field="remark" :label="$t('site.config.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -308,7 +502,13 @@
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
   import { quotaConv } from '@/utils/common';
-  import { submitSiteConfigCreate, SiteConfigCreate } from '@/api/site_config';
+  import {
+    submitSiteConfigCreate,
+    SiteConfigCreate,
+    Carousel,
+    Announcement,
+    Document,
+  } from '@/api/site_config';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter } from 'vue-router';
 
@@ -338,6 +538,16 @@
     user_name: '',
     password: '',
     from_name: '',
+    carousel1_title: '',
+    carousels1: [],
+    carousel2_title: '',
+    carousels2: [],
+    announcement_title: '',
+    announcement_more_url: '',
+    announcements: [],
+    document_title: '',
+    document_more_url: '',
+    documents: [],
     remark: '',
   });
 
@@ -371,6 +581,71 @@
   const handleQuotaQuickChange = (quota: number) => {
     formData.value.grant_quota = quota * 500000;
   };
+
+  const handleCarousels1Add = () => {
+    const carousel: Carousel = {
+      image_url: '',
+      jump_url: '',
+    };
+    formData.value.carousels1.push(carousel);
+  };
+
+  const handleCarousels1Del = (index: number) => {
+    if (formData.value.carousels1.length > 1) {
+      formData.value.carousels1.splice(index, 1);
+    }
+  };
+
+  const handleCarousels2Add = () => {
+    const carousel: Carousel = {
+      image_url: '',
+      jump_url: '',
+    };
+    formData.value.carousels2.push(carousel);
+  };
+
+  const handleCarousels2Del = (index: number) => {
+    if (formData.value.carousels2.length > 1) {
+      formData.value.carousels2.splice(index, 1);
+    }
+  };
+
+  const handleAnnouncementsAdd = () => {
+    const carousel: Announcement = {
+      content: '',
+      jump_url: '',
+    };
+    formData.value.announcements.push(carousel);
+  };
+
+  const handleAnnouncementsDel = (index: number) => {
+    if (formData.value.announcements.length > 1) {
+      formData.value.announcements.splice(index, 1);
+    }
+  };
+
+  const handleDocumentsAdd = () => {
+    const document: Document = {
+      title: '',
+      jump_url: '',
+    };
+    formData.value.documents.push(document);
+  };
+
+  const handleDocumentsDel = (index: number) => {
+    if (formData.value.documents.length > 1) {
+      formData.value.documents.splice(index, 1);
+    }
+  };
+
+  for (let i = 0; i < 3; i += 1) {
+    handleCarousels1Add();
+    handleCarousels2Add();
+    handleAnnouncementsAdd();
+    handleDocumentsAdd();
+  }
+
+  handleDocumentsAdd();
 </script>
 
 <script lang="ts">

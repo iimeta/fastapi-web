@@ -1,4 +1,5 @@
 import type { RouteRecordNormalized } from 'vue-router';
+import { Carousel, Announcement } from '@/api/site_config';
 
 export interface Config {
   title?: string;
@@ -13,6 +14,16 @@ export interface Config {
   icp_beian?: string;
   ga_beian?: string;
   register_tips?: string;
+  carousel1_title?: string;
+  carousels1?: Carousel[];
+  carousel2_title?: string;
+  carousels2?: Carousel[];
+  announcement_title?: string;
+  announcement_more_url?: string;
+  announcements?: Announcement[];
+  document_title?: string;
+  document_more_url?: string;
+  documents?: Document[];
 }
 
 export interface AppState {

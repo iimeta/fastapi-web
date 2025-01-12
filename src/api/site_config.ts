@@ -1,6 +1,21 @@
 import axios from 'axios';
 import qs from 'query-string';
 
+export interface Carousel {
+  image_url: string;
+  jump_url: string;
+}
+
+export interface Announcement {
+  content: string;
+  jump_url: string;
+}
+
+export interface Document {
+  title: string;
+  jump_url: string;
+}
+
 export interface SiteConfigCreate {
   domain: string;
   title: string;
@@ -23,6 +38,16 @@ export interface SiteConfigCreate {
   user_name: string;
   password: string;
   from_name: string;
+  carousel1_title: string;
+  carousels1: Carousel[];
+  carousel2_title: string;
+  carousels2: Carousel[];
+  announcement_title: string;
+  announcement_more_url: string;
+  announcements: Announcement[];
+  document_title: string;
+  document_more_url: string;
+  documents: Document[];
   remark: string;
 }
 
@@ -105,6 +130,16 @@ export interface SiteConfigDetail {
   user_name: string;
   password: string;
   from_name: string;
+  carousel1_title: string;
+  carousels1: Carousel[];
+  carousel2_title: string;
+  carousels2: Carousel[];
+  announcement_title: string;
+  announcement_more_url: string;
+  announcements: Announcement[];
+  document_title: string;
+  document_more_url: string;
+  documents: Document[];
   remark: string;
   status: number;
   created_at: string;
@@ -143,6 +178,16 @@ export interface SiteConfigUpdate {
   user_name: string;
   password: string;
   from_name: string;
+  carousel1_title: string;
+  carousels1: Carousel[];
+  carousel2_title: string;
+  carousels2: Carousel[];
+  announcement_title: string;
+  announcement_more_url: string;
+  announcements: Announcement[];
+  document_title: string;
+  document_more_url: string;
+  documents: Document[];
   remark: string;
   status: number;
 }
