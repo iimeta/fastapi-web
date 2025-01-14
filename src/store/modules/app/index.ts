@@ -4,7 +4,7 @@ import type { NotificationReturn } from '@arco-design/web-vue/es/notification/in
 import type { RouteRecordNormalized } from 'vue-router';
 import defaultSettings from '@/config/settings.json';
 import { getMenuList } from '@/api/user';
-import { querySite, Carousel, Announcement } from '@/api/site_config';
+import { querySite, Carousel, Announcement, Document } from '@/api/site_config';
 import { AppState } from './types';
 
 const useAppStore = defineStore('app', {
@@ -57,31 +57,83 @@ const useAppStore = defineStore('app', {
       return state.config?.carousel1_title || '赞助商';
     },
     getCarousels1(state: AppState): Carousel[] | undefined {
-      return state.config?.carousels1;
+      return state.config?.carousels1 || [
+          {
+            image_url: 'https://fastapi.ai/public/images/iimyun.png',
+            jump_url: 'https://www.iimyun.com/cart?fid=3&gid=11',
+          },
+          {
+            image_url: 'https://fastapi.ai/public/images/iimyun.png',
+            jump_url: 'https://www.iimyun.com/cart?fid=3&gid=11',
+          },
+          {
+            image_url: 'https://fastapi.ai/public/images/iimyun.png',
+            jump_url: 'https://www.iimyun.com/cart?fid=3&gid=11',
+          },
+      ];
     },
     getCarousel2Title(state: AppState): string | undefined {
       return state.config?.carousel2_title || '作者';
     },
     getCarousels2(state: AppState): Carousel[] | undefined {
-      return state.config?.carousels2;
+      return state.config?.carousels2 || [
+          {
+            image_url: 'https://fastapi.ai/Author.png',
+            jump_url: 'https://github.com/iimeta/fastapi',
+          },
+          {
+            image_url: 'https://fastapi.ai/AuthorQQ.png',
+            jump_url: 'https://github.com/iimeta/fastapi',
+          },
+      ];
     },
     getAnnouncementTitle(state: AppState): string | undefined {
       return state.config?.announcement_title || '公告';
     },
     getAnnouncementMoreUrl(state: AppState): string | undefined {
-      return state.config?.announcement_more_url;
+      return state.config?.announcement_more_url || state.config?.announcement_title ? undefined : 'https://github.com/iimeta/fastapi-admin/releases';
     },
     getAnnouncements(state: AppState): Announcement[] | undefined {
-      return state.config?.announcements;
+      return state.config?.announcements || [
+          {
+            content: 'v1.1.0 版本发布啦! 啦!! 啦!!!',
+            jump_url: 'https://github.com/iimeta/fastapi-admin/releases',
+          },
+          {
+            content: 'v1.0.0 版本发布啦! 啦!! 啦!!!',
+            jump_url: 'https://github.com/iimeta/fastapi-admin/releases',
+          },
+          {
+            content: 'v0.5.0 版本发布啦! 啦!! 啦!!!',
+            jump_url: 'https://github.com/iimeta/fastapi-admin/releases',
+          },
+      ];
     },
     getDocumentTitle(state: AppState): string | undefined {
       return state.config?.document_title || '使用指南';
     },
     getDocumentMoreUrl(state: AppState): string | undefined {
-      return state.config?.document_more_url;
+      return state.config?.document_more_url || state.config?.document_title ? undefined :  'https://www.fastapi.ai';
     },
     getDocuments(state: AppState): Document[] | undefined {
-      return state.config?.documents;
+      return state.config?.documents || [
+          {
+            title: '产品概要',
+            jump_url: 'https://www.fastapi.ai/guide/why.html',
+          },
+          {
+            title: '帮助文档',
+            jump_url: 'https://www.fastapi.ai/guide/faq.html',
+          },
+          {
+            title: '接入流程',
+            jump_url: 'https://www.fastapi.ai/guide/',
+          },
+          {
+            title: '接口文档',
+            jump_url: 'https://www.fastapi.ai/api/',
+          },
+      ];
     },
   },
 
@@ -155,6 +207,16 @@ const useAppStore = defineStore('app', {
           icp_beian: res.data.icp_beian,
           ga_beian: res.data.ga_beian,
           register_tips: res.data.register_tips,
+          carousel1_title: res.data.carousel1_title,
+          carousels1: res.data.carousels1,
+          carousel2_title: res.data.carousel2_title,
+          carousels2: res.data.carousels2,
+          announcement_title: res.data.announcement_title,
+          announcement_more_url: res.data.announcement_more_url,
+          announcements: res.data.announcements,
+          document_title: res.data.document_title,
+          document_more_url: res.data.document_more_url,
+          documents: res.data.documents,
         };
         document.title = res.data.title || '智元 Fast API';
         document

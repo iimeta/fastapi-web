@@ -1,7 +1,7 @@
 <template>
   <a-card
     class="general-card"
-    :title="$t('workplace.author')"
+    :title="appStore.getCarousel2Title"
     :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
     :body-style="{ padding: '10px 20px 15px 20px' }"
     :bordered="false"
@@ -12,20 +12,22 @@
       auto-play
       style="height: 252px"
     >
-      <a-carousel-item v-for="(src, idx) in imageSrc" :key="idx">
-        <div>
-          <img class="author" :src="src" />
-        </div>
+      <a-carousel-item
+        v-for="(carousel, idx) in appStore.getCarousels2"
+        :key="idx"
+      >
+        <a-link :href="carousel.jump_url" target="_blank">
+          <img class="author" :src="carousel.image_url" />
+        </a-link>
       </a-carousel-item>
     </a-carousel>
   </a-card>
 </template>
 
 <script lang="ts" setup>
-  const imageSrc = [
-    'https://fastapi.ai/Author.png',
-    'https://fastapi.ai/AuthorQQ.png',
-  ];
+  import { useAppStore } from '@/store';
+
+  const appStore = useAppStore();
 </script>
 
 <style lang="less" scoped>

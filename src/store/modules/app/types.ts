@@ -1,5 +1,5 @@
 import type { RouteRecordNormalized } from 'vue-router';
-import { Carousel, Announcement } from '@/api/site_config';
+import { Carousel, Announcement, Document } from '@/api/site_config';
 
 export interface Config {
   title?: string;

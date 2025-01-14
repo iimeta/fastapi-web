@@ -624,6 +624,35 @@
       formData.value.documents = data.documents;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
+
+      if (
+        !formData.value.carousels1 ||
+        formData.value.carousels1.length === 0
+      ) {
+        formData.value.carousels1 = [];
+        handleCarousels1Add();
+      }
+
+      if (
+        !formData.value.carousels2 ||
+        formData.value.carousels2.length === 0
+      ) {
+        formData.value.carousels2 = [];
+        handleCarousels2Add();
+      }
+
+      if (
+        !formData.value.announcements ||
+        formData.value.announcements.length === 0
+      ) {
+        formData.value.announcements = [];
+        handleAnnouncementsAdd();
+      }
+
+      if (!formData.value.documents || formData.value.documents.length === 0) {
+        formData.value.documents = [];
+        handleDocumentsAdd();
+      }
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -645,9 +674,7 @@
   };
 
   const handleCarousels1Del = (index: number) => {
-    if (formData.value.carousels1.length > 1) {
-      formData.value.carousels1.splice(index, 1);
-    }
+    formData.value.carousels1.splice(index, 1);
   };
 
   const handleCarousels2Add = () => {
@@ -659,9 +686,7 @@
   };
 
   const handleCarousels2Del = (index: number) => {
-    if (formData.value.carousels2.length > 1) {
-      formData.value.carousels2.splice(index, 1);
-    }
+    formData.value.carousels2.splice(index, 1);
   };
 
   const handleAnnouncementsAdd = () => {
@@ -673,9 +698,7 @@
   };
 
   const handleAnnouncementsDel = (index: number) => {
-    if (formData.value.announcements.length > 1) {
-      formData.value.announcements.splice(index, 1);
-    }
+    formData.value.announcements.splice(index, 1);
   };
 
   const handleDocumentsAdd = () => {
@@ -687,9 +710,7 @@
   };
 
   const handleDocumentsDel = (index: number) => {
-    if (formData.value.documents.length > 1) {
-      formData.value.documents.splice(index, 1);
-    }
+    formData.value.documents.splice(index, 1);
   };
 </script>
 

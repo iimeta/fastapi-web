@@ -1,7 +1,7 @@
 <template>
   <a-card
     class="general-card"
-    :title="$t('workplace.sponsor')"
+    :title="appStore.getCarousel1Title"
     :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
     :body-style="{ padding: '10px 20px 20px 20px' }"
     :bordered="false"
@@ -12,9 +12,12 @@
       auto-play
       style="height: 197px"
     >
-      <a-carousel-item v-for="(src, idx) in imageSrc" :key="idx">
-        <a-link :href="urlSrc[idx]" target="_blank">
-          <img class="sponsor" :src="src" />
+      <a-carousel-item
+        v-for="(carousel, idx) in appStore.getCarousels1"
+        :key="idx"
+      >
+        <a-link :href="carousel.jump_url" target="_blank">
+          <img class="sponsor" :src="carousel.image_url" />
         </a-link>
       </a-carousel-item>
     </a-carousel>
@@ -22,16 +25,9 @@
 </template>
 
 <script lang="ts" setup>
-  const imageSrc = [
-    'https://fastapi.ai/public/images/iimyun.png',
-    'https://fastapi.ai/public/images/iimyun.png',
-    'https://fastapi.ai/public/images/iimyun.png',
-  ];
-  const urlSrc = [
-    'https://www.iimyun.com/cart?fid=3&gid=11',
-    'https://www.iimyun.com/cart?fid=3&gid=11',
-    'https://www.iimyun.com/cart?fid=3&gid=11',
-  ];
+  import { useAppStore } from '@/store';
+
+  const appStore = useAppStore();
 </script>
 
 <style lang="less" scoped>

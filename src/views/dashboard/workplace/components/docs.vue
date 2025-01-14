@@ -1,40 +1,35 @@
 <template>
   <a-card
     class="general-card"
-    :title="$t('workplace.docs')"
+    :title="appStore.getDocumentTitle"
     :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
     :body-style="{ padding: '10px 20px 10px 20px' }"
     :bordered="false"
   >
     <template #extra>
-      <a-link href="https://www.fastapi.ai" target="_blank">{{
-        $t('workplace.viewMore')
-      }}</a-link>
+      <a-link :href="appStore.getDocumentMoreUrl" target="_blank">
+        {{ $t('workplace.viewMore') }}
+      </a-link>
     </template>
     <a-row>
-      <a-col :span="12">
-        <a-link href="https://www.fastapi.ai" target="_blank">
-          {{ $t('workplace.docs.productOverview') }}
-        </a-link>
-      </a-col>
-      <a-col :span="12">
-        <a-link href="https://www.fastapi.ai" target="_blank">
-          {{ $t('workplace.docs.userGuide') }}
-        </a-link>
-      </a-col>
-      <a-col :span="12">
-        <a-link href="https://www.fastapi.ai" target="_blank">
-          {{ $t('workplace.docs.workflow') }}
-        </a-link>
-      </a-col>
-      <a-col :span="12">
-        <a-link href="https://www.fastapi.ai" target="_blank">
-          {{ $t('workplace.docs.interfaceDocs') }}
+      <a-col
+        v-for="(document, idx) in appStore.getDocuments"
+        :key="idx"
+        :span="12"
+      >
+        <a-link :href="document.jump_url" target="_blank">
+          {{ document.title }}
         </a-link>
       </a-col>
     </a-row>
   </a-card>
 </template>
+
+<script lang="ts" setup>
+  import { useAppStore } from '@/store';
+
+  const appStore = useAppStore();
+</script>
 
 <style lang="less" scoped>
   .arco-card-body .arco-link {

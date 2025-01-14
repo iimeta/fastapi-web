@@ -1,28 +1,26 @@
 <template>
   <a-card
     class="general-card"
-    :title="$t('workplace.announcement')"
+    :title="appStore.getAnnouncementTitle"
     :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
     :body-style="{ padding: '10px 20px 7px 20px' }"
     :bordered="false"
   >
     <template #extra>
-      <a-link
-        target="_blank"
-        href="https://github.com/iimeta/fastapi-admin/releases"
-      >
+      <a-link :href="appStore.getAnnouncementMoreUrl" target="_blank">
         {{ $t('workplace.viewMore') }}
       </a-link>
     </template>
     <div>
-      <div v-for="(item, idx) in list" :key="idx" class="item">
-        <a-tag :color="item.type" size="small">{{ item.label }}</a-tag>
+      <div
+        v-for="(announcement, idx) in appStore.getAnnouncements"
+        :key="idx"
+        class="item"
+      >
+        <a-tag color="blue" size="small">通知</a-tag>
         <span class="item-content">
-          <a-link
-            target="_blank"
-            href="https://github.com/iimeta/fastapi-admin/releases"
-          >
-            {{ item.content }}
+          <a-link :href="announcement.jump_url" target="_blank">
+            {{ announcement.content }}
           </a-link>
         </span>
       </div>
@@ -31,23 +29,9 @@
 </template>
 
 <script lang="ts" setup>
-  const list = [
-    {
-      type: 'blue',
-      label: '通知',
-      content: 'v1.1.0 版本发布啦! 啦!! 啦!!!',
-    },
-    {
-      type: 'blue',
-      label: '通知',
-      content: 'v1.0.0 版本发布啦! 啦!! 啦!!!',
-    },
-    {
-      type: 'blue',
-      label: '通知',
-      content: 'v0.5.0 版本发布啦! 啦!! 啦!!!',
-    },
-  ];
+  import { useAppStore } from '@/store';
+
+  const appStore = useAppStore();
 </script>
 
 <style scoped lang="less">
