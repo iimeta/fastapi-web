@@ -57,7 +57,8 @@ const useAppStore = defineStore('app', {
       return state.config?.carousel1_title || '赞助商';
     },
     getCarousels1(state: AppState): Carousel[] | undefined {
-      return state.config?.carousels1 || [
+      return (
+        state.config?.carousels1 || [
           {
             image_url: 'https://fastapi.ai/public/images/iimyun.png',
             jump_url: 'https://www.iimyun.com/cart?fid=3&gid=11',
@@ -70,13 +71,15 @@ const useAppStore = defineStore('app', {
             image_url: 'https://fastapi.ai/public/images/iimyun.png',
             jump_url: 'https://www.iimyun.com/cart?fid=3&gid=11',
           },
-      ];
+        ]
+      );
     },
     getCarousel2Title(state: AppState): string | undefined {
       return state.config?.carousel2_title || '作者';
     },
     getCarousels2(state: AppState): Carousel[] | undefined {
-      return state.config?.carousels2 || [
+      return (
+        state.config?.carousels2 || [
           {
             image_url: 'https://fastapi.ai/Author.png',
             jump_url: 'https://github.com/iimeta/fastapi',
@@ -85,38 +88,53 @@ const useAppStore = defineStore('app', {
             image_url: 'https://fastapi.ai/AuthorQQ.png',
             jump_url: 'https://github.com/iimeta/fastapi',
           },
-      ];
+        ]
+      );
     },
     getAnnouncementTitle(state: AppState): string | undefined {
       return state.config?.announcement_title || '公告';
     },
     getAnnouncementMoreUrl(state: AppState): string | undefined {
-      return state.config?.announcement_more_url || state.config?.announcement_title ? undefined : 'https://github.com/iimeta/fastapi-admin/releases';
+      return (
+        state.config?.announcement_more_url ||
+        (state.config?.announcement_title
+          ? undefined
+          : 'https://github.com/iimeta/fastapi-admin/releases')
+      );
     },
     getAnnouncements(state: AppState): Announcement[] | undefined {
-      return state.config?.announcements || [
+      return (
+        state.config?.announcements || [
           {
             content: 'v1.1.0 版本发布啦! 啦!! 啦!!!',
-            jump_url: 'https://github.com/iimeta/fastapi-admin/releases/tag/v1.1.0',
+            jump_url:
+              'https://github.com/iimeta/fastapi-admin/releases/tag/v1.1.0',
           },
           {
             content: 'v1.0.0 版本发布啦! 啦!! 啦!!!',
-            jump_url: 'https://github.com/iimeta/fastapi-admin/releases/tag/v1.0.0',
+            jump_url:
+              'https://github.com/iimeta/fastapi-admin/releases/tag/v1.0.0',
           },
           {
             content: 'v0.5.0 版本发布啦! 啦!! 啦!!!',
-            jump_url: 'https://github.com/iimeta/fastapi-admin/releases/tag/v0.5.0',
+            jump_url:
+              'https://github.com/iimeta/fastapi-admin/releases/tag/v0.5.0',
           },
-      ];
+        ]
+      );
     },
     getDocumentTitle(state: AppState): string | undefined {
       return state.config?.document_title || '使用指南';
     },
     getDocumentMoreUrl(state: AppState): string | undefined {
-      return state.config?.document_more_url || state.config?.document_title ? undefined : 'https://www.fastapi.ai';
+      return (
+        state.config?.document_more_url ||
+        (state.config?.document_title ? undefined : 'https://www.fastapi.ai')
+      );
     },
     getDocuments(state: AppState): Document[] | undefined {
-      return state.config?.documents || [
+      return (
+        state.config?.documents || [
           {
             title: '产品概要',
             jump_url: 'https://www.fastapi.ai/guide/why.html',
@@ -133,7 +151,8 @@ const useAppStore = defineStore('app', {
             title: '接口文档',
             jump_url: 'https://www.fastapi.ai/api/',
           },
-      ];
+        ]
+      );
     },
   },
 
