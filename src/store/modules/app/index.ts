@@ -97,15 +97,15 @@ const useAppStore = defineStore('app', {
       return state.config?.announcements || [
           {
             content: 'v1.1.0 版本发布啦! 啦!! 啦!!!',
-            jump_url: 'https://github.com/iimeta/fastapi-admin/releases',
+            jump_url: 'https://github.com/iimeta/fastapi-admin/releases/tag/v1.1.0',
           },
           {
             content: 'v1.0.0 版本发布啦! 啦!! 啦!!!',
-            jump_url: 'https://github.com/iimeta/fastapi-admin/releases',
+            jump_url: 'https://github.com/iimeta/fastapi-admin/releases/tag/v1.0.0',
           },
           {
             content: 'v0.5.0 版本发布啦! 啦!! 啦!!!',
-            jump_url: 'https://github.com/iimeta/fastapi-admin/releases',
+            jump_url: 'https://github.com/iimeta/fastapi-admin/releases/tag/v0.5.0',
           },
       ];
     },
@@ -113,7 +113,7 @@ const useAppStore = defineStore('app', {
       return state.config?.document_title || '使用指南';
     },
     getDocumentMoreUrl(state: AppState): string | undefined {
-      return state.config?.document_more_url || state.config?.document_title ? undefined :  'https://www.fastapi.ai';
+      return state.config?.document_more_url || state.config?.document_title ? undefined : 'https://www.fastapi.ai';
     },
     getDocuments(state: AppState): Document[] | undefined {
       return state.config?.documents || [
@@ -122,7 +122,7 @@ const useAppStore = defineStore('app', {
             jump_url: 'https://www.fastapi.ai/guide/why.html',
           },
           {
-            title: '帮助文档',
+            title: '常见问题',
             jump_url: 'https://www.fastapi.ai/guide/faq.html',
           },
           {
