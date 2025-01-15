@@ -40,17 +40,20 @@
         >
           <QuickOperation />
         </a-grid-item>
-        <a-grid-item class="panel" :span="24">
+        <a-grid-item v-if="appStore.getCarousel1Title" class="panel" :span="24">
           <Sponsor />
         </a-grid-item>
-        <a-grid-item class="panel" :span="24">
+        <a-grid-item v-if="appStore.getCarousel2Title" class="panel" :span="24">
           <Author />
         </a-grid-item>
-        <a-grid-item class="panel" :span="24">
+        <a-grid-item
+          v-if="appStore.getAnnouncementTitle"
+          class="panel"
+          :span="24"
+        >
           <Announcement />
         </a-grid-item>
-
-        <a-grid-item class="panel" :span="24">
+        <a-grid-item v-if="appStore.getDocumentTitle" class="panel" :span="24">
           <Docs />
         </a-grid-item>
       </a-grid>
@@ -59,6 +62,7 @@
 </template>
 
 <script lang="ts" setup>
+  import { useAppStore } from '@/store';
   import Banner from './components/banner.vue';
   import DataPanel from './components/data-panel.vue';
   import DataChart from './components/data-chart.vue';
@@ -71,6 +75,8 @@
   import Sponsor from './components/sponsor.vue';
   import Announcement from './components/announcement.vue';
   import Docs from './components/docs.vue';
+
+  const appStore = useAppStore();
 </script>
 
 <script lang="ts">

@@ -101,6 +101,12 @@
   ];
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'QuickOperation', // If you want the include property of keep-alive to take effect, you must name the component
+  };
+</script>
+
 <style scoped lang="less">
   .moduler-wrap .wrapper {
     margin-top: 7px;

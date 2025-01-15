@@ -45,18 +45,20 @@
   const expense = reactive({}) as Expense;
 
   const getExpense = async () => {
-    try {
-      const { data } = await queryExpense();
-      expense.quota = data.quota;
-      expense.quota_usd = data.quota_usd;
-      expense.used_quota = data.used_quota;
-      expense.used_quota_usd = data.used_quota_usd;
-      expense.quota_expires_at = data.quota_expires_at;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
+    const { data } = await queryExpense();
+    expense.quota = data.quota;
+    expense.quota_usd = data.quota_usd;
+    expense.used_quota = data.used_quota;
+    expense.used_quota_usd = data.used_quota_usd;
+    expense.quota_expires_at = data.quota_expires_at;
   };
   getExpense();
+</script>
+
+<script lang="ts">
+  export default {
+    name: 'Expense', // If you want the include property of keep-alive to take effect, you must name the component
+  };
 </script>
 
 <style lang="less" scoped>

@@ -306,6 +306,12 @@
   });
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'DataPanel', // If you want the include property of keep-alive to take effect, you must name the component
+  };
+</script>
+
 <style lang="less" scoped>
   .arco-grid.panel {
     margin-bottom: 0;

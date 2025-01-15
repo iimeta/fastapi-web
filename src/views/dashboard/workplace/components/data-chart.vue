@@ -306,8 +306,6 @@
           graphicElements.value[1].style.text = el.date;
         }
       });
-    } catch (err) {
-      // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }
@@ -322,6 +320,12 @@
     fetchData(days);
   };
   fetchData(15);
+</script>
+
+<script lang="ts">
+  export default {
+    name: 'DataChart', // If you want the include property of keep-alive to take effect, you must name the component
+  };
 </script>
 
 <style scoped lang="less"></style>

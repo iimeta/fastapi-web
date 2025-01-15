@@ -20,45 +20,51 @@ const useAppStore = defineStore('app', {
     appAsyncMenus(state: AppState): RouteRecordNormalized[] {
       return state.serverMenu as unknown as RouteRecordNormalized[];
     },
+    getDomain(state: AppState): string | undefined {
+      return state.config.domain;
+    },
     getTitle(state: AppState): string | undefined {
-      return state.config?.title || '智元 Fast API';
+      return state.config.title || '智元 Fast API';
     },
     getLogo(state: AppState): string | undefined {
-      return state.config?.logo || '/logo.png';
+      return state.config.logo || '/logo.png';
     },
     getFavicon(state: AppState): string | undefined {
-      return state.config?.favicon || '/favicon.ico';
+      return state.config.favicon || '/favicon.ico';
     },
     getAvatar(state: AppState): string | undefined {
-      return state.config?.avatar || '/avatar.png';
+      return state.config.avatar || '/avatar.png';
     },
     getBgImg(state: AppState): string | undefined {
-      return state.config?.bg_img || '/bgimg.jpg';
+      return state.config.bg_img || '/bgimg.jpg';
     },
     getCopyright(state: AppState): string | undefined {
       return (
-        state.config?.copyright ||
+        state.config.copyright ||
         'Copyright © 2023-2025 IIM. All Rights Reserved.'
       );
     },
     getJumpUrl(state: AppState): string | undefined {
-      return state.config?.jump_url;
+      return state.config.jump_url;
     },
     getIcpBeian(state: AppState): string | undefined {
-      return state.config?.icp_beian;
+      return state.config.icp_beian;
     },
     getGaBeian(state: AppState): string | undefined {
-      return state.config?.ga_beian;
+      return state.config.ga_beian;
     },
     getRegisterTips(state: AppState): string {
-      return state.config?.register_tips || '';
+      return state.config.register_tips || '';
     },
     getCarousel1Title(state: AppState): string | undefined {
-      return state.config?.carousel1_title || '赞助商';
+      return (
+        state.config.carousel1_title ||
+        (state.config.domain ? undefined : '赞助商')
+      );
     },
     getCarousels1(state: AppState): Carousel[] | undefined {
       return (
-        state.config?.carousels1 || [
+        state.config.carousels1 || [
           {
             image_url: 'https://fastapi.ai/public/images/iimyun.png',
             jump_url: 'https://www.iimyun.com/cart?fid=3&gid=11',
@@ -75,11 +81,14 @@ const useAppStore = defineStore('app', {
       );
     },
     getCarousel2Title(state: AppState): string | undefined {
-      return state.config?.carousel2_title || '作者';
+      return (
+        state.config.carousel2_title ||
+        (state.config.domain ? undefined : '作者')
+      );
     },
     getCarousels2(state: AppState): Carousel[] | undefined {
       return (
-        state.config?.carousels2 || [
+        state.config.carousels2 || [
           {
             image_url: 'https://fastapi.ai/Author.png',
             jump_url: 'https://github.com/iimeta/fastapi',
@@ -92,19 +101,22 @@ const useAppStore = defineStore('app', {
       );
     },
     getAnnouncementTitle(state: AppState): string | undefined {
-      return state.config?.announcement_title || '公告';
+      return (
+        state.config.announcement_title ||
+        (state.config.domain ? undefined : '公告')
+      );
     },
     getAnnouncementMoreUrl(state: AppState): string | undefined {
       return (
-        state.config?.announcement_more_url ||
-        (state.config?.announcement_title
+        state.config.announcement_more_url ||
+        (state.config.announcement_title
           ? undefined
           : 'https://github.com/iimeta/fastapi-admin/releases')
       );
     },
     getAnnouncements(state: AppState): Announcement[] | undefined {
       return (
-        state.config?.announcements || [
+        state.config.announcements || [
           {
             content: 'v1.1.0 版本发布啦! 啦!! 啦!!!',
             jump_url:
@@ -124,17 +136,20 @@ const useAppStore = defineStore('app', {
       );
     },
     getDocumentTitle(state: AppState): string | undefined {
-      return state.config?.document_title || '使用指南';
+      return (
+        state.config.document_title ||
+        (state.config.domain ? undefined : '使用指南')
+      );
     },
     getDocumentMoreUrl(state: AppState): string | undefined {
       return (
-        state.config?.document_more_url ||
-        (state.config?.document_title ? undefined : 'https://www.fastapi.ai')
+        state.config.document_more_url ||
+        (state.config.document_title ? undefined : 'https://www.fastapi.ai')
       );
     },
     getDocuments(state: AppState): Document[] | undefined {
       return (
-        state.config?.documents || [
+        state.config.documents || [
           {
             title: '产品概要',
             jump_url: 'https://www.fastapi.ai/guide/why.html',
@@ -214,6 +229,7 @@ const useAppStore = defineStore('app', {
         domain: window.location.hostname,
       }).then((res) => {
         this.config = {
+          domain: res.data.domain,
           title: res.data.title,
           logo: res.data.logo,
           favicon: res.data.favicon,

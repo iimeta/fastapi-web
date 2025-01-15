@@ -31,6 +31,12 @@
   const appStore = useAppStore();
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'Docs', // If you want the include property of keep-alive to take effect, you must name the component
+  };
+</script>
+
 <style lang="less" scoped>
   .arco-card-body .arco-link {
     margin: 2px 0;

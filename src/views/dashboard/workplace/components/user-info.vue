@@ -41,6 +41,12 @@
   const appStore = useAppStore();
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'UserInfo', // If you want the include property of keep-alive to take effect, you must name the component
+  };
+</script>
+
 <style lang="less" scoped>
   .header {
     display: flex;
