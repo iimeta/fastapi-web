@@ -94,8 +94,6 @@
     try {
       const { data } = await queryModelPercent(days);
       statisticsData.value = data;
-    } catch (err) {
-      // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }

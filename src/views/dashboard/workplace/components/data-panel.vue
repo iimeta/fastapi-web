@@ -220,12 +220,8 @@
   let getPerMinuteIntervalId: ReturnType<typeof setInterval> | undefined;
 
   const getBaseData = async () => {
-    try {
-      const { data } = await queryBaseData();
-      Object.assign(baseData, data);
-    } catch (err) {
-      // Handle error
-    }
+    const { data } = await queryBaseData();
+    Object.assign(baseData, data);
   };
 
   const getPerSecond = async () => {
