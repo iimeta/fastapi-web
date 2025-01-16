@@ -104,20 +104,7 @@
           }}
         </span>
       </a-descriptions-item> -->
-      <a-descriptions-item label="花费令牌数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          currentData.total_tokens
-            ? currentData.total_tokens
-            : currentData.status === 1 &&
-              currentData.text_quota.billing_method === 2
-            ? 0
-            : '-'
-        }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="提问倍率" :span="2">
+      <a-descriptions-item label="提问倍率">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -127,7 +114,7 @@
             : currentData.multimodal_quota.text_quota.prompt_ratio || '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答倍率">
+      <a-descriptions-item label="回答倍率" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -139,23 +126,17 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="提问令牌数" :span="2">
+      <a-descriptions-item label="提问令牌数">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.prompt_tokens || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答令牌数">
+      <a-descriptions-item label="回答令牌数" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.completion_tokens || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="搜索令牌数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.search_tokens || '-' }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="缓存写入令牌数">
         <a-skeleton v-if="loading" :animation="true">
@@ -168,6 +149,27 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.cache_hit_tokens || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="搜索令牌数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.search_tokens || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="花费令牌数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.total_tokens
+              ? currentData.total_tokens
+              : currentData.status === 1 &&
+                currentData.text_quota.billing_method === 2
+              ? 0
+              : '-'
+          }}
+        </span>
       </a-descriptions-item>
       <a-descriptions-item label="连接耗时">
         <a-skeleton v-if="loading" :animation="true">
@@ -495,20 +497,7 @@
           )
         }}</span>
       </a-descriptions-item> -->
-      <a-descriptions-item label="花费令牌数" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          currentData.total_tokens
-            ? currentData.total_tokens
-            : currentData.status === 1 &&
-              currentData.text_quota.billing_method === 2
-            ? 0
-            : '-'
-        }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="提问倍率">
+      <a-descriptions-item label="提问倍率" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -518,7 +507,7 @@
             : currentData.multimodal_quota.text_quota.prompt_ratio || '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答倍率" :span="2">
+      <a-descriptions-item label="回答倍率">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -528,23 +517,17 @@
             : currentData.multimodal_quota.text_quota.completion_ratio || '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="提问令牌数">
+      <a-descriptions-item label="提问令牌数" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.prompt_tokens || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答令牌数" :span="2">
+      <a-descriptions-item label="回答令牌数">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.completion_tokens || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="搜索令牌数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.search_tokens || '-' }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="缓存写入令牌数" :span="2">
         <a-skeleton v-if="loading" :animation="true">
@@ -557,6 +540,27 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.cache_hit_tokens || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="搜索令牌数" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.search_tokens || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="花费令牌数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.total_tokens
+              ? currentData.total_tokens
+              : currentData.status === 1 &&
+                currentData.text_quota.billing_method === 2
+              ? 0
+              : '-'
+          }}
+        </span>
       </a-descriptions-item>
       <a-descriptions-item label="连接耗时" :span="2">
         <a-skeleton v-if="loading" :animation="true">
