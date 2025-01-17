@@ -34,7 +34,13 @@
           <Expense />
         </a-grid-item>
         <a-grid-item
-          v-permission="['admin']"
+          v-if="
+            userStore.role === 'admin' ||
+            !appStore.getCarousel1Title ||
+            !appStore.getCarousel2Title ||
+            !appStore.getAnnouncementTitle ||
+            !appStore.getDocumentTitle
+          "
           class="panel moduler-wrap"
           :span="24"
         >
@@ -62,7 +68,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { useAppStore } from '@/store';
+  import { useAppStore, useUserStore } from '@/store';
   import Banner from './components/banner.vue';
   import DataPanel from './components/data-panel.vue';
   import DataChart from './components/data-chart.vue';
@@ -77,6 +83,7 @@
   import Docs from './components/docs.vue';
 
   const appStore = useAppStore();
+  const userStore = useUserStore();
 </script>
 
 <script lang="ts">
