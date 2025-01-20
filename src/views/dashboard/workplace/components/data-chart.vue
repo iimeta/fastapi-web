@@ -50,7 +50,9 @@
           <span>${el.seriesName}</span>
         </p>
         <span class="tooltip-value">
-        ${el.value.toLocaleString()}
+        ${el.value.toLocaleString(undefined, {
+          maximumFractionDigits: 6,
+        })}
         </span>
       </div>`
       )
