@@ -18,6 +18,7 @@ import localeChat from '@/views/log/chat/locale/zh-CN';
 import localeImage from '@/views/log/image/locale/zh-CN';
 import localeAudio from '@/views/log/audio/locale/zh-CN';
 import localeSiteConfig from '@/views/system/site_config/locale/zh-CN';
+import localeSysConfig from '@/views/system/config/locale/zh-CN';
 
 import localeSettings from './zh-CN/settings';
 
@@ -39,4 +40,5 @@ export default {
   ...localeImage,
   ...localeAudio,
   ...localeSiteConfig,
+  ...localeSysConfig,
 };

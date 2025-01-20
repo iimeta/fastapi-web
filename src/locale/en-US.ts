@@ -18,6 +18,7 @@ import localeChat from '@/views/log/chat/locale/en-US';
 import localeImage from '@/views/log/image/locale/en-US';
 import localeAudio from '@/views/log/audio/locale/en-US';
 import localeSiteConfig from '@/views/system/site_config/locale/en-US';
+import localeSysConfig from '@/views/system/config/locale/en-US';
 
 import localeSettings from './en-US/settings';
 
@@ -39,4 +40,5 @@ export default {
   ...localeImage,
   ...localeAudio,
   ...localeSiteConfig,
+  ...localeSysConfig,
 };

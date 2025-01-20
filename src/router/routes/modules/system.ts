@@ -44,6 +44,16 @@ const SYS: AppRouteRecordRaw = {
         hideInMenu: true,
       },
     },
+    {
+      path: 'config/list',
+      name: 'SysConfig',
+      component: () => import('@/views/system/config/list/index.vue'),
+      meta: {
+        locale: 'menu.sys.config',
+        requiresAuth: true,
+        roles: ['admin'],
+      },
+    },
   ],
 };
 
