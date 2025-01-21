@@ -35,6 +35,38 @@
                 <span>{{ expiresTagText }}</span>
               </a-tag>
             </template>
+            <template v-if="actionType">
+              <a-switch v-if="actionType === 'switch'" v-model="open" />
+              <a-space v-else-if="actionType === 'button'">
+                <template v-if="isExpires">
+                  <a-button type="outline" @click="renew">
+                    {{ expiresText }}
+                  </a-button>
+                </template>
+                <template v-else>
+                  <a-button v-if="open" @click="handleToggle">
+                    {{ closeTxt }}
+                  </a-button>
+                  <a-button
+                    v-else-if="!open"
+                    type="outline"
+                    @click="handleToggle"
+                  >
+                    {{ openTxt }}
+                  </a-button>
+                </template>
+              </a-space>
+              <div v-else>
+                <a-space>
+                  <a-button @click="toggle(false)">
+                    {{ closeTxt }}
+                  </a-button>
+                  <a-button type="primary" @click="toggle(true)">
+                    {{ openTxt }}
+                  </a-button>
+                </a-space>
+              </div>
+            </template>
           </template>
           <template #description>
             {{ description }}
