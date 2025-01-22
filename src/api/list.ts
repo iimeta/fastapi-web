@@ -37,6 +37,7 @@ export interface ServiceRecord {
   title: string;
   description: string;
   name?: string;
+  action?: string;
   actionType?: string;
   icon?: string;
   data?: DescData[];

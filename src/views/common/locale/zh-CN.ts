@@ -83,6 +83,7 @@ export default {
   'button.download': '下载',
   'button.return': '返回',
   'button.export': '导出',
+  'button.config': '配置',
   // success
   'success.create': '新建成功',
   'success.update': '修改成功',

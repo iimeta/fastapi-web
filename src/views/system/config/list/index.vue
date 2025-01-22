@@ -1,32 +1,49 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.list', 'menu.list.cardList']" />
+    <a-breadcrumb class="container-breadcrumb">
+      <a-breadcrumb-item>
+        <icon-settings />
+      </a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.sys.config') }}</a-breadcrumb-item>
+    </a-breadcrumb>
     <a-row :gutter="20" align="stretch">
       <a-col :span="24">
-        <a-card class="general-card" :title="$t('menu.list.cardList')">
+        <a-card
+          class="general-card"
+          :bordered="false"
+          :header-style="{ padding: '20px' }"
+          :body-style="{
+            padding: '25px 20px 20px 14px',
+          }"
+        >
           <a-row justify="space-between">
             <a-col :span="24">
               <a-tabs :default-active-tab="1" type="rounded">
                 <a-tab-pane key="1" :title="$t('cardList.tab.title.all')">
+                  <Global />
                   <QualityInspection />
                   <TheService />
                   <RulesPreset />
                 </a-tab-pane>
-                <a-tab-pane key="2" :title="$t('cardList.tab.title.content')">
+                <a-tab-pane key="2" :title="$t('sys.config.tab.title.global')">
+                  <Global />
+                </a-tab-pane>
+                <a-tab-pane key="3" :title="$t('cardList.tab.title.content')">
                   <QualityInspection />
                 </a-tab-pane>
-                <a-tab-pane key="3" :title="$t('cardList.tab.title.service')">
+                <a-tab-pane key="4" :title="$t('cardList.tab.title.service')">
                   <TheService />
                 </a-tab-pane>
-                <a-tab-pane key="4" :title="$t('cardList.tab.title.preset')">
+                <a-tab-pane key="5" :title="$t('cardList.tab.title.preset')">
                   <RulesPreset />
                 </a-tab-pane>
               </a-tabs>
             </a-col>
-            <a-input-search
+            <!-- <a-input-search
               :placeholder="$t('cardList.searchInput.placeholder')"
-              style="width: 240px; position: absolute; top: 60px; right: 20px"
-            />
+              style="width: 240px; position: absolute; top: 25px; right: 20px"
+            /> -->
           </a-row>
         </a-card>
       </a-col>
@@ -35,6 +52,7 @@
 </template>
 
 <script lang="ts" setup>
+  import Global from './components/global.vue';
   import QualityInspection from './components/quality-inspection.vue';
   import TheService from './components/the-service.vue';
   import RulesPreset from './components/rules-preset.vue';
@@ -48,7 +66,7 @@
 
 <style scoped lang="less">
   .container {
-    padding: 0 20px 20px 20px;
+    padding: 0 10px 20px 10px;
     :deep(.arco-list-content) {
       overflow-x: hidden;
     }
@@ -88,5 +106,18 @@
         }
       }
     }
+  }
+  .container-breadcrumb {
+    margin: 6px 0;
+    :deep(.arco-breadcrumb-item) {
+      color: rgb(var(--gray-6));
+      &:last-child {
+        color: rgb(var(--gray-8));
+      }
+    }
+  }
+  :deep(.arco-tabs-content) {
+    padding-top: 6px;
+    padding-left: 6px;
   }
 </style>

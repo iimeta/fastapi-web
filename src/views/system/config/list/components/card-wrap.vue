@@ -5,37 +5,12 @@
     </a-card>
     <a-card v-else :bordered="false" hoverable>
       <a-space align="start">
-        <a-avatar
-          v-if="icon"
-          :size="24"
-          style="margin-right: 8px; background-color: #626aea"
-        >
-          <icon-filter />
-        </a-avatar>
         <a-card-meta>
           <template #title>
-            <a-typography-text style="margin-right: 10px">
+            <a-typography-text style="margin-right: 130px">
               {{ title }}
             </a-typography-text>
-            <template v-if="showTag">
-              <a-tag
-                v-if="open && isExpires === false"
-                size="small"
-                color="green"
-              >
-                <template #icon>
-                  <icon-check-circle-fill />
-                </template>
-                <span>{{ tagText }}</span>
-              </a-tag>
-              <a-tag v-else-if="isExpires" size="small" color="red">
-                <template #icon>
-                  <icon-check-circle-fill />
-                </template>
-                <span>{{ expiresTagText }}</span>
-              </a-tag>
-            </template>
-            <template v-if="actionType">
+            <span v-if="actionType">
               <a-switch v-if="actionType === 'switch'" v-model="open" />
               <a-space v-else-if="actionType === 'button'">
                 <template v-if="isExpires">
@@ -66,7 +41,7 @@
                   </a-button>
                 </a-space>
               </div>
-            </template>
+            </span>
           </template>
           <template #description>
             {{ description }}
@@ -75,7 +50,11 @@
         </a-card-meta>
       </a-space>
       <template #actions>
-        <a-switch v-if="actionType === 'switch'" v-model="open" />
+        <a-switch
+          v-if="actionType === 'switch'"
+          v-model="open"
+          @change="configChangeStatus()"
+        />
         <a-space v-else-if="actionType === 'button'">
           <template v-if="isExpires">
             <a-button type="outline" @click="renew">
@@ -86,7 +65,7 @@
             <a-button v-if="open" @click="handleToggle">
               {{ closeTxt }}
             </a-button>
-            <a-button v-else-if="!open" type="outline" @click="handleToggle">
+            <a-button v-else-if="!open" type="primary" @click="handleToggle">
               {{ openTxt }}
             </a-button>
           </template>
@@ -107,8 +86,16 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, getCurrentInstance } from 'vue';
+  import useLoading from '@/hooks/loading';
   import { useToggle } from '@vueuse/core';
+  import {
+    SysConfigChangeStatus,
+    submitSysConfigChangeStatus,
+  } from '@/api/sys_config';
+
+  const { proxy } = getCurrentInstance() as any;
+  const { setLoading } = useLoading(true);
 
   const props = defineProps({
     loading: {
@@ -120,6 +107,10 @@
       default: '',
     },
     description: {
+      type: String,
+      default: '',
+    },
+    action: {
       type: String,
       default: '',
     },
@@ -171,6 +162,29 @@
   const isExpires = ref(props.expires);
   const renew = () => {
     isExpires.value = false;
+  };
+
+  const configChangeStatus = async (
+    params: SysConfigChangeStatus = {
+      action: props.action,
+      open: open.value,
+    }
+  ) => {
+    setLoading(true);
+    try {
+      await submitSysConfigChangeStatus(params);
+      proxy.$message.success('操作成功');
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+</script>
+
+<script lang="ts">
+  export default {
+    name: 'CardWrap',
   };
 </script>
 

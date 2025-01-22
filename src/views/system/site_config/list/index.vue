@@ -217,7 +217,7 @@
             :checked-value="1"
             :unchecked-value="2"
             @change="
-              corpChangeStatus({
+              siteChangeStatus({
                 id: `${record.id}`,
                 status: Number(`${record.status}`),
               })
@@ -242,7 +242,7 @@
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="corpDelete({ id: `${record.id}` })"
+            @ok="siteDelete({ id: `${record.id}` })"
           >
             <a-button type="text" size="small">
               {{ $t('operations.delete') }}
@@ -310,7 +310,7 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const corpDelete = async (params: SiteConfigDeleteParams) => {
+  const siteDelete = async (params: SiteConfigDeleteParams) => {
     setLoading(true);
     try {
       await submitSiteConfigDelete(params);
@@ -484,7 +484,7 @@
     formModel.value = generateFormModel();
   };
 
-  const corpChangeStatus = async (params: SiteConfigChangeStatus) => {
+  const siteChangeStatus = async (params: SiteConfigChangeStatus) => {
     setLoading(true);
     try {
       await submitSiteConfigChangeStatus(params);

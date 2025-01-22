@@ -1,8 +1,5 @@
 <template>
   <div class="list-wrap">
-    <a-typography-title class="block-title" :heading="6">
-      {{ $t('cardList.tab.title.content') }}
-    </a-typography-title>
     <a-row class="list-row" :gutter="24">
       <a-col
         v-for="item in renderData"
@@ -58,6 +55,18 @@
       title: '视频类-历史导入',
       description: '2021-10-12 00:00:00',
       data: [
+        {
+          label: '待质检数',
+          value: '120',
+        },
+        {
+          label: '积压时长',
+          value: '60s',
+        },
+        {
+          label: '待抽检数',
+          value: '0',
+        },
         {
           label: '待质检数',
           value: '120',
