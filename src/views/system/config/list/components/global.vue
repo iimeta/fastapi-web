@@ -22,7 +22,11 @@
             }"
           >
             <template #extra>
-              <a-switch v-if="item.open !== undefined" />
+              <a-switch
+                v-if="item.open !== undefined"
+                v-model="item.open"
+                @change="sysConfigChangeStatus(item)"
+              />
             </template>
             <a-card-meta>
               <template #description>
@@ -62,10 +66,8 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { ServiceRecord } from '@/api/list';
   import {
     SysConfigItem,
-    SysConfigChangeStatus,
     submitSysConfigChangeStatus,
     querySysConfigDetail,
   } from '@/api/sys_config';
@@ -73,41 +75,58 @@
   const { proxy } = getCurrentInstance() as any;
   const { setLoading } = useLoading(true);
 
-  const sysConfigItems: SysConfigItem[] = [
-    {
-      action: 'email',
-      title: '邮箱配置',
-      description: '配置邮箱相关信息',
-      open: false,
-      config: true,
-    },
-    {
-      action: 'http',
-      title: 'HTTP配置',
-      description: '配置HTTP请求超时时间和代理地址',
-      open: false,
-      config: true,
-    },
-    {
-      action: 'core',
-      title: '核心配置',
-      description: '系统核心配置, 请谨慎修改',
-      reset: true,
-      config: true,
-    },
-    {
-      action: 'debug',
-      title: '调试开关',
-      description:
-        '系统调试开关, 打开后, 日志会打印更多详细信息, 日志级别需是DEBUG',
-      open: false,
-    },
-  ];
+  const sysConfigItems = ref<SysConfigItem[]>({} as SysConfigItem[]);
 
   const getSysConfigDetail = async () => {
     const { data } = await querySysConfigDetail();
+    sysConfigItems.value = [
+      {
+        action: 'email',
+        title: '邮箱配置',
+        description: '配置邮箱相关信息',
+        open: data.email.open,
+        config: true,
+      },
+      {
+        action: 'http',
+        title: 'HTTP配置',
+        description: '配置HTTP请求超时时间和代理地址',
+        open: data.http.open,
+        config: true,
+      },
+      {
+        action: 'core',
+        title: '核心配置',
+        description: '系统核心配置, 请谨慎修改',
+        reset: true,
+        config: true,
+      },
+      {
+        action: 'debug',
+        title: '调试开关',
+        description:
+          '系统调试开关, 打开后, 日志会打印更多详细信息, 日志级别需是DEBUG',
+        open: data.debug.open,
+      },
+    ];
   };
   getSysConfigDetail();
+
+  const sysConfigChangeStatus = async (sysConfigItem: SysConfigItem) => {
+    setLoading(true);
+    try {
+      await submitSysConfigChangeStatus({
+        action: sysConfigItem.action,
+        open: sysConfigItem.open,
+      });
+      proxy.$message.success('操作成功');
+      getSysConfigDetail();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 </script>
 
 <script lang="ts">
