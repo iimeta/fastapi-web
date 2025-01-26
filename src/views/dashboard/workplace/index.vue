@@ -27,7 +27,7 @@
           </div>
         </a-grid-item>
         <a-grid-item
-          v-permission="['user']"
+          v-if="userStore.role !== 'admin'"
           class="panel moduler-wrap"
           :span="24"
         >

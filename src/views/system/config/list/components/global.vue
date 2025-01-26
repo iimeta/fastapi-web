@@ -40,10 +40,14 @@
               </template>
             </a-card-meta>
             <template #actions>
-              <a-button v-if="item.reset">
+              <a-button v-if="item.reset" @click="resetHandle(item)">
                 {{ $t('button.reset') }}
               </a-button>
-              <a-button v-if="item.config" type="primary">
+              <a-button
+                v-if="item.config"
+                type="primary"
+                @click="configHandle(item)"
+              >
                 {{ $t('button.config') }}
               </a-button>
             </template>
@@ -60,38 +64,137 @@
         </div>
       </a-col>
     </a-row>
+
+    <a-modal
+      v-model:visible="configVisible"
+      :title="$t(configTitle)"
+      @cancel="handleCancel"
+      @before-ok="handleBeforeOk"
+    >
+      <a-form ref="configForm" :model="configFormData">
+        <a-form-item
+          field="email.host"
+          :label="$t('sys.config.label.host')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.host.required'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.email.host"
+            :placeholder="$t('sys.config.placeholder.host')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          field="email.port"
+          :label="$t('sys.config.label.port')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.port.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.email.port"
+            :placeholder="$t('sys.config.placeholder.port')"
+            :min="1"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          field="email.user_name"
+          :label="$t('sys.config.label.user_name')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.user_name.required'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.email.user_name"
+            :placeholder="$t('sys.config.placeholder.user_name')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          field="email.password"
+          :label="$t('sys.config.label.password')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.password.required'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.email.password"
+            :placeholder="$t('sys.config.placeholder.password')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          field="email.from_name"
+          :label="$t('sys.config.label.from_name')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.from_name.required'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.email.from_name"
+            :placeholder="$t('sys.config.placeholder.from_name')"
+            allow-clear
+          />
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
+  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { useI18n } from 'vue-i18n';
   import {
     SysConfigItem,
     submitSysConfigChangeStatus,
+    SysConfigDetail,
     querySysConfigDetail,
+    SysConfigUpdate,
+    submitSysConfigUpdate,
   } from '@/api/sys_config';
 
   const { proxy } = getCurrentInstance() as any;
   const { setLoading } = useLoading(true);
+  const { t } = useI18n();
 
+  const currentData = ref<SysConfigDetail>({} as SysConfigDetail);
   const sysConfigItems = ref<SysConfigItem[]>({} as SysConfigItem[]);
 
   const getSysConfigDetail = async () => {
     const { data } = await querySysConfigDetail();
+    currentData.value = data;
     sysConfigItems.value = [
       {
         action: 'email',
-        title: '邮箱配置',
+        title: t('sys.config.item.title.email'),
         description: '配置邮箱相关信息',
-        open: data.email.open,
+        open: currentData.value.email.open,
         config: true,
       },
       {
         action: 'http',
         title: 'HTTP配置',
         description: '配置HTTP请求超时时间和代理地址',
-        open: data.http.open,
+        open: currentData.value.http.open,
         config: true,
       },
       {
@@ -106,7 +209,7 @@
         title: '调试开关',
         description:
           '系统调试开关, 打开后, 日志会打印更多详细信息, 日志级别需是DEBUG',
-        open: data.debug.open,
+        open: currentData.value.debug.open,
       },
     ];
   };
@@ -126,6 +229,55 @@
     } finally {
       setLoading(false);
     }
+  };
+
+  const configVisible = ref(false);
+  const configTitle = ref('');
+  const configForm = ref<FormInstance>();
+
+  const configFormData = ref<SysConfigUpdate>({
+    email: {
+      open: false,
+      host: '',
+      port: 465,
+      user_name: '',
+      password: '',
+      from_name: '',
+    },
+  });
+
+  const resetHandle = async (sysConfigItem: SysConfigItem) => {
+    configVisible.value = true;
+    configTitle.value = t('sys.config.item.title.email');
+  };
+
+  const configHandle = async (sysConfigItem: SysConfigItem) => {
+    configVisible.value = true;
+    configTitle.value = t('sys.config.item.title.email');
+  };
+
+  const handleBeforeOk = async (done: any) => {
+    const res = await configForm.value?.validate();
+    if (res) {
+      configVisible.value = true;
+      done(false);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await submitSysConfigUpdate(configFormData.value);
+      done();
+      window.location.reload();
+    } catch (err) {
+      done(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCancel = () => {
+    configVisible.value = false;
   };
 </script>
 

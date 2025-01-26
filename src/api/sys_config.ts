@@ -98,18 +98,18 @@ export function querySysConfigDetail() {
 }
 
 export interface SysConfigUpdate {
-  id: string;
-  action: string;
-  core: Core;
-  http: Http;
+  id?: string;
+  action?: string;
+  core?: Core;
+  http?: Http;
   email: Email;
-  statistics: Statistics;
-  api: Api;
-  midjourney: Midjourney;
-  gcp: Gcp;
-  log: Log;
-  error: Error;
-  debug: Debug;
+  statistics?: Statistics;
+  api?: Api;
+  midjourney?: Midjourney;
+  gcp?: Gcp;
+  log?: Log;
+  error?: Error;
+  debug?: Debug;
 }
 
 export function submitSysConfigUpdate(data: SysConfigUpdate) {
