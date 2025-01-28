@@ -1,7 +1,9 @@
 export default {
   'menu.sys.config': '配置管理',
-  'sys.config.tab.title.global': '全局',
   'sys.config.tab.title.all': '全部',
+  'sys.config.tab.title.global': '全局',
+  'sys.config.tab.title.task': '任务',
+  'sys.config.tab.title.api': 'API',
   'sys.config.item.title.email': '邮箱配置',
   'sys.config.item.title.http': 'HTTP配置',
   'sys.config.item.title.core': '核心配置',

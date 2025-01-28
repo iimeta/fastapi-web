@@ -19,22 +19,20 @@
         >
           <a-row justify="space-between">
             <a-col :span="24">
-              <a-tabs :default-active-tab="1" type="rounded">
-                <a-tab-pane key="1" :title="$t('sys.config.tab.title.all')">
+              <a-tabs :default-active-tab="0" type="rounded">
+                <a-tab-pane key="0" :title="$t('sys.config.tab.title.all')">
                   <Global />
+                  <Task />
+                  <API />
+                </a-tab-pane>
+                <a-tab-pane key="1" :title="$t('sys.config.tab.title.global')">
                   <Global />
                 </a-tab-pane>
-                <a-tab-pane key="2" :title="$t('sys.config.tab.title.global')">
-                  <Global />
+                <a-tab-pane key="2" :title="$t('sys.config.tab.title.task')">
+                  <Task />
                 </a-tab-pane>
-                <a-tab-pane key="3" :title="$t('sys.config.tab.title.global')">
-                  <Global />
-                </a-tab-pane>
-                <a-tab-pane key="4" :title="$t('sys.config.tab.title.global')">
-                  <Global />
-                </a-tab-pane>
-                <a-tab-pane key="5" :title="$t('sys.config.tab.title.global')">
-                  <Global />
+                <a-tab-pane key="3" :title="$t('sys.config.tab.title.api')">
+                  <API />
                 </a-tab-pane>
               </a-tabs>
             </a-col>
@@ -51,11 +49,13 @@
 
 <script lang="ts" setup>
   import Global from './components/global.vue';
+  import Task from './components/task.vue';
+  import API from './components/api.vue';
 </script>
 
 <script lang="ts">
   export default {
-    name: 'Card',
+    name: 'SysConfig',
   };
 </script>
 
