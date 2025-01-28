@@ -6,8 +6,8 @@ export interface SysConfigItem {
   title: string;
   description: string;
   open?: boolean;
-  reset?: boolean;
   config?: boolean;
+  reset?: boolean;
   data?: DescData[];
 }
 
@@ -98,18 +98,17 @@ export function querySysConfigDetail() {
 }
 
 export interface SysConfigUpdate {
-  id?: string;
-  action?: string;
-  core?: Core;
-  http?: Http;
+  action: string;
+  core: Core;
+  http: Http;
   email: Email;
-  statistics?: Statistics;
-  api?: Api;
-  midjourney?: Midjourney;
-  gcp?: Gcp;
-  log?: Log;
-  error?: Error;
-  debug?: Debug;
+  statistics: Statistics;
+  api: Api;
+  midjourney: Midjourney;
+  gcp: Gcp;
+  log: Log;
+  error: Error;
+  debug: Debug;
 }
 
 export function submitSysConfigUpdate(data: SysConfigUpdate) {
@@ -117,12 +116,18 @@ export function submitSysConfigUpdate(data: SysConfigUpdate) {
 }
 
 export interface SysConfigChangeStatus {
-  id?: string;
-  action?: string;
-  status?: number;
-  open?: boolean;
+  action: string;
+  open: boolean;
 }
 
 export function submitSysConfigChangeStatus(data: SysConfigChangeStatus) {
   return axios.post('/api/v1/sys/config/change/status', data);
+}
+
+export interface SysConfigReset {
+  action: string;
+}
+
+export function submitSysConfigReset(data: SysConfigReset) {
+  return axios.post('/api/v1/sys/config/reset', data);
 }
