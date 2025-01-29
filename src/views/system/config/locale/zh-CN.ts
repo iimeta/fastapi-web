@@ -8,6 +8,7 @@ export default {
   'sys.config.item.title.http': 'HTTP配置',
   'sys.config.item.title.core': '核心配置',
   'sys.config.item.title.debug': '调试开关',
+  'sys.config.item.title.statistics': '统计任务',
   'sys.config.searchInput.placeholder': '搜索',
   'sys.config.label.email.host': '发信服务器',
   'sys.config.placeholder.email.host': '请输入发信服务器, 如: smtp.xxx.com',

@@ -254,43 +254,18 @@
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
-    switch (sysConfigItem.action) {
-      case 'email':
-        configTitle.value = t('sys.config.item.title.email');
-        break;
-      case 'http':
-        configTitle.value = t('sys.config.item.title.http');
-        break;
-      case 'core':
-        configTitle.value = t('sys.config.item.title.core');
-        break;
-      default:
-        configTitle.value = t('menu.sys.config');
-    }
+    configTitle.value = t(`sys.config.item.title.${sysConfigItem.action}`);
     configFormData.value.action = sysConfigItem.action;
     configVisible.value = true;
   };
 
   const resetHandle = async (sysConfigItem: SysConfigItem) => {
-    let alertContent;
-    switch (sysConfigItem.action) {
-      case 'email':
-        alertContent = `是否确定重置${t('sys.config.item.title.email')}?`;
-        break;
-      case 'http':
-        alertContent = `是否确定重置${t('sys.config.item.title.http')}?`;
-        break;
-      case 'core':
-        alertContent = `是否确定重置${t('sys.config.item.title.core')}?`;
-        break;
-      default:
-        alertContent = `是否确定重置此配置?`;
-    }
-
     proxy.$modal.warning({
       title: '警告',
       titleAlign: 'center',
-      content: alertContent,
+      content: `是否确定重置${t(
+        `sys.config.item.title.${sysConfigItem.action}`
+      )}?`,
       hideCancel: false,
       onOk: () => {
         sysConfigReset(sysConfigItem);

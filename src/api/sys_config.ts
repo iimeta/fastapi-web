@@ -56,10 +56,6 @@ export interface Midjourney {
   cdn_original_url: string;
 }
 
-export interface Gcp {
-  cdn_get_token_urlurl: string;
-}
-
 export interface Log {
   open: boolean;
   records: string[];
@@ -85,7 +81,6 @@ export interface SysConfigDetail {
   statistics: Statistics;
   api: Api;
   midjourney: Midjourney;
-  gcp: Gcp;
   log: Log;
   error: Error;
   debug: Debug;
@@ -105,7 +100,6 @@ export interface SysConfigUpdate {
   statistics: Statistics;
   api: Api;
   midjourney: Midjourney;
-  gcp: Gcp;
   log: Log;
   error: Error;
   debug: Debug;
