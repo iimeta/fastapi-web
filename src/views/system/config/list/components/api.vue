@@ -71,7 +71,7 @@
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
-      <a-form ref="configForm" :model="configFormData">
+      <a-form ref="configForm" :model="configFormData" auto-label-width>
         <a-form-item
           v-if="configFormData.action === 'base'"
           field="base.err_retry"
@@ -82,7 +82,6 @@
               message: $t('sys.config.error.base.err_retry.required'),
             },
           ]"
-          label-col-flex="160px"
         >
           <a-input-number
             v-model="configFormData.base.err_retry"
@@ -102,7 +101,6 @@
               ),
             },
           ]"
-          label-col-flex="160px"
         >
           <a-input-number
             v-model="configFormData.base.model_key_err_disable"
@@ -124,7 +122,6 @@
               ),
             },
           ]"
-          label-col-flex="160px"
         >
           <a-input-number
             v-model="configFormData.base.model_agent_err_disable"
@@ -146,7 +143,6 @@
               ),
             },
           ]"
-          label-col-flex="160px"
         >
           <a-input-number
             v-model="configFormData.base.model_agent_key_err_disable"
