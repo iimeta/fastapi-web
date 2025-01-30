@@ -14,7 +14,6 @@ export interface SysConfigItem {
 export interface Core {
   secret_key_prefix: string;
   error_prefix: string;
-  channel_prefix: string;
 }
 
 export interface Http {
@@ -40,8 +39,8 @@ export interface Statistics {
   lock_minutes: number;
 }
 
-export interface Api {
-  retry: number;
+export interface Base {
+  err_retry: number;
   model_key_err_disable: number;
   model_agent_err_disable: number;
   model_agent_key_err_disable: number;
@@ -79,7 +78,7 @@ export interface SysConfigDetail {
   http: Http;
   email: Email;
   statistics: Statistics;
-  api: Api;
+  base: Base;
   midjourney: Midjourney;
   log: Log;
   error: Error;
@@ -98,7 +97,7 @@ export interface SysConfigUpdate {
   http: Http;
   email: Email;
   statistics: Statistics;
-  api: Api;
+  base: Base;
   midjourney: Midjourney;
   log: Log;
   error: Error;

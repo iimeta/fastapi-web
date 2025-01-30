@@ -209,17 +209,6 @@
             allow-clear
           />
         </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'core'"
-          field="core.channel_prefix"
-          :label="$t('sys.config.label.core.channel_prefix')"
-        >
-          <a-input
-            v-model="configFormData.core.channel_prefix"
-            :placeholder="$t('sys.config.placeholder.core.channel_prefix')"
-            allow-clear
-          />
-        </a-form-item>
       </a-form>
     </a-modal>
   </div>

@@ -73,150 +73,86 @@
     >
       <a-form ref="configForm" :model="configFormData">
         <a-form-item
-          v-if="configFormData.action === 'email'"
-          field="email.host"
-          :label="$t('sys.config.label.email.host')"
+          v-if="configFormData.action === 'base'"
+          field="base.err_retry"
+          :label="$t('sys.config.label.base.err_retry')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.email.host.required'),
+              message: $t('sys.config.error.base.err_retry.required'),
             },
           ]"
-        >
-          <a-input
-            v-model="configFormData.email.host"
-            :placeholder="$t('sys.config.placeholder.email.host')"
-            allow-clear
-          />
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'email'"
-          field="email.port"
-          :label="$t('sys.config.label.email.port')"
-          :rules="[
-            {
-              required: true,
-              message: $t('sys.config.error.email.port.required'),
-            },
-          ]"
+          label-col-flex="160px"
         >
           <a-input-number
-            v-model="configFormData.email.port"
-            :placeholder="$t('sys.config.placeholder.email.port')"
-            :min="1"
+            v-model="configFormData.base.err_retry"
+            :placeholder="$t('sys.config.placeholder.base.err_retry')"
             allow-clear
           />
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'email'"
-          field="email.user_name"
-          :label="$t('sys.config.label.email.user_name')"
+          v-if="configFormData.action === 'base'"
+          field="base.model_key_err_disable"
+          :label="$t('sys.config.label.base.model_key_err_disable')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.email.user_name.required'),
+              message: $t(
+                'sys.config.error.base.model_key_err_disable.required'
+              ),
             },
           ]"
-        >
-          <a-input
-            v-model="configFormData.email.user_name"
-            :placeholder="$t('sys.config.placeholder.email.user_name')"
-            allow-clear
-          />
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'email'"
-          field="email.password"
-          :label="$t('sys.config.label.email.password')"
-          :rules="[
-            {
-              required: true,
-              message: $t('sys.config.error.email.password.required'),
-            },
-          ]"
-        >
-          <a-input
-            v-model="configFormData.email.password"
-            :placeholder="$t('sys.config.placeholder.email.password')"
-            allow-clear
-          />
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'email'"
-          field="email.from_name"
-          :label="$t('sys.config.label.email.from_name')"
-          :rules="[
-            {
-              required: true,
-              message: $t('sys.config.error.email.from_name.required'),
-            },
-          ]"
-        >
-          <a-input
-            v-model="configFormData.email.from_name"
-            :placeholder="$t('sys.config.placeholder.email.from_name')"
-            allow-clear
-          />
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'http'"
-          field="http.timeout"
-          :label="$t('sys.config.label.http.timeout')"
-          :rules="[
-            {
-              required: true,
-              message: $t('sys.config.error.http.timeout.required'),
-            },
-          ]"
+          label-col-flex="160px"
         >
           <a-input-number
-            v-model="configFormData.http.timeout"
-            :placeholder="$t('sys.config.placeholder.http.timeout')"
-            :min="1"
+            v-model="configFormData.base.model_key_err_disable"
+            :placeholder="
+              $t('sys.config.placeholder.base.model_key_err_disable')
+            "
             allow-clear
           />
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'http'"
-          field="http.proxy_url"
-          :label="$t('sys.config.label.http.proxy_url')"
+          v-if="configFormData.action === 'base'"
+          field="base.model_agent_err_disable"
+          :label="$t('sys.config.label.base.model_agent_err_disable')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.error.base.model_agent_err_disable.required'
+              ),
+            },
+          ]"
+          label-col-flex="160px"
         >
-          <a-input
-            v-model="configFormData.http.proxy_url"
-            :placeholder="$t('sys.config.placeholder.http.proxy_url')"
+          <a-input-number
+            v-model="configFormData.base.model_agent_err_disable"
+            :placeholder="
+              $t('sys.config.placeholder.base.model_agent_err_disable')
+            "
             allow-clear
           />
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'core'"
-          field="core.secret_key_prefix"
-          :label="$t('sys.config.label.core.secret_key_prefix')"
+          v-if="configFormData.action === 'base'"
+          field="base.model_agent_key_err_disable"
+          :label="$t('sys.config.label.base.model_agent_key_err_disable')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.error.base.model_agent_key_err_disable.required'
+              ),
+            },
+          ]"
+          label-col-flex="160px"
         >
-          <a-input
-            v-model="configFormData.core.secret_key_prefix"
-            :placeholder="$t('sys.config.placeholder.core.secret_key_prefix')"
-            allow-clear
-          />
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'core'"
-          field="core.error_prefix"
-          :label="$t('sys.config.label.core.error_prefix')"
-        >
-          <a-input
-            v-model="configFormData.core.error_prefix"
-            :placeholder="$t('sys.config.placeholder.core.error_prefix')"
-            allow-clear
-          />
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'core'"
-          field="core.channel_prefix"
-          :label="$t('sys.config.label.core.channel_prefix')"
-        >
-          <a-input
-            v-model="configFormData.core.channel_prefix"
-            :placeholder="$t('sys.config.placeholder.core.channel_prefix')"
+          <a-input-number
+            v-model="configFormData.base.model_agent_key_err_disable"
+            :placeholder="
+              $t('sys.config.placeholder.base.model_agent_key_err_disable')
+            "
             allow-clear
           />
         </a-form-item>
@@ -331,38 +267,23 @@
   const getSysConfigDetail = async () => {
     const { data } = await querySysConfigDetail();
     currentData.value = data;
-    configFormData.value.email = data.email;
-    configFormData.value.http = data.http;
-    configFormData.value.core = data.core;
+    configFormData.value.base = data.base;
+    configFormData.value.log = data.log;
     sysConfigItems.value = [
       {
-        action: 'email',
-        title: t('sys.config.item.title.email'),
-        description: '配置邮箱相关信息',
-        open: currentData.value.email.open,
+        action: 'base',
+        title: t('sys.config.item.title.base'),
+        description: '配置失败重试次数, 各类禁用次数等',
         config: true,
         reset: true,
       },
       {
-        action: 'http',
-        title: t('sys.config.item.title.http'),
-        description: '配置HTTP请求超时时间和代理地址',
+        action: 'log',
+        title: t('sys.config.item.title.log'),
+        description: '调用日志记录内容',
+        open: currentData.value.log.open,
         config: true,
         reset: true,
-      },
-      {
-        action: 'core',
-        title: t('sys.config.item.title.core'),
-        description: '系统核心配置, 请谨慎修改',
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'debug',
-        title: t('sys.config.item.title.debug'),
-        description:
-          '系统调试开关, 打开后, 日志会打印更多详细信息, 日志级别需是: DEBUG',
-        open: currentData.value.debug.open,
       },
     ];
   };
