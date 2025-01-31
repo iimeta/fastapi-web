@@ -22,16 +22,20 @@
               <a-tabs :default-active-tab="0" type="rounded">
                 <a-tab-pane key="0" :title="$t('sys.config.tab.title.all')">
                   <Global />
+                  <General />
                   <Task />
                   <API />
                 </a-tab-pane>
                 <a-tab-pane key="1" :title="$t('sys.config.tab.title.global')">
                   <Global />
                 </a-tab-pane>
-                <a-tab-pane key="2" :title="$t('sys.config.tab.title.task')">
+                <a-tab-pane key="2" :title="$t('sys.config.tab.title.general')">
+                  <General />
+                </a-tab-pane>
+                <a-tab-pane key="3" :title="$t('sys.config.tab.title.task')">
                   <Task />
                 </a-tab-pane>
-                <a-tab-pane key="3" :title="$t('sys.config.tab.title.api')">
+                <a-tab-pane key="4" :title="$t('sys.config.tab.title.api')">
                   <API />
                 </a-tab-pane>
               </a-tabs>
@@ -49,6 +53,7 @@
 
 <script lang="ts" setup>
   import Global from './components/global.vue';
+  import General from './components/general.vue';
   import Task from './components/task.vue';
   import API from './components/api.vue';
 </script>

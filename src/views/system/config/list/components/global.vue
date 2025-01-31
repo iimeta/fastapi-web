@@ -71,7 +71,7 @@
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
-      <a-form ref="configForm" :model="configFormData">
+      <a-form ref="configForm" :model="configFormData" auto-label-width>
         <a-form-item
           v-if="configFormData.action === 'email'"
           field="email.host"

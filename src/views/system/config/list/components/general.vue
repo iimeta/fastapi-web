@@ -71,59 +71,51 @@
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
-      <a-form ref="configForm" :model="configFormData" auto-label-width>
+      <a-form
+        ref="configForm"
+        :model="configFormData"
+        auto-label-width
+        style="max-height: 300px"
+      >
         <a-form-item
-          v-if="configFormData.action === 'statistics'"
-          field="statistics.cron"
-          :label="$t('sys.config.label.statistics.cron')"
+          v-for="(item, index) of configFormData.user_shield_error.errors"
+          v-show="configFormData.action === 'user_shield_error'"
+          :key="index"
+          :field="`user_shield_error.errors[${index}]`"
+          :label="
+            `${index + 1}. ` + $t('sys.config.label.user_shield_error.errors')
+          "
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.statistics.cron.required'),
+              message: $t('sys.config.error.user_shield_error.errors.required'),
             },
           ]"
+          :label-col-style="{
+            padding: '0 16px 2px 0',
+          }"
         >
           <a-input
-            v-model="configFormData.statistics.cron"
-            :placeholder="$t('sys.config.placeholder.statistics.cron')"
+            v-model="configFormData.user_shield_error.errors[index]"
+            :placeholder="$t('sys.config.placeholder.user_shield_error.errors')"
             allow-clear
+            style="width: 75%; margin-right: 5px"
           />
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'statistics'"
-          field="statistics.limit"
-          :label="$t('sys.config.label.statistics.limit')"
-          :rules="[
-            {
-              required: true,
-              message: $t('sys.config.error.statistics.limit.required'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="configFormData.statistics.limit"
-            :placeholder="$t('sys.config.placeholder.statistics.limit')"
-            :min="10"
-            allow-clear
-          />
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'statistics'"
-          field="statistics.lock_minutes"
-          :label="$t('sys.config.label.statistics.lock_minutes')"
-          :rules="[
-            {
-              required: true,
-              message: $t('sys.config.error.statistics.lock_minutes.required'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="configFormData.statistics.lock_minutes"
-            :placeholder="$t('sys.config.placeholder.statistics.lock_minutes')"
-            :min="1"
-            allow-clear
-          />
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleUserShieldErrorAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleUserShieldErrorDel(index)"
+          >
+            <icon-minus />
+          </a-button>
         </a-form-item>
       </a-form>
     </a-modal>
@@ -153,10 +145,16 @@
   const configTitle = ref('');
   const configForm = ref<FormInstance>();
   const configFormData = ref<SysConfigUpdate>({
-    statistics: {},
+    user_shield_error: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
+    if (
+      sysConfigItem.action === 'user_shield_error' &&
+      configFormData.value.user_shield_error.errors.length === 0
+    ) {
+      handleUserShieldErrorAdd();
+    }
     configTitle.value = t(`sys.config.item.title.${sysConfigItem.action}`);
     configFormData.value.action = sysConfigItem.action;
     configVisible.value = true;
@@ -199,6 +197,16 @@
 
   const handleCancel = () => {
     configVisible.value = false;
+    if (
+      configFormData.value.user_shield_error.errors.length > 0 &&
+      !configFormData.value.user_shield_error.errors[
+        configFormData.value.user_shield_error.errors.length - 1
+      ]
+    ) {
+      handleUserShieldErrorDel(
+        configFormData.value.user_shield_error.errors.length - 1
+      );
+    }
   };
 
   const sysConfigReset = async (sysConfigItem: SysConfigItem) => {
@@ -234,24 +242,33 @@
   const getSysConfigDetail = async () => {
     const { data } = await querySysConfigDetail();
     currentData.value = data;
-    configFormData.value.statistics = data.statistics;
+    configFormData.value.user_shield_error = data.user_shield_error;
     sysConfigItems.value = [
       {
-        action: 'statistics',
-        title: t('sys.config.item.title.statistics'),
-        description: '统计仪表盘上的各类数据',
-        open: currentData.value.statistics.open,
+        action: 'user_shield_error',
+        title: t('sys.config.item.title.user_shield_error'),
+        description:
+          '用户查看调用日志错误时, 包含有配置错误内容时则屏蔽显示, 为空则屏蔽所有错误显示',
+        open: currentData.value.user_shield_error.open,
         config: true,
         reset: true,
       },
     ];
   };
   getSysConfigDetail();
+
+  const handleUserShieldErrorAdd = () => {
+    configFormData.value.user_shield_error.errors.push('');
+  };
+
+  const handleUserShieldErrorDel = (index: number) => {
+    configFormData.value.user_shield_error.errors.splice(index, 1);
+  };
 </script>
 
 <script lang="ts">
   export default {
-    name: 'Task',
+    name: 'General',
   };
 </script>
 

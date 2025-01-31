@@ -71,7 +71,12 @@
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
-      <a-form ref="configForm" :model="configFormData" auto-label-width>
+      <a-form
+        ref="configForm"
+        :model="configFormData"
+        auto-label-width
+        style="max-height: 300px"
+      >
         <a-form-item
           v-if="configFormData.action === 'base'"
           field="base.err_retry"
@@ -152,6 +157,168 @@
             allow-clear
           />
         </a-form-item>
+        <a-form-item
+          v-for="(item, index) of configFormData.log.records"
+          v-show="configFormData.action === 'log'"
+          :key="index"
+          :field="`log.records[${index}]`"
+          :label="`${index + 1}. ` + $t('sys.config.label.log.records')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.log.records.required'),
+            },
+          ]"
+          :label-col-style="{
+            padding: '0 16px 2px 0',
+          }"
+        >
+          <a-input
+            v-model="configFormData.log.records[index]"
+            :placeholder="$t('sys.config.placeholder.log.records')"
+            allow-clear
+            style="width: 75%; margin-right: 5px"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleLogRecordAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleLogRecordDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
+        <a-form-item
+          v-for="(item, index) of configFormData.auto_disabled_error.errors"
+          v-show="configFormData.action === 'auto_disabled_error'"
+          :key="index"
+          :field="`auto_disabled_error.errors[${index}]`"
+          :label="
+            `${index + 1}. ` + $t('sys.config.label.auto_disabled_error.errors')
+          "
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.error.auto_disabled_error.errors.required'
+              ),
+            },
+          ]"
+          :label-col-style="{
+            padding: '0 16px 2px 0',
+          }"
+        >
+          <a-input
+            v-model="configFormData.auto_disabled_error.errors[index]"
+            :placeholder="
+              $t('sys.config.placeholder.auto_disabled_error.errors')
+            "
+            allow-clear
+            style="width: 75%; margin-right: 5px"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleAutoDisabledErrorAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleAutoDisabledErrorDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
+        <a-form-item
+          v-for="(item, index) of configFormData.not_retry_error.errors"
+          v-show="configFormData.action === 'not_retry_error'"
+          :key="index"
+          :field="`not_retry_error.errors[${index}]`"
+          :label="
+            `${index + 1}. ` + $t('sys.config.label.not_retry_error.errors')
+          "
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.not_retry_error.errors.required'),
+            },
+          ]"
+          :label-col-style="{
+            padding: '0 16px 2px 0',
+          }"
+        >
+          <a-input
+            v-model="configFormData.not_retry_error.errors[index]"
+            :placeholder="$t('sys.config.placeholder.not_retry_error.errors')"
+            allow-clear
+            style="width: 75%; margin-right: 5px"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleNotRetryErrorAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleNotRetryErrorDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
+        <a-form-item
+          v-for="(item, index) of configFormData.not_shield_error.errors"
+          v-show="configFormData.action === 'not_shield_error'"
+          :key="index"
+          :field="`not_shield_error.errors[${index}]`"
+          :label="
+            `${index + 1}. ` + $t('sys.config.label.not_shield_error.errors')
+          "
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.not_shield_error.errors.required'),
+            },
+          ]"
+          :label-col-style="{
+            padding: '0 16px 2px 0',
+          }"
+        >
+          <a-input
+            v-model="configFormData.not_shield_error.errors[index]"
+            :placeholder="$t('sys.config.placeholder.not_shield_error.errors')"
+            allow-clear
+            style="width: 75%; margin-right: 5px"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleNotShieldErrorAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleNotShieldErrorDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -180,12 +347,32 @@
   const configTitle = ref('');
   const configForm = ref<FormInstance>();
   const configFormData = ref<SysConfigUpdate>({
-    email: {},
-    http: {},
-    core: {},
+    base: {},
+    log: {},
+    auto_disabled_error: {},
+    not_retry_error: {},
+    not_shield_error: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
+    if (
+      sysConfigItem.action === 'auto_disabled_error' &&
+      configFormData.value.auto_disabled_error.errors.length === 0
+    ) {
+      handleAutoDisabledErrorAdd();
+    }
+    if (
+      sysConfigItem.action === 'not_retry_error' &&
+      configFormData.value.not_retry_error.errors.length === 0
+    ) {
+      handleNotRetryErrorAdd();
+    }
+    if (
+      sysConfigItem.action === 'not_shield_error' &&
+      configFormData.value.not_shield_error.errors.length === 0
+    ) {
+      handleNotShieldErrorAdd();
+    }
     configTitle.value = t(`sys.config.item.title.${sysConfigItem.action}`);
     configFormData.value.action = sysConfigItem.action;
     configVisible.value = true;
@@ -228,6 +415,36 @@
 
   const handleCancel = () => {
     configVisible.value = false;
+    if (
+      configFormData.value.auto_disabled_error.errors.length > 0 &&
+      !configFormData.value.auto_disabled_error.errors[
+        configFormData.value.auto_disabled_error.errors.length - 1
+      ]
+    ) {
+      handleAutoDisabledErrorDel(
+        configFormData.value.auto_disabled_error.errors.length - 1
+      );
+    }
+    if (
+      configFormData.value.not_retry_error.errors.length > 0 &&
+      !configFormData.value.not_retry_error.errors[
+        configFormData.value.not_retry_error.errors.length - 1
+      ]
+    ) {
+      handleNotRetryErrorDel(
+        configFormData.value.not_retry_error.errors.length - 1
+      );
+    }
+    if (
+      configFormData.value.not_shield_error.errors.length > 0 &&
+      !configFormData.value.not_shield_error.errors[
+        configFormData.value.not_shield_error.errors.length - 1
+      ]
+    ) {
+      handleNotShieldErrorDel(
+        configFormData.value.not_shield_error.errors.length - 1
+      );
+    }
   };
 
   const sysConfigReset = async (sysConfigItem: SysConfigItem) => {
@@ -265,6 +482,9 @@
     currentData.value = data;
     configFormData.value.base = data.base;
     configFormData.value.log = data.log;
+    configFormData.value.auto_disabled_error = data.auto_disabled_error;
+    configFormData.value.not_retry_error = data.not_retry_error;
+    configFormData.value.not_shield_error = data.not_shield_error;
     sysConfigItems.value = [
       {
         action: 'base',
@@ -281,9 +501,69 @@
         config: true,
         reset: true,
       },
+      {
+        action: 'auto_disabled_error',
+        title: t('sys.config.item.title.auto_disabled_error'),
+        description:
+          '调用报错时, 包含有配置错误内容时则自动会禁用密钥或模型代理等',
+        open: currentData.value.auto_disabled_error.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'not_retry_error',
+        title: t('sys.config.item.title.not_retry_error'),
+        description: '调用报错时, 包含有配置错误内容时则不会自动重试',
+        open: currentData.value.not_retry_error.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'not_shield_error',
+        title: t('sys.config.item.title.not_shield_error'),
+        description:
+          '调用报错时, 包含有配置错误内容时则会将错误内容返回给调用方',
+        open: currentData.value.not_shield_error.open,
+        config: true,
+        reset: true,
+      },
     ];
   };
   getSysConfigDetail();
+
+  const handleLogRecordAdd = () => {
+    configFormData.value.log.records.push('');
+  };
+
+  const handleLogRecordDel = (index: number) => {
+    if (configFormData.value.log.records.length > 1) {
+      configFormData.value.log.records.splice(index, 1);
+    }
+  };
+
+  const handleAutoDisabledErrorAdd = () => {
+    configFormData.value.auto_disabled_error.errors.push('');
+  };
+
+  const handleAutoDisabledErrorDel = (index: number) => {
+    configFormData.value.auto_disabled_error.errors.splice(index, 1);
+  };
+
+  const handleNotRetryErrorAdd = () => {
+    configFormData.value.not_retry_error.errors.push('');
+  };
+
+  const handleNotRetryErrorDel = (index: number) => {
+    configFormData.value.not_retry_error.errors.splice(index, 1);
+  };
+
+  const handleNotShieldErrorAdd = () => {
+    configFormData.value.not_shield_error.errors.push('');
+  };
+
+  const handleNotShieldErrorDel = (index: number) => {
+    configFormData.value.not_shield_error.errors.splice(index, 1);
+  };
 </script>
 
 <script lang="ts">

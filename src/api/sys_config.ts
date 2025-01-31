@@ -60,12 +60,24 @@ export interface Log {
   records: string[];
 }
 
-export interface Error {
+export interface UserShieldError {
   open: boolean;
-  shield_user: string[];
-  auto_disabled: string[];
-  not_retry: string[];
-  not_shield: string[];
+  errors: string[];
+}
+
+export interface AutoDisabledError {
+  open: boolean;
+  errors: string[];
+}
+
+export interface NotRetryError {
+  open: boolean;
+  errors: string[];
+}
+
+export interface NotShieldError {
+  open: boolean;
+  errors: string[];
 }
 
 export interface Debug {
@@ -81,7 +93,10 @@ export interface SysConfigDetail {
   base: Base;
   midjourney: Midjourney;
   log: Log;
-  error: Error;
+  user_shield_error: UserShieldError;
+  auto_disabled_error: AutoDisabledError;
+  not_retry_error: NotRetryError;
+  not_shield_error: NotShieldError;
   debug: Debug;
   created_at: string;
   updated_at: string;
@@ -100,7 +115,10 @@ export interface SysConfigUpdate {
   base: Base;
   midjourney: Midjourney;
   log: Log;
-  error: Error;
+  user_shield_error: UserShieldError;
+  auto_disabled_error: AutoDisabledError;
+  not_retry_error: NotRetryError;
+  not_shield_error: NotShieldError;
   debug: Debug;
 }
 

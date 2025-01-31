@@ -45,7 +45,7 @@ const SYS: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'config/list',
+      path: 'config',
       name: 'SysConfig',
       component: () => import('@/views/system/config/list/index.vue'),
       meta: {
