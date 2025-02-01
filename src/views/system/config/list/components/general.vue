@@ -286,7 +286,7 @@
       height: 100%;
       border-radius: 5px;
       .arco-card-body {
-        height: 120px;
+        height: 130px;
         .arco-card-meta {
           height: 100%;
           display: flex;
@@ -295,7 +295,7 @@
             flex: 1;
             .arco-card-meta-description {
               color: rgb(var(--gray-6));
-              line-height: 20px;
+              line-height: 18px;
               font-size: 12px;
               .arco-descriptions-item-label-inline {
                 font-weight: normal;
@@ -307,7 +307,7 @@
         }
       }
       .arco-card-meta-footer:last-child {
-        margin-top: 16px;
+        margin-top: 2px;
         margin-bottom: 12px;
       }
     }

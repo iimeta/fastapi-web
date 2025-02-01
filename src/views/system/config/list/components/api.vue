@@ -489,14 +489,16 @@
       {
         action: 'base',
         title: t('sys.config.item.title.base'),
-        description: '配置失败重试次数, 各类禁用次数等',
+        description:
+          '配置错误重试次数和各类错误禁用次数等, 错误重试次数N > 0 重试 N 次, N < 0 重试所有key一轮, N = 0 不重试, 错误次数每天0点会自动重置, 注: 代理密钥错误时, 也会记录模型代理错误次数',
         config: true,
         reset: true,
       },
       {
         action: 'log',
         title: t('sys.config.item.title.log'),
-        description: '调用日志记录内容',
+        description:
+          '调用日志记录内容, prompt: 提问, completion: 回答, messages: 上下文, image: 多模态识图的BASE64图像数据',
         open: currentData.value.log.open,
         config: true,
         reset: true,
@@ -505,7 +507,7 @@
         action: 'auto_disabled_error',
         title: t('sys.config.item.title.auto_disabled_error'),
         description:
-          '调用报错时, 包含有配置错误内容时则自动会禁用密钥或模型代理等',
+          '调用报错时, 包含有配置错误内容时则自动会禁用密钥或模型代理等, 为空则不会自动禁用(达到错误次数上限除外)',
         open: currentData.value.auto_disabled_error.open,
         config: true,
         reset: true,
@@ -513,7 +515,8 @@
       {
         action: 'not_retry_error',
         title: t('sys.config.item.title.not_retry_error'),
-        description: '调用报错时, 包含有配置错误内容时则不会自动重试',
+        description:
+          '调用报错时, 包含有配置错误内容时则不会自动重试, 为空则会自动重试',
         open: currentData.value.not_retry_error.open,
         config: true,
         reset: true,
@@ -522,7 +525,7 @@
         action: 'not_shield_error',
         title: t('sys.config.item.title.not_shield_error'),
         description:
-          '调用报错时, 包含有配置错误内容时则会将错误内容返回给调用方',
+          '调用报错时, 包含有配置错误内容时则会将错误内容返回给调用方, 为空则屏蔽所有错误',
         open: currentData.value.not_shield_error.open,
         config: true,
         reset: true,
@@ -586,7 +589,7 @@
       height: 100%;
       border-radius: 5px;
       .arco-card-body {
-        height: 120px;
+        height: 130px;
         .arco-card-meta {
           height: 100%;
           display: flex;
@@ -595,7 +598,7 @@
             flex: 1;
             .arco-card-meta-description {
               color: rgb(var(--gray-6));
-              line-height: 20px;
+              line-height: 18px;
               font-size: 12px;
               .arco-descriptions-item-label-inline {
                 font-weight: normal;
@@ -607,7 +610,7 @@
         }
       }
       .arco-card-meta-footer:last-child {
-        margin-top: 16px;
+        margin-top: 2px;
         margin-bottom: 12px;
       }
     }

@@ -327,7 +327,8 @@
       {
         action: 'email',
         title: t('sys.config.item.title.email'),
-        description: '配置邮箱相关信息',
+        description:
+          '配置发信邮箱信息, 当有站点配置且同时配置发信邮箱信息时, 站点配置的优先',
         open: currentData.value.email.open,
         config: true,
         reset: true,
@@ -342,7 +343,8 @@
       {
         action: 'core',
         title: t('sys.config.item.title.core'),
-        description: '系统核心配置, 请谨慎修改',
+        description:
+          '系统首次使用时可根据实际情况修改, 后期如若再次修改密钥前缀, 历史应用密钥将无法通过核验, 请谨慎修改',
         config: true,
         reset: true,
       },
@@ -350,7 +352,7 @@
         action: 'debug',
         title: t('sys.config.item.title.debug'),
         description:
-          '系统调试开关, 打开后, 日志会打印更多详细信息, 日志级别需是: DEBUG',
+          '调试开关打开后, 日志会打印更多详细信息, 日志级别(logger.level)需配置为: debug',
         open: currentData.value.debug.open,
       },
     ];
@@ -378,7 +380,7 @@
       height: 100%;
       border-radius: 5px;
       .arco-card-body {
-        height: 120px;
+        height: 130px;
         .arco-card-meta {
           height: 100%;
           display: flex;
@@ -387,7 +389,7 @@
             flex: 1;
             .arco-card-meta-description {
               color: rgb(var(--gray-6));
-              line-height: 20px;
+              line-height: 18px;
               font-size: 12px;
               .arco-descriptions-item-label-inline {
                 font-weight: normal;
@@ -399,7 +401,7 @@
         }
       }
       .arco-card-meta-footer:last-child {
-        margin-top: 16px;
+        margin-top: 2px;
         margin-bottom: 12px;
       }
     }
