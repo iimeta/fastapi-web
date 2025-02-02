@@ -87,6 +87,7 @@
         :scroll="{
           y: '380px',
         }"
+        :scrollbar="false"
       >
       </a-table>
     </a-card>
