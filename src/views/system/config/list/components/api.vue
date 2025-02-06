@@ -530,6 +530,13 @@
         config: true,
         reset: true,
       },
+      {
+        action: 'reset_api_error',
+        title: t('sys.config.item.title.reset_api_error'),
+        description:
+          '当错误次数达到配置上限时可手动进行重置, 重置过程可能会造成系统的短暂不可用(一般几秒钟), 请谨慎操作',
+        reset: true,
+      },
     ];
   };
   getSysConfigDetail();

@@ -16,6 +16,7 @@ export default {
   'sys.config.item.title.auto_disabled_error': '自动禁用错误',
   'sys.config.item.title.not_retry_error': '不重试错误',
   'sys.config.item.title.not_shield_error': '不屏蔽错误',
+  'sys.config.item.title.reset_api_error': '重置错误次数',
   'sys.config.searchInput.placeholder': '搜索',
   'sys.config.label.email.host': '发信服务器',
   'sys.config.placeholder.email.host': '请输入发信服务器, 如: smtp.xxx.com',
