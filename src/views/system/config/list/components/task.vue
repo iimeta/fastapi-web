@@ -239,7 +239,8 @@
       {
         action: 'statistics',
         title: t('sys.config.item.title.statistics'),
-        description: '统计仪表盘上的各类数据',
+        description:
+          '仪表盘上各类数据以及账单明细的统计任务, 统计间隔时间建议控制在30分钟以内, 单次循环统计查询条数建议控制在10000以内, 单次统计任务超时时间可根据实际情况配置, 建议不要低于10分钟',
         open: currentData.value.statistics.open,
         config: true,
         reset: true,

@@ -328,7 +328,7 @@
         action: 'email',
         title: t('sys.config.item.title.email'),
         description:
-          '配置发信邮箱信息, 当有站点配置且同时配置发信邮箱信息时, 站点配置的优先',
+          '配置发信邮箱信息, 用于注册、登录、发送消息等场景, 当有站点配置且同时配置发信邮箱信息时, 站点配置的优先',
         open: currentData.value.email.open,
         config: true,
         reset: true,
