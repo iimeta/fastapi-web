@@ -38,6 +38,7 @@
                 v-model="formData.corp"
                 :placeholder="$t('model.agent.placeholder.corp')"
                 allow-search
+                @change="getKeyPlaceholder"
               >
                 <a-option
                   v-for="item in corps"
@@ -143,7 +144,7 @@
             <a-form-item field="key" :label="$t('model.agent.label.key')">
               <a-textarea
                 v-model="formData.key"
-                :placeholder="$t('model.agent.placeholder.key')"
+                :placeholder="keyPlaceholder"
                 :auto-size="{ minRows: 5, maxRows: 10 }"
               />
             </a-form-item>
@@ -182,6 +183,7 @@
   import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRoute, useRouter } from 'vue-router';
+  import { useI18n } from 'vue-i18n';
   import {
     submitModelAgentUpdate,
     ModelAgentUpdate,
@@ -195,13 +197,18 @@
   const { proxy } = getCurrentInstance() as any;
   const route = useRoute();
   const router = useRouter();
+  const { t } = useI18n();
 
   const corps = ref<CorpList[]>([]);
+  const corpMap = new Map();
   const getCorpList = async () => {
     setLoading(true);
     try {
       const { data } = await queryCorpList();
       corps.value = data.items;
+      for (let i = 0; i < corps.value.length; i += 1) {
+        corpMap.set(corps.value[i].id, corps.value[i]);
+      }
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -209,6 +216,20 @@
     }
   };
   getCorpList();
+
+  const keyPlaceholder = ref(t('key.placeholder.key'));
+  const getKeyPlaceholder = async () => {
+    switch (corpMap.get(formData.value.corp).code) {
+      case 'Baidu':
+        keyPlaceholder.value = t('key.placeholder.key.baidu');
+        break;
+      case 'Xfyun':
+        keyPlaceholder.value = t('key.placeholder.key.xfyun');
+        break;
+      default:
+        keyPlaceholder.value = t('key.placeholder.key');
+    }
+  };
 
   const treeData = ref<Tree[]>([]);
   const getModelTree = async () => {

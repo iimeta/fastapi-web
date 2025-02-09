@@ -1694,7 +1694,7 @@
     midjourney_quotas: [],
     data_format: '1',
     is_public: true,
-    is_enable_model_agent: false,
+    is_enable_model_agent: true,
     lb_strategy: '1',
     model_agents: [],
     is_enable_forward: false,

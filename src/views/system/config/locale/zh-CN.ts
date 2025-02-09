@@ -69,7 +69,7 @@ export default {
   'sys.config.error.log.records.required': '请输入日志记录内容',
   'sys.config.label.user_login_register.account_login': '账密登录',
   'sys.config.label.user_login_register.email_login': '邮箱登录',
-  'sys.config.label.user_login_register.email_register': '邮箱注册',
+  'sys.config.label.user_login_register.email_register': '用户注册',
   'sys.config.label.user_login_register.email_retrieve': '找回密码',
   'sys.config.label.user_shield_error.errors': '错误内容',
   'sys.config.placeholder.user_shield_error.errors': '错误内容区分大小写以及内容包含空格',

@@ -38,6 +38,7 @@
                 v-model="formData.corp"
                 :placeholder="$t('key.placeholder.corp')"
                 allow-search
+                @change="getKeyPlaceholder"
               >
                 <a-option
                   v-for="item in corps"
@@ -59,8 +60,9 @@
             >
               <a-input
                 v-model="formData.key"
-                :placeholder="$t('key.placeholder.update.key')"
+                :placeholder="keyPlaceholder"
                 :auto-size="{ minRows: 5, maxRows: 10 }"
+                allow-clear
               />
             </a-form-item>
             <a-form-item field="weight" :label="$t('model.agent.label.weight')">
@@ -148,6 +150,7 @@
   import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRoute, useRouter } from 'vue-router';
+  import { useI18n } from 'vue-i18n';
   import {
     submitKeyUpdate,
     KeyUpdate,
@@ -162,13 +165,18 @@
   const { proxy } = getCurrentInstance() as any;
   const router = useRouter();
   const route = useRoute();
+  const { t } = useI18n();
 
   const corps = ref<CorpList[]>([]);
+  const corpMap = new Map();
   const getCorpList = async () => {
     setLoading(true);
     try {
       const { data } = await queryCorpList();
       corps.value = data.items;
+      for (let i = 0; i < corps.value.length; i += 1) {
+        corpMap.set(corps.value[i].id, corps.value[i]);
+      }
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -176,6 +184,20 @@
     }
   };
   getCorpList();
+
+  const keyPlaceholder = ref(t('key.placeholder.update.key'));
+  const getKeyPlaceholder = async () => {
+    switch (corpMap.get(formData.value.corp).code) {
+      case 'Baidu':
+        keyPlaceholder.value = t('key.placeholder.update.key.baidu');
+        break;
+      case 'Xfyun':
+        keyPlaceholder.value = t('key.placeholder.update.key.xfyun');
+        break;
+      default:
+        keyPlaceholder.value = t('key.placeholder.update.key');
+    }
+  };
 
   const treeData = ref<Tree[]>([]);
   const getModelTree = async () => {

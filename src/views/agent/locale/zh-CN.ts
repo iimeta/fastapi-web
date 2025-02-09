@@ -24,7 +24,6 @@ export default {
   'model.agent.placeholder.models': '请绑定模型, 可同时绑定多个模型',
   'model.agent.label.lb_strategy': '密钥负载策略',
   'model.agent.label.key': '密钥',
-  'model.agent.placeholder.key': '密钥一行一个, 可一次性添加多个多行\n如:\nsk-aaa\nsk-bbb\nsk-ccc',
   'model.agent.label.isAgentsOnly': '代理专用',
   'model.agent.success.title': '提交成功',
   'model.agent.success.create.subTitle': '代理新建成功',

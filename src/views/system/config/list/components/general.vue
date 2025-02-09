@@ -301,7 +301,7 @@
         action: 'user_login_register',
         title: t('sys.config.item.title.user_login_register'),
         description:
-          '配置登录页上的登录方式、邮箱注册以及找回密码, 对应的开关可控制登录页上对应功能的显示, 关闭邮箱注册时, 通过邮箱登录也无法自动注册',
+          '配置登录页上的登录方式、用户注册以及找回密码, 对应的开关可控制登录页上对应功能的显示, 关闭用户注册时, 通过邮箱登录也无法自动注册',
         config: true,
         reset: true,
       },
