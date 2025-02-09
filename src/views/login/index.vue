@@ -10,23 +10,15 @@
         <div class="title"> {{ appStore.getTitle + $t('login.welcome') }} </div>
         <Register v-if="isRegister" />
         <Forget v-else-if="isForget" />
-        <a-tabs
-          v-else
-          class="account-tab"
-          :default-active-key="
-            sysConfig.user_login_register.account_login ? '1' : '2'
-          "
-        >
+        <a-tabs v-else class="account-tab">
           <a-tab-pane
             v-if="sysConfig.user_login_register.account_login"
-            key="1"
             :title="$t('login.account')"
           >
             <AccountLogin />
           </a-tab-pane>
           <a-tab-pane
             v-if="sysConfig.user_login_register.email_login"
-            key="2"
             :title="$t('login.email')"
           >
             <EmailLogin />

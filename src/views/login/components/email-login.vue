@@ -179,7 +179,7 @@
   };
 
   const sysConfig = ref<SysConfigDetail>({
-    user_login_register: {},
+    user_login_register: { email_register: true },
   } as SysConfigDetail);
   querySysConfig().then((res) => {
     sysConfig.value = res.data;
