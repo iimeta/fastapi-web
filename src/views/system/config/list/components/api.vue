@@ -331,7 +331,6 @@
   import { useI18n } from 'vue-i18n';
   import {
     SysConfigItem,
-    SysConfigDetail,
     querySysConfigDetail,
     SysConfigUpdate,
     submitSysConfigUpdate,
@@ -474,12 +473,10 @@
     }
   };
 
-  const currentData = ref<SysConfigDetail>({} as SysConfigDetail);
   const sysConfigItems = ref<SysConfigItem[]>({} as SysConfigItem[]);
 
   const getSysConfigDetail = async () => {
     const { data } = await querySysConfigDetail();
-    currentData.value = data;
     configFormData.value.base = data.base;
     configFormData.value.log = data.log;
     configFormData.value.auto_disabled_error = data.auto_disabled_error;
@@ -499,7 +496,7 @@
         title: t('sys.config.item.title.log'),
         description:
           '调用日志记录内容, prompt: 提问, completion: 回答, messages: 上下文, image: 多模态识图的BASE64图像数据',
-        open: currentData.value.log.open,
+        open: configFormData.value.log.open,
         config: true,
         reset: true,
       },
@@ -508,7 +505,7 @@
         title: t('sys.config.item.title.auto_disabled_error'),
         description:
           '调用报错时, 包含有配置错误内容时则自动会禁用密钥或模型代理等, 为空则不会自动禁用(达到错误次数上限除外)',
-        open: currentData.value.auto_disabled_error.open,
+        open: configFormData.value.auto_disabled_error.open,
         config: true,
         reset: true,
       },
@@ -517,7 +514,7 @@
         title: t('sys.config.item.title.not_retry_error'),
         description:
           '调用报错时, 包含有配置错误内容时则不会自动重试, 为空则会自动重试',
-        open: currentData.value.not_retry_error.open,
+        open: configFormData.value.not_retry_error.open,
         config: true,
         reset: true,
       },
@@ -526,7 +523,7 @@
         title: t('sys.config.item.title.not_shield_error'),
         description:
           '调用报错时, 包含有配置错误内容时则会将错误内容返回给调用方, 为空则屏蔽所有错误',
-        open: currentData.value.not_shield_error.open,
+        open: configFormData.value.not_shield_error.open,
         config: true,
         reset: true,
       },

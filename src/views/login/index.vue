@@ -10,24 +10,51 @@
         <div class="title"> {{ appStore.getTitle + $t('login.welcome') }} </div>
         <Register v-if="isRegister" />
         <Forget v-else-if="isForget" />
-        <a-tabs v-else class="account-tab" default-active-key="1">
-          <a-tab-pane key="1" :title="$t('login.account')">
+        <a-tabs
+          v-else
+          class="account-tab"
+          :default-active-key="
+            sysConfig.user_login_register.account_login ? '1' : '2'
+          "
+        >
+          <a-tab-pane
+            v-if="sysConfig.user_login_register.account_login"
+            key="1"
+            :title="$t('login.account')"
+          >
             <AccountLogin />
           </a-tab-pane>
-          <a-tab-pane key="2" :title="$t('login.email')">
+          <a-tab-pane
+            v-if="sysConfig.user_login_register.email_login"
+            key="2"
+            :title="$t('login.email')"
+          >
             <EmailLogin />
           </a-tab-pane>
         </a-tabs>
-        <div class="actions">
-          <a-link v-if="!isForget" @click="toggleForget">{{
-            $t('login.form.forget')
-          }}</a-link>
-          <a-link v-if="!isRegister" @click="toggleRegister">{{
-            $t('login.form.register')
-          }}</a-link>
-          <a-link v-if="isRegister || isForget" @click="toggleLogin">{{
-            $t('login.form.login')
-          }}</a-link>
+        <div
+          :class="
+            sysConfig.user_login_register.email_register &&
+            sysConfig.user_login_register.email_retrieve
+              ? 'actions'
+              : 'actions-end'
+          "
+        >
+          <a-link
+            v-if="sysConfig.user_login_register.email_retrieve && !isForget"
+            @click="toggleForget"
+          >
+            {{ $t('login.form.forget') }}
+          </a-link>
+          <a-link
+            v-if="sysConfig.user_login_register.email_register && !isRegister"
+            @click="toggleRegister"
+          >
+            {{ $t('login.form.register') }}
+          </a-link>
+          <a-link v-if="isRegister || isForget" @click="toggleLogin">
+            {{ $t('login.form.login') }}
+          </a-link>
         </div>
       </div>
     </div>
@@ -63,6 +90,7 @@
   import { ref } from 'vue';
   import { useUserStore, useAppStore } from '@/store';
   import { Modal } from '@arco-design/web-vue';
+  import { querySysConfig, SysConfigDetail } from '@/api/sys_config';
   import Footer from '@/components/footer/index.vue';
   import AccountLogin from './components/account-login.vue';
   import EmailLogin from './components/email-login.vue';
@@ -102,6 +130,13 @@
     isForget.value = true;
     isRegister.value = false;
   };
+
+  const sysConfig = ref<SysConfigDetail>({
+    user_login_register: {},
+  } as SysConfigDetail);
+  querySysConfig().then((res) => {
+    sysConfig.value = res.data;
+  });
 </script>
 
 <style lang="less" scoped>
@@ -285,6 +320,13 @@
   .actions {
     display: flex;
     justify-content: space-between;
+    .arco-checkbox {
+      padding-left: 0;
+    }
+  }
+  .actions-end {
+    display: flex;
+    justify-content: flex-end;
     .arco-checkbox {
       padding-left: 0;
     }

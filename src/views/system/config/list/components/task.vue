@@ -137,7 +137,6 @@
   import { useI18n } from 'vue-i18n';
   import {
     SysConfigItem,
-    SysConfigDetail,
     querySysConfigDetail,
     SysConfigUpdate,
     submitSysConfigUpdate,
@@ -228,12 +227,10 @@
     }
   };
 
-  const currentData = ref<SysConfigDetail>({} as SysConfigDetail);
   const sysConfigItems = ref<SysConfigItem[]>({} as SysConfigItem[]);
 
   const getSysConfigDetail = async () => {
     const { data } = await querySysConfigDetail();
-    currentData.value = data;
     configFormData.value.statistics = data.statistics;
     sysConfigItems.value = [
       {
@@ -241,7 +238,7 @@
         title: t('sys.config.item.title.statistics'),
         description:
           '仪表盘上各类数据以及账单明细的统计任务, 统计间隔时间建议控制在30分钟以内, 单次循环统计查询条数建议控制在1万以内, 单次统计任务超时时间可根据实际情况配置, 建议不要低于10分钟',
-        open: currentData.value.statistics.open,
+        open: configFormData.value.statistics.open,
         config: true,
         reset: true,
       },

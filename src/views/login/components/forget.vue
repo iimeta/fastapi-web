@@ -7,7 +7,7 @@
     layout="vertical"
     size="large"
     class="login-form"
-    @submit="handleRegister"
+    @submit="handleForget"
   >
     <a-form-item field="email" hide-label>
       <a-input
@@ -138,7 +138,7 @@
    * @param errors 表单验证错误
    * @param values 表单数据
    */
-  const handleRegister = ({
+  const handleForget = ({
     errors,
     values,
   }: {
@@ -167,6 +167,12 @@
           loading.value = false;
         });
     }
+  };
+</script>
+
+<script lang="ts">
+  export default {
+    name: 'Forget',
   };
 </script>
 

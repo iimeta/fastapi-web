@@ -60,6 +60,13 @@ export interface Log {
   records: string[];
 }
 
+export interface UserLoginRegister {
+  account_login: boolean;
+  email_login: boolean;
+  email_register: boolean;
+  email_retrieve: boolean;
+}
+
 export interface UserShieldError {
   open: boolean;
   errors: string[];
@@ -93,6 +100,7 @@ export interface SysConfigDetail {
   base: Base;
   midjourney: Midjourney;
   log: Log;
+  user_login_register: UserLoginRegister;
   user_shield_error: UserShieldError;
   auto_disabled_error: AutoDisabledError;
   not_retry_error: NotRetryError;
@@ -115,6 +123,7 @@ export interface SysConfigUpdate {
   base: Base;
   midjourney: Midjourney;
   log: Log;
+  user_login_register: UserLoginRegister;
   user_shield_error: UserShieldError;
   auto_disabled_error: AutoDisabledError;
   not_retry_error: NotRetryError;
@@ -141,4 +150,8 @@ export interface SysConfigReset {
 
 export function submitSysConfigReset(data: SysConfigReset) {
   return axios.post('/api/v1/sys/config/reset', data);
+}
+
+export function querySysConfig() {
+  return axios.get<SysConfigDetail>('/api/v1/open/sys/config');
 }

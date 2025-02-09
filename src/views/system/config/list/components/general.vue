@@ -78,6 +78,60 @@
         style="max-height: 300px"
       >
         <a-form-item
+          v-if="configFormData.action === 'user_login_register'"
+          field="user_login_register.account_login"
+          :label="$t('sys.config.label.user_login_register.account_login')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch
+            v-model="configFormData.user_login_register.account_login"
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'user_login_register'"
+          field="user_login_register.email_login"
+          :label="$t('sys.config.label.user_login_register.email_login')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch v-model="configFormData.user_login_register.email_login" />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'user_login_register'"
+          field="user_login_register.email_register"
+          :label="$t('sys.config.label.user_login_register.email_register')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch
+            v-model="configFormData.user_login_register.email_register"
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'user_login_register'"
+          field="user_login_register.email_retrieve"
+          :label="$t('sys.config.label.user_login_register.email_retrieve')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch
+            v-model="configFormData.user_login_register.email_retrieve"
+          />
+        </a-form-item>
+        <a-form-item
           v-for="(item, index) of configFormData.user_shield_error.errors"
           v-show="configFormData.action === 'user_shield_error'"
           :key="index"
@@ -129,7 +183,6 @@
   import { useI18n } from 'vue-i18n';
   import {
     SysConfigItem,
-    SysConfigDetail,
     querySysConfigDetail,
     SysConfigUpdate,
     submitSysConfigUpdate,
@@ -145,6 +198,7 @@
   const configTitle = ref('');
   const configForm = ref<FormInstance>();
   const configFormData = ref<SysConfigUpdate>({
+    user_login_register: {},
     user_shield_error: {},
   } as SysConfigUpdate);
 
@@ -236,20 +290,26 @@
     }
   };
 
-  const currentData = ref<SysConfigDetail>({} as SysConfigDetail);
   const sysConfigItems = ref<SysConfigItem[]>({} as SysConfigItem[]);
 
   const getSysConfigDetail = async () => {
     const { data } = await querySysConfigDetail();
-    currentData.value = data;
+    configFormData.value.user_login_register = data.user_login_register;
     configFormData.value.user_shield_error = data.user_shield_error;
     sysConfigItems.value = [
+      {
+        action: 'user_login_register',
+        title: t('sys.config.item.title.user_login_register'),
+        description: '配置用户登录方式与邮箱注册开关',
+        config: true,
+        reset: true,
+      },
       {
         action: 'user_shield_error',
         title: t('sys.config.item.title.user_shield_error'),
         description:
           '用户查看调用日志错误时, 包含有配置错误内容时则屏蔽显示, 为空则屏蔽所有错误显示',
-        open: currentData.value.user_shield_error.open,
+        open: configFormData.value.user_shield_error.open,
         config: true,
         reset: true,
       },

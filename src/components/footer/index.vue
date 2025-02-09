@@ -12,6 +12,12 @@
   const appStore = useAppStore();
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'Foote',
+  };
+</script>
+
 <style lang="less" scoped>
   .footer {
     display: flex;

@@ -169,6 +169,12 @@
   };
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'Register',
+  };
+</script>
+
 <style lang="less" scoped>
   .login-form {
     box-sizing: border-box;

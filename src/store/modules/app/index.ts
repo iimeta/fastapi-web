@@ -4,7 +4,12 @@ import type { NotificationReturn } from '@arco-design/web-vue/es/notification/in
 import type { RouteRecordNormalized } from 'vue-router';
 import defaultSettings from '@/config/settings.json';
 import { getMenuList } from '@/api/user';
-import { querySite, Carousel, Announcement, Document } from '@/api/site_config';
+import {
+  querySiteConfig,
+  Carousel,
+  Announcement,
+  Document,
+} from '@/api/site_config';
 import { AppState } from './types';
 
 const useAppStore = defineStore('app', {
@@ -225,7 +230,7 @@ const useAppStore = defineStore('app', {
      * 初始化系统配置信息
      */
     init() {
-      querySite({
+      querySiteConfig({
         domain: window.location.hostname,
       }).then((res) => {
         this.config = {

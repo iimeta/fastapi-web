@@ -215,11 +215,6 @@ export function submitSiteConfigBatchOperate(data: SiteConfigBatchOperate) {
   return axios.post('/api/v1/sys/site/batch/operate', data);
 }
 
-export function querySite(params: SiteConfigDetailParams) {
-  return axios.get<SiteConfigDetail>('/site', {
-    params,
-    paramsSerializer: (obj) => {
-      return qs.stringify(obj);
-    },
-  });
+export function querySiteConfig(params: SiteConfigDetailParams) {
+  return axios.post<SiteConfigDetail>('/api/v1/open/site/config', params);
 }

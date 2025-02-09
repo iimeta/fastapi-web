@@ -221,7 +221,6 @@
   import { useI18n } from 'vue-i18n';
   import {
     SysConfigItem,
-    SysConfigDetail,
     querySysConfigDetail,
     SysConfigUpdate,
     submitSysConfigUpdate,
@@ -240,6 +239,7 @@
     email: {},
     http: {},
     core: {},
+    debug: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
@@ -314,22 +314,21 @@
     }
   };
 
-  const currentData = ref<SysConfigDetail>({} as SysConfigDetail);
   const sysConfigItems = ref<SysConfigItem[]>({} as SysConfigItem[]);
 
   const getSysConfigDetail = async () => {
     const { data } = await querySysConfigDetail();
-    currentData.value = data;
     configFormData.value.email = data.email;
     configFormData.value.http = data.http;
     configFormData.value.core = data.core;
+    configFormData.value.debug = data.debug;
     sysConfigItems.value = [
       {
         action: 'email',
         title: t('sys.config.item.title.email'),
         description:
           '配置发信邮箱信息, 用于注册、登录、发送消息等场景, 当有站点配置且同时配置发信邮箱信息时, 站点配置的优先',
-        open: currentData.value.email.open,
+        open: configFormData.value.email.open,
         config: true,
         reset: true,
       },
@@ -353,7 +352,7 @@
         title: t('sys.config.item.title.debug'),
         description:
           '调试开关打开后, 日志会打印更多详细信息, 日志级别(logger.level)需配置为: debug',
-        open: currentData.value.debug.open,
+        open: configFormData.value.debug.open,
       },
     ];
   };
