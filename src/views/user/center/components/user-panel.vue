@@ -119,6 +119,7 @@
           onUploadProgress,
         });
         onSuccess(res);
+        userStore.info();
       } catch (error) {
         onError(error);
       }

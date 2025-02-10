@@ -65,6 +65,7 @@ export interface UserLoginRegister {
   email_login: boolean;
   email_register: boolean;
   email_retrieve: boolean;
+  session_expire: number;
 }
 
 export interface UserShieldError {

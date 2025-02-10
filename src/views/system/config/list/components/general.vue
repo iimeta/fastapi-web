@@ -132,6 +132,28 @@
           />
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'user_login_register'"
+          field="user_login_register.session_expire"
+          :label="$t('sys.config.label.user_login_register.session_expire')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.error.user_login_register.session_expire.required'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.user_login_register.session_expire"
+            :placeholder="
+              $t('sys.config.placeholder.user_login_register.session_expire')
+            "
+            :min="1"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
           v-for="(item, index) of configFormData.user_shield_error.errors"
           v-show="configFormData.action === 'user_shield_error'"
           :key="index"
@@ -301,7 +323,7 @@
         action: 'user_login_register',
         title: t('sys.config.item.title.user_login_register'),
         description:
-          '配置登录页上的登录方式、用户注册以及找回密码, 对应的开关可控制登录页上对应功能的显示, 关闭用户注册时, 通过邮箱登录也无法自动注册',
+          '配置登录页上的登录方式、用户注册、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示, 关闭用户注册时, 通过邮箱登录也无法自动注册',
         config: true,
         reset: true,
       },
