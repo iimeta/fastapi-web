@@ -149,7 +149,7 @@
             :placeholder="
               $t('sys.config.placeholder.user_login_register.session_expire')
             "
-            :min="1"
+            :min="10"
             allow-clear
           />
         </a-form-item>
