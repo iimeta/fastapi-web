@@ -35,6 +35,7 @@ export interface RegisterData {
   account: string;
   password: string;
   terminal: string;
+  channel: string;
   code: string;
   domain?: string;
 }

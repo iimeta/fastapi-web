@@ -152,6 +152,7 @@
         account: values.email,
         password: values.password,
         terminal: 'web',
+        channel: 'user',
         code: values.captcha,
         domain: window.location.hostname,
       })
