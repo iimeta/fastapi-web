@@ -58,7 +58,7 @@
   import { ref } from 'vue';
   import { useUserStore, useAppStore } from '@/store';
   import Footer from '@/components/footer/index.vue';
-  import AccountLogin from './components/admin-login.vue';
+  import AccountLogin from './components/admin-account-login.vue';
   import Forget from './components/forget.vue';
 
   useUserStore().logout();

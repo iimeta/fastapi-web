@@ -110,6 +110,12 @@
   };
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'AdminAccountLogin',
+  };
+</script>
+
 <style lang="less" scoped>
   .login-form {
     box-sizing: border-box;
