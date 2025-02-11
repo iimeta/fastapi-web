@@ -3,7 +3,9 @@
     {{
       $t(
         sysConfig.user_login_register.email_register
-          ? 'login.email.title'
+          ? appStore.getRegisterTips
+            ? 'login.email.title2'
+            : 'login.email.title'
           : 'login.email.title2'
       )
     }}
@@ -52,7 +54,7 @@
   import { useI18n } from 'vue-i18n';
   import { useRouter } from 'vue-router';
   import { ValidatedError } from '@arco-design/web-vue';
-  import { useUserStore } from '@/store';
+  import { useUserStore, useAppStore } from '@/store';
   import { getCaptcha } from '@/api/common';
   import { querySysConfig, SysConfigDetail } from '@/api/sys_config';
 
@@ -60,6 +62,7 @@
   const { t } = useI18n();
   const router = useRouter();
   const userStore = useUserStore();
+  const appStore = useAppStore();
   const loading = ref(false);
   const captchaLoading = ref(false);
   const captchaDisable = ref(false);
