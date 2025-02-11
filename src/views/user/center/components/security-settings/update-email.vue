@@ -178,7 +178,8 @@
         captchaBtnNameKey.value = 'userCenter.securitySettings.captcha.ing';
         getCaptcha({
           email: form.email,
-          channel: 'change_email',
+          action: 'change_email',
+          channel: 'user',
         })
           .then((res) => {
             captchaLoading.value = false;

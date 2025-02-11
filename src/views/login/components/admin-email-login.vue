@@ -1,5 +1,4 @@
 <template>
-  <div class="sub-title">{{ $t('login.form.register.title') }}</div>
   <a-form
     ref="formRef"
     :model="form"
@@ -7,7 +6,7 @@
     layout="vertical"
     size="large"
     class="login-form"
-    @submit="handleRegister"
+    @submit="handleLogin"
   >
     <a-form-item field="email" hide-label>
       <a-input
@@ -33,15 +32,8 @@
         {{ captchaBtnName }}
       </a-button>
     </a-form-item>
-    <a-form-item field="password" hide-label>
-      <a-input-password
-        v-model="form.password"
-        :placeholder="$t('login.account.placeholder.password')"
-        allow-clear
-      />
-    </a-form-item>
     <a-button class="btn" :loading="loading" type="primary" html-type="submit"
-      >{{ $t('register.button') }}
+      >{{ $t('login.button') }}
     </a-button>
   </a-form>
 </template>
@@ -51,12 +43,14 @@
   import { useI18n } from 'vue-i18n';
   import { useRouter } from 'vue-router';
   import { ValidatedError } from '@arco-design/web-vue';
+  import { useUserStore } from '@/store';
   import { getCaptcha } from '@/api/common';
-  import { register } from '@/api/user';
+  import { querySysConfig, SysConfigDetail } from '@/api/sys_config';
 
   const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
   const router = useRouter();
+  const userStore = useUserStore();
   const loading = ref(false);
   const captchaLoading = ref(false);
   const captchaDisable = ref(false);
@@ -67,15 +61,13 @@
   const data = reactive({
     form: {
       email: '',
-      password: '',
       captcha: '',
+      terminal: 'web',
+      channel: 'login',
     },
     rules: {
       email: [
         { required: true, message: t('login.email.error.required.email') },
-      ],
-      password: [
-        { required: true, message: t('login.email.error.required.password') },
       ],
       captcha: [
         { required: true, message: t('login.email.error.required.captcha') },
@@ -105,8 +97,8 @@
         captchaBtnNameKey.value = 'login.captcha.ing';
         getCaptcha({
           email: form.value.email,
-          action: 'register',
-          channel: 'user',
+          action: 'login',
+          channel: 'admin',
           domain: window.location.hostname,
         })
           .then(() => {
@@ -134,12 +126,12 @@
   };
 
   /**
-   * 注册
+   * 登录
    *
    * @param errors 表单验证错误
    * @param values 表单数据
    */
-  const handleRegister = ({
+  const handleLogin = ({
     errors,
     values,
   }: {
@@ -149,17 +141,25 @@
     if (loading.value) return;
     if (!errors) {
       loading.value = true;
-      register({
-        account: values.email,
-        password: values.password,
-        terminal: 'web',
-        channel: 'user',
-        code: values.captcha,
-        domain: window.location.hostname,
-      })
+      userStore
+        .login({
+          account: values.email,
+          code: values.captcha,
+          terminal: 'web',
+          channel: 'admin',
+          method: 'code',
+          domain: window.location.hostname,
+        })
         .then(() => {
-          proxy.$message.success(t('register.success'));
-          router.go(0);
+          window.localStorage.setItem('userRole', 'admin');
+          const { redirect, ...othersQuery } = router.currentRoute.value.query;
+          router.push({
+            name: (redirect as string) || 'Workplace',
+            query: {
+              ...othersQuery,
+            },
+          });
+          proxy.$message.success(t('login.success'));
         })
         .catch(() => {
           form.value.captcha = '';
@@ -169,11 +169,18 @@
         });
     }
   };
+
+  const sysConfig = ref<SysConfigDetail>({
+    user_login_register: { email_register: true },
+  } as SysConfigDetail);
+  querySysConfig().then((res) => {
+    sysConfig.value = res.data;
+  });
 </script>
 
 <script lang="ts">
   export default {
-    name: 'Register',
+    name: 'AdminEmailLogin',
   };
 </script>
 
@@ -181,7 +188,7 @@
   .login-form {
     box-sizing: border-box;
     padding: 0 5px;
-    margin-top: 24px;
+    margin-top: 16px;
     .arco-input-wrapper,
     :deep(.arco-select-view-single) {
       background-color: var(--color-bg-white);
@@ -219,13 +226,13 @@
       font-weight: 500;
       height: 40px;
       line-height: 22px;
-      margin: 20px 0 12px;
+      margin: 36px 0 12px;
       width: 100%;
     }
   }
-  .sub-title {
-    color: var(--color-text-2);
-    font-size: 18px;
-    margin: 20px 0px 0px 10px;
+  .login-email-title {
+    color: var(--color-text-3);
+    font-size: 14px;
+    padding-left: 5px;
   }
 </style>

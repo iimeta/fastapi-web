@@ -193,6 +193,64 @@
             <icon-minus />
           </a-button>
         </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'admin_login'"
+          field="admin_login.account_login"
+          :label="$t('sys.config.label.admin_login.account_login')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch v-model="configFormData.admin_login.account_login" />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'admin_login'"
+          field="admin_login.email_login"
+          :label="$t('sys.config.label.admin_login.email_login')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch v-model="configFormData.admin_login.email_login" />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'admin_login'"
+          field="admin_login.email_retrieve"
+          :label="$t('sys.config.label.admin_login.email_retrieve')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch v-model="configFormData.admin_login.email_retrieve" />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'admin_login'"
+          field="admin_login.session_expire"
+          :label="$t('sys.config.label.admin_login.session_expire')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.error.admin_login.session_expire.required'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.admin_login.session_expire"
+            :placeholder="
+              $t('sys.config.placeholder.admin_login.session_expire')
+            "
+            :min="10"
+            allow-clear
+          />
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -222,6 +280,7 @@
   const configFormData = ref<SysConfigUpdate>({
     user_login_register: {},
     user_shield_error: {},
+    admin_login: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
@@ -318,6 +377,7 @@
     const { data } = await querySysConfigDetail();
     configFormData.value.user_login_register = data.user_login_register;
     configFormData.value.user_shield_error = data.user_shield_error;
+    configFormData.value.admin_login = data.admin_login;
     sysConfigItems.value = [
       {
         action: 'user_login_register',
@@ -333,6 +393,14 @@
         description:
           '用户查看调用日志错误时, 包含有配置错误内容时则屏蔽显示, 为空则屏蔽所有错误显示',
         open: configFormData.value.user_shield_error.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'admin_login',
+        title: t('sys.config.item.title.admin_login'),
+        description:
+          '配置登录页上的登录方式、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示',
         config: true,
         reset: true,
       },

@@ -109,7 +109,8 @@
         captchaBtnNameKey.value = 'login.captcha.ing';
         getCaptcha({
           email: form.value.email,
-          channel: 'login',
+          action: 'login',
+          channel: 'user',
           domain: window.location.hostname,
         })
           .then(() => {

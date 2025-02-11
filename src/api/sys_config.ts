@@ -73,6 +73,13 @@ export interface UserShieldError {
   errors: string[];
 }
 
+export interface AdminLogin {
+  account_login: boolean;
+  email_login: boolean;
+  email_retrieve: boolean;
+  session_expire: number;
+}
+
 export interface AutoDisabledError {
   open: boolean;
   errors: string[];
@@ -102,6 +109,7 @@ export interface SysConfigDetail {
   midjourney: Midjourney;
   log: Log;
   user_login_register: UserLoginRegister;
+  admin_login: AdminLogin;
   user_shield_error: UserShieldError;
   auto_disabled_error: AutoDisabledError;
   not_retry_error: NotRetryError;
@@ -126,6 +134,7 @@ export interface SysConfigUpdate {
   log: Log;
   user_login_register: UserLoginRegister;
   user_shield_error: UserShieldError;
+  admin_login: AdminLogin;
   auto_disabled_error: AutoDisabledError;
   not_retry_error: NotRetryError;
   not_shield_error: NotShieldError;

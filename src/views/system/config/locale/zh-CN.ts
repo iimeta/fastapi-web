@@ -14,6 +14,7 @@ export default {
   'sys.config.item.title.log': '日志配置',
   'sys.config.item.title.user_login_register': '用户登录注册',
   'sys.config.item.title.user_shield_error': '用户屏蔽错误',
+  'sys.config.item.title.admin_login': '管理员登录',
   'sys.config.item.title.auto_disabled_error': '自动禁用错误',
   'sys.config.item.title.not_retry_error': '不重试错误',
   'sys.config.item.title.not_shield_error': '不屏蔽错误',
@@ -86,4 +87,10 @@ export default {
   'sys.config.label.not_shield_error.errors': '错误内容',
   'sys.config.placeholder.not_shield_error.errors': '错误内容区分大小写以及内容包含空格',
   'sys.config.error.not_shield_error.errors.required': '请输入错误内容',
+  'sys.config.label.admin_login.account_login': '账密登录',
+  'sys.config.label.admin_login.email_login': '邮箱登录',
+  'sys.config.label.admin_login.email_retrieve': '找回密码',
+  'sys.config.label.admin_login.session_expire': '会话过期',
+  'sys.config.placeholder.admin_login.session_expire': '请输入会话过期时长, 单位: 秒',
+  'sys.config.error.admin_login.session_expire.required': '请输入会话过期时长',
 };

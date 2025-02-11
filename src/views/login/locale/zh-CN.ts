@@ -12,7 +12,7 @@ export default {
   'login.account.placeholder.password': '请输入密码',
   'login.account.placeholder.captcha': '请输入验证码',
   'login.email.title': '登录邮箱未注册, 将会自动注册',
-  'login.email.title2': '登录邮箱未注册, 请先联系管理员',
+  'login.email.title2': '登录邮箱如未注册, 请联系管理员注册',
   'login.email.placeholder.email': '请输入邮箱',
   'login.email.placeholder.captcha': '请输入验证码',
   'login.captcha.get': '获取验证码',

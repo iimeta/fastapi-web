@@ -11,19 +11,31 @@
           {{ appStore.getTitle + $t('login.admin.welcome') }}
         </div>
         <Forget v-if="isForget" />
-        <a-tabs v-else class="account-tab" default-active-key="1">
-          <a-tab-pane key="1" :title="$t('login.account')">
+        <a-tabs v-else class="account-tab">
+          <a-tab-pane
+            v-if="sysConfig.admin_login.account_login"
+            :title="$t('login.account')"
+          >
             <AccountLogin />
           </a-tab-pane>
+          <a-tab-pane
+            v-if="sysConfig.admin_login.email_login"
+            :title="$t('login.email')"
+          >
+            <EmailLogin />
+          </a-tab-pane>
         </a-tabs>
-        <!-- <div class="actions">
-          <a-link v-if="!isForget" @click="toggleForget">{{
-            $t('login.form.forget')
-          }}</a-link>
-          <a-link v-if="isRegister || isForget" @click="toggleLogin">{{
-            $t('login.form.login')
-          }}</a-link>
-        </div> -->
+        <div class="actions-end">
+          <a-link
+            v-if="sysConfig.admin_login.email_retrieve && !isForget"
+            @click="toggleForget"
+          >
+            {{ $t('login.form.forget') }}
+          </a-link>
+          <a-link v-if="isForget" @click="toggleLogin">
+            {{ $t('login.form.login') }}
+          </a-link>
+        </div>
       </div>
     </div>
     <div class="footer">
@@ -57,15 +69,16 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { useUserStore, useAppStore } from '@/store';
+  import { querySysConfig, SysConfigDetail } from '@/api/sys_config';
   import Footer from '@/components/footer/index.vue';
   import AccountLogin from './components/admin-account-login.vue';
-  import Forget from './components/forget.vue';
+  import EmailLogin from './components/admin-email-login.vue';
+  import Forget from './components/admin-forget.vue';
 
   useUserStore().logout();
 
   const appStore = useAppStore();
 
-  const isRegister = ref(false);
   const isForget = ref(false);
   const gaBeianNum = ref();
 
@@ -74,19 +87,19 @@
     : '';
 
   const toggleLogin = () => {
-    isRegister.value = false;
-    isForget.value = false;
-  };
-
-  const toggleRegister = () => {
-    isRegister.value = true;
     isForget.value = false;
   };
 
   const toggleForget = () => {
     isForget.value = true;
-    isRegister.value = false;
   };
+
+  const sysConfig = ref<SysConfigDetail>({
+    user_login_register: {},
+  } as SysConfigDetail);
+  querySysConfig().then((res) => {
+    sysConfig.value = res.data;
+  });
 </script>
 
 <style lang="less" scoped>
@@ -270,6 +283,13 @@
   .actions {
     display: flex;
     justify-content: space-between;
+    .arco-checkbox {
+      padding-left: 0;
+    }
+  }
+  .actions-end {
+    display: flex;
+    justify-content: flex-end;
     .arco-checkbox {
       padding-left: 0;
     }

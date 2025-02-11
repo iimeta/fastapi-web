@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export interface CaptchaData {
   email: string;
+  action: string;
   channel: string;
   domain?: string;
 }

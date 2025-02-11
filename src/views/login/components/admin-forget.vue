@@ -1,5 +1,5 @@
 <template>
-  <div class="sub-title">{{ $t('login.form.register.title') }}</div>
+  <div class="sub-title">{{ $t('login.form.forget.title') }}</div>
   <a-form
     ref="formRef"
     :model="form"
@@ -7,7 +7,7 @@
     layout="vertical"
     size="large"
     class="login-form"
-    @submit="handleRegister"
+    @submit="handleForget"
   >
     <a-form-item field="email" hide-label>
       <a-input
@@ -41,7 +41,7 @@
       />
     </a-form-item>
     <a-button class="btn" :loading="loading" type="primary" html-type="submit"
-      >{{ $t('register.button') }}
+      >{{ $t('forget.button') }}
     </a-button>
   </a-form>
 </template>
@@ -52,7 +52,7 @@
   import { useRouter } from 'vue-router';
   import { ValidatedError } from '@arco-design/web-vue';
   import { getCaptcha } from '@/api/common';
-  import { register } from '@/api/user';
+  import { forget } from '@/api/user';
 
   const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
@@ -105,8 +105,8 @@
         captchaBtnNameKey.value = 'login.captcha.ing';
         getCaptcha({
           email: form.value.email,
-          action: 'register',
-          channel: 'user',
+          action: 'forget_account',
+          channel: 'admin',
           domain: window.location.hostname,
         })
           .then(() => {
@@ -134,12 +134,12 @@
   };
 
   /**
-   * 注册
+   * 找回密码
    *
    * @param errors 表单验证错误
    * @param values 表单数据
    */
-  const handleRegister = ({
+  const handleForget = ({
     errors,
     values,
   }: {
@@ -149,16 +149,16 @@
     if (loading.value) return;
     if (!errors) {
       loading.value = true;
-      register({
+      forget({
         account: values.email,
         password: values.password,
         terminal: 'web',
-        channel: 'user',
+        channel: 'admin',
         code: values.captcha,
         domain: window.location.hostname,
       })
         .then(() => {
-          proxy.$message.success(t('register.success'));
+          proxy.$message.success(t('forget.success'));
           router.go(0);
         })
         .catch(() => {
@@ -173,7 +173,7 @@
 
 <script lang="ts">
   export default {
-    name: 'Register',
+    name: 'AdminForget',
   };
 </script>
 
