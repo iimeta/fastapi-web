@@ -179,7 +179,8 @@
         getCaptcha({
           email: form.email,
           action: 'change_email',
-          channel: 'user',
+          channel: userStore.role,
+          domain: window.location.hostname,
         })
           .then((res) => {
             captchaLoading.value = false;
