@@ -212,6 +212,12 @@
       case 'Xfyun':
         keyPlaceholder.value = t('key.placeholder.key.xfyun');
         break;
+      case 'DeepSeek-Baidu':
+        keyPlaceholder.value = t('key.placeholder.key.deepseek.baidu');
+        break;
+      case 'VolcEngine':
+        keyPlaceholder.value = t('key.placeholder.key.volcengine');
+        break;
       default:
         keyPlaceholder.value = t('key.placeholder.key');
     }

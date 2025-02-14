@@ -194,6 +194,12 @@
       case 'Xfyun':
         keyPlaceholder.value = t('key.placeholder.update.key.xfyun');
         break;
+      case 'DeepSeek-Baidu':
+        keyPlaceholder.value = t('key.placeholder.update.key.deepseek.baidu');
+        break;
+      case 'VolcEngine':
+        keyPlaceholder.value = t('key.placeholder.update.key.volcengine');
+        break;
       default:
         keyPlaceholder.value = t('key.placeholder.update.key');
     }
@@ -274,6 +280,7 @@
       formData.value.models = data.models;
       formData.value.model_agents = data.model_agents;
       formData.value.is_agents_only = data.is_agents_only;
+      getKeyPlaceholder();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
