@@ -10,7 +10,7 @@
       indicator-type="slider"
       show-arrow="hover"
       auto-play
-      style="height: 196px"
+      style="height: 197px"
     >
       <a-carousel-item
         v-for="(carousel, idx) in appStore.getCarousels1"

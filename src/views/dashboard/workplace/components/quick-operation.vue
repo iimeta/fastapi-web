@@ -81,12 +81,6 @@
       permission: ['admin'],
     },
     {
-      text: 'workplace.appKeyManagement',
-      icon: 'icon-safe',
-      router: 'AppKeyList',
-      permission: ['admin'],
-    },
-    {
       text: 'workplace.financeCenter',
       icon: 'icon-wechatpay',
       router: 'BillList',
@@ -97,6 +91,12 @@
       icon: 'icon-message',
       router: 'ChatList',
       permission: ['user', 'admin'],
+    },
+    {
+      text: 'menu.sys.config',
+      icon: 'icon-settings',
+      router: 'SysConfig',
+      permission: ['admin'],
     },
   ];
 </script>
