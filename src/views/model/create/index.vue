@@ -426,6 +426,33 @@
               </a-space>
             </a-form-item>
             <a-form-item
+              v-if="isShowMultimodalTextQuota"
+              field="multimodal_quota.billing_rule"
+              :label="$t('model.label.billing_rule')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.billing_rule.required'),
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.multimodal_quota.billing_rule"
+                  value="1"
+                  :default-checked="true"
+                >
+                  按官方
+                </a-radio>
+                <a-radio
+                  v-model="formData.multimodal_quota.billing_rule"
+                  value="2"
+                >
+                  按系统
+                </a-radio>
+              </a-space>
+            </a-form-item>
+            <a-form-item
               v-if="
                 isShowMultimodalTextQuota &&
                 formData.multimodal_quota.text_quota.billing_method === '1'
@@ -1642,6 +1669,7 @@
       completion_price: ref(),
     },
     multimodal_quota: {
+      billing_rule: '1',
       text_quota: {
         billing_method: '1',
         prompt_ratio: 1,

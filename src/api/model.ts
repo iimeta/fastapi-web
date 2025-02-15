@@ -70,6 +70,7 @@ export interface AudioQuota {
 }
 
 export interface MultimodalQuota {
+  billing_rule: any;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
   search_quota: any;

@@ -25,6 +25,8 @@ export default {
   'model.placeholder.remark': '请输入说明',
   'model.label.billingMethod': '计费方式',
   'model.error.billingMethod.required': '请选择计费方式',
+  'model.label.billing_rule': '计费规则',
+  'model.error.billing_rule.required': '请选择计费规则',
   'model.label.prompt_price': '提问价格',
   'model.placeholder.prompt_price': '请输入提问价格',
   'model.error.prompt_price.required': '请输入提问价格',
