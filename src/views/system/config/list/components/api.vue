@@ -157,7 +157,7 @@
             allow-clear
           />
         </a-form-item>
-        <a-form-item
+        <!-- <a-form-item
           v-for="(item, index) of configFormData.log.records"
           v-show="configFormData.action === 'log'"
           :key="index"
@@ -194,6 +194,26 @@
           >
             <icon-minus />
           </a-button>
+        </a-form-item> -->
+        <a-form-item
+          v-if="configFormData.action === 'log'"
+          field="log.records"
+          :label="$t('sys.config.label.log.records')"
+        >
+          <a-space size="large">
+            <a-checkbox v-model="configFormData.log.records" value="prompt">
+              提问
+            </a-checkbox>
+            <a-checkbox v-model="configFormData.log.records" value="completion">
+              回答
+            </a-checkbox>
+            <a-checkbox v-model="configFormData.log.records" value="messages">
+              上下文
+            </a-checkbox>
+            <a-checkbox v-model="configFormData.log.records" value="image">
+              识图的图像数据
+            </a-checkbox>
+          </a-space>
         </a-form-item>
         <a-form-item
           v-for="(item, index) of configFormData.auto_disabled_error.errors"
@@ -495,7 +515,7 @@
         action: 'log',
         title: t('sys.config.item.title.log'),
         description:
-          '调用日志记录内容, prompt: 提问, completion: 回答, messages: 上下文, image: 多模态识图的BASE64图像数据',
+          '调用日志记录内容, 支持记录: 提问、回答、上下文、多模态识图的BASE64图像数据',
         open: configFormData.value.log.open,
         config: true,
         reset: true,
