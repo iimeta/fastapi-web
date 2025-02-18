@@ -68,6 +68,11 @@
     <a-modal
       v-model:visible="configVisible"
       :title="$t(configTitle)"
+      :width="
+        configFormData.action === 'base' || configFormData.action === 'log'
+          ? 520
+          : 700
+      "
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
@@ -157,44 +162,6 @@
             allow-clear
           />
         </a-form-item>
-        <!-- <a-form-item
-          v-for="(item, index) of configFormData.log.records"
-          v-show="configFormData.action === 'log'"
-          :key="index"
-          :field="`log.records[${index}]`"
-          :label="`${index + 1}. ` + $t('sys.config.label.log.records')"
-          :rules="[
-            {
-              required: true,
-              message: $t('sys.config.error.log.records.required'),
-            },
-          ]"
-          :label-col-style="{
-            padding: '0 16px 2px 0',
-          }"
-        >
-          <a-input
-            v-model="configFormData.log.records[index]"
-            :placeholder="$t('sys.config.placeholder.log.records')"
-            allow-clear
-            style="width: 75%; margin-right: 5px"
-          />
-          <a-button
-            type="primary"
-            shape="circle"
-            style="margin: 0 10px 0 10px"
-            @click="handleLogRecordAdd()"
-          >
-            <icon-plus />
-          </a-button>
-          <a-button
-            type="secondary"
-            shape="circle"
-            @click="handleLogRecordDel(index)"
-          >
-            <icon-minus />
-          </a-button>
-        </a-form-item> -->
         <a-form-item
           v-if="configFormData.action === 'log'"
           field="log.records"
@@ -241,7 +208,7 @@
               $t('sys.config.placeholder.auto_disabled_error.errors')
             "
             allow-clear
-            style="width: 75%; margin-right: 5px"
+            style="width: 85%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -255,6 +222,73 @@
             type="secondary"
             shape="circle"
             @click="handleAutoDisabledErrorDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
+        <a-form-item
+          v-for="(item, index) of configFormData.auto_enable_error
+            .enable_errors"
+          v-show="configFormData.action === 'auto_enable_error'"
+          :key="index"
+          :field="
+            `auto_enable_error.enable_errors[${index}].cron` &&
+            `auto_enable_error.enable_errors[${index}].enable_time` &&
+            `auto_enable_error.enable_errors[${index}].error`
+          "
+          :label="`${index + 1}. ` + $t('sys.config.label.auto_enable_error')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.auto_enable_error.required'),
+            },
+          ]"
+          :label-col-style="{
+            padding: '0 16px 2px 0',
+          }"
+        >
+          <a-input
+            v-model="configFormData.auto_enable_error.enable_errors[index].cron"
+            :placeholder="
+              $t('sys.config.placeholder.auto_enable_error.enable_errors.cron')
+            "
+            allow-clear
+            style="width: 22%; margin-right: 5px"
+          />
+          <a-input-number
+            v-model="
+              configFormData.auto_enable_error.enable_errors[index].enable_time
+            "
+            :placeholder="
+              $t(
+                'sys.config.placeholder.auto_enable_error.enable_errors.enable_time'
+              )
+            "
+            allow-clear
+            style="width: 17%; margin-right: 5px"
+          />
+          <a-input
+            v-model="
+              configFormData.auto_enable_error.enable_errors[index].error
+            "
+            :placeholder="
+              $t('sys.config.placeholder.auto_enable_error.enable_errors.error')
+            "
+            allow-clear
+            style="width: 43%; margin-right: 5px"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleAutoEnableErrorAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleAutoEnableErrorDel(index)"
           >
             <icon-minus />
           </a-button>
@@ -281,7 +315,7 @@
             v-model="configFormData.not_retry_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.not_retry_error.errors')"
             allow-clear
-            style="width: 75%; margin-right: 5px"
+            style="width: 85%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -321,7 +355,7 @@
             v-model="configFormData.not_shield_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.not_shield_error.errors')"
             allow-clear
-            style="width: 75%; margin-right: 5px"
+            style="width: 85%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -369,6 +403,7 @@
     base: {},
     log: {},
     auto_disabled_error: {},
+    auto_enable_error: {},
     not_retry_error: {},
     not_shield_error: {},
   } as SysConfigUpdate);
@@ -379,6 +414,12 @@
       configFormData.value.auto_disabled_error.errors.length === 0
     ) {
       handleAutoDisabledErrorAdd();
+    }
+    if (
+      sysConfigItem.action === 'auto_enable_error' &&
+      configFormData.value.auto_enable_error.enable_errors.length === 0
+    ) {
+      handleAutoEnableErrorAdd();
     }
     if (
       sysConfigItem.action === 'not_retry_error' &&
@@ -445,6 +486,22 @@
       );
     }
     if (
+      configFormData.value.auto_enable_error.enable_errors.length > 0 &&
+      (!configFormData.value.auto_enable_error.enable_errors[
+        configFormData.value.auto_enable_error.enable_errors.length - 1
+      ].enable_time ||
+        !configFormData.value.auto_enable_error.enable_errors[
+          configFormData.value.auto_enable_error.enable_errors.length - 1
+        ].cron ||
+        !configFormData.value.auto_enable_error.enable_errors[
+          configFormData.value.auto_enable_error.enable_errors.length - 1
+        ].error)
+    ) {
+      handleAutoEnableErrorDel(
+        configFormData.value.auto_enable_error.enable_errors.length - 1
+      );
+    }
+    if (
       configFormData.value.not_retry_error.errors.length > 0 &&
       !configFormData.value.not_retry_error.errors[
         configFormData.value.not_retry_error.errors.length - 1
@@ -500,6 +557,7 @@
     configFormData.value.base = data.base;
     configFormData.value.log = data.log;
     configFormData.value.auto_disabled_error = data.auto_disabled_error;
+    configFormData.value.auto_enable_error = data.auto_enable_error;
     configFormData.value.not_retry_error = data.not_retry_error;
     configFormData.value.not_shield_error = data.not_shield_error;
     sysConfigItems.value = [
@@ -526,6 +584,15 @@
         description:
           '调用报错时, 包含有配置错误内容时则自动会禁用密钥或模型代理等, 为空则不会自动禁用(达到错误次数上限除外)',
         open: configFormData.value.auto_disabled_error.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'auto_enable_error',
+        title: t('sys.config.item.title.auto_enable_error'),
+        description:
+          '密钥自动禁用后, 可通过此配置自动启用, 密钥禁用原因包含有配置的错误内容时, 会根据配置的启用时间判断是否满足启用条件, 满足则会自动启用, 启用时间单位: 秒',
+        open: configFormData.value.auto_enable_error.open,
         config: true,
         reset: true,
       },
@@ -558,22 +625,26 @@
   };
   getSysConfigDetail();
 
-  const handleLogRecordAdd = () => {
-    configFormData.value.log.records.push('');
-  };
-
-  const handleLogRecordDel = (index: number) => {
-    if (configFormData.value.log.records.length > 1) {
-      configFormData.value.log.records.splice(index, 1);
-    }
-  };
-
   const handleAutoDisabledErrorAdd = () => {
     configFormData.value.auto_disabled_error.errors.push('');
   };
 
   const handleAutoDisabledErrorDel = (index: number) => {
     configFormData.value.auto_disabled_error.errors.splice(index, 1);
+  };
+
+  const handleAutoEnableErrorAdd = () => {
+    configFormData.value.auto_enable_error.enable_errors.push({
+      cron: '',
+      enable_time: ref(),
+      error: '',
+    });
+  };
+
+  const handleAutoEnableErrorDel = (index: number) => {
+    if (configFormData.value.log.records.length > 1) {
+      configFormData.value.auto_enable_error.enable_errors.splice(index, 1);
+    }
   };
 
   const handleNotRetryErrorAdd = () => {

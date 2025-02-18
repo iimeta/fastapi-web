@@ -85,6 +85,17 @@ export interface AutoDisabledError {
   errors: string[];
 }
 
+export interface EnableError {
+  cron: string;
+  enable_time: any;
+  error: string;
+}
+
+export interface AutoEnableError {
+  open: boolean;
+  enable_errors: EnableError[];
+}
+
 export interface NotRetryError {
   open: boolean;
   errors: string[];
@@ -112,6 +123,7 @@ export interface SysConfigDetail {
   admin_login: AdminLogin;
   user_shield_error: UserShieldError;
   auto_disabled_error: AutoDisabledError;
+  auto_enable_error: AutoEnableError;
   not_retry_error: NotRetryError;
   not_shield_error: NotShieldError;
   debug: Debug;
@@ -136,6 +148,7 @@ export interface SysConfigUpdate {
   user_shield_error: UserShieldError;
   admin_login: AdminLogin;
   auto_disabled_error: AutoDisabledError;
+  auto_enable_error: AutoEnableError;
   not_retry_error: NotRetryError;
   not_shield_error: NotShieldError;
   debug: Debug;
