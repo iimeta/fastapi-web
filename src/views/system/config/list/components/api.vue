@@ -236,7 +236,7 @@
             `auto_enable_error.enable_errors[${index}].enable_time` &&
             `auto_enable_error.enable_errors[${index}].error`
           "
-          :label="`${index + 1}. ` + $t('sys.config.label.auto_enable_error')"
+          :label="`${index + 1}.`"
           :rules="[
             {
               required: true,
@@ -253,7 +253,7 @@
               $t('sys.config.placeholder.auto_enable_error.enable_errors.cron')
             "
             allow-clear
-            style="width: 22%; margin-right: 5px"
+            style="width: 122px; margin-right: 5px"
           />
           <a-input-number
             v-model="
@@ -265,7 +265,7 @@
               )
             "
             allow-clear
-            style="width: 17%; margin-right: 5px"
+            style="width: 95px; margin-right: 5px"
           />
           <a-input
             v-model="
@@ -275,7 +275,7 @@
               $t('sys.config.placeholder.auto_enable_error.enable_errors.error')
             "
             allow-clear
-            style="width: 43%; margin-right: 5px"
+            style="width: 305px; margin-right: 5px"
           />
           <a-button
             type="primary"
