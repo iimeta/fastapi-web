@@ -576,4 +576,12 @@
   };
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+  .copy-btn {
+    color: gray;
+    cursor: pointer;
+  }
+  .copy-btn:hover {
+    color: rgb(var(--arcoblue-6));
+  }
+</style>

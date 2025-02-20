@@ -1351,11 +1351,4 @@
     padding-top: 5px;
     padding-left: 15px;
   }
-  .copy-btn {
-    color: gray;
-    cursor: pointer;
-  }
-  .copy-btn:hover {
-    color: rgb(var(--arcoblue-6));
-  }
 </style>
