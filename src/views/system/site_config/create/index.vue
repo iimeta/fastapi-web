@@ -561,6 +561,51 @@
           formData.value.support_email_suffix =
             formData.value.support_email_suffix.split(',');
         }
+
+        const carousels1RemoveIndexes: number[] = [];
+        formData.value.carousels1.forEach((item, index) => {
+          if (!item.image_url && !item.jump_url) {
+            carousels1RemoveIndexes.push(index);
+          }
+        });
+
+        carousels1RemoveIndexes.reverse().forEach((item) => {
+          formData.value.carousels1.splice(item, 1);
+        });
+
+        const carousels2RemoveIndexes: number[] = [];
+        formData.value.carousels2.forEach((item, index) => {
+          if (!item.image_url && !item.jump_url) {
+            carousels2RemoveIndexes.push(index);
+          }
+        });
+
+        carousels2RemoveIndexes.reverse().forEach((item) => {
+          formData.value.carousels2.splice(item, 1);
+        });
+
+        const announcementsRemoveIndexes: number[] = [];
+        formData.value.announcements.forEach((item, index) => {
+          if (!item.content && !item.jump_url) {
+            announcementsRemoveIndexes.push(index);
+          }
+        });
+
+        announcementsRemoveIndexes.reverse().forEach((item) => {
+          formData.value.announcements.splice(item, 1);
+        });
+
+        const documentsRemoveIndexes: number[] = [];
+        formData.value.documents.forEach((item, index) => {
+          if (!item.title && !item.jump_url) {
+            documentsRemoveIndexes.push(index);
+          }
+        });
+
+        documentsRemoveIndexes.reverse().forEach((item) => {
+          formData.value.documents.splice(item, 1);
+        });
+
         await submitSiteConfigCreate(formData.value).then(() => {
           proxy.$message.success('新建成功');
           router.push({

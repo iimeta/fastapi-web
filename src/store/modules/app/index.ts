@@ -264,10 +264,18 @@ const useAppStore = defineStore('app', {
           ?.setAttribute('href', res.data.favicon || '/favicon.ico');
         document
           .querySelector('meta[name="keywords"]')
-          ?.setAttribute('content', res.data.keywords);
+          ?.setAttribute(
+            'content',
+            res.data.keywords ||
+              '智元,IIMETA,IIM,DEEPSEEK,AI,FAST,API,CHAT,GPT,AGI,LLM,AIGC,OPENAI,AZURE,GEMINI,人工智能,元宇宙,大模型,文心一言,讯飞星火,通义千问,智谱GLM,豆包,火山引擎'
+          );
         document
           .querySelector('meta[name="description"]')
-          ?.setAttribute('content', res.data.description);
+          ?.setAttribute(
+            'content',
+            res.data.description ||
+              '智元 Fast API 是企业级 LLM API 快速集成系统，支持DeepSeek、OpenAI、Azure、文心一言、讯飞星火、通义千问、智谱GLM、Gemini、豆包以及OpenAI格式的模型等，简洁的页面风格，轻量高效且稳定，支持Docker一键部署。业务系统只需要按照统一API标准，对接一次的开发工作量，即可无缝对接N个大模型，无需考虑N个大模型背后的各种复杂逻辑等等，可大大降低开发和维护成本...'
+          );
       });
     },
   },
