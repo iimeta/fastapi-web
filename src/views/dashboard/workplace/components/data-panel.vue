@@ -314,12 +314,12 @@
     padding: 8px 20px 0 20px;
   }
   .panel-col {
-    padding-left: 15px;
+    padding-left: 12px;
     height: 50px;
     border-right: 1px solid rgb(var(--gray-2));
   }
   .col-avatar {
-    margin-right: 12px;
+    margin-right: 5px;
     background-color: var(--color-fill-2);
   }
   .up-icon {
