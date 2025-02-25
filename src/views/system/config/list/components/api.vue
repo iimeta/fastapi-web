@@ -69,8 +69,10 @@
       v-model:visible="configVisible"
       :title="$t(configTitle)"
       :width="
-        configFormData.action === 'base' || configFormData.action === 'log'
+        configFormData.action === 'base'
           ? 520
+          : configFormData.action === 'log'
+          ? 560
           : 700
       "
       @cancel="handleCancel"
@@ -164,23 +166,100 @@
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'log'"
-          field="log.records"
-          :label="$t('sys.config.label.log.records')"
+          field="log.chat_records"
+          :label="$t('sys.config.label.log.chat_records')"
         >
           <a-space size="large">
-            <a-checkbox v-model="configFormData.log.records" value="prompt">
+            <a-checkbox
+              v-model="configFormData.log.chat_records"
+              value="prompt"
+            >
               提问
             </a-checkbox>
-            <a-checkbox v-model="configFormData.log.records" value="completion">
+            <a-checkbox
+              v-model="configFormData.log.chat_records"
+              value="completion"
+            >
               回答
             </a-checkbox>
-            <a-checkbox v-model="configFormData.log.records" value="messages">
+            <a-checkbox
+              v-model="configFormData.log.chat_records"
+              value="messages"
+            >
               上下文
             </a-checkbox>
-            <a-checkbox v-model="configFormData.log.records" value="image">
+            <a-checkbox v-model="configFormData.log.chat_records" value="image">
               识图的图像数据
             </a-checkbox>
           </a-space>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'log'"
+          field="log.chat_reserve"
+          :label="$t('sys.config.label.log.chat_reserve')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.log.chat_reserve.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.log.chat_reserve"
+            :placeholder="$t('sys.config.placeholder.log.chat_reserve')"
+            :min="0"
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'log'"
+          field="log.image_reserve"
+          :label="$t('sys.config.label.log.image_reserve')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.log.image_reserve.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.log.image_reserve"
+            :placeholder="$t('sys.config.placeholder.log.image_reserve')"
+            :min="0"
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'log'"
+          field="log.audio_reserve"
+          :label="$t('sys.config.label.log.audio_reserve')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.log.audio_reserve.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.log.audio_reserve"
+            :placeholder="$t('sys.config.placeholder.log.audio_reserve')"
+            :min="0"
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'log'"
+          field="log.cron"
+          :label="$t('sys.config.label.log.cron')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.log.cron.required'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.log.cron"
+            :placeholder="$t('sys.config.placeholder.log.cron')"
+            allow-clear
+          />
         </a-form-item>
         <a-form-item
           v-for="(item, index) of configFormData.auto_disabled_error.errors"
@@ -573,7 +652,7 @@
         action: 'log',
         title: t('sys.config.item.title.log'),
         description:
-          '调用日志记录内容, 支持记录: 提问、回答、上下文、多模态识图的BASE64图像数据',
+          '配置聊天日志记录内容, 支持记录: 提问、回答、上下文、多模态识图的BASE64图像数据, 以及各类日志保留天数, 当保留天数>0则会自动删除',
         open: configFormData.value.log.open,
         config: true,
         reset: true,
@@ -642,7 +721,7 @@
   };
 
   const handleAutoEnableErrorDel = (index: number) => {
-    if (configFormData.value.log.records.length > 1) {
+    if (configFormData.value.auto_enable_error.enable_errors.length > 1) {
       configFormData.value.auto_enable_error.enable_errors.splice(index, 1);
     }
   };

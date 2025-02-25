@@ -57,7 +57,11 @@ export interface Midjourney {
 
 export interface Log {
   open: boolean;
-  records: string[];
+  chat_records: string[];
+  chat_reserve: number;
+  image_reserve: number;
+  audio_reserve: number;
+  cron: string;
 }
 
 export interface UserLoginRegister {
