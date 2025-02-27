@@ -182,6 +182,47 @@
             >
               删除
             </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="allMultiple"
+              :title="allMultiple ? '请查询要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'all-status',
+                  value: 1,
+                })
+              "
+            >
+              全部启用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="allMultiple"
+              :title="allMultiple ? '请查询要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'all-status',
+                  value: 2,
+                })
+              "
+            >
+              全部禁用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="allMultiple"
+              :title="allMultiple ? '请查询要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'all-delete',
+                })
+              "
+            >
+              全部删除
+            </a-button>
           </a-space>
         </a-col>
         <a-col
@@ -490,6 +531,7 @@
   const size = ref<SizeProps>('medium');
   const ids = ref<Array<string>>([]);
   const multiple = ref(true);
+  const allMultiple = ref(true);
   const tableRef = ref();
 
   const basePagination: Pagination = {
@@ -629,6 +671,19 @@
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
       pagination.total = data.paging.total;
+      if (
+        data.items.length > 0 &&
+        (formModel.value.corp ||
+          formModel.value.key ||
+          formModel.value.models.length > 0 ||
+          formModel.value.model_agents ||
+          formModel.value.status ||
+          formModel.value.remark)
+      ) {
+        allMultiple.value = false;
+      } else {
+        allMultiple.value = true;
+      }
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -751,8 +806,8 @@
    * 批量操作
    */
   const handleBatch = (params: KeyBatchOperate) => {
-    if (ids.value.length === 0) {
-      proxy.$message.info('请选择要操作的数据');
+    if (allMultiple.value && ids.value.length === 0) {
+      proxy.$message.info('请选择或查询要操作的数据');
     } else {
       let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
       switch (params.action) {
@@ -765,6 +820,16 @@
           break;
         case 'delete':
           alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          break;
+        case 'all-status':
+          if (params.value === 1) {
+            alertContent = `是否确定全部启用查询结果的${pagination.total}条数据?`;
+          } else {
+            alertContent = `是否确定全部禁用查询结果的${pagination.total}条数据?`;
+          }
+          break;
+        case 'all-delete':
+          alertContent = `是否确定全部删除查询结果的${pagination.total}条数据?`;
           break;
         default:
       }
