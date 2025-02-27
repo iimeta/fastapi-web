@@ -842,12 +842,14 @@
         onOk: () => {
           setLoading(true);
           params.ids = ids.value;
-          submitKeyBatchOperate(params).then((res) => {
-            setLoading(false);
-            proxy.$message.success('操作成功');
-            search();
-            tableRef.value.selectAll(false);
-          });
+          submitKeyBatchOperate({ ...params, ...formModel.value }).then(
+            (res) => {
+              setLoading(false);
+              proxy.$message.success('操作成功');
+              search();
+              tableRef.value.selectAll(false);
+            }
+          );
         },
       });
     }

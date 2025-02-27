@@ -131,6 +131,13 @@ export interface KeyBatchOperate {
   action: string;
   ids?: string[];
   value?: any;
+  type?: number;
+  corp?: string;
+  key?: string;
+  models?: string[];
+  model_agents?: string[];
+  status?: number;
+  remark?: string;
 }
 
 export function submitKeyBatchOperate(data: KeyBatchOperate) {
