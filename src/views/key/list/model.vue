@@ -845,7 +845,7 @@
           submitKeyBatchOperate({ ...params, ...formModel.value }).then(
             (res) => {
               setLoading(false);
-              proxy.$message.success('操作成功');
+              proxy.$message.success('操作成功, 任务已提交');
               search();
               tableRef.value.selectAll(false);
             }
