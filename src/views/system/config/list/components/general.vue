@@ -251,6 +251,53 @@
             allow-clear
           />
         </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'warning'"
+          field="warning.quota_warning"
+          :label="$t('sys.config.label.warning.quota_warning')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch v-model="configFormData.warning.quota_warning" />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'warning'"
+          field="warning.warning_threshold"
+          :label="$t('sys.config.label.warning.warning_threshold')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.error.warning.warning_threshold.required'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.warning.warning_threshold"
+            :placeholder="
+              $t('sys.config.placeholder.warning.warning_threshold')
+            "
+            :min="1"
+            allow-clear
+          />
+          &nbsp;&nbsp;$
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'warning'"
+          field="warning.exhaustion_notice"
+          :label="$t('sys.config.label.warning.exhaustion_notice')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch v-model="configFormData.warning.exhaustion_notice" />
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -281,6 +328,7 @@
     user_login_register: {},
     user_shield_error: {},
     admin_login: {},
+    warning: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
@@ -319,6 +367,10 @@
 
     setLoading(true);
     try {
+      if (configFormData.value.action === 'warning') {
+        configFormData.value.warning.warning_threshold *= 500000;
+      }
+
       await submitSysConfigUpdate(configFormData.value);
       done();
       proxy.$message.success('操作成功');
@@ -378,6 +430,9 @@
     configFormData.value.user_login_register = data.user_login_register;
     configFormData.value.user_shield_error = data.user_shield_error;
     configFormData.value.admin_login = data.admin_login;
+    configFormData.value.warning = data.warning;
+    configFormData.value.warning.warning_threshold =
+      data.warning.warning_threshold / 500000;
     sysConfigItems.value = [
       {
         action: 'user_login_register',
@@ -401,6 +456,14 @@
         title: t('sys.config.item.title.admin_login'),
         description:
           '配置登录页上的登录方式、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示',
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'warning',
+        title: t('sys.config.item.title.warning'),
+        description:
+          '配置各类预警参数和开关, 用户如若有配置额度预警和预警阈值, 将以用户的配置优先',
         config: true,
         reset: true,
       },

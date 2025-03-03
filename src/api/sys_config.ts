@@ -34,7 +34,6 @@ export interface Email {
 export interface Statistics {
   open: boolean;
   cron: string;
-  days: number;
   limit: number;
   lock_minutes: number;
 }
@@ -110,6 +109,18 @@ export interface NotShieldError {
   errors: string[];
 }
 
+export interface Notice {
+  open: boolean;
+  cron: string;
+  lock_minutes: number;
+}
+
+export interface Warning {
+  quota_warning: boolean;
+  warning_threshold: number;
+  exhaustion_notice: boolean;
+}
+
 export interface Debug {
   open: boolean;
 }
@@ -130,6 +141,8 @@ export interface SysConfigDetail {
   auto_enable_error: AutoEnableError;
   not_retry_error: NotRetryError;
   not_shield_error: NotShieldError;
+  notice: Notice;
+  warning: Warning;
   debug: Debug;
   created_at: string;
   updated_at: string;
@@ -155,6 +168,8 @@ export interface SysConfigUpdate {
   auto_enable_error: AutoEnableError;
   not_retry_error: NotRetryError;
   not_shield_error: NotShieldError;
+  notice: Notice;
+  warning: Warning;
   debug: Debug;
 }
 

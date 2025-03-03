@@ -125,6 +125,41 @@
             allow-clear
           />
         </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'notice'"
+          field="notice.cron"
+          :label="$t('sys.config.label.notice.cron')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.notice.cron.required'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.notice.cron"
+            :placeholder="$t('sys.config.placeholder.notice.cron')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'notice'"
+          field="notice.lock_minutes"
+          :label="$t('sys.config.label.notice.lock_minutes')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.notice.lock_minutes.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.notice.lock_minutes"
+            :placeholder="$t('sys.config.placeholder.notice.lock_minutes')"
+            :min="1"
+            allow-clear
+          />
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -153,6 +188,7 @@
   const configForm = ref<FormInstance>();
   const configFormData = ref<SysConfigUpdate>({
     statistics: {},
+    notice: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
@@ -232,6 +268,7 @@
   const getSysConfigDetail = async () => {
     const { data } = await querySysConfigDetail();
     configFormData.value.statistics = data.statistics;
+    configFormData.value.notice = data.notice;
     sysConfigItems.value = [
       {
         action: 'statistics',
@@ -239,6 +276,15 @@
         description:
           '仪表盘上各类数据以及账单明细的统计任务, 统计间隔时间建议控制在30分钟以内, 单次循环统计查询条数建议控制在1万以内, 单次统计任务超时时间可根据实际情况配置, 建议不要低于10分钟',
         open: configFormData.value.statistics.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'notice',
+        title: t('sys.config.item.title.notice'),
+        description:
+          '定时检查各类通知配置是否需要发送通知, 单次通知任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        open: configFormData.value.notice.open,
         config: true,
         reset: true,
       },
