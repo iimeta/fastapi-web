@@ -252,51 +252,82 @@
           />
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'warning'"
-          field="warning.quota_warning"
-          :label="$t('sys.config.label.warning.quota_warning')"
+          v-if="configFormData.action === 'quota_warning'"
+          field="quota_warning.threshold"
+          :label="$t('sys.config.label.quota_warning.threshold')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.quota_warning.threshold.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.quota_warning.threshold"
+            :placeholder="$t('sys.config.placeholder.quota_warning.threshold')"
+            :min="1"
+            allow-clear
+          />
+          &nbsp;&nbsp;$&nbsp;
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'quota_warning'"
+          field="quota_warning.exhaustion_notice"
+          :label="$t('sys.config.label.quota_warning.exhaustion_notice')"
           :rules="[
             {
               required: true,
             },
           ]"
         >
-          <a-switch v-model="configFormData.warning.quota_warning" />
+          <a-switch v-model="configFormData.quota_warning.exhaustion_notice" />
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'warning'"
-          field="warning.warning_threshold"
-          :label="$t('sys.config.label.warning.warning_threshold')"
+          v-if="configFormData.action === 'quota_warning'"
+          field="quota_warning.expire_warning"
+          :label="$t('sys.config.label.quota_warning.expire_warning')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch v-model="configFormData.quota_warning.expire_warning" />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'quota_warning'"
+          field="quota_warning.expire_threshold"
+          :label="$t('sys.config.label.quota_warning.expire_threshold')"
           :rules="[
             {
               required: true,
               message: $t(
-                'sys.config.error.warning.warning_threshold.required'
+                'sys.config.error.quota_warning.expire_threshold.required'
               ),
             },
           ]"
         >
           <a-input-number
-            v-model="configFormData.warning.warning_threshold"
+            v-model="configFormData.quota_warning.expire_threshold"
             :placeholder="
-              $t('sys.config.placeholder.warning.warning_threshold')
+              $t('sys.config.placeholder.quota_warning.expire_threshold')
             "
             :min="1"
             allow-clear
           />
-          &nbsp;&nbsp;$
+          &nbsp;&nbsp;天
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'warning'"
-          field="warning.exhaustion_notice"
-          :label="$t('sys.config.label.warning.exhaustion_notice')"
+          v-if="configFormData.action === 'quota_warning'"
+          field="quota_warning.expire_notice"
+          :label="$t('sys.config.label.quota_warning.expire_notice')"
           :rules="[
             {
               required: true,
             },
           ]"
         >
-          <a-switch v-model="configFormData.warning.exhaustion_notice" />
+          <a-switch v-model="configFormData.quota_warning.expire_notice" />
         </a-form-item>
       </a-form>
     </a-modal>
@@ -328,7 +359,7 @@
     user_login_register: {},
     user_shield_error: {},
     admin_login: {},
-    warning: {},
+    quota_warning: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
@@ -367,8 +398,8 @@
 
     setLoading(true);
     try {
-      if (configFormData.value.action === 'warning') {
-        configFormData.value.warning.warning_threshold *= 500000;
+      if (configFormData.value.action === 'quota_warning') {
+        configFormData.value.quota_warning.threshold *= 500000;
       }
 
       await submitSysConfigUpdate(configFormData.value);
@@ -430,9 +461,9 @@
     configFormData.value.user_login_register = data.user_login_register;
     configFormData.value.user_shield_error = data.user_shield_error;
     configFormData.value.admin_login = data.admin_login;
-    configFormData.value.warning = data.warning;
-    configFormData.value.warning.warning_threshold =
-      data.warning.warning_threshold / 500000;
+    configFormData.value.quota_warning = data.quota_warning;
+    configFormData.value.quota_warning.threshold =
+      data.quota_warning.threshold / 500000;
     sysConfigItems.value = [
       {
         action: 'user_login_register',
@@ -460,10 +491,11 @@
         reset: true,
       },
       {
-        action: 'warning',
-        title: t('sys.config.item.title.warning'),
+        action: 'quota_warning',
+        title: t('sys.config.item.title.quota_warning'),
         description:
-          '配置各类预警参数和开关, 用户如若有配置额度预警和预警阈值, 将以用户的配置优先',
+          '配置额度预警参数默认值和通知开关, 用户如若有配置额度预警和预警阈值等, 将以用户的配置优先',
+        open: configFormData.value.quota_warning.open,
         config: true,
         reset: true,
       },

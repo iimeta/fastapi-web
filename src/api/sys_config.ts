@@ -115,10 +115,13 @@ export interface Notice {
   lock_minutes: number;
 }
 
-export interface Warning {
-  quota_warning: boolean;
-  warning_threshold: number;
+export interface QuotaWarning {
+  open: boolean;
+  threshold: number;
   exhaustion_notice: boolean;
+  expire_warning: boolean;
+  expire_threshold: number;
+  expire_notice: boolean;
 }
 
 export interface Debug {
@@ -142,7 +145,7 @@ export interface SysConfigDetail {
   not_retry_error: NotRetryError;
   not_shield_error: NotShieldError;
   notice: Notice;
-  warning: Warning;
+  quota_warning: QuotaWarning;
   debug: Debug;
   created_at: string;
   updated_at: string;
@@ -169,7 +172,7 @@ export interface SysConfigUpdate {
   not_retry_error: NotRetryError;
   not_shield_error: NotShieldError;
   notice: Notice;
-  warning: Warning;
+  quota_warning: QuotaWarning;
   debug: Debug;
 }
 

@@ -8,22 +8,36 @@
   >
     <div>
       <div>
-        <a-statistic
-          :title="$t('workplace.current.quota')"
-          :value="expense.quota"
-          show-group-separator
-        />
+        <div class="arco-statistic">
+          <div class="arco-statistic-title">
+            {{ $t('workplace.current.quota') }}
+            <a-link @click="quotaWarning">
+              {{ $t('workplace.current.quota_warning') }}
+            </a-link>
+          </div>
+          <div class="arco-statistic-content">
+            <div class="arco-statistic-value">
+              <span class="arco-statistic-value-integer">
+                {{
+                  expense.quota ? expense.quota.toLocaleString() : expense.quota
+                }}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="quota-box">
         <div class="quota-usd-box">
           <div class="quota">剩余额度</div>
-          <div class="quota-usd">{{
-            expense.quota > 0
-              ? `$${quotaConv4(expense.quota)}`
-              : expense.quota < 0
-              ? `-$${quotaConv4(-expense.quota)}`
-              : '$0.00'
-          }}</div>
+          <div class="quota-usd">
+            {{
+              expense.quota > 0
+                ? `$${quotaConv4(expense.quota)}`
+                : expense.quota < 0
+                ? `-$${quotaConv4(-expense.quota)}`
+                : '$0.00'
+            }}
+          </div>
         </div>
         <div>
           <div class="used-quota">已用额度</div>
@@ -34,30 +48,120 @@
         额度过期时间: {{ expense.quota_expires_at || '2099-12-31 23:59:59' }}
       </div>
     </div>
+    <a-modal
+      v-model:visible="configVisible"
+      :title="$t('workplace.current.quota_warning')"
+      @cancel="handleCancel"
+      @before-ok="handleBeforeOk"
+    >
+      <a-form ref="configForm" :model="configFormData" auto-label-width>
+        <a-form-item
+          field="quota_warning.open"
+          :label="$t('workplace.current.quota_warning')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch v-model="configFormData.quota_warning.open" />
+        </a-form-item>
+        <a-form-item
+          field="quota_warning.threshold"
+          :label="$t('workplace.label.quota_warning.threshold')"
+          :rules="[
+            {
+              required: true,
+              message: $t('workplace.error.quota_warning.threshold.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.quota_warning.threshold"
+            :placeholder="$t('workplace.placeholder.quota_warning.threshold')"
+            :min="1"
+            allow-clear
+          />
+          &nbsp;&nbsp;$&nbsp;
+        </a-form-item>
+        <a-form-item
+          field="quota_warning.expire_threshold"
+          :label="$t('workplace.label.quota_warning.expire_threshold')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'workplace.error.quota_warning.expire_threshold.required'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.quota_warning.expire_threshold"
+            :placeholder="
+              $t('workplace.placeholder.quota_warning.expire_threshold')
+            "
+            :min="1"
+            allow-clear
+          />
+          &nbsp;&nbsp;天
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </a-card>
 </template>
 
 <script lang="ts" setup>
-  import { reactive } from 'vue';
+  import { ref, getCurrentInstance } from 'vue';
+  import { FormInstance } from '@arco-design/web-vue/es/form';
   import { quotaConv4 } from '@/utils/common';
   import { queryExpense, Expense } from '@/api/dashboard';
+  import { SysConfigUpdate, submitSysConfigUpdate } from '@/api/sys_config';
 
-  const expense = reactive({}) as Expense;
+  const { proxy } = getCurrentInstance() as any;
+
+  const expense = ref<Expense>({} as Expense);
+  const configVisible = ref(false);
+  const configForm = ref<FormInstance>();
+  const configFormData = ref<SysConfigUpdate>({
+    quota_warning: {},
+  } as SysConfigUpdate);
 
   const getExpense = async () => {
     const { data } = await queryExpense();
-    expense.quota = data.quota;
-    expense.quota_usd = data.quota_usd;
-    expense.used_quota = data.used_quota;
-    expense.used_quota_usd = data.used_quota_usd;
-    expense.quota_expires_at = data.quota_expires_at;
+    expense.value = data;
   };
   getExpense();
+
+  const quotaWarning = () => {
+    configVisible.value = true;
+  };
+
+  const handleBeforeOk = async (done: any) => {
+    const res = await configForm.value?.validate();
+    if (res) {
+      configVisible.value = true;
+      done(false);
+      return;
+    }
+
+    try {
+      await submitSysConfigUpdate(configFormData.value);
+      done();
+      proxy.$message.success('操作成功');
+    } catch (err) {
+      done(false);
+    }
+  };
+
+  const handleCancel = () => {
+    configVisible.value = false;
+  };
 </script>
 
 <script lang="ts">
   export default {
-    name: 'Expense', // If you want the include property of keep-alive to take effect, you must name the component
+    name: 'Expense',
   };
 </script>
 
@@ -113,5 +217,10 @@
 
   .expires_at {
     margin-top: 10px;
+  }
+
+  .arco-link {
+    margin-left: 18px;
+    padding: 0 4px;
   }
 </style>
