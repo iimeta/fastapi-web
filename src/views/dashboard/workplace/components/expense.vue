@@ -49,57 +49,67 @@
       </div>
     </div>
     <a-modal
-      v-model:visible="configVisible"
+      v-model:visible="quotaWarningVisible"
       :title="$t('workplace.current.quota_warning')"
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
-      <a-form ref="configForm" :model="configFormData" auto-label-width>
+      <a-form
+        ref="quotaWarningForm"
+        :model="quotaWarningFormData"
+        auto-label-width
+      >
         <a-form-item
-          field="quota_warning.open"
-          :label="$t('workplace.current.quota_warning')"
+          field="quota_warning"
+          :label="$t('workplace.label.quota_warning')"
           :rules="[
             {
               required: true,
             },
           ]"
         >
-          <a-switch v-model="configFormData.quota_warning.open" />
+          <a-switch v-model="quotaWarningFormData.quota_warning" />
         </a-form-item>
         <a-form-item
-          field="quota_warning.threshold"
-          :label="$t('workplace.label.quota_warning.threshold')"
+          v-if="quotaWarningFormData.quota_warning"
+          field="warning_threshold"
+          :label="$t('workplace.label.quota_warning.warning_threshold')"
           :rules="[
             {
               required: true,
-              message: $t('workplace.error.quota_warning.threshold.required'),
+              message: $t(
+                'workplace.error.quota_warning.warning_threshold.required'
+              ),
             },
           ]"
         >
           <a-input-number
-            v-model="configFormData.quota_warning.threshold"
-            :placeholder="$t('workplace.placeholder.quota_warning.threshold')"
+            v-model="quotaWarningFormData.warning_threshold"
+            :placeholder="
+              $t('workplace.placeholder.quota_warning.warning_threshold')
+            "
             :min="1"
             allow-clear
           />
           &nbsp;&nbsp;$&nbsp;
         </a-form-item>
         <a-form-item
-          field="quota_warning.expire_threshold"
-          :label="$t('workplace.label.quota_warning.expire_threshold')"
+          v-if="quotaWarningFormData.quota_warning"
+          field="expire_warning_threshold"
+          :label="$t('workplace.label.quota_warning.expire_warning_threshold')"
           :rules="[
             {
               required: true,
               message: $t(
-                'workplace.error.quota_warning.expire_threshold.required'
+                'workplace.error.quota_warning.expire_warning_threshold.required'
               ),
             },
           ]"
         >
           <a-input-number
-            v-model="configFormData.quota_warning.expire_threshold"
+            v-model="quotaWarningFormData.expire_warning_threshold"
             :placeholder="
-              $t('workplace.placeholder.quota_warning.expire_threshold')
+              $t('workplace.placeholder.quota_warning.expire_warning_threshold')
             "
             :min="1"
             allow-clear
@@ -116,37 +126,41 @@
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { quotaConv4 } from '@/utils/common';
   import { queryExpense, Expense } from '@/api/dashboard';
-  import { SysConfigUpdate, submitSysConfigUpdate } from '@/api/sys_config';
+  import { QuotaWarningParams, submitQuotaWarning } from '@/api/dashboard';
 
   const { proxy } = getCurrentInstance() as any;
 
   const expense = ref<Expense>({} as Expense);
-  const configVisible = ref(false);
-  const configForm = ref<FormInstance>();
-  const configFormData = ref<SysConfigUpdate>({
-    quota_warning: {},
-  } as SysConfigUpdate);
+  const quotaWarningVisible = ref(false);
+  const quotaWarningForm = ref<FormInstance>();
+  const quotaWarningFormData = ref<QuotaWarningParams>(
+    {} as QuotaWarningParams
+  );
 
   const getExpense = async () => {
     const { data } = await queryExpense();
     expense.value = data;
+    quotaWarningFormData.value.quota_warning = data.quota_warning;
+    quotaWarningFormData.value.warning_threshold = data.warning_threshold || 50;
+    quotaWarningFormData.value.expire_warning_threshold =
+      data.expire_warning_threshold || 3;
   };
   getExpense();
 
   const quotaWarning = () => {
-    configVisible.value = true;
+    quotaWarningVisible.value = true;
   };
 
   const handleBeforeOk = async (done: any) => {
-    const res = await configForm.value?.validate();
+    const res = await quotaWarningForm.value?.validate();
     if (res) {
-      configVisible.value = true;
+      quotaWarningVisible.value = true;
       done(false);
       return;
     }
 
     try {
-      await submitSysConfigUpdate(configFormData.value);
+      await submitQuotaWarning(quotaWarningFormData.value);
       done();
       proxy.$message.success('操作成功');
     } catch (err) {
@@ -155,7 +169,7 @@
   };
 
   const handleCancel = () => {
-    configVisible.value = false;
+    quotaWarningVisible.value = false;
   };
 </script>
 

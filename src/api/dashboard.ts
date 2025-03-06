@@ -51,6 +51,9 @@ export interface Expense {
   used_quota: number;
   used_quota_usd: number;
   quota_expires_at: string;
+  quota_warning: boolean;
+  warning_threshold: number;
+  expire_warning_threshold: number;
 }
 
 export function queryExpense() {
@@ -129,4 +132,14 @@ export interface PerMinuteRes {
 
 export function queryPerMinute(params?: PerMinuteParams) {
   return axios.post<PerMinuteRes>(`/api/v1/dashboard/per/minute`, params);
+}
+
+export interface QuotaWarningParams {
+  quota_warning: boolean;
+  warning_threshold: number;
+  expire_warning_threshold: number;
+}
+
+export function submitQuotaWarning(params: QuotaWarningParams) {
+  return axios.post(`/api/v1/dashboard/quota/warning`, params);
 }
