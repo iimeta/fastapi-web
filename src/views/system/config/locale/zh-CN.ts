@@ -84,6 +84,8 @@ export default {
   'sys.config.label.log.audio_reserve': '音频日志保留天数',
   'sys.config.placeholder.log.audio_reserve': '请输入音频日志保留天数, 保留天数>0则会自动删除',
   'sys.config.error.log.audio_reserve.required': '请输入音频日志保留天数',
+  'sys.config.label.log.status': '删除日志结果',
+  'sys.config.error.log.status.required': '请选择删除日志结果',
   'sys.config.label.log.cron': 'CRON表达式',
   'sys.config.placeholder.log.cron': '请输入CRON表达式',
   'sys.config.error.log.cron.required': '请输入CRON表达式',

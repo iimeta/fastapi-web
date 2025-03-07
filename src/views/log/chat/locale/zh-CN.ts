@@ -49,7 +49,7 @@ export default {
   'chat.form.models': '模型',
   'chat.form.total_time': '耗时大于',
   'chat.form.total_time.placeholder': '请输入总耗时(ms)',
-  'chat.form.status': '状态',
+  'chat.form.status': '结果',
   'chat.form.req_time': '请求时间',
   'chat.form.search': '查询',
   'chat.form.reset': '重置',
@@ -57,6 +57,9 @@ export default {
   'chat.form.title.chat_export': '导出聊天日志',
   'chat.form.title.chat_del': '删除聊天日志',
   'chat.error.req_time.required': '请选择请求时间',
+  'chat.form.req.status': '请求结果',
+  'chat.error.req.status.required': '请选择请求结果',
+  'chat.form.req.user_id': '用户ID',
   // columns
   'chat.columns.user_id': '用户ID',
   'chat.columns.app_id': '应用ID',

@@ -41,7 +41,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="7">
                 <a-form-item field="key" :label="$t('key.form.key')">
                   <a-input
                     v-model="formModel.key"
@@ -50,7 +50,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="9">
                 <a-form-item field="models" :label="$t('key.form.models')">
                   <a-select
                     v-model="formModel.models"
@@ -91,7 +91,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="7">
                 <a-form-item field="status" :label="$t('key.form.status')">
                   <a-select
                     v-model="formModel.status"
@@ -101,7 +101,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="9">
                 <a-form-item field="remark" :label="$t('key.form.remark')">
                   <a-input
                     v-model="formModel.remark"

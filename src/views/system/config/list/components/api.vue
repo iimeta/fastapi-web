@@ -246,6 +246,32 @@
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'log'"
+          field="log.status"
+          :label="$t('sys.config.label.log.status')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.log.status.required'),
+            },
+          ]"
+        >
+          <a-space size="large">
+            <a-checkbox v-model="configFormData.log.status" :value="1">
+              成功
+            </a-checkbox>
+            <a-checkbox v-model="configFormData.log.status" :value="2">
+              中止
+            </a-checkbox>
+            <a-checkbox v-model="configFormData.log.status" :value="3">
+              重试
+            </a-checkbox>
+            <a-checkbox v-model="configFormData.log.status" :value="-1">
+              失败
+            </a-checkbox>
+          </a-space>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'log'"
           field="log.cron"
           :label="$t('sys.config.label.log.cron')"
           :rules="[

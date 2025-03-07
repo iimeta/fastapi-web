@@ -60,6 +60,7 @@ export interface Log {
   chat_reserve: number;
   image_reserve: number;
   audio_reserve: number;
+  status: number[];
   cron: string;
 }
 

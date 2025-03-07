@@ -685,7 +685,32 @@
               show-time
             />
           </a-form-item>
-          <a-form-item field="user_id" :label="$t('chat.form.user_id')">
+          <a-form-item
+            field="status"
+            :label="$t('chat.form.req.status')"
+            :rules="[
+              {
+                required: true,
+                message: $t('chat.error.req.status.required'),
+              },
+            ]"
+          >
+            <a-space size="large">
+              <a-checkbox v-model="chatDelFormData.status" :value="1">
+                成功
+              </a-checkbox>
+              <a-checkbox v-model="chatDelFormData.status" :value="2">
+                中止
+              </a-checkbox>
+              <a-checkbox v-model="chatDelFormData.status" :value="3">
+                重试
+              </a-checkbox>
+              <a-checkbox v-model="chatDelFormData.status" :value="-1">
+                失败
+              </a-checkbox>
+            </a-space>
+          </a-form-item>
+          <a-form-item field="user_id" :label="$t('chat.form.req.user_id')">
             <a-input-number
               v-model="chatDelFormData.user_id"
               :placeholder="$t('chat.form.user_id.placeholder')"
@@ -1228,7 +1253,9 @@
 
   const chatDelForm = ref<FormInstance>();
   const chatDelFormVisible = ref(false);
-  const chatDelFormData = ref<ChatBatchOperate>({} as ChatBatchOperate);
+  const chatDelFormData = ref<ChatBatchOperate>({
+    status: [1, 2, 3, -1],
+  } as ChatBatchOperate);
 
   const chatDelHandleBeforeOk = async (done: any) => {
     const res = await chatDelForm.value?.validate();
@@ -1242,6 +1269,7 @@
       action: 'time',
       value: chatDelFormData.value.value,
       user_id: chatDelFormData.value.user_id,
+      status: chatDelFormData.value.status,
     });
   };
 

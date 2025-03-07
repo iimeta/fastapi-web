@@ -378,6 +378,7 @@ export interface ChatBatchOperate {
   ids?: string[];
   value?: any;
   user_id?: number;
+  status?: number[];
 }
 
 export function submitChatBatchOperate(data: ChatBatchOperate) {
