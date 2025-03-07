@@ -95,7 +95,7 @@
   };
 
   const sysConfig = ref<SysConfigDetail>({
-    user_login_register: {},
+    admin_login: {},
   } as SysConfigDetail);
   querySysConfig().then((res) => {
     sysConfig.value = res.data;
