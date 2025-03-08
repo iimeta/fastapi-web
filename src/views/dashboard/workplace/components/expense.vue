@@ -125,8 +125,12 @@
   import { ref, getCurrentInstance } from 'vue';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { quotaConv4 } from '@/utils/common';
-  import { queryExpense, Expense } from '@/api/dashboard';
-  import { QuotaWarningParams, submitQuotaWarning } from '@/api/dashboard';
+  import {
+    queryExpense,
+    Expense,
+    QuotaWarningParams,
+    submitQuotaWarning,
+  } from '@/api/dashboard';
 
   const { proxy } = getCurrentInstance() as any;
 
@@ -140,7 +144,9 @@
   const getExpense = async () => {
     const { data } = await queryExpense();
     expense.value = data;
-    quotaWarningFormData.value.quota_warning = data.quota_warning;
+    quotaWarningFormData.value.quota_warning =
+      data.quota_warning ||
+      (data.warning_threshold === 0 && data.expire_warning_threshold === 0);
     quotaWarningFormData.value.warning_threshold = data.warning_threshold || 50;
     quotaWarningFormData.value.expire_warning_threshold =
       data.expire_warning_threshold || 3;
