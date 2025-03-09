@@ -121,7 +121,7 @@
 
 ## 交流群
 
-<img src="https://iim.ai/public/images/WeChatGroup.jpg?t=20250302" width="320" alt="交流群"/>
+<img src="https://iim.ai/public/images/WeChatGroup.jpg?t=20250309" width="320" alt="交流群"/>
 
 ## 参考项目
 
