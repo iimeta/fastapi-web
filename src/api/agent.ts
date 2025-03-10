@@ -7,13 +7,16 @@ export interface ModelAgentBaseInfo {
   name: string;
   base_url: string;
   path: string;
+  weight: any;
   remark: string;
   status?: number;
 }
 
 export interface ModelAgentAdvanced {
-  weight: any;
   models: string[];
+  is_enable_model_replace: boolean;
+  replace_models: string[];
+  target_models: string[];
   lb_strategy: string;
   key: string;
   is_agents_only: boolean;
@@ -103,6 +106,9 @@ export interface ModelAgentDetail {
   model_names: string[];
   fallback_names: string[];
   fallback_model_names: string[];
+  is_enable_model_replace: boolean;
+  replace_models: string[];
+  target_models: string[];
   lb_strategy: number;
   key: string;
   status: number;

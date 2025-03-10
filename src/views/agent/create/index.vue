@@ -119,6 +119,54 @@
               />
             </a-form-item>
             <a-form-item
+              field="is_enable_model_replace"
+              :label="$t('model.agent.label.is_enable_model_replace')"
+            >
+              <a-switch
+                v-model="formData.is_enable_model_replace"
+                @change="handleIsEnableModelReplaceChange"
+              />
+            </a-form-item>
+            <a-form-item
+              v-for="(models, index) of formData.replace_models"
+              v-show="formData.is_enable_model_replace"
+              :key="index"
+              :field="`replace_models[${index}]` && `target_models[${index}]`"
+              :label="`${index + 1}. ` + $t('model.agent.label.replace_models')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.agent.error.replace_models.required'),
+                },
+              ]"
+            >
+              <a-input
+                v-model="formData.replace_models[index]"
+                :placeholder="$t('model.agent.placeholder.replace_models')"
+                style="width: 218px; margin-right: 5px"
+              />
+              <a-input
+                v-model="formData.target_models[index]"
+                :placeholder="$t('model.agent.placeholder.target_models')"
+                style="width: 218px"
+              />
+              <a-button
+                type="primary"
+                shape="circle"
+                style="margin: 0 10px 0 10px"
+                @click="handleModelReplaceAdd"
+              >
+                <icon-plus />
+              </a-button>
+              <a-button
+                type="secondary"
+                shape="circle"
+                @click="handleModelReplaceDel(index)"
+              >
+                <icon-minus />
+              </a-button>
+            </a-form-item>
+            <a-form-item
               field="lb_strategy"
               :label="$t('model.agent.label.lb_strategy')"
             >
@@ -246,6 +294,9 @@
     weight: ref(20),
     remark: '',
     models: [],
+    is_enable_model_replace: false,
+    replace_models: [],
+    target_models: [],
     lb_strategy: '1',
     key: '',
     is_agents_only: true,
@@ -267,6 +318,27 @@
       } finally {
         setLoading(false);
       }
+    }
+  };
+
+  const handleIsEnableModelReplaceChange = () => {
+    if (!formData.value.is_enable_model_replace) {
+      formData.value.replace_models = [];
+      formData.value.target_models = [];
+    } else {
+      handleModelReplaceAdd();
+    }
+  };
+
+  const handleModelReplaceAdd = () => {
+    formData.value.replace_models.push('');
+    formData.value.target_models.push('');
+  };
+
+  const handleModelReplaceDel = (index: number) => {
+    if (formData.value.replace_models.length > 1) {
+      formData.value.replace_models.splice(index, 1);
+      formData.value.target_models.splice(index, 1);
     }
   };
 </script>
