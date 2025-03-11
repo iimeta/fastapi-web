@@ -353,8 +353,10 @@
       formData.value.status = data.status;
       formData.value.models = data.models;
       formData.value.is_enable_model_replace = data.is_enable_model_replace;
-      formData.value.replace_models = data.replace_models;
-      formData.value.target_models = data.target_models;
+      if (data.replace_models) {
+        formData.value.replace_models = data.replace_models;
+        formData.value.target_models = data.target_models;
+      }
       formData.value.lb_strategy = String(data.lb_strategy);
       formData.value.key = data.key;
       getKeyPlaceholder();
