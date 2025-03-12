@@ -846,7 +846,7 @@
         <a-table
           v-if="isShowSearchQuota"
           style="margin-top: 15px"
-          :data="multimodalSearchQuotas"
+          :data="multimodalSearchQuota"
           :pagination="false"
           :bordered="false"
         >
@@ -858,6 +858,36 @@
             >
               <template #cell="{ record }">
                 {{ `$${quotaConv(record.search_quota)}/次` }}
+              </template>
+            </a-table-column>
+          </template>
+        </a-table>
+
+        <a-table
+          v-if="isShowSearchQuotas"
+          style="margin-top: 15px"
+          :data="multimodalSearchQuotas"
+          :pagination="false"
+          :bordered="false"
+        >
+          <template #columns>
+            <a-table-column
+              title="搜索上下文大小"
+              data-index="search_context_size"
+              align="center"
+            ></a-table-column>
+            <a-table-column
+              title="搜索价格"
+              data-index="fixed_quota"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${quotaConv(record.fixed_quota)}/次` }}
+              </template>
+            </a-table-column>
+            <a-table-column title="默认" data-index="is_default" align="center">
+              <template #cell="{ record }">
+                {{ record.is_default ? '是' : '-' }}
               </template>
             </a-table-column>
           </template>
@@ -1001,6 +1031,7 @@
     RealtimeQuota,
     MultimodalAudioQuota,
     FallbackConfig,
+    SearchQuota,
   } from '@/api/model';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -1587,9 +1618,11 @@
 
   const multimodalQuotaVisible = ref(false);
   const isShowSearchQuota = ref(false);
+  const isShowSearchQuotas = ref(false);
   const multimodalTextQuotas = ref<TextQuota[]>([]);
   const multimodalImageQuotas = ref<ImageQuota[]>([]);
-  const multimodalSearchQuotas = ref<MultimodalQuota[]>([]);
+  const multimodalSearchQuota = ref<MultimodalQuota[]>([]);
+  const multimodalSearchQuotas = ref<SearchQuota[]>([]);
   const viewMultimodalQuota = (params: MultimodalQuota) => {
     multimodalQuotaVisible.value = true;
     isShowSearchQuota.value = false;
@@ -1597,7 +1630,11 @@
     multimodalImageQuotas.value = params.image_quotas;
     if (params.search_quota > 0) {
       isShowSearchQuota.value = true;
-      multimodalSearchQuotas.value[0] = params;
+      multimodalSearchQuota.value[0] = params;
+    }
+    if (params.search_quotas) {
+      isShowSearchQuotas.value = true;
+      multimodalSearchQuotas.value = params.search_quotas;
     }
   };
 

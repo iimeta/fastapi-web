@@ -69,11 +69,18 @@ export interface AudioQuota {
   completion_price: any;
 }
 
+export interface SearchQuota {
+  search_context_size?: string;
+  fixed_quota: any;
+  is_default: string;
+}
+
 export interface MultimodalQuota {
   billing_rule: any;
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
   search_quota: any;
+  search_quotas: SearchQuota[];
 }
 
 export interface RealtimeQuota {

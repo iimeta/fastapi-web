@@ -616,6 +616,65 @@
                 }}/次
               </div>
             </a-form-item>
+            <a-form-item
+              v-for="(search_quotas, index) of formData.multimodal_quota
+                .search_quotas"
+              v-show="isShowMultimodalSearchQuota"
+              :key="index"
+              :field="
+                `multimodal_quota.search_quotas[${index}].search_context_size` &&
+                `multimodal_quota.search_quotas[${index}].fixed_quota`
+              "
+              :label="`${index + 1}. ` + $t('model.label.search_quotas')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.search_quotas.required'),
+                },
+              ]"
+            >
+              <a-input
+                v-model="
+                  formData.multimodal_quota.search_quotas[index]
+                    .search_context_size
+                "
+                :placeholder="
+                  $t('model.placeholder.search_quotas.search_context_size')
+                "
+                style="width: 185px; margin-right: 5px"
+              />
+              <a-input-number
+                v-model="
+                  formData.multimodal_quota.search_quotas[index].fixed_quota
+                "
+                :placeholder="$t('model.placeholder.search_quotas.fixed_quota')"
+                style="width: 185px; margin-right: 5px"
+              />
+              <a-radio
+                v-model="
+                  formData.multimodal_quota.search_quotas[index].is_default
+                "
+                value="1"
+                style="width: 60px"
+                @change="handleMultimodalSearchQuotaIsDefaultChange(index)"
+                >默认</a-radio
+              >
+              <a-button
+                type="primary"
+                shape="circle"
+                style="margin: 0 10px 0 10px"
+                @click="handleMultimodalSearchQuotaAdd()"
+              >
+                <icon-plus />
+              </a-button>
+              <a-button
+                type="secondary"
+                shape="circle"
+                @click="handleMultimodalSearchQuotaDel(index)"
+              >
+                <icon-minus />
+              </a-button>
+            </a-form-item>
 
             <!-- 多模态实时额度 -->
             <a-form-item
@@ -1583,6 +1642,7 @@
     ModelList,
     ImageQuota,
     MidjourneyQuota,
+    SearchQuota,
   } from '@/api/model';
   import { queryCorpList, CorpList } from '@/api/corp';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
@@ -1684,6 +1744,7 @@
       },
       image_quotas: [],
       search_quota: ref(),
+      search_quotas: [],
     },
     realtime_quota: {
       text_quota: {
@@ -1747,8 +1808,8 @@
   });
 
   const submitForm = async () => {
+    const corp = corpMap.get(formData.value.corp);
     if (formData.value.type === '2') {
-      const corp = corpMap.get(formData.value.corp);
       if (corp && corp.code === 'Midjourney') {
         formData.value.image_quotas = [];
         formData.value.multimodal_quota.image_quotas = [];
@@ -1759,10 +1820,14 @@
     } else if (formData.value.type === '100') {
       formData.value.image_quotas = [];
       formData.value.midjourney_quotas = [];
+      if (corp && corp.code !== 'OpenAI') {
+        formData.value.multimodal_quota.search_quotas = [];
+      }
     } else {
       formData.value.image_quotas = [];
       formData.value.multimodal_quota.image_quotas = [];
       formData.value.midjourney_quotas = [];
+      formData.value.multimodal_quota.search_quotas = [];
     }
 
     const res = await formRef.value?.validate();
@@ -1946,6 +2011,8 @@
           formData.value.type === '100' && data.corp_code !== 'Midjourney';
         isShowSearchQuota.value =
           formData.value.type === '100' && data.corp_code === 'Google';
+        isShowMultimodalSearchQuota.value =
+          formData.value.type === '100' && data.corp_code === 'OpenAI';
         formData.value.multimodal_quota = data.multimodal_quota;
         formData.value.multimodal_quota.billing_rule = String(
           formData.value.multimodal_quota.billing_rule
@@ -1973,6 +2040,21 @@
           }
         } else {
           formData.value.multimodal_quota.image_quotas = [];
+        }
+
+        if (formData.value.multimodal_quota.search_quotas) {
+          for (
+            let i = 0;
+            i < formData.value.multimodal_quota.search_quotas.length;
+            i += 1
+          ) {
+            if (formData.value.multimodal_quota.search_quotas[i].is_default) {
+              formData.value.multimodal_quota.search_quotas[i].is_default = '1';
+              break;
+            }
+          }
+        } else {
+          formData.value.multimodal_quota.search_quotas = [];
         }
       }
 
@@ -2075,6 +2157,7 @@
     isShowMultimodalAudioQuota.value = false;
     isShowMidjourneyQuota.value = false;
     isShowSearchQuota.value = false;
+    isShowMultimodalSearchQuota.value = false;
     const corp = corpMap.get(formData.value.corp);
     if (corp && corp.code === 'Midjourney') {
       handleMidjourneyQuota();
@@ -2091,6 +2174,7 @@
   const isShowMultimodalAudioQuota = ref(false);
   const isShowMidjourneyQuota = ref(false);
   const isShowSearchQuota = ref(false);
+  const isShowMultimodalSearchQuota = ref(false);
 
   const handleTypeChange = () => {
     isShowImageQuota.value = false;
@@ -2101,6 +2185,7 @@
     isShowMultimodalAudioQuota.value = false;
     isShowMidjourneyQuota.value = false;
     isShowSearchQuota.value = false;
+    isShowMultimodalSearchQuota.value = false;
     formData.value.text_quota.billing_method = '1';
 
     if (formData.value.type === '2') {
@@ -2122,8 +2207,14 @@
     } else if (formData.value.type === '5' || formData.value.type === '6') {
       isShowAudioQuota.value = true;
     } else if (formData.value.type === '100') {
+      const corp = corpMap.get(formData.value.corp);
+
       isShowMultimodalTextQuota.value = true;
       isShowMultimodalImageQuota.value = true;
+
+      if (corp && (corp.code === 'OpenAI' || corp.name === 'OpenAI')) {
+        isShowMultimodalSearchQuota.value = true;
+      }
 
       if (formData.value.multimodal_quota.image_quotas.length === 0) {
         const modes = ['auto', 'high', 'low'];
@@ -2132,9 +2223,19 @@
         }
       }
 
-      const corp = corpMap.get(formData.value.corp);
       if (corp && (corp.code === 'Google' || corp.name === 'Google')) {
         isShowSearchQuota.value = true;
+      }
+
+      if (
+        formData.value.multimodal_quota.search_quotas.length === 0 &&
+        corp &&
+        (corp.code === 'OpenAI' || corp.name === 'OpenAI')
+      ) {
+        const searchContextSizes = ['medium', 'high', 'low'];
+        for (let i = 0; i < searchContextSizes.length; i += 1) {
+          handleMultimodalSearchQuotaAdd(searchContextSizes[i]);
+        }
       }
     } else if (formData.value.type === '101') {
       isShowRealtimeQuota.value = true;
@@ -2209,6 +2310,43 @@
     }
   };
 
+  const handleMultimodalSearchQuotaAdd = (s?: string) => {
+    const searchQuota: SearchQuota = {
+      search_context_size: s,
+      fixed_quota: ref(),
+      is_default:
+        formData.value.multimodal_quota.search_quotas.length === 0 ? '1' : '',
+    };
+    formData.value.multimodal_quota.search_quotas.push(searchQuota);
+  };
+
+  const handleMultimodalSearchQuotaDel = (index: number) => {
+    if (formData.value.multimodal_quota.search_quotas.length > 1) {
+      if (
+        formData.value.multimodal_quota.search_quotas[index].is_default === '1'
+      ) {
+        formData.value.multimodal_quota.search_quotas[
+          index === 0 ? 1 : 0
+        ].is_default = '1';
+      }
+      formData.value.multimodal_quota.search_quotas.splice(index, 1);
+    }
+  };
+
+  const handleMultimodalSearchQuotaIsDefaultChange = (index: number) => {
+    for (
+      let i = 0;
+      i < formData.value.multimodal_quota.search_quotas.length;
+      i += 1
+    ) {
+      if (i === index) {
+        formData.value.multimodal_quota.search_quotas[i].is_default = '1';
+      } else {
+        formData.value.multimodal_quota.search_quotas[i].is_default = '';
+      }
+    }
+  };
+
   const handleMidjourneyQuota = () => {
     isShowImageQuota.value = false;
     isShowAudioQuota.value = false;
@@ -2218,6 +2356,7 @@
     isShowMultimodalAudioQuota.value = false;
     isShowMidjourneyQuota.value = true;
     isShowSearchQuota.value = false;
+    isShowMultimodalSearchQuota.value = false;
     formData.value.type = '2';
     formData.value.text_quota.billing_method = '2';
     if (formData.value.midjourney_quotas.length === 0) {
