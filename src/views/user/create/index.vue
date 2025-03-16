@@ -222,7 +222,6 @@
     email: '',
     account: '',
     password: '',
-    terminal: 'web',
     quota: ref(),
     quota_expires_at: '',
     remark: '',

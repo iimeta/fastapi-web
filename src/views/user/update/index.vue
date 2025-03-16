@@ -187,7 +187,6 @@
     email: '',
     account: '',
     password: '',
-    terminal: 'web',
     quota_expires_at: '',
     remark: '',
     status: 1,

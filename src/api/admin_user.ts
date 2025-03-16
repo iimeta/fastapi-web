@@ -6,7 +6,6 @@ export interface UserCreate {
   email: string;
   account: string;
   password: string;
-  terminal: string;
   quota: any;
   quota_expires_at: string;
   remark: string;
@@ -50,12 +49,9 @@ export function queryUserPage(params: UserPageParams) {
 }
 
 export interface UserList {
-  id: string;
   user_id: number;
   name: string;
-  models: string[];
   status: number;
-  remark: string;
 }
 
 export interface UserListRes {
@@ -119,7 +115,6 @@ export interface UserUpdate {
   email: string;
   account: string;
   password: string;
-  terminal: string;
   quota_expires_at: string;
   remark: string;
   status: number;
