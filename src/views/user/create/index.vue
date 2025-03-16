@@ -42,6 +42,22 @@
               />
             </a-form-item>
             <a-form-item
+              field="email"
+              :label="$t('user.label.email')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('user.error.email.required'),
+                },
+              ]"
+            >
+              <a-input
+                v-model="formData.email"
+                :placeholder="$t('user.placeholder.email')"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
               field="account"
               :label="$t('user.label.account')"
               :rules="[
@@ -203,6 +219,7 @@
   const formRef = ref<FormInstance>();
   const formData = ref<UserCreate>({
     name: '',
+    email: '',
     account: '',
     password: '',
     terminal: 'web',

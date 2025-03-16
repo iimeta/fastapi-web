@@ -94,6 +94,8 @@ export default {
   'operations.status.1': '禁用',
   'operations.status.2': '启用',
   'operations.delete': '删除',
+  'operations.open.true': '开启',
+  'operations.open.false': '关闭',
   // dict
   'dict.status.1': '正常',
   'dict.status.2': '禁用',
@@ -126,4 +128,6 @@ export default {
   'dict.corp.Midjourney': 'Midjourney',
   'dict.lb_strategy.1': '轮询',
   'dict.lb_strategy.2': '权重',
+  'dict.notice.true': '已发送',
+  'dict.notice.false': '未发送',
 };

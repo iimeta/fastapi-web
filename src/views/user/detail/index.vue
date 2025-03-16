@@ -71,17 +71,68 @@
           {{ currentData.quota_expires_at || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')">
+      <a-descriptions-item :label="t('user.detail.label.quota_warning')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          <a-tag v-if="currentData.status === 1" color="green">
-            {{ $t(`dict.status.${currentData.status}`) }}
-          </a-tag>
-          <a-tag v-else color="red">
-            {{ $t(`dict.status.${currentData.status}`) }}
-          </a-tag>
+          {{
+            $t(
+              `operations.open.${
+                currentData.quota_warning ||
+                (currentData.warning_threshold === 0 &&
+                  currentData.expire_warning_threshold === 0)
+              }`
+            )
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('user.detail.label.warning_threshold')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else> ${{ currentData.warning_threshold || 50 }} </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="t('user.detail.label.expire_warning_threshold')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else> {{ currentData.expire_warning_threshold || 3 }}天 </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('user.detail.label.warning_notice')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.notice.${currentData.warning_notice || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="t('user.detail.label.expire_warning_notice')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.notice.${currentData.expire_warning_notice || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('user.detail.label.exhaustion_notice')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.notice.${currentData.exhaustion_notice || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('user.detail.label.expire_notice')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.notice.${currentData.expire_notice || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('user.detail.label.models')" :span="2">
@@ -114,6 +165,27 @@
         </a-skeleton>
         <span v-else>
           {{ currentData.login_time || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('user.detail.label.login_domain')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.login_domain || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.status')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.status === 1" color="green">
+            {{ $t(`dict.status.${currentData.status}`) }}
+          </a-tag>
+          <a-tag v-else color="red">
+            {{ $t(`dict.status.${currentData.status}`) }}
+          </a-tag>
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('common.created_at')">

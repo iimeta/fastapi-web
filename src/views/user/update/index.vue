@@ -42,6 +42,22 @@
               />
             </a-form-item>
             <a-form-item
+              field="email"
+              :label="$t('user.label.email')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('user.error.email.required'),
+                },
+              ]"
+            >
+              <a-input
+                v-model="formData.email"
+                :placeholder="$t('user.placeholder.email')"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
               field="account"
               :label="$t('user.label.account')"
               :rules="[
@@ -168,6 +184,7 @@
   const formData = ref<UserUpdate>({
     id: '',
     name: '',
+    email: '',
     account: '',
     password: '',
     terminal: 'web',
@@ -184,6 +201,7 @@
       const { data } = await queryUserDetail(params);
       formData.value.id = data.id;
       formData.value.name = data.name;
+      formData.value.email = data.email;
       formData.value.account = data.account;
       formData.value.quota_expires_at = data.quota_expires_at;
       formData.value.remark = data.remark;

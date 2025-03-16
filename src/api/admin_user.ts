@@ -3,6 +3,7 @@ import qs from 'query-string';
 
 export interface UserCreate {
   name: string;
+  email: string;
   account: string;
   password: string;
   terminal: string;
@@ -87,10 +88,18 @@ export interface UserDetail {
   used_quota: number;
   quota_expires_at: string;
   model_names: string[];
+  quota_warning: boolean;
+  warning_threshold: number;
+  expire_warning_threshold: number;
+  warning_notice: boolean;
+  exhaustion_notice: boolean;
+  expire_warning_notice: boolean;
+  expire_notice: boolean;
   remark: string;
   status: number;
   login_ip: string;
   login_time: string;
+  login_domain: string;
   created_at: string;
   updated_at: string;
 }
@@ -107,6 +116,7 @@ export function queryUserDetail(params: UserDetailParams) {
 export interface UserUpdate {
   id: string;
   name: string;
+  email: string;
   account: string;
   password: string;
   terminal: string;
