@@ -243,7 +243,7 @@
       setLoading(true);
       try {
         await submitKeyCreate(formData.value).then(() => {
-          proxy.$message.success('新建成功');
+          proxy.$message.success('操作成功, 任务已提交');
           router.push({
             name: 'ModelKeyList',
           });
