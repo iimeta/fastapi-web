@@ -8,6 +8,7 @@ export interface SysConfigItem {
   open?: boolean;
   config?: boolean;
   reset?: boolean;
+  refresh?: boolean;
   data?: DescData[];
 }
 
@@ -196,6 +197,14 @@ export interface SysConfigReset {
 
 export function submitSysConfigReset(data: SysConfigReset) {
   return axios.post('/api/v1/sys/config/reset', data);
+}
+
+export interface SysConfigRefresh {
+  action: string;
+}
+
+export function submitSysConfigRefresh(data: SysConfigRefresh) {
+  return axios.post('/api/v1/sys/config/refresh', data);
 }
 
 export function querySysConfig() {

@@ -84,6 +84,7 @@ export default {
   'button.return': '返回',
   'button.export': '导出',
   'button.config': '配置',
+  'button.refresh': '刷新',
   // success
   'success.create': '新建成功',
   'success.update': '修改成功',

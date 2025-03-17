@@ -44,6 +44,13 @@
                 {{ $t('button.reset') }}
               </a-button>
               <a-button
+                v-if="item.refresh"
+                status="success"
+                @click="refreshHandle(item)"
+              >
+                {{ $t('button.refresh') }}
+              </a-button>
+              <a-button
                 v-if="item.config"
                 type="primary"
                 @click="configHandle(item)"
@@ -494,6 +501,7 @@
     SysConfigUpdate,
     submitSysConfigUpdate,
     submitSysConfigReset,
+    submitSysConfigRefresh,
     submitSysConfigChangeStatus,
   } from '@/api/sys_config';
 
@@ -553,6 +561,18 @@
       hideCancel: false,
       onOk: () => {
         sysConfigReset(sysConfigItem);
+      },
+    });
+  };
+
+  const refreshHandle = async (sysConfigItem: SysConfigItem) => {
+    proxy.$modal.warning({
+      title: '警告',
+      titleAlign: 'center',
+      content: `是否确定${t(`sys.config.item.title.${sysConfigItem.action}`)}?`,
+      hideCancel: false,
+      onOk: () => {
+        sysConfigRefresh(sysConfigItem);
       },
     });
   };
@@ -632,6 +652,19 @@
     setLoading(true);
     try {
       await submitSysConfigReset({
+        action: sysConfigItem.action,
+      });
+      proxy.$message.success('操作成功');
+      getSysConfigDetail();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const sysConfigRefresh = async (sysConfigItem: SysConfigItem) => {
+    setLoading(true);
+    try {
+      await submitSysConfigRefresh({
         action: sysConfigItem.action,
       });
       proxy.$message.success('操作成功');
@@ -725,6 +758,13 @@
         description:
           '当错误次数达到配置上限时可手动进行重置, 重置过程可能会造成系统的短暂不可用(一般几秒钟), 请谨慎操作, 或尝试调高基础配置的错误次数, 调高不会影响系统的正常运行',
         reset: true,
+      },
+      {
+        action: 'refresh_api_cache',
+        title: t('sys.config.item.title.refresh_api_cache'),
+        description:
+          '系统默认30分钟更新一次缓存, 如需立刻更新缓存, 请点击刷新按钮',
+        refresh: true,
       },
     ];
   };
