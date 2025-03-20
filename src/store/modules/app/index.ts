@@ -28,20 +28,20 @@ const useAppStore = defineStore('app', {
     getDomain(state: AppState): string | undefined {
       return state.config.domain;
     },
-    getTitle(state: AppState): string | undefined {
-      return state.config.title || '智元 Fast API';
+    getTitle(state: AppState): string {
+      return state.config.title || '';
     },
-    getLogo(state: AppState): string | undefined {
-      return state.config.logo || '/logo.png';
+    getLogo(state: AppState): string {
+      return state.config.logo || '';
     },
-    getFavicon(state: AppState): string | undefined {
-      return state.config.favicon || '/favicon.ico';
+    getFavicon(state: AppState): string {
+      return state.config.favicon || '';
     },
-    getAvatar(state: AppState): string | undefined {
-      return state.config.avatar || '/avatar.png';
+    getAvatar(state: AppState): string {
+      return state.config.avatar || '';
     },
-    getBgImg(state: AppState): string | undefined {
-      return state.config.bg_img || '/bgimg.jpg';
+    getBgImg(state: AppState): string {
+      return state.config.bg_img || '';
     },
     getCopyright(state: AppState): string | undefined {
       return (
@@ -62,10 +62,7 @@ const useAppStore = defineStore('app', {
       return state.config.register_tips || '';
     },
     getCarousel1Title(state: AppState): string | undefined {
-      return (
-        state.config.carousel1_title ||
-        (state.config.domain ? undefined : '赞助商')
-      );
+      return state.config.carousel1_title;
     },
     getCarousels1(state: AppState): Carousel[] | undefined {
       return (
@@ -86,10 +83,7 @@ const useAppStore = defineStore('app', {
       );
     },
     getCarousel2Title(state: AppState): string | undefined {
-      return (
-        state.config.carousel2_title ||
-        (state.config.domain ? undefined : '作者')
-      );
+      return state.config.carousel2_title;
     },
     getCarousels2(state: AppState): Carousel[] | undefined {
       return (
@@ -106,10 +100,7 @@ const useAppStore = defineStore('app', {
       );
     },
     getAnnouncementTitle(state: AppState): string | undefined {
-      return (
-        state.config.announcement_title ||
-        (state.config.domain ? undefined : '公告')
-      );
+      return state.config.announcement_title;
     },
     getAnnouncementMoreUrl(state: AppState): string | undefined {
       return (
@@ -123,6 +114,11 @@ const useAppStore = defineStore('app', {
       return (
         state.config.announcements || [
           {
+            content: 'v1.4.0 版本发布啦! 啦!! 啦!!!',
+            jump_url:
+              'https://github.com/iimeta/fastapi-admin/releases/tag/v1.4.0',
+          },
+          {
             content: 'v1.3.0 版本发布啦! 啦!! 啦!!!',
             jump_url:
               'https://github.com/iimeta/fastapi-admin/releases/tag/v1.3.0',
@@ -132,19 +128,11 @@ const useAppStore = defineStore('app', {
             jump_url:
               'https://github.com/iimeta/fastapi-admin/releases/tag/v1.2.0',
           },
-          {
-            content: 'v1.1.0 版本发布啦! 啦!! 啦!!!',
-            jump_url:
-              'https://github.com/iimeta/fastapi-admin/releases/tag/v1.1.0',
-          },
         ]
       );
     },
     getDocumentTitle(state: AppState): string | undefined {
-      return (
-        state.config.document_title ||
-        (state.config.domain ? undefined : '使用指南')
-      );
+      return state.config.document_title;
     },
     getDocumentMoreUrl(state: AppState): string | undefined {
       return (
@@ -235,11 +223,11 @@ const useAppStore = defineStore('app', {
       }).then((res) => {
         this.config = {
           domain: res.data.domain,
-          title: res.data.title,
-          logo: res.data.logo,
-          favicon: res.data.favicon,
-          avatar: res.data.avatar,
-          bg_img: res.data.bg_img,
+          title: res.data.title || '智元 Fast API',
+          logo: res.data.logo || '/logo.png',
+          favicon: res.data.favicon || '/favicon.ico',
+          avatar: res.data.avatar || '/avatar.png',
+          bg_img: res.data.bg_img || '/bgimg.jpg',
           copyright: res.data.copyright,
           jump_url: res.data.jump_url,
           keywords: res.data.keywords,
@@ -247,14 +235,21 @@ const useAppStore = defineStore('app', {
           icp_beian: res.data.icp_beian,
           ga_beian: res.data.ga_beian,
           register_tips: res.data.register_tips,
-          carousel1_title: res.data.carousel1_title,
+          carousel1_title:
+            res.data.carousel1_title ||
+            (res.data.domain ? undefined : '赞助商'),
           carousels1: res.data.carousels1,
-          carousel2_title: res.data.carousel2_title,
+          carousel2_title:
+            res.data.carousel2_title || (res.data.domain ? undefined : '作者'),
           carousels2: res.data.carousels2,
-          announcement_title: res.data.announcement_title,
+          announcement_title:
+            res.data.announcement_title ||
+            (res.data.domain ? undefined : '公告'),
           announcement_more_url: res.data.announcement_more_url,
           announcements: res.data.announcements,
-          document_title: res.data.document_title,
+          document_title:
+            res.data.document_title ||
+            (res.data.domain ? undefined : '使用指南'),
           document_more_url: res.data.document_more_url,
           documents: res.data.documents,
         };
