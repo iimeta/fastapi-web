@@ -6,8 +6,6 @@ export default {
   'menu.app.detail': '应用详情',
   'app.title.create': '新建应用',
   'app.title.update': '修改应用',
-  'app.title.baseInfo': '基础信息',
-  'app.title.advanced': '高级配置',
   'app.label.user_id': '用户ID',
   'app.placeholder.user_id': '请输入用户ID',
   'app.error.user_id.required': '请输入用户ID',
@@ -18,7 +16,6 @@ export default {
   'app.label.remark': '备注',
   'app.placeholder.remark': '请输入备注',
   'app.label.models': '模型权限',
-  'app.label.selectAll': '全选',
   'app.placeholder.models': '此应用可使用的模型, 为空则不限制',
   'app.label.isLimitQuota': '限制额度',
   'app.label.ip_whitelist': 'IP白名单',
@@ -66,8 +63,6 @@ export default {
   'app.form.title.keyConfig': '密钥配置',
   // operation
   'app.operation.create': '新建',
-  'app.operation.import': '批量导入',
-  'app.operation.download': '下载',
   // columns
   'app.columns.userId': '用户ID',
   'app.columns.appId': '应用ID',
@@ -87,8 +82,6 @@ export default {
   'app.columns.operations.delete': '删除',
   'app.columns.operations.createKey': '创建密钥',
   'app.columns.operations.manageKey': '管理密钥',
-  'app.columns.operations.status.1': '禁用',
-  'app.columns.operations.status.2': '启用',
   // dict
   'app.dict.status.1': '正常',
   'app.dict.status.2': '禁用',

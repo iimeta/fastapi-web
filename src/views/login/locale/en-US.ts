@@ -4,8 +4,6 @@ export default {
   'login.phone': 'Phone Login',
   'login.email': 'Email Login',
   'login.other': 'Other Login',
-  'login.ing': 'Login...',
-  'bind.ing': 'Bind...',
 
   'login.account.placeholder.username': 'Please enter username',
   'login.account.placeholder.password': 'Please enter password',
@@ -34,6 +32,5 @@ export default {
   'login.account.txt': 'Account/Phone Login',
 
   'login.success': 'Welcome to use',
-  'login.error': 'Login error, refresh and try again',
   'login.logout.success': 'Logout success',
 };

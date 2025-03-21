@@ -31,8 +31,6 @@ export default {
   'model.agent.label.key': '密钥',
   'model.agent.label.isAgentsOnly': '代理专用',
   // detail
-  'model.agent.detail.title.baseInfo': '基础信息',
-  'model.agent.detail.title.advanced': '高级配置',
   'model.agent.detail.label.corp': '公司',
   'model.agent.detail.label.name': '代理名称',
   'model.agent.detail.label.baseUrl': '代理地址',
@@ -79,8 +77,6 @@ export default {
   'model.agent.columns.operations.update': '修改',
   'model.agent.columns.operations.delete': '删除',
   'model.agent.columns.operations.manageKey': '密钥',
-  'model.agent.columns.operations.status.1': '禁用',
-  'model.agent.columns.operations.status.2': '启用',
   // dict
   'model.agent.dict.corp.OpenAI': 'OpenAI',
   'model.agent.dict.corp.Baidu': '百度',

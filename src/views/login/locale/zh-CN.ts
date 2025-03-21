@@ -4,8 +4,6 @@ export default {
   'login.account': '账密登录',
   'login.email': '邮箱登录',
   'login.other': '其他登录方式',
-  'login.ing': '登录中...',
-  'bind.ing': '绑定中...',
 
   'login.account.placeholder.username': '请输入邮箱',
   'login.admin.account.placeholder.username': '请输入账号/邮箱',
@@ -35,7 +33,6 @@ export default {
   'login.success': '欢迎回来',
   'register.success': '注册成功',
   'forget.success': '找回成功',
-  'login.error': '登录出错，请重新登录',
   'login.logout.success': '退出成功',
   'login.form.login': '立即登录',
   'login.form.register.title': '注册账号',

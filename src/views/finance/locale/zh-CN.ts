@@ -20,10 +20,6 @@ export default {
   'finance.form.selectDefault': '全部',
   'finance.form.title.bill_export': '导出账单明细',
   'finance.error.stat_date.required': '请选择账单日期',
-  // operation
-  'finance.operation.create': '新建',
-  'finance.operation.import': '批量导入',
-  'finance.operation.download': '下载',
   // columns
   'finance.columns.user_id': '用户ID',
   'finance.columns.quota': '充值额度',

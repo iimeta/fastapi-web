@@ -18,7 +18,6 @@ export default {
   'corp.label.remark': '备注',
   'corp.placeholder.remark': '请输入备注',
   // detail
-  'corp.detail.title.baseInfo': '基础信息',
   'corp.detail.label.name': '公司名称',
   'corp.detail.label.code': '代码',
   'corp.detail.label.remark': '备注',
@@ -40,8 +39,6 @@ export default {
   'corp.form.selectDefault': '全部',
   // operation
   'corp.operation.create': '新建',
-  'corp.operation.import': '批量导入',
-  'corp.operation.download': '下载',
   // columns
   'corp.columns.name': '名称',
   'corp.columns.code': '代码',
@@ -54,9 +51,6 @@ export default {
   'corp.columns.operations.view': '查看',
   'corp.columns.operations.update': '修改',
   'corp.columns.operations.delete': '删除',
-  'corp.columns.operations.manageKey': '管理密钥',
-  'corp.columns.operations.status.1': '禁用',
-  'corp.columns.operations.status.2': '启用',
   // dict
   'corp.dict.status.1': '正常',
   'corp.dict.status.2': '禁用',

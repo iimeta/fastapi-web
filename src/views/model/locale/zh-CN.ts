@@ -148,8 +148,6 @@ export default {
   'model.columns.realtime_price': '多模态实时价格',
   'model.columns.multimodal_audio_price': '多模态语音价格',
   // detail
-  'model.detail.title.baseInfo': '基础信息',
-  'model.detail.title.advanced': '高级配置',
   'model.detail.label.corp': '公司',
   'model.detail.label.name': '模型名称',
   'model.detail.label.model': '模型',
@@ -215,8 +213,6 @@ export default {
   'model.form.title.fallback': '全部后备',
   // operation
   'model.operation.create': '新建',
-  'model.operation.import': '批量导入',
-  'model.operation.download': '下载',
   // columns
   'model.columns.corp': '公司',
   'model.columns.name': '模型名称',
@@ -238,8 +234,6 @@ export default {
   'model.columns.operations.view': '详情',
   'model.columns.operations.update': '修改',
   'model.columns.operations.delete': '删除',
-  'model.columns.operations.status.1': '禁用',
-  'model.columns.operations.status.2': '启用',
   // dict
   'model.dict.data_format.1': '统一格式',
   'model.dict.data_format.2': '官方格式',

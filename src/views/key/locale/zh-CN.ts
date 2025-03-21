@@ -76,8 +76,6 @@ export default {
   'key.form.selectDefault': '全部',
   // operation
   'key.operation.create': '新建',
-  'key.operation.import': '批量导入',
-  'key.operation.download': '下载',
   // columns
   'key.columns.user_id': '用户ID',
   'key.columns.app_id': '应用ID',
@@ -97,8 +95,6 @@ export default {
   'key.columns.operations': '操作',
   'key.columns.operations.view': '详情',
   'key.columns.operations.update': '修改',
-  'key.columns.operations.status.1': '禁用',
-  'key.columns.operations.status.2': '启用',
   'key.columns.operations.delete': '删除',
   // dict
   'key.dict.data_format.1': '统一格式',

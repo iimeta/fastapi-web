@@ -4,9 +4,6 @@ export default {
   'menu.user.create': '新建用户',
   'menu.user.update': '修改用户',
   'menu.user.detail': '用户详情',
-  'user.title.create': '新建用户',
-  'user.title.update': '修改用户',
-  'user.title.baseInfo': '基础信息',
   'user.label.name': '姓名',
   'user.placeholder.name': '姓名, 最多30字符',
   'user.error.name.required': '请输入姓名',
@@ -43,8 +40,6 @@ export default {
   'user.success.grantQuota': '充值成功',
   'user.success.models': '保存成功',
   // detail
-  'user.detail.title.baseInfo': '基础信息',
-  'user.detail.title.advanced': '高级配置',
   'user.detail.label.userId': '用户ID',
   'user.detail.label.account': '账号',
   'user.detail.label.name': '姓名',
@@ -85,8 +80,6 @@ export default {
   'user.form.title.models': '权限配置',
   // operation
   'user.operation.create': '新建',
-  'user.operation.import': '批量导入',
-  'user.operation.download': '下载',
   // columns
   'user.columns.userId': '用户ID',
   'user.columns.name': '姓名',
@@ -106,9 +99,6 @@ export default {
   'user.columns.operations.delete': '删除',
   'user.columns.operations.grantQuota': '充值',
   'user.columns.operations.models': '权限',
-  'user.columns.operations.manageKey': '管理密钥',
-  'user.columns.operations.status.1': '禁用',
-  'user.columns.operations.status.2': '启用',
   // dict
   'user.dict.status.1': '正常',
   'user.dict.status.2': '禁用',
