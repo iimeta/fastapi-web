@@ -219,63 +219,49 @@
                 label: '1',
                 value: () =>
                   dayjs(
-                    new Date(
-                      renderData[rowIndex].quota_expires_at || new Date()
-                    )
+                    renderData[rowIndex].quota_expires_at || new Date().setHours(23, 59, 59, 999)
                   ).add(1, 'day'),
               },
               {
                 label: '7',
                 value: () =>
                   dayjs(
-                    new Date(
-                      renderData[rowIndex].quota_expires_at || new Date()
-                    )
+                    renderData[rowIndex].quota_expires_at || new Date().setHours(23, 59, 59, 999)
                   ).add(7, 'day'),
               },
               {
                 label: '15',
                 value: () =>
                   dayjs(
-                    new Date(
-                      renderData[rowIndex].quota_expires_at || new Date()
-                    )
+                    renderData[rowIndex].quota_expires_at || new Date().setHours(23, 59, 59, 999)
                   ).add(15, 'day'),
               },
               {
                 label: '30',
                 value: () =>
                   dayjs(
-                    new Date(
-                      renderData[rowIndex].quota_expires_at || new Date()
-                    )
+                    renderData[rowIndex].quota_expires_at || new Date().setHours(23, 59, 59, 999)
                   ).add(30, 'day'),
               },
               {
                 label: '90',
                 value: () =>
                   dayjs(
-                    new Date(
-                      renderData[rowIndex].quota_expires_at || new Date()
-                    )
+                    renderData[rowIndex].quota_expires_at || new Date().setHours(23, 59, 59, 999)
                   ).add(90, 'day'),
               },
               {
                 label: '180',
                 value: () =>
                   dayjs(
-                    new Date(
-                      renderData[rowIndex].quota_expires_at || new Date()
-                    )
+                    renderData[rowIndex].quota_expires_at || new Date().setHours(23, 59, 59, 999)
                   ).add(180, 'day'),
               },
               {
                 label: '365',
                 value: () =>
                   dayjs(
-                    new Date(
-                      renderData[rowIndex].quota_expires_at || new Date()
-                    )
+                    renderData[rowIndex].quota_expires_at || new Date().setHours(23, 59, 59, 999)
                   ).add(365, 'day'),
               },
             ]"
@@ -433,49 +419,56 @@
                   label: '1',
                   value: () =>
                     dayjs(
-                      new Date(formData.quota_expires_at || new Date())
+                      formData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
                     ).add(1, 'day'),
                 },
                 {
                   label: '7',
                   value: () =>
                     dayjs(
-                      new Date(formData.quota_expires_at || new Date())
+                      formData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
                     ).add(7, 'day'),
                 },
                 {
                   label: '15',
                   value: () =>
                     dayjs(
-                      new Date(formData.quota_expires_at || new Date())
+                      formData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
                     ).add(15, 'day'),
                 },
                 {
                   label: '30',
                   value: () =>
                     dayjs(
-                      new Date(formData.quota_expires_at || new Date())
+                      formData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
                     ).add(30, 'day'),
                 },
                 {
                   label: '90',
                   value: () =>
                     dayjs(
-                      new Date(formData.quota_expires_at || new Date())
+                      formData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
                     ).add(90, 'day'),
                 },
                 {
                   label: '180',
                   value: () =>
                     dayjs(
-                      new Date(formData.quota_expires_at || new Date())
+                      formData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
                     ).add(180, 'day'),
                 },
                 {
                   label: '365',
                   value: () =>
                     dayjs(
-                      new Date(formData.quota_expires_at || new Date())
+                      formData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
                     ).add(365, 'day'),
                 },
               ]"

@@ -145,31 +145,59 @@
                 :shortcuts="[
                   {
                     label: '1',
-                    value: () => dayjs().add(1, 'day'),
+                    value: () =>
+                      dayjs(
+                        formData.quota_expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(1, 'day'),
                   },
                   {
                     label: '7',
-                    value: () => dayjs().add(7, 'day'),
+                    value: () =>
+                      dayjs(
+                        formData.quota_expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(7, 'day'),
                   },
                   {
                     label: '15',
-                    value: () => dayjs().add(15, 'day'),
+                    value: () =>
+                      dayjs(
+                        formData.quota_expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(15, 'day'),
                   },
                   {
                     label: '30',
-                    value: () => dayjs().add(30, 'day'),
+                    value: () =>
+                      dayjs(
+                        formData.quota_expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(30, 'day'),
                   },
                   {
                     label: '90',
-                    value: () => dayjs().add(90, 'day'),
+                    value: () =>
+                      dayjs(
+                        formData.quota_expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(90, 'day'),
                   },
                   {
                     label: '180',
-                    value: () => dayjs().add(180, 'day'),
+                    value: () =>
+                      dayjs(
+                        formData.quota_expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(180, 'day'),
                   },
                   {
                     label: '365',
-                    value: () => dayjs().add(365, 'day'),
+                    value: () =>
+                      dayjs(
+                        formData.quota_expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(365, 'day'),
                   },
                 ]"
               />
