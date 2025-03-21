@@ -479,7 +479,7 @@
       <a-modal
         v-model:visible="modelsVisible"
         :title="$t('user.form.title.models')"
-        :ok-text="$t('user.button.save')"
+        :ok-text="$t('button.save')"
         :width="700"
         @cancel="modelsHandleCancel"
         @before-ok="modelsHandleBeforeOk"

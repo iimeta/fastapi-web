@@ -350,7 +350,7 @@
         v-model:visible="visible"
         :width="600"
         :title="$t('app.form.title.keyConfig')"
-        :ok-text="$t('app.button.save')"
+        :ok-text="$t('button.save')"
         @cancel="handleCancel"
         @before-ok="handleBeforeOk"
       >

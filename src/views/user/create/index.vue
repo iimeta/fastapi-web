@@ -202,6 +202,18 @@
                 ]"
               />
             </a-form-item>
+            <a-form-item field="models" :label="$t('user.label.models')">
+              <a-tree-select
+                v-model="formData.models"
+                :allow-search="true"
+                :allow-clear="true"
+                :tree-checkable="true"
+                tree-checked-strategy="child"
+                :data="treeData"
+                :placeholder="$t('user.placeholder.create.models')"
+                :max-tag-count="3"
+              />
+            </a-form-item>
             <a-form-item field="remark" :label="$t('user.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -236,14 +248,30 @@
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { quotaConv } from '@/utils/common';
-  import { submitUserCreate, UserCreate } from '@/api/admin_user';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter } from 'vue-router';
+  import { quotaConv } from '@/utils/common';
+  import { submitUserCreate, UserCreate } from '@/api/admin_user';
+  import { queryModelTree, Tree } from '@/api/model';
 
   const { proxy } = getCurrentInstance() as any;
-
+  const { loading, setLoading } = useLoading(false);
   const router = useRouter();
+
+  const treeData = ref<Tree[]>([]);
+  const getModelTree = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelTree();
+      treeData.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelTree();
+
   const formRef = ref<FormInstance>();
   const formData = ref<UserCreate>({
     name: '',
@@ -252,10 +280,10 @@
     password: '',
     quota: ref(),
     quota_expires_at: '',
+    models: [],
     remark: '',
   });
 
-  const { loading, setLoading } = useLoading(false);
   const submitForm = async () => {
     const res = await formRef.value?.validate();
     if (!res) {

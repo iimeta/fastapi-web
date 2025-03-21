@@ -8,6 +8,7 @@ export interface UserCreate {
   password: string;
   quota: any;
   quota_expires_at: string;
+  models: string[];
   remark: string;
 }
 

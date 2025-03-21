@@ -17,9 +17,6 @@ export default {
   'corp.label.is_public': '公开',
   'corp.label.remark': '备注',
   'corp.placeholder.remark': '请输入备注',
-  'corp.success.title': '提交成功',
-  'corp.button.submit': '提交',
-  'corp.button.cancel': '取消',
   // detail
   'corp.detail.title.baseInfo': '基础信息',
   'corp.detail.label.name': '公司名称',

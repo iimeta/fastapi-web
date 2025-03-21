@@ -648,7 +648,7 @@
           <a-form-item
             v-permission="['admin']"
             field="user_id"
-            :label="$t('chat.form.user_id')"
+            :label="$t('chat.form.req.user_id')"
           >
             <a-input-number
               v-model="chatExportFormData.user_id"
