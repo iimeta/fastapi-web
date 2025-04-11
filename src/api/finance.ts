@@ -64,6 +64,7 @@ export function queryBillPage(params: BillPageParams) {
 export interface BillExportParams {
   ids?: string[];
   stat_date?: any;
+  user_id?: number;
 }
 
 export function submitBillExport(params: BillExportParams) {

@@ -204,6 +204,18 @@
               style="width: 100%"
             />
           </a-form-item>
+          <a-form-item
+            v-permission="['admin']"
+            field="user_id"
+            :label="$t('finance.form.user_id')"
+          >
+            <a-input-number
+              v-model="billExportFormData.user_id"
+              :placeholder="$t('finance.form.user_id.placeholder')"
+              :min="1"
+              allow-clear
+            />
+          </a-form-item>
         </a-form>
       </a-modal>
     </a-card>
@@ -468,9 +480,7 @@
       return;
     }
     done();
-    handleBillExport({
-      stat_date: billExportFormData.value.stat_date,
-    });
+    handleBillExport(billExportFormData.value);
   };
 
   const billExportHandleCancel = () => {
