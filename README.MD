@@ -143,7 +143,7 @@
 
 ## 交流群
 
-<img src="https://iim.ai/public/images/WeChatGroup.jpg?t=20250405" width="320" alt="交流群"/>
+<img src="https://iim.ai/public/images/WeChatGroup.jpg?t=20250412" width="320" alt="交流群"/>
 
 ## 参考项目
 
