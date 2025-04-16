@@ -116,6 +116,60 @@
             >
               {{ $t('user.operation.create') }}
             </a-button>
+            <a-button
+              type="primary"
+              status="warning"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'recharge',
+                })
+              "
+            >
+              充值
+            </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'status',
+                  value: 1,
+                })
+              "
+            >
+              启用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'status',
+                  value: 2,
+                })
+              "
+            >
+              禁用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'delete',
+                })
+              "
+            >
+              删除
+            </a-button>
           </a-space>
         </a-col>
         <a-col
@@ -184,6 +238,7 @@
         </a-col>
       </a-row>
       <a-table
+        ref="tableRef"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -194,6 +249,7 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
+        @selection-change="handleSelectionChange"
       >
         <template #quota="{ record }">
           {{
@@ -306,13 +362,13 @@
             type="text"
             size="small"
             @click="
-              grantQuota({
+              recharge({
                 user_id: `${record.user_id}`,
                 quota_expires_at: `${record.quota_expires_at}`,
               })
             "
           >
-            {{ $t('user.columns.operations.grantQuota') }}
+            {{ $t('user.columns.operations.recharge') }}
           </a-button>
           <a-button
             type="text"
@@ -365,8 +421,8 @@
       </a-drawer>
 
       <a-modal
-        v-model:visible="grantQuotaVisible"
-        :title="$t('user.form.title.grantQuota')"
+        v-model:visible="rechargeVisible"
+        :title="$t('user.form.title.recharge')"
         :ok-text="$t('button.ok')"
         @cancel="handleCancel"
         @before-ok="handleBeforeOk"
@@ -384,7 +440,7 @@
           >
             <a-input-number
               v-model="formData.quota"
-              :placeholder="$t('user.placeholder.grant_quota')"
+              :placeholder="$t('user.placeholder.recharge')"
               :precision="0"
               :min="-9999999999999"
               :max="9999999999999"
@@ -534,9 +590,9 @@
     UserPageParams,
     submitUserDelete,
     UserDeleteParams,
-    UserGrantQuotaParams,
-    submitUserGrantQuota,
-    UserGrantQuota,
+    UserRechargeParams,
+    submitUserRecharge,
+    UserRecharge,
     UserChangeQuotaExpire,
     submitUserChangeQuotaExpire,
     UserChangeStatus,
@@ -544,6 +600,8 @@
     UserModelsParams,
     submitUserModels,
     UserModels,
+    UserBatchOperate,
+    submitUserBatchOperate,
   } from '@/api/admin_user';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -612,8 +670,10 @@
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
-
   const size = ref<SizeProps>('medium');
+  const ids = ref<Array<string>>([]);
+  const multiple = ref(true);
+  const tableRef = ref();
 
   const basePagination: Pagination = {
     current: 1,
@@ -862,22 +922,23 @@
   );
 
   const quotaQuick = ref(0);
-  const grantQuotaVisible = ref(false);
+  const rechargeVisible = ref(false);
   const modelsVisible = ref(false);
 
   const formRef = ref<FormInstance>();
-  const formData = ref<UserGrantQuota>({} as UserGrantQuota);
+  const formData = ref<UserRecharge>({} as UserRecharge);
   const modelsFormRef = ref<FormInstance>();
   const modelsFormData = ref<UserModels>({} as UserModels);
 
-  const grantQuota = async (params: UserGrantQuotaParams) => {
+  const recharge = async (params: UserRechargeParams) => {
     setLoading(true);
     try {
       quotaQuick.value = 0;
       formData.value.quota = ref();
       formData.value.user_id = params.user_id;
       formData.value.quota_expires_at = params.quota_expires_at;
-      grantQuotaVisible.value = true;
+      tableRef.value.selectAll(false);
+      rechargeVisible.value = true;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -913,15 +974,25 @@
   const handleBeforeOk = async (done: any) => {
     const res = await formRef.value?.validate();
     if (res) {
-      grantQuotaVisible.value = true;
+      rechargeVisible.value = true;
       done(false);
+      return;
+    }
+
+    if (ids.value.length > 0) {
+      done();
+      handleBatch({
+        action: 'recharge',
+        value: formData.value.quota,
+        quota_expires_at: formData.value.quota_expires_at,
+      });
       return;
     }
 
     setLoading(true);
     try {
-      await submitUserGrantQuota(formData.value);
-      Message.success(t('user.success.grantQuota'));
+      await submitUserRecharge(formData.value);
+      Message.success(t('user.success.recharge'));
       done();
       fetchData();
     } catch (err) {
@@ -932,7 +1003,7 @@
   };
 
   const handleCancel = () => {
-    grantQuotaVisible.value = false;
+    rechargeVisible.value = false;
   };
 
   const modelsHandleBeforeOk = async (done: any) => {
@@ -969,6 +1040,71 @@
   };
   const detailHandleCancel = () => {
     detailVisible.value = false;
+  };
+
+  /**
+   * 已选择的数据行发生改变时触发
+   *
+   * @param rowKeys ID 列表
+   */
+  const handleSelectionChange = (rowKeys: Array<any>) => {
+    ids.value = rowKeys;
+    multiple.value = !rowKeys.length;
+  };
+
+  /**
+   * 批量操作
+   */
+  const handleBatch = (params: UserBatchOperate) => {
+    if (ids.value.length === 0) {
+      proxy.$message.info('请选择要操作的数据');
+    } else {
+      let alertContent = `是否确定操作所选的${ids.value.length}位用户?`;
+      switch (params.action) {
+        case 'recharge':
+          if (!params.value) {
+            quotaQuick.value = 0;
+            formData.value.quota = ref();
+            formData.value.quota_expires_at = '';
+            rechargeVisible.value = true;
+          } else {
+            alertContent = `是否确定给所选的${ids.value.length}位用户充值 $${quotaConv(params.value)} 额度?`;
+          }
+          break;
+        case 'status':
+          if (params.value === 1) {
+            alertContent = `是否确定启用所选的${ids.value.length}位用户?`;
+          } else {
+            alertContent = `是否确定禁用所选的${ids.value.length}位用户?`;
+          }
+          break;
+        case 'delete':
+          alertContent = `是否确定删除所选的${ids.value.length}位用户?`;
+          break;
+        default:
+      }
+
+      if (params.action === 'recharge' && !params.value) {
+        return;
+      }
+
+      proxy.$modal.warning({
+        title: '警告',
+        titleAlign: 'center',
+        content: alertContent,
+        hideCancel: false,
+        onOk: () => {
+          setLoading(true);
+          params.ids = ids.value;
+          submitUserBatchOperate(params).then((res) => {
+            setLoading(false);
+            proxy.$message.success('操作成功');
+            search();
+            tableRef.value.selectAll(false);
+          });
+        },
+      });
+    }
   };
 </script>
 

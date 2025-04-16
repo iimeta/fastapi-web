@@ -166,3 +166,13 @@ export interface AppKeyConfig {
 export function submitAppKeyConfig(data: AppKeyConfig) {
   return axios.post('/api/v1/app/key/config', data);
 }
+
+export interface AppBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+}
+
+export function submitAppBatchOperate(data: AppBatchOperate) {
+  return axios.post('/api/v1/app/batch/operate', data);
+}

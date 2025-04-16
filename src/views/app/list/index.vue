@@ -135,6 +135,47 @@
             >
               {{ $t('app.operation.create') }}
             </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'status',
+                  value: 1,
+                })
+              "
+            >
+              启用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'status',
+                  value: 2,
+                })
+              "
+            >
+              禁用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'delete',
+                })
+              "
+            >
+              删除
+            </a-button>
           </a-space>
         </a-col>
         <a-col
@@ -203,6 +244,7 @@
         </a-col>
       </a-row>
       <a-table
+        ref="tableRef"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -213,6 +255,7 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
+        @selection-change="handleSelectionChange"
       >
         <template #model_names="{ record }">
           <span v-if="record.model_names">
@@ -562,6 +605,8 @@
     AppKeyConfig,
     AppChangeStatus,
     submitAppChangeStatus,
+    AppBatchOperate,
+    submitAppBatchOperate,
   } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -645,8 +690,10 @@
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
-
   const size = ref<SizeProps>('medium');
+  const ids = ref<Array<string>>([]);
+  const multiple = ref(true);
+  const tableRef = ref();
 
   const basePagination: Pagination = {
     current: 1,
@@ -968,6 +1015,57 @@
     modelsVisible.value = true;
     recordId.value = id;
     action.value = 'app';
+  };
+
+  /**
+   * 已选择的数据行发生改变时触发
+   *
+   * @param rowKeys ID 列表
+   */
+  const handleSelectionChange = (rowKeys: Array<any>) => {
+    ids.value = rowKeys;
+    multiple.value = !rowKeys.length;
+  };
+
+  /**
+   * 批量操作
+   */
+  const handleBatch = (params: AppBatchOperate) => {
+    if (ids.value.length === 0) {
+      proxy.$message.info('请选择要操作的数据');
+    } else {
+      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      switch (params.action) {
+        case 'status':
+          if (params.value === 1) {
+            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
+          } else {
+            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
+          }
+          break;
+        case 'delete':
+          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          break;
+        default:
+      }
+
+      proxy.$modal.warning({
+        title: '警告',
+        titleAlign: 'center',
+        content: alertContent,
+        hideCancel: false,
+        onOk: () => {
+          setLoading(true);
+          params.ids = ids.value;
+          submitAppBatchOperate(params).then((res) => {
+            setLoading(false);
+            proxy.$message.success('操作成功');
+            search();
+            tableRef.value.selectAll(false);
+          });
+        },
+      });
+    }
   };
 </script>
 

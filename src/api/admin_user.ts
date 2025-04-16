@@ -143,20 +143,19 @@ export function submitUserChangeStatus(data: UserChangeStatus) {
   return axios.post('/api/v1/admin/user/change/status', data);
 }
 
-export interface UserGrantQuotaParams {
+export interface UserRechargeParams {
   user_id: any;
   quota_expires_at: string;
 }
 
-export interface UserGrantQuota {
-  id: string;
+export interface UserRecharge {
   user_id: number;
   quota: any;
   quota_expires_at: string;
 }
 
-export function submitUserGrantQuota(data: UserGrantQuota) {
-  return axios.post('/api/v1/admin/user/grant/quota', data);
+export function submitUserRecharge(data: UserRecharge) {
+  return axios.post('/api/v1/admin/user/recharge', data);
 }
 
 export interface UserModelsParams {
@@ -172,4 +171,15 @@ export interface UserModels {
 
 export function submitUserModels(data: UserModels) {
   return axios.post('/api/v1/admin/user/models', data);
+}
+
+export interface UserBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+  quota_expires_at?: string;
+}
+
+export function submitUserBatchOperate(data: UserBatchOperate) {
+  return axios.post('/api/v1/admin/user/batch/operate', data);
 }
