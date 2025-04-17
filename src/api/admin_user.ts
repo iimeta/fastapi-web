@@ -158,19 +158,19 @@ export function submitUserRecharge(data: UserRecharge) {
   return axios.post('/api/v1/admin/user/recharge', data);
 }
 
-export interface UserModelsParams {
+export interface UserPermissionsParams {
   user_id: any;
   models: string[];
 }
 
-export interface UserModels {
+export interface UserPermissions {
   id: string;
   user_id: number;
   models: string[];
 }
 
-export function submitUserModels(data: UserModels) {
-  return axios.post('/api/v1/admin/user/models', data);
+export function submitUserPermissions(data: UserPermissions) {
+  return axios.post('/api/v1/admin/user/permissions', data);
 }
 
 export interface UserBatchOperate {

@@ -374,13 +374,13 @@
             type="text"
             size="small"
             @click="
-              modelsPermission({
+              userPermissions({
                 user_id: `${record.user_id}`,
                 models: `${record.models}`.split(','),
               })
             "
           >
-            {{ $t('user.columns.operations.models') }}
+            {{ $t('user.columns.operations.permissions') }}
           </a-button>
           <a-button type="text" size="small" @click="detailHandle(record.id)">
             {{ $t('user.columns.operations.view') }}
@@ -540,21 +540,21 @@
         </a-form>
       </a-modal>
       <a-modal
-        v-model:visible="modelsVisible"
-        :title="$t('user.form.title.models')"
+        v-model:visible="permissionsVisible"
+        :title="$t('user.form.title.permissions')"
         :ok-text="$t('button.save')"
         :width="700"
-        @cancel="modelsHandleCancel"
-        @before-ok="modelsHandleBeforeOk"
+        @cancel="permissionsHandleCancel"
+        @before-ok="permissionsHandleBeforeOk"
       >
-        <a-form ref="modelsFormRef" :model="modelsFormData">
+        <a-form ref="permissionsFormRef" :model="permissionsFormData">
           <a-form-item
             field="models"
             :label="$t('user.label.models')"
             style="align-items: center"
           >
             <a-tree-select
-              v-model="modelsFormData.models"
+              v-model="permissionsFormData.models"
               :allow-search="true"
               :allow-clear="true"
               :tree-checkable="true"
@@ -597,9 +597,9 @@
     submitUserChangeQuotaExpire,
     UserChangeStatus,
     submitUserChangeStatus,
-    UserModelsParams,
-    submitUserModels,
-    UserModels,
+    UserPermissionsParams,
+    submitUserPermissions,
+    UserPermissions,
     UserBatchOperate,
     submitUserBatchOperate,
   } from '@/api/admin_user';
@@ -923,12 +923,12 @@
 
   const quotaQuick = ref(0);
   const rechargeVisible = ref(false);
-  const modelsVisible = ref(false);
+  const permissionsVisible = ref(false);
 
   const formRef = ref<FormInstance>();
   const formData = ref<UserRecharge>({} as UserRecharge);
-  const modelsFormRef = ref<FormInstance>();
-  const modelsFormData = ref<UserModels>({} as UserModels);
+  const permissionsFormRef = ref<FormInstance>();
+  const permissionsFormData = ref<UserPermissions>({} as UserPermissions);
 
   const recharge = async (params: UserRechargeParams) => {
     setLoading(true);
@@ -950,20 +950,20 @@
     formData.value.quota = quota * 500000;
   };
 
-  const modelsPermission = async (params: UserModelsParams) => {
+  const userPermissions = async (params: UserPermissionsParams) => {
     setLoading(true);
     try {
-      modelsFormData.value.user_id = params.user_id;
+      permissionsFormData.value.user_id = params.user_id;
       if (
         params.models &&
         params.models.length > 0 &&
         params.models[0] !== 'undefined'
       ) {
-        modelsFormData.value.models = params.models;
+        permissionsFormData.value.models = params.models;
       } else {
-        modelsFormData.value.models = [];
+        permissionsFormData.value.models = [];
       }
-      modelsVisible.value = true;
+      permissionsVisible.value = true;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -992,7 +992,7 @@
     setLoading(true);
     try {
       await submitUserRecharge(formData.value);
-      Message.success(t('user.success.recharge'));
+      Message.success(t('success.recharge'));
       done();
       fetchData();
     } catch (err) {
@@ -1006,18 +1006,18 @@
     rechargeVisible.value = false;
   };
 
-  const modelsHandleBeforeOk = async (done: any) => {
-    const res = await modelsFormRef.value?.validate();
+  const permissionsHandleBeforeOk = async (done: any) => {
+    const res = await permissionsFormRef.value?.validate();
     if (res) {
-      modelsVisible.value = true;
+      permissionsVisible.value = true;
       done(false);
       return;
     }
 
     setLoading(true);
     try {
-      await submitUserModels(modelsFormData.value);
-      Message.success(t('user.success.models'));
+      await submitUserPermissions(permissionsFormData.value);
+      Message.success(t('success.save'));
       done();
       fetchData();
     } catch (err) {
@@ -1027,8 +1027,8 @@
     }
   };
 
-  const modelsHandleCancel = () => {
-    modelsVisible.value = false;
+  const permissionsHandleCancel = () => {
+    permissionsVisible.value = false;
   };
 
   const detailVisible = ref(false);

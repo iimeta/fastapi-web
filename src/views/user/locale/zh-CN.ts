@@ -37,8 +37,6 @@ export default {
   'user.placeholder.recharge': '正数为加额度, 负数为减额度, $1=500000',
   'user.label.quota_expires_at': '过期时间',
   'user.placeholder.quota_expires_at': '请设置额度过期时间',
-  'user.success.recharge': '充值成功',
-  'user.success.models': '保存成功',
   // detail
   'user.detail.label.userId': '用户ID',
   'user.detail.label.account': '账号',
@@ -77,7 +75,7 @@ export default {
   'user.form.reset': '重置',
   'user.form.selectDefault': '全部',
   'user.form.title.recharge': '充值额度',
-  'user.form.title.models': '权限配置',
+  'user.form.title.permissions': '权限配置',
   // operation
   'user.operation.create': '新建',
   // columns
@@ -98,7 +96,7 @@ export default {
   'user.columns.operations.update': '修改',
   'user.columns.operations.delete': '删除',
   'user.columns.operations.recharge': '充值',
-  'user.columns.operations.models': '权限',
+  'user.columns.operations.permissions': '权限',
   // dict
   'user.dict.status.1': '正常',
   'user.dict.status.2': '禁用',

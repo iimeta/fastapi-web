@@ -88,7 +88,9 @@ export default {
   // success
   'success.create': '新建成功',
   'success.update': '修改成功',
+  'success.save': '保存成功',
   'success.operate': '操作成功',
+  'success.recharge': '充值成功',
   // operations
   'operations.view': '详情',
   'operations.update': '修改',
