@@ -52,10 +52,11 @@
                 :allow-search="true"
                 :allow-clear="true"
                 :tree-checkable="true"
-                tree-checked-strategy="child"
                 :data="treeData"
                 :placeholder="$t('app.placeholder.models')"
                 :max-tag-count="3"
+                :scrollbar="false"
+                tree-checked-strategy="child"
               />
             </a-form-item>
             <a-form-item

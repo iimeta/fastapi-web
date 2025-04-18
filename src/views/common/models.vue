@@ -26,6 +26,7 @@
                   <a-select
                     v-model="formModel.corp"
                     :placeholder="$t('model.form.selectDefault')"
+                    :scrollbar="false"
                     allow-search
                     allow-clear
                   >

@@ -51,6 +51,7 @@
                   <a-select
                     v-model="formModel.app_id"
                     :placeholder="$t('key.form.selectDefault')"
+                    :scrollbar="false"
                     allow-search
                     allow-clear
                   >
@@ -78,6 +79,7 @@
                     v-model="formModel.models"
                     :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="2"
+                    :scrollbar="false"
                     multiple
                     allow-search
                     allow-clear
@@ -108,6 +110,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('key.form.selectDefault')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
@@ -292,8 +295,8 @@
         <template #quota_expires_at="{ record }">
           {{ record.is_limit_quota ? record.quota_expires_at || '-' : '-' }}
         </template>
-        <template #model_names="{ record }">
-          <span v-if="record.model_names">
+        <template #models="{ record }">
+          <span v-if="record.models">
             <a-button type="text" size="small" @click="modelsHandle(record.id)">
               查看
             </a-button>
@@ -368,10 +371,11 @@
               :allow-search="true"
               :allow-clear="true"
               :tree-checkable="true"
-              tree-checked-strategy="child"
               :data="treeData"
               :placeholder="$t('app.placeholder.key.models')"
               :max-tag-count="3"
+              :scrollbar="false"
+              tree-checked-strategy="child"
             />
           </a-form-item>
           <a-form-item
@@ -787,8 +791,8 @@
     },
     {
       title: t('key.columns.app.models'),
-      dataIndex: 'model_names',
-      slotName: 'model_names',
+      dataIndex: 'models',
+      slotName: 'models',
       align: 'center',
       ellipsis: true,
       tooltip: true,

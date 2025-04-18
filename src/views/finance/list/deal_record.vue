@@ -40,6 +40,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('finance.form.selectDefault')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>

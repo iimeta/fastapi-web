@@ -17,9 +17,11 @@ export interface ModelAgentAdvanced {
   is_enable_model_replace: boolean;
   replace_models: string[];
   target_models: string[];
+  is_never_disable: boolean;
   lb_strategy: string;
   key: string;
   is_agents_only: boolean;
+  is_never_disable_key: boolean;
 }
 
 export type ModelAgentCreate = ModelAgentBaseInfo & ModelAgentAdvanced;
@@ -109,6 +111,7 @@ export interface ModelAgentDetail {
   is_enable_model_replace: boolean;
   replace_models: string[];
   target_models: string[];
+  is_never_disable: boolean;
   lb_strategy: number;
   key: string;
   status: number;

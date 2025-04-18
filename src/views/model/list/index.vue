@@ -29,6 +29,7 @@
                   <a-select
                     v-model="formModel.corp"
                     :placeholder="$t('model.form.selectDefault')"
+                    :scrollbar="false"
                     allow-search
                     allow-clear
                   >
@@ -65,6 +66,7 @@
                     v-model="formModel.type"
                     :options="typeOptions"
                     :placeholder="$t('model.form.selectDefault')"
+                    :scrollbar="false"
                     allow-search
                     allow-clear
                   />
@@ -76,6 +78,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('model.form.selectDefault')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
@@ -636,6 +639,7 @@
               v-model="agentFormData.model_agents"
               :placeholder="$t('model.placeholder.model_agents')"
               :max-tag-count="15"
+              :scrollbar="false"
               multiple
               allow-search
               allow-clear
@@ -671,6 +675,7 @@
             <a-select
               v-model="forwardFormData.target_model"
               :placeholder="$t('model.placeholder.target_model')"
+              :scrollbar="false"
               allow-search
             >
               <a-option
@@ -706,6 +711,7 @@
             <a-select
               v-model="fallbackFormData.model_agent"
               :placeholder="$t('model.placeholder.fallback_model_agent')"
+              :scrollbar="false"
               allow-search
               allow-clear
             >
@@ -732,6 +738,7 @@
             <a-select
               v-model="fallbackFormData.model"
               :placeholder="$t('model.placeholder.fallback_model')"
+              :scrollbar="false"
               allow-search
               allow-clear
             >

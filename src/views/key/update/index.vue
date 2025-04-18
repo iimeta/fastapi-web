@@ -37,6 +37,7 @@
               <a-select
                 v-model="formData.corp"
                 :placeholder="$t('key.placeholder.corp')"
+                :scrollbar="false"
                 allow-search
                 @change="getKeyPlaceholder"
               >
@@ -89,10 +90,11 @@
                 :allow-search="true"
                 :allow-clear="true"
                 :tree-checkable="true"
-                tree-checked-strategy="child"
                 :data="treeData"
                 :placeholder="$t('key.placeholder.models')"
                 :max-tag-count="3"
+                :scrollbar="false"
+                tree-checked-strategy="child"
               />
             </a-form-item>
             <a-form-item
@@ -103,6 +105,7 @@
                 v-model="formData.model_agents"
                 :placeholder="$t('key.placeholder.modelAgents')"
                 :max-tag-count="3"
+                :scrollbar="false"
                 multiple
                 allow-search
                 allow-clear
@@ -120,6 +123,12 @@
               :label="$t('key.label.isAgentsOnly')"
             >
               <a-switch v-model="formData.is_agents_only" />
+            </a-form-item>
+            <a-form-item
+              field="is_never_disable"
+              :label="$t('key.label.is_never_disable')"
+            >
+              <a-switch v-model="formData.is_never_disable" />
             </a-form-item>
             <a-space>
               <div class="submit-btn">
@@ -244,6 +253,7 @@
     models: [],
     model_agents: [],
     is_agents_only: false,
+    is_never_disable: false,
   });
 
   const submitForm = async () => {
@@ -280,6 +290,7 @@
       formData.value.models = data.models;
       formData.value.model_agents = data.model_agents;
       formData.value.is_agents_only = data.is_agents_only;
+      formData.value.is_never_disable = data.is_never_disable;
       getKeyPlaceholder();
     } catch (err) {
       // you can report use errorHandler or other

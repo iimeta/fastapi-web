@@ -60,6 +60,7 @@
                     v-model="formModel.is_public"
                     :options="publicOptions"
                     :placeholder="$t('corp.form.selectDefault')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
@@ -70,6 +71,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('corp.form.selectDefault')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>

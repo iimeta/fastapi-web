@@ -14,6 +14,7 @@ export interface KeyAdvanced {
   models: string[];
   model_agents: string[];
   is_agents_only: boolean;
+  is_never_disable: boolean;
 }
 
 export type KeyCreate = KeyBaseInfo & KeyAdvanced;
@@ -93,6 +94,7 @@ export interface KeyDetail {
   model_agent_names: string[];
   is_limit_quota: boolean;
   is_agents_only: boolean;
+  is_never_disable: boolean;
   ip_whitelist: string[];
   ip_blacklist: string[];
   status: number;

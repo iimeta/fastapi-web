@@ -31,6 +31,7 @@ export default {
   'key.label.modelAgents': '绑定代理',
   'key.placeholder.modelAgents': '请绑定代理, 可同时绑定多个代理',
   'key.label.isAgentsOnly': '代理专用',
+  'key.label.is_never_disable': '永不禁用',
   'key.label.remark': '备注',
   'key.placeholder.remark': '请输入备注',
   // detail
@@ -39,6 +40,7 @@ export default {
   'key.detail.label.bind.models': '绑定模型',
   'key.detail.label.model_agent_names': '绑定代理',
   'key.detail.label.is_agents_only': '代理专用',
+  'key.detail.label.is_never_disable': '永不禁用',
   'key.detail.label.name': '应用名称',
   'key.detail.label.models': '模型权限',
   'key.detail.label.is_limit_quota': '限制额度',

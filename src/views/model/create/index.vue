@@ -37,6 +37,7 @@
               <a-select
                 v-model="formData.corp"
                 :placeholder="$t('model.placeholder.corp')"
+                :scrollbar="false"
                 allow-search
                 @change="handleCorpChange"
               >
@@ -91,6 +92,7 @@
               <a-select
                 v-model="formData.type"
                 :placeholder="$t('model.placeholder.type')"
+                :scrollbar="false"
                 allow-search
                 @change="handleTypeChange"
               >
@@ -1339,6 +1341,7 @@
                 v-model="formData.model_agents"
                 :placeholder="$t('model.placeholder.modelAgents')"
                 :max-tag-count="3"
+                :scrollbar="false"
                 multiple
                 allow-search
                 allow-clear
@@ -1374,6 +1377,7 @@
               <a-select
                 v-model="formData.forward_config.forward_rule"
                 :placeholder="$t('model.placeholder.forwardRule')"
+                :scrollbar="false"
                 @change="handleForwardRuleChange"
               >
                 <a-option value="1">全部转发</a-option>
@@ -1420,6 +1424,7 @@
               <a-select
                 v-model="formData.forward_config.target_model"
                 :placeholder="$t('model.placeholder.targetModel')"
+                :scrollbar="false"
                 allow-search
               >
                 <a-option
@@ -1476,6 +1481,7 @@
               <a-select
                 v-model="formData.forward_config.decision_model"
                 :placeholder="$t('model.placeholder.decisionModel')"
+                :scrollbar="false"
                 allow-search
               >
                 <a-option
@@ -1513,6 +1519,7 @@
               <a-select
                 v-model="formData.forward_config.target_models[index]"
                 :placeholder="$t('model.placeholder.targetModel')"
+                :scrollbar="false"
                 style="width: 40%"
                 allow-search
               >
@@ -1562,6 +1569,7 @@
               <a-select
                 v-model="formData.fallback_config.model_agent"
                 :placeholder="$t('model.placeholder.fallback_model_agent')"
+                :scrollbar="false"
                 allow-search
                 allow-clear
               >
@@ -1590,6 +1598,7 @@
               <a-select
                 v-model="formData.fallback_config.model"
                 :placeholder="$t('model.placeholder.fallback_model')"
+                :scrollbar="false"
                 allow-search
                 allow-clear
               >

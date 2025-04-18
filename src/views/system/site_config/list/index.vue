@@ -54,6 +54,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('common.all')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>

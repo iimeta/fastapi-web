@@ -80,6 +80,17 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
+        :label="t('model.agent.detail.label.is_never_disable')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ t(`dict.${currentData?.is_never_disable || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
         :label="t('model.agent.detail.label.lb_strategy')"
         :span="2"
       >

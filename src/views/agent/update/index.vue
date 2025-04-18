@@ -37,6 +37,7 @@
               <a-select
                 v-model="formData.corp"
                 :placeholder="$t('model.agent.placeholder.corp')"
+                :scrollbar="false"
                 allow-search
                 @change="getKeyPlaceholder"
               >
@@ -120,10 +121,11 @@
                 :allow-search="true"
                 :allow-clear="true"
                 :tree-checkable="true"
-                tree-checked-strategy="child"
                 :data="treeData"
                 :placeholder="$t('model.agent.placeholder.models')"
                 :max-tag-count="3"
+                :scrollbar="false"
+                tree-checked-strategy="child"
               />
             </a-form-item>
             <a-form-item
@@ -175,6 +177,12 @@
               </a-button>
             </a-form-item>
             <a-form-item
+              field="is_never_disable"
+              :label="$t('model.agent.label.is_never_disable')"
+            >
+              <a-switch v-model="formData.is_never_disable" />
+            </a-form-item>
+            <a-form-item
               field="lb_strategy"
               :label="$t('model.agent.label.lb_strategy')"
             >
@@ -201,6 +209,12 @@
               :label="$t('model.agent.label.isAgentsOnly')"
             >
               <a-switch v-model="formData.is_agents_only" />
+            </a-form-item>
+            <a-form-item
+              field="is_never_disable_key"
+              :label="$t('model.agent.label.is_never_disable_key')"
+            >
+              <a-switch v-model="formData.is_never_disable_key" />
             </a-form-item>
             <a-space>
               <div class="submit-btn">
@@ -313,9 +327,11 @@
     is_enable_model_replace: false,
     replace_models: [],
     target_models: [],
+    is_never_disable: false,
     lb_strategy: '',
     key: '',
     is_agents_only: true,
+    is_never_disable_key: false,
   });
 
   const submitForm = async () => {
@@ -357,6 +373,7 @@
         formData.value.replace_models = data.replace_models;
         formData.value.target_models = data.target_models;
       }
+      formData.value.is_never_disable = data.is_never_disable;
       formData.value.lb_strategy = String(data.lb_strategy);
       formData.value.key = data.key;
       getKeyPlaceholder();

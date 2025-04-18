@@ -70,6 +70,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('user.form.selectDefault')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
@@ -558,9 +559,10 @@
               :allow-search="true"
               :allow-clear="true"
               :tree-checkable="true"
-              tree-checked-strategy="child"
               :data="treeData"
               :placeholder="$t('user.placeholder.models')"
+              :scrollbar="false"
+              tree-checked-strategy="child"
               style="max-height: 220px; display: block; overflow: auto"
             />
           </a-form-item>

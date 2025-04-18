@@ -29,6 +29,7 @@
                   <a-select
                     v-model="formModel.corp"
                     :placeholder="$t('key.form.selectDefault')"
+                    :scrollbar="false"
                     allow-search
                     allow-clear
                   >
@@ -56,6 +57,7 @@
                     v-model="formModel.models"
                     :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="2"
+                    :scrollbar="false"
                     multiple
                     allow-search
                     allow-clear
@@ -78,6 +80,7 @@
                     v-model="formModel.model_agents"
                     :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="2"
+                    :scrollbar="false"
                     multiple
                     allow-search
                     allow-clear
@@ -97,6 +100,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('key.form.selectDefault')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
@@ -312,8 +316,8 @@
           }}
           <icon-copy class="copy-btn" @click="handleCopy(record.id)" />
         </template>
-        <template #model_names="{ record }">
-          <span v-if="record.model_names">
+        <template #models="{ record }">
+          <span v-if="record.models">
             <a-button type="text" size="small" @click="modelsHandle(record.id)">
               查看
             </a-button>
@@ -581,8 +585,8 @@
     },
     {
       title: t('key.columns.models'),
-      dataIndex: 'model_names',
-      slotName: 'model_names',
+      dataIndex: 'models',
+      slotName: 'models',
       align: 'center',
       ellipsis: true,
       tooltip: true,

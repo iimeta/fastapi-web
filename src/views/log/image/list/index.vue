@@ -29,6 +29,7 @@
                   <a-select
                     v-model="formModel.app_id"
                     :placeholder="$t('chat.form.selectDefault')"
+                    :scrollbar="false"
                     allow-search
                     allow-clear
                   >
@@ -68,6 +69,7 @@
                     v-model="formModel.models"
                     :placeholder="$t('chat.form.selectDefault')"
                     :max-tag-count="1"
+                    :scrollbar="false"
                     multiple
                     allow-search
                     allow-clear
@@ -87,6 +89,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('chat.form.selectDefault')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
@@ -128,6 +131,7 @@
                     v-model="formModel.models"
                     :placeholder="$t('chat.form.selectDefault')"
                     :max-tag-count="1"
+                    :scrollbar="false"
                     multiple
                     allow-search
                     allow-clear
@@ -192,6 +196,7 @@
                     v-model="formModel.model_agents"
                     :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="1"
+                    :scrollbar="false"
                     multiple
                     allow-search
                     allow-clear
@@ -215,6 +220,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('chat.form.selectDefault')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>

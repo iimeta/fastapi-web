@@ -157,7 +157,7 @@
       }
 
       ::-webkit-scrollbar-thumb {
-        border: 4px solid transparent;
+        border: 3.5px solid transparent;
         background-clip: padding-box;
         border-radius: 7px;
         background-color: var(--color-text-4);

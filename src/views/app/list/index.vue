@@ -61,6 +61,7 @@
                     v-model="formModel.models"
                     :placeholder="$t('app.form.selectDefault')"
                     :max-tag-count="2"
+                    :scrollbar="false"
                     multiple
                     allow-search
                     allow-clear
@@ -89,6 +90,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('app.form.selectDefault')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
@@ -375,10 +377,11 @@
               :allow-search="true"
               :allow-clear="true"
               :tree-checkable="true"
-              tree-checked-strategy="child"
               :data="treeData"
               :placeholder="$t('app.placeholder.key.models')"
               :max-tag-count="3"
+              :scrollbar="false"
+              tree-checked-strategy="child"
             />
           </a-form-item>
           <a-form-item

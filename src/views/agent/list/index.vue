@@ -29,6 +29,7 @@
                   <a-select
                     v-model="formModel.corp"
                     :placeholder="$t('model.agent.form.selectDefault')"
+                    :scrollbar="false"
                     allow-search
                     allow-clear
                   >
@@ -71,6 +72,7 @@
                     v-model="formModel.models"
                     :placeholder="$t('model.agent.form.selectDefault')"
                     :max-tag-count="2"
+                    :scrollbar="false"
                     multiple
                     allow-search
                     allow-clear
@@ -93,6 +95,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('model.agent.form.selectDefault')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
