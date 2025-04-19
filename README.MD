@@ -145,8 +145,4 @@
 
 <img src="https://iim.ai/public/images/WeChatGroup.jpg?t=20250419" width="320" alt="交流群"/>
 
-## 参考项目
-
-### [continew-admin-ui-arco](https://github.com/Charles7c/continew-admin-ui-arco)
-
 ![Star History Chart](https://api.star-history.com/svg?repos=iimeta/fastapi-web&type=Date)
