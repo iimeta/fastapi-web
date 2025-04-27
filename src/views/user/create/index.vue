@@ -139,7 +139,10 @@
                 v-model="formData.quota_expires_at"
                 :placeholder="$t('user.placeholder.quota_expires_at')"
                 :time-picker-props="{ defaultValue: '23:59:59' }"
-                :disabled-date="(current) => dayjs(current).isBefore(dayjs())"
+                :disabled-date="
+                  (current) =>
+                    dayjs(current).isBefore(dayjs().subtract(1, 'day'))
+                "
                 style="width: 100%"
                 show-time
                 :shortcuts="[

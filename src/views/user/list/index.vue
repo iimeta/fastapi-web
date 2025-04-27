@@ -269,7 +269,9 @@
             v-model="renderData[rowIndex].quota_expires_at"
             :placeholder="$t('user.columns.placeholder.quota_expires_at')"
             :time-picker-props="{ defaultValue: '23:59:59' }"
-            :disabled-date="(current) => dayjs(current).isBefore(dayjs())"
+            :disabled-date="
+              (current) => dayjs(current).isBefore(dayjs().subtract(1, 'day'))
+            "
             show-time
             :shortcuts="[
               {
@@ -474,7 +476,9 @@
               v-model="formData.quota_expires_at"
               :placeholder="$t('user.placeholder.quota_expires_at')"
               :time-picker-props="{ defaultValue: '23:59:59' }"
-              :disabled-date="(current) => dayjs(current).isBefore(dayjs())"
+              :disabled-date="
+                (current) => dayjs(current).isBefore(dayjs().subtract(1, 'day'))
+              "
               position="tl"
               style="width: 100%"
               show-time
@@ -1070,7 +1074,9 @@
             formData.value.quota_expires_at = '';
             rechargeVisible.value = true;
           } else {
-            alertContent = `是否确定给所选的${ids.value.length}位用户充值 $${quotaConv(params.value)} 额度?`;
+            alertContent = `是否确定给所选的${
+              ids.value.length
+            }位用户充值 $${quotaConv(params.value)} 额度?`;
           }
           break;
         case 'status':
