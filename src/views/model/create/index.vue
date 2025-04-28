@@ -1401,6 +1401,7 @@
             >
               <a-input-number
                 v-model="formData.forward_config.content_length"
+                :precision="0"
                 :min="1"
                 :max="9999999999999"
                 :placeholder="$t('model.placeholder.content_length')"

@@ -121,6 +121,7 @@
           <a-input-number
             v-model="configFormData.statistics.lock_minutes"
             :placeholder="$t('sys.config.placeholder.statistics.lock_minutes')"
+            :precision="0"
             :min="1"
             allow-clear
           />
@@ -156,6 +157,7 @@
           <a-input-number
             v-model="configFormData.notice.lock_minutes"
             :placeholder="$t('sys.config.placeholder.notice.lock_minutes')"
+            :precision="0"
             :min="1"
             allow-clear
           />

@@ -103,6 +103,7 @@
           <a-input-number
             v-model="configFormData.email.port"
             :placeholder="$t('sys.config.placeholder.email.port')"
+            :precision="0"
             :min="1"
             allow-clear
           />
@@ -172,6 +173,7 @@
           <a-input-number
             v-model="configFormData.http.timeout"
             :placeholder="$t('sys.config.placeholder.http.timeout')"
+            :precision="0"
             :min="1"
             allow-clear
           />

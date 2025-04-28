@@ -29,6 +29,7 @@
                   <a-input-number
                     v-model="formModel.user_id"
                     :placeholder="$t('finance.form.user_id.placeholder')"
+                    :precision="0"
                     :min="1"
                     allow-clear
                   />

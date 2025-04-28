@@ -213,6 +213,7 @@
               <a-input-number
                 v-model="formData.quota_expires_at"
                 :placeholder="$t('site.config.placeholder.quota_expires_at')"
+                :precision="0"
                 :min="1"
                 allow-clear
               />
@@ -240,6 +241,7 @@
               <a-input-number
                 v-model="formData.port"
                 :placeholder="$t('site.config.placeholder.port')"
+                :precision="0"
                 :min="1"
                 allow-clear
               />

@@ -88,6 +88,7 @@
             :placeholder="
               $t('workplace.placeholder.quota_warning.warning_threshold')
             "
+            :precision="0"
             :min="1"
             allow-clear
           />
@@ -111,6 +112,7 @@
             :placeholder="
               $t('workplace.placeholder.quota_warning.expire_warning_threshold')
             "
+            :precision="0"
             :min="1"
             allow-clear
           />

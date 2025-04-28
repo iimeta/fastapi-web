@@ -265,6 +265,7 @@
           <a-input-number
             v-model="configFormData.quota_warning.threshold"
             :placeholder="$t('sys.config.placeholder.quota_warning.threshold')"
+            :precision="0"
             :min="1"
             allow-clear
           />
@@ -312,6 +313,7 @@
             :placeholder="
               $t('sys.config.placeholder.quota_warning.expire_threshold')
             "
+            :precision="0"
             :min="1"
             allow-clear
           />

@@ -29,6 +29,7 @@
                   <a-input-number
                     v-model="formModel.user_id"
                     :placeholder="$t('key.form.userId.placeholder')"
+                    :precision="0"
                     :min="1"
                     :max="9999999999999"
                     allow-clear
@@ -40,6 +41,7 @@
                   <a-input-number
                     v-model="formModel.app_id"
                     :placeholder="$t('key.form.appId.placeholder')"
+                    :precision="0"
                     :min="1"
                     :max="9999999999999"
                     allow-clear

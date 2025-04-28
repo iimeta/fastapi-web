@@ -38,6 +38,7 @@
               <a-input-number
                 v-model="formData.user_id"
                 :placeholder="$t('app.placeholder.user_id')"
+                :precision="0"
                 :min="1"
               />
             </a-form-item>
