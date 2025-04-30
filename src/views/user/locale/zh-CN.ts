@@ -20,6 +20,8 @@ export default {
   'user.error.password.required': '请输入密码',
   'user.error.password.pattern': '密码不得低于6位',
   'user.error.quota.required': '请输入额度',
+  'user.label.quota_type': '额度类型',
+  'user.error.quota_type.required': '请选择额度类型',
   'user.label.remark': '备注',
   'user.placeholder.remark': '请输入备注',
   'user.label.models': '模型权限',
@@ -34,7 +36,7 @@ export default {
   'user.placeholder.key': '密钥',
   'user.label.quota': '额度',
   'user.placeholder.quota': '请输入额度',
-  'user.placeholder.recharge': '正数为加额度, 负数为减额度, $1=500000',
+  'user.placeholder.recharge': '请输入额度, $1=500000',
   'user.label.quota_expires_at': '过期时间',
   'user.placeholder.quota_expires_at': '请设置额度过期时间',
   // detail

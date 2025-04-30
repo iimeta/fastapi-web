@@ -7,6 +7,7 @@ export interface UserCreate {
   account: string;
   password: string;
   quota: any;
+  quota_type: any;
   quota_expires_at: string;
   models: string[];
   remark: string;
@@ -151,6 +152,7 @@ export interface UserRechargeParams {
 export interface UserRecharge {
   user_id: number;
   quota: any;
+  quota_type: any;
   quota_expires_at: string;
 }
 
@@ -177,6 +179,7 @@ export interface UserBatchOperate {
   action: string;
   ids?: string[];
   value?: any;
+  quota_type?: any;
   quota_expires_at?: string;
 }
 

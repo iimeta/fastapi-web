@@ -22,7 +22,8 @@ export default {
   'finance.error.stat_date.required': '请选择账单日期',
   // columns
   'finance.columns.user_id': '用户ID',
-  'finance.columns.quota': '充值额度',
+  'finance.columns.quota': '额度',
+  'finance.columns.type': '交易类型',
   'finance.columns.status': '状态',
   'finance.columns.remark': '备注',
   'finance.columns.created_at': '交易时间',
@@ -37,4 +38,9 @@ export default {
   'finance.columns.operations.delete': '删除',
   // dict
   'finance.dict.status.1': '成功',
+  'finance.dict.status.2': '退款',
+  'finance.dict.status.3': '失败',
+  'finance.dict.deal_type.1': '充值',
+  'finance.dict.deal_type.2': '扣除',
+  'finance.dict.deal_type.3': '赠送',
 };

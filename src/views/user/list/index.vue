@@ -428,6 +428,7 @@
         v-model:visible="rechargeVisible"
         :title="$t('user.form.title.recharge')"
         :ok-text="$t('button.ok')"
+        :width="660"
         @cancel="handleCancel"
         @before-ok="handleBeforeOk"
       >
@@ -446,7 +447,7 @@
               v-model="formData.quota"
               :placeholder="$t('user.placeholder.recharge')"
               :precision="0"
-              :min="-9999999999999"
+              :min="1"
               :max="9999999999999"
               style="margin-right: 10px"
             />
@@ -454,7 +455,7 @@
               ${{ formData.quota ? quotaConv(formData.quota) : '0.00' }}</div
             >
           </a-form-item>
-          <a-form-item>
+          <a-form-item style="width: 280px">
             <a-radio-group
               v-model="quotaQuick"
               type="button"
@@ -464,10 +465,35 @@
               <a-radio :value="5"> $5 </a-radio>
               <a-radio :value="10"> $10 </a-radio>
               <a-radio :value="20"> $20 </a-radio>
+              <a-radio :value="50"> $50 </a-radio>
               <a-radio :value="100"> $100 </a-radio>
+              <a-radio :value="200"> $200 </a-radio>
               <a-radio :value="500"> $500 </a-radio>
               <a-radio :value="1000"> $1000 </a-radio>
+              <a-radio :value="2000"> $2000 </a-radio>
             </a-radio-group>
+          </a-form-item>
+          <a-form-item
+            field="quota_type"
+            :label="$t('user.label.quota_type')"
+            :rules="[
+              {
+                required: true,
+                message: $t('user.error.quota_type.required'),
+              },
+            ]"
+          >
+            <a-space size="large">
+              <a-radio
+                v-model="formData.quota_type"
+                value="1"
+                :default-checked="true"
+              >
+                充值
+              </a-radio>
+              <a-radio v-model="formData.quota_type" value="2"> 扣除 </a-radio>
+              <a-radio v-model="formData.quota_type" value="3"> 赠送 </a-radio>
+            </a-space>
           </a-form-item>
           <a-form-item
             field="quota_expires_at"
@@ -942,6 +968,7 @@
     try {
       quotaQuick.value = 0;
       formData.value.quota = ref();
+      formData.value.quota_type = '1';
       formData.value.user_id = params.user_id;
       formData.value.quota_expires_at = params.quota_expires_at;
       tableRef.value.selectAll(false);
@@ -991,6 +1018,7 @@
       handleBatch({
         action: 'recharge',
         value: formData.value.quota,
+        quota_type: formData.value.quota_type,
         quota_expires_at: formData.value.quota_expires_at,
       });
       return;
@@ -1072,12 +1100,17 @@
           if (!params.value) {
             quotaQuick.value = 0;
             formData.value.quota = ref();
+            formData.value.quota_type = '1';
             formData.value.quota_expires_at = '';
             rechargeVisible.value = true;
-          } else {
-            alertContent = `是否确定给所选的${
+          } else if (formData.value.quota_type === '2') {
+            alertContent = `是否确定扣除所选的${
               ids.value.length
-            }位用户充值 $${quotaConv(params.value)} 额度?`;
+            }位用户 $${quotaConv(params.value)} 额度?`;
+          } else {
+            alertContent = `是否确定给所选的${ids.value.length}位用户${
+              formData.value.quota_type === '1' ? '充值' : '赠送'
+            } $${quotaConv(params.value)} 额度?`;
           }
           break;
         case 'status':

@@ -107,7 +107,7 @@
                 v-model="formData.quota"
                 :placeholder="$t('user.placeholder.quota')"
                 :precision="0"
-                :min="-9999999999999"
+                :min="1"
                 :max="9999999999999"
               />
               <div style="margin-left: 10px">
@@ -130,6 +130,29 @@
                 <a-radio :value="500"> $500 </a-radio>
                 <a-radio :value="1000"> $1000 </a-radio>
               </a-radio-group>
+            </a-form-item>
+            <a-form-item
+              field="quota_type"
+              :label="$t('user.label.quota_type')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('user.error.quota_type.required'),
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.quota_type"
+                  value="1"
+                  :default-checked="true"
+                >
+                  充值
+                </a-radio>
+                <a-radio v-model="formData.quota_type" value="3">
+                  赠送
+                </a-radio>
+              </a-space>
             </a-form-item>
             <a-form-item
               field="quota_expires_at"
@@ -283,6 +306,7 @@
     account: '',
     password: '',
     quota: ref(),
+    quota_type: '1',
     quota_expires_at: '',
     models: [],
     remark: '',

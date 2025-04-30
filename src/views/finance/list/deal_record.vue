@@ -170,6 +170,15 @@
               : '$0.00'
           }}
         </template>
+        <template #type="{ record }">
+          {{
+            $t(
+              `finance.dict.deal_type.${
+                record.type ? record.type : record.quota > 0 ? 1 : 2
+              }`
+            )
+          }}
+        </template>
         <template #remark="{ record }">
           {{ record.remark || '-' }}
         </template>
@@ -270,6 +279,12 @@
       title: t('finance.columns.quota'),
       dataIndex: 'quota',
       slotName: 'quota',
+      align: 'center',
+    },
+    {
+      title: t('finance.columns.type'),
+      dataIndex: 'type',
+      slotName: 'type',
       align: 'center',
     },
     {
