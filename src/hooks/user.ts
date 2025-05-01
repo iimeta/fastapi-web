@@ -12,7 +12,13 @@ export default function useUser() {
     const currentRoute = router.currentRoute.value;
     Message.success('退出成功');
 
-    let routeName = logoutTo && typeof logoutTo === 'string' ? logoutTo : 'login';
+    let routeName =
+      logoutTo && typeof logoutTo === 'string' ? logoutTo : 'login';
+
+    if (routeName === 'login' && userRole === 'reseller') {
+      routeName = 'reseller';
+    }
+
     if (routeName === 'login' && userRole === 'admin') {
       routeName = 'admin';
     }

@@ -78,12 +78,12 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.dataFormat')">
+      <a-descriptions-item :label="t('model.detail.label.group_names')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
-          {{ t(`model.dict.data_format.${currentData.data_format}`) }}
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
+          {{ currentData?.group_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('model.detail.label.isPublic')">
@@ -322,6 +322,14 @@
           </a-tag>
         </span>
       </a-descriptions-item>
+      <!-- <a-descriptions-item :label="t('model.detail.label.dataFormat')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ t(`model.dict.data_format.${currentData.data_format}`) }}
+        </span>
+      </a-descriptions-item> -->
       <a-descriptions-item :label="t('model.detail.label.remark')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

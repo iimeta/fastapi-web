@@ -23,8 +23,8 @@
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
           >
-            <a-row v-permission="['user']" :gutter="16">
-              <a-col :span="8">
+            <a-row v-permission="['reseller', 'user']" :gutter="16">
+              <a-col v-permission="['user']" :span="8">
                 <a-form-item field="app_id" :label="$t('chat.form.app_id')">
                   <a-select
                     v-model="formModel.app_id"
@@ -42,7 +42,33 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col v-permission="['reseller']" :span="8">
+                <a-form-item
+                  field="trace_id"
+                  :label="$t('chat.form.user.trace_id')"
+                >
+                  <a-input
+                    v-model="formModel.trace_id"
+                    :placeholder="$t('chat.form.trace_id.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['reseller']" :span="8">
+                <a-form-item
+                  field="user_id"
+                  :label="$t('chat.form.reseller.user_id')"
+                >
+                  <a-input-number
+                    v-model="formModel.user_id"
+                    :placeholder="$t('chat.form.user_id.placeholder')"
+                    :precision="0"
+                    :min="1"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['user']" :span="8">
                 <a-form-item field="key" :label="$t('chat.form.key')">
                   <a-input
                     v-model="formModel.key"
@@ -51,7 +77,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col v-permission="['user']" :span="8">
                 <a-form-item
                   field="trace_id"
                   :label="$t('chat.form.user.trace_id')"
@@ -59,6 +85,20 @@
                   <a-input
                     v-model="formModel.trace_id"
                     :placeholder="$t('chat.form.trace_id.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['reseller']" :span="8">
+                <a-form-item
+                  field="total_time"
+                  :label="$t('chat.form.total_time')"
+                >
+                  <a-input-number
+                    v-model="formModel.total_time"
+                    :placeholder="$t('chat.form.total_time.placeholder')"
+                    :precision="0"
+                    :min="1"
                     allow-clear
                   />
                 </a-form-item>
@@ -87,8 +127,8 @@
                 <a-form-item field="status" :label="$t('chat.form.status')">
                   <a-select
                     v-model="formModel.status"
-                    :options="statusOptions"
                     :placeholder="$t('chat.form.selectDefault')"
+                    :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -165,9 +205,9 @@
                 >
                   <a-input-number
                     v-model="formModel.total_time"
+                    :placeholder="$t('chat.form.total_time.placeholder')"
                     :precision="0"
                     :min="1"
-                    :placeholder="$t('chat.form.total_time.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -219,8 +259,8 @@
                 >
                   <a-select
                     v-model="formModel.status"
-                    :options="statusOptions"
                     :placeholder="$t('chat.form.selectDefault')"
+                    :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -261,7 +301,7 @@
       </a-row>
       <a-divider style="margin-top: 0; margin-bottom: 16px" />
       <a-row style="margin-bottom: 16px; align-items: center">
-        <a-col :span="4">
+        <a-col :span="3">
           <a-space>
             <a-button type="primary" @click="handleChatExport({})">
               导出
@@ -280,11 +320,11 @@
             </a-button>
           </a-space>
         </a-col>
-        <a-col :span="12">
-          花费 = ( 提问 × 提问倍率 + 回答 × 回答倍率 ) ÷ 500000
-          &nbsp;&nbsp;或&nbsp;&nbsp; 回答 ÷ 500000
+        <a-col :span="14">
+          花费 = ( 提问 × 提问倍率 + 回答 × 回答倍率 ) × 分组折扣 ÷ 500000
+          &nbsp;&nbsp;或&nbsp;&nbsp; 回答 × 分组折扣 ÷ 500000
         </a-col>
-        <a-col :span="3"> RPM: &nbsp;{{ rpm.toLocaleString() }} </a-col>
+        <a-col :span="2"> RPM: &nbsp;{{ rpm.toLocaleString() }} </a-col>
         <a-col :span="3"> TPM: &nbsp;{{ tpm.toLocaleString() }} </a-col>
         <a-col
           :span="2"
@@ -396,26 +436,26 @@
         <template #conn_time="{ record }">
           <a-tag
             v-if="record.conn_time > 30000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="red"
           >
             {{ record.conn_time }}
           </a-tag>
           <a-tag
             v-else-if="record.conn_time > 15000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="orange"
           >
             {{ record.conn_time }}
           </a-tag>
           <a-tag
             v-else-if="record.conn_time > 5000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="gold"
           >
             {{ record.conn_time }}
           </a-tag>
-          <a-tag v-else v-permission="['user']" color="green">{{
+          <a-tag v-else v-permission="['reseller', 'user']" color="green">{{
             record.conn_time || '-'
           }}</a-tag>
           <a-tag
@@ -446,26 +486,26 @@
         <template #duration="{ record }">
           <a-tag
             v-if="record.duration > 180000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="red"
           >
             {{ record.duration }}
           </a-tag>
           <a-tag
             v-else-if="record.duration > 120000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="orange"
           >
             {{ record.duration }}
           </a-tag>
           <a-tag
             v-else-if="record.duration > 90000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="gold"
           >
             {{ record.duration }}
           </a-tag>
-          <a-tag v-else v-permission="['user']" color="green">{{
+          <a-tag v-else v-permission="['reseller', 'user']" color="green">{{
             record.duration || '-'
           }}</a-tag>
           <a-tag
@@ -496,26 +536,26 @@
         <template #total_time="{ record }">
           <a-tag
             v-if="record.total_time > 180000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="red"
           >
             {{ record.total_time }}
           </a-tag>
           <a-tag
             v-else-if="record.total_time > 120000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="orange"
           >
             {{ record.total_time }}
           </a-tag>
           <a-tag
             v-else-if="record.total_time > 90000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="gold"
           >
             {{ record.total_time }}
           </a-tag>
-          <a-tag v-else v-permission="['user']" color="green">{{
+          <a-tag v-else v-permission="['reseller', 'user']" color="green">{{
             record.total_time || '-'
           }}</a-tag>
           <a-tag
@@ -546,26 +586,26 @@
         <template #internal_time="{ record }">
           <a-tag
             v-if="record.internal_time > 1000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="red"
           >
             {{ record.internal_time }}
           </a-tag>
           <a-tag
             v-else-if="record.internal_time > 500"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="orange"
           >
             {{ record.internal_time }}
           </a-tag>
           <a-tag
             v-else-if="record.internal_time > 300"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="gold"
           >
             {{ record.internal_time }}
           </a-tag>
-          <a-tag v-else v-permission="['user']" color="green">{{
+          <a-tag v-else v-permission="['reseller', 'user']" color="green">{{
             record.internal_time || '-'
           }}</a-tag>
           <a-tag
@@ -653,7 +693,7 @@
             />
           </a-form-item>
           <a-form-item
-            v-permission="['admin']"
+            v-permission="['reseller', 'admin']"
             field="user_id"
             :label="$t('chat.form.req.user_id')"
           >
@@ -886,11 +926,13 @@
   const columns = computed<TableColumnData[]>(() => [
     {
       title:
-        userRole === 'admin'
+        userRole === 'reseller' || userRole === 'admin'
           ? t('chat.columns.user_id')
           : t('chat.columns.app_id'),
-      dataIndex: userRole === 'admin' ? 'user_id' : 'app_id',
-      slotName: userRole === 'admin' ? 'user_id' : 'app_id',
+      dataIndex:
+        userRole === 'reseller' || userRole === 'admin' ? 'user_id' : 'app_id',
+      slotName:
+        userRole === 'reseller' || userRole === 'admin' ? 'user_id' : 'app_id',
       align: 'center',
       width: 75,
     },
@@ -976,7 +1018,7 @@
     },
   ]);
 
-  if (userRole === 'user') {
+  if (userRole === 'reseller' || userRole === 'user') {
     columns.value.splice(9, 1);
   }
 

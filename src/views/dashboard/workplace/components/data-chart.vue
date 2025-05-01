@@ -242,9 +242,12 @@
         //   },
         // },
         {
-          name: userRole === 'admin' ? '用户数' : '应用数',
+          name:
+            userRole === 'reseller' || userRole === 'admin'
+              ? '用户数'
+              : '应用数',
           data:
-            userRole === 'admin'
+            userRole === 'reseller' || userRole === 'admin'
               ? userStatisticsData.value
               : appStatisticsData.value,
           type: 'line',

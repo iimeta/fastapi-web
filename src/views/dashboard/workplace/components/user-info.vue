@@ -7,7 +7,7 @@
   >
     <div class="header">
       <a-space
-        :size="12"
+        :size="userInfo.role === 'user' || userInfo.role === 'admin' ? 12 : 5"
         direction="vertical"
         align="center"
         @click="$router.push({ name: 'Center' })"
@@ -21,14 +21,18 @@
         <a-typography-title :heading="6" style="margin: 0">
           {{ userInfo.name }}
         </a-typography-title>
-        <!-- <div v-permission="['user']" class="user-msg">
-          <a-space :size="18">
-            <div>
-              <icon-email />
-              <a-typography-text>{{ userInfo.email }}</a-typography-text>
-            </div>
+        <div v-if="userInfo.role === 'reseller'" class="user-msg">
+          <a-space :size="64">
+            <a-tag color="orange">
+              <div style="font-size: 16px">
+                <icon-user style="color: rgb(var(--orange-6))" />
+                <a-typography-text style="color: rgb(var(--orange-6))">
+                  代理商
+                </a-typography-text>
+              </div>
+            </a-tag>
           </a-space>
-        </div> -->
+        </div>
       </a-space>
     </div>
   </a-card>
@@ -64,6 +68,7 @@
       }
     }
     .user-msg {
+      height: 14px;
       .arco-icon {
         color: rgb(var(--gray-10));
       }

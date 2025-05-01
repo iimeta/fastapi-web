@@ -23,8 +23,8 @@
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
           >
-            <a-row v-permission="['user']" :gutter="16">
-              <a-col :span="8">
+            <a-row v-permission="['reseller', 'user']" :gutter="16">
+              <a-col v-permission="['user']" :span="8">
                 <a-form-item field="app_id" :label="$t('chat.form.app_id')">
                   <a-select
                     v-model="formModel.app_id"
@@ -42,7 +42,33 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col v-permission="['reseller']" :span="8">
+                <a-form-item
+                  field="trace_id"
+                  :label="$t('chat.form.user.trace_id')"
+                >
+                  <a-input
+                    v-model="formModel.trace_id"
+                    :placeholder="$t('chat.form.trace_id.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['reseller']" :span="8">
+                <a-form-item
+                  field="user_id"
+                  :label="$t('chat.form.reseller.user_id')"
+                >
+                  <a-input-number
+                    v-model="formModel.user_id"
+                    :placeholder="$t('chat.form.user_id.placeholder')"
+                    :precision="0"
+                    :min="1"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['user']" :span="8">
                 <a-form-item field="key" :label="$t('chat.form.key')">
                   <a-input
                     v-model="formModel.key"
@@ -51,7 +77,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col v-permission="['user']" :span="8">
                 <a-form-item
                   field="trace_id"
                   :label="$t('chat.form.user.trace_id')"
@@ -59,6 +85,20 @@
                   <a-input
                     v-model="formModel.trace_id"
                     :placeholder="$t('chat.form.trace_id.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['reseller']" :span="8">
+                <a-form-item
+                  field="total_time"
+                  :label="$t('chat.form.total_time')"
+                >
+                  <a-input-number
+                    v-model="formModel.total_time"
+                    :placeholder="$t('chat.form.total_time.placeholder')"
+                    :precision="0"
+                    :min="1"
                     allow-clear
                   />
                 </a-form-item>
@@ -87,8 +127,8 @@
                 <a-form-item field="status" :label="$t('chat.form.status')">
                   <a-select
                     v-model="formModel.status"
-                    :options="statusOptions"
                     :placeholder="$t('chat.form.selectDefault')"
+                    :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -165,9 +205,9 @@
                 >
                   <a-input-number
                     v-model="formModel.total_time"
+                    :placeholder="$t('chat.form.total_time.placeholder')"
                     :precision="0"
                     :min="1"
-                    :placeholder="$t('chat.form.total_time.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -219,8 +259,8 @@
                 >
                   <a-select
                     v-model="formModel.status"
-                    :options="statusOptions"
                     :placeholder="$t('chat.form.selectDefault')"
+                    :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -358,26 +398,26 @@
         <template #total_time="{ record }">
           <a-tag
             v-if="record.total_time > 180000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="red"
           >
             {{ record.total_time }}
           </a-tag>
           <a-tag
             v-else-if="record.total_time > 120000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="orange"
           >
             {{ record.total_time }}
           </a-tag>
           <a-tag
             v-else-if="record.total_time > 90000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="gold"
           >
             {{ record.total_time }}
           </a-tag>
-          <a-tag v-else v-permission="['user']" color="green">{{
+          <a-tag v-else v-permission="['reseller', 'user']" color="green">{{
             record.total_time || '-'
           }}</a-tag>
           <a-tag
@@ -408,26 +448,26 @@
         <template #internal_time="{ record }">
           <a-tag
             v-if="record.internal_time > 1000"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="red"
           >
             {{ record.internal_time }}
           </a-tag>
           <a-tag
             v-else-if="record.internal_time > 500"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="orange"
           >
             {{ record.internal_time }}
           </a-tag>
           <a-tag
             v-else-if="record.internal_time > 300"
-            v-permission="['user']"
+            v-permission="['reseller', 'user']"
             color="gold"
           >
             {{ record.internal_time }}
           </a-tag>
-          <a-tag v-else v-permission="['user']" color="green">{{
+          <a-tag v-else v-permission="['reseller', 'user']" color="green">{{
             record.internal_time || '-'
           }}</a-tag>
           <a-tag
@@ -623,11 +663,13 @@
   const columns = computed<TableColumnData[]>(() => [
     {
       title:
-        userRole === 'admin'
+        userRole === 'reseller' || userRole === 'admin'
           ? t('chat.columns.user_id')
           : t('chat.columns.app_id'),
-      dataIndex: userRole === 'admin' ? 'user_id' : 'app_id',
-      slotName: userRole === 'admin' ? 'user_id' : 'app_id',
+      dataIndex:
+        userRole === 'reseller' || userRole === 'admin' ? 'user_id' : 'app_id',
+      slotName:
+        userRole === 'reseller' || userRole === 'admin' ? 'user_id' : 'app_id',
       align: 'center',
       width: 75,
     },
@@ -692,7 +734,7 @@
     },
   ]);
 
-  if (userRole === 'user') {
+  if (userRole === 'reseller' || userRole === 'user') {
     columns.value.splice(6, 1);
   }
 

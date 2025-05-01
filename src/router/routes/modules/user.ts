@@ -10,9 +10,9 @@ const USER: AppRouteRecordRaw = {
     locale: 'menu.user',
     icon: 'icon-user',
     requiresAuth: true,
-    order: 7,
+    order: 8,
     hideChildrenInMenu: true,
-    roles: ['admin'],
+    roles: ['reseller', 'admin'],
   },
   children: [
     {
@@ -22,7 +22,7 @@ const USER: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.user.list',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['reseller', 'admin'],
         activeMenu: 'user',
       },
     },
@@ -33,7 +33,7 @@ const USER: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.user.create',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['reseller', 'admin'],
         hideInMenu: true,
       },
     },
@@ -44,7 +44,7 @@ const USER: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.user.update',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['reseller', 'admin'],
         hideInMenu: true,
       },
     },
@@ -55,7 +55,7 @@ const USER: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.user.detail',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['reseller', 'admin'],
         hideInMenu: true,
       },
     },
@@ -66,7 +66,7 @@ const USER: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.user.center',
         requiresAuth: true,
-        roles: ['admin', 'user'],
+        roles: ['reseller', 'user', 'admin'],
         hideInMenu: true,
       },
     },

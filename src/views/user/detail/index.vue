@@ -13,6 +13,14 @@
           {{ currentData.user_id }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="t('user.detail.label.rid')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.rid || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="t('common.account')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -70,6 +78,14 @@
         <span v-else>
           {{ currentData.quota_expires_at || '-' }}
         </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.status')">
+        <a-tag v-if="currentData.status === 1" color="green">
+          {{ $t(`dict.status.${currentData.status}`) }}
+        </a-tag>
+        <a-tag v-else color="red">
+          {{ $t(`dict.status.${currentData.status}`) }}
+        </a-tag>
       </a-descriptions-item>
       <a-descriptions-item :label="t('user.detail.label.quota_warning')">
         <a-skeleton v-if="loading" :animation="true">
@@ -135,7 +151,15 @@
           {{ $t(`dict.notice.${currentData.expire_notice || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('user.detail.label.models')" :span="2">
+      <a-descriptions-item :label="t('user.detail.label.groups')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else style="max-height: 220px; display: block; overflow: auto">
+          {{ currentData?.group_names?.join('\n') || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('user.detail.label.models')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -143,7 +167,7 @@
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.remark')">
+      <a-descriptions-item :label="t('common.remark')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -151,7 +175,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('user.detail.label.login_ip')" :span="2">
+      <a-descriptions-item :label="t('user.detail.label.login_ip')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -173,19 +197,6 @@
         </a-skeleton>
         <span v-else>
           {{ currentData.login_domain || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          <a-tag v-if="currentData.status === 1" color="green">
-            {{ $t(`dict.status.${currentData.status}`) }}
-          </a-tag>
-          <a-tag v-else color="red">
-            {{ $t(`dict.status.${currentData.status}`) }}
-          </a-tag>
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('common.created_at')">

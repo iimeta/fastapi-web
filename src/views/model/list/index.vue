@@ -43,15 +43,6 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('model.form.name')">
-                  <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('model.form.name.placeholder')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
                 <a-form-item field="model" :label="$t('model.form.model')">
                   <a-input
                     v-model="formModel.model"
@@ -61,33 +52,51 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="type" :label="$t('model.form.type')">
+                <a-form-item field="name" :label="$t('model.form.name')">
+                  <a-input
+                    v-model="formModel.name"
+                    :placeholder="$t('model.form.name.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="group" :label="$t('model.form.group')">
                   <a-select
-                    v-model="formModel.type"
-                    :options="typeOptions"
+                    v-model="formModel.group"
                     :placeholder="$t('model.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
-                  />
+                  >
+                    <a-option
+                      v-for="item in groups"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    />
+                  </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('model.form.status')">
                   <a-select
                     v-model="formModel.status"
-                    :options="statusOptions"
                     :placeholder="$t('model.form.selectDefault')"
+                    :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="remark" :label="$t('model.form.remark')">
-                  <a-input
-                    v-model="formModel.remark"
-                    :placeholder="$t('model.form.remark.placeholder')"
+                <a-form-item field="type" :label="$t('model.form.type')">
+                  <a-select
+                    v-model="formModel.type"
+                    :placeholder="$t('model.form.selectDefault')"
+                    :options="typeOptions"
+                    :scrollbar="false"
+                    allow-search
                     allow-clear
                   />
                 </a-form-item>
@@ -488,6 +497,9 @@
                 : `$${quotaConv(record.text_quota.fixed_quota)}/次`
             }}
           </span>
+        </template>
+        <template #group_names="{ record }">
+          {{ record?.group_names?.join(',') || '-' }}
         </template>
         <template #lb_strategy="{ record }">
           {{
@@ -1051,6 +1063,7 @@
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { queryCorpList, CorpList } from '@/api/corp';
+  import { queryGroupList, GroupList } from '@/api/group';
   import Detail from '../detail/index.vue';
 
   const { loading, setLoading } = useLoading(true);
@@ -1104,6 +1117,19 @@
   };
   getModelAgentList();
 
+  const groups = ref<GroupList[]>([]);
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getGroupList();
+
   const modelDelete = async (params: ModelDeleteParams) => {
     setLoading(true);
     try {
@@ -1120,11 +1146,11 @@
   const generateFormModel = () => {
     return {
       corp: '',
-      name: '',
       model: '',
+      name: '',
       type: ref(),
+      group: '',
       status: ref(),
-      remark: '',
     };
   };
   const { t } = useI18n();
@@ -1174,7 +1200,7 @@
       dataIndex: 'corp_name',
       slotName: 'corp_name',
       align: 'center',
-      width: 110,
+      width: 120,
     },
     {
       title: t('model.columns.model'),
@@ -1197,10 +1223,19 @@
       align: 'center',
     },
     {
+      title: t('model.columns.group_names'),
+      dataIndex: 'group_names',
+      slotName: 'group_names',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
       title: t('model.columns.lb_strategy'),
       dataIndex: 'lb_strategy',
       slotName: 'lb_strategy',
       align: 'center',
+      width: 88,
     },
     {
       title: t('model.columns.status'),

@@ -1,4 +1,4 @@
-export type RoleType = '' | '*' | 'admin' | 'user';
+export type RoleType = '' | '*' | 'reseller' | 'user' | 'admin';
 export interface UserState {
   user_id?: string;
   account?: string;
@@ -8,4 +8,5 @@ export interface UserState {
   phone?: string;
   created_at?: string;
   role: RoleType;
+  rid?: number;
 }

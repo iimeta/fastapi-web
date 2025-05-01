@@ -33,7 +33,7 @@
       </a-space>
     </a-grid-item>
     <a-grid-item
-      v-permission="['admin']"
+      v-permission="['reseller', 'admin']"
       class="panel-col"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
     >
@@ -66,11 +66,11 @@
         </a-statistic>
       </a-space>
     </a-grid-item>
-    <a-grid-item v-permission="['admin']" :span="24">
+    <a-grid-item v-permission="['reseller', 'admin']" :span="24">
       <a-divider class="panel-border" />
     </a-grid-item>
     <a-grid-item
-      v-permission="['admin']"
+      v-permission="['reseller', 'admin']"
       class="panel-col"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
     >
@@ -87,7 +87,7 @@
       </a-space>
     </a-grid-item>
     <a-grid-item
-      v-permission="['admin']"
+      v-permission="['reseller', 'admin']"
       class="panel-col"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
       style="border-right: none"
@@ -122,7 +122,7 @@
       </a-space>
     </a-grid-item>
     <a-grid-item
-      v-permission="['admin']"
+      v-permission="['reseller', 'admin']"
       class="panel-col"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
       style="border-right: none; border-left: 1px solid rgb(var(--gray-2))"

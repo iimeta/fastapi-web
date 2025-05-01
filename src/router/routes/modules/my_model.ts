@@ -12,17 +12,17 @@ const MY_MODEL: AppRouteRecordRaw = {
     icon: 'icon-common',
     order: 2,
     hideChildrenInMenu: true,
-    roles: ['user'],
+    roles: ['reseller', 'user'],
   },
   children: [
     {
       path: 'model',
-      name: 'MyModelList',
+      name: 'MyModel',
       component: () => import('@/views/model/list/my.vue'),
       meta: {
         locale: 'menu.model.list',
         requiresAuth: true,
-        roles: ['user'],
+        roles: ['reseller', 'user'],
         activeMenu: 'my_model',
       },
     },

@@ -55,7 +55,10 @@ axios.interceptors.response.use(
           okText: '重新登录',
           async onOk() {
             const userStore = useUserStore();
-            if (userStore.role === 'admin') {
+            if (userStore.role === 'reseller') {
+              await userStore.logout();
+              window.location.href = '/reseller';
+            } else if (userStore.role === 'admin') {
               await userStore.logout();
               window.location.href = '/admin';
             } else {
@@ -64,6 +67,13 @@ axios.interceptors.response.use(
             }
           },
         });
+      } else if (res.code === 9) {
+        const userStore = useUserStore();
+        if (userStore.role === 'admin') {
+          setTimeout(() => {
+            window.location.href = '/sys/license/info';
+          }, 3000);
+        }
       }
       return Promise.reject(new Error(res.message || 'Unknown Error'));
     }
@@ -79,7 +89,10 @@ axios.interceptors.response.use(
       }
 
       const userStore = useUserStore();
-      if (userStore.role === 'admin') {
+      if (userStore.role === 'reseller') {
+        await userStore.logout();
+        window.location.href = '/reseller';
+      } else if (userStore.role === 'admin') {
         await userStore.logout();
         window.location.href = '/admin';
       } else {

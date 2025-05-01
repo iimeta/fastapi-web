@@ -10,9 +10,9 @@ const APP_KEY: AppRouteRecordRaw = {
     locale: 'menu.key.app',
     requiresAuth: true,
     icon: 'icon-safe',
-    order: 9,
+    order: 10,
     hideChildrenInMenu: true,
-    roles: ['admin', 'user'],
+    roles: ['reseller', 'user', 'admin'],
   },
   children: [
     {
@@ -22,7 +22,7 @@ const APP_KEY: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.key.app.list',
         requiresAuth: true,
-        roles: ['admin', 'user'],
+        roles: ['reseller', 'user', 'admin'],
         activeMenu: 'app_key',
       },
     },

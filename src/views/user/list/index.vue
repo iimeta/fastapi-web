@@ -69,8 +69,8 @@
                 <a-form-item field="status" :label="$t('user.form.status')">
                   <a-select
                     v-model="formModel.status"
-                    :options="statusOptions"
                     :placeholder="$t('user.form.selectDefault')"
+                    :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -253,6 +253,14 @@
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
       >
+        <template #user_id="{ record }">
+          <span v-if="record.rid && userRole === 'admin'" :title="record.rid">
+            <b>{{ record.user_id }}</b>
+          </span>
+          <span v-else>
+            {{ record.user_id }}
+          </span>
+        </template>
         <template #quota="{ record }">
           {{
             record.quota > 0
@@ -381,6 +389,7 @@
               userPermissions({
                 user_id: `${record.user_id}`,
                 models: `${record.models}`.split(','),
+                groups: `${record.groups}`.split(','),
               })
             "
           >
@@ -581,17 +590,39 @@
       >
         <a-form ref="permissionsFormRef" :model="permissionsFormData">
           <a-form-item
+            field="groups"
+            :label="$t('user.label.groups')"
+            style="align-items: center"
+          >
+            <a-select
+              v-model="permissionsFormData.groups"
+              :placeholder="$t('user.placeholder.groups')"
+              :scrollbar="false"
+              multiple
+              allow-search
+              allow-clear
+              style="max-height: 220px; display: block; overflow: auto"
+            >
+              <a-option
+                v-for="item in groups"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              />
+            </a-select>
+          </a-form-item>
+          <a-form-item
             field="models"
             :label="$t('user.label.models')"
             style="align-items: center"
           >
             <a-tree-select
               v-model="permissionsFormData.models"
+              :placeholder="$t('user.placeholder.models')"
               :allow-search="true"
               :allow-clear="true"
               :tree-checkable="true"
               :data="treeData"
-              :placeholder="$t('user.placeholder.models')"
               :scrollbar="false"
               tree-checked-strategy="child"
               style="max-height: 220px; display: block; overflow: auto"
@@ -646,6 +677,7 @@
   import Sortable from 'sortablejs';
   import { Message } from '@arco-design/web-vue';
   import { queryModelTree, Tree } from '@/api/model';
+  import { queryGroupList, GroupList } from '@/api/group';
   import Detail from '../detail/index.vue';
 
   const { proxy } = getCurrentInstance() as any;
@@ -674,6 +706,18 @@
     }
   };
   getModelTree();
+
+  const groups = ref<GroupList[]>([]);
+
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getGroupList();
 
   const userDelete = async (params: UserDeleteParams) => {
     setLoading(true);
@@ -707,6 +751,7 @@
   const ids = ref<Array<string>>([]);
   const multiple = ref(true);
   const tableRef = ref();
+  const userRole = localStorage.getItem('userRole');
 
   const basePagination: Pagination = {
     current: 1,
@@ -997,6 +1042,17 @@
       } else {
         permissionsFormData.value.models = [];
       }
+
+      if (
+        params.groups &&
+        params.groups.length > 0 &&
+        params.groups[0] !== 'undefined'
+      ) {
+        permissionsFormData.value.groups = params.groups;
+      } else {
+        permissionsFormData.value.groups = [];
+      }
+
       permissionsVisible.value = true;
     } catch (err) {
       // you can report use errorHandler or other

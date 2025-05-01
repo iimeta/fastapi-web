@@ -228,14 +228,47 @@
                 ]"
               />
             </a-form-item>
+            <a-form-item
+              field="groups"
+              :label="$t('user.label.groups')"
+              style="align-items: center"
+            >
+              <a-select
+                v-model="formData.groups"
+                :placeholder="
+                  $t(
+                    userRole === 'reseller'
+                      ? 'user.placeholder.reseller.create.groups'
+                      : 'user.placeholder.create.groups'
+                  )
+                "
+                :scrollbar="false"
+                multiple
+                allow-search
+                allow-clear
+              >
+                <a-option
+                  v-for="item in groups"
+                  :key="item.id"
+                  :value="item.id"
+                  :label="item.name"
+                />
+              </a-select>
+            </a-form-item>
             <a-form-item field="models" :label="$t('user.label.models')">
               <a-tree-select
                 v-model="formData.models"
+                :placeholder="
+                  $t(
+                    userRole === 'reseller'
+                      ? 'user.placeholder.reseller.create.models'
+                      : 'user.placeholder.create.models'
+                  )
+                "
                 :allow-search="true"
                 :allow-clear="true"
                 :tree-checkable="true"
                 :data="treeData"
-                :placeholder="$t('user.placeholder.create.models')"
                 :max-tag-count="3"
                 :scrollbar="false"
                 tree-checked-strategy="child"
@@ -280,10 +313,12 @@
   import { quotaConv } from '@/utils/common';
   import { submitUserCreate, UserCreate } from '@/api/admin_user';
   import { queryModelTree, Tree } from '@/api/model';
+  import { queryGroupList, GroupList } from '@/api/group';
 
   const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(false);
   const router = useRouter();
+  const userRole = localStorage.getItem('userRole');
 
   const treeData = ref<Tree[]>([]);
   const getModelTree = async () => {
@@ -299,6 +334,18 @@
   };
   getModelTree();
 
+  const groups = ref<GroupList[]>([]);
+
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getGroupList();
+
   const formRef = ref<FormInstance>();
   const formData = ref<UserCreate>({
     name: '',
@@ -309,6 +356,7 @@
     quota_type: '1',
     quota_expires_at: '',
     models: [],
+    groups: [],
     remark: '',
   });
 

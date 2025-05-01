@@ -214,6 +214,7 @@
           <a-input-number
             v-model="configFormData.log.chat_reserve"
             :placeholder="$t('sys.config.placeholder.log.chat_reserve')"
+            :precision="0"
             :min="0"
           />
         </a-form-item>
@@ -231,6 +232,7 @@
           <a-input-number
             v-model="configFormData.log.image_reserve"
             :placeholder="$t('sys.config.placeholder.log.image_reserve')"
+            :precision="0"
             :min="0"
           />
         </a-form-item>
@@ -248,6 +250,7 @@
           <a-input-number
             v-model="configFormData.log.audio_reserve"
             :placeholder="$t('sys.config.placeholder.log.audio_reserve')"
+            :precision="0"
             :min="0"
           />
         </a-form-item>

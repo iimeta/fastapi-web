@@ -17,8 +17,10 @@ import localeFinance from '@/views/finance/locale/en-US';
 import localeChat from '@/views/log/chat/locale/en-US';
 import localeImage from '@/views/log/image/locale/en-US';
 import localeAudio from '@/views/log/audio/locale/en-US';
+import localeReseller from '@/views/system/reseller/locale/en-US';
 import localeSiteConfig from '@/views/system/site_config/locale/en-US';
 import localeSysConfig from '@/views/system/config/locale/en-US';
+import localeGroup from '@/views/group/locale/en-US';
 
 import localeSettings from './en-US/settings';
 
@@ -39,6 +41,8 @@ export default {
   ...localeChat,
   ...localeImage,
   ...localeAudio,
+  ...localeReseller,
   ...localeSiteConfig,
   ...localeSysConfig,
+  ...localeGroup,
 };

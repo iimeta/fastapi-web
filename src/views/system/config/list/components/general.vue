@@ -194,6 +194,127 @@
           </a-button>
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'reseller_login_register'"
+          field="reseller_login_register.account_login"
+          :label="$t('sys.config.label.reseller_login_register.account_login')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch
+            v-model="configFormData.reseller_login_register.account_login"
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'reseller_login_register'"
+          field="reseller_login_register.email_login"
+          :label="$t('sys.config.label.reseller_login_register.email_login')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch v-model="configFormData.reseller_login_register.email_login" />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'reseller_login_register'"
+          field="reseller_login_register.email_register"
+          :label="$t('sys.config.label.reseller_login_register.email_register')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch
+            v-model="configFormData.reseller_login_register.email_register"
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'reseller_login_register'"
+          field="reseller_login_register.email_retrieve"
+          :label="$t('sys.config.label.reseller_login_register.email_retrieve')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch
+            v-model="configFormData.reseller_login_register.email_retrieve"
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'reseller_login_register'"
+          field="reseller_login_register.session_expire"
+          :label="$t('sys.config.label.reseller_login_register.session_expire')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.error.reseller_login_register.session_expire.required'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.reseller_login_register.session_expire"
+            :placeholder="
+              $t('sys.config.placeholder.reseller_login_register.session_expire')
+            "
+            :min="10"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-for="(item, index) of configFormData.reseller_shield_error.errors"
+          v-show="configFormData.action === 'reseller_shield_error'"
+          :key="index"
+          :field="`reseller_shield_error.errors[${index}]`"
+          :label="
+            `${index + 1}. ` +
+            $t('sys.config.label.reseller_shield_error.errors')
+          "
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.error.reseller_shield_error.errors.required'
+              ),
+            },
+          ]"
+          :label-col-style="{
+            padding: '0 16px 2px 0',
+          }"
+        >
+          <a-input
+            v-model="configFormData.reseller_shield_error.errors[index]"
+            :placeholder="
+              $t('sys.config.placeholder.reseller_shield_error.errors')
+            "
+            allow-clear
+            style="width: 75%; margin-right: 5px"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleResellerShieldErrorAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleResellerShieldErrorDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
+        <a-form-item
           v-if="configFormData.action === 'admin_login'"
           field="admin_login.account_login"
           :label="$t('sys.config.label.admin_login.account_login')"
@@ -360,6 +481,8 @@
   const configFormData = ref<SysConfigUpdate>({
     user_login_register: {},
     user_shield_error: {},
+    reseller_login_register: {},
+    reseller_shield_error: {},
     admin_login: {},
     quota_warning: {},
   } as SysConfigUpdate);
@@ -371,6 +494,14 @@
     ) {
       handleUserShieldErrorAdd();
     }
+
+    if (
+      sysConfigItem.action === 'reseller_shield_error' &&
+      configFormData.value.reseller_shield_error.errors.length === 0
+    ) {
+      handleResellerShieldErrorAdd();
+    }
+
     configTitle.value = t(`sys.config.item.title.${sysConfigItem.action}`);
     configFormData.value.action = sysConfigItem.action;
     configVisible.value = true;
@@ -427,6 +558,17 @@
         configFormData.value.user_shield_error.errors.length - 1
       );
     }
+
+    if (
+      configFormData.value.reseller_shield_error.errors.length > 0 &&
+      !configFormData.value.reseller_shield_error.errors[
+        configFormData.value.reseller_shield_error.errors.length - 1
+      ]
+    ) {
+      handleUserShieldErrorDel(
+        configFormData.value.reseller_shield_error.errors.length - 1
+      );
+    }
   };
 
   const sysConfigReset = async (sysConfigItem: SysConfigItem) => {
@@ -462,6 +604,8 @@
     const { data } = await querySysConfigDetail();
     configFormData.value.user_login_register = data.user_login_register;
     configFormData.value.user_shield_error = data.user_shield_error;
+    configFormData.value.reseller_login_register = data.reseller_login_register;
+    configFormData.value.reseller_shield_error = data.reseller_shield_error;
     configFormData.value.admin_login = data.admin_login;
     configFormData.value.quota_warning = data.quota_warning;
     configFormData.value.quota_warning.threshold =
@@ -481,6 +625,23 @@
         description:
           '用户查看调用日志错误时, 包含有配置错误内容时则屏蔽显示, 为空则屏蔽所有错误显示',
         open: configFormData.value.user_shield_error.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'reseller_login_register',
+        title: t('sys.config.item.title.reseller_login_register'),
+        description:
+          '配置登录页上的登录方式、代理商注册、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示, 关闭代理商注册时, 通过邮箱登录也无法自动注册',
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'reseller_shield_error',
+        title: t('sys.config.item.title.reseller_shield_error'),
+        description:
+          '代理商查看调用日志错误时, 包含有配置错误内容时则屏蔽显示, 为空则屏蔽所有错误显示',
+        open: configFormData.value.reseller_shield_error.open,
         config: true,
         reset: true,
       },
@@ -511,6 +672,14 @@
 
   const handleUserShieldErrorDel = (index: number) => {
     configFormData.value.user_shield_error.errors.splice(index, 1);
+  };
+
+  const handleResellerShieldErrorAdd = () => {
+    configFormData.value.reseller_shield_error.errors.push('');
+  };
+
+  const handleResellerShieldErrorDel = (index: number) => {
+    configFormData.value.reseller_shield_error.errors.splice(index, 1);
   };
 </script>
 

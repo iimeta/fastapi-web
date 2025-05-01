@@ -15,7 +15,7 @@
         padding: '25px 20px 20px 20px',
       }"
     >
-      <a-row v-permission="['admin']">
+      <a-row v-permission="['reseller', 'admin']">
         <a-col :flex="1">
           <a-form
             :model="formModel"
@@ -39,8 +39,8 @@
                 <a-form-item field="status" :label="$t('finance.form.status')">
                   <a-select
                     v-model="formModel.status"
-                    :options="statusOptions"
                     :placeholder="$t('finance.form.selectDefault')"
+                    :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -79,7 +79,7 @@
         </a-col>
       </a-row>
       <a-divider
-        v-permission="['admin']"
+        v-permission="['reseller', 'admin']"
         style="margin-top: 0; margin-bottom: 16px"
       />
       <a-row style="margin-bottom: 16px">

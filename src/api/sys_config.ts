@@ -78,6 +78,19 @@ export interface UserShieldError {
   errors: string[];
 }
 
+export interface ResellerLoginRegister {
+  account_login: boolean;
+  email_login: boolean;
+  email_register: boolean;
+  email_retrieve: boolean;
+  session_expire: number;
+}
+
+export interface ResellerShieldError {
+  open: boolean;
+  errors: string[];
+}
+
 export interface AdminLogin {
   account_login: boolean;
   email_login: boolean;
@@ -142,6 +155,8 @@ export interface SysConfigDetail {
   user_login_register: UserLoginRegister;
   admin_login: AdminLogin;
   user_shield_error: UserShieldError;
+  reseller_login_register: ResellerLoginRegister;
+  reseller_shield_error: ResellerShieldError;
   auto_disabled_error: AutoDisabledError;
   auto_enable_error: AutoEnableError;
   not_retry_error: NotRetryError;
@@ -168,6 +183,8 @@ export interface SysConfigUpdate {
   log: Log;
   user_login_register: UserLoginRegister;
   user_shield_error: UserShieldError;
+  reseller_login_register: ResellerLoginRegister;
+  reseller_shield_error: ResellerShieldError;
   admin_login: AdminLogin;
   auto_disabled_error: AutoDisabledError;
   auto_enable_error: AutoEnableError;

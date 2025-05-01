@@ -50,6 +50,8 @@ export interface Expense {
   quota_usd: number;
   used_quota: number;
   used_quota_usd: number;
+  allocated_quota: number;
+  to_be_allocated: number;
   quota_expires_at: string;
   quota_warning: boolean;
   warning_threshold: number;

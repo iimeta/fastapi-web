@@ -178,8 +178,8 @@
             >
               <a-input-number
                 v-model="formData.text_quota.prompt_price"
-                :min="0.000001"
                 :placeholder="$t('model.placeholder.prompt_price')"
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div> ${{ formData.text_quota.prompt_price || '0.00' }}/k </div>
@@ -203,8 +203,8 @@
             >
               <a-input-number
                 v-model="formData.text_quota.completion_price"
-                :min="0.000001"
                 :placeholder="$t('model.placeholder.completion_price')"
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -231,9 +231,10 @@
             >
               <a-input-number
                 v-model="formData.text_quota.fixed_quota"
+                :placeholder="$t('model.placeholder.fixedQuota')"
+                :precision="0"
                 :min="0"
                 :max="9999999999999"
-                :placeholder="$t('model.placeholder.fixedQuota')"
                 style="width: 86%; margin-right: 5px"
               />
               <div>
@@ -344,8 +345,8 @@
             >
               <a-input-number
                 v-model="formData.audio_quota.prompt_price"
-                :min="0.000001"
                 :placeholder="$t('model.placeholder.prompt_price')"
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div> ${{ formData.audio_quota.prompt_price || '0.00' }}/k </div>
@@ -367,8 +368,8 @@
             >
               <a-input-number
                 v-model="formData.audio_quota.completion_price"
-                :min="0.000001"
                 :placeholder="$t('model.placeholder.completion_price')"
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -392,9 +393,10 @@
             >
               <a-input-number
                 v-model="formData.audio_quota.fixed_quota"
+                :placeholder="$t('model.placeholder.fixedQuota')"
+                :precision="0"
                 :min="0"
                 :max="9999999999999"
-                :placeholder="$t('model.placeholder.fixedQuota')"
                 style="width: 86%; margin-right: 5px"
               />
               <div>
@@ -470,8 +472,8 @@
             >
               <a-input-number
                 v-model="formData.multimodal_quota.text_quota.prompt_price"
-                :min="0.000001"
                 :placeholder="$t('model.placeholder.prompt_price')"
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -496,8 +498,8 @@
             >
               <a-input-number
                 v-model="formData.multimodal_quota.text_quota.completion_price"
-                :min="0.000001"
                 :placeholder="$t('model.placeholder.completion_price')"
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -523,9 +525,10 @@
             >
               <a-input-number
                 v-model="formData.multimodal_quota.text_quota.fixed_quota"
+                :placeholder="$t('model.placeholder.fixedQuota')"
+                :precision="0"
                 :min="0"
                 :max="9999999999999"
-                :placeholder="$t('model.placeholder.fixedQuota')"
                 style="width: 86%; margin-right: 5px"
               />
               <div>
@@ -605,9 +608,10 @@
             >
               <a-input-number
                 v-model="formData.multimodal_quota.search_quota"
+                :placeholder="$t('model.placeholder.search_quota')"
+                :precision="0"
                 :min="0"
                 :max="9999999999999"
-                :placeholder="$t('model.placeholder.search_quota')"
                 style="width: 86%; margin-right: 5px"
               />
               <div>
@@ -717,10 +721,10 @@
             >
               <a-input-number
                 v-model="formData.realtime_quota.text_quota.prompt_price"
-                :min="0.000001"
                 :placeholder="
                   $t('model.placeholder.realtime_quota.text_quota.prompt_price')
                 "
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -749,12 +753,12 @@
             >
               <a-input-number
                 v-model="formData.realtime_quota.text_quota.completion_price"
-                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.realtime_quota.text_quota.completion_price'
                   )
                 "
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -781,11 +785,12 @@
             >
               <a-input-number
                 v-model="formData.realtime_quota.text_quota.fixed_quota"
-                :min="0"
-                :max="9999999999999"
                 :placeholder="
                   $t('model.placeholder.realtime_quota.text_quota.fixedQuota')
                 "
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
                 style="width: 86%; margin-right: 5px"
               />
               <div>
@@ -814,12 +819,12 @@
             >
               <a-input-number
                 v-model="formData.realtime_quota.audio_quota.prompt_price"
-                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.realtime_quota.audio_quota.prompt_price'
                   )
                 "
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -848,12 +853,12 @@
             >
               <a-input-number
                 v-model="formData.realtime_quota.audio_quota.completion_price"
-                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.realtime_quota.audio_quota.completion_price'
                   )
                 "
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -881,11 +886,12 @@
             >
               <a-input-number
                 v-model="formData.realtime_quota.audio_quota.fixed_quota"
-                :min="0"
-                :max="9999999999999"
                 :placeholder="
                   $t('model.placeholder.realtime_quota.audio_quota.fixedQuota')
                 "
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
                 style="width: 86%; margin-right: 5px"
               />
               <div>
@@ -943,12 +949,12 @@
                 v-model="
                   formData.multimodal_audio_quota.text_quota.prompt_price
                 "
-                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.multimodal_audio_quota.text_quota.prompt_price'
                   )
                 "
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -983,12 +989,12 @@
                 v-model="
                   formData.multimodal_audio_quota.text_quota.completion_price
                 "
-                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.multimodal_audio_quota.text_quota.completion_price'
                   )
                 "
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -1019,13 +1025,14 @@
             >
               <a-input-number
                 v-model="formData.multimodal_audio_quota.text_quota.fixed_quota"
-                :min="0"
-                :max="9999999999999"
                 :placeholder="
                   $t(
                     'model.placeholder.multimodal_audio_quota.text_quota.fixedQuota'
                   )
                 "
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
                 style="width: 86%; margin-right: 5px"
               />
               <div>
@@ -1063,12 +1070,12 @@
                 v-model="
                   formData.multimodal_audio_quota.audio_quota.prompt_price
                 "
-                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.multimodal_audio_quota.audio_quota.prompt_price'
                   )
                 "
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -1103,12 +1110,12 @@
                 v-model="
                   formData.multimodal_audio_quota.audio_quota.completion_price
                 "
-                :min="0.000001"
                 :placeholder="
                   $t(
                     'model.placeholder.multimodal_audio_quota.audio_quota.completion_price'
                   )
                 "
+                :min="0.000001"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -1141,13 +1148,14 @@
                 v-model="
                   formData.multimodal_audio_quota.audio_quota.fixed_quota
                 "
-                :min="0"
-                :max="9999999999999"
                 :placeholder="
                   $t(
                     'model.placeholder.multimodal_audio_quota.audio_quota.fixedQuota'
                   )
                 "
+                :precision="0"
+                :min="0"
+                :max="9999999999999"
                 style="width: 86%; margin-right: 5px"
               />
               <div>
@@ -1251,6 +1259,24 @@
             >
               <a-switch v-model="formData.is_public" />
             </a-form-item>
+            <a-form-item field="groups" :label="$t('model.label.groups')">
+              <a-select
+                v-model="formData.groups"
+                :placeholder="$t('model.placeholder.groups')"
+                :max-tag-count="5"
+                :scrollbar="false"
+                multiple
+                allow-search
+                allow-clear
+              >
+                <a-option
+                  v-for="item in groups"
+                  :key="item.id"
+                  :value="item.id"
+                  :label="item.name"
+                />
+              </a-select>
+            </a-form-item>
             <a-form-item
               field="is_enable_preset_config"
               :label="$t('model.label.is_enable_preset_config')"
@@ -1290,6 +1316,7 @@
                 v-model="formData.preset_config.min_tokens"
                 :placeholder="$t('model.placeholder.preset_config.min_tokens')"
                 style="width: 260px; margin-right: 5px"
+                :precision="0"
                 :min="0"
                 :max="2097152"
               />
@@ -1297,6 +1324,7 @@
                 v-model="formData.preset_config.max_tokens"
                 :placeholder="$t('model.placeholder.preset_config.max_tokens')"
                 style="width: 260px"
+                :precision="0"
                 :min="0"
                 :max="2097152"
               />
@@ -1403,10 +1431,10 @@
             >
               <a-input-number
                 v-model="formData.forward_config.content_length"
+                :placeholder="$t('model.placeholder.content_length')"
                 :precision="0"
                 :min="1"
                 :max="9999999999999"
-                :placeholder="$t('model.placeholder.content_length')"
               />
             </a-form-item>
             <a-form-item
@@ -1656,6 +1684,7 @@
   } from '@/api/model';
   import { queryCorpList, CorpList } from '@/api/corp';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+  import { queryGroupList, GroupList } from '@/api/group';
 
   const { loading, setLoading } = useLoading(true);
   const { proxy } = getCurrentInstance() as any;
@@ -1707,6 +1736,19 @@
     }
   };
   getModelAgentList();
+
+  const groups = ref<GroupList[]>([]);
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getGroupList();
 
   const formRef = ref<FormInstance>();
   const formData = ref<ModelUpdate>({
@@ -1797,6 +1839,7 @@
     midjourney_quotas: [],
     data_format: '1',
     is_public: true,
+    groups: [],
     is_enable_model_agent: false,
     lb_strategy: '1',
     model_agents: [],
@@ -1966,6 +2009,7 @@
       formData.value.status = data.status;
       formData.value.data_format = String(data.data_format);
       formData.value.is_public = data.is_public;
+      formData.value.groups = data.groups;
       formData.value.is_enable_preset_config = data.is_enable_preset_config;
       formData.value.preset_config = data.preset_config;
       formData.value.is_enable_model_agent = data.is_enable_model_agent;

@@ -24,7 +24,7 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col v-permission="['admin']" :span="8">
+              <a-col v-permission="['reseller', 'admin']" :span="8">
                 <a-form-item field="user_id" :label="$t('app.form.userId')">
                   <a-input-number
                     v-model="formModel.user_id"
@@ -90,8 +90,8 @@
                 <a-form-item field="status" :label="$t('app.form.status')">
                   <a-select
                     v-model="formModel.status"
-                    :options="statusOptions"
                     :placeholder="$t('app.form.selectDefault')"
+                    :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -319,7 +319,11 @@
           <a-button
             type="text"
             size="small"
-            @click="createKey({ app_id: `${record.app_id}` })"
+            @click="
+              createKey({
+                app_id: `${record.app_id}`,
+              })
+            "
           >
             {{ $t('app.columns.operations.createKey') }}
           </a-button>
@@ -376,11 +380,11 @@
           <a-form-item field="models" :label="$t('app.label.models')">
             <a-tree-select
               v-model="formData.models"
+              :placeholder="$t('app.placeholder.key.models')"
               :allow-search="true"
               :allow-clear="true"
               :tree-checkable="true"
               :data="treeData"
-              :placeholder="$t('app.placeholder.key.models')"
               :max-tag-count="3"
               :scrollbar="false"
               tree-checked-strategy="child"
@@ -539,6 +543,38 @@
             />
           </a-form-item>
           <a-form-item
+            field="is_bind_group"
+            :label="$t('app.label.is_bind_group')"
+          >
+            <a-switch v-model="formData.is_bind_group" />
+          </a-form-item>
+          <a-form-item
+            v-if="formData.is_bind_group"
+            field="group"
+            :label="$t('app.label.group')"
+            :rules="[
+              {
+                required: true,
+                message: $t('app.error.group.required'),
+              },
+            ]"
+          >
+            <a-select
+              v-model="formData.group"
+              :placeholder="$t('app.key.placeholder.group')"
+              :scrollbar="false"
+              allow-search
+              allow-clear
+            >
+              <a-option
+                v-for="item in groups"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              />
+            </a-select>
+          </a-form-item>
+          <a-form-item
             field="ip_whitelist"
             :label="$t('app.label.ip_whitelist')"
           >
@@ -624,6 +660,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
+  import { queryGroupList, GroupList } from '@/api/group';
   import { Message } from '@arco-design/web-vue';
   import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
@@ -665,6 +702,19 @@
     }
   };
   getModelTree();
+
+  const groups = ref<GroupList[]>([]);
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getGroupList();
 
   const appDelete = async (params: AppDeleteParams) => {
     setLoading(true);

@@ -44,6 +44,30 @@
           <div class="used-quota-usd">${{ expense.used_quota_usd }} </div>
         </div>
       </div>
+      <div v-permission="['reseller']" class="quota-box2">
+        <div class="quota-usd-box">
+          <div class="quota">已分配额度</div>
+          <div class="quota-usd">{{
+            expense.allocated_quota > 0
+              ? `$${quotaConv4(expense.allocated_quota)}`
+              : expense.allocated_quota < 0
+              ? `-$${quotaConv4(-expense.allocated_quota)}`
+              : '$0.00'
+          }}</div>
+        </div>
+        <div>
+          <div class="used-quota">待分配额度</div>
+          <div class="used-quota-usd">
+            {{
+              expense.to_be_allocated > 0
+                ? `$${quotaConv4(expense.to_be_allocated)}`
+                : expense.to_be_allocated < 0
+                ? `-$${quotaConv4(-expense.to_be_allocated)}`
+                : '$0.00'
+            }}
+          </div>
+        </div>
+      </div>
       <div class="expires_at">
         额度过期时间: {{ expense.quota_expires_at || '2099-12-31 23:59:59' }}
       </div>
@@ -192,6 +216,19 @@
     background: #f7f8fa;
     padding: 7px 0;
     margin-top: 8px;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    text-align: center;
+    div {
+      flex: 1;
+    }
+  }
+
+  .quota-box2 {
+    background: #f7f8fa;
+    padding: 7px 0;
+    margin-top: 5px;
     display: flex;
     align-items: center;
     border-radius: 6px;

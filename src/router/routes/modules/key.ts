@@ -33,7 +33,7 @@ const KEY: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.key.create',
         requiresAuth: true,
-        roles: ['admin', 'user'],
+        roles: ['reseller', 'user', 'admin'],
         hideInMenu: true,
       },
     },
@@ -44,7 +44,7 @@ const KEY: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.key.update',
         requiresAuth: true,
-        roles: ['admin', 'user'],
+        roles: ['reseller', 'user', 'admin'],
         hideInMenu: true,
       },
     },

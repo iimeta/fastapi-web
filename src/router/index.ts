@@ -16,6 +16,14 @@ const router = createRouter({
       redirect: 'login',
     },
     {
+      path: '/reseller',
+      name: 'reseller',
+      component: () => import('@/views/login/reseller.vue'),
+      meta: {
+        requiresAuth: false,
+      },
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('@/views/login/index.vue'),

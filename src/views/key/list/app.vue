@@ -24,7 +24,7 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col v-permission="['admin']" :span="8">
+              <a-col v-permission="['reseller', 'admin']" :span="8">
                 <a-form-item field="user_id" :label="$t('key.form.userId')">
                   <a-input-number
                     v-model="formModel.user_id"
@@ -36,7 +36,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col v-permission="['admin']" :span="8">
+              <a-col v-permission="['reseller', 'admin']" :span="8">
                 <a-form-item field="app_id" :label="$t('key.form.appId')">
                   <a-input-number
                     v-model="formModel.app_id"
@@ -110,8 +110,8 @@
                 <a-form-item field="status" :label="$t('key.form.status')">
                   <a-select
                     v-model="formModel.status"
-                    :options="statusOptions"
                     :placeholder="$t('key.form.selectDefault')"
+                    :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -370,11 +370,11 @@
           <a-form-item field="models" :label="$t('app.label.models')">
             <a-tree-select
               v-model="formData.models"
+              :placeholder="$t('app.placeholder.key.models')"
               :allow-search="true"
               :allow-clear="true"
               :tree-checkable="true"
               :data="treeData"
-              :placeholder="$t('app.placeholder.key.models')"
               :max-tag-count="3"
               :scrollbar="false"
               tree-checked-strategy="child"
@@ -533,6 +533,38 @@
             />
           </a-form-item>
           <a-form-item
+            field="is_bind_group"
+            :label="$t('app.label.is_bind_group')"
+          >
+            <a-switch v-model="formData.is_bind_group" />
+          </a-form-item>
+          <a-form-item
+            v-if="formData.is_bind_group"
+            field="group"
+            :label="$t('app.label.group')"
+            :rules="[
+              {
+                required: true,
+                message: $t('app.error.group.required'),
+              },
+            ]"
+          >
+            <a-select
+              v-model="formData.group"
+              :placeholder="$t('app.key.placeholder.group')"
+              :scrollbar="false"
+              allow-search
+              allow-clear
+            >
+              <a-option
+                v-for="item in groups"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              />
+            </a-select>
+          </a-form-item>
+          <a-form-item
             field="ip_whitelist"
             :label="$t('app.label.ip_whitelist')"
           >
@@ -622,6 +654,7 @@
     AppKeyConfig,
   } from '@/api/app';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
+  import { queryGroupList, GroupList } from '@/api/group';
   import { Message } from '@arco-design/web-vue';
   import { useClipboard } from '@vueuse/core';
   import Models from '@/views/common/models.vue';
@@ -680,6 +713,19 @@
     }
   };
   getModelTree();
+
+  const groups = ref<GroupList[]>([]);
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getGroupList();
 
   const keyDelete = async (params: KeyDeleteParams) => {
     setLoading(true);
@@ -981,12 +1027,14 @@
   interface AppKeyConfigView {
     id: string;
     key: string;
+    models: string[];
     is_limit_quota: boolean;
     quota: number;
     quota_expires_rule: string;
     quota_expires_at: string;
     quota_expires_minutes: any;
-    models: string[];
+    is_bind_group: boolean;
+    group: string;
     ip_whitelist: string[];
     ip_blacklist: string[];
     remark: string;
@@ -997,13 +1045,15 @@
     try {
       formData.value.id = params.id;
       formData.value.key = params.key;
+      formData.value.models = params.models;
       formData.value.is_limit_quota = params.is_limit_quota;
       formData.value.quota = params.quota;
       formData.value.quota_expires_rule =
         String(params.quota_expires_rule) || '1';
       formData.value.quota_expires_at = params.quota_expires_at;
       formData.value.quota_expires_minutes = params.quota_expires_minutes;
-      formData.value.models = params.models;
+      formData.value.is_bind_group = params.is_bind_group;
+      formData.value.group = params.group;
       formData.value.ip_whitelist = params.ip_whitelist?.join('\n') || '';
       formData.value.ip_blacklist = params.ip_blacklist?.join('\n') || '';
       formData.value.remark = params.remark;

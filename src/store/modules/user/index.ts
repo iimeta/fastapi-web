@@ -20,6 +20,7 @@ const useUserStore = defineStore('user', {
     phone: undefined,
     created_at: undefined,
     role: '',
+    rid: undefined,
   }),
 
   getters: {

@@ -49,11 +49,11 @@
             <a-form-item field="models" :label="$t('app.label.models')">
               <a-tree-select
                 v-model="formData.models"
+                :placeholder="$t('app.placeholder.models')"
                 :allow-search="true"
                 :allow-clear="true"
                 :tree-checkable="true"
                 :data="treeData"
-                :placeholder="$t('app.placeholder.models')"
                 :max-tag-count="3"
                 :scrollbar="false"
                 tree-checked-strategy="child"
@@ -180,6 +180,38 @@
               />
             </a-form-item>
             <a-form-item
+              field="is_bind_group"
+              :label="$t('app.label.is_bind_group')"
+            >
+              <a-switch v-model="formData.is_bind_group" />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_bind_group"
+              field="group"
+              :label="$t('app.label.group')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('app.error.group.required'),
+                },
+              ]"
+            >
+              <a-select
+                v-model="formData.group"
+                :placeholder="$t('app.placeholder.group')"
+                :scrollbar="false"
+                allow-search
+                allow-clear
+              >
+                <a-option
+                  v-for="item in groups"
+                  :key="item.id"
+                  :value="item.id"
+                  :label="item.name"
+                />
+              </a-select>
+            </a-form-item>
+            <a-form-item
               field="ip_whitelist"
               :label="$t('app.label.ip_whitelist')"
             >
@@ -251,6 +283,7 @@
     AppDetailParams,
   } from '@/api/app';
   import { queryModelTree, Tree } from '@/api/model';
+  import { queryGroupList, GroupList } from '@/api/group';
 
   const { loading, setLoading } = useLoading(false);
   const { proxy } = getCurrentInstance() as any;
@@ -271,6 +304,20 @@
   };
   getModelTree();
 
+  const groups = ref<GroupList[]>([]);
+  const getGroupList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getGroupList();
+
   const formRef = ref<FormInstance>();
   const formData = ref<AppUpdate>({
     id: '',
@@ -281,6 +328,8 @@
     is_limit_quota: false,
     quota: ref(),
     quota_expires_at: '',
+    is_bind_group: false,
+    group: '',
     ip_whitelist: '',
     ip_blacklist: '',
   });
@@ -318,6 +367,8 @@
       formData.value.is_limit_quota = data.is_limit_quota;
       formData.value.quota = data.quota;
       formData.value.quota_expires_at = data.quota_expires_at;
+      formData.value.is_bind_group = data.is_bind_group;
+      formData.value.group = data.group;
       formData.value.ip_whitelist = data?.ip_whitelist?.join('\n') || '';
       formData.value.ip_blacklist = data?.ip_blacklist?.join('\n') || '';
     } catch (err) {

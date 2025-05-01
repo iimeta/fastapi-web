@@ -113,6 +113,8 @@ export interface ChatDetail {
   app_id: any;
   corp: string;
   corp_name: string;
+  group_name: string;
+  discount: number;
   model_id: string;
   name: string;
   model: string;
@@ -214,6 +216,8 @@ export interface ImageDetail {
   app_id: any;
   corp: string;
   corp_name: string;
+  group_name: string;
+  discount: number;
   model_id: string;
   name: string;
   model: string;
@@ -304,6 +308,8 @@ export interface AudioDetail {
   app_id: any;
   corp: string;
   corp_name: string;
+  group_name: string;
+  discount: number;
   model_id: string;
   name: string;
   model: string;

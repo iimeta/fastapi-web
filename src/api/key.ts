@@ -95,6 +95,9 @@ export interface KeyDetail {
   is_limit_quota: boolean;
   is_agents_only: boolean;
   is_never_disable: boolean;
+  is_bind_group: boolean;
+  group: string;
+  group_name: string;
   ip_whitelist: string[];
   ip_blacklist: string[];
   status: number;

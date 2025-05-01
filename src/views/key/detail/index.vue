@@ -112,9 +112,25 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('key.detail.label.ip_whitelist')"
+        :label="t('app.detail.label.is_bind_group')"
         :span="2"
       >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ t(`dict.enable.${currentData.is_bind_group || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('app.detail.label.group')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.group_name || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('key.detail.label.ip_whitelist')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

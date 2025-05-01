@@ -35,7 +35,10 @@
           type="button"
           @change="typeChange as any"
         >
-          <a-radio v-if="userRole === 'admin'" value="user">
+          <a-radio
+            v-if="userRole === 'reseller' || userRole === 'admin'"
+            value="user"
+          >
             {{ $t('workplace.dataTop.user') }}
           </a-radio>
           <a-radio value="app">
@@ -61,7 +64,10 @@
               </template>
             </a-table-column>
             <a-table-column
-              v-if="dataType === 'user' && userRole === 'admin'"
+              v-if="
+                dataType === 'user' &&
+                (userRole === 'reseller' || userRole === 'admin')
+              "
               title="用户ID"
               data-index="user_id"
               align="center"
@@ -84,7 +90,10 @@
             >
             </a-table-column>
             <a-table-column
-              v-if="dataType === 'app' && userRole === 'admin'"
+              v-if="
+                dataType === 'app' &&
+                (userRole === 'reseller' || userRole === 'admin')
+              "
               title="用户ID"
               data-index="user_id"
               align="center"

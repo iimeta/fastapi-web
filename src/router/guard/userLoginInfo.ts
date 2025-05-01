@@ -29,7 +29,11 @@ export default function setupUserLoginInfoGuard(router: Router) {
         }
       }
     } else {
-      if (to.name === 'login' || to.name === 'admin') {
+      if (
+        to.name === 'reseller' ||
+        to.name === 'login' ||
+        to.name === 'admin'
+      ) {
         next();
         return;
       }

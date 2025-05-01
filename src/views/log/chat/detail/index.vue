@@ -1,7 +1,7 @@
 <template>
   <div style="margin: 10px 0 30px 10px">
     <a-descriptions
-      v-permission="['user']"
+      v-permission="['reseller', 'user']"
       :column="2"
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
@@ -92,7 +92,7 @@
           {{ currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
-      <!-- <a-descriptions-item label="计费方式" :span="2">
+      <!-- <a-descriptions-item label="计费方式">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -104,6 +104,24 @@
           }}
         </span>
       </a-descriptions-item> -->
+      <a-descriptions-item label="分组名称">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.group_name || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="分组折扣" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.discount > 0
+              ? Number((currentData.discount * 100).toFixed(2)) + '%'
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item label="提问倍率">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -132,7 +150,7 @@
         </a-skeleton>
         <span v-else>{{ currentData.prompt_tokens || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答令牌数" :span="2">
+      <a-descriptions-item label="回答令牌数">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -497,6 +515,24 @@
           )
         }}</span>
       </a-descriptions-item> -->
+      <a-descriptions-item label="分组名称" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.group_name || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="分组折扣">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.discount > 0
+              ? Number((currentData.discount * 100).toFixed(2)) + '%'
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item label="提问倍率" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

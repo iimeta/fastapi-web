@@ -3,6 +3,7 @@ export default {
   'menu.sys': '系统管理',
   // common
   'common.user_id': '用户ID',
+  'common.reseller_id': '代理商ID',
   'common.user_name': '用户名称',
   'common.account': '账号',
   'common.name': '姓名',

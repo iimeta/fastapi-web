@@ -58,8 +58,8 @@
                 >
                   <a-select
                     v-model="formModel.is_public"
-                    :options="publicOptions"
                     :placeholder="$t('corp.form.selectDefault')"
+                    :options="publicOptions"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -69,8 +69,8 @@
                 <a-form-item field="status" :label="$t('corp.form.status')">
                   <a-select
                     v-model="formModel.status"
-                    :options="statusOptions"
                     :placeholder="$t('corp.form.selectDefault')"
+                    :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
                   />

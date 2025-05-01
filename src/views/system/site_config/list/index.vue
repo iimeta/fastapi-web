@@ -24,6 +24,21 @@
             label-align="left"
           >
             <a-row :gutter="16">
+              <a-col v-permission="['admin']" :span="8">
+                <a-form-item
+                  field="user_id"
+                  :label="$t('site.config.form.user_id')"
+                >
+                  <a-input-number
+                    v-model="formModel.user_id"
+                    :placeholder="$t('site.config.form.user_id.placeholder')"
+                    :precision="0"
+                    :min="1"
+                    :max="9999999999999"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="domain"
@@ -48,12 +63,35 @@
                   />
                 </a-form-item>
               </a-col>
+              <a-col v-permission="['admin']" :span="8">
+                <a-form-item
+                  field="register_tips"
+                  :label="$t('site.config.form.register_tips')"
+                >
+                  <a-input
+                    v-model="formModel.register_tips"
+                    :placeholder="
+                      $t('site.config.form.register_tips.placeholder')
+                    "
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['admin']" :span="8">
+                <a-form-item field="logo" :label="$t('site.config.form.logo')">
+                  <a-input
+                    v-model="formModel.logo"
+                    :placeholder="$t('site.config.form.logo.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="formModel.status"
-                    :options="statusOptions"
                     :placeholder="$t('common.all')"
+                    :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -62,7 +100,16 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 32px" direction="vertical" />
+        <a-divider
+          v-permission="['admin']"
+          style="height: 84px"
+          direction="vertical"
+        />
+        <a-divider
+          v-permission="['reseller']"
+          style="height: 32px"
+          direction="vertical"
+        />
         <a-col :flex="'86px'" style="text-align: right">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
@@ -70,6 +117,12 @@
                 <icon-search />
               </template>
               {{ $t('button.search') }}
+            </a-button>
+            <a-button v-permission="['admin']" @click="reset">
+              <template #icon>
+                <icon-refresh />
+              </template>
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -379,6 +432,13 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
+      title: t('common.user_id'),
+      dataIndex: 'user_id',
+      slotName: 'user_id',
+      align: 'center',
+      width: 80,
+    },
+    {
       title: t('site.config.columns.domain'),
       dataIndex: 'domain',
       slotName: 'domain',
@@ -432,6 +492,11 @@
       width: 170,
     },
   ]);
+
+  const userRole = localStorage.getItem('userRole');
+  if (userRole === 'reseller') {
+    columns.value.splice(0, 1);
+  }
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {

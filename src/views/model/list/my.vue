@@ -42,15 +42,6 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('model.form.name')">
-                  <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('model.form.name.placeholder')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
                 <a-form-item field="model" :label="$t('model.form.model')">
                   <a-input
                     v-model="formModel.model"
@@ -63,21 +54,10 @@
                 <a-form-item field="type" :label="$t('model.form.type')">
                   <a-select
                     v-model="formModel.type"
-                    :options="typeOptions"
                     :placeholder="$t('model.form.selectDefault')"
+                    :options="typeOptions"
                     :scrollbar="false"
                     allow-search
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="status" :label="$t('model.form.status')">
-                  <a-select
-                    v-model="formModel.status"
-                    :options="statusOptions"
-                    :placeholder="$t('model.form.selectDefault')"
-                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
@@ -89,6 +69,35 @@
                     :placeholder="$t('model.form.remark.placeholder')"
                     allow-clear
                   />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="status" :label="$t('model.form.status')">
+                  <a-select
+                    v-model="formModel.status"
+                    :placeholder="$t('model.form.selectDefault')"
+                    :options="statusOptions"
+                    :scrollbar="false"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="group" :label="$t('model.form.my.group')">
+                  <a-select
+                    v-model="formModel.group"
+                    :placeholder="$t('model.form.selectDefault')"
+                    :scrollbar="false"
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in groups"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    />
+                  </a-select>
                 </a-form-item>
               </a-col>
             </a-row>
@@ -283,6 +292,9 @@
                 : `$${quotaConv(record.text_quota.fixed_quota)}/次`
             }}
           </span>
+        </template>
+        <template #group_names="{ record }">
+          {{ record?.group_names?.join(',') || '-' }}
         </template>
         <template #remark="{ record }">
           {{ record.remark || '-' }}
@@ -571,6 +583,7 @@
   import Sortable from 'sortablejs';
   import { priceConv, quotaConv } from '@/utils/common';
   import { queryCorpList, CorpList } from '@/api/corp';
+  import { queryGroupList, GroupList } from '@/api/group';
 
   const { loading, setLoading } = useLoading(true);
 
@@ -586,16 +599,15 @@
   const generateFormModel = () => {
     return {
       corp: '',
-      name: '',
       model: '',
       type: ref(),
+      group: '',
       remark: '',
       status: ref(),
     };
   };
 
   const corps = ref<CorpList[]>([]);
-
   const getCorpList = async () => {
     setLoading(true);
     try {
@@ -608,6 +620,19 @@
     }
   };
   getCorpList();
+
+  const groups = ref<GroupList[]>([]);
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getGroupList();
 
   const { t } = useI18n();
   const renderData = ref<ModelPage[]>([]);
@@ -656,15 +681,6 @@
       width: 120,
     },
     {
-      title: t('model.columns.name'),
-      dataIndex: 'name',
-      slotName: 'name',
-      align: 'center',
-      width: 200,
-      ellipsis: true,
-      tooltip: true,
-    },
-    {
       title: t('model.columns.model'),
       dataIndex: 'model',
       slotName: 'model',
@@ -693,6 +709,15 @@
       slotName: 'completion_ratio',
       align: 'center',
       width: 120,
+    },
+    {
+      title: t('model.columns.my.group_names'),
+      dataIndex: 'group_names',
+      slotName: 'group_names',
+      align: 'center',
+      width: 200,
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('model.columns.remark'),
@@ -902,7 +927,7 @@
 
 <script lang="ts">
   export default {
-    name: 'ModelList',
+    name: 'MyModel',
   };
 </script>
 

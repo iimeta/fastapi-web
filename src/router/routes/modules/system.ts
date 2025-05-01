@@ -13,13 +13,57 @@ const SYS: AppRouteRecordRaw = {
   },
   children: [
     {
+      path: 'reseller/list',
+      name: 'ResellerList',
+      component: () => import('@/views/system/reseller/list/index.vue'),
+      meta: {
+        locale: 'menu.reseller',
+        requiresAuth: true,
+        roles: ['admin'],
+        activeMenu: 'ResellerList',
+      },
+    },
+    {
+      path: 'reseller/create',
+      name: 'ResellerCreate',
+      component: () => import('@/views/system/reseller/create/index.vue'),
+      meta: {
+        locale: 'menu.reseller.create',
+        requiresAuth: true,
+        roles: ['admin'],
+        hideInMenu: true,
+      },
+    },
+    {
+      path: 'reseller/update',
+      name: 'ResellerUpdate',
+      component: () => import('@/views/system/reseller/update/index.vue'),
+      meta: {
+        locale: 'menu.reseller.update',
+        requiresAuth: true,
+        roles: ['admin'],
+        hideInMenu: true,
+      },
+    },
+    {
+      path: 'reseller/detail',
+      name: 'ResellerDetail',
+      component: () => import('@/views/system/reseller/detail/index.vue'),
+      meta: {
+        locale: 'menu.reseller.detail',
+        requiresAuth: true,
+        roles: ['admin'],
+        hideInMenu: true,
+      },
+    },
+    {
       path: 'site/config',
       name: 'SiteConfig',
       component: () => import('@/views/system/site_config/list/index.vue'),
       meta: {
         locale: 'menu.site.config',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['reseller', 'admin'],
       },
     },
     {
@@ -29,7 +73,7 @@ const SYS: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.site.config.create',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['reseller', 'admin'],
         hideInMenu: true,
       },
     },
@@ -40,7 +84,7 @@ const SYS: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.site.config.update',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['reseller', 'admin'],
         hideInMenu: true,
       },
     },

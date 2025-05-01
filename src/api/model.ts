@@ -119,6 +119,7 @@ export interface ModelAdvanced {
   midjourney_quotas: MidjourneyQuota[];
   data_format: string;
   is_public: boolean;
+  groups: string[];
   is_enable_preset_config: boolean;
   preset_config: PresetConfig;
   is_enable_model_agent: boolean;
@@ -143,6 +144,8 @@ export interface ModelPage {
   name: string;
   model: string;
   type: number;
+  groups: string[];
+  group_names: string[];
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
   audio_quota: AudioQuota;
@@ -223,6 +226,8 @@ export interface ModelDetail {
   base_url: string;
   path: string;
   billing_method: any;
+  groups: string[];
+  group_names: string[];
   text_quota: TextQuota;
   image_quotas: ImageQuota[];
   audio_quota: AudioQuota;

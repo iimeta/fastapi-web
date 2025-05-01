@@ -9,7 +9,7 @@ const LOG: AppRouteRecordRaw = {
     locale: 'menu.chat',
     requiresAuth: true,
     icon: 'icon-message',
-    order: 11,
+    order: 12,
   },
   children: [
     {
@@ -19,7 +19,7 @@ const LOG: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.chat.list',
         requiresAuth: true,
-        roles: ['admin', 'user'],
+        roles: ['reseller', 'user', 'admin'],
       },
     },
     {
@@ -29,7 +29,7 @@ const LOG: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.image.list',
         requiresAuth: true,
-        roles: ['admin', 'user'],
+        roles: ['reseller', 'user', 'admin'],
       },
     },
     {
@@ -39,7 +39,7 @@ const LOG: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.audio.list',
         requiresAuth: true,
-        roles: ['admin', 'user'],
+        roles: ['reseller', 'user', 'admin'],
       },
     },
   ],

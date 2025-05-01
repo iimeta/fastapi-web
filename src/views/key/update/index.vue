@@ -69,10 +69,10 @@
             <a-form-item field="weight" :label="$t('model.agent.label.weight')">
               <a-input-number
                 v-model="formData.weight"
+                :placeholder="$t('model.agent.placeholder.weight')"
                 :precision="0"
                 :min="0"
                 :max="999"
-                :placeholder="$t('model.agent.placeholder.weight')"
               />
             </a-form-item>
             <a-form-item field="remark" :label="$t('key.label.remark')">
@@ -87,11 +87,11 @@
             <a-form-item field="models" :label="$t('key.label.models')">
               <a-tree-select
                 v-model="formData.models"
+                :placeholder="$t('key.placeholder.models')"
                 :allow-search="true"
                 :allow-clear="true"
                 :tree-checkable="true"
                 :data="treeData"
-                :placeholder="$t('key.placeholder.models')"
                 :max-tag-count="3"
                 :scrollbar="false"
                 tree-checked-strategy="child"
