@@ -6,7 +6,7 @@
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.user.center') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-row style="margin-bottom: 16px">
+    <a-row style="margin-bottom: 10px">
       <a-col :span="24">
         <UserPanel />
       </a-col>
@@ -57,7 +57,7 @@
     padding: 20px 0 0 20px;
     min-height: 580px;
     background-color: var(--color-bg-2);
-    border-radius: 4px;
+    border-radius: 6px;
   }
 
   :deep(.section-title) {

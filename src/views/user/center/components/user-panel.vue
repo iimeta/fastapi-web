@@ -134,8 +134,8 @@
 
 <style scoped lang="less">
   .arco-card {
-    padding: 14px 0 4px 4px;
-    border-radius: 4px;
+    padding: 16px 0;
+    border-radius: 6px;
   }
   :deep(.arco-avatar-trigger-icon-button) {
     width: 32px;
