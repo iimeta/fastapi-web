@@ -54,6 +54,7 @@
                 v-model="formData.discount"
                 :placeholder="$t('group.placeholder.discount')"
                 :min="0.01"
+                :max="9999999999999"
                 allow-clear
               />
               <div style="margin-left: 10px"> % </div>

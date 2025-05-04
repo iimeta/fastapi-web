@@ -180,6 +180,7 @@
                 v-model="formData.text_quota.prompt_price"
                 :placeholder="$t('model.placeholder.prompt_price')"
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div> ${{ formData.text_quota.prompt_price || '0.00' }}/k </div>
@@ -205,6 +206,7 @@
                 v-model="formData.text_quota.completion_price"
                 :placeholder="$t('model.placeholder.completion_price')"
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -347,6 +349,7 @@
                 v-model="formData.audio_quota.prompt_price"
                 :placeholder="$t('model.placeholder.prompt_price')"
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div> ${{ formData.audio_quota.prompt_price || '0.00' }}/k </div>
@@ -370,6 +373,7 @@
                 v-model="formData.audio_quota.completion_price"
                 :placeholder="$t('model.placeholder.completion_price')"
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -474,6 +478,7 @@
                 v-model="formData.multimodal_quota.text_quota.prompt_price"
                 :placeholder="$t('model.placeholder.prompt_price')"
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -500,6 +505,7 @@
                 v-model="formData.multimodal_quota.text_quota.completion_price"
                 :placeholder="$t('model.placeholder.completion_price')"
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -725,6 +731,7 @@
                   $t('model.placeholder.realtime_quota.text_quota.prompt_price')
                 "
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -759,6 +766,7 @@
                   )
                 "
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -825,6 +833,7 @@
                   )
                 "
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -859,6 +868,7 @@
                   )
                 "
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -955,6 +965,7 @@
                   )
                 "
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -995,6 +1006,7 @@
                   )
                 "
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -1076,6 +1088,7 @@
                   )
                 "
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
@@ -1116,6 +1129,7 @@
                   )
                 "
                 :min="0.000001"
+                :max="9999999999999"
                 style="width: 90%; margin-right: 5px"
               />
               <div>
