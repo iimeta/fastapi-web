@@ -1085,7 +1085,7 @@
       await submitUserRecharge(formData.value);
       Message.success(t('success.recharge'));
       done();
-      fetchData();
+      search();
     } catch (err) {
       done(false);
     } finally {
@@ -1110,7 +1110,7 @@
       await submitUserPermissions(permissionsFormData.value);
       Message.success(t('success.save'));
       done();
-      fetchData();
+      search();
     } catch (err) {
       done(false);
     } finally {

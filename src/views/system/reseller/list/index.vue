@@ -1113,7 +1113,7 @@
       await submitResellerRecharge(formData.value); // The mock api default success
       Message.success(t('success.recharge'));
       done();
-      fetchData();
+      search();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -1138,7 +1138,7 @@
       await submitResellerPermissions(permissionsFormData.value); // The mock api default success
       Message.success(t('success.save'));
       done();
-      fetchData();
+      search();
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
