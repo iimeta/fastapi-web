@@ -404,7 +404,16 @@
           {{ $t(`dict.model_type.${record.type}`) }}
         </template>
         <template #prompt_ratio="{ record }">
-          <span v-if="record.type === 5">
+          <span v-if="record.type === 2">
+            <a-button
+              type="text"
+              size="small"
+              @click="viewImageQuota(record.image_quota)"
+            >
+              查看
+            </a-button>
+          </span>
+          <span v-else-if="record.type === 5">
             {{
               record.audio_quota.billing_method === 1
                 ? `$${priceConv(record.audio_quota.prompt_ratio)}/k`
@@ -450,7 +459,7 @@
             <a-button
               type="text"
               size="small"
-              @click="viewImageQuota(record.image_quotas)"
+              @click="viewImageQuota(record.image_quota)"
             >
               查看
             </a-button>
@@ -768,19 +777,23 @@
       <a-modal
         v-model:visible="imageQuotaVisible"
         :title="$t('model.columns.image_price')"
-        width="500px"
+        width="600px"
         hide-cancel
         simple
       >
-        <a-table :data="imageQuotas" :pagination="false" :bordered="false">
+        <a-table
+          :data="imageGenerationQuotas"
+          :pagination="false"
+          :bordered="false"
+          :scroll="{
+            y: '380px',
+          }"
+          :scrollbar="false"
+        >
           <template #columns>
-            <a-table-column
-              title="宽度"
-              data-index="width"
-              align="center"
-            ></a-table-column>
-            <a-table-column title="高度" data-index="height" align="center">
-            </a-table-column>
+            <a-table-column title="质量" data-index="quality" align="center" />
+            <a-table-column title="宽度" data-index="width" align="center" />
+            <a-table-column title="高度" data-index="height" align="center" />
             <a-table-column
               title="价格"
               data-index="fixed_quota"
@@ -793,6 +806,45 @@
             <a-table-column title="默认" data-index="is_default" align="center">
               <template #cell="{ record }">
                 {{ record.is_default ? '是' : '-' }}
+              </template>
+            </a-table-column>
+          </template>
+        </a-table>
+
+        <!-- 图像文本、输入、输出额度 -->
+        <a-table
+          v-if="imageQuotaVisible"
+          style="margin-top: 15px"
+          :data="imageQuotas"
+          :pagination="false"
+          :bordered="false"
+        >
+          <template #columns>
+            <a-table-column
+              title="文本价格"
+              data-index="text_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.text_ratio)}/k` }}
+              </template>
+            </a-table-column>
+            <a-table-column
+              title="输入价格"
+              data-index="input_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.input_ratio)}/k` }}
+              </template>
+            </a-table-column>
+            <a-table-column
+              title="输出价格"
+              data-index="output_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.output_ratio)}/k` }}
               </template>
             </a-table-column>
           </template>
@@ -835,7 +887,7 @@
 
         <a-table
           style="margin-top: 15px"
-          :data="multimodalImageQuotas"
+          :data="multimodalVisionQuotas"
           :pagination="false"
           :bordered="false"
         >
@@ -1045,7 +1097,9 @@
     queryModelList,
     ModelList,
     TextQuota,
+    GenerationQuota,
     ImageQuota,
+    VisionQuota,
     MultimodalQuota,
     RealtimeQuota,
     MultimodalAudioQuota,
@@ -1652,24 +1706,26 @@
   };
 
   const imageQuotaVisible = ref(false);
+  const imageGenerationQuotas = ref<GenerationQuota[]>([]);
   const imageQuotas = ref<ImageQuota[]>([]);
-  const viewImageQuota = (params: ImageQuota[]) => {
-    imageQuotas.value = params;
+  const viewImageQuota = (params: ImageQuota) => {
     imageQuotaVisible.value = true;
+    imageGenerationQuotas.value = params.generation_quotas;
+    imageQuotas.value[0] = params;
   };
 
   const multimodalQuotaVisible = ref(false);
   const isShowSearchQuota = ref(false);
   const isShowSearchQuotas = ref(false);
   const multimodalTextQuotas = ref<TextQuota[]>([]);
-  const multimodalImageQuotas = ref<ImageQuota[]>([]);
+  const multimodalVisionQuotas = ref<VisionQuota[]>([]);
   const multimodalSearchQuota = ref<MultimodalQuota[]>([]);
   const multimodalSearchQuotas = ref<SearchQuota[]>([]);
   const viewMultimodalQuota = (params: MultimodalQuota) => {
     multimodalQuotaVisible.value = true;
     isShowSearchQuota.value = false;
     multimodalTextQuotas.value[0] = params.text_quota;
-    multimodalImageQuotas.value = params.image_quotas;
+    multimodalVisionQuotas.value = params.vision_quotas;
     if (params.search_quota > 0) {
       isShowSearchQuota.value = true;
       multimodalSearchQuota.value[0] = params;

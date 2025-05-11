@@ -52,11 +52,29 @@ export interface TextQuota {
   completion_price: any;
 }
 
-export interface ImageQuota {
-  width?: any;
-  height?: any;
+export interface GenerationQuota {
+  quality: any;
+  width: any;
+  height: any;
   fixed_quota: any;
-  mode?: string;
+  is_default: string;
+}
+
+export interface ImageQuota {
+  billing_method: any;
+  generation_quotas: GenerationQuota[];
+  text_ratio: number;
+  input_ratio: number;
+  output_ratio: number;
+  fixed_quota: any;
+  text_price: any;
+  input_price: any;
+  output_price: any;
+}
+
+export interface VisionQuota {
+  mode: string;
+  fixed_quota: any;
   is_default: string;
 }
 
@@ -78,7 +96,7 @@ export interface SearchQuota {
 export interface MultimodalQuota {
   billing_rule: any;
   text_quota: TextQuota;
-  image_quotas: ImageQuota[];
+  vision_quotas: VisionQuota[];
   search_quota: any;
   search_quotas: SearchQuota[];
 }
@@ -111,7 +129,7 @@ export interface FallbackConfig {
 
 export interface ModelAdvanced {
   text_quota: TextQuota;
-  image_quotas: ImageQuota[];
+  image_quota: ImageQuota;
   audio_quota: AudioQuota;
   multimodal_quota: MultimodalQuota;
   realtime_quota: RealtimeQuota;
@@ -147,7 +165,7 @@ export interface ModelPage {
   groups: string[];
   group_names: string[];
   text_quota: TextQuota;
-  image_quotas: ImageQuota[];
+  image_quota: ImageQuota;
   audio_quota: AudioQuota;
   multimodal_quota: MultimodalQuota;
   realtime_quota: RealtimeQuota;
@@ -229,7 +247,7 @@ export interface ModelDetail {
   groups: string[];
   group_names: string[];
   text_quota: TextQuota;
-  image_quotas: ImageQuota[];
+  image_quota: ImageQuota;
   audio_quota: AudioQuota;
   multimodal_quota: MultimodalQuota;
   realtime_quota: RealtimeQuota;

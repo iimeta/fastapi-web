@@ -394,22 +394,18 @@
       </template>
     </a-table>
 
-    <!-- 图像额度 -->
+    <!-- 图像生成额度 -->
     <a-table
       v-if="imageQuotaVisible"
       style="margin-top: 15px"
-      :data="imageQuotas"
+      :data="imageGenerationQuotas"
       :pagination="false"
       :bordered="false"
     >
       <template #columns>
-        <a-table-column
-          title="宽度"
-          data-index="width"
-          align="center"
-        ></a-table-column>
-        <a-table-column title="高度" data-index="height" align="center">
-        </a-table-column>
+        <a-table-column title="质量" data-index="quality" align="center" />
+        <a-table-column title="宽度" data-index="width" align="center" />
+        <a-table-column title="高度" data-index="height" align="center" />
         <a-table-column title="价格" data-index="fixed_quota" align="center">
           <template #cell="{ record }">
             {{ `$${quotaConv(record.fixed_quota)}/张` }}
@@ -418,6 +414,41 @@
         <a-table-column title="默认" data-index="is_default" align="center">
           <template #cell="{ record }">
             {{ record.is_default ? '是' : '-' }}
+          </template>
+        </a-table-column>
+      </template>
+    </a-table>
+
+    <!-- 图像文本、输入、输出额度 -->
+    <a-table
+      v-if="imageQuotaVisible"
+      style="margin-top: 15px"
+      :data="imageQuotas"
+      :pagination="false"
+      :bordered="false"
+    >
+      <template #columns>
+        <a-table-column title="文本价格" data-index="text_ratio" align="center">
+          <template #cell="{ record }">
+            {{ `$${priceConv(record.text_ratio)}/k` }}
+          </template>
+        </a-table-column>
+        <a-table-column
+          title="输入价格"
+          data-index="input_ratio"
+          align="center"
+        >
+          <template #cell="{ record }">
+            {{ `$${priceConv(record.input_ratio)}/k` }}
+          </template>
+        </a-table-column>
+        <a-table-column
+          title="输出价格"
+          data-index="output_ratio"
+          align="center"
+        >
+          <template #cell="{ record }">
+            {{ `$${priceConv(record.output_ratio)}/k` }}
           </template>
         </a-table-column>
       </template>
@@ -499,7 +530,7 @@
     <a-table
       v-if="multimodalQuotaVisible"
       style="margin-top: 15px"
-      :data="multimodalImageQuotas"
+      :data="multimodalVisionQuotas"
       :pagination="false"
       :bordered="false"
     >
@@ -685,7 +716,9 @@
     ModelDetailParams,
     ModelDetail,
     TextQuota,
+    GenerationQuota,
     ImageQuota,
+    VisionQuota,
     AudioQuota,
     RealtimeQuota,
     MultimodalQuota,
@@ -707,6 +740,7 @@
   const textQuotas = ref<TextQuota[]>([]);
 
   const imageQuotaVisible = ref(false);
+  const imageGenerationQuotas = ref<GenerationQuota[]>([]);
   const imageQuotas = ref<ImageQuota[]>([]);
 
   const audioQuotaVisible = ref(false);
@@ -716,7 +750,7 @@
   const isShowSearchQuota = ref(false);
   const isShowSearchQuotas = ref(false);
   const multimodalTextQuotas = ref<TextQuota[]>([]);
-  const multimodalImageQuotas = ref<ImageQuota[]>([]);
+  const multimodalVisionQuotas = ref<VisionQuota[]>([]);
   const multimodalSearchQuota = ref<MultimodalQuota[]>([]);
   const multimodalSearchQuotas = ref<SearchQuota[]>([]);
 
@@ -735,9 +769,9 @@
       currentData.value = data;
 
       if (data.type === 2) {
-        currentData.value.billing_method = 2;
         imageQuotaVisible.value = true;
-        imageQuotas.value = data.image_quotas;
+        imageGenerationQuotas.value = data.image_quota.generation_quotas;
+        imageQuotas.value[0] = data.image_quota;
       } else if (data.type === 5 || data.type === 6) {
         currentData.value.billing_method = data.audio_quota.billing_method;
         audioQuotaVisible.value = true;
@@ -745,7 +779,7 @@
       } else if (data.type === 100) {
         multimodalQuotaVisible.value = true;
         multimodalTextQuotas.value[0] = data.multimodal_quota.text_quota;
-        multimodalImageQuotas.value = data.multimodal_quota.image_quotas;
+        multimodalVisionQuotas.value = data.multimodal_quota.vision_quotas;
         if (data.multimodal_quota.search_quota > 0) {
           isShowSearchQuota.value = true;
           multimodalSearchQuota.value[0] = data.multimodal_quota;

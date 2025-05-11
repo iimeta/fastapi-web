@@ -50,11 +50,26 @@ export interface TextQuota {
   fixed_quota: number;
 }
 
-export interface ImageQuota {
-  width?: any;
-  height?: any;
+export interface GenerationQuota {
+  quality: string;
+  width: any;
+  height: any;
   fixed_quota: any;
-  mode?: string;
+  is_default: string;
+}
+
+export interface ImageQuota {
+  billing_method: any;
+  generation_quotas: GenerationQuota[];
+  text_ratio: number;
+  input_ratio: number;
+  output_ratio: number;
+  fixed_quota: any;
+}
+
+export interface VisionQuota {
+  mode: string;
+  fixed_quota: any;
   is_default: string;
 }
 
@@ -67,7 +82,7 @@ export interface AudioQuota {
 
 export interface MultimodalQuota {
   text_quota: TextQuota;
-  image_quotas: ImageQuota[];
+  vision_quotas: VisionQuota[];
 }
 
 export interface RealtimeQuota {
