@@ -251,8 +251,11 @@ export interface ImageDetail {
   fallback_config: FallbackConfig;
   prompt: string;
   image_data: any;
-  text_quota: TextQuota;
-  multimodal_quota: MultimodalQuota;
+  image_quota: ImageQuota;
+  input_tokens: number;
+  output_tokens: number;
+  text_tokens: number;
+  image_tokens: number;
   total_tokens: number;
   total_time: number;
   internal_time: number;

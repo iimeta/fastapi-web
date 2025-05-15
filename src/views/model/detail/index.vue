@@ -434,7 +434,7 @@
           </template>
         </a-table-column>
         <a-table-column
-          title="输入价格"
+          title="图像输入价格"
           data-index="input_ratio"
           align="center"
         >
@@ -443,7 +443,7 @@
           </template>
         </a-table-column>
         <a-table-column
-          title="输出价格"
+          title="图像输出价格"
           data-index="output_ratio"
           align="center"
         >

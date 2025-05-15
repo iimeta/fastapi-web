@@ -84,30 +84,7 @@
           {{ currentData.text || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="计费方式" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          $t(
-            `chat.dict.billing_method.${currentData.audio_quota.billing_method}`
-          )
-        }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="花费令牌数" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          currentData.total_tokens
-            ? currentData.total_tokens
-            : currentData.status === 1 &&
-              currentData.audio_quota.billing_method === 2
-            ? 0
-            : '-'
-        }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="分组名称" :span="2">
+      <a-descriptions-item label="分组名称">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -125,7 +102,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="提问倍率" :span="2">
+      <a-descriptions-item label="提问倍率">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -145,19 +122,42 @@
             : '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="提问字符数" :span="2">
+      <a-descriptions-item label="提问字符数">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.characters || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答分钟数" :span="2">
+      <a-descriptions-item label="回答分钟数">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.minute || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="总耗时" :span="2">
+      <a-descriptions-item label="计费方式">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{
+          $t(
+            `chat.dict.billing_method.${currentData.audio_quota.billing_method}`
+          )
+        }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="花费令牌数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{
+          currentData.total_tokens
+            ? currentData.total_tokens
+            : currentData.status === 1 &&
+              currentData.audio_quota.billing_method === 2
+            ? 0
+            : '-'
+        }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="总耗时">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -176,7 +176,7 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="结果" :span="2">
+      <a-descriptions-item label="结果">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -195,19 +195,19 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="客户端IP" :span="2">
+      <a-descriptions-item label="客户端IP">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.client_ip || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="请求时间" :span="2">
+      <a-descriptions-item label="请求时间">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.req_time || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="错误信息" :span="2">
+      <a-descriptions-item label="错误信息">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -427,36 +427,13 @@
           {{ currentData.text || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="计费方式" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          $t(
-            `chat.dict.billing_method.${currentData.audio_quota.billing_method}`
-          )
-        }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="花费令牌数" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          currentData.total_tokens
-            ? currentData.total_tokens
-            : currentData.status === 1 &&
-              currentData.audio_quota.billing_method === 2
-            ? 0
-            : '-'
-        }}</span>
-      </a-descriptions-item>
       <a-descriptions-item label="分组名称" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.group_name || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="分组折扣" :span="2">
+      <a-descriptions-item label="分组折扣">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -478,7 +455,7 @@
             : '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答倍率" :span="2">
+      <a-descriptions-item label="回答倍率">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -494,13 +471,36 @@
         </a-skeleton>
         <span v-else>{{ currentData.characters || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答分钟数" :span="2">
+      <a-descriptions-item label="回答分钟数">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.minute || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="总耗时" :span="2">
+      <a-descriptions-item label="计费方式" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{
+          $t(
+            `chat.dict.billing_method.${currentData.audio_quota.billing_method}`
+          )
+        }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="花费令牌数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{
+          currentData.total_tokens
+            ? currentData.total_tokens
+            : currentData.status === 1 &&
+              currentData.audio_quota.billing_method === 2
+            ? 0
+            : '-'
+        }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="总耗时">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -519,7 +519,7 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="内耗" :span="2">
+      <a-descriptions-item label="内耗">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -538,7 +538,7 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="结果" :span="2">
+      <a-descriptions-item label="结果">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -557,37 +557,37 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="本地IP" :span="2">
+      <a-descriptions-item label="本地IP">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.local_ip || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="客户端IP" :span="2">
+      <a-descriptions-item label="客户端IP">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.client_ip || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="远程IP" :span="2">
+      <a-descriptions-item label="远程IP">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.remote_ip || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="请求时间" :span="2">
+      <a-descriptions-item label="请求时间">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.req_time || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="创建时间" :span="2">
+      <a-descriptions-item label="创建时间">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.created_at || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="错误信息" :span="2">
+      <a-descriptions-item label="错误信息">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
