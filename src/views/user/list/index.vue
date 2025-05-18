@@ -464,13 +464,14 @@
               ${{ formData.quota ? quotaConv(formData.quota) : '0.00' }}</div
             >
           </a-form-item>
-          <a-form-item style="width: 280px">
+          <a-form-item style="width: 280px; margin-bottom: 10px">
             <a-radio-group
               v-model="quotaQuick"
               type="button"
               @change="handleQuotaQuickChange as any"
             >
               <a-radio :value="1"> $1 </a-radio>
+              <a-radio :value="2"> $2 </a-radio>
               <a-radio :value="5"> $5 </a-radio>
               <a-radio :value="10"> $10 </a-radio>
               <a-radio :value="20"> $20 </a-radio>
@@ -478,8 +479,22 @@
               <a-radio :value="100"> $100 </a-radio>
               <a-radio :value="200"> $200 </a-radio>
               <a-radio :value="500"> $500 </a-radio>
-              <a-radio :value="1000"> $1000 </a-radio>
-              <a-radio :value="2000"> $2000 </a-radio>
+              <a-radio :value="1000"> $1,000 </a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item style="width: 280px">
+            <a-radio-group
+              v-model="quotaQuick"
+              type="button"
+              @change="handleQuotaQuickChange as any"
+            >
+              <a-radio :value="2000"> $2,000 </a-radio>
+              <a-radio :value="3000"> $3,000 </a-radio>
+              <a-radio :value="5000"> $5,000 </a-radio>
+              <a-radio :value="10000"> $10,000 </a-radio>
+              <a-radio :value="20000"> $20,000 </a-radio>
+              <a-radio :value="50000"> $50,000 </a-radio>
+              <a-radio :value="100000"> $100,000 </a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item
