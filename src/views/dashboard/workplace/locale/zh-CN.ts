@@ -10,6 +10,7 @@ export default {
   'workplace.user': '用户数',
   'workplace.todayUser': '今日新增用户数',
   'workplace.call': '总调用数',
+  'workplace.group': '分组数',
   'workplace.minute': '分钟',
   'workplace.appManagement': '应用管理',
   'workplace.modelManagement': '模型管理',

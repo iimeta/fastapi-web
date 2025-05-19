@@ -39,6 +39,7 @@ export interface BaseDataRecord {
   user: number;
   today_user: number;
   call: number;
+  group: number;
 }
 
 export function queryBaseData() {

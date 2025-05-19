@@ -122,7 +122,7 @@
       </a-space>
     </a-grid-item>
     <a-grid-item
-      v-permission="['reseller', 'admin']"
+      v-permission="['admin']"
       class="panel-col"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
       style="border-right: none; border-left: 1px solid rgb(var(--gray-2))"
@@ -134,6 +134,24 @@
         <a-statistic
           :title="$t('workplace.modelKey')"
           :value="baseData.model_key"
+          show-group-separator
+        >
+        </a-statistic>
+      </a-space>
+    </a-grid-item>
+    <a-grid-item
+      v-permission="['reseller']"
+      class="panel-col"
+      :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
+      style="border-right: none; border-left: 1px solid rgb(var(--gray-2))"
+    >
+      <a-space>
+        <a-avatar :size="54" class="col-avatar">
+          <img alt="avatar" src="@/assets/images/group.png" />
+        </a-avatar>
+        <a-statistic
+          :title="$t('workplace.group')"
+          :value="baseData.group"
           show-group-separator
         >
         </a-statistic>
