@@ -41,7 +41,13 @@
         </div>
         <div>
           <div class="used-quota">已用额度</div>
-          <div class="used-quota-usd">${{ expense.used_quota_usd }} </div>
+          <div class="used-quota-usd">
+            {{
+              expense.used_quota > 0
+                ? `$${quotaConv4(expense.used_quota)}`
+                : '$0.00'
+            }}
+          </div>
         </div>
       </div>
       <div v-permission="['reseller']" class="quota-box2">
