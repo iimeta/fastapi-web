@@ -250,8 +250,12 @@ export interface ImageDetail {
   is_enable_fallback: boolean;
   fallback_config: FallbackConfig;
   prompt: string;
+  size: string;
+  n: number;
+  quality: string;
   image_data: any;
   image_quota: ImageQuota;
+  generation_quota: GenerationQuota;
   input_tokens: number;
   output_tokens: number;
   text_tokens: number;

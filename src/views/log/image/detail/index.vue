@@ -102,13 +102,37 @@
           }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item label="图像质量">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.quality || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="图像大小" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.size || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="图像张数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.n || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="图像令牌数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.generation_quota.fixed_quota || '-' }}</span>
+      </a-descriptions-item>
       <a-descriptions-item label="文本倍率">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.image_quota.text_ratio || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="文本令牌数" :span="2">
+      <a-descriptions-item label="文本令牌数">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -480,6 +504,30 @@
           }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item label="图像质量" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.quality || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="图像大小">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.size || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="图像张数" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.n || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="图像令牌数">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.generation_quota.fixed_quota || '-' }}</span>
+      </a-descriptions-item>
       <a-descriptions-item label="文本倍率" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -501,7 +549,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="图像输入倍率" :span="2">
+      <a-descriptions-item label="图像输入倍率">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -522,7 +570,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="图像输出倍率" :span="2">
+      <a-descriptions-item label="图像输出倍率">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
