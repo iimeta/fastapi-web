@@ -47,6 +47,7 @@ export interface TextQuota {
   billing_method: number;
   prompt_ratio: number;
   completion_ratio: number;
+  cached_ratio: number;
   fixed_quota: number;
 }
 
@@ -64,6 +65,7 @@ export interface ImageQuota {
   text_ratio: number;
   input_ratio: number;
   output_ratio: number;
+  cached_ratio: number;
   fixed_quota: any;
 }
 
@@ -77,6 +79,7 @@ export interface AudioQuota {
   billing_method: any;
   prompt_ratio: number;
   completion_ratio: number;
+  cached_ratio: number;
   fixed_quota: number;
 }
 

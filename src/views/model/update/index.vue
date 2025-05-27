@@ -223,6 +223,33 @@
                 !isShowRealtimeQuota &&
                 !isShowMultimodalAudioQuota &&
                 !isShowImageQuota &&
+                formData.text_quota.billing_method === '1'
+              "
+              field="text_quota.cached_price"
+              :label="$t('model.label.cached_price')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.cached_price.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.text_quota.cached_price"
+                :placeholder="$t('model.placeholder.cached_price')"
+                :min="0.000001"
+                :max="9999999999999"
+                style="width: 90%; margin-right: 5px"
+              />
+              <div> ${{ formData.text_quota.cached_price || '0.00' }}/k </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                !isShowMultimodalTextQuota &&
+                !isShowAudioQuota &&
+                !isShowRealtimeQuota &&
+                !isShowMultimodalAudioQuota &&
+                !isShowImageQuota &&
                 formData.text_quota.billing_method === '2'
               "
               field="text_quota.fixed_quota"
@@ -454,6 +481,28 @@
               />
               <div> ${{ formData.image_quota.output_price || '0.00' }}/k </div>
             </a-form-item>
+            <a-form-item
+              v-if="
+                isShowImageQuota && formData.image_quota.billing_method === '1'
+              "
+              field="image_quota.cached_price"
+              :label="$t('model.label.image_quota.cached_price')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.image_quota.cached_price.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.image_quota.cached_price"
+                :placeholder="$t('model.placeholder.image_quota.cached_price')"
+                :min="0.000001"
+                :max="9999999999999"
+                style="width: 90%; margin-right: 5px"
+              />
+              <div> ${{ formData.image_quota.cached_price || '0.00' }}/k </div>
+            </a-form-item>
 
             <!-- 音频额度 -->
             <a-form-item
@@ -661,6 +710,33 @@
                 ${{
                   formData.multimodal_quota.text_quota.completion_price ||
                   '0.00'
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowMultimodalTextQuota &&
+                formData.multimodal_quota.text_quota.billing_method === '1'
+              "
+              field="multimodal_quota.text_quota.cached_price"
+              :label="$t('model.label.cached_price')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.cached_price.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.multimodal_quota.text_quota.cached_price"
+                :placeholder="$t('model.placeholder.cached_price')"
+                :min="0.000001"
+                :max="9999999999999"
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  formData.multimodal_quota.text_quota.cached_price || '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -927,6 +1003,37 @@
             <a-form-item
               v-if="
                 isShowRealtimeQuota &&
+                formData.realtime_quota.text_quota.billing_method === '1'
+              "
+              field="realtime_quota.text_quota.cached_price"
+              :label="$t('model.label.realtime_quota.text_quota.cached_price')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.realtime_quota.text_quota.cached_price.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.realtime_quota.text_quota.cached_price"
+                :placeholder="
+                  $t('model.placeholder.realtime_quota.text_quota.cached_price')
+                "
+                :min="0.000001"
+                :max="9999999999999"
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  formData.realtime_quota.text_quota.cached_price || '0.00'
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowRealtimeQuota &&
                 formData.realtime_quota.text_quota.billing_method === '2'
               "
               field="realtime_quota.text_quota.fixed_quota"
@@ -1024,6 +1131,39 @@
                 ${{
                   formData.realtime_quota.audio_quota.completion_price ||
                   '0.00'
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowRealtimeQuota &&
+                formData.realtime_quota.audio_quota.billing_method === '1'
+              "
+              field="realtime_quota.audio_quota.cached_price"
+              :label="$t('model.label.realtime_quota.audio_quota.cached_price')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.realtime_quota.audio_quota.cached_price.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.realtime_quota.audio_quota.cached_price"
+                :placeholder="
+                  $t(
+                    'model.placeholder.realtime_quota.audio_quota.cached_price'
+                  )
+                "
+                :min="0.000001"
+                :max="9999999999999"
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  formData.realtime_quota.audio_quota.cached_price || '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -1169,6 +1309,45 @@
               v-if="
                 isShowMultimodalAudioQuota &&
                 formData.multimodal_audio_quota.text_quota.billing_method ===
+                  '1'
+              "
+              field="multimodal_audio_quota.text_quota.cached_price"
+              :label="
+                $t('model.label.multimodal_audio_quota.text_quota.cached_price')
+              "
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.multimodal_audio_quota.text_quota.cached_price.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="
+                  formData.multimodal_audio_quota.text_quota.cached_price
+                "
+                :placeholder="
+                  $t(
+                    'model.placeholder.multimodal_audio_quota.text_quota.cached_price'
+                  )
+                "
+                :min="0.000001"
+                :max="9999999999999"
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  formData.multimodal_audio_quota.text_quota.cached_price ||
+                  '0.00'
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowMultimodalAudioQuota &&
+                formData.multimodal_audio_quota.text_quota.billing_method ===
                   '2'
               "
               field="multimodal_audio_quota.text_quota.fixed_quota"
@@ -1285,6 +1464,47 @@
                 ${{
                   formData.multimodal_audio_quota.audio_quota
                     .completion_price || '0.00'
+                }}/k
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                isShowMultimodalAudioQuota &&
+                formData.multimodal_audio_quota.audio_quota.billing_method ===
+                  '1'
+              "
+              field="multimodal_audio_quota.audio_quota.cached_price"
+              :label="
+                $t(
+                  'model.label.multimodal_audio_quota.audio_quota.cached_price'
+                )
+              "
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.error.multimodal_audio_quota.audio_quota.cached_price.required'
+                  ),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="
+                  formData.multimodal_audio_quota.audio_quota.cached_price
+                "
+                :placeholder="
+                  $t(
+                    'model.placeholder.multimodal_audio_quota.audio_quota.cached_price'
+                  )
+                "
+                :min="0.000001"
+                :max="9999999999999"
+                style="width: 90%; margin-right: 5px"
+              />
+              <div>
+                ${{
+                  formData.multimodal_audio_quota.audio_quota.cached_price ||
+                  '0.00'
                 }}/k
               </div>
             </a-form-item>
@@ -1935,9 +2155,11 @@
       billing_method: '1',
       prompt_ratio: 1,
       completion_ratio: 1,
+      cached_ratio: 1,
       fixed_quota: ref(),
       prompt_price: ref(),
       completion_price: ref(),
+      cached_price: ref(),
     },
     image_quota: {
       billing_method: '1',
@@ -1945,18 +2167,22 @@
       text_ratio: 1,
       input_ratio: 1,
       output_ratio: 1,
+      cached_ratio: 1,
       fixed_quota: ref(),
       text_price: ref(),
       input_price: ref(),
       output_price: ref(),
+      cached_price: ref(),
     },
     audio_quota: {
       billing_method: '1',
       prompt_ratio: 1,
       completion_ratio: 1,
+      cached_ratio: 1,
       fixed_quota: ref(),
       prompt_price: ref(),
       completion_price: ref(),
+      cached_price: ref(),
     },
     multimodal_quota: {
       billing_rule: '1',
@@ -1964,9 +2190,11 @@
         billing_method: '1',
         prompt_ratio: 1,
         completion_ratio: 1,
+        cached_ratio: 1,
         fixed_quota: ref(),
         prompt_price: ref(),
         completion_price: ref(),
+        cached_price: ref(),
       },
       vision_quotas: [],
       search_quota: ref(),
@@ -1977,17 +2205,21 @@
         billing_method: '1',
         prompt_ratio: 1,
         completion_ratio: 1,
+        cached_ratio: 1,
         fixed_quota: ref(),
         prompt_price: ref(),
         completion_price: ref(),
+        cached_price: ref(),
       },
       audio_quota: {
         billing_method: '1',
         prompt_ratio: 1,
         completion_ratio: 1,
+        cached_ratio: 1,
         fixed_quota: ref(),
         prompt_price: ref(),
         completion_price: ref(),
+        cached_price: ref(),
       },
       fixed_quota: ref(),
     },
@@ -1996,17 +2228,21 @@
         billing_method: '1',
         prompt_ratio: 1,
         completion_ratio: 1,
+        cached_ratio: 1,
         fixed_quota: ref(),
         prompt_price: ref(),
         completion_price: ref(),
+        cached_price: ref(),
       },
       audio_quota: {
         billing_method: '1',
         prompt_ratio: 1,
         completion_ratio: 1,
+        cached_ratio: 1,
         fixed_quota: ref(),
         prompt_price: ref(),
         completion_price: ref(),
+        cached_price: ref(),
       },
       fixed_quota: ref(),
     },
@@ -2014,7 +2250,7 @@
     data_format: '1',
     is_public: true,
     groups: [],
-    is_enable_model_agent: false,
+    is_enable_model_agent: true,
     lb_strategy: '1',
     model_agents: [],
     is_enable_forward: false,
@@ -2076,6 +2312,12 @@
           );
         }
 
+        if (formData.value.text_quota.cached_price) {
+          formData.value.text_quota.cached_ratio = ratioConv(
+            formData.value.text_quota.cached_price
+          );
+        }
+
         if (formData.value.image_quota.text_price) {
           formData.value.image_quota.text_ratio = ratioConv(
             formData.value.image_quota.text_price
@@ -2094,6 +2336,12 @@
           );
         }
 
+        if (formData.value.image_quota.cached_price) {
+          formData.value.image_quota.cached_ratio = ratioConv(
+            formData.value.image_quota.cached_price
+          );
+        }
+
         if (formData.value.audio_quota.prompt_price) {
           formData.value.audio_quota.prompt_ratio = ratioConv(
             formData.value.audio_quota.prompt_price
@@ -2103,6 +2351,12 @@
         if (formData.value.audio_quota.completion_price) {
           formData.value.audio_quota.completion_ratio = ratioConv(
             formData.value.audio_quota.completion_price
+          );
+        }
+
+        if (formData.value.audio_quota.cached_price) {
+          formData.value.audio_quota.cached_ratio = ratioConv(
+            formData.value.audio_quota.cached_price
           );
         }
 
@@ -2119,6 +2373,12 @@
             );
         }
 
+        if (formData.value.multimodal_quota.text_quota.cached_price) {
+          formData.value.multimodal_quota.text_quota.cached_ratio = ratioConv(
+            formData.value.multimodal_quota.text_quota.cached_price
+          );
+        }
+
         if (formData.value.realtime_quota.text_quota.prompt_price) {
           formData.value.realtime_quota.text_quota.prompt_ratio = ratioConv(
             formData.value.realtime_quota.text_quota.prompt_price
@@ -2128,6 +2388,12 @@
         if (formData.value.realtime_quota.text_quota.completion_price) {
           formData.value.realtime_quota.text_quota.completion_ratio = ratioConv(
             formData.value.realtime_quota.text_quota.completion_price
+          );
+        }
+
+        if (formData.value.realtime_quota.text_quota.cached_price) {
+          formData.value.realtime_quota.text_quota.cached_ratio = ratioConv(
+            formData.value.realtime_quota.text_quota.cached_price
           );
         }
 
@@ -2144,6 +2410,12 @@
             );
         }
 
+        if (formData.value.realtime_quota.audio_quota.cached_price) {
+          formData.value.realtime_quota.audio_quota.cached_ratio = ratioConv(
+            formData.value.realtime_quota.audio_quota.cached_price
+          );
+        }
+
         if (formData.value.multimodal_audio_quota.text_quota.prompt_price) {
           formData.value.multimodal_audio_quota.text_quota.prompt_ratio =
             ratioConv(
@@ -2155,6 +2427,13 @@
           formData.value.multimodal_audio_quota.text_quota.completion_ratio =
             ratioConv(
               formData.value.multimodal_audio_quota.text_quota.completion_price
+            );
+        }
+
+        if (formData.value.multimodal_audio_quota.text_quota.cached_price) {
+          formData.value.multimodal_audio_quota.text_quota.cached_ratio =
+            ratioConv(
+              formData.value.multimodal_audio_quota.text_quota.cached_price
             );
         }
 
@@ -2173,6 +2452,14 @@
               formData.value.multimodal_audio_quota.audio_quota.completion_price
             );
         }
+
+        if (formData.value.multimodal_audio_quota.audio_quota.cached_price) {
+          formData.value.multimodal_audio_quota.audio_quota.cached_ratio =
+            ratioConv(
+              formData.value.multimodal_audio_quota.audio_quota.cached_price
+            );
+        }
+
         await submitModelUpdate(formData.value).then(() => {
           proxy.$message.success('更新成功');
           router.push({
@@ -2220,6 +2507,9 @@
         formData.value.text_quota.completion_price = Number(
           priceConv(data.text_quota.completion_ratio)
         );
+        formData.value.text_quota.cached_price = Number(
+          priceConv(data.text_quota.cached_ratio)
+        );
         formData.value.text_quota.billing_method = String(
           formData.value.text_quota.billing_method
         );
@@ -2258,6 +2548,9 @@
         formData.value.image_quota.output_price = Number(
           priceConv(data.image_quota.output_ratio)
         );
+        formData.value.image_quota.cached_price = Number(
+          priceConv(data.image_quota.cached_ratio)
+        );
       }
 
       if (data.audio_quota) {
@@ -2269,6 +2562,9 @@
         );
         formData.value.audio_quota.completion_price = Number(
           priceConv(data.audio_quota.completion_ratio)
+        );
+        formData.value.audio_quota.cached_price = Number(
+          priceConv(data.audio_quota.cached_ratio)
         );
         formData.value.audio_quota.billing_method = String(
           formData.value.audio_quota.billing_method
@@ -2293,6 +2589,9 @@
         );
         formData.value.multimodal_quota.text_quota.completion_price = Number(
           priceConv(data.multimodal_quota.text_quota.completion_ratio)
+        );
+        formData.value.multimodal_quota.text_quota.cached_price = Number(
+          priceConv(data.multimodal_quota.text_quota.cached_ratio)
         );
         formData.value.multimodal_quota.text_quota.billing_method = String(
           formData.value.multimodal_quota.text_quota.billing_method
@@ -2339,8 +2638,17 @@
         formData.value.realtime_quota.text_quota.completion_price = Number(
           priceConv(data.realtime_quota.text_quota.completion_ratio)
         );
+        formData.value.realtime_quota.text_quota.cached_price = Number(
+          priceConv(data.realtime_quota.text_quota.cached_ratio)
+        );
         formData.value.realtime_quota.audio_quota.prompt_price = Number(
           priceConv(data.realtime_quota.audio_quota.prompt_ratio)
+        );
+        formData.value.realtime_quota.audio_quota.completion_price = Number(
+          priceConv(data.realtime_quota.audio_quota.completion_ratio)
+        );
+        formData.value.realtime_quota.audio_quota.cached_price = Number(
+          priceConv(data.realtime_quota.audio_quota.cached_ratio)
         );
         formData.value.realtime_quota.audio_quota.completion_price = Number(
           priceConv(data.realtime_quota.audio_quota.completion_ratio)
@@ -2364,6 +2672,9 @@
           Number(
             priceConv(data.multimodal_audio_quota.text_quota.completion_ratio)
           );
+        formData.value.multimodal_audio_quota.text_quota.cached_price = Number(
+          priceConv(data.multimodal_audio_quota.text_quota.cached_ratio)
+        );
         formData.value.multimodal_audio_quota.audio_quota.prompt_price = Number(
           priceConv(data.multimodal_audio_quota.audio_quota.prompt_ratio)
         );
@@ -2371,6 +2682,9 @@
           Number(
             priceConv(data.multimodal_audio_quota.audio_quota.completion_ratio)
           );
+        formData.value.multimodal_audio_quota.audio_quota.cached_price = Number(
+          priceConv(data.multimodal_audio_quota.audio_quota.cached_ratio)
+        );
         formData.value.multimodal_audio_quota.text_quota.billing_method =
           String(
             formData.value.multimodal_audio_quota.text_quota.billing_method

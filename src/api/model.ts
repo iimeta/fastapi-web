@@ -47,9 +47,11 @@ export interface TextQuota {
   billing_method: any;
   prompt_ratio: number;
   completion_ratio: number;
+  cached_ratio: number;
   fixed_quota: any;
   prompt_price: any;
   completion_price: any;
+  cached_price: any;
 }
 
 export interface GenerationQuota {
@@ -66,10 +68,12 @@ export interface ImageQuota {
   text_ratio: number;
   input_ratio: number;
   output_ratio: number;
+  cached_ratio: number;
   fixed_quota: any;
   text_price: any;
   input_price: any;
   output_price: any;
+  cached_price: any;
 }
 
 export interface VisionQuota {
@@ -82,9 +86,11 @@ export interface AudioQuota {
   billing_method: any;
   prompt_ratio: number;
   completion_ratio: number;
+  cached_ratio: number;
   fixed_quota: any;
   prompt_price: any;
   completion_price: any;
+  cached_price: any;
 }
 
 export interface SearchQuota {
