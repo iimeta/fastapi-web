@@ -173,10 +173,6 @@ export default {
   'model.error.key.required': '请输入应用密钥',
   'model.placeholder.key': 'Fast API 应用密钥',
   'model.label.is_config_model_agent': '配置代理',
-  'model.columns.image_price': '绘图价格',
-  'model.columns.multimodal_price': '多模态价格',
-  'model.columns.realtime_price': '多模态实时价格',
-  'model.columns.multimodal_audio_price': '多模态语音价格',
   // detail
   'model.detail.label.corp': '公司',
   'model.detail.label.name': '模型名称',
@@ -268,6 +264,12 @@ export default {
   'model.columns.operations.view': '详情',
   'model.columns.operations.update': '修改',
   'model.columns.operations.delete': '删除',
+  'model.columns.price': '价格',
+  'model.columns.text_price': '文本价格',
+  'model.columns.image_price': '绘图价格',
+  'model.columns.multimodal_price': '多模态价格',
+  'model.columns.realtime_price': '多模态实时价格',
+  'model.columns.multimodal_audio_price': '多模态语音价格',
   // dict
   'model.dict.data_format.1': '统一格式',
   'model.dict.data_format.2': '官方格式',

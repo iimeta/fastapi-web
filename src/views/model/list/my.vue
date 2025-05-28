@@ -200,7 +200,11 @@
         </template>
         <template #prompt_ratio="{ record }">
           <span v-if="record.type === 2">
+            <span v-if="record.image_quota.billing_method === 2">
+              {{ `$${quotaConv(record.image_quota.fixed_quota)}/次` }}
+            </span>
             <a-button
+              v-else
               type="text"
               size="small"
               @click="viewImageQuota(record.image_quota)"
@@ -215,58 +219,13 @@
                 : `$${quotaConv(record.audio_quota.fixed_quota)}/次`
             }}
           </span>
-          <span v-else-if="record.type === 6">-</span>
-          <span v-else-if="record.type === 100">
-            <a-button
-              type="text"
-              size="small"
-              @click="viewMultimodalQuota(record.multimodal_quota)"
-            >
-              查看
-            </a-button>
-          </span>
-          <span v-else-if="record.type === 101">
-            <a-button
-              type="text"
-              size="small"
-              @click="viewRealtimeQuota(record.realtime_quota)"
-            >
-              查看
-            </a-button>
-          </span>
-          <span v-else-if="record.type === 102">
-            <a-button
-              type="text"
-              size="small"
-              @click="viewMultimodalAudioQuota(record.multimodal_audio_quota)"
-            >
-              查看
-            </a-button>
-          </span>
-          <span v-else>{{
-            record.text_quota.billing_method === 1
-              ? `$${priceConv(record.text_quota.prompt_ratio)}/k`
-              : '-'
-          }}</span>
-        </template>
-        <template #completion_ratio="{ record }">
-          <span v-if="record.type === 2">
-            <a-button
-              type="text"
-              size="small"
-              @click="viewImageQuota(record.image_quota)"
-            >
-              查看
-            </a-button>
-          </span>
-          <span v-else-if="record.type === 5">-</span>
           <span v-else-if="record.type === 6">
             {{
               record.audio_quota.billing_method === 1
                 ? `$${priceConv(record.audio_quota.completion_ratio)}/min`
                 : `$${quotaConv(record.audio_quota.fixed_quota)}/次`
-            }}</span
-          >
+            }}
+          </span>
           <span v-else-if="record.type === 100">
             <a-button
               type="text"
@@ -295,11 +254,17 @@
             </a-button>
           </span>
           <span v-else>
-            {{
-              record.text_quota.billing_method === 1
-                ? `$${priceConv(record.text_quota.completion_ratio)}/k`
-                : `$${quotaConv(record.text_quota.fixed_quota)}/次`
-            }}
+            <span v-if="record.text_quota.billing_method === 2">
+              {{ `$${quotaConv(record.text_quota.fixed_quota)}/次` }}
+            </span>
+            <a-button
+              v-else
+              type="text"
+              size="small"
+              @click="viewTextQuota(record.text_quota)"
+            >
+              查看
+            </a-button>
           </span>
         </template>
         <template #group_names="{ record }">
@@ -315,6 +280,48 @@
         </template>
       </a-table>
 
+      <!-- 文本价格 -->
+      <a-modal
+        v-model:visible="textQuotaVisible"
+        :title="$t('model.columns.text_price')"
+        width="600px"
+        hide-cancel
+        simple
+      >
+        <a-table :data="textQuotas" :pagination="false" :bordered="false">
+          <template #columns>
+            <a-table-column
+              title="提问价格"
+              data-index="prompt_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.prompt_ratio)}/k` }}
+              </template>
+            </a-table-column>
+            <a-table-column
+              title="回答价格"
+              data-index="completion_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.completion_ratio)}/k` }}
+              </template>
+            </a-table-column>
+            <a-table-column
+              title="缓存价格"
+              data-index="cached_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.cached_ratio)}/k` }}
+              </template>
+            </a-table-column>
+          </template>
+        </a-table>
+      </a-modal>
+
+      <!-- 绘图价格 -->
       <a-modal
         v-model:visible="imageQuotaVisible"
         :title="$t('model.columns.image_price')"
@@ -352,13 +359,12 @@
           </template>
         </a-table>
 
-        <!-- 图像文本、输入、输出额度 -->
+        <!-- 图像文本、输入、输出、缓存额度 -->
         <a-table
-          v-if="imageQuotaVisible"
-          style="margin-top: 15px"
           :data="imageQuotas"
           :pagination="false"
           :bordered="false"
+          style="margin-top: 15px"
         >
           <template #columns>
             <a-table-column
@@ -388,10 +394,20 @@
                 {{ `$${priceConv(record.output_ratio)}/k` }}
               </template>
             </a-table-column>
+            <a-table-column
+              title="图像缓存价格"
+              data-index="cached_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.cached_ratio)}/k` }}
+              </template>
+            </a-table-column>
           </template>
         </a-table>
       </a-modal>
 
+      <!-- 多模态价格 -->
       <a-modal
         v-model:visible="multimodalQuotaVisible"
         :title="$t('model.columns.multimodal_price')"
@@ -423,14 +439,23 @@
                 {{ `$${priceConv(record.completion_ratio)}/k` }}
               </template>
             </a-table-column>
+            <a-table-column
+              title="文本缓存价格"
+              data-index="cached_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.cached_ratio)}/k` }}
+              </template>
+            </a-table-column>
           </template>
         </a-table>
 
         <a-table
-          style="margin-top: 15px"
           :data="multimodalVisionQuotas"
           :pagination="false"
           :bordered="false"
+          style="margin-top: 15px"
         >
           <template #columns>
             <a-table-column
@@ -457,10 +482,10 @@
 
         <a-table
           v-if="isShowSearchQuota"
-          style="margin-top: 15px"
           :data="multimodalSearchQuota"
           :pagination="false"
           :bordered="false"
+          style="margin-top: 15px"
         >
           <template #columns>
             <a-table-column
@@ -477,10 +502,10 @@
 
         <a-table
           v-if="isShowSearchQuotas"
-          style="margin-top: 15px"
           :data="multimodalSearchQuotas"
           :pagination="false"
           :bordered="false"
+          style="margin-top: 15px"
         >
           <template #columns>
             <a-table-column
@@ -506,6 +531,7 @@
         </a-table>
       </a-modal>
 
+      <!-- 多模态实时价格 -->
       <a-modal
         v-model:visible="realtimeQuotaVisible"
         :title="$t('model.columns.realtime_price')"
@@ -534,6 +560,25 @@
               </template>
             </a-table-column>
             <a-table-column
+              title="文本缓存价格"
+              data-index="text_quota.cached_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.text_quota.cached_ratio)}/k` }}
+              </template>
+            </a-table-column>
+          </template>
+        </a-table>
+
+        <a-table
+          :data="realtimeQuotas"
+          :pagination="false"
+          :bordered="false"
+          style="margin-top: 15px"
+        >
+          <template #columns>
+            <a-table-column
               title="音频提问价格"
               data-index="audio_quota.prompt_ratio"
               align="center"
@@ -551,10 +596,20 @@
                 {{ `$${priceConv(record.audio_quota.completion_ratio)}/k` }}
               </template>
             </a-table-column>
+            <a-table-column
+              title="音频缓存价格"
+              data-index="audio_quota.cached_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.audio_quota.cached_ratio)}/k` }}
+              </template>
+            </a-table-column>
           </template>
         </a-table>
       </a-modal>
 
+      <!-- 多模态语音价格 -->
       <a-modal
         v-model:visible="multimodalAudioQuotaVisible"
         :title="$t('model.columns.multimodal_audio_price')"
@@ -587,6 +642,25 @@
               </template>
             </a-table-column>
             <a-table-column
+              title="文本缓存价格"
+              data-index="text_quota.cached_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.text_quota.cached_ratio)}/k` }}
+              </template>
+            </a-table-column>
+          </template>
+        </a-table>
+
+        <a-table
+          :data="multimodalAudioQuotas"
+          :pagination="false"
+          :bordered="false"
+          style="margin-top: 15px"
+        >
+          <template #columns>
+            <a-table-column
               title="音频提问价格"
               data-index="audio_quota.prompt_ratio"
               align="center"
@@ -602,6 +676,15 @@
             >
               <template #cell="{ record }">
                 {{ `$${priceConv(record.audio_quota.completion_ratio)}/k` }}
+              </template>
+            </a-table-column>
+            <a-table-column
+              title="音频缓存价格"
+              data-index="audio_quota.cached_ratio"
+              align="center"
+            >
+              <template #cell="{ record }">
+                {{ `$${priceConv(record.audio_quota.cached_ratio)}/k` }}
               </template>
             </a-table-column>
           </template>
@@ -752,16 +835,9 @@
       width: 120,
     },
     {
-      title: t('model.columns.prompt_price'),
+      title: t('model.columns.price'),
       dataIndex: 'prompt_ratio',
       slotName: 'prompt_ratio',
-      align: 'center',
-      width: 120,
-    },
-    {
-      title: t('model.columns.completion_price'),
-      dataIndex: 'completion_ratio',
-      slotName: 'completion_ratio',
       align: 'center',
       width: 120,
     },
@@ -805,6 +881,14 @@
     {
       label: t('dict.model_type.4'),
       value: 4,
+    },
+    {
+      label: t('dict.model_type.5'),
+      value: 5,
+    },
+    {
+      label: t('dict.model_type.6'),
+      value: 6,
     },
     {
       label: t('dict.model_type.100'),
@@ -935,6 +1019,13 @@
     },
     { deep: true, immediate: true }
   );
+
+  const textQuotaVisible = ref(false);
+  const textQuotas = ref<TextQuota[]>([]);
+  const viewTextQuota = (params: TextQuota) => {
+    textQuotaVisible.value = true;
+    textQuotas.value[0] = params;
+  };
 
   const imageQuotaVisible = ref(false);
   const imageGenerationQuotas = ref<GenerationQuota[]>([]);

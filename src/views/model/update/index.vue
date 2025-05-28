@@ -278,7 +278,7 @@
               </div>
             </a-form-item>
 
-            <!-- 图像额度 -->
+            <!-- 绘图额度 -->
             <a-form-item
               v-if="isShowImageQuota"
               field="image_quota.billing_method"
