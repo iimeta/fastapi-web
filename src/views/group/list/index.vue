@@ -668,11 +668,12 @@
       width: 65,
     },
     {
-      title: t('group.columns.expires_at'),
-      dataIndex: 'expires_at',
-      slotName: 'expires_at',
+      title: t('group.columns.remark'),
+      dataIndex: 'remark',
+      slotName: 'remark',
       align: 'center',
-      width: 170,
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('group.columns.status'),

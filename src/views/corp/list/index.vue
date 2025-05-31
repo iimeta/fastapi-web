@@ -441,12 +441,14 @@
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
+      width: 65,
     },
     {
       title: t('corp.columns.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
       align: 'center',
+      width: 132,
     },
     {
       title: t('corp.columns.operations'),

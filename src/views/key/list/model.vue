@@ -574,7 +574,7 @@
       dataIndex: 'corp_name',
       slotName: 'corp_name',
       align: 'center',
-      width: 110,
+      width: 120,
     },
     {
       title: t('key.columns.key'),

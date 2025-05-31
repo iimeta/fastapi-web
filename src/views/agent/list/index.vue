@@ -535,7 +535,7 @@
       dataIndex: 'corp_name',
       slotName: 'corp_name',
       align: 'center',
-      width: 110,
+      width: 120,
     },
     {
       title: t('model.agent.columns.name'),
@@ -553,14 +553,14 @@
       ellipsis: true,
       tooltip: true,
     },
-    {
-      title: t('model.agent.columns.fallback_models'),
-      dataIndex: 'fallback_model_names',
-      slotName: 'fallback_model_names',
-      align: 'center',
-      ellipsis: true,
-      tooltip: true,
-    },
+    // {
+    //   title: t('model.agent.columns.fallback_models'),
+    //   dataIndex: 'fallback_model_names',
+    //   slotName: 'fallback_model_names',
+    //   align: 'center',
+    //   ellipsis: true,
+    //   tooltip: true,
+    // },
     {
       title: t('common.weight'),
       dataIndex: 'weight',

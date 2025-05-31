@@ -1366,7 +1366,6 @@
       dataIndex: 'lb_strategy',
       slotName: 'lb_strategy',
       align: 'center',
-      width: 88,
     },
     {
       title: t('model.columns.status'),

@@ -1007,20 +1007,13 @@
   };
 
   const createKey = async (params: AppCreateKeyParams) => {
-    setLoading(true);
-    try {
-      const { data } = await submitAppCreateKey(params);
-      formData.value.app_id = data.app_id;
-      formData.value.key = data.key;
-      formData.value.quota_expires_rule = '1';
-      formData.value.quota_expires_at = '';
-      formData.value.quota_expires_minutes = ref();
-      visible.value = true;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
+    const { data } = await submitAppCreateKey(params);
+    formData.value.app_id = data.app_id;
+    formData.value.key = data.key;
+    formData.value.quota_expires_rule = '1';
+    formData.value.quota_expires_at = '';
+    formData.value.quota_expires_minutes = ref();
+    visible.value = true;
   };
 
   const handleBeforeOk = async (done: any) => {
