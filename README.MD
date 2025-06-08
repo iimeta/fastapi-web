@@ -95,16 +95,17 @@
 
 ### 社区版
 
-- API接口: <https://api.free.fastapi.ai>
 - 用户端: <https://free.fastapi.ai/login>
+- 代理商: <https://free.fastapi.ai/reseller>
+- API接口: <https://api.free.fastapi.ai>
 
 ### 专业版
 
-- API接口: <https://api.free.fastapi.pro>
 - 用户端: <https://free.fastapi.pro/login>
 - 代理商: <https://free.fastapi.pro/reseller>
+- API接口: <https://api.free.fastapi.pro>
 
-#### 社区版和专业版数据互通, 可以根据自己喜好选择, 社区版用户注册送1000万额度, 专业版用户注册送2500万额度, 专业版支持注册代理商
+#### 社区版和专业版数据互通, 可根据自己喜好选择, 支持注册代理商, 社区版用户注册送10万刀额度, 专业版用户注册送100万刀额度
 
 ## 项目截图
 
