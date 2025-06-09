@@ -185,3 +185,30 @@ export interface AppBatchOperate {
 export function submitAppBatchOperate(data: AppBatchOperate) {
   return axios.post('/api/v1/app/batch/operate', data);
 }
+
+export interface AppKeyBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+  id?: string;
+  user_id?: number;
+  app_id?: number;
+  key?: string;
+  n?: number;
+  models?: string[];
+  is_limit_quota?: boolean;
+  quota?: number;
+  quota_expires_rule?: string;
+  quota_expires_at?: any;
+  quota_expires_minutes?: any;
+  is_bind_group?: boolean;
+  group?: string;
+  ip_whitelist?: string;
+  ip_blacklist?: string;
+  remark?: string;
+  expires_at?: string[];
+}
+
+export function submitAppKeyBatchOperate(data: AppKeyBatchOperate) {
+  return axios.post('/api/v1/app/key/batch/operate', data);
+}

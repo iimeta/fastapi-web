@@ -9,6 +9,9 @@ export default {
   'app.label.user_id': '用户ID',
   'app.placeholder.user_id': '请输入用户ID',
   'app.error.user_id.required': '请输入用户ID',
+  'app.label.app_id': '应用ID',
+  'app.placeholder.app_id': '请输入应用ID',
+  'app.error.app_id.required': '请输入应用ID',
   'app.label.name': '应用名称',
   'app.placeholder.name': '应用名称, 最多100字符',
   'app.error.name.required': '请输入应用名称',
@@ -40,6 +43,9 @@ export default {
   'app.placeholder.key.models': '此密钥可使用的模型, 为空则使用应用所选的模型',
   'app.label.is_create_key': '创建密钥',
   'app.success.key_config': '保存成功, 密钥已复制到剪贴板',
+  'app.label.n': '数量',
+  'app.placeholder.n': '请输入数量',
+  'app.error.n.required': '请输入数量',
   // detail
   'app.detail.label.name': '应用名称',
   'app.detail.label.models': '模型权限',
@@ -68,6 +74,8 @@ export default {
   'app.form.reset': '重置',
   'app.form.selectDefault': '全部',
   'app.form.title.keyConfig': '密钥配置',
+  'app.form.title.batch.create': '新建密钥',
+  'app.form.title.batch.update': '修改密钥',
   // operation
   'app.operation.create': '新建',
   // columns

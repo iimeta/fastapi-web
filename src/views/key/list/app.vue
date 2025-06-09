@@ -155,6 +155,29 @@
           <a-space>
             <a-button
               type="primary"
+              @click="
+                handleAppKeyBatch({
+                  action: 'create',
+                })
+              "
+            >
+              {{ $t('key.operation.create') }}
+            </a-button>
+            <a-button
+              type="primary"
+              status="warning"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleAppKeyBatch({
+                  action: 'update',
+                })
+              "
+            >
+              修改
+            </a-button>
+            <a-button
+              type="primary"
               status="success"
               :disabled="multiple"
               :title="multiple ? '请选择要操作的数据' : ''"
@@ -193,6 +216,60 @@
               "
             >
               删除
+            </a-button>
+            <a-button
+              type="primary"
+              status="warning"
+              :disabled="allMultiple"
+              :title="allMultiple ? '请查询要操作的数据' : ''"
+              @click="
+                handleAppKeyBatch({
+                  action: 'all-update',
+                })
+              "
+            >
+              全部修改
+            </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="allMultiple"
+              :title="allMultiple ? '请查询要操作的数据' : ''"
+              @click="
+                handleAppKeyBatch({
+                  action: 'all-status',
+                  value: 1,
+                })
+              "
+            >
+              全部启用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="allMultiple"
+              :title="allMultiple ? '请查询要操作的数据' : ''"
+              @click="
+                handleAppKeyBatch({
+                  action: 'all-status',
+                  value: 2,
+                })
+              "
+            >
+              全部禁用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="allMultiple"
+              :title="allMultiple ? '请查询要操作的数据' : ''"
+              @click="
+                handleAppKeyBatch({
+                  action: 'all-delete',
+                })
+              "
+            >
+              全部删除
             </a-button>
           </a-space>
         </a-col>
@@ -356,6 +433,7 @@
         :width="600"
         :title="$t('app.form.title.keyConfig')"
         :ok-text="$t('button.save')"
+        :body-style="{ height: '560px' }"
         @cancel="handleCancel"
         @before-ok="handleBeforeOk"
       >
@@ -608,6 +686,303 @@
       >
         <Models :id="recordId" :action="action" />
       </a-modal>
+
+      <!-- 批量操作 -->
+      <a-modal
+        v-model:visible="batchVisible"
+        :width="600"
+        :title="$t('app.form.title.batch.create')"
+        :ok-text="$t('button.save')"
+        :body-style="{ height: '560px' }"
+        @cancel="handleBatchCancel"
+        @before-ok="handleBatchBeforeOk"
+      >
+        <a-form ref="batchFormRef" :model="batchFormData">
+          <a-form-item
+            v-permission="['reseller', 'admin']"
+            field="user_id"
+            :label="$t('app.label.user_id')"
+            :rules="[
+              {
+                required:
+                  userStore.role === 'reseller' || userStore.role === 'admin',
+                message: $t('app.error.user_id.required'),
+              },
+            ]"
+          >
+            <a-input-number
+              v-model="batchFormData.user_id"
+              :placeholder="$t('app.placeholder.user_id')"
+              :precision="0"
+              :min="1"
+            />
+          </a-form-item>
+          <a-form-item
+            v-permission="['reseller', 'admin']"
+            field="app_id"
+            :label="$t('app.label.app_id')"
+            :rules="[
+              {
+                required:
+                  userStore.role === 'reseller' || userStore.role === 'admin',
+                message: $t('app.error.app_id.required'),
+              },
+            ]"
+          >
+            <a-input-number
+              v-model="batchFormData.app_id"
+              :placeholder="$t('app.placeholder.app_id')"
+              :precision="0"
+              :min="1"
+            />
+          </a-form-item>
+          <a-form-item
+            field="n"
+            :label="$t('app.label.n')"
+            :rules="[
+              {
+                required: true,
+                message: $t('app.error.n.required'),
+              },
+            ]"
+          >
+            <a-input-number
+              v-model="batchFormData.n"
+              :placeholder="$t('app.placeholder.n')"
+              :precision="0"
+              :min="1"
+              :max="100000"
+            />
+          </a-form-item>
+          <a-form-item field="models" :label="$t('app.label.models')">
+            <a-tree-select
+              v-model="batchFormData.models"
+              :placeholder="$t('app.placeholder.key.models')"
+              :allow-search="true"
+              :allow-clear="true"
+              :tree-checkable="true"
+              :data="treeData"
+              :max-tag-count="3"
+              :scrollbar="false"
+              tree-checked-strategy="child"
+            />
+          </a-form-item>
+          <a-form-item
+            field="is_limit_quota"
+            :label="$t('app.label.isLimitQuota')"
+          >
+            <a-switch v-model="batchFormData.is_limit_quota" />
+          </a-form-item>
+          <a-form-item
+            v-if="batchFormData.is_limit_quota"
+            field="quota"
+            :label="$t('app.label.quota')"
+            :rules="[
+              {
+                required: true,
+                message: $t('app.error.quota.required'),
+              },
+            ]"
+          >
+            <a-input-number
+              v-model="batchFormData.quota"
+              :placeholder="$t('app.placeholder.quota')"
+              :precision="0"
+              :min="0"
+              :max="9999999999999"
+              style="margin-right: 10px"
+            />
+            <div>
+              ${{
+                batchFormData.quota ? quotaConv(batchFormData.quota) : '0.00'
+              }}</div
+            >
+          </a-form-item>
+          <a-form-item v-if="batchFormData.is_limit_quota">
+            <a-radio-group
+              type="button"
+              @change="handleQuotaQuickChange as any"
+            >
+              <a-radio :value="1"> $1 </a-radio>
+              <a-radio :value="5"> $5 </a-radio>
+              <a-radio :value="10"> $10 </a-radio>
+              <a-radio :value="20"> $20 </a-radio>
+              <a-radio :value="100"> $100 </a-radio>
+              <a-radio :value="500"> $500 </a-radio>
+              <a-radio :value="1000"> $1000 </a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item
+            v-if="batchFormData.is_limit_quota"
+            field="quota_expires_rule"
+            :label="$t('app.label.quota_expires_rule')"
+          >
+            <a-space size="large">
+              <a-radio
+                v-model="batchFormData.quota_expires_rule"
+                value="1"
+                :default-checked="true"
+              >
+                固定
+              </a-radio>
+              <a-radio v-model="batchFormData.quota_expires_rule" value="2"
+                >时长</a-radio
+              >
+            </a-space>
+          </a-form-item>
+          <a-form-item
+            v-if="
+              batchFormData.is_limit_quota &&
+              batchFormData.quota_expires_rule === '1'
+            "
+            field="quota_expires_at"
+            :label="$t('app.label.quota_expires_at')"
+          >
+            <a-date-picker
+              v-model="batchFormData.quota_expires_at"
+              :placeholder="$t('app.placeholder.quota_expires_at')"
+              :time-picker-props="{ defaultValue: '23:59:59' }"
+              :disabled-date="
+                (current) => dayjs(current).isBefore(dayjs().subtract(1, 'day'))
+              "
+              style="width: 100%"
+              show-time
+              :shortcuts="[
+                {
+                  label: '1',
+                  value: () =>
+                    dayjs(
+                      batchFormData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
+                    ).add(1, 'day'),
+                },
+                {
+                  label: '7',
+                  value: () =>
+                    dayjs(
+                      batchFormData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
+                    ).add(7, 'day'),
+                },
+                {
+                  label: '15',
+                  value: () =>
+                    dayjs(
+                      batchFormData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
+                    ).add(15, 'day'),
+                },
+                {
+                  label: '30',
+                  value: () =>
+                    dayjs(
+                      batchFormData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
+                    ).add(30, 'day'),
+                },
+                {
+                  label: '90',
+                  value: () =>
+                    dayjs(
+                      batchFormData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
+                    ).add(90, 'day'),
+                },
+                {
+                  label: '180',
+                  value: () =>
+                    dayjs(
+                      batchFormData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
+                    ).add(180, 'day'),
+                },
+                {
+                  label: '365',
+                  value: () =>
+                    dayjs(
+                      batchFormData.quota_expires_at ||
+                        new Date().setHours(23, 59, 59, 999)
+                    ).add(365, 'day'),
+                },
+              ]"
+            />
+          </a-form-item>
+          <a-form-item
+            v-if="
+              batchFormData.is_limit_quota &&
+              batchFormData.quota_expires_rule === '2'
+            "
+            field="quota_expires_minutes"
+            :label="$t('app.label.quota_expires_minutes')"
+          >
+            <a-input-number
+              v-model="batchFormData.quota_expires_minutes"
+              :placeholder="$t('app.placeholder.quota_expires_minutes')"
+              :precision="0"
+              :min="1"
+              :max="9999999999999"
+            />
+          </a-form-item>
+          <a-form-item
+            field="is_bind_group"
+            :label="$t('app.label.is_bind_group')"
+          >
+            <a-switch v-model="batchFormData.is_bind_group" />
+          </a-form-item>
+          <a-form-item
+            v-if="batchFormData.is_bind_group"
+            field="group"
+            :label="$t('app.label.group')"
+            :rules="[
+              {
+                required: true,
+                message: $t('app.error.group.required'),
+              },
+            ]"
+          >
+            <a-select
+              v-model="batchFormData.group"
+              :placeholder="$t('app.key.placeholder.group')"
+              :scrollbar="false"
+              allow-search
+              allow-clear
+            >
+              <a-option
+                v-for="item in groups"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              />
+            </a-select>
+          </a-form-item>
+          <a-form-item
+            field="ip_whitelist"
+            :label="$t('app.label.ip_whitelist')"
+          >
+            <a-textarea
+              v-model="batchFormData.ip_whitelist"
+              :placeholder="$t('app.placeholder.ip_whitelist')"
+              :auto-size="{ minRows: 5, maxRows: 5 }"
+            />
+          </a-form-item>
+          <a-form-item
+            field="ip_blacklist"
+            :label="$t('app.label.ip_blacklist')"
+          >
+            <a-textarea
+              v-model="batchFormData.ip_blacklist"
+              :placeholder="$t('app.placeholder.ip_blacklist')"
+              :auto-size="{ minRows: 5, maxRows: 5 }"
+            />
+          </a-form-item>
+          <a-form-item field="remark" :label="$t('common.remark')">
+            <a-textarea
+              v-model="batchFormData.remark"
+              :placeholder="$t('app.placeholder.remark')"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -639,6 +1014,7 @@
     submitKeyBatchOperate,
     queryKeyDetail,
   } from '@/api/key';
+  import { AppKeyBatchOperate, submitAppKeyBatchOperate } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -657,12 +1033,14 @@
   import { queryGroupList, GroupList } from '@/api/group';
   import { Message } from '@arco-design/web-vue';
   import { useClipboard } from '@vueuse/core';
+  import { useUserStore } from '@/store';
   import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
 
   const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
+  const userStore = useUserStore();
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -750,7 +1128,6 @@
       quota: ref(),
       quota_expires_at: [],
       status: ref(),
-      created_at: [],
     };
   };
 
@@ -761,6 +1138,7 @@
   const size = ref<SizeProps>('medium');
   const ids = ref<Array<string>>([]);
   const multiple = ref(true);
+  const allMultiple = ref(true);
   const tableRef = ref();
 
   const basePagination: Pagination = {
@@ -907,6 +1285,21 @@
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
       pagination.total = data.paging.total;
+      if (
+        data.items.length > 0 &&
+        (formModel.value.user_id ||
+          formModel.value.app_id ||
+          formModel.value.key ||
+          formModel.value.models.length > 0 ||
+          formModel.value.quota ||
+          formModel.value.status ||
+          (formModel.value.quota_expires_at &&
+            formModel.value.quota_expires_at.length > 0))
+      ) {
+        allMultiple.value = false;
+      } else {
+        allMultiple.value = true;
+      }
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -1016,9 +1409,12 @@
   );
 
   const visible = ref(false);
+  const batchVisible = ref(false);
 
   const formRef = ref<FormInstance>();
+  const batchFormRef = ref<FormInstance>();
   const formData = ref<AppKeyConfig>({} as AppKeyConfig);
+  const batchFormData = ref<AppKeyBatchOperate>({} as AppKeyBatchOperate);
 
   const handleQuotaQuickChange = (quota: number) => {
     formData.value.quota = quota * 500000;
@@ -1097,6 +1493,38 @@
     visible.value = false;
   };
 
+  const handleBatchBeforeOk = async (done: any) => {
+    const res = await batchFormRef.value?.validate();
+    if (res) {
+      batchVisible.value = true;
+      done(false);
+      return;
+    }
+
+    setLoading(true);
+    if (batchFormData.value.quota_expires_rule === '1') {
+      batchFormData.value.quota_expires_minutes = '';
+    }
+    if (batchFormData.value.quota_expires_rule === '2') {
+      batchFormData.value.quota_expires_at = '';
+    }
+    try {
+      const { data } = await submitAppKeyBatchOperate(batchFormData.value);
+      navigator.clipboard.writeText(data.keys);
+      Message.success(t('app.success.key_config'));
+      done();
+      fetchData();
+    } catch (err) {
+      done(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleBatchCancel = () => {
+    batchVisible.value = false;
+  };
+
   /**
    * 已选择的数据行发生改变时触发
    *
@@ -1143,6 +1571,68 @@
             search();
             tableRef.value.selectAll(false);
           });
+        },
+      });
+    }
+  };
+
+  const handleAppKeyBatch = (params: AppKeyBatchOperate) => {
+    batchFormData.value.action = params.action;
+    if (
+      allMultiple.value &&
+      ids.value.length === 0 &&
+      params.action !== 'create'
+    ) {
+      proxy.$message.info('请选择要操作的数据');
+    } else {
+      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      switch (params.action) {
+        case 'create':
+          if (!params.n) {
+            batchFormData.value.n = 1;
+            batchVisible.value = true;
+            return;
+          }
+          break;
+        case 'update':
+          if (ids.value.length === 0) {
+            batchVisible.value = true;
+            return;
+          }
+          break;
+        case 'all-update':
+          batchVisible.value = true;
+          break;
+        case 'all-status':
+          if (params.value === 1) {
+            alertContent = `是否确定全部启用查询结果的${pagination.total}条数据?`;
+          } else {
+            alertContent = `是否确定全部禁用查询结果的${pagination.total}条数据?`;
+          }
+          break;
+        case 'all-delete':
+          alertContent = `是否确定全部删除查询结果的${pagination.total}条数据?`;
+          break;
+        default:
+      }
+
+      proxy.$modal.warning({
+        title: '警告',
+        titleAlign: 'center',
+        content: alertContent,
+        hideCancel: false,
+        onOk: () => {
+          setLoading(true);
+          params.ids = ids.value;
+          params.expires_at = formModel.value.quota_expires_at;
+          submitAppKeyBatchOperate({ ...params, ...formModel.value }).then(
+            (res) => {
+              setLoading(false);
+              proxy.$message.success('操作成功, 任务已提交');
+              search();
+              tableRef.value.selectAll(false);
+            }
+          );
         },
       });
     }

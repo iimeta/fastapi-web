@@ -366,6 +366,7 @@
         :width="600"
         :title="$t('app.form.title.keyConfig')"
         :ok-text="$t('button.save')"
+        :body-style="{ height: '560px' }"
         @cancel="handleCancel"
         @before-ok="handleBeforeOk"
       >
