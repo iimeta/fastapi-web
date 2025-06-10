@@ -695,13 +695,13 @@
         v-model:visible="batchVisible"
         :width="600"
         :title="$t('app.form.title.batch.create')"
-        :ok-text="$t('button.save')"
         :body-style="{ height: '560px' }"
         @cancel="handleBatchCancel"
         @before-ok="handleBatchBeforeOk"
       >
         <a-form ref="batchFormRef" :model="batchFormData">
           <a-form-item
+            v-if="batchFormData.action === 'create'"
             v-permission="['reseller', 'admin']"
             field="user_id"
             :label="$t('app.label.user_id')"
@@ -721,6 +721,7 @@
             />
           </a-form-item>
           <a-form-item
+            v-if="batchFormData.action === 'create'"
             v-permission="['reseller', 'admin']"
             field="app_id"
             :label="$t('app.label.app_id')"
@@ -740,6 +741,34 @@
             />
           </a-form-item>
           <a-form-item
+            v-if="batchFormData.action === 'create'"
+            v-permission="['user']"
+            field="app_id"
+            :label="$t('key.form.app')"
+            :rules="[
+              {
+                required: userStore.role === 'user',
+                message: $t('app.error.app.required'),
+              },
+            ]"
+          >
+            <a-select
+              v-model="batchFormData.app_id"
+              :placeholder="$t('app.placeholder.app')"
+              :scrollbar="false"
+              allow-search
+              allow-clear
+            >
+              <a-option
+                v-for="item in apps"
+                :key="item.app_id"
+                :value="item.app_id"
+                :label="item.name"
+              />
+            </a-select>
+          </a-form-item>
+          <a-form-item
+            v-if="batchFormData.action === 'create'"
             field="n"
             :label="$t('app.label.n')"
             :rules="[
@@ -1073,7 +1102,16 @@
     submitKeyBatchOperate,
     queryKeyDetail,
   } from '@/api/key';
-  import { AppKeyBatchOperate, submitAppKeyBatchOperate } from '@/api/app';
+  import {
+    queryAppList,
+    AppList,
+    submitAppKeyConfig,
+    AppKeyConfig,
+    AppKeyExportParams,
+    submitAppKeyExport,
+    AppKeyBatchOperate,
+    submitAppKeyBatchOperate,
+  } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -1082,14 +1120,6 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import {
-    queryAppList,
-    AppList,
-    submitAppKeyConfig,
-    AppKeyConfig,
-    AppKeyExportParams,
-    submitAppKeyExport,
-  } from '@/api/app';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { queryGroupList, GroupList } from '@/api/group';
   import { Message } from '@arco-design/web-vue';
@@ -1479,6 +1509,7 @@
 
   const handleQuotaQuickChange = (quota: number) => {
     formData.value.quota = quota * 500000;
+    batchFormData.value.quota = quota * 500000;
   };
 
   interface AppKeyConfigView {
@@ -1542,7 +1573,7 @@
       navigator.clipboard.writeText(data.key);
       Message.success(t('app.success.key_config'));
       done();
-      fetchData();
+      search();
     } catch (err) {
       done(false);
     } finally {
@@ -1570,11 +1601,18 @@
       batchFormData.value.quota_expires_at = '';
     }
     try {
+      batchFormData.value.ids = ids.value;
+      batchFormData.value.expires_at = formModel.value.quota_expires_at;
       const { data } = await submitAppKeyBatchOperate(batchFormData.value);
       navigator.clipboard.writeText(data.keys);
-      Message.success(t('app.success.key_config'));
+      if (batchFormData.value.action === 'create') {
+        Message.success('操作成功, 密钥已复制到剪贴板');
+      } else {
+        Message.success('操作成功, 任务已提交');
+      }
       done();
-      fetchData();
+      search();
+      tableRef.value.selectAll(false);
     } catch (err) {
       done(false);
     } finally {
@@ -1656,14 +1694,11 @@
           }
           break;
         case 'update':
-          if (ids.value.length === 0) {
-            batchVisible.value = true;
-            return;
-          }
-          break;
+          batchVisible.value = true;
+          return;
         case 'all-update':
           batchVisible.value = true;
-          break;
+          return;
         case 'all-status':
           if (params.value === 1) {
             alertContent = `是否确定全部启用查询结果的${pagination.total}条数据?`;

@@ -46,6 +46,8 @@ export default {
   'app.label.n': '数量',
   'app.placeholder.n': '请输入数量',
   'app.error.n.required': '请输入数量',
+  'app.placeholder.app': '请选择应用',
+  'app.error.app.required': '请选择应用',
   // detail
   'app.detail.label.name': '应用名称',
   'app.detail.label.models': '模型权限',
