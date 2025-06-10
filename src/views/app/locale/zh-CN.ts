@@ -76,6 +76,7 @@ export default {
   'app.form.title.keyConfig': '密钥配置',
   'app.form.title.batch.create': '新建密钥',
   'app.form.title.batch.update': '修改密钥',
+  'app.form.title.app_key_export': '导出应用密钥',
   // operation
   'app.operation.create': '新建',
   // columns

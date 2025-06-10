@@ -271,6 +271,9 @@
             >
               全部删除
             </a-button>
+            <a-button type="primary" @click="handleAppKeyExport({})">
+              导出
+            </a-button>
           </a-space>
         </a-col>
         <a-col
@@ -983,6 +986,62 @@
           </a-form-item>
         </a-form>
       </a-modal>
+
+      <a-modal
+        v-model:visible="appKeyExportFormVisible"
+        :title="$t('app.form.title.app_key_export')"
+        @cancel="appKeyExportHandleCancel"
+        @before-ok="appKeyExportHandleBeforeOk"
+      >
+        <a-form ref="appKeyExportForm" :model="appKeyExportFormData">
+          <a-form-item
+            v-permission="['reseller', 'admin']"
+            field="user_id"
+            :label="$t('app.form.userId')"
+          >
+            <a-input-number
+              v-model="appKeyExportFormData.user_id"
+              :placeholder="$t('app.form.userId.placeholder')"
+              :precision="0"
+              :min="1"
+              allow-clear
+            />
+          </a-form-item>
+          <a-form-item
+            v-permission="['reseller', 'admin']"
+            field="app_id"
+            :label="$t('app.form.appId')"
+          >
+            <a-input-number
+              v-model="appKeyExportFormData.app_id"
+              :placeholder="$t('app.form.appId.placeholder')"
+              :precision="0"
+              :min="1"
+              allow-clear
+            />
+          </a-form-item>
+          <a-form-item
+            v-permission="['user']"
+            field="app_id"
+            :label="$t('key.form.app')"
+          >
+            <a-select
+              v-model="appKeyExportFormData.app_id"
+              :placeholder="$t('key.form.selectDefault')"
+              :scrollbar="false"
+              allow-search
+              allow-clear
+            >
+              <a-option
+                v-for="item in apps"
+                :key="item.app_id"
+                :value="item.app_id"
+                :label="item.name"
+              />
+            </a-select>
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -1028,6 +1087,8 @@
     AppList,
     submitAppKeyConfig,
     AppKeyConfig,
+    AppKeyExportParams,
+    submitAppKeyExport,
   } from '@/api/app';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { queryGroupList, GroupList } from '@/api/group';
@@ -1672,6 +1733,67 @@
     modelsVisible.value = true;
     recordId.value = id;
     action.value = 'key';
+  };
+
+  const appKeyExportForm = ref<FormInstance>();
+  const appKeyExportFormVisible = ref(false);
+  const appKeyExportFormData = ref<AppKeyExportParams>(
+    {} as AppKeyExportParams
+  );
+
+  const appKeyExportHandleBeforeOk = async (done: any) => {
+    const res = await appKeyExportForm.value?.validate();
+    if (res) {
+      appKeyExportFormVisible.value = true;
+      done(false);
+      return;
+    }
+    done();
+    handleAppKeyExport(appKeyExportFormData.value);
+  };
+
+  const appKeyExportHandleCancel = () => {
+    appKeyExportFormVisible.value = false;
+  };
+
+  /**
+   * 导出操作
+   */
+  const handleAppKeyExport = (params: AppKeyExportParams) => {
+    if (!appKeyExportFormVisible.value && ids.value.length === 0) {
+      appKeyExportFormVisible.value = true;
+      return;
+    }
+
+    setLoading(true);
+    params.ids = ids.value;
+    submitAppKeyExport(params)
+      .then((res) => {
+        setLoading(false);
+        proxy.$message.success('导出成功');
+        tableRef.value.selectAll(false);
+        // 创建一个新的Blob对象，使用后端返回的文件流
+        const blob = new Blob([res.data], { type: 'application/vnd.ms-excel' });
+
+        // 创建一个指向该Blob的URL
+        const url = window.URL.createObjectURL(blob);
+
+        // 创建一个a标签用于下载文件
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', '应用密钥.xlsx'); // 设置下载文件名
+        document.body.appendChild(link);
+
+        // 触发a标签的点击事件，开始下载
+        link.click();
+
+        // 清理并释放资源
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        proxy.$message.error('导出失败, 请联系管理员', error);
+      });
   };
 </script>
 

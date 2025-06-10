@@ -212,3 +212,15 @@ export interface AppKeyBatchOperate {
 export function submitAppKeyBatchOperate(data: AppKeyBatchOperate) {
   return axios.post('/api/v1/app/key/batch/operate', data);
 }
+
+export interface AppKeyExportParams {
+  ids?: string[];
+  user_id?: number;
+  app_id?: number;
+}
+
+export function submitAppKeyExport(params: AppKeyExportParams) {
+  return axios.post('/api/v1/app/key/export', params, {
+    responseType: 'blob',
+  });
+}
