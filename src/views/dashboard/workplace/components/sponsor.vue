@@ -3,14 +3,21 @@
     class="general-card"
     :title="appStore.getCarousel1Title"
     :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
-    :body-style="{ padding: '10px 20px 20px 20px' }"
+    :body-style="{ padding: '10px 20px 15px 20px' }"
     :bordered="false"
   >
     <a-carousel
       indicator-type="slider"
       show-arrow="hover"
       auto-play
-      style="height: 197px"
+      :style="{
+        height:
+          userRole === 'user'
+            ? '191px'
+            : userRole === 'reseller'
+            ? '177px'
+            : '202px',
+      }"
     >
       <a-carousel-item
         v-for="(carousel, idx) in appStore.getCarousels1"
@@ -28,6 +35,7 @@
   import { useAppStore } from '@/store';
 
   const appStore = useAppStore();
+  const userRole = localStorage.getItem('userRole');
 </script>
 
 <script lang="ts">

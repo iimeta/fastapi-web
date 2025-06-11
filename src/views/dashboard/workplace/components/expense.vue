@@ -2,8 +2,8 @@
   <a-card
     class="general-card"
     :title="$t('workplace.expense')"
-    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
-    :body-style="{ padding: '10px 20px 20px 20px' }"
+    :header-style="{ padding: '10px 20px 10px 20px', height: '36px' }"
+    :body-style="{ padding: '10px 20px 10px 20px' }"
     :bordered="false"
   >
     <div>
@@ -27,9 +27,9 @@
         </div>
       </div>
       <div class="quota-box">
-        <div class="quota-usd-box">
-          <div class="quota">剩余额度</div>
-          <div class="quota-usd">
+        <div class="quota-item-box">
+          <span class="quota-title">剩余额度:</span>
+          <span class="quota">
             {{
               expense.quota > 0
                 ? `$${quotaConv4(expense.quota)}`
@@ -37,33 +37,39 @@
                 ? `-$${quotaConv4(-expense.quota)}`
                 : '$0.00'
             }}
-          </div>
+          </span>
         </div>
-        <div>
-          <div class="used-quota">已用额度</div>
-          <div class="used-quota-usd">
+      </div>
+      <div class="quota-box">
+        <div class="quota-item-box">
+          <span class="quota-title">已用额度:</span>
+          <span class="quota">
             {{
               expense.used_quota > 0
                 ? `$${quotaConv4(expense.used_quota)}`
                 : '$0.00'
             }}
-          </div>
+          </span>
         </div>
       </div>
-      <div v-permission="['reseller']" class="quota-box2">
-        <div class="quota-usd-box">
-          <div class="quota">已分配额度</div>
-          <div class="quota-usd">{{
-            expense.allocated_quota > 0
-              ? `$${quotaConv4(expense.allocated_quota)}`
-              : expense.allocated_quota < 0
-              ? `-$${quotaConv4(-expense.allocated_quota)}`
-              : '$0.00'
-          }}</div>
+      <div v-permission="['reseller']" class="quota-box">
+        <div class="quota-item-box">
+          <span class="quota-title">已分配额度:</span>
+          <span class="quota">
+            {{
+              expense.allocated_quota > 0
+                ? `$${quotaConv4(expense.allocated_quota)}`
+                : expense.allocated_quota < 0
+                ? `-$${quotaConv4(-expense.allocated_quota)}`
+                : '$0.00'
+            }}
+          </span>
         </div>
-        <div>
-          <div class="used-quota">待分配额度</div>
-          <div class="used-quota-usd">
+      </div>
+      <div v-permission="['reseller']" class="quota-box">
+        <div class="quota-item-box">
+          <span class="quota-title">待分配额度:</span>
+          <span class="quota">
             {{
               expense.to_be_allocated > 0
                 ? `$${quotaConv4(expense.to_be_allocated)}`
@@ -71,11 +77,16 @@
                 ? `-$${quotaConv4(-expense.to_be_allocated)}`
                 : '$0.00'
             }}
-          </div>
+          </span>
         </div>
       </div>
-      <div class="expires_at">
-        额度过期时间: {{ expense.quota_expires_at || '2099-12-31 23:59:59' }}
+      <div class="quota-box">
+        <div class="quota-item-box">
+          <span class="quota-title">额度过期:</span>
+          <span class="expires_at">
+            {{ expense.quota_expires_at || '无期限' }}
+          </span>
+        </div>
       </div>
     </div>
     <a-modal
@@ -220,68 +231,41 @@
 <style lang="less" scoped>
   .quota-box {
     background: #f7f8fa;
-    padding: 7px 0;
-    margin-top: 8px;
-    display: flex;
+    padding: 6px 0;
+    margin-top: 6px;
     align-items: center;
     border-radius: 6px;
-    text-align: center;
+    text-align: left;
     div {
       flex: 1;
     }
   }
 
-  .quota-box2 {
-    background: #f7f8fa;
-    padding: 7px 0;
-    margin-top: 5px;
+  .quota-item-box {
     display: flex;
-    align-items: center;
-    border-radius: 6px;
-    text-align: center;
-    div {
-      flex: 1;
-    }
   }
 
-  .quota-usd-box {
-    border-right: 1px solid var(--color-text-4);
+  .quota-title {
+    color: var(--color-text-2);
+    font-size: 15px;
+    margin-right: 8px;
+    white-space: nowrap;
+    padding-left: 8px;
+    display: block;
   }
 
   .quota {
-    color: var(--color-text-2);
-    font-size: 13px;
-    margin-right: 8px;
-    white-space: nowrap;
-    padding-left: 8px;
-  }
-
-  .quota-usd {
     color: var(--color-text-1);
     font-size: 16px;
     font-weight: 600;
-    padding: 6px 8px 0 8px;
-    white-space: nowrap;
-  }
-
-  .used-quota {
-    color: var(--color-text-2);
-    font-size: 13px;
-    margin-right: 8px;
-    white-space: nowrap;
-    padding-left: 8px;
-  }
-
-  .used-quota-usd {
-    color: var(--color-text-1);
-    font-size: 16px;
-    font-weight: 600;
-    padding: 6px 8px 0 8px;
     white-space: nowrap;
   }
 
   .expires_at {
-    margin-top: 10px;
+    color: var(--color-text-1);
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
   }
 
   .arco-link {
