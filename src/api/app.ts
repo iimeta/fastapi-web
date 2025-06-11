@@ -186,6 +186,17 @@ export function submitAppBatchOperate(data: AppBatchOperate) {
   return axios.post('/api/v1/app/batch/operate', data);
 }
 
+export interface AppKeyQueryParams {
+  user_id?: number;
+  app_id?: number;
+  key?: string;
+  models?: string[];
+  quota?: number;
+  quota_expires_at?: any;
+  status?: any;
+  remark?: string;
+}
+
 export interface AppKeyBatchOperate {
   action: string;
   ids?: string[];
@@ -206,7 +217,7 @@ export interface AppKeyBatchOperate {
   ip_whitelist?: string;
   ip_blacklist?: string;
   remark?: string;
-  expires_at?: string[];
+  query_params?: AppKeyQueryParams;
 }
 
 export function submitAppKeyBatchOperate(data: AppKeyBatchOperate) {

@@ -495,6 +495,7 @@
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
+      tableRef.value.selectAll(false);
     }
   };
 
@@ -518,6 +519,7 @@
 
   const reset = () => {
     formModel.value = generateFormModel();
+    search();
   };
 
   const corpChangePublic = async (params: CorpChangePublic) => {

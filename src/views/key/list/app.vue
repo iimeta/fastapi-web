@@ -701,14 +701,15 @@
       >
         <a-form ref="batchFormRef" :model="batchFormData">
           <a-form-item
-            v-if="batchFormData.action === 'create'"
-            v-permission="['reseller', 'admin']"
+            v-if="
+              batchFormData.action === 'create' &&
+              (userRole === 'reseller' || userRole === 'admin')
+            "
             field="user_id"
             :label="$t('app.label.user_id')"
             :rules="[
               {
-                required:
-                  userStore.role === 'reseller' || userStore.role === 'admin',
+                required: userRole === 'reseller' || userRole === 'admin',
                 message: $t('app.error.user_id.required'),
               },
             ]"
@@ -721,14 +722,15 @@
             />
           </a-form-item>
           <a-form-item
-            v-if="batchFormData.action === 'create'"
-            v-permission="['reseller', 'admin']"
+            v-if="
+              batchFormData.action === 'create' &&
+              (userRole === 'reseller' || userRole === 'admin')
+            "
             field="app_id"
             :label="$t('app.label.app_id')"
             :rules="[
               {
-                required:
-                  userStore.role === 'reseller' || userStore.role === 'admin',
+                required: userRole === 'reseller' || userRole === 'admin',
                 message: $t('app.error.app_id.required'),
               },
             ]"
@@ -741,13 +743,12 @@
             />
           </a-form-item>
           <a-form-item
-            v-if="batchFormData.action === 'create'"
-            v-permission="['user']"
+            v-if="batchFormData.action === 'create' && userRole === 'user'"
             field="app_id"
             :label="$t('key.form.app')"
             :rules="[
               {
-                required: userStore.role === 'user',
+                required: userRole === 'user',
                 message: $t('app.error.app.required'),
               },
             ]"
@@ -1024,7 +1025,7 @@
       >
         <a-form ref="appKeyExportForm" :model="appKeyExportFormData">
           <a-form-item
-            v-permission="['reseller', 'admin']"
+            v-if="userRole === 'reseller' || userRole === 'admin'"
             field="user_id"
             :label="$t('app.form.userId')"
           >
@@ -1037,7 +1038,7 @@
             />
           </a-form-item>
           <a-form-item
-            v-permission="['reseller', 'admin']"
+            v-if="userRole === 'reseller' || userRole === 'admin'"
             field="app_id"
             :label="$t('app.form.appId')"
           >
@@ -1050,7 +1051,7 @@
             />
           </a-form-item>
           <a-form-item
-            v-permission="['user']"
+            v-if="userRole === 'user'"
             field="app_id"
             :label="$t('key.form.app')"
           >
@@ -1124,14 +1125,12 @@
   import { queryGroupList, GroupList } from '@/api/group';
   import { Message } from '@arco-design/web-vue';
   import { useClipboard } from '@vueuse/core';
-  import { useUserStore } from '@/store';
   import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
 
   const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const userStore = useUserStore();
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -1395,6 +1394,7 @@
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
+      tableRef.value.selectAll(false);
     }
   };
 
@@ -1418,6 +1418,7 @@
 
   const reset = () => {
     formModel.value = generateFormModel();
+    search();
   };
 
   const keyChangeStatus = async (params: KeyChangeStatus) => {
@@ -1602,7 +1603,15 @@
     }
     try {
       batchFormData.value.ids = ids.value;
-      batchFormData.value.expires_at = formModel.value.quota_expires_at;
+      batchFormData.value.query_params = {};
+      batchFormData.value.query_params.user_id = formModel.value.user_id;
+      batchFormData.value.query_params.app_id = formModel.value.app_id;
+      batchFormData.value.query_params.key = formModel.value.key;
+      batchFormData.value.query_params.models = formModel.value.models;
+      batchFormData.value.query_params.quota = formModel.value.quota;
+      batchFormData.value.query_params.quota_expires_at =
+        formModel.value.quota_expires_at;
+      batchFormData.value.query_params.status = formModel.value.status;
       const { data } = await submitAppKeyBatchOperate(batchFormData.value);
       navigator.clipboard.writeText(data.keys);
       if (batchFormData.value.action === 'create') {
@@ -1687,16 +1696,19 @@
       let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
       switch (params.action) {
         case 'create':
-          if (!params.n) {
-            batchFormData.value.n = 1;
-            batchVisible.value = true;
-            return;
-          }
-          break;
+          batchFormData.value = {} as AppKeyBatchOperate;
+          batchFormData.value.action = params.action;
+          batchFormData.value.n = 1;
+          batchVisible.value = true;
+          return;
         case 'update':
+          batchFormData.value = {} as AppKeyBatchOperate;
+          batchFormData.value.action = params.action;
           batchVisible.value = true;
           return;
         case 'all-update':
+          batchFormData.value = {} as AppKeyBatchOperate;
+          batchFormData.value.action = params.action;
           batchVisible.value = true;
           return;
         case 'all-status':
@@ -1720,7 +1732,15 @@
         onOk: () => {
           setLoading(true);
           params.ids = ids.value;
-          params.expires_at = formModel.value.quota_expires_at;
+          params.query_params = {};
+          params.query_params.user_id = formModel.value.user_id;
+          params.query_params.app_id = formModel.value.app_id;
+          params.query_params.key = formModel.value.key;
+          params.query_params.models = formModel.value.models;
+          params.query_params.quota = formModel.value.quota;
+          params.query_params.quota_expires_at =
+            formModel.value.quota_expires_at;
+          params.query_params.status = formModel.value.status;
           submitAppKeyBatchOperate({ ...params, ...formModel.value }).then(
             (res) => {
               setLoading(false);
