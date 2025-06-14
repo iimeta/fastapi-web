@@ -67,7 +67,11 @@ export function queryUserList() {
 }
 
 export interface UserDeleteParams {
-  id: string;
+  id?: string;
+  user_id?: any;
+  name?: string;
+  data: number[];
+  action?: string;
 }
 
 export function submitUserDelete(params: UserDeleteParams) {
@@ -187,6 +191,7 @@ export interface UserBatchOperate {
   value?: any;
   quota_type?: any;
   quota_expires_at?: string;
+  data?: number[];
 }
 
 export function submitUserBatchOperate(data: UserBatchOperate) {

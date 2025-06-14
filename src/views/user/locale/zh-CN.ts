@@ -44,6 +44,7 @@ export default {
   'user.placeholder.recharge': '请输入额度, $1=500000',
   'user.label.quota_expires_at': '过期时间',
   'user.placeholder.quota_expires_at': '请设置额度过期时间',
+  'user.label.del.data': '删除数据',
   // detail
   'user.detail.label.userId': '用户ID',
   'user.detail.label.account': '账号',
@@ -85,6 +86,7 @@ export default {
   'user.form.selectDefault': '全部',
   'user.form.title.recharge': '充值额度',
   'user.form.title.permissions': '权限配置',
+  'user.form.title.del': '删除用户',
   // operation
   'user.operation.create': '新建',
   // columns

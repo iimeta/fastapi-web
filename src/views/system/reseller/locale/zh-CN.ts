@@ -45,6 +45,7 @@ export default {
   'reseller.success.recharge': '充值成功',
   'reseller.success.models': '保存成功',
   'reseller.button.save': '保存',
+  'reseller.label.del.data': '删除数据',
   // detail
   'reseller.detail.label.userId': '代理商ID',
   'reseller.detail.label.account': '账号',
@@ -87,6 +88,7 @@ export default {
   'reseller.form.selectDefault': '全部',
   'reseller.form.title.recharge': '充值额度',
   'reseller.form.title.permissions': '权限配置',
+  'reseller.form.title.del': '删除代理商',
   // operation
   'reseller.operation.create': '新建',
   // columns

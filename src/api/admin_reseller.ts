@@ -67,7 +67,11 @@ export function queryResellerList() {
 }
 
 export interface ResellerDeleteParams {
-  id: string;
+  id?: string;
+  user_id?: any;
+  name?: string;
+  data: number[];
+  action?: string;
 }
 
 export function submitResellerDelete(params: ResellerDeleteParams) {
@@ -188,6 +192,7 @@ export interface ResellerBatchOperate {
   value?: any;
   quota_type?: any;
   quota_expires_at?: string;
+  data?: number[];
 }
 
 export function submitResellerBatchOperate(data: ResellerBatchOperate) {

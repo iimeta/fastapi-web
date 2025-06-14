@@ -165,8 +165,9 @@
               :disabled="multiple"
               :title="multiple ? '请选择要操作的数据' : ''"
               @click="
-                handleBatch({
+                handleUserDelete({
                   action: 'delete',
+                  data: [2, 3, 4, 5],
                 })
               "
             >
@@ -410,14 +411,20 @@
           >
             {{ $t('user.columns.operations.update') }}
           </a-button>
-          <a-popconfirm
-            content="你确定要删除吗?"
-            @ok="userDelete({ id: `${record.id}` })"
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              handleUserDelete({
+                id: `${record.id}`,
+                user_id: `${record.user_id}`,
+                name: `${record.name}`,
+                data: [2, 3, 4, 5],
+              })
+            "
           >
-            <a-button type="text" size="small">
-              {{ $t('user.columns.operations.delete') }}
-            </a-button>
-          </a-popconfirm>
+            {{ $t('user.columns.operations.delete') }}
+          </a-button>
         </template>
       </a-table>
 
@@ -595,6 +602,7 @@
           </a-form-item>
         </a-form>
       </a-modal>
+
       <a-modal
         v-model:visible="permissionsVisible"
         :title="$t('user.form.title.permissions')"
@@ -642,6 +650,57 @@
               tree-checked-strategy="child"
               style="max-height: 220px; display: block; overflow: auto"
             />
+          </a-form-item>
+        </a-form>
+      </a-modal>
+
+      <a-modal
+        v-model:visible="delVisible"
+        :title="$t('user.form.title.del')"
+        :width="600"
+        @cancel="delHandleCancel"
+        @before-ok="delHandleBeforeOk"
+      >
+        <a-form ref="delFormRef" :model="delFormData">
+          <a-form-item
+            v-if="delFormData.user_id"
+            field="user_id"
+            :label="$t('user.form.userId')"
+            :rules="[
+              {
+                required: true,
+              },
+            ]"
+          >
+            <a-input v-model="delFormData.user_id" readonly />
+          </a-form-item>
+          <a-form-item
+            v-if="delFormData.name"
+            field="name"
+            :label="$t('user.label.name')"
+            :rules="[
+              {
+                required: true,
+              },
+            ]"
+          >
+            <a-input v-model="delFormData.name" readonly />
+          </a-form-item>
+          <a-form-item field="data" :label="$t('user.label.del.data')">
+            <a-space size="large">
+              <a-checkbox v-model="delFormData.data" :value="2">
+                应用数据
+              </a-checkbox>
+              <a-checkbox v-model="delFormData.data" :value="3">
+                交易记录
+              </a-checkbox>
+              <a-checkbox v-model="delFormData.data" :value="4">
+                账单明细
+              </a-checkbox>
+              <a-checkbox v-model="delFormData.data" :value="5">
+                日志数据
+              </a-checkbox>
+            </a-space>
           </a-form-item>
         </a-form>
       </a-modal>
@@ -734,17 +793,42 @@
   };
   getGroupList();
 
+  const delDataMap = new Map();
+  delDataMap.set(2, '应用数据');
+  delDataMap.set(3, '交易记录');
+  delDataMap.set(4, '账单明细');
+  delDataMap.set(5, '日志数据');
+
   const userDelete = async (params: UserDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitUserDelete(params);
-      proxy.$message.success('删除成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
+    let alertContent = `是否确定删除用户: ${params.name}?`;
+
+    if (params.data && params.data.length > 0) {
+      let delData = '';
+      for (let i = 0; i < params.data.length; i += 1) {
+        if (i === 0) {
+          delData = delDataMap.get(params.data[i]);
+        } else {
+          delData += `、${delDataMap.get(params.data[i])}`;
+        }
+      }
+      alertContent = `是否确定删除用户: ${params.name} 以及同时删除: ${delData}?`;
     }
+
+    proxy.$modal.warning({
+      title: '警告',
+      titleAlign: 'center',
+      content: alertContent,
+      hideCancel: false,
+      onOk: () => {
+        setLoading(true);
+        submitUserDelete(params).then((res) => {
+          setLoading(false);
+          proxy.$message.success('操作成功, 任务已提交');
+          search();
+          tableRef.value.selectAll(false);
+        });
+      },
+    });
   };
 
   const generateFormModel = () => {
@@ -1019,11 +1103,14 @@
   const quotaQuick = ref(0);
   const rechargeVisible = ref(false);
   const permissionsVisible = ref(false);
+  const delVisible = ref(false);
 
   const formRef = ref<FormInstance>();
   const formData = ref<UserRecharge>({} as UserRecharge);
   const permissionsFormRef = ref<FormInstance>();
   const permissionsFormData = ref<UserPermissions>({} as UserPermissions);
+  const delFormRef = ref<FormInstance>();
+  const delFormData = ref<UserDeleteParams>({} as UserDeleteParams);
 
   const recharge = async (params: UserRechargeParams) => {
     setLoading(true);
@@ -1195,6 +1282,17 @@
           break;
         case 'delete':
           alertContent = `是否确定删除所选的${ids.value.length}位用户?`;
+          if (params.data && params.data.length > 0) {
+            let delData = '';
+            for (let i = 0; i < params.data.length; i += 1) {
+              if (i === 0) {
+                delData = delDataMap.get(params.data[i]);
+              } else {
+                delData += `、${delDataMap.get(params.data[i])}`;
+              }
+            }
+            alertContent = `是否确定删除所选的${ids.value.length}位用户以及同时删除: ${delData}?`;
+          }
           break;
         default:
       }
@@ -1220,6 +1318,32 @@
         },
       });
     }
+  };
+
+  const handleUserDelete = async (params: UserDeleteParams) => {
+    delFormData.value = params;
+    delVisible.value = true;
+    if (!params.action) {
+      tableRef.value.selectAll(false);
+    }
+  };
+
+  const delHandleBeforeOk = async (done: any) => {
+    const res = await delFormRef.value?.validate();
+    if (res) {
+      delVisible.value = true;
+      done(false);
+      return;
+    }
+    if (!delFormData.value.action) {
+      userDelete(delFormData.value);
+    } else {
+      handleBatch({ action: 'delete', data: delFormData.value.data });
+    }
+  };
+
+  const delHandleCancel = () => {
+    delVisible.value = false;
   };
 </script>
 
