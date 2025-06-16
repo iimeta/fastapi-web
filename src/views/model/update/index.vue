@@ -1688,6 +1688,7 @@
                 :placeholder="
                   $t('model.placeholder.preset_config.system_role_prompt')
                 "
+                :auto-size="{ minRows: 5, maxRows: 10 }"
               />
             </a-form-item>
             <a-form-item
@@ -1711,6 +1712,13 @@
                 :min="0"
                 :max="2097152"
               />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_enable_preset_config"
+              field="preset_config.is_support_stream"
+              :label="$t('model.label.preset_config.is_support_stream')"
+            >
+              <a-switch v-model="formData.preset_config.is_support_stream" />
             </a-form-item>
             <a-form-item
               field="is_enable_model_agent"
@@ -2150,6 +2158,7 @@
       system_role_prompt: '',
       min_tokens: ref(),
       max_tokens: ref(),
+      is_support_stream: true,
     },
     text_quota: {
       billing_method: '1',

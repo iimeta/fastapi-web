@@ -28,6 +28,7 @@ export interface PresetConfig {
   system_role_prompt: string;
   min_tokens: any;
   max_tokens: any;
+  is_support_stream: boolean;
 }
 
 export interface ForwardConfig {

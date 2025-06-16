@@ -96,6 +96,7 @@
       </a-descriptions-item>
       <a-descriptions-item
         :label="t('model.detail.label.is_enable_preset_config')"
+        :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -127,8 +128,23 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
+        :label="t('model.detail.label.preset_config.is_support_stream')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            t(
+              `model.dict.is_support_system_role.${
+                currentData?.preset_config?.is_support_stream || false
+              }`
+            )
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
         :label="t('model.detail.label.preset_config.system_role_prompt')"
-        :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -139,6 +155,7 @@
       </a-descriptions-item>
       <a-descriptions-item
         :label="t('model.detail.label.preset_config.min_tokens')"
+        :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -185,10 +202,7 @@
           {{ currentData?.model_agent_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('model.detail.label.isEnableForward')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('model.detail.label.isEnableForward')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -202,7 +216,10 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.forwardRule')">
+      <a-descriptions-item
+        :label="t('model.detail.label.forwardRule')"
+        :span="2"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -292,7 +309,6 @@
       </a-descriptions-item>
       <a-descriptions-item
         :label="t('model.detail.label.fallback_model_agent_name')"
-        :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -309,6 +325,22 @@
           {{ currentData?.fallback_config?.model_name || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="t('model.detail.label.dataFormat')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ t(`model.dict.data_format.${currentData.data_format}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('model.detail.label.remark')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
+          {{ currentData.remark || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -322,23 +354,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <!-- <a-descriptions-item :label="t('model.detail.label.dataFormat')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ t(`model.dict.data_format.${currentData.data_format}`) }}
-        </span>
-      </a-descriptions-item> -->
-      <a-descriptions-item :label="t('model.detail.label.remark')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.remark || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')" :span="2">
+      <a-descriptions-item :label="t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
