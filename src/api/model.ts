@@ -5,6 +5,7 @@ export interface ModelInit {
   url: string;
   key: string;
   is_config_model_agent: boolean;
+  is_cover_price: boolean;
 }
 
 export function submitModelInit(data: ModelInit) {

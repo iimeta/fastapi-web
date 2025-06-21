@@ -579,6 +579,12 @@
           >
             <a-switch v-model="initFormData.is_config_model_agent" />
           </a-form-item>
+          <a-form-item
+            field="is_cover_price"
+            :label="$t('model.label.is_cover_price')"
+          >
+            <a-switch v-model="initFormData.is_cover_price" />
+          </a-form-item>
         </a-form>
       </a-modal>
 
@@ -1576,6 +1582,7 @@
       initFormData.value.url = '';
       initFormData.value.key = '';
       initFormData.value.is_config_model_agent = true;
+      initFormData.value.is_cover_price = false;
       initModelVisible.value = true;
     } catch (err) {
       // you can report use errorHandler or other
