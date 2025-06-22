@@ -110,7 +110,7 @@
         <a-tooltip content="版本: v1.6.0">
           <a-link
             target="_blank"
-            href="https://github.com/iimeta/fastapi-admin/releases/tag/v1.6.0"
+            href="https://github.com/iimeta/fastapi/releases/tag/v1.6.0"
           >
             <a-button class="nav-btn" type="outline" :shape="'circle'">
               <template #icon>
