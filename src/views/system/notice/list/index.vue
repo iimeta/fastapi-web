@@ -240,34 +240,8 @@
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
       >
-        <template #is_public="{ record }">
-          <a-switch
-            v-model="record.is_public"
-            :checked-value="true"
-            :unchecked-value="false"
-            @change="
-              noticeChangePublic({
-                id: `${record.id}`,
-                is_public: `${record.is_public}`,
-              })
-            "
-          />
-        </template>
         <template #remark="{ record }">
           {{ record.remark || '-' }}
-        </template>
-        <template #status="{ record }">
-          <a-switch
-            v-model="record.status"
-            :checked-value="1"
-            :unchecked-value="2"
-            @change="
-              noticeChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
-              })
-            "
-          />
         </template>
         <template #operations="{ record }">
           <a-button
@@ -313,10 +287,6 @@
     NoticePageParams,
     submitNoticeDelete,
     NoticeDeleteParams,
-    NoticeChangePublic,
-    submitNoticeChangePublic,
-    NoticeChangeStatus,
-    submitNoticeChangeStatus,
     NoticeBatchOperate,
     submitNoticeBatchOperate,
   } from '@/api/notice';
@@ -520,32 +490,6 @@
   const reset = () => {
     formModel.value = generateFormModel();
     search();
-  };
-
-  const noticeChangePublic = async (params: NoticeChangePublic) => {
-    setLoading(true);
-    try {
-      await submitNoticeChangePublic(params);
-      proxy.$message.success('操作成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const noticeChangeStatus = async (params: NoticeChangeStatus) => {
-    setLoading(true);
-    try {
-      await submitNoticeChangeStatus(params);
-      proxy.$message.success('操作成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleSelectDensity = (

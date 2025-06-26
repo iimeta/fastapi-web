@@ -28,7 +28,7 @@
                 {
                   required: true,
                   message: $t('notice.error.title.required'),
-                }
+                },
               ]"
             >
               <a-input
@@ -37,7 +37,9 @@
                 allow-clear
               />
             </a-form-item>
-           
+            <div style="flex: 1">
+              <AiEditor v-model="formData.content" />
+            </div>
             <a-form-item field="remark" :label="$t('notice.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -74,6 +76,7 @@
   import { submitNoticeCreate, NoticeCreate } from '@/api/notice';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter } from 'vue-router';
+  import AiEditor from './components/index.vue';
 
   const { proxy } = getCurrentInstance() as any;
 
