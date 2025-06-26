@@ -1,4 +1,3 @@
-<!-- 未完善 -->
 <template>
   <div ref="divRef" class="container">
     <div class="aie-container">
@@ -9,7 +8,7 @@
         <div class="aie-directory-content">
           <div class="aie-directory">
             <h5>目录</h5>
-            <div id="outline"> </div>
+            <div id="outline"></div>
           </div>
         </div>
         <div class="aie-container-panel">
@@ -69,7 +68,7 @@
     element: '',
     placeholder: '请输入内容',
     content: '',
-    draggable: false,
+    toolbarExcludeKeys: ['attachment'],
     onChange: (editor: AiEditor) => {
       emit('update:modelValue', editor.getHtml());
       updateOutLine(editor);
@@ -90,17 +89,11 @@
     }
   );
 
-  const init = () => {
+  onMounted(() => {
     editorConfig.element = divRef.value;
     aieditor.value = new AiEditor(editorConfig);
-  };
-
-  // 挂载阶段
-  onMounted(() => {
-    init();
   });
 
-  // 销毁阶段
   onUnmounted(() => {
     aieditor.value?.destroy();
   });
@@ -130,8 +123,7 @@
 
   .aie-container-panel {
     width: calc(100% - 2rem - 2px);
-    max-width: 826.77px;
-    margin: 0rem auto;
+    max-width: 80%;
     border: 1px solid var(--color-border-1);
     background-color: var(--color-bg-1);
     height: 100%;
@@ -154,7 +146,7 @@
   .aie-directory {
     position: absolute;
     top: 30px;
-    left: 10px;
+    right: -8%;
     width: 260px;
     z-index: 0;
   }
