@@ -37,7 +37,16 @@
                 allow-clear
               />
             </a-form-item>
-            <a-form-item :label-col-props="{ span: 2 }">
+            <a-form-item
+              field="content"
+              :label="$t('notice.label.content')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('notice.error.content.required'),
+                },
+              ]"
+            >
               <AiEditor
                 v-model="formData.content"
                 style="flex: 1; height: 800px"
@@ -79,7 +88,7 @@
   import { submitNoticeCreate, NoticeCreate } from '@/api/notice';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter } from 'vue-router';
-  import AiEditor from '../components/index.vue';
+  import AiEditor from '@/views/common/aieditor.vue';
 
   const { proxy } = getCurrentInstance() as any;
 

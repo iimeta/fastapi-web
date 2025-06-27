@@ -99,6 +99,12 @@
   });
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'AiEditor',
+  };
+</script>
+
 <style scoped lang="less">
   .container {
     height: 100%;
@@ -146,7 +152,7 @@
   .aie-directory {
     position: absolute;
     top: 30px;
-    right: -8%;
+    right: -10%;
     width: 260px;
     z-index: 0;
   }
@@ -183,7 +189,7 @@
   }
 
   #outline {
-    text-indent: 2rem;
+    text-indent: 15px;
   }
 
   .aie-directory-content {
