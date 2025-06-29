@@ -2,9 +2,9 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-bar-chart />
+        <icon-settings />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.notice') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.notice.update') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
@@ -18,60 +18,264 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 5 }"
+            :label-col-props="{ span: 3 }"
             :wrapper-col-props="{ span: 18 }"
           >
             <a-form-item
-              field="name"
-              :label="$t('notice.label.name')"
+              field="title"
+              :label="$t('notice.label.title')"
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.error.name.required'),
-                },
-                {
-                  match: /^.{1,100}$/,
-                  message: $t('notice.error.name.pattern'),
+                  message: $t('notice.error.title.required'),
                 },
               ]"
             >
               <a-input
-                v-model="formData.name"
-                :placeholder="$t('notice.placeholder.name')"
+                v-model="formData.title"
+                :placeholder="$t('notice.placeholder.title')"
                 allow-clear
               />
             </a-form-item>
             <a-form-item
-              field="code"
-              :label="$t('notice.label.code')"
+              field="category"
+              :label="$t('notice.label.category')"
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.error.code.required'),
-                },
-                {
-                  match: /^.{1,100}$/,
-                  message: $t('notice.error.code.pattern'),
+                  message: $t('notice.error.category.required'),
                 },
               ]"
             >
-              <a-input
-                v-model="formData.code"
-                :placeholder="$t('notice.placeholder.code')"
+              <a-select
+                v-model="formData.category"
+                :placeholder="$t('notice.placeholder.category')"
+                :scrollbar="false"
+                allow-search
+              >
+                <a-option value="1">
+                  {{ $t('notice.dict.category.1') }}
+                </a-option>
+                <a-option value="2">
+                  {{ $t('notice.dict.category.2') }}
+                </a-option>
+                <a-option value="3">
+                  {{ $t('notice.dict.category.3') }}
+                </a-option>
+              </a-select>
+            </a-form-item>
+            <a-form-item
+              field="scope"
+              :label="$t('notice.label.scope')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('notice.error.scope.required'),
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-radio v-model="formData.scope" value="1">
+                  {{ $t('notice.dict.scope.1') }}
+                </a-radio>
+                <a-radio v-model="formData.scope" value="2">
+                  {{ $t('notice.dict.scope.2') }}
+                </a-radio>
+                <a-radio v-model="formData.scope" value="3">
+                  {{ $t('notice.dict.scope.3') }}
+                </a-radio>
+                <a-radio v-model="formData.scope" value="4">
+                  {{ $t('notice.dict.scope.4') }}
+                </a-radio>
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              field="users"
+              :label="$t('notice.label.users')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('notice.error.users.required'),
+                },
+              ]"
+            >
+              <a-select
+                v-model="formData.users"
+                :placeholder="$t('notice.placeholder.users')"
+                :scrollbar="false"
+                multiple
+                allow-search
                 allow-clear
-              />
+              >
+                <a-option
+                  v-for="item in users"
+                  :key="item.user_id"
+                  :value="item.user_id"
+                  :label="item.name"
+                />
+              </a-select>
             </a-form-item>
-            <a-form-item field="sort" :label="$t('notice.label.sort')">
+            <a-form-item
+              field="resellers"
+              :label="$t('notice.label.resellers')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('notice.error.resellers.required'),
+                },
+              ]"
+            >
+              <a-select
+                v-model="formData.resellers"
+                :placeholder="$t('notice.placeholder.resellers')"
+                :scrollbar="false"
+                multiple
+                allow-search
+                allow-clear
+              >
+                <a-option
+                  v-for="item in resellers"
+                  :key="item.user_id"
+                  :value="item.user_id"
+                  :label="item.name"
+                />
+              </a-select>
+            </a-form-item>
+            <a-form-item
+              field="methods"
+              :label="$t('notice.label.methods')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('notice.error.methods.required'),
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-checkbox
+                  v-model="formData.methods"
+                  value="1"
+                  :default-checked="true"
+                >
+                  {{ $t('notice.dict.methods.1') }}
+                </a-checkbox>
+                <a-checkbox v-model="formData.methods" value="2">
+                  {{ $t('notice.dict.methods.2') }}
+                </a-checkbox>
+              </a-space>
+            </a-form-item>
+            <a-form-item field="priority" :label="$t('notice.label.priority')">
               <a-input-number
-                v-model="formData.sort"
-                :placeholder="$t('notice.placeholder.sort')"
+                v-model="formData.priority"
+                :placeholder="$t('notice.placeholder.priority')"
                 :precision="0"
-                :min="-10"
-                :max="999"
+                :min="-999"
+                :max="99999"
               />
             </a-form-item>
-            <a-form-item field="is_public" :label="$t('notice.label.is_public')">
-              <a-switch v-model="formData.is_public" />
+            <a-form-item
+              field="expires_at"
+              :label="$t('notice.label.expires_at')"
+            >
+              <a-date-picker
+                v-model="formData.expires_at"
+                :placeholder="$t('notice.placeholder.expires_at')"
+                :time-picker-props="{ defaultValue: '23:59:59' }"
+                :disabled-date="
+                  (current) =>
+                    dayjs(current).isBefore(dayjs().subtract(1, 'day'))
+                "
+                style="width: 100%"
+                show-time
+                :shortcuts="[
+                  {
+                    label: '1',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(1, 'day'),
+                  },
+                  {
+                    label: '7',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(7, 'day'),
+                  },
+                  {
+                    label: '15',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(15, 'day'),
+                  },
+                  {
+                    label: '30',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(30, 'day'),
+                  },
+                  {
+                    label: '90',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(90, 'day'),
+                  },
+                  {
+                    label: '180',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(180, 'day'),
+                  },
+                  {
+                    label: '365',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(365, 'day'),
+                  },
+                ]"
+              />
+            </a-form-item>
+            <a-form-item
+              field="scheduled_time"
+              :label="$t('notice.label.scheduled_time')"
+            >
+              <a-date-picker
+                v-model="formData.scheduled_time"
+                :placeholder="$t('notice.placeholder.scheduled_time')"
+                :disabled-date="
+                  (current) =>
+                    dayjs(current).isBefore(dayjs().subtract(1, 'day'))
+                "
+                style="width: 100%"
+                show-time
+              />
+            </a-form-item>
+            <a-form-item
+              field="content"
+              :label="$t('notice.label.content')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('notice.error.content.required'),
+                },
+              ]"
+            >
+              <AiEditor
+                v-model="formData.content"
+                style="flex: 1; height: 500px"
+              />
             </a-form-item>
             <a-form-item field="remark" :label="$t('notice.label.remark')">
               <a-textarea
@@ -105,18 +309,21 @@
 
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
+  import { useRouter, useRoute } from 'vue-router';
+  import { FormInstance } from '@arco-design/web-vue/es/form';
   import useLoading from '@/hooks/loading';
+  import dayjs from 'dayjs';
   import {
     submitNoticeUpdate,
     NoticeUpdate,
     queryNoticeDetail,
     NoticeDetailParams,
   } from '@/api/notice';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { useRouter, useRoute } from 'vue-router';
+  import { UserList, queryUserList } from '@/api/admin_user';
+  import { ResellerList, queryResellerList } from '@/api/admin_reseller';
+  import AiEditor from '@/views/common/aieditor.vue';
 
   const { proxy } = getCurrentInstance() as any;
-
   const { loading, setLoading } = useLoading(false);
 
   const router = useRouter();
@@ -124,13 +331,49 @@
   const formRef = ref<FormInstance>();
   const formData = ref<NoticeUpdate>({
     id: '',
-    name: '',
-    code: '',
-    sort: 0,
-    is_public: true,
+    title: '',
+    content: '',
+    category: ref(),
+    scope: ref(),
+    users: [],
+    resellers: [],
+    methods: [],
+    priority: ref(),
+    expires_at: '',
+    scheduled_time: '',
     remark: '',
     status: 1,
   });
+
+  const users = ref<UserList[]>([]);
+
+  const getUserList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryUserList();
+      users.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getUserList();
+
+  const resellers = ref<ResellerList[]>([]);
+
+  const getResellerList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryResellerList();
+      resellers.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getResellerList();
 
   const getNoticeDetail = async (
     params: NoticeDetailParams = { id: route.query.id }
@@ -139,10 +382,18 @@
     try {
       const { data } = await queryNoticeDetail(params);
       formData.value.id = data.id;
-      formData.value.name = data.name;
-      formData.value.code = data.code;
-      formData.value.sort = data.sort;
-      formData.value.is_public = data.is_public;
+      formData.value.title = data.title;
+      formData.value.content = data.content;
+      formData.value.category = String(data.category);
+      formData.value.scope = String(data.scope);
+      formData.value.users = data.users;
+      formData.value.resellers = data.resellers;
+      for (let i = 0; i < data.methods.length; i += 1) {
+        formData.value.methods[i] = String(data.methods[i]);
+      }
+      formData.value.priority = data.priority;
+      formData.value.expires_at = data.expires_at;
+      formData.value.scheduled_time = data.scheduled_time;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
     } catch (err) {
@@ -207,7 +458,7 @@
     background-color: var(--color-bg-2);
     :deep(.arco-form) {
       .arco-form-item {
-        width: 700px;
+        width: 100%;
         &:first-child {
           margin-top: 20px;
         }

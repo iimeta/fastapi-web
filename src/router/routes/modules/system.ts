@@ -61,10 +61,10 @@ const SYS: AppRouteRecordRaw = {
       name: 'NoticeList',
       component: () => import('@/views/system/notice/list/index.vue'),
       meta: {
-        locale: 'menu.notice.list',
+        locale: 'menu.notice',
         requiresAuth: true,
         roles: ['admin'],
-        activeMenu: 'notice',
+        activeMenu: 'NoticeList',
       },
     },
     {

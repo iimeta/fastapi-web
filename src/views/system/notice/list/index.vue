@@ -2,10 +2,10 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-bar-chart />
+        <icon-settings />
       </a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.notice') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.notice.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -25,19 +25,33 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('notice.form.name')">
+                <a-form-item field="title" :label="$t('notice.form.title')">
                   <a-input
-                    v-model="formModel.name"
-                    :placeholder="$t('notice.form.name.placeholder')"
+                    v-model="formModel.title"
+                    :placeholder="$t('notice.form.title.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="code" :label="$t('notice.form.code')">
+                <a-form-item field="content" :label="$t('notice.form.content')">
                   <a-input
-                    v-model="formModel.code"
-                    :placeholder="$t('notice.form.code.placeholder')"
+                    v-model="formModel.content"
+                    :placeholder="$t('notice.form.content.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="category"
+                  :label="$t('notice.form.category')"
+                >
+                  <a-select
+                    v-model="formModel.category"
+                    :placeholder="$t('notice.form.selectDefault')"
+                    :options="publicOptions"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
@@ -47,20 +61,6 @@
                   <a-input
                     v-model="formModel.remark"
                     :placeholder="$t('notice.form.remark.placeholder')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="is_public"
-                  :label="$t('notice.form.is_public')"
-                >
-                  <a-select
-                    v-model="formModel.is_public"
-                    :placeholder="$t('notice.form.selectDefault')"
-                    :options="publicOptions"
-                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
@@ -117,34 +117,6 @@
               @click="$router.push({ name: 'NoticeCreate' })"
             >
               {{ $t('notice.operation.create') }}
-            </a-button>
-            <a-button
-              type="primary"
-              status="success"
-              :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
-              @click="
-                handleBatch({
-                  action: 'status',
-                  value: 1,
-                })
-              "
-            >
-              启用
-            </a-button>
-            <a-button
-              type="primary"
-              status="danger"
-              :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
-              @click="
-                handleBatch({
-                  action: 'status',
-                  value: 2,
-                })
-              "
-            >
-              禁用
             </a-button>
             <a-button
               type="primary"
@@ -240,8 +212,17 @@
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
       >
+        <template #category="{ record }">
+          {{ $t(`notice.dict.category.${record.category}`) }}
+        </template>
+        <template #scope="{ record }">
+          {{ $t(`notice.dict.scope.${record.scope}`) }}
+        </template>
         <template #remark="{ record }">
           {{ record.remark || '-' }}
+        </template>
+        <template #status="{ record }">
+          {{ $t(`notice.dict.status.${record.status}`) }}
         </template>
         <template #operations="{ record }">
           <a-button
@@ -325,10 +306,10 @@
 
   const generateFormModel = () => {
     return {
-      name: '',
-      code: '',
+      title: '',
+      content: '',
+      category: ref(),
       remark: '',
-      is_public: ref(),
       status: ref(),
       updated_at: [],
     };
@@ -377,27 +358,43 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('notice.columns.name'),
-      dataIndex: 'name',
-      slotName: 'name',
+      title: t('notice.columns.user_id'),
+      dataIndex: 'user_id',
+      slotName: 'user_id',
       align: 'center',
     },
     {
-      title: t('notice.columns.code'),
-      dataIndex: 'code',
-      slotName: 'code',
+      title: t('notice.columns.title'),
+      dataIndex: 'title',
+      slotName: 'title',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
+      title: t('notice.columns.content'),
+      dataIndex: 'content',
+      slotName: 'content',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
+      title: t('notice.columns.category'),
+      dataIndex: 'category',
+      slotName: 'category',
       align: 'center',
     },
     {
-      title: t('notice.columns.sort'),
-      dataIndex: 'sort',
-      slotName: 'sort',
+      title: t('notice.columns.scope'),
+      dataIndex: 'scope',
+      slotName: 'scope',
       align: 'center',
     },
     {
-      title: t('notice.columns.is_public'),
-      dataIndex: 'is_public',
-      slotName: 'is_public',
+      title: t('notice.columns.priority'),
+      dataIndex: 'priority',
+      slotName: 'priority',
       align: 'center',
     },
     {
@@ -437,15 +434,27 @@
       label: t('notice.dict.status.2'),
       value: 2,
     },
+    {
+      label: t('notice.dict.status.3'),
+      value: 3,
+    },
+    {
+      label: t('notice.dict.status.4'),
+      value: 4,
+    },
   ]);
   const publicOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('notice.dict.is_public.true'),
-      value: 'true',
+      label: t('notice.dict.category.1'),
+      value: 1,
     },
     {
-      label: t('notice.dict.is_public.false'),
-      value: 'false',
+      label: t('notice.dict.category.2'),
+      value: 2,
+    },
+    {
+      label: t('notice.dict.category.3'),
+      value: 3,
     },
   ]);
 
@@ -577,13 +586,6 @@
     } else {
       let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
       switch (params.action) {
-        case 'status':
-          if (params.value === 1) {
-            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
-          } else {
-            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
-          }
-          break;
         case 'delete':
           alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
           break;

@@ -1,5 +1,5 @@
 <template>
-  <div ref="divRef" class="container">
+  <div ref="divRef">
     <div class="aie-container">
       <div class="aie-header-panel">
         <div class="aie-container-header"></div>
@@ -45,7 +45,7 @@
       child.classList.add(`aie-title${outline.level}`);
       child.style.marginLeft = `${14 * (outline.level - 1)}px`;
       child.style.padding = `4px 0`;
-      child.innerHTML = `<a href="#${outline.id}">${outline.text}</a>`;
+      child.innerHTML = `<a style="text-decoration: none;" href="#${outline.id}">${outline.text}</a>`;
       child.addEventListener('click', (e) => {
         e.preventDefault();
         const el = editor.innerEditor.view.dom.querySelector(
