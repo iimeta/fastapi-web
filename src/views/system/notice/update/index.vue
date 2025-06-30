@@ -5,7 +5,9 @@
         <icon-settings />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.notice.update') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{
+        $t(route.query.action ? 'menu.notice.create' : 'menu.notice.update')
+      }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -87,9 +89,16 @@
                 <a-radio v-model="formData.scope" value="4">
                   {{ $t('notice.dict.scope.4') }}
                 </a-radio>
+                <a-radio v-model="formData.scope" value="5">
+                  {{ $t('notice.dict.scope.5') }}
+                </a-radio>
+                <a-radio v-model="formData.scope" value="6">
+                  {{ $t('notice.dict.scope.6') }}
+                </a-radio>
               </a-space>
             </a-form-item>
             <a-form-item
+              v-if="formData.scope === '4' || formData.scope === '6'"
               field="users"
               :label="$t('notice.label.users')"
               :rules="[
@@ -116,6 +125,7 @@
               </a-select>
             </a-form-item>
             <a-form-item
+              v-if="formData.scope === '5' || formData.scope === '6'"
               field="resellers"
               :label="$t('notice.label.resellers')"
               :rules="[
@@ -285,18 +295,22 @@
             </a-form-item>
             <a-space>
               <div class="submit-btn">
-                <a-button
-                  type="secondary"
-                  @click="
-                    $router.push({
-                      name: 'NoticeList',
-                    })
-                  "
-                >
-                  {{ $t('button.cancel') }}
+                <a-button type="secondary" @click="submitForm(2)">
+                  {{ $t('button.draft') }}
                 </a-button>
-                <a-button type="primary" @click="submitForm">
-                  {{ $t('button.submit') }}
+                <a-button
+                  v-if="!formData.scheduled_time"
+                  type="primary"
+                  @click="submitForm(1)"
+                >
+                  {{ $t('button.publish') }}
+                </a-button>
+                <a-button
+                  v-if="formData.scheduled_time"
+                  type="primary"
+                  @click="submitForm(3)"
+                >
+                  {{ $t('button.scheduled') }}
                 </a-button>
               </div>
             </a-space>
@@ -404,13 +418,20 @@
   };
   getNoticeDetail();
 
-  const submitForm = async () => {
+  const submitForm = async (status: number) => {
     const res = await formRef.value?.validate();
     if (!res) {
       setLoading(true);
       try {
+        formData.value.status = status;
         await submitNoticeUpdate(formData.value).then(() => {
-          proxy.$message.success('更新成功');
+          let alertContent = '更新成功';
+          if (status === 1) {
+            alertContent = '发布成功';
+          } else if (status === 2) {
+            alertContent = '保存成功';
+          }
+          proxy.$message.success(alertContent);
           router.push({
             name: 'NoticeList',
           });

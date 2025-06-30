@@ -78,11 +78,11 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="updated_at"
-                  :label="$t('notice.form.updated_at')"
+                  field="publish_time"
+                  :label="$t('notice.form.publish_time')"
                 >
                   <a-range-picker
-                    v-model="formModel.updated_at"
+                    v-model="formModel.publish_time"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -224,7 +224,25 @@
         <template #status="{ record }">
           {{ $t(`notice.dict.status.${record.status}`) }}
         </template>
+        <template #publish_time="{ record }">
+          {{ record.publish_time || '-' }}
+        </template>
         <template #operations="{ record }">
+          <a-button type="text" size="small" @click="detailHandle(record.id)">
+            {{ $t('operations.view') }}
+          </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              $router.push({
+                name: 'NoticeUpdate',
+                query: { id: `${record.id}`, action: 'copy' },
+              })
+            "
+          >
+            {{ $t('notice.columns.operations.copy') }}
+          </a-button>
           <a-button
             type="text"
             size="small"
@@ -247,6 +265,18 @@
           </a-popconfirm>
         </template>
       </a-table>
+
+      <a-drawer
+        :title="$t('menu.notice.detail')"
+        unmount-on-close
+        render-to-body
+        :width="700"
+        :footer="false"
+        :visible="detailVisible"
+        @cancel="detailHandleCancel"
+      >
+        <Detail :id="recordId" />
+      </a-drawer>
     </a-card>
   </div>
 </template>
@@ -311,7 +341,7 @@
       category: ref(),
       remark: '',
       status: ref(),
-      updated_at: [],
+      publish_time: [],
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -362,19 +392,12 @@
       dataIndex: 'user_id',
       slotName: 'user_id',
       align: 'center',
+      width: 80,
     },
     {
       title: t('notice.columns.title'),
       dataIndex: 'title',
       slotName: 'title',
-      align: 'center',
-      ellipsis: true,
-      tooltip: true,
-    },
-    {
-      title: t('notice.columns.content'),
-      dataIndex: 'content',
-      slotName: 'content',
       align: 'center',
       ellipsis: true,
       tooltip: true,
@@ -390,6 +413,8 @@
       dataIndex: 'scope',
       slotName: 'scope',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('notice.columns.priority'),
@@ -402,6 +427,8 @@
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('notice.columns.status'),
@@ -411,18 +438,18 @@
       width: 65,
     },
     {
-      title: t('notice.columns.updated_at'),
-      dataIndex: 'updated_at',
-      slotName: 'updated_at',
+      title: t('notice.columns.publish_time'),
+      dataIndex: 'publish_time',
+      slotName: 'publish_time',
       align: 'center',
-      width: 132,
+      width: 170,
     },
     {
       title: t('notice.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 130,
+      width: 220,
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
@@ -609,6 +636,17 @@
         },
       });
     }
+  };
+
+  const detailVisible = ref(false);
+  const recordId = ref();
+
+  const detailHandle = (id: string) => {
+    detailVisible.value = true;
+    recordId.value = id;
+  };
+  const detailHandleCancel = () => {
+    detailVisible.value = false;
   };
 </script>
 

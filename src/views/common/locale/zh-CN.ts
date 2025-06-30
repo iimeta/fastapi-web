@@ -86,6 +86,9 @@ export default {
   'button.export': '导出',
   'button.config': '配置',
   'button.refresh': '刷新',
+  'button.publish': '立即发布',
+  'button.draft': '保存草稿',
+  'button.scheduled': '定时发布',
   // success
   'success.create': '新建成功',
   'success.update': '修改成功',

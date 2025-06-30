@@ -274,6 +274,7 @@
       dataIndex: 'user_id',
       slotName: 'user_id',
       align: 'center',
+      width: 80,
     },
     {
       title: t('finance.columns.quota'),
