@@ -325,7 +325,7 @@
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { submitNoticeCreate, NoticeCreate } from '@/api/notice';
+  import { submitNoticeCreate, Notice } from '@/api/notice';
   import { UserList, queryUserList } from '@/api/admin_user';
   import { ResellerList, queryResellerList } from '@/api/admin_reseller';
   import AiEditor from '@/views/common/aieditor.vue';
@@ -335,7 +335,7 @@
 
   const router = useRouter();
   const formRef = ref<FormInstance>();
-  const formData = ref<NoticeCreate>({
+  const formData = ref<Notice>({
     title: '',
     content: '',
     category: ref(),

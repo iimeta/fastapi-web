@@ -1,7 +1,8 @@
 import axios from 'axios';
 import qs from 'query-string';
 
-export interface NoticeCreate {
+export interface Notice {
+  id?: string;
   title: string;
   content: string;
   category: any;
@@ -16,7 +17,7 @@ export interface NoticeCreate {
   status: number;
 }
 
-export function submitNoticeCreate(data: NoticeCreate) {
+export function submitNoticeCreate(data: Notice) {
   return axios.post('/api/v1/sys/notice/create', data);
 }
 
@@ -99,23 +100,7 @@ export function queryNoticeDetail(params: NoticeDetailParams) {
   });
 }
 
-export interface NoticeUpdate {
-  id: string;
-  title: string;
-  content: string;
-  category: any;
-  scope: any;
-  users: number[];
-  resellers: number[];
-  methods: string[];
-  priority: any;
-  expires_at: string;
-  scheduled_time: string;
-  remark: string;
-  status: number;
-}
-
-export function submitNoticeUpdate(data: NoticeUpdate) {
+export function submitNoticeUpdate(data: Notice) {
   return axios.post('/api/v1/sys/notice/update', data);
 }
 

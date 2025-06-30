@@ -9,176 +9,72 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
           {{ currentData.title }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.title')">
+      <a-descriptions-item :label="t('notice.detail.category')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.title }}
+          {{ $t(`notice.dict.category.${currentData.category}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.logo')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.logo }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.favicon')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.favicon }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.avatar')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.avatar || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.bg_img')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.bg_img || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.copyright')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.copyright || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.jump_url')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.jump_url || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.keywords')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.keywords || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.description')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.description || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.icp_beian')" :span="2">
+      <a-descriptions-item :label="t('notice.detail.scope')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.icp_beian || '-' }}
+          {{ $t(`notice.dict.scope.${currentData.scope}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.ga_beian')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.ga_beian || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('notice.detail.register_tips')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('notice.detail.users')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.register_tips || '-' }}
+          {{ currentData.users?.toString() || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.grant_quota')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.grant_quota || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('notice.detail.quota_expires_at')"
-        :span="2"
-      >
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.quota_expires_at || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('notice.detail.support_email_suffix')"
-      >
+      <a-descriptions-item :label="t('notice.detail.resellers')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData?.support_email_suffix?.join('\n') || '-' }}
+          {{ currentData.resellers?.toString() || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.host')" :span="2">
+      <a-descriptions-item :label="t('notice.detail.methods')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.host || '-' }}
+          {{ $t(`notice.dict.methods.${currentData.methods}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.port')">
+      <a-descriptions-item :label="t('notice.detail.priority')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.port || '-' }}
+          {{ currentData.priority }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.user_name')" :span="2">
+      <a-descriptions-item :label="t('notice.detail.expires_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.user_name || '-' }}
+          {{ currentData.expires_at || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.password')">
+      <a-descriptions-item :label="t('notice.detail.scheduled_time')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.password || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.from_name')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.from_name || '-' }}
+          {{ currentData.scheduled_time || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('common.remark')">
@@ -194,12 +90,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          <a-tag v-if="currentData.status === 1" color="green">
-            {{ $t(`dict.status.${currentData.status}`) }}
-          </a-tag>
-          <a-tag v-else color="red">
-            {{ $t(`dict.status.${currentData.status}`) }}
-          </a-tag>
+          {{ $t(`notice.dict.status.${currentData.status}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('common.created_at')">

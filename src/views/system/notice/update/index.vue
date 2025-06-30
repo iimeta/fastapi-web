@@ -328,8 +328,9 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import {
+    submitNoticeCreate,
     submitNoticeUpdate,
-    NoticeUpdate,
+    Notice,
     queryNoticeDetail,
     NoticeDetailParams,
   } from '@/api/notice';
@@ -343,7 +344,7 @@
   const router = useRouter();
   const route = useRoute();
   const formRef = ref<FormInstance>();
-  const formData = ref<NoticeUpdate>({
+  const formData = ref<Notice>({
     id: '',
     title: '',
     content: '',
@@ -424,18 +425,33 @@
       setLoading(true);
       try {
         formData.value.status = status;
-        await submitNoticeUpdate(formData.value).then(() => {
-          let alertContent = '更新成功';
-          if (status === 1) {
-            alertContent = '发布成功';
-          } else if (status === 2) {
-            alertContent = '保存成功';
-          }
-          proxy.$message.success(alertContent);
-          router.push({
-            name: 'NoticeList',
+        if (route.query.action) {
+          await submitNoticeCreate(formData.value).then(() => {
+            let alertContent = '操作成功';
+            if (status === 1) {
+              alertContent = '发布成功';
+            } else if (status === 2) {
+              alertContent = '保存成功';
+            }
+            proxy.$message.success(alertContent);
+            router.push({
+              name: 'NoticeList',
+            });
           });
-        });
+        } else {
+          await submitNoticeUpdate(formData.value).then(() => {
+            let alertContent = '更新成功';
+            if (status === 1) {
+              alertContent = '发布成功';
+            } else if (status === 2) {
+              alertContent = '保存成功';
+            }
+            proxy.$message.success(alertContent);
+            router.push({
+              name: 'NoticeList',
+            });
+          });
+        }
       } catch (err) {
         // you can report use errorHandler or other
       } finally {

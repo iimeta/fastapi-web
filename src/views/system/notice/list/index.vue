@@ -309,6 +309,7 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import Detail from '../detail/index.vue';
 
   const { proxy } = getCurrentInstance() as any;
 
