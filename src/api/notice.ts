@@ -18,7 +18,7 @@ export interface Notice {
 }
 
 export function submitNoticeCreate(data: Notice) {
-  return axios.post('/api/v1/sys/notice/create', data);
+  return axios.post('/api/v1/notice/create', data);
 }
 
 export interface NoticePage {
@@ -45,7 +45,7 @@ export interface NoticePageRes {
 }
 
 export function queryNoticePage(params: NoticePageParams) {
-  return axios.post<NoticePageRes>('/api/v1/sys/notice/page', params);
+  return axios.post<NoticePageRes>('/api/v1/notice/page', params);
 }
 
 export interface NoticeList {
@@ -58,7 +58,7 @@ export interface NoticeListRes {
 }
 
 export function queryNoticeList() {
-  return axios.get<NoticeListRes>('/api/v1/sys/notice/list');
+  return axios.get<NoticeListRes>('/api/v1/notice/list');
 }
 
 export interface NoticeDeleteParams {
@@ -66,7 +66,7 @@ export interface NoticeDeleteParams {
 }
 
 export function submitNoticeDelete(params: NoticeDeleteParams) {
-  return axios.post('/api/v1/sys/notice/delete', params);
+  return axios.post('/api/v1/notice/delete', params);
 }
 
 export interface NoticeDetailParams {
@@ -87,12 +87,13 @@ export interface NoticeDetail {
   scheduled_time: string;
   remark: string;
   status: number;
+  publish_time: string;
   created_at: string;
   updated_at: string;
 }
 
 export function queryNoticeDetail(params: NoticeDetailParams) {
-  return axios.get<NoticeDetail>('/api/v1/sys/notice/detail', {
+  return axios.get<NoticeDetail>('/api/v1/notice/detail', {
     params,
     paramsSerializer: (obj) => {
       return qs.stringify(obj);
@@ -101,7 +102,7 @@ export function queryNoticeDetail(params: NoticeDetailParams) {
 }
 
 export function submitNoticeUpdate(data: Notice) {
-  return axios.post('/api/v1/sys/notice/update', data);
+  return axios.post('/api/v1/notice/update', data);
 }
 
 export interface NoticeBatchOperate {
@@ -111,5 +112,5 @@ export interface NoticeBatchOperate {
 }
 
 export function submitNoticeBatchOperate(data: NoticeBatchOperate) {
-  return axios.post('/api/v1/sys/notice/batch/operate', data);
+  return axios.post('/api/v1/notice/batch/operate', data);
 }

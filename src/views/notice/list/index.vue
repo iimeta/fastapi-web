@@ -2,10 +2,10 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-settings />
+        <icon-notification />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.notice') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.notice.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -117,6 +117,19 @@
               @click="$router.push({ name: 'NoticeCreate' })"
             >
               {{ $t('notice.operation.create') }}
+            </a-button>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'notice',
+                })
+              "
+            >
+              发送通知
             </a-button>
             <a-button
               type="primary"

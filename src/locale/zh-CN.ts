@@ -21,7 +21,7 @@ import localeReseller from '@/views/system/reseller/locale/zh-CN';
 import localeSiteConfig from '@/views/system/site_config/locale/zh-CN';
 import localeSysConfig from '@/views/system/config/locale/zh-CN';
 import localeGroup from '@/views/group/locale/zh-CN';
-import localeNotice from '@/views/system/notice/locale/zh-CN';
+import localeNotice from '@/views/notice/locale/zh-CN';
 
 import localeSettings from './zh-CN/settings';
 

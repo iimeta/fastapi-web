@@ -2,9 +2,9 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-settings />
+        <icon-notification />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.notice') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.notice.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">

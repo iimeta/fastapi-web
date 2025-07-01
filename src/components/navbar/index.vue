@@ -49,33 +49,6 @@
             </template>
           </a-button>
         </a-tooltip>
-      </li>
-      <li>
-        <a-tooltip :content="$t('settings.navbar.alerts')">
-          <div class="message-box-trigger">
-            <a-badge :count="9" dot>
-              <a-button
-                class="nav-btn"
-                type="outline"
-                :shape="'circle'"
-                @click="setPopoverVisible"
-              >
-                <icon-notification />
-              </a-button>
-            </a-badge>
-          </div>
-        </a-tooltip>
-        <a-popover
-          trigger="click"
-          :arrow-style="{ display: 'none' }"
-          :content-style="{ padding: 0, minWidth: '400px' }"
-          content-class="message-popover"
-        >
-          <div ref="refBtn" class="ref-btn"></div>
-          <template #content>
-            <message-box />
-          </template>
-        </a-popover>
       </li> -->
       <!-- <li>
         <a-tooltip :content="$t('settings.language')">
@@ -106,6 +79,33 @@
           </template>
         </a-dropdown>
       </li> -->
+      <li>
+        <a-tooltip :content="$t('settings.navbar.alerts')">
+          <div class="message-box-trigger">
+            <a-badge :count="9" dot>
+              <a-button
+                class="nav-btn"
+                type="outline"
+                :shape="'circle'"
+                @click="setPopoverVisible"
+              >
+                <icon-notification />
+              </a-button>
+            </a-badge>
+          </div>
+        </a-tooltip>
+        <a-popover
+          trigger="click"
+          :arrow-style="{ display: 'none' }"
+          :content-style="{ padding: 0, minWidth: '400px' }"
+          content-class="message-popover"
+        >
+          <div ref="refBtn" class="ref-btn"></div>
+          <template #content>
+            <message-box />
+          </template>
+        </a-popover>
+      </li>
       <li>
         <a-tooltip content="版本: v1.6.0">
           <a-link

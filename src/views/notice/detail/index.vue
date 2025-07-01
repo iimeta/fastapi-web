@@ -13,7 +13,7 @@
           {{ currentData.title }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.category')">
+      <a-descriptions-item :label="t('notice.detail.category')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -29,7 +29,7 @@
           {{ $t(`notice.dict.scope.${currentData.scope}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.users')">
+      <a-descriptions-item :label="t('notice.detail.users')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -45,7 +45,7 @@
           {{ currentData.resellers?.toString() || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.methods')">
+      <a-descriptions-item :label="t('notice.detail.methods')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -61,7 +61,7 @@
           {{ currentData.priority }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.expires_at')">
+      <a-descriptions-item :label="t('notice.detail.expires_at')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -77,7 +77,7 @@
           {{ currentData.scheduled_time || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.remark')">
+      <a-descriptions-item :label="t('common.remark')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -93,7 +93,15 @@
           {{ $t(`notice.dict.status.${currentData.status}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')">
+      <a-descriptions-item :label="t('notice.detail.publish_time')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.publish_time }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.created_at')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

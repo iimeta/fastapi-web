@@ -1,6 +1,6 @@
 export default {
-  'menu.notice': '通知公告',
-  'menu.notice.list': '通知公告列表',
+  'menu.notice': '通知管理',
+  'menu.notice.list': '通知公告',
   'menu.notice.create': '新建通知公告',
   'menu.notice.update': '修改通知公告',
   'menu.notice.detail': '通知公告详情',
@@ -52,8 +52,7 @@ export default {
   'notice.detail.priority': '优先级',
   'notice.detail.scheduled_time': '定时发布时间',
   'notice.detail.remark': '备注',
-  'notice.detail.created_at': '创建时间',
-  'notice.detail.updated_at': '更新时间',
+  'notice.detail.publish_time': '发布时间',
   // search
   'notice.form.title': '标题',
   'notice.form.title.placeholder': '请输入标题',

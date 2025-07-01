@@ -9,7 +9,7 @@ const LOG: AppRouteRecordRaw = {
     locale: 'menu.chat',
     requiresAuth: true,
     icon: 'icon-message',
-    order: 12,
+    order: 13,
   },
   children: [
     {

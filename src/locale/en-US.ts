@@ -21,7 +21,7 @@ import localeReseller from '@/views/system/reseller/locale/en-US';
 import localeSiteConfig from '@/views/system/site_config/locale/en-US';
 import localeSysConfig from '@/views/system/config/locale/en-US';
 import localeGroup from '@/views/group/locale/en-US';
-import localeNotice from '@/views/system/notice/locale/en-US';
+import localeNotice from '@/views/notice/locale/en-US';
 
 import localeSettings from './en-US/settings';
 

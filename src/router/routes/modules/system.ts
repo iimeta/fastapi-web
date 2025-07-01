@@ -57,39 +57,6 @@ const SYS: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'notice/list',
-      name: 'NoticeList',
-      component: () => import('@/views/system/notice/list/index.vue'),
-      meta: {
-        locale: 'menu.notice',
-        requiresAuth: true,
-        roles: ['admin'],
-        activeMenu: 'NoticeList',
-      },
-    },
-    {
-      path: 'notice/create',
-      name: 'NoticeCreate',
-      component: () => import('@/views/system/notice/create/index.vue'),
-      meta: {
-        locale: 'menu.notice.create',
-        requiresAuth: true,
-        roles: ['admin'],
-        hideInMenu: true,
-      },
-    },
-    {
-      path: 'notice/update',
-      name: 'NoticeUpdate',
-      component: () => import('@/views/system/notice/update/index.vue'),
-      meta: {
-        locale: 'menu.notice.update',
-        requiresAuth: true,
-        roles: ['admin'],
-        hideInMenu: true,
-      },
-    },
-    {
       path: 'site/config',
       name: 'SiteConfig',
       component: () => import('@/views/system/site_config/list/index.vue'),

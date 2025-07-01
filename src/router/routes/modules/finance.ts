@@ -9,7 +9,7 @@ const FINANCE: AppRouteRecordRaw = {
     locale: 'menu.finance',
     requiresAuth: true,
     icon: 'icon-wechatpay',
-    order: 11,
+    order: 12,
   },
   children: [
     {

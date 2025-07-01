@@ -2,9 +2,9 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-settings />
+        <icon-notification />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.notice') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{
         $t(route.query.action ? 'menu.notice.create' : 'menu.notice.update')
       }}</a-breadcrumb-item>
