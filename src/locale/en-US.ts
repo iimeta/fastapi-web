@@ -22,6 +22,7 @@ import localeSiteConfig from '@/views/system/site_config/locale/en-US';
 import localeSysConfig from '@/views/system/config/locale/en-US';
 import localeGroup from '@/views/group/locale/en-US';
 import localeNotice from '@/views/notice/locale/en-US';
+import localeNoticeTemplate from '@/views/notice_template/locale/en-US';
 
 import localeSettings from './en-US/settings';
 
@@ -47,4 +48,5 @@ export default {
   ...localeSysConfig,
   ...localeGroup,
   ...localeNotice,
+  ...localeNoticeTemplate,
 };

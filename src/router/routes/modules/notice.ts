@@ -5,13 +5,11 @@ const NOTICE: AppRouteRecordRaw = {
   path: '/notice',
   name: 'notice',
   component: DEFAULT_LAYOUT,
-  redirect: '/notice/list',
   meta: {
     locale: 'menu.notice',
     requiresAuth: true,
     icon: 'icon-notification',
     order: 11,
-    hideChildrenInMenu: true,
     roles: ['reseller', 'admin'],
   },
   children: [
@@ -23,7 +21,7 @@ const NOTICE: AppRouteRecordRaw = {
         locale: 'menu.notice.list',
         requiresAuth: true,
         roles: ['reseller', 'admin'],
-        activeMenu: 'notice',
+        activeMenu: 'NoticeList',
       },
     },
     {
@@ -35,6 +33,7 @@ const NOTICE: AppRouteRecordRaw = {
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         hideInMenu: true,
+        activeMenu: 'NoticeList',
       },
     },
     {
@@ -46,6 +45,42 @@ const NOTICE: AppRouteRecordRaw = {
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         hideInMenu: true,
+        activeMenu: 'NoticeList',
+      },
+    },
+    {
+      path: 'template/list',
+      name: 'NoticeTemplateList',
+      component: () => import('@/views/notice_template/list/index.vue'),
+      meta: {
+        locale: 'menu.notice.template.list',
+        requiresAuth: true,
+        roles: ['reseller', 'admin'],
+        activeMenu: 'NoticeTemplateList',
+      },
+    },
+    {
+      path: 'template/create',
+      name: 'NoticeTemplateCreate',
+      component: () => import('@/views/notice_template/create/index.vue'),
+      meta: {
+        locale: 'menu.notice.template.create',
+        requiresAuth: true,
+        roles: ['reseller', 'admin'],
+        hideInMenu: true,
+        activeMenu: 'NoticeTemplateList',
+      },
+    },
+    {
+      path: 'template/update',
+      name: 'NoticeTemplateUpdate',
+      component: () => import('@/views/notice_template/update/index.vue'),
+      meta: {
+        locale: 'menu.notice.template.update',
+        requiresAuth: true,
+        roles: ['reseller', 'admin'],
+        hideInMenu: true,
+        activeMenu: 'NoticeTemplateList',
       },
     },
   ],

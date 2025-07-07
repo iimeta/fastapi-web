@@ -150,27 +150,34 @@
               </a-select>
             </a-form-item>
             <a-form-item
-              field="methods"
-              :label="$t('notice.label.methods')"
+              field="channels"
+              :label="$t('notice.label.channels')"
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.error.methods.required'),
+                  message: $t('notice.error.channels.required'),
                 },
               ]"
             >
               <a-space size="large">
                 <a-checkbox
-                  v-model="formData.methods"
-                  value="1"
+                  v-model="formData.channels"
+                  value="web"
                   :default-checked="true"
                 >
-                  {{ $t('notice.dict.methods.1') }}
+                  {{ $t('notice.dict.channels.web') }}
                 </a-checkbox>
-                <a-checkbox v-model="formData.methods" value="2">
-                  {{ $t('notice.dict.methods.2') }}
+                <a-checkbox v-model="formData.channels" value="email">
+                  {{ $t('notice.dict.channels.email') }}
                 </a-checkbox>
               </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="formData.channels.includes('web')"
+              field="is_popup"
+              :label="$t('notice.label.is_popup')"
+            >
+              <a-switch v-model="formData.is_popup" />
             </a-form-item>
             <a-form-item field="priority" :label="$t('notice.label.priority')">
               <a-input-number
@@ -342,7 +349,8 @@
     scope: '1',
     users: [],
     resellers: [],
-    methods: ['1', '2'],
+    channels: ['web', 'email'],
+    is_popup: false,
     priority: ref(),
     expires_at: '',
     scheduled_time: '',

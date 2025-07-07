@@ -10,6 +10,7 @@ const SYS: AppRouteRecordRaw = {
     requiresAuth: true,
     icon: 'icon-settings',
     order: 20,
+    roles: ['reseller', 'admin'],
   },
   children: [
     {

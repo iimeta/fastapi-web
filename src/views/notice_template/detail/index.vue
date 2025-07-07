@@ -5,7 +5,26 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item :label="t('notice.detail.title')" :span="2">
+      <a-descriptions-item :label="t('notice.template.detail.name')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
+          {{ currentData.name }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="t('notice.template.detail.scenes')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.scenes.toString() }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('notice.template.detail.title')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -13,47 +32,21 @@
           {{ currentData.title }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.category')" :span="2">
+      <a-descriptions-item
+        :label="t('notice.template.detail.channels')"
+        :span="2"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ $t(`notice.dict.category.${currentData.category}`) }}
+          {{ $t(`notice.template.dict.channels.${currentData.channels}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.scope')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ $t(`notice.dict.scope.${currentData.scope}`) }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.users')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.users?.toString() || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.resellers')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.resellers?.toString() || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.channels')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ $t(`notice.dict.channels.${currentData.channels}`) }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.is_popup')" :span="2">
+      <a-descriptions-item
+        :label="t('notice.template.detail.is_popup')"
+        :span="2"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -61,28 +54,12 @@
           {{ t(`dict.${currentData.is_popup || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.priority')" :span="2">
+      <a-descriptions-item :label="t('common.is_public')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.priority }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.expires_at')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.expires_at || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.scheduled_time')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.scheduled_time || '-' }}
+          {{ t(`dict.public.${currentData.is_public || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('common.remark')" :span="2">
@@ -98,15 +75,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ $t(`notice.dict.status.${currentData.status}`) }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.publish_time')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.publish_time }}
+          {{ $t(`dict.status.${currentData.status}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('common.created_at')" :span="2">
@@ -134,14 +103,14 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    NoticeDetailParams,
-    queryNoticeDetail,
-    NoticeDetail,
-  } from '@/api/notice';
+    NoticeTemplateDetailParams,
+    queryNoticeTemplateDetail,
+    NoticeTemplateDetail,
+  } from '@/api/notice_template';
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
-  const currentData = ref<NoticeDetail>({} as NoticeDetail);
+  const currentData = ref<NoticeTemplateDetail>({} as NoticeTemplateDetail);
   const props = defineProps({
     id: {
       type: String,
@@ -149,12 +118,15 @@
     },
   });
 
-  const getNoticeDetail = async (
-    params: NoticeDetailParams = { id: props.id }
+  const getNoticeTemplateDetail = async (
+    params: NoticeTemplateDetailParams = { id: props.id }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryNoticeDetail(params);
+      const { data } = await queryNoticeTemplateDetail(params);
+      for (let i = 0; i < data.scenes.length; i += 1) {
+        data.scenes[i] = t(`notice.template.dict.scenes.${data.scenes[i]}`);
+      }
       currentData.value = data;
     } catch (err) {
       // you can report use errorHandler or other
@@ -162,12 +134,12 @@
       setLoading(false);
     }
   };
-  getNoticeDetail();
+  getNoticeTemplateDetail();
 </script>
 
 <script lang="ts">
   export default {
-    name: 'NoticeDetail',
+    name: 'NoticeTemplateDetail',
   };
 </script>
 

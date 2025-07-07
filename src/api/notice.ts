@@ -9,7 +9,8 @@ export interface Notice {
   scope: any;
   users: number[];
   resellers: number[];
-  methods: string[];
+  channels: string[];
+  is_popup: boolean;
   priority: any;
   expires_at: string;
   scheduled_time: string;
@@ -81,7 +82,8 @@ export interface NoticeDetail {
   scope: number;
   users: number[];
   resellers: number[];
-  methods: number[];
+  channels: string[];
+  is_popup: boolean;
   priority: number;
   expires_at: string;
   scheduled_time: string;

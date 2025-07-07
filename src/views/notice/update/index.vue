@@ -152,27 +152,34 @@
               </a-select>
             </a-form-item>
             <a-form-item
-              field="methods"
-              :label="$t('notice.label.methods')"
+              field="channels"
+              :label="$t('notice.label.channels')"
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.error.methods.required'),
+                  message: $t('notice.error.channels.required'),
                 },
               ]"
             >
               <a-space size="large">
                 <a-checkbox
-                  v-model="formData.methods"
-                  value="1"
+                  v-model="formData.channels"
+                  value="web"
                   :default-checked="true"
                 >
-                  {{ $t('notice.dict.methods.1') }}
+                  {{ $t('notice.dict.channels.web') }}
                 </a-checkbox>
-                <a-checkbox v-model="formData.methods" value="2">
-                  {{ $t('notice.dict.methods.2') }}
+                <a-checkbox v-model="formData.channels" value="email">
+                  {{ $t('notice.dict.channels.email') }}
                 </a-checkbox>
               </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="formData.channels.includes('web')"
+              field="is_popup"
+              :label="$t('notice.label.is_popup')"
+            >
+              <a-switch v-model="formData.is_popup" />
             </a-form-item>
             <a-form-item field="priority" :label="$t('notice.label.priority')">
               <a-input-number
@@ -352,7 +359,8 @@
     scope: ref(),
     users: [],
     resellers: [],
-    methods: [],
+    channels: [],
+    is_popup: false,
     priority: ref(),
     expires_at: '',
     scheduled_time: '',
@@ -403,9 +411,8 @@
       formData.value.scope = String(data.scope);
       formData.value.users = data.users;
       formData.value.resellers = data.resellers;
-      for (let i = 0; i < data.methods.length; i += 1) {
-        formData.value.methods[i] = String(data.methods[i]);
-      }
+      formData.value.channels = data.channels;
+      formData.value.is_popup = data.is_popup;
       formData.value.priority = data.priority;
       formData.value.expires_at = data.expires_at;
       formData.value.scheduled_time = data.scheduled_time;
