@@ -166,6 +166,22 @@
               <a-switch v-model="formData.is_public" />
             </a-form-item>
             <a-form-item
+              field="title"
+              :label="$t('notice.template.label.title')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('notice.template.error.title.required'),
+                },
+              ]"
+            >
+              <a-input
+                v-model="formData.title"
+                :placeholder="$t('notice.template.placeholder.title')"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
               field="content"
               :label="$t('notice.template.label.content')"
               :rules="[
@@ -177,7 +193,7 @@
             >
               <AiEditor
                 v-model="formData.content"
-                style="flex: 1; height: 500px"
+                style="flex: 1; height: 1024px"
               />
             </a-form-item>
             <a-form-item

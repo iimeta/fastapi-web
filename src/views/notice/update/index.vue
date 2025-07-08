@@ -291,7 +291,7 @@
             >
               <AiEditor
                 v-model="formData.content"
-                style="flex: 1; height: 500px"
+                style="flex: 1; height: 1024px"
               />
             </a-form-item>
             <a-form-item field="remark" :label="$t('notice.label.remark')">

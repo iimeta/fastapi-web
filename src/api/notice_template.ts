@@ -98,6 +98,24 @@ export function submitNoticeTemplateUpdate(data: NoticeTemplate) {
   return axios.post('/api/v1/notice/template/update', data);
 }
 
+export interface NoticeTemplateChangePublic {
+  id: string;
+  is_public: any;
+}
+
+export function submitNoticeTemplateChangePublic(data: NoticeTemplateChangePublic) {
+  return axios.post('/api/v1/notice/template/change/public', data);
+}
+
+export interface NoticeTemplateChangeStatus {
+  id: string;
+  status: number;
+}
+
+export function submitNoticeTemplateChangeStatus(data: NoticeTemplateChangeStatus) {
+  return axios.post('/api/v1/notice/template/change/status', data);
+}
+
 export interface NoticeTemplateBatchOperate {
   action: string;
   ids?: string[];

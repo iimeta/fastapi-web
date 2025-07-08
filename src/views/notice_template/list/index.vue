@@ -5,7 +5,9 @@
         <icon-notification />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.notice') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.notice.template.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>
+        {{ $t('menu.notice.template.list') }}
+      </a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -25,7 +27,22 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="title" :label="$t('notice.template.form.title')">
+                <a-form-item
+                  field="name"
+                  :label="$t('notice.template.form.name')"
+                >
+                  <a-input
+                    v-model="formModel.title"
+                    :placeholder="$t('notice.template.form.name.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="title"
+                  :label="$t('notice.template.form.title')"
+                >
                   <a-input
                     v-model="formModel.title"
                     :placeholder="$t('notice.template.form.title.placeholder')"
@@ -34,56 +51,56 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="content" :label="$t('notice.template.form.content')">
+                <a-form-item
+                  field="content"
+                  :label="$t('notice.template.form.content')"
+                >
                   <a-input
                     v-model="formModel.content"
-                    :placeholder="$t('notice.template.form.content.placeholder')"
+                    :placeholder="
+                      $t('notice.template.form.content.placeholder')
+                    "
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="category"
-                  :label="$t('notice.template.form.category')"
+                  field="scenes"
+                  :label="$t('notice.template.form.scenes')"
                 >
                   <a-select
-                    v-model="formModel.category"
+                    v-model="formModel.scenes"
                     :placeholder="$t('notice.template.form.selectDefault')"
-                    :options="publicOptions"
+                    :options="scenesOptions"
                     :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="remark" :label="$t('notice.template.form.remark')">
+                <a-form-item
+                  field="channels"
+                  :label="$t('notice.template.form.channels')"
+                >
+                  <a-select
+                    v-model="formModel.channels"
+                    :placeholder="$t('notice.template.form.selectDefault')"
+                    :options="channelsOptions"
+                    :scrollbar="false"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="remark"
+                  :label="$t('notice.template.form.remark')"
+                >
                   <a-input
                     v-model="formModel.remark"
                     :placeholder="$t('notice.template.form.remark.placeholder')"
                     allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="status" :label="$t('notice.template.form.status')">
-                  <a-select
-                    v-model="formModel.status"
-                    :placeholder="$t('notice.template.form.selectDefault')"
-                    :options="statusOptions"
-                    :scrollbar="false"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="publish_time"
-                  :label="$t('notice.template.form.publish_time')"
-                >
-                  <a-range-picker
-                    v-model="formModel.publish_time"
-                    style="width: 100%"
                   />
                 </a-form-item>
               </a-col>
@@ -125,11 +142,26 @@
               :title="multiple ? '请选择要操作的数据' : ''"
               @click="
                 handleBatch({
-                  action: 'notice',
+                  action: 'status',
+                  value: 1,
                 })
               "
             >
-              发送通知
+              启用
+            </a-button>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? '请选择要操作的数据' : ''"
+              @click="
+                handleBatch({
+                  action: 'status',
+                  value: 2,
+                })
+              "
+            >
+              禁用
             </a-button>
             <a-button
               type="primary"
@@ -225,20 +257,34 @@
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
       >
-        <template #category="{ record }">
-          {{ $t(`notice.template.dict.category.${record.category}`) }}
+        <template #is_public="{ record }">
+          <a-switch
+            v-model="record.is_public"
+            :checked-value="true"
+            :unchecked-value="false"
+            @change="
+              changePublic({
+                id: `${record.id}`,
+                is_public: `${record.is_public}`,
+              })
+            "
+          />
         </template>
-        <template #scope="{ record }">
-          {{ $t(`notice.template.dict.scope.${record.scope}`) }}
+        <template #status="{ record }">
+          <a-switch
+            v-model="record.status"
+            :checked-value="1"
+            :unchecked-value="2"
+            @change="
+              changeStatus({
+                id: `${record.id}`,
+                status: Number(`${record.status}`),
+              })
+            "
+          />
         </template>
         <template #remark="{ record }">
           {{ record.remark || '-' }}
-        </template>
-        <template #status="{ record }">
-          {{ $t(`notice.template.dict.status.${record.status}`) }}
-        </template>
-        <template #publish_time="{ record }">
-          {{ record.publish_time || '-' }}
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
@@ -311,6 +357,10 @@
     NoticeTemplatePageParams,
     submitNoticeTemplateDelete,
     NoticeTemplateDeleteParams,
+    NoticeTemplateChangePublic,
+    submitNoticeTemplateChangePublic,
+    NoticeTemplateChangeStatus,
+    submitNoticeTemplateChangeStatus,
     NoticeTemplateBatchOperate,
     submitNoticeTemplateBatchOperate,
   } from '@/api/notice_template';
@@ -350,12 +400,12 @@
 
   const generateFormModel = () => {
     return {
+      name: '',
+      scenes: [],
+      channels: [],
       title: '',
       content: '',
-      category: ref(),
       remark: '',
-      status: ref(),
-      publish_time: [],
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -408,7 +458,7 @@
       align: 'center',
       width: 80,
     },
-     {
+    {
       title: t('notice.template.columns.name'),
       dataIndex: 'name',
       slotName: 'name',
@@ -423,6 +473,13 @@
       align: 'center',
       ellipsis: true,
       tooltip: true,
+    },
+    {
+      title: t('notice.template.columns.is_public'),
+      dataIndex: 'is_public',
+      slotName: 'is_public',
+      align: 'center',
+      width: 65,
     },
     {
       title: t('notice.template.columns.remark'),
@@ -454,36 +511,62 @@
       width: 220,
     },
   ]);
-  const statusOptions = computed<SelectOptionData[]>(() => [
+
+  const scenesOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('notice.template.dict.status.1'),
-      value: 1,
+      label: t('notice.template.dict.scenes.code'),
+      value: 'code',
     },
     {
-      label: t('notice.template.dict.status.2'),
-      value: 2,
+      label: t('notice.template.dict.scenes.login'),
+      value: 'login',
     },
     {
-      label: t('notice.template.dict.status.3'),
-      value: 3,
+      label: t('notice.template.dict.scenes.register'),
+      value: 'register',
     },
     {
-      label: t('notice.template.dict.status.4'),
-      value: 4,
+      label: t('notice.template.dict.scenes.forget_password'),
+      value: 'forget_password',
+    },
+    {
+      label: t('notice.template.dict.scenes.change_password'),
+      value: 'change_password',
+    },
+    {
+      label: t('notice.template.dict.scenes.change_email'),
+      value: 'change_email',
+    },
+    {
+      label: t('notice.template.dict.scenes.quota_warning'),
+      value: 'quota_warning',
+    },
+    {
+      label: t('notice.template.dict.scenes.quota_exhaustion'),
+      value: 'quota_exhaustion',
+    },
+    {
+      label: t('notice.template.dict.scenes.quota_expire_warning'),
+      value: 'quota_expire_warning',
+    },
+    {
+      label: t('notice.template.dict.scenes.quota_expire'),
+      value: 'quota_expire',
+    },
+    {
+      label: t('notice.template.dict.scenes.notice'),
+      value: 'notice',
     },
   ]);
-  const publicOptions = computed<SelectOptionData[]>(() => [
+
+  const channelsOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('notice.template.dict.category.1'),
-      value: 1,
+      label: t('notice.template.dict.channels.web'),
+      value: 'web',
     },
     {
-      label: t('notice.template.dict.category.2'),
-      value: 2,
-    },
-    {
-      label: t('notice.template.dict.category.3'),
-      value: 3,
+      label: t('notice.template.dict.channels.email'),
+      value: 'email',
     },
   ]);
 
@@ -528,6 +611,32 @@
   const reset = () => {
     formModel.value = generateFormModel();
     search();
+  };
+
+  const changePublic = async (params: NoticeTemplateChangePublic) => {
+    setLoading(true);
+    try {
+      await submitNoticeTemplateChangePublic(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const changeStatus = async (params: NoticeTemplateChangeStatus) => {
+    setLoading(true);
+    try {
+      await submitNoticeTemplateChangeStatus(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSelectDensity = (
