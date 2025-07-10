@@ -466,6 +466,7 @@
       width: 220,
     },
   ]);
+  
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('notice.dict.status.1'),
@@ -484,18 +485,31 @@
       value: 4,
     },
   ]);
+
   const publicOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('notice.dict.category.1'),
-      value: 1,
+      label: t('notice.dict.category.service'),
+      value: 'service',
     },
     {
-      label: t('notice.dict.category.2'),
-      value: 2,
+      label: t('notice.dict.category.activity'),
+      value: 'activity',
     },
     {
-      label: t('notice.dict.category.3'),
-      value: 3,
+      label: t('notice.dict.category.safety'),
+      value: 'safety',
+    },
+    {
+      label: t('notice.dict.category.maint'),
+      value: 'maint',
+    },
+    {
+      label: t('notice.dict.category.product'),
+      value: 'product',
+    },
+    {
+      label: t('notice.dict.category.fault'),
+      value: 'fault',
     },
   ]);
 

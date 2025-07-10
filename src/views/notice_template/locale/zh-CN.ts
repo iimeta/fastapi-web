@@ -71,7 +71,7 @@ export default {
   'notice.template.dict.scenes.quota_exhaustion': '额度耗尽通知',
   'notice.template.dict.scenes.quota_expire_warning': '额度过期提醒',
   'notice.template.dict.scenes.quota_expire': '额度过期通知',
-  'notice.template.dict.scenes.notice': '通知公告',
+  'notice.template.dict.scenes.notice': '消息通知',
   'notice.template.dict.channels.web': '站内信',
   'notice.template.dict.channels.email': '邮件',
   'notice.template.dict.channels.web,email': '站内信, 邮件',

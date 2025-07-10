@@ -79,7 +79,7 @@
           </template>
         </a-dropdown>
       </li> -->
-      <li>
+      <!-- <li>
         <a-tooltip :content="$t('settings.navbar.alerts')">
           <div class="message-box-trigger">
             <a-badge :count="9" dot>
@@ -105,7 +105,7 @@
             <message-box />
           </template>
         </a-popover>
-      </li>
+      </li> -->
       <li>
         <a-tooltip content="版本: v1.6.0">
           <a-link

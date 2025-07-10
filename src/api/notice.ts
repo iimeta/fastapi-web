@@ -5,7 +5,7 @@ export interface Notice {
   id?: string;
   title: string;
   content: string;
-  category: any;
+  category: string;
   scope: any;
   users: number[];
   resellers: number[];
@@ -78,7 +78,7 @@ export interface NoticeDetail {
   id: string;
   title: string;
   content: string;
-  category: number;
+  category: string;
   scope: number;
   users: number[];
   resellers: number[];

@@ -53,14 +53,23 @@
                 :scrollbar="false"
                 allow-search
               >
-                <a-option value="1">
-                  {{ $t('notice.dict.category.1') }}
+                <a-option value="service">
+                  {{ $t('notice.dict.category.service') }}
                 </a-option>
-                <a-option value="2">
-                  {{ $t('notice.dict.category.2') }}
+                <a-option value="activity">
+                  {{ $t('notice.dict.category.activity') }}
                 </a-option>
-                <a-option value="3">
-                  {{ $t('notice.dict.category.3') }}
+                <a-option value="safety">
+                  {{ $t('notice.dict.category.safety') }}
+                </a-option>
+                <a-option value="maint">
+                  {{ $t('notice.dict.category.maint') }}
+                </a-option>
+                <a-option value="product">
+                  {{ $t('notice.dict.category.product') }}
+                </a-option>
+                <a-option value="fault">
+                  {{ $t('notice.dict.category.fault') }}
                 </a-option>
               </a-select>
             </a-form-item>
@@ -345,7 +354,7 @@
   const formData = ref<Notice>({
     title: '',
     content: '',
-    category: ref(),
+    category: '',
     scope: '1',
     users: [],
     resellers: [],

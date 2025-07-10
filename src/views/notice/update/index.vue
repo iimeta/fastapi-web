@@ -55,14 +55,23 @@
                 :scrollbar="false"
                 allow-search
               >
-                <a-option value="1">
-                  {{ $t('notice.dict.category.1') }}
+                <a-option value="service">
+                  {{ $t('notice.dict.category.service') }}
                 </a-option>
-                <a-option value="2">
-                  {{ $t('notice.dict.category.2') }}
+                <a-option value="activity">
+                  {{ $t('notice.dict.category.activity') }}
                 </a-option>
-                <a-option value="3">
-                  {{ $t('notice.dict.category.3') }}
+                <a-option value="safety">
+                  {{ $t('notice.dict.category.safety') }}
+                </a-option>
+                <a-option value="maint">
+                  {{ $t('notice.dict.category.maint') }}
+                </a-option>
+                <a-option value="product">
+                  {{ $t('notice.dict.category.product') }}
+                </a-option>
+                <a-option value="fault">
+                  {{ $t('notice.dict.category.fault') }}
                 </a-option>
               </a-select>
             </a-form-item>
@@ -355,7 +364,7 @@
     id: '',
     title: '',
     content: '',
-    category: ref(),
+    category: '',
     scope: ref(),
     users: [],
     resellers: [],
@@ -407,7 +416,7 @@
       formData.value.id = data.id;
       formData.value.title = data.title;
       formData.value.content = data.content;
-      formData.value.category = String(data.category);
+      formData.value.category = data.category;
       formData.value.scope = String(data.scope);
       formData.value.users = data.users;
       formData.value.resellers = data.resellers;
