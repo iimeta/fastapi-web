@@ -9,8 +9,8 @@ const NOTICE: AppRouteRecordRaw = {
     locale: 'menu.notice',
     requiresAuth: true,
     icon: 'icon-notification',
-    order: 11,
-    roles: ['reseller', 'admin'],
+    order: 110,
+    roles: ['admin'],
   },
   children: [
     {
@@ -20,7 +20,7 @@ const NOTICE: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.notice.list',
         requiresAuth: true,
-        roles: ['reseller', 'admin'],
+        roles: ['admin'],
         activeMenu: 'NoticeList',
       },
     },
@@ -31,7 +31,7 @@ const NOTICE: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.notice.create',
         requiresAuth: true,
-        roles: ['reseller', 'admin'],
+        roles: ['admin'],
         hideInMenu: true,
         activeMenu: 'NoticeList',
       },
@@ -43,7 +43,7 @@ const NOTICE: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.notice.update',
         requiresAuth: true,
-        roles: ['reseller', 'admin'],
+        roles: ['admin'],
         hideInMenu: true,
         activeMenu: 'NoticeList',
       },
@@ -55,7 +55,7 @@ const NOTICE: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.notice.template.list',
         requiresAuth: true,
-        roles: ['reseller', 'admin'],
+        roles: ['admin'],
         activeMenu: 'NoticeTemplateList',
       },
     },
@@ -66,7 +66,7 @@ const NOTICE: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.notice.template.create',
         requiresAuth: true,
-        roles: ['reseller', 'admin'],
+        roles: ['admin'],
         hideInMenu: true,
         activeMenu: 'NoticeTemplateList',
       },
@@ -78,7 +78,7 @@ const NOTICE: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.notice.template.update',
         requiresAuth: true,
-        roles: ['reseller', 'admin'],
+        roles: ['admin'],
         hideInMenu: true,
         activeMenu: 'NoticeTemplateList',
       },

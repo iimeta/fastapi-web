@@ -48,6 +48,9 @@ export function queryNoticeTemplatePage(params: NoticeTemplatePageParams) {
 export interface NoticeTemplateList {
   id: string;
   name: string;
+  title: string;
+  content: string;
+  channels: string[];
 }
 
 export interface NoticeTemplateListRes {

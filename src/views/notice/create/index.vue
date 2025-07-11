@@ -21,6 +21,22 @@
             :label-col-props="{ span: 3 }"
             :wrapper-col-props="{ span: 18 }"
           >
+            <a-form-item :label="$t('notice.label.template')">
+              <a-select
+                v-model="formData.template"
+                :placeholder="$t('notice.placeholder.template')"
+                :scrollbar="false"
+                allow-search
+                @change="handleNoticeTemplateChange"
+              >
+                <a-option
+                  v-for="item in noticeTemplates"
+                  :key="item.id"
+                  :value="item.id"
+                  :label="item.name"
+                />
+              </a-select>
+            </a-form-item>
             <a-form-item
               field="title"
               :label="$t('notice.label.title')"
@@ -158,7 +174,7 @@
                 />
               </a-select>
             </a-form-item>
-            <a-form-item
+            <!-- <a-form-item
               field="channels"
               :label="$t('notice.label.channels')"
               :rules="[
@@ -285,7 +301,7 @@
                 style="width: 100%"
                 show-time
               />
-            </a-form-item>
+            </a-form-item> -->
             <a-form-item
               field="content"
               :label="$t('notice.label.content')"
@@ -342,6 +358,10 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { submitNoticeCreate, Notice } from '@/api/notice';
+  import {
+    queryNoticeTemplateList,
+    NoticeTemplateList,
+  } from '@/api/notice_template';
   import { UserList, queryUserList } from '@/api/admin_user';
   import { ResellerList, queryResellerList } from '@/api/admin_reseller';
   import AiEditor from '@/views/common/aieditor.vue';
@@ -358,7 +378,7 @@
     scope: '1',
     users: [],
     resellers: [],
-    channels: ['web', 'email'],
+    channels: ['email'],
     is_popup: false,
     priority: ref(),
     expires_at: '',
@@ -366,6 +386,36 @@
     remark: '',
     status: 1,
   });
+
+  const noticeTemplates = ref<NoticeTemplateList[]>([]);
+  const noticeTemplateMap = new Map();
+  const getNoticeTemplateList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryNoticeTemplateList();
+      noticeTemplates.value = data.items;
+      for (let i = 0; i < noticeTemplates.value.length; i += 1) {
+        noticeTemplateMap.set(
+          noticeTemplates.value[i].id,
+          noticeTemplates.value[i]
+        );
+      }
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getNoticeTemplateList();
+
+  const handleNoticeTemplateChange = () => {
+    const noticeTemplate = noticeTemplateMap.get(formData.value.template);
+    if (noticeTemplate) {
+      formData.value.title = noticeTemplate.title;
+      formData.value.content = noticeTemplate.content;
+      formData.value.channels = noticeTemplate.channels;
+    }
+  };
 
   const users = ref<UserList[]>([]);
 

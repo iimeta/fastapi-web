@@ -265,6 +265,7 @@
                 query: { id: `${record.id}` },
               })
             "
+            :disabled="record.status === 1"
           >
             {{ $t('notice.columns.operations.update') }}
           </a-button>
@@ -401,13 +402,13 @@
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
-    {
-      title: t('notice.columns.user_id'),
-      dataIndex: 'user_id',
-      slotName: 'user_id',
-      align: 'center',
-      width: 80,
-    },
+    // {
+    //   title: t('notice.columns.user_id'),
+    //   dataIndex: 'user_id',
+    //   slotName: 'user_id',
+    //   align: 'center',
+    //   width: 80,
+    // },
     {
       title: t('notice.columns.title'),
       dataIndex: 'title',
@@ -430,12 +431,12 @@
       ellipsis: true,
       tooltip: true,
     },
-    {
-      title: t('notice.columns.priority'),
-      dataIndex: 'priority',
-      slotName: 'priority',
-      align: 'center',
-    },
+    // {
+    //   title: t('notice.columns.priority'),
+    //   dataIndex: 'priority',
+    //   slotName: 'priority',
+    //   align: 'center',
+    // },
     {
       title: t('notice.columns.remark'),
       dataIndex: 'remark',
@@ -466,7 +467,7 @@
       width: 220,
     },
   ]);
-  
+
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('notice.dict.status.1'),
@@ -476,14 +477,14 @@
       label: t('notice.dict.status.2'),
       value: 2,
     },
-    {
-      label: t('notice.dict.status.3'),
-      value: 3,
-    },
-    {
-      label: t('notice.dict.status.4'),
-      value: 4,
-    },
+    // {
+    //   label: t('notice.dict.status.3'),
+    //   value: 3,
+    // },
+    // {
+    //   label: t('notice.dict.status.4'),
+    //   value: 4,
+    // },
   ]);
 
   const publicOptions = computed<SelectOptionData[]>(() => [

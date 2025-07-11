@@ -10,7 +10,7 @@ const MY_GROUP: AppRouteRecordRaw = {
     locale: 'menu.my.group',
     requiresAuth: true,
     icon: 'icon-user-group',
-    order: 3,
+    order: 30,
     hideChildrenInMenu: true,
     roles: ['reseller', 'user'],
   },

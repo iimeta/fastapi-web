@@ -10,7 +10,7 @@ const APP_KEY: AppRouteRecordRaw = {
     locale: 'menu.key.app',
     requiresAuth: true,
     icon: 'icon-safe',
-    order: 10,
+    order: 100,
     hideChildrenInMenu: true,
     roles: ['reseller', 'user', 'admin'],
   },

@@ -9,7 +9,7 @@ const FINANCE: AppRouteRecordRaw = {
     locale: 'menu.finance',
     requiresAuth: true,
     icon: 'icon-wechatpay',
-    order: 12,
+    order: 120,
   },
   children: [
     {
@@ -20,6 +20,7 @@ const FINANCE: AppRouteRecordRaw = {
         locale: 'menu.bill.list',
         requiresAuth: true,
         roles: ['reseller', 'user', 'admin'],
+        activeMenu: 'BillList',
       },
     },
     {
@@ -30,6 +31,7 @@ const FINANCE: AppRouteRecordRaw = {
         locale: 'menu.deal_record.list',
         requiresAuth: true,
         roles: ['reseller', 'user', 'admin'],
+        activeMenu: 'DealRecordList',
       },
     },
   ],

@@ -129,7 +129,7 @@
                 </a-checkbox>
               </a-space>
             </a-form-item>
-            <a-form-item
+            <!-- <a-form-item
               field="channels"
               :label="$t('notice.template.label.channels')"
               :rules="[
@@ -164,7 +164,7 @@
               :label="$t('notice.template.label.is_public')"
             >
               <a-switch v-model="formData.is_public" />
-            </a-form-item>
+            </a-form-item> -->
             <a-form-item
               field="title"
               :label="$t('notice.template.label.title')"
@@ -253,7 +253,7 @@
     scenes: [],
     title: '',
     content: '',
-    channels: [],
+    channels: ['email'],
     is_popup: false,
     is_public: true,
     remark: '',

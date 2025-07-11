@@ -80,13 +80,13 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="channels"
-                  :label="$t('notice.template.form.channels')"
+                  field="status"
+                  :label="$t('notice.template.form.status')"
                 >
                   <a-select
-                    v-model="formModel.channels"
+                    v-model="formModel.status"
                     :placeholder="$t('notice.template.form.selectDefault')"
-                    :options="channelsOptions"
+                    :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -402,7 +402,7 @@
     return {
       name: '',
       scenes: [],
-      channels: [],
+      status: ref(),
       title: '',
       content: '',
       remark: '',
@@ -451,13 +451,13 @@
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
-    {
-      title: t('notice.template.columns.user_id'),
-      dataIndex: 'user_id',
-      slotName: 'user_id',
-      align: 'center',
-      width: 80,
-    },
+    // {
+    //   title: t('notice.template.columns.user_id'),
+    //   dataIndex: 'user_id',
+    //   slotName: 'user_id',
+    //   align: 'center',
+    //   width: 80,
+    // },
     {
       title: t('notice.template.columns.name'),
       dataIndex: 'name',
@@ -474,13 +474,13 @@
       ellipsis: true,
       tooltip: true,
     },
-    {
-      title: t('notice.template.columns.is_public'),
-      dataIndex: 'is_public',
-      slotName: 'is_public',
-      align: 'center',
-      width: 65,
-    },
+    // {
+    //   title: t('notice.template.columns.is_public'),
+    //   dataIndex: 'is_public',
+    //   slotName: 'is_public',
+    //   align: 'center',
+    //   width: 65,
+    // },
     {
       title: t('notice.template.columns.remark'),
       dataIndex: 'remark',
@@ -559,14 +559,14 @@
     },
   ]);
 
-  const channelsOptions = computed<SelectOptionData[]>(() => [
+  const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('notice.template.dict.channels.web'),
-      value: 'web',
+      label: t('model.dict.status.1'),
+      value: 1,
     },
     {
-      label: t('notice.template.dict.channels.email'),
-      value: 'email',
+      label: t('model.dict.status.2'),
+      value: 2,
     },
   ]);
 

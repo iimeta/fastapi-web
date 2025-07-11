@@ -10,7 +10,7 @@ const USER: AppRouteRecordRaw = {
     locale: 'menu.user',
     icon: 'icon-user',
     requiresAuth: true,
-    order: 8,
+    order: 80,
     hideChildrenInMenu: true,
     roles: ['reseller', 'admin'],
   },
@@ -35,6 +35,7 @@ const USER: AppRouteRecordRaw = {
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         hideInMenu: true,
+        activeMenu: 'user',
       },
     },
     {
@@ -46,17 +47,7 @@ const USER: AppRouteRecordRaw = {
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         hideInMenu: true,
-      },
-    },
-    {
-      path: 'detail',
-      name: 'UserDetail',
-      component: () => import('@/views/user/detail/index.vue'),
-      meta: {
-        locale: 'menu.user.detail',
-        requiresAuth: true,
-        roles: ['reseller', 'admin'],
-        hideInMenu: true,
+        activeMenu: 'user',
       },
     },
     {

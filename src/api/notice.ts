@@ -16,6 +16,7 @@ export interface Notice {
   scheduled_time: string;
   remark: string;
   status: number;
+  template?: string;
 }
 
 export function submitNoticeCreate(data: Notice) {

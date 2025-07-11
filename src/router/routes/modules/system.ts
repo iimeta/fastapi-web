@@ -9,7 +9,7 @@ const SYS: AppRouteRecordRaw = {
     locale: 'menu.sys',
     requiresAuth: true,
     icon: 'icon-settings',
-    order: 20,
+    order: 200,
     roles: ['reseller', 'admin'],
   },
   children: [
@@ -33,6 +33,7 @@ const SYS: AppRouteRecordRaw = {
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
+        activeMenu: 'ResellerList',
       },
     },
     {
@@ -44,17 +45,7 @@ const SYS: AppRouteRecordRaw = {
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
-      },
-    },
-    {
-      path: 'reseller/detail',
-      name: 'ResellerDetail',
-      component: () => import('@/views/system/reseller/detail/index.vue'),
-      meta: {
-        locale: 'menu.reseller.detail',
-        requiresAuth: true,
-        roles: ['admin'],
-        hideInMenu: true,
+        activeMenu: 'ResellerList',
       },
     },
     {
@@ -65,6 +56,7 @@ const SYS: AppRouteRecordRaw = {
         locale: 'menu.site.config',
         requiresAuth: true,
         roles: ['reseller', 'admin'],
+        activeMenu: 'SiteConfig',
       },
     },
     {
@@ -76,6 +68,7 @@ const SYS: AppRouteRecordRaw = {
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         hideInMenu: true,
+        activeMenu: 'SiteConfig',
       },
     },
     {
@@ -87,6 +80,7 @@ const SYS: AppRouteRecordRaw = {
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         hideInMenu: true,
+        activeMenu: 'SiteConfig',
       },
     },
     {
@@ -97,6 +91,7 @@ const SYS: AppRouteRecordRaw = {
         locale: 'menu.sys.config',
         requiresAuth: true,
         roles: ['admin'],
+        activeMenu: 'SysConfig',
       },
     },
   ],

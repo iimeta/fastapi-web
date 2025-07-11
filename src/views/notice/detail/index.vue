@@ -13,6 +13,16 @@
           {{ currentData.title }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="t('notice.detail.content')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span
+          v-else
+          style="max-height: 300px; display: block; overflow: auto"
+          v-html="currentData.content"
+        ></span>
+      </a-descriptions-item>
       <a-descriptions-item :label="t('notice.detail.category')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -45,7 +55,7 @@
           {{ currentData.resellers?.toString() || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.channels')" :span="2">
+      <!-- <a-descriptions-item :label="t('notice.detail.channels')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -84,7 +94,7 @@
         <span v-else>
           {{ currentData.scheduled_time || '-' }}
         </span>
-      </a-descriptions-item>
+      </a-descriptions-item> -->
       <a-descriptions-item :label="t('common.remark')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
