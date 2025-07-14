@@ -239,8 +239,6 @@
     submitNoticeTemplateCreate,
     NoticeTemplate,
   } from '@/api/notice_template';
-  import { UserList, queryUserList } from '@/api/admin_user';
-  import { ResellerList, queryResellerList } from '@/api/admin_reseller';
   import AiEditor from '@/views/common/aieditor.vue';
 
   const { proxy } = getCurrentInstance() as any;
@@ -259,36 +257,6 @@
     remark: '',
     status: 1,
   });
-
-  const users = ref<UserList[]>([]);
-
-  const getUserList = async () => {
-    setLoading(true);
-    try {
-      const { data } = await queryUserList();
-      users.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getUserList();
-
-  const resellers = ref<ResellerList[]>([]);
-
-  const getResellerList = async () => {
-    setLoading(true);
-    try {
-      const { data } = await queryResellerList();
-      resellers.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getResellerList();
 
   const submitForm = async () => {
     const res = await formRef.value?.validate();
