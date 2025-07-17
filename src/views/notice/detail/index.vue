@@ -19,7 +19,7 @@
         </a-skeleton>
         <span
           v-else
-          style="max-height: 300px; display: block; overflow: auto"
+          style="max-height: 500px; display: block; overflow: auto"
           v-html="currentData.content"
         ></span>
       </a-descriptions-item>
