@@ -61,7 +61,7 @@ export default {
   'notice.template.columns.operations.delete': '删除',
   'notice.template.columns.operations.copy': '复制',
   // dict
-  'notice.template.dict.scenes.code': '验证码',
+  'notice.template.dict.scenes.code': '安全验证',
   'notice.template.dict.scenes.login': '登录通知',
   'notice.template.dict.scenes.register': '注册通知',
   'notice.template.dict.scenes.forget_password': '找回密码',

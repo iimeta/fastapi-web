@@ -32,7 +32,7 @@
                   :label="$t('notice.template.form.name')"
                 >
                   <a-input
-                    v-model="formModel.title"
+                    v-model="formModel.name"
                     :placeholder="$t('notice.template.form.name.placeholder')"
                     allow-clear
                   />
