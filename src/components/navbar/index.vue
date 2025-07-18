@@ -107,10 +107,10 @@
         </a-popover>
       </li> -->
       <li>
-        <a-tooltip content="版本: v1.6.0">
+        <a-tooltip :content="`版本: v${config.version}`">
           <a-link
             target="_blank"
-            href="https://github.com/iimeta/fastapi/releases/tag/v1.6.0"
+            :href="`https://github.com/iimeta/fastapi/releases/tag/v${config.version}`"
           >
             <a-button class="nav-btn" type="outline" :shape="'circle'">
               <template #icon>
@@ -224,6 +224,7 @@
   import useUser from '@/hooks/user';
   import Menu from '@/components/menu/index.vue';
   import MessageBox from '../message-box/index.vue';
+  import config from "../../../package.json";
 
   const appStore = useAppStore();
   const userStore = useUserStore();

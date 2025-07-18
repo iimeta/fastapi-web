@@ -7,7 +7,11 @@
     :bordered="false"
   >
     <template #extra>
-      <a-link :href="appStore.getDocumentMoreUrl" target="_blank">
+      <a-link
+        v-if="appStore.getDocumentMoreUrl"
+        :href="appStore.getDocumentMoreUrl"
+        target="_blank"
+      >
         {{ $t('workplace.viewMore') }}
       </a-link>
     </template>

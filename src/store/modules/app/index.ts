@@ -50,7 +50,8 @@ const useAppStore = defineStore('app', {
       );
     },
     getJumpUrl(state: AppState): string | undefined {
-      return state.config.jump_url;
+      return state.config.jump_url ||
+        (state.config.domain ? undefined : 'https://www.fastapi.ai');
     },
     getIcpBeian(state: AppState): string | undefined {
       return state.config.icp_beian;
@@ -73,11 +74,11 @@ const useAppStore = defineStore('app', {
           },
           {
             image_url: 'https://fastapi.ai/public/images/iimyun.png',
-            jump_url: 'https://www.iimyun.com/cart?fid=3&gid=11',
+            jump_url: 'https://www.iimyun.com/cart?fid=3&gid=49',
           },
           {
             image_url: 'https://fastapi.ai/public/images/iimyun.png',
-            jump_url: 'https://www.iimyun.com/cart?fid=3&gid=11',
+            jump_url: 'https://www.iimyun.com/cart?fid=6&gid=15',
           },
         ]
       );
@@ -105,28 +106,28 @@ const useAppStore = defineStore('app', {
     getAnnouncementMoreUrl(state: AppState): string | undefined {
       return (
         state.config.announcement_more_url ||
-        (state.config.announcement_title
+        (state.config.announcement_title && state.config.domain
           ? undefined
-          : 'https://github.com/iimeta/fastapi-admin/releases')
+          : 'https://github.com/iimeta/fastapi/releases')
       );
     },
     getAnnouncements(state: AppState): Announcement[] | undefined {
       return (
         state.config.announcements || [
           {
+            content: 'v1.7.0 版本发布啦! 啦!! 啦!!!',
+            jump_url:
+              'https://github.com/iimeta/fastapi/releases/tag/v1.7.0',
+          },
+          {
             content: 'v1.6.0 版本发布啦! 啦!! 啦!!!',
             jump_url:
-              'https://github.com/iimeta/fastapi-admin/releases/tag/v1.6.0',
+              'https://github.com/iimeta/fastapi/releases/tag/v1.6.0',
           },
           {
             content: 'v1.5.0 版本发布啦! 啦!! 啦!!!',
             jump_url:
-              'https://github.com/iimeta/fastapi-admin/releases/tag/v1.5.0',
-          },
-          {
-            content: 'v1.4.0 版本发布啦! 啦!! 啦!!!',
-            jump_url:
-              'https://github.com/iimeta/fastapi-admin/releases/tag/v1.4.0',
+              'https://github.com/iimeta/fastapi/releases/tag/v1.5.0',
           },
         ]
       );
@@ -137,7 +138,7 @@ const useAppStore = defineStore('app', {
     getDocumentMoreUrl(state: AppState): string | undefined {
       return (
         state.config.document_more_url ||
-        (state.config.document_title ? undefined : 'https://www.fastapi.ai')
+        (state.config.document_title && state.config.domain ? undefined : 'https://www.fastapi.ai')
       );
     },
     getDocuments(state: AppState): Document[] | undefined {
