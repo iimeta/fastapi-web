@@ -49,6 +49,7 @@ export default {
   // columns
   'notice.template.columns.user_id': '用户ID',
   'notice.template.columns.name': '名称',
+  'notice.template.columns.scenes': '场景',
   'notice.template.columns.title': '标题',
   'notice.template.columns.content': '内容',
   'notice.template.columns.status': '状态',
@@ -67,6 +68,7 @@ export default {
   'notice.template.dict.scenes.forget_password': '找回密码',
   'notice.template.dict.scenes.change_password': '修改密码',
   'notice.template.dict.scenes.change_email': '修改邮箱',
+  'notice.template.dict.scenes.quota_recharge': '充值额度',
   'notice.template.dict.scenes.quota_warning': '额度不足提醒',
   'notice.template.dict.scenes.quota_exhaustion': '额度耗尽通知',
   'notice.template.dict.scenes.quota_expire_warning': '额度过期提醒',

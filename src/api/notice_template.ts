@@ -20,6 +20,7 @@ export function submitNoticeTemplateCreate(data: NoticeTemplate) {
 
 export interface NoticeTemplatePage {
   id: string;
+  scenes: string[];
   title: string;
   status: number;
   remark: string;
@@ -45,6 +46,10 @@ export function queryNoticeTemplatePage(params: NoticeTemplatePageParams) {
   return axios.post<NoticeTemplatePageRes>('/api/v1/notice/template/page', params);
 }
 
+export interface NoticeTemplateListParams {
+  scenes: string[];
+}
+
 export interface NoticeTemplateList {
   id: string;
   name: string;
@@ -57,8 +62,13 @@ export interface NoticeTemplateListRes {
   items: NoticeTemplateList[];
 }
 
-export function queryNoticeTemplateList() {
-  return axios.get<NoticeTemplateListRes>('/api/v1/notice/template/list');
+export function queryNoticeTemplateList(params: NoticeTemplateListParams) {
+  return axios.get<NoticeTemplateListRes>('/api/v1/notice/template/list', {
+    params,
+    paramsSerializer: (obj) => {
+      return qs.stringify(obj);
+    },
+  });
 }
 
 export interface NoticeTemplateDeleteParams {

@@ -402,7 +402,7 @@
   const getNoticeTemplateList = async () => {
     setLoading(true);
     try {
-      const { data } = await queryNoticeTemplateList();
+      const { data } = await queryNoticeTemplateList({ scenes: ['notice'] });
       noticeTemplates.value = data.items;
       for (let i = 0; i < noticeTemplates.value.length; i += 1) {
         noticeTemplateMap.set(

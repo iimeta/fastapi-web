@@ -83,7 +83,11 @@
                 >
                   <a-range-picker
                     v-model="formModel.publish_time"
-                    style="width: 100%"
+                    :placeholder="['开始时间', '结束时间']"
+                    :time-picker-props="{
+                      defaultValue: ['00:00:00', '23:59:59'],
+                    }"
+                    show-time
                   />
                 </a-form-item>
               </a-col>

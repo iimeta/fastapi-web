@@ -467,6 +467,14 @@
       tooltip: true,
     },
     {
+      title: t('notice.template.columns.scenes'),
+      dataIndex: 'scenes',
+      slotName: 'scenes',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
       title: t('notice.template.columns.title'),
       dataIndex: 'title',
       slotName: 'title',
@@ -538,6 +546,10 @@
       value: 'change_email',
     },
     {
+      label: t('notice.template.dict.scenes.quota_recharge'),
+      value: 'quota_recharge',
+    },
+    {
       label: t('notice.template.dict.scenes.quota_warning'),
       value: 'quota_warning',
     },
@@ -578,6 +590,13 @@
     setLoading(true);
     try {
       const { data } = await queryNoticeTemplatePage(params);
+      for (let i = 0; i < data.items.length; i += 1) {
+        for (let j = 0; j < data.items[i].scenes.length; j += 1) {
+          data.items[i].scenes[j] = t(
+            `notice.template.dict.scenes.${data.items[i].scenes[j]}`
+          );
+        }
+      }
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;

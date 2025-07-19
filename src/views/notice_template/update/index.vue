@@ -98,6 +98,13 @@
                 </a-checkbox>
                 <a-checkbox
                   v-model="formData.scenes"
+                  value="quota_recharge"
+                  class="scenes"
+                >
+                  {{ $t('notice.template.dict.scenes.quota_recharge') }}
+                </a-checkbox>
+                <a-checkbox
+                  v-model="formData.scenes"
                   value="quota_warning"
                   class="scenes"
                 >
