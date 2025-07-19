@@ -407,9 +407,9 @@
 
   const columns = computed<TableColumnData[]>(() => [
     // {
-    //   title: t('notice.columns.user_id'),
-    //   dataIndex: 'user_id',
-    //   slotName: 'user_id',
+    //   title: t('notice.columns.publisher'),
+    //   dataIndex: 'publisher',
+    //   slotName: 'publisher',
     //   align: 'center',
     //   width: 80,
     // },

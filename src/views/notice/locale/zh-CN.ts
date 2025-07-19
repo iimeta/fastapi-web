@@ -68,7 +68,7 @@ export default {
   // operation
   'notice.operation.create': '新建',
   // columns
-  'notice.columns.user_id': '用户ID',
+  'notice.columns.publisher': '发布人',
   'notice.columns.title': '标题',
   'notice.columns.content': '内容',
   'notice.columns.category': '分类',

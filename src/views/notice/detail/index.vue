@@ -116,7 +116,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.publish_time }}
+          {{ currentData.publish_time || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('common.created_at')" :span="2">
