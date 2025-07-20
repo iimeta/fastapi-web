@@ -162,6 +162,7 @@ export interface UserRecharge {
   quota: any;
   quota_type: any;
   quota_expires_at: string;
+  is_send_notice: boolean;
 }
 
 export function submitUserRecharge(data: UserRecharge) {
@@ -191,6 +192,7 @@ export interface UserBatchOperate {
   value?: any;
   quota_type?: any;
   quota_expires_at?: string;
+  is_send_notice?: boolean;
   data?: number[];
 }
 

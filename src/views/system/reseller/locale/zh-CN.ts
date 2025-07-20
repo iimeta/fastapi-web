@@ -46,6 +46,7 @@ export default {
   'reseller.success.models': '保存成功',
   'reseller.button.save': '保存',
   'reseller.label.del.data': '删除数据',
+  'reseller.label.is_send_notice': '发送通知',
   // detail
   'reseller.detail.label.userId': '代理商ID',
   'reseller.detail.label.account': '账号',

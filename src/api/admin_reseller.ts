@@ -163,6 +163,7 @@ export interface ResellerRecharge {
   quota: any;
   quota_type: any;
   quota_expires_at: string;
+  is_send_notice: boolean;
 }
 
 export function submitResellerRecharge(data: ResellerRecharge) {
@@ -192,6 +193,7 @@ export interface ResellerBatchOperate {
   value?: any;
   quota_type?: any;
   quota_expires_at?: string;
+  is_send_notice?: boolean;
   data?: number[];
 }
 

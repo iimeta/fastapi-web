@@ -612,6 +612,12 @@
               ]"
             />
           </a-form-item>
+          <a-form-item
+            field="is_send_notice"
+            :label="$t('reseller.label.is_send_notice')"
+          >
+            <a-switch v-model="formData.is_send_notice" />
+          </a-form-item>
         </a-form>
       </a-modal>
 
@@ -1152,6 +1158,7 @@
       formData.value.quota_type = '1';
       formData.value.user_id = params.user_id;
       formData.value.quota_expires_at = params.quota_expires_at;
+      formData.value.is_send_notice = true;
       tableRef.value.selectAll(false);
       rechargeVisible.value = true;
     } catch (err) {
@@ -1212,6 +1219,7 @@
         value: formData.value.quota,
         quota_type: formData.value.quota_type,
         quota_expires_at: formData.value.quota_expires_at,
+        is_send_notice: formData.value.is_send_notice,
       });
       return;
     }
@@ -1294,6 +1302,7 @@
             formData.value.quota = ref();
             formData.value.quota_type = '1';
             formData.value.quota_expires_at = '';
+            formData.value.is_send_notice = true;
             rechargeVisible.value = true;
           } else if (formData.value.quota_type === '2') {
             alertContent = `是否确定扣除所选的${

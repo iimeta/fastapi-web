@@ -45,6 +45,7 @@ export default {
   'user.label.quota_expires_at': '过期时间',
   'user.placeholder.quota_expires_at': '请设置额度过期时间',
   'user.label.del.data': '删除数据',
+  'user.label.is_send_notice': '发送通知',
   // detail
   'user.detail.label.userId': '用户ID',
   'user.detail.label.account': '账号',
