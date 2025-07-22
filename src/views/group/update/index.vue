@@ -107,13 +107,19 @@
               v-if="!formData.is_default"
               field="weight"
               :label="$t('group.label.weight')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('group.error.weight.required'),
+                },
+              ]"
             >
               <a-input-number
                 v-model="formData.weight"
                 :placeholder="$t('group.placeholder.weight')"
                 :precision="0"
                 :min="1"
-                :max="100"
+                :max="99999"
                 allow-clear
               />
             </a-form-item>
