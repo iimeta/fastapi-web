@@ -60,6 +60,26 @@
               <div style="margin-left: 10px"> % </div>
             </a-form-item>
             <a-form-item
+              v-if="!formData.is_default"
+              field="weight"
+              :label="$t('group.label.weight')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('group.error.weight.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.weight"
+                :placeholder="$t('group.placeholder.weight')"
+                :precision="0"
+                :min="1"
+                :max="99999"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
               field="models"
               :label="$t('group.label.models')"
               :rules="[
@@ -82,17 +102,6 @@
               />
             </a-form-item>
             <a-form-item
-              field="is_default"
-              :label="$t('group.label.is_default')"
-              :rules="[
-                {
-                  required: true,
-                },
-              ]"
-            >
-              <a-switch v-model="formData.is_default" />
-            </a-form-item>
-            <a-form-item
               field="is_public"
               :label="$t('group.label.is_public')"
               :rules="[
@@ -104,99 +113,10 @@
               <a-switch v-model="formData.is_public" />
             </a-form-item>
             <a-form-item
-              v-if="!formData.is_default"
-              field="weight"
-              :label="$t('group.label.weight')"
-              :rules="[
-                {
-                  required: true,
-                  message: $t('group.error.weight.required'),
-                },
-              ]"
+              field="is_default"
+              :label="$t('group.label.is_default')"
             >
-              <a-input-number
-                v-model="formData.weight"
-                :placeholder="$t('group.placeholder.weight')"
-                :precision="0"
-                :min="1"
-                :max="99999"
-                allow-clear
-              />
-            </a-form-item>
-            <a-form-item
-              field="expires_at"
-              :label="$t('group.label.expires_at')"
-            >
-              <a-date-picker
-                v-model="formData.expires_at"
-                :placeholder="$t('group.placeholder.expires_at')"
-                :time-picker-props="{ defaultValue: '23:59:59' }"
-                :disabled-date="
-                  (current) =>
-                    dayjs(current).isBefore(dayjs().subtract(1, 'day'))
-                "
-                allow-clear
-                style="width: 100%"
-                show-time
-                :shortcuts="[
-                  {
-                    label: '1',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(1, 'day'),
-                  },
-                  {
-                    label: '7',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(7, 'day'),
-                  },
-                  {
-                    label: '15',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(15, 'day'),
-                  },
-                  {
-                    label: '30',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(30, 'day'),
-                  },
-                  {
-                    label: '90',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(90, 'day'),
-                  },
-                  {
-                    label: '180',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(180, 'day'),
-                  },
-                  {
-                    label: '365',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(365, 'day'),
-                  },
-                ]"
-              />
+              <a-switch v-model="formData.is_default" />
             </a-form-item>
             <a-form-item
               field="remark"
@@ -215,52 +135,6 @@
             <a-divider orientation="left">
               {{ $t('common.title.advanced') }}
             </a-divider>
-            <a-form-item
-              field="is_limit_quota"
-              :label="$t('group.label.is_limit_quota')"
-            >
-              <a-switch v-model="formData.is_limit_quota" />
-            </a-form-item>
-            <a-form-item
-              v-if="formData.is_limit_quota"
-              field="quota"
-              :label="$t('group.label.quota')"
-              :rules="[
-                {
-                  required: true,
-                  message: $t('group.error.quota.required'),
-                },
-              ]"
-            >
-              <a-input-number
-                v-model="formData.quota"
-                :placeholder="$t('group.placeholder.quota')"
-                :precision="0"
-                :min="1"
-                :max="9999999999999"
-                allow-clear
-              />
-              <div style="margin-left: 10px">
-                ${{ formData.quota ? quotaConv(formData.quota) : '0.00' }}
-              </div>
-            </a-form-item>
-            <a-form-item v-if="formData.is_limit_quota">
-              <a-radio-group
-                type="button"
-                @change="handleQuotaQuickChange as any"
-              >
-                <a-radio :value="1"> $1 </a-radio>
-                <a-radio :value="2"> $2 </a-radio>
-                <a-radio :value="5"> $5 </a-radio>
-                <a-radio :value="10"> $10 </a-radio>
-                <a-radio :value="20"> $20 </a-radio>
-                <a-radio :value="50"> $50 </a-radio>
-                <a-radio :value="100"> $100 </a-radio>
-                <a-radio :value="200"> $200 </a-radio>
-                <a-radio :value="500"> $500 </a-radio>
-                <a-radio :value="1000"> $1000 </a-radio>
-              </a-radio-group>
-            </a-form-item>
             <a-form-item
               field="is_enable_model_agent"
               :label="$t('group.label.is_enable_model_agent')"
@@ -315,6 +189,52 @@
                   :label="item.name"
                 />
               </a-select>
+            </a-form-item>
+            <a-form-item
+              field="is_limit_quota"
+              :label="$t('group.label.is_limit_quota')"
+            >
+              <a-switch v-model="formData.is_limit_quota" />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_limit_quota"
+              field="quota"
+              :label="$t('group.label.quota')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('group.error.quota.required'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.quota"
+                :placeholder="$t('group.placeholder.quota')"
+                :precision="0"
+                :min="1"
+                :max="9999999999999"
+                allow-clear
+              />
+              <div style="margin-left: 10px">
+                ${{ formData.quota ? quotaConv(formData.quota) : '0.00' }}
+              </div>
+            </a-form-item>
+            <a-form-item v-if="formData.is_limit_quota">
+              <a-radio-group
+                type="button"
+                @change="handleQuotaQuickChange as any"
+              >
+                <a-radio :value="1"> $1 </a-radio>
+                <a-radio :value="2"> $2 </a-radio>
+                <a-radio :value="5"> $5 </a-radio>
+                <a-radio :value="10"> $10 </a-radio>
+                <a-radio :value="20"> $20 </a-radio>
+                <a-radio :value="50"> $50 </a-radio>
+                <a-radio :value="100"> $100 </a-radio>
+                <a-radio :value="200"> $200 </a-radio>
+                <a-radio :value="500"> $500 </a-radio>
+                <a-radio :value="1000"> $1000 </a-radio>
+              </a-radio-group>
             </a-form-item>
             <a-form-item
               field="model_forward"
@@ -563,6 +483,81 @@
               >
                 <icon-minus />
               </a-button>
+            </a-form-item>
+            <a-form-item
+              field="expires_at"
+              :label="$t('group.label.expires_at')"
+            >
+              <a-date-picker
+                v-model="formData.expires_at"
+                :placeholder="$t('group.placeholder.expires_at')"
+                :time-picker-props="{ defaultValue: '23:59:59' }"
+                :disabled-date="
+                  (current) =>
+                    dayjs(current).isBefore(dayjs().subtract(1, 'day'))
+                "
+                allow-clear
+                style="width: 100%"
+                show-time
+                :shortcuts="[
+                  {
+                    label: '1',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(1, 'day'),
+                  },
+                  {
+                    label: '7',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(7, 'day'),
+                  },
+                  {
+                    label: '15',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(15, 'day'),
+                  },
+                  {
+                    label: '30',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(30, 'day'),
+                  },
+                  {
+                    label: '90',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(90, 'day'),
+                  },
+                  {
+                    label: '180',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(180, 'day'),
+                  },
+                  {
+                    label: '365',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(365, 'day'),
+                  },
+                ]"
+              />
             </a-form-item>
             <a-space>
               <div class="submit-btn">
