@@ -46,9 +46,11 @@
         </a-skeleton>
         <span v-else style="max-height: 200px; display: block; overflow: auto">
           {{
-            currentData.scope === 1
-              ? $t(`notice.dict.scope.${currentData.scope}`)
-              : currentData.users?.join('\n') || '-'
+            currentData.scope === 1 || currentData.scope === 2
+              ? '全部'
+              : currentData.scope === 4 || currentData.scope === 6
+              ? currentData.users?.join('\n') || '-'
+              : '-'
           }}
         </span>
       </a-descriptions-item>
@@ -58,9 +60,11 @@
         </a-skeleton>
         <span v-else style="max-height: 200px; display: block; overflow: auto">
           {{
-            currentData.scope === 1
-              ? $t(`notice.dict.scope.${currentData.scope}`)
-              : currentData.resellers?.join('\n') || '-'
+            currentData.scope === 1 || currentData.scope === 3
+              ? '全部'
+              : currentData.scope === 5 || currentData.scope === 6
+              ? currentData.resellers?.join('\n') || '-'
+              : '-'
           }}
         </span>
       </a-descriptions-item>
