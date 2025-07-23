@@ -21,7 +21,8 @@
           v-else
           style="max-height: 500px; display: block; overflow: auto"
           v-html="currentData.content"
-        ></span>
+        >
+        </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('notice.detail.category')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
@@ -31,7 +32,7 @@
           {{ $t(`notice.dict.category.${currentData.category}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.scope')" :span="2">
+      <a-descriptions-item :label="t('notice.detail.scope')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -39,7 +40,7 @@
           {{ $t(`notice.dict.scope.${currentData.scope}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.users')" :span="2">
+      <a-descriptions-item :label="t('notice.detail.users')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -103,15 +104,17 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')" :span="2">
+      <a-descriptions-item :label="t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ $t(`notice.dict.status.${currentData.status}`) }}
+          <a-tag :color="currentData.status === 1 ? 'green' : ''">
+            {{ $t(`notice.dict.status.${currentData.status}`) }}
+          </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.publish_time')" :span="2">
+      <a-descriptions-item :label="t('notice.detail.publish_time')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -119,7 +122,7 @@
           {{ currentData.publish_time || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')" :span="2">
+      <a-descriptions-item :label="t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

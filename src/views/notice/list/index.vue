@@ -239,7 +239,9 @@
           {{ record.remark || '-' }}
         </template>
         <template #status="{ record }">
-          {{ $t(`notice.dict.status.${record.status}`) }}
+          <a-tag :color="record.status === 1 ? 'green' : ''">
+            {{ $t(`notice.dict.status.${record.status}`) }}
+          </a-tag>
         </template>
         <template #publish_time="{ record }">
           {{ record.publish_time || '-' }}

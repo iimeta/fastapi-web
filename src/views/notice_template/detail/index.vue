@@ -5,7 +5,7 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item :label="t('notice.template.detail.name')" :span="2">
+      <a-descriptions-item :label="t('notice.template.detail.name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -13,10 +13,7 @@
           {{ currentData.name }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('notice.template.detail.scenes')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('notice.template.detail.scenes')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -43,7 +40,8 @@
           v-else
           style="max-height: 500px; display: block; overflow: auto"
           v-html="currentData.content"
-        ></span>
+        >
+        </span>
       </a-descriptions-item>
       <!-- <a-descriptions-item
         :label="t('notice.template.detail.channels')"
@@ -83,15 +81,17 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')" :span="2">
+      <a-descriptions-item :label="t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ $t(`dict.status.${currentData.status}`) }}
+          <a-tag :color="currentData.status === 1 ? 'green' : 'red'">
+            {{ $t(`dict.status.${currentData.status}`) }}
+          </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')" :span="2">
+      <a-descriptions-item :label="t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -99,7 +99,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')" :span="2">
+      <a-descriptions-item :label="t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
