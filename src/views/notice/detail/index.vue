@@ -44,16 +44,24 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.users?.toString() || '-' }}
+        <span v-else style="max-height: 200px; display: block; overflow: auto">
+          {{
+            currentData.scope === 1
+              ? $t(`notice.dict.scope.${currentData.scope}`)
+              : currentData.users?.join('\n') || '-'
+          }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('notice.detail.resellers')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.resellers?.toString() || '-' }}
+        <span v-else style="max-height: 200px; display: block; overflow: auto">
+          {{
+            currentData.scope === 1
+              ? $t(`notice.dict.scope.${currentData.scope}`)
+              : currentData.resellers?.join('\n') || '-'
+          }}
         </span>
       </a-descriptions-item>
       <!-- <a-descriptions-item :label="t('notice.detail.channels')" :span="2">
