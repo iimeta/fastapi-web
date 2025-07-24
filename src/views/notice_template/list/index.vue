@@ -743,6 +743,13 @@
     } else {
       let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
       switch (params.action) {
+        case 'status':
+          if (params.value === 1) {
+            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
+          } else {
+            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
+          }
+          break;
         case 'delete':
           alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
           break;

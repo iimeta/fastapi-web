@@ -648,6 +648,9 @@
     } else {
       let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
       switch (params.action) {
+        case 'notice':
+          alertContent = `是否确定所选的${ids.value.length}条数据再次发送通知?`;
+          break;
         case 'delete':
           alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
           break;
