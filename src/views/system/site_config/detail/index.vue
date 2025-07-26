@@ -1,11 +1,11 @@
 <template>
   <div style="margin: 10px 0 30px 10px">
     <a-descriptions
-      :column="2"
+      :column="1"
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item :label="t('site.config.detail.domain')" :span="2">
+      <a-descriptions-item :label="t('site.config.detail.domain')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -21,7 +21,7 @@
           {{ currentData.title }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.logo')" :span="2">
+      <a-descriptions-item :label="t('site.config.detail.logo')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -37,7 +37,7 @@
           {{ currentData.favicon }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.avatar')" :span="2">
+      <a-descriptions-item :label="t('site.config.detail.avatar')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -53,7 +53,7 @@
           {{ currentData.bg_img || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.copyright')" :span="2">
+      <a-descriptions-item :label="t('site.config.detail.copyright')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -69,7 +69,7 @@
           {{ currentData.jump_url || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.keywords')" :span="2">
+      <a-descriptions-item :label="t('site.config.detail.keywords')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -85,7 +85,7 @@
           {{ currentData.description || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.icp_beian')" :span="2">
+      <a-descriptions-item :label="t('site.config.detail.icp_beian')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -101,10 +101,7 @@
           {{ currentData.ga_beian || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('site.config.detail.register_tips')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('site.config.detail.register_tips')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -120,10 +117,7 @@
           {{ currentData.grant_quota || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('site.config.detail.quota_expires_at')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('site.config.detail.quota_expires_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -141,7 +135,18 @@
           {{ currentData?.support_email_suffix?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.host')" :span="2">
+      <a-descriptions-item :label="t('site.config.detail.register_welcome')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span
+          v-else
+          style="max-height: 500px; display: block; overflow: auto"
+          v-html="currentData.register_welcome"
+        >
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('site.config.detail.host')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -157,7 +162,7 @@
           {{ currentData.port || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.user_name')" :span="2">
+      <a-descriptions-item :label="t('site.config.detail.user_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -173,7 +178,7 @@
           {{ currentData.password || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.from_name')" :span="2">
+      <a-descriptions-item :label="t('site.config.detail.from_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -189,7 +194,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')" :span="2">
+      <a-descriptions-item :label="t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -210,7 +215,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')" :span="2">
+      <a-descriptions-item :label="t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

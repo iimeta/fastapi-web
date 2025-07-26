@@ -230,6 +230,16 @@
                 allow-clear
               />
             </a-form-item>
+            <a-form-item
+              field="register_welcome"
+              :label="$t('site.config.label.register_welcome')"
+            >
+              <a-textarea
+                v-model="formData.register_welcome"
+                :placeholder="$t('site.config.placeholder.register_welcome')"
+                :auto-size="{ minRows: 3, maxRows: 20 }"
+              />
+            </a-form-item>
             <a-form-item field="host" :label="$t('site.config.label.host')">
               <a-input
                 v-model="formData.host"
@@ -535,6 +545,7 @@
     grant_quota: ref(),
     quota_expires_at: ref(),
     support_email_suffix: ref(),
+    register_welcome: '',
     host: '',
     port: ref(),
     user_name: '',

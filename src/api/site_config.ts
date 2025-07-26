@@ -33,6 +33,7 @@ export interface SiteConfigCreate {
   grant_quota: any;
   quota_expires_at: any;
   support_email_suffix: any;
+  register_welcome: string;
   host: string;
   port: any;
   user_name: string;
@@ -125,6 +126,7 @@ export interface SiteConfigDetail {
   grant_quota: number;
   quota_expires_at: number;
   support_email_suffix: any;
+  register_welcome: string;
   host: string;
   port: number;
   user_name: string;
@@ -173,6 +175,7 @@ export interface SiteConfigUpdate {
   grant_quota: any;
   quota_expires_at: any;
   support_email_suffix: any;
+  register_welcome: string;
   host: string;
   port: any;
   user_name: string;
