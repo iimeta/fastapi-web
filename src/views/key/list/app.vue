@@ -5,7 +5,6 @@
         <icon-safe />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.key.app') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.key.app.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
