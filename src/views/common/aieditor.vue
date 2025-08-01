@@ -235,6 +235,10 @@
       label: '公安备案',
       value: '{{.site.ga_beian}}',
     },
+    {
+      label: '注册欢迎语',
+      value: '{{.site.register_welcome}}',
+    },
   ];
 </script>
 
