@@ -526,12 +526,12 @@
       value: 'code',
     },
     {
-      label: t('notice.template.dict.scenes.login'),
-      value: 'login',
-    },
-    {
       label: t('notice.template.dict.scenes.register'),
       value: 'register',
+    },
+    {
+      label: t('notice.template.dict.scenes.login'),
+      value: 'login',
     },
     {
       label: t('notice.template.dict.scenes.forget_password'),
@@ -568,6 +568,14 @@
     {
       label: t('notice.template.dict.scenes.notice'),
       value: 'notice',
+    },
+    {
+      label: t('notice.template.dict.scenes.notice_register'),
+      value: 'notice_register',
+    },
+    {
+      label: t('notice.template.dict.scenes.notice_login'),
+      value: 'notice_login',
     },
   ]);
 

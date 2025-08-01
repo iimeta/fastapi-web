@@ -63,17 +63,17 @@
                 </a-checkbox>
                 <a-checkbox
                   v-model="formData.scenes"
-                  value="login"
-                  class="scenes"
-                >
-                  {{ $t('notice.template.dict.scenes.login') }}
-                </a-checkbox>
-                <a-checkbox
-                  v-model="formData.scenes"
                   value="register"
                   class="scenes"
                 >
                   {{ $t('notice.template.dict.scenes.register') }}
+                </a-checkbox>
+                <a-checkbox
+                  v-model="formData.scenes"
+                  value="login"
+                  class="scenes"
+                >
+                  {{ $t('notice.template.dict.scenes.login') }}
                 </a-checkbox>
                 <a-checkbox
                   v-model="formData.scenes"
@@ -137,6 +137,20 @@
                   class="scenes"
                 >
                   {{ $t('notice.template.dict.scenes.notice') }}
+                </a-checkbox>
+                <a-checkbox
+                  v-model="formData.scenes"
+                  value="notice_register"
+                  class="scenes"
+                >
+                  {{ $t('notice.template.dict.scenes.notice_register') }}
+                </a-checkbox>
+                <a-checkbox
+                  v-model="formData.scenes"
+                  value="notice_login"
+                  class="scenes"
+                >
+                  {{ $t('notice.template.dict.scenes.notice_login') }}
                 </a-checkbox>
               </a-space>
             </a-form-item>
