@@ -44,6 +44,7 @@
     "pinia": "^2.0.23",
     "query-string": "^8.0.3",
     "sortablejs": "^1.15.0",
+    "vditor": "^3.11.1",
     "vue": "^3.2.40",
     "vue-echarts": "^6.2.3",
     "vue-i18n": "^9.2.2",

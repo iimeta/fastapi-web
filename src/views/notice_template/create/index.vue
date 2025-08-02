@@ -212,7 +212,7 @@
                 },
               ]"
             >
-              <AiEditor
+              <Vditor
                 v-model="formData.content"
                 style="flex: 1; height: 1024px"
               />
@@ -260,7 +260,7 @@
     submitNoticeTemplateCreate,
     NoticeTemplate,
   } from '@/api/notice_template';
-  import AiEditor from '@/views/common/aieditor.vue';
+  import Vditor from '@/views/common/vditor.vue';
 
   const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(false);
