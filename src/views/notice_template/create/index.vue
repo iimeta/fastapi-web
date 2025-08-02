@@ -212,10 +212,7 @@
                 },
               ]"
             >
-              <Vditor
-                v-model="formData.content"
-                style="flex: 1; height: 1024px"
-              />
+              <Vditor v-model="formData.content" style="flex: 1" />
             </a-form-item>
             <a-form-item
               field="remark"

@@ -312,10 +312,7 @@
                 },
               ]"
             >
-              <AiEditor
-                v-model="formData.content"
-                style="flex: 1; height: 1024px"
-              />
+              <Vditor v-model="formData.content" style="flex: 1" />
             </a-form-item>
             <a-form-item field="remark" :label="$t('notice.label.remark')">
               <a-textarea
@@ -364,7 +361,7 @@
   } from '@/api/notice_template';
   import { UserList, queryUserList } from '@/api/admin_user';
   import { ResellerList, queryResellerList } from '@/api/admin_reseller';
-  import AiEditor from '@/views/common/aieditor.vue';
+  import Vditor from '@/views/common/vditor.vue';
 
   const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(false);

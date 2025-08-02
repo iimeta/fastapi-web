@@ -216,10 +216,7 @@
                 },
               ]"
             >
-              <AiEditor
-                v-model="formData.content"
-                style="flex: 1; height: 1024px"
-              />
+              <Vditor v-model="formData.content" style="flex: 1" />
             </a-form-item>
             <a-form-item
               field="remark"
@@ -267,7 +264,7 @@
     queryNoticeTemplateDetail,
     NoticeTemplateDetailParams,
   } from '@/api/notice_template';
-  import AiEditor from '@/views/common/aieditor.vue';
+  import Vditor from '@/views/common/vditor.vue';
 
   const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(false);

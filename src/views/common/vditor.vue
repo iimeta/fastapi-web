@@ -1,13 +1,44 @@
 <template>
-  <div id="vditor" class="vditor-preview"></div>
+  <div class="main">
+    <div id="vditor" class="content"></div>
+    <div class="attribute">
+      <a-descriptions title="用户属性" :column="{ xs: 1, md: 2, lg: 3 }">
+        <a-descriptions-item
+          v-for="(item, index) of userAttribute"
+          :key="index"
+          :label="item.label"
+        >
+          <a-tag>{{ item.value }}</a-tag>
+        </a-descriptions-item>
+      </a-descriptions>
+
+      <a-descriptions title="代理商属性" :column="{ xs: 1, md: 2, lg: 3 }">
+        <a-descriptions-item
+          v-for="(item, index) of resellerAttribute"
+          :key="index"
+          :label="item.label"
+        >
+          <a-tag>{{ item.value }}</a-tag>
+        </a-descriptions-item>
+      </a-descriptions>
+
+      <a-descriptions title="站点属性" :column="{ xs: 1, md: 3, lg: 4 }">
+        <a-descriptions-item
+          v-for="(item, index) of siteAttribute"
+          :key="index"
+          :label="item.label"
+        >
+          <a-tag>{{ item.value }}</a-tag>
+        </a-descriptions-item>
+      </a-descriptions>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-  import { ref, reactive, watch, onMounted, onUnmounted } from 'vue';
+  import { ref, watch, onMounted, onUnmounted } from 'vue';
   import Vditor from 'vditor';
   import 'vditor/dist/index.css';
-
-  const vditor = ref();
 
   const props = defineProps<{
     modelValue: string;
@@ -15,24 +46,67 @@
 
   const emit = defineEmits<(e: 'update:modelValue', value: string) => void>();
 
+  const vditor = ref<Vditor | null>(null);
+
   const options = {
-    width: '50vw',
-    height: '50vh',
+    mode: 'wysiwyg' as 'wysiwyg' | 'sv' | 'ir',
+    height: '60vh',
     placeholder: '请输入内容',
     cache: {
       enable: false,
     },
-    focus: () => {
-      emit('update:modelValue', vditor.value.getValue());
+    toolbar: [
+      'emoji',
+      'headings',
+      'bold',
+      'italic',
+      'strike',
+      'link',
+      '|',
+      'list',
+      'ordered-list',
+      'check',
+      'outdent',
+      'indent',
+      '|',
+      'quote',
+      'line',
+      'code',
+      'inline-code',
+      'insert-before',
+      'insert-after',
+      '|',
+      'table',
+      '|',
+      'undo',
+      'redo',
+      '|',
+      'fullscreen',
+      'edit-mode',
+      {
+        name: 'more',
+        toolbar: [
+          'both',
+          'code-theme',
+          'content-theme',
+          'export',
+          'outline',
+          'preview',
+          'devtools',
+        ],
+      },
+    ],
+    input: () => {
+      if (vditor.value) {
+        emit('update:modelValue', vditor.value.getValue());
+      }
     },
-    blur: () => {
-      emit('update:modelValue', vditor.value.getValue());
+    after: () => {
+      if (vditor.value) {
+        vditor.value.setValue(props.modelValue);
+      }
     },
   };
-
-  onMounted(() => {
-    vditor.value = new Vditor('vditor', options);
-  });
 
   watch(
     () => props.modelValue,
@@ -44,6 +118,14 @@
       }
     }
   );
+
+  onMounted(() => {
+    vditor.value = new Vditor('vditor', options);
+  });
+
+  onUnmounted(() => {
+    vditor.value?.destroy();
+  });
 
   const userAttribute = [
     {
@@ -166,9 +248,17 @@
 </script>
 
 <style scoped lang="less">
-  .container {
+  .main {
     height: 100%;
     width: 100%;
     box-sizing: border-box;
+  }
+
+  .content {
+    border: 1px solid rgb(var(--gray-2));
+  }
+
+  .attribute {
+    padding: 1rem 0px;
   }
 </style>
