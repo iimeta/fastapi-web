@@ -99,8 +99,7 @@
 - 用户端: <https://free.fastapi.pro/login>
 - 代理商: <https://free.fastapi.pro/reseller>
 - API接口: <https://api.free.fastapi.pro>
-
-#### 支持注册代理商, 注册就送1,000,000刀额度
+- 支持注册代理商, 注册就送1,000,000刀额度
 
 ## 项目截图
 
