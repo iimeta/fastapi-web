@@ -108,17 +108,6 @@
     },
   };
 
-  watch(
-    () => props.modelValue,
-    (value) => {
-      if (value !== vditor.value?.getValue()) {
-        vditor.value?.destroy();
-        vditor.value = new Vditor('vditor', options);
-        vditor.value.setValue(value);
-      }
-    }
-  );
-
   onMounted(() => {
     vditor.value = new Vditor('vditor', options);
   });
