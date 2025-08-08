@@ -680,7 +680,6 @@
     if (!res) {
       setLoading(true);
       try {
-        formData.value.discount /= 100;
         await submitGroupUpdate(formData.value).then(() => {
           proxy.$message.success('更新成功');
           router.push({

@@ -673,7 +673,6 @@
     if (!res) {
       setLoading(true);
       try {
-        formData.value.discount /= 100;
         await submitGroupCreate(formData.value).then(() => {
           proxy.$message.success('新建成功');
           router.push({
