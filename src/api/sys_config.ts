@@ -30,6 +30,7 @@ export interface Email {
   user_name: string;
   password: string;
   from_name: string;
+  interval: number;
 }
 
 export interface Statistics {

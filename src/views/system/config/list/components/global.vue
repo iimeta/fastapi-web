@@ -160,6 +160,25 @@
           />
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'email'"
+          field="email.interval"
+          :label="$t('sys.config.label.email.interval')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.email.interval.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.email.interval"
+            :placeholder="$t('sys.config.placeholder.email.interval')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
           v-if="configFormData.action === 'http'"
           field="http.timeout"
           :label="$t('sys.config.label.http.timeout')"
