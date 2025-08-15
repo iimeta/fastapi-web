@@ -163,6 +163,9 @@ const useAppStore = defineStore('app', {
         ]
       );
     },
+    getRechargeTips(state: AppState): string {
+      return state.config.recharge_tips || '';
+    },
   },
 
   actions: {
@@ -253,6 +256,7 @@ const useAppStore = defineStore('app', {
             (res.data.domain ? undefined : '使用指南'),
           document_more_url: res.data.document_more_url,
           documents: res.data.documents,
+          recharge_tips: res.data.recharge_tips,
         };
         document.title = res.data.title || '智元 Fast API';
         document

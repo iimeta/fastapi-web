@@ -25,6 +25,7 @@ export interface Config {
   document_title?: string;
   document_more_url?: string;
   documents?: Document[];
+  recharge_tips?: string;
 }
 
 export interface AppState {

@@ -49,6 +49,7 @@ export interface SiteConfigCreate {
   document_title: string;
   document_more_url: string;
   documents: Document[];
+  recharge_tips: string;
   remark: string;
 }
 
@@ -142,6 +143,7 @@ export interface SiteConfigDetail {
   document_title: string;
   document_more_url: string;
   documents: Document[];
+  recharge_tips: string;
   remark: string;
   status: number;
   created_at: string;
@@ -191,6 +193,7 @@ export interface SiteConfigUpdate {
   document_title: string;
   document_more_url: string;
   documents: Document[];
+  recharge_tips: string;
   remark: string;
   status: number;
 }

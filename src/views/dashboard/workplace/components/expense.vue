@@ -6,6 +6,11 @@
     :body-style="{ padding: '10px 20px 10px 20px' }"
     :bordered="false"
   >
+    <template #extra>
+      <a-link v-if="appStore.getRechargeTips" @click="recharge">
+        {{ $t('workplace.recharge') }}
+      </a-link>
+    </template>
     <div>
       <div>
         <div class="arco-statistic">
@@ -167,6 +172,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { Modal } from '@arco-design/web-vue';
   import { quotaConv4 } from '@/utils/common';
   import {
     queryExpense,
@@ -174,7 +180,9 @@
     QuotaWarningParams,
     submitQuotaWarning,
   } from '@/api/dashboard';
+  import { useAppStore } from '@/store';
 
+  const appStore = useAppStore();
   const { proxy } = getCurrentInstance() as any;
 
   const expense = ref<Expense>({} as Expense);
@@ -219,6 +227,13 @@
 
   const handleCancel = () => {
     quotaWarningVisible.value = false;
+  };
+
+  const recharge = () => {
+    Modal.warning({
+      title: '温馨提示',
+      content: appStore.getRechargeTips,
+    });
   };
 </script>
 

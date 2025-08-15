@@ -186,6 +186,14 @@
           {{ currentData.from_name || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="t('site.config.detail.recharge_tips')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
+          {{ currentData.recharge_tips || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="t('common.remark')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

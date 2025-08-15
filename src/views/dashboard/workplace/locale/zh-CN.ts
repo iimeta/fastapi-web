@@ -47,4 +47,5 @@ export default {
   'workplace.label.quota_warning.expire_warning_threshold': '过期预警阈值',
   'workplace.placeholder.quota_warning.expire_warning_threshold': '请输入过期预警阈值, 单位: 天',
   'workplace.error.quota_warning.expire_warning_threshold.required': '请输入过期预警阈值',
+  'workplace.recharge': '充值',
 };

@@ -75,6 +75,8 @@ export default {
   'site.config.label.documents': '文档',
   'site.config.placeholder.documents.title': '请输入文档标题, 标题为空时不展示此栏目',
   'site.config.placeholder.documents.jump_url': '跳转URL, 如: https://abc.com',
+  'site.config.label.recharge_tips': '充值提示',
+  'site.config.placeholder.recharge_tips': '输入充值提示后, 用户点击充值, 会自动弹出此提示',
   'site.config.label.remark': '备注',
   'site.config.placeholder.remark': '请输入备注',
   // detail
@@ -100,6 +102,7 @@ export default {
   'site.config.detail.user_name': '发信账号',
   'site.config.detail.password': '发信密码',
   'site.config.detail.from_name': '发信人名称',
+  'site.config.detail.recharge_tips': '充值提示',
   // search
   'site.config.form.user_id': '用户ID',
   'site.config.form.user_id.placeholder': '请输入用户ID',

@@ -480,6 +480,16 @@
                 <icon-minus />
               </a-button>
             </a-form-item>
+            <a-form-item
+              field="recharge_tips"
+              :label="$t('site.config.label.recharge_tips')"
+            >
+              <a-input
+                v-model="formData.recharge_tips"
+                :placeholder="$t('site.config.placeholder.recharge_tips')"
+                allow-clear
+              />
+            </a-form-item>
             <a-form-item field="remark" :label="$t('site.config.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -565,6 +575,7 @@
     document_title: '',
     document_more_url: '',
     documents: [],
+    recharge_tips: '',
     remark: '',
     status: 1,
   });
@@ -681,6 +692,7 @@
       formData.value.document_title = data.document_title;
       formData.value.document_more_url = data.document_more_url;
       formData.value.documents = data.documents;
+      formData.value.recharge_tips = data.recharge_tips;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
 
