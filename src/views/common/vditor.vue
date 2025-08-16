@@ -55,6 +55,7 @@
     cache: {
       enable: false,
     },
+    cdn: 'https://vditor.fastapi.pro/vditor@3.11.1',
     toolbar: [
       'emoji',
       'headings',
