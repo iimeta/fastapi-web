@@ -1624,11 +1624,12 @@
                   v-model="formData.data_format"
                   value="1"
                   :default-checked="true"
-                  >统一格式</a-radio
                 >
-                <!-- <a-radio v-model="formData.data_format" value="2"
-                  >官方格式</a-radio
-                > -->
+                  统一格式
+                </a-radio>
+                <a-radio v-model="formData.data_format" value="2">
+                  官方格式
+                </a-radio>
               </a-space>
             </a-form-item>
             <a-form-item
