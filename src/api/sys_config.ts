@@ -45,6 +45,8 @@ export interface Base {
   model_key_err_disable: number;
   model_agent_err_disable: number;
   model_agent_key_err_disable: number;
+  short_timeout: number;
+  long_timeout: number;
 }
 
 export interface Midjourney {

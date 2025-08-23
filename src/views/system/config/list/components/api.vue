@@ -126,6 +126,7 @@
             :placeholder="
               $t('sys.config.placeholder.base.model_key_err_disable')
             "
+            :min="0"
             allow-clear
           />
         </a-form-item>
@@ -147,6 +148,7 @@
             :placeholder="
               $t('sys.config.placeholder.base.model_agent_err_disable')
             "
+            :min="0"
             allow-clear
           />
         </a-form-item>
@@ -168,6 +170,43 @@
             :placeholder="
               $t('sys.config.placeholder.base.model_agent_key_err_disable')
             "
+            :min="0"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'base'"
+          field="base.short_timeout"
+          :label="$t('sys.config.label.base.short_timeout')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.base.short_timeout.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.base.short_timeout"
+            :placeholder="$t('sys.config.placeholder.base.short_timeout')"
+            :min="0"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'base'"
+          field="base.long_timeout"
+          :label="$t('sys.config.label.base.long_timeout')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.base.long_timeout.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.base.long_timeout"
+            :placeholder="$t('sys.config.placeholder.base.long_timeout')"
+            :min="0"
             allow-clear
           />
         </a-form-item>
@@ -706,7 +745,7 @@
         action: 'base',
         title: t('sys.config.item.title.base'),
         description:
-          '配置错误重试次数和各类错误禁用次数等, 错误重试次数N > 0 重试 N 次, N < 0 重试所有key一轮, N = 0 不重试, 错误次数每天0点会自动重置, 注: 代理密钥错误时, 也会记录模型代理错误次数',
+          '配置错误重试次数、各类错误禁用次数、超时时间等, 错误重试次数N > 0 重试 N 次, N < 0 重试所有key一轮, N = 0 不重试, 错误次数每天0点会自动重置, 注: 代理密钥错误时, 也会记录模型代理错误次数',
         config: true,
         reset: true,
       },
