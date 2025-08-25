@@ -233,7 +233,7 @@
     Modal.warning({
       title: '温馨提示',
       content: appStore.getRechargeTips,
-      okText: '知道了',
+      okText: '我知道了',
     });
   };
 </script>

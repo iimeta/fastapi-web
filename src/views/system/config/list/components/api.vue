@@ -32,7 +32,6 @@
               <template #description>
                 {{ item.description }}
                 <a-descriptions
-                  style="margin-top: 10px"
                   :data="item.data"
                   layout="inline-horizontal"
                   :column="2"
