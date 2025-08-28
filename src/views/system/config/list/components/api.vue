@@ -78,7 +78,7 @@
         configFormData.action === 'base'
           ? 520
           : configFormData.action === 'log'
-          ? 560
+          ? 622
           : 700
       "
       @cancel="handleCancel"
@@ -234,7 +234,10 @@
               上下文
             </a-checkbox>
             <a-checkbox v-model="configFormData.log.chat_records" value="image">
-              识图的图像数据
+              图像数据
+            </a-checkbox>
+            <a-checkbox v-model="configFormData.log.chat_records" value="audio">
+              音频数据
             </a-checkbox>
           </a-space>
         </a-form-item>
