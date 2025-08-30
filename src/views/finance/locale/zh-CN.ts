@@ -12,8 +12,9 @@ export default {
   // search
   'finance.form.user_id': '用户ID',
   'finance.form.user_id.placeholder': '请输入用户ID',
+  'finance.form.type': '类型',
   'finance.form.status': '状态',
-  'finance.form.created_at': '交易时间',
+  'finance.form.created_at': '时间',
   'finance.form.stat_date': '账单日期',
   'finance.form.search': '查询',
   'finance.form.reset': '重置',
@@ -23,10 +24,10 @@ export default {
   // columns
   'finance.columns.user_id': '用户ID',
   'finance.columns.quota': '额度',
-  'finance.columns.type': '交易类型',
+  'finance.columns.type': '类型',
   'finance.columns.status': '状态',
   'finance.columns.remark': '备注',
-  'finance.columns.created_at': '交易时间',
+  'finance.columns.created_at': '时间',
   'finance.columns.updated_at': '更新时间',
   'finance.columns.total': '调用数',
   'finance.columns.models': '模型数',
@@ -43,4 +44,5 @@ export default {
   'finance.dict.deal_type.1': '充值',
   'finance.dict.deal_type.2': '扣除',
   'finance.dict.deal_type.3': '赠送',
+  'finance.dict.deal_type.4': '过期',
 };

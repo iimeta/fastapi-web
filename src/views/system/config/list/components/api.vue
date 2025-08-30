@@ -91,7 +91,7 @@
         ref="configForm"
         :model="configFormData"
         auto-label-width
-        style="max-height: 300px"
+        style="max-height: 500px"
       >
         <a-form-item
           v-if="configFormData.action === 'base'"

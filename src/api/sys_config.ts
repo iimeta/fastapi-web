@@ -133,13 +133,15 @@ export interface Notice {
   lock_minutes: number;
 }
 
-export interface QuotaWarning {
-  open: boolean;
+export interface Quota {
+  warning: boolean;
   threshold: number;
-  exhaustion_notice: boolean;
-  expire_warning: boolean;
-  expire_threshold: number;
-  expire_notice: boolean;
+  expired_warning: boolean;
+  expired_threshold: number;
+  exhausted_notice: boolean;
+  expired_notice: boolean;
+  expired_clear: boolean;
+  expired_clear_defer: number;
 }
 
 export interface ServiceUnavailable {
@@ -170,7 +172,7 @@ export interface SysConfigDetail {
   not_retry_error: NotRetryError;
   not_shield_error: NotShieldError;
   notice: Notice;
-  quota_warning: QuotaWarning;
+  quota: Quota;
   service_unavailable: ServiceUnavailable;
   debug: Debug;
   created_at: string;
@@ -200,7 +202,7 @@ export interface SysConfigUpdate {
   not_retry_error: NotRetryError;
   not_shield_error: NotShieldError;
   notice: Notice;
-  quota_warning: QuotaWarning;
+  quota: Quota;
   service_unavailable: ServiceUnavailable;
   debug: Debug;
 }

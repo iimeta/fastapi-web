@@ -24,7 +24,7 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="name" :label="$t('finance.form.user_id')">
                   <a-input-number
                     v-model="formModel.user_id"
@@ -35,7 +35,18 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
+                <a-form-item field="type" :label="$t('finance.form.type')">
+                  <a-select
+                    v-model="formModel.type"
+                    :placeholder="$t('finance.form.selectDefault')"
+                    :options="typeOptions"
+                    :scrollbar="false"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
                 <a-form-item field="status" :label="$t('finance.form.status')">
                   <a-select
                     v-model="formModel.status"
@@ -46,7 +57,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item
                   field="created_at"
                   :label="$t('finance.form.created_at')"
@@ -223,6 +234,7 @@
   const generateFormModel = () => {
     return {
       user_id: ref(),
+      type: ref(),
       status: ref(),
       created_at: [],
     };
@@ -274,7 +286,6 @@
       dataIndex: 'user_id',
       slotName: 'user_id',
       align: 'center',
-      width: 80,
     },
     {
       title: t('finance.columns.quota'),
@@ -301,10 +312,38 @@
       align: 'center',
     },
   ]);
+
+  const typeOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('finance.dict.deal_type.1'),
+      value: 1,
+    },
+    {
+      label: t('finance.dict.deal_type.2'),
+      value: 2,
+    },
+    {
+      label: t('finance.dict.deal_type.3'),
+      value: 3,
+    },
+    {
+      label: t('finance.dict.deal_type.4'),
+      value: 4,
+    },
+  ]);
+
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('finance.dict.status.1'),
       value: 1,
+    },
+    {
+      label: t('finance.dict.status.2'),
+      value: 2,
+    },
+    {
+      label: t('finance.dict.status.3'),
+      value: 3,
     },
   ]);
 
