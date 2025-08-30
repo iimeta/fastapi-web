@@ -24,6 +24,7 @@ export default {
   'sys.config.item.title.not_retry_error': '不重试错误',
   'sys.config.item.title.not_shield_error': '不屏蔽错误',
   'sys.config.item.title.reset_api_error': '错误次数',
+  'sys.config.item.title.service_unavailable': '暂停服务',
   'sys.config.item.title.refresh_api_cache': '刷新缓存',
   'sys.config.searchInput.placeholder': '搜索',
   'sys.config.label.email.host': '发信服务器',
@@ -150,4 +151,7 @@ export default {
   'sys.config.placeholder.quota_warning.expire_threshold': '请输入过期预警阈值, 单位: 天',
   'sys.config.error.quota_warning.expire_threshold.required': '请输入过期预警阈值',
   'sys.config.label.quota_warning.expire_notice': '过期通知',
+  'sys.config.label.service_unavailable.ip_whitelist': 'IP白名单',
+  'sys.config.placeholder.service_unavailable.ip_whitelist': '白名单内的IP不受暂停服务限制, 可正常请求, 提前检查服务是否达到预期',
+  'sys.config.error.service_unavailable.ip_whitelist.required': '请输入IP白名单',
 };

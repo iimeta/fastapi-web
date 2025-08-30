@@ -67,6 +67,9 @@
     <a-modal
       v-model:visible="configVisible"
       :title="$t(configTitle)"
+      :body-style="{
+        padding: '20px 16px',
+      }"
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
@@ -216,7 +219,9 @@
             },
           ]"
         >
-          <a-switch v-model="configFormData.reseller_login_register.email_login" />
+          <a-switch
+            v-model="configFormData.reseller_login_register.email_login"
+          />
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'reseller_login_register'"
@@ -262,7 +267,9 @@
           <a-input-number
             v-model="configFormData.reseller_login_register.session_expire"
             :placeholder="
-              $t('sys.config.placeholder.reseller_login_register.session_expire')
+              $t(
+                'sys.config.placeholder.reseller_login_register.session_expire'
+              )
             "
             :min="10"
             allow-clear

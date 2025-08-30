@@ -142,6 +142,11 @@ export interface QuotaWarning {
   expire_notice: boolean;
 }
 
+export interface ServiceUnavailable {
+  open: boolean;
+  ip_whitelist: string[];
+}
+
 export interface Debug {
   open: boolean;
 }
@@ -166,6 +171,7 @@ export interface SysConfigDetail {
   not_shield_error: NotShieldError;
   notice: Notice;
   quota_warning: QuotaWarning;
+  service_unavailable: ServiceUnavailable;
   debug: Debug;
   created_at: string;
   updated_at: string;
@@ -195,6 +201,7 @@ export interface SysConfigUpdate {
   not_shield_error: NotShieldError;
   notice: Notice;
   quota_warning: QuotaWarning;
+  service_unavailable: ServiceUnavailable;
   debug: Debug;
 }
 

@@ -67,6 +67,9 @@
     <a-modal
       v-model:visible="configVisible"
       :title="$t(configTitle)"
+      :body-style="{
+        padding: '20px 16px',
+      }"
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >

@@ -81,6 +81,9 @@
           ? 622
           : 700
       "
+      :body-style="{
+        padding: '20px 16px',
+      }"
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
@@ -364,7 +367,7 @@
               $t('sys.config.placeholder.auto_disabled_error.errors')
             "
             allow-clear
-            style="width: 85%; margin-right: 5px"
+            style="width: 84%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -471,7 +474,7 @@
             v-model="configFormData.not_retry_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.not_retry_error.errors')"
             allow-clear
-            style="width: 85%; margin-right: 5px"
+            style="width: 84%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -511,7 +514,7 @@
             v-model="configFormData.not_shield_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.not_shield_error.errors')"
             allow-clear
-            style="width: 85%; margin-right: 5px"
+            style="width: 84%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -525,6 +528,52 @@
             type="secondary"
             shape="circle"
             @click="handleNotShieldErrorDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
+        <a-form-item
+          v-for="(item, index) of configFormData.service_unavailable
+            .ip_whitelist"
+          v-show="configFormData.action === 'service_unavailable'"
+          :key="index"
+          :field="`service_unavailable.ip_whitelist[${index}]`"
+          :label="
+            `${index + 1}. ` +
+            $t('sys.config.label.service_unavailable.ip_whitelist')
+          "
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.error.service_unavailable.ip_whitelist.required'
+              ),
+            },
+          ]"
+          :label-col-style="{
+            padding: '0 16px 2px 0',
+          }"
+        >
+          <a-input
+            v-model="configFormData.service_unavailable.ip_whitelist[index]"
+            :placeholder="
+              $t('sys.config.placeholder.service_unavailable.ip_whitelist')
+            "
+            allow-clear
+            style="width: 84%; margin-right: 5px"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleServiceUnavailableAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleServiceUnavailableDel(index)"
           >
             <icon-minus />
           </a-button>
@@ -563,6 +612,7 @@
     auto_enable_error: {},
     not_retry_error: {},
     not_shield_error: {},
+    service_unavailable: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
@@ -589,6 +639,12 @@
       configFormData.value.not_shield_error.errors.length === 0
     ) {
       handleNotShieldErrorAdd();
+    }
+    if (
+      sysConfigItem.action === 'service_unavailable' &&
+      configFormData.value.service_unavailable.ip_whitelist.length === 0
+    ) {
+      handleServiceUnavailableAdd();
     }
     configTitle.value = t(`sys.config.item.title.${sysConfigItem.action}`);
     configFormData.value.action = sysConfigItem.action;
@@ -690,6 +746,16 @@
         configFormData.value.not_shield_error.errors.length - 1
       );
     }
+    if (
+      configFormData.value.service_unavailable.ip_whitelist.length > 0 &&
+      !configFormData.value.service_unavailable.ip_whitelist[
+        configFormData.value.service_unavailable.ip_whitelist.length - 1
+      ]
+    ) {
+      handleServiceUnavailableDel(
+        configFormData.value.service_unavailable.ip_whitelist.length - 1
+      );
+    }
   };
 
   const sysConfigReset = async (sysConfigItem: SysConfigItem) => {
@@ -742,6 +808,7 @@
     configFormData.value.auto_enable_error = data.auto_enable_error;
     configFormData.value.not_retry_error = data.not_retry_error;
     configFormData.value.not_shield_error = data.not_shield_error;
+    configFormData.value.service_unavailable = data.service_unavailable;
     sysConfigItems.value = [
       {
         action: 'base',
@@ -810,6 +877,15 @@
           '系统默认30分钟更新一次缓存, 如需立刻更新缓存, 请点击刷新按钮',
         refresh: true,
       },
+      {
+        action: 'service_unavailable',
+        title: t('sys.config.item.title.service_unavailable'),
+        description:
+          '暂停服务开启后, 将拒绝所有API调用请求, 请谨慎操作, 此开关多用于需更新API服务场景时开启, 支持配置IP白名单, 白名单内的IP不受暂停服务限制, 可正常请求, 提前检查服务是否达到预期',
+        open: configFormData.value.service_unavailable.open,
+        config: true,
+        reset: true,
+      },
     ];
   };
   getSysConfigDetail();
@@ -850,6 +926,14 @@
 
   const handleNotShieldErrorDel = (index: number) => {
     configFormData.value.not_shield_error.errors.splice(index, 1);
+  };
+
+  const handleServiceUnavailableAdd = () => {
+    configFormData.value.service_unavailable.ip_whitelist.push('');
+  };
+
+  const handleServiceUnavailableDel = (index: number) => {
+    configFormData.value.service_unavailable.ip_whitelist.splice(index, 1);
   };
 </script>
 
