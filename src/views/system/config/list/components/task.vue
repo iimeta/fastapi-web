@@ -80,6 +80,42 @@
         style="max-height: 500px"
       >
         <a-form-item
+          v-if="configFormData.action === 'quota_task'"
+          field="quota_task.cron"
+          :label="$t('sys.config.label.quota_task.cron')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.quota_task.cron.required'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.quota_task.cron"
+            :placeholder="$t('sys.config.placeholder.quota_task.cron')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'quota_task'"
+          field="quota_task.lock_minutes"
+          :label="$t('sys.config.label.quota_task.lock_minutes')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.quota_task.lock_minutes.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.quota_task.lock_minutes"
+            :placeholder="$t('sys.config.placeholder.quota_task.lock_minutes')"
+            :precision="0"
+            :min="1"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
           v-if="configFormData.action === 'statistics'"
           field="statistics.cron"
           :label="$t('sys.config.label.statistics.cron')"
@@ -198,6 +234,7 @@
   const configFormData = ref<SysConfigUpdate>({
     statistics: {},
     notice: {},
+    quota_task: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
@@ -276,9 +313,19 @@
 
   const getSysConfigDetail = async () => {
     const { data } = await querySysConfigDetail();
+    configFormData.value.quota_task = data.quota_task;
     configFormData.value.statistics = data.statistics;
     configFormData.value.notice = data.notice;
     sysConfigItems.value = [
+      {
+        action: 'quota_task',
+        title: t('sys.config.item.title.quota_task'),
+        description:
+          '定时检查各类额度配置以及发送相关通知, 单次任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        open: configFormData.value.quota_task.open,
+        config: true,
+        reset: true,
+      },
       {
         action: 'statistics',
         title: t('sys.config.item.title.statistics'),

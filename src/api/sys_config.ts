@@ -144,6 +144,12 @@ export interface Quota {
   expired_clear_defer: number;
 }
 
+export interface QuotaTask {
+  open: boolean;
+  cron: string;
+  lock_minutes: number;
+}
+
 export interface ServiceUnavailable {
   open: boolean;
   ip_whitelist: string[];
@@ -173,6 +179,7 @@ export interface SysConfigDetail {
   not_shield_error: NotShieldError;
   notice: Notice;
   quota: Quota;
+  quota_task: QuotaTask;
   service_unavailable: ServiceUnavailable;
   debug: Debug;
   created_at: string;
@@ -203,6 +210,7 @@ export interface SysConfigUpdate {
   not_shield_error: NotShieldError;
   notice: Notice;
   quota: Quota;
+  quota_task: QuotaTask;
   service_unavailable: ServiceUnavailable;
   debug: Debug;
 }
