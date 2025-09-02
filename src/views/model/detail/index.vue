@@ -325,12 +325,26 @@
           {{ currentData?.fallback_config?.model_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.dataFormat')">
+      <a-descriptions-item :label="t('model.detail.label.request_data_format')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`model.dict.data_format.${currentData.data_format}`) }}
+          {{
+            t(`model.dict.data_format.${currentData.request_data_format || 1}`)
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="t('model.detail.label.response_data_format')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            t(`model.dict.data_format.${currentData.response_data_format || 1}`)
+          }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('model.detail.label.remark')">

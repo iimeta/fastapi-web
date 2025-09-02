@@ -1610,24 +1610,47 @@
               </a-button>
             </a-form-item>
             <a-form-item
-              field="data_format"
-              :label="$t('model.label.dataFormat')"
+              field="request_data_format"
+              :label="$t('model.label.request_data_format')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.dataFormat.required'),
+                  message: $t('model.error.request_data_format.required'),
                 },
               ]"
             >
               <a-space size="large">
                 <a-radio
-                  v-model="formData.data_format"
+                  v-model="formData.request_data_format"
                   value="1"
                   :default-checked="true"
                 >
                   统一格式
                 </a-radio>
-                <a-radio v-model="formData.data_format" value="2">
+                <a-radio v-model="formData.request_data_format" value="2">
+                  官方格式
+                </a-radio>
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              field="response_data_format"
+              :label="$t('model.label.response_data_format')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.response_data_format.required'),
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.response_data_format"
+                  value="1"
+                  :default-checked="true"
+                >
+                  统一格式
+                </a-radio>
+                <a-radio v-model="formData.response_data_format" value="2">
                   官方格式
                 </a-radio>
               </a-space>
@@ -2253,7 +2276,8 @@
       fixed_quota: ref(),
     },
     midjourney_quotas: [],
-    data_format: '1',
+    request_data_format: '1',
+    response_data_format: '1',
     is_public: true,
     groups: [],
     is_enable_model_agent: true,

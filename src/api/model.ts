@@ -143,7 +143,8 @@ export interface ModelAdvanced {
   realtime_quota: RealtimeQuota;
   multimodal_audio_quota: MultimodalAudioQuota;
   midjourney_quotas: MidjourneyQuota[];
-  data_format: string;
+  request_data_format: string;
+  response_data_format: string;
   is_public: boolean;
   groups: string[];
   is_enable_preset_config: boolean;
@@ -179,7 +180,8 @@ export interface ModelPage {
   realtime_quota: RealtimeQuota;
   multimodal_audio_quota: MultimodalAudioQuota;
   midjourney_quotas: MidjourneyQuota[];
-  data_format: number;
+  request_data_format: number;
+  response_data_format: number;
   is_public: boolean;
   status: number;
   remark: string;
@@ -215,7 +217,8 @@ export interface ModelList {
   prompt_ratio: number;
   completion_ratio: number;
   fixed_quota: number;
-  data_format: number;
+  request_data_format: number;
+  response_data_format: number;
   is_public: boolean;
   status: number;
   remark: string;
@@ -261,7 +264,8 @@ export interface ModelDetail {
   realtime_quota: RealtimeQuota;
   multimodal_audio_quota: MultimodalAudioQuota;
   midjourney_quotas: MidjourneyQuota[];
-  data_format: number;
+  request_data_format: number;
+  response_data_format: number;
   is_public: boolean;
   is_enable_preset_config: boolean;
   preset_config: PresetConfig;
