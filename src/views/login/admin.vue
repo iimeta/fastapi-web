@@ -53,7 +53,9 @@
       <a-link
         v-if="appStore.getGaBeian"
         target="_blank"
-        :href="'https://beian.mps.gov.cn/#/query/webSearch?code=' + gaBeianNum"
+        :href="`https://beian.mps.gov.cn/#/query/webSearch?code=${
+          appStore.getGaBeian ? appStore.getGaBeian.match(`\\d+`) : ''
+        }`"
       >
         <img
           style="border: 0"
@@ -80,11 +82,6 @@
   const appStore = useAppStore();
 
   const isForget = ref(false);
-  const gaBeianNum = ref();
-
-  gaBeianNum.value = appStore.getGaBeian
-    ? appStore.getGaBeian.match(`\\d+`)
-    : '';
 
   const toggleLogin = () => {
     isForget.value = false;

@@ -116,18 +116,15 @@ const useAppStore = defineStore('app', {
         state.config.announcements || [
           {
             content: 'v1.7.0 版本发布啦! 啦!! 啦!!!',
-            jump_url:
-              'https://github.com/iimeta/fastapi/releases/tag/v1.7.0',
+            jump_url: 'https://github.com/iimeta/fastapi/releases/tag/v1.7.0',
           },
           {
             content: 'v1.6.0 版本发布啦! 啦!! 啦!!!',
-            jump_url:
-              'https://github.com/iimeta/fastapi/releases/tag/v1.6.0',
+            jump_url: 'https://github.com/iimeta/fastapi/releases/tag/v1.6.0',
           },
           {
             content: 'v1.5.0 版本发布啦! 啦!! 啦!!!',
-            jump_url:
-              'https://github.com/iimeta/fastapi/releases/tag/v1.5.0',
+            jump_url: 'https://github.com/iimeta/fastapi/releases/tag/v1.5.0',
           },
         ]
       );
