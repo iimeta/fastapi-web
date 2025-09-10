@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-bar-chart />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.corp') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.corp.create') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.provider') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.provider.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -23,60 +23,63 @@
           >
             <a-form-item
               field="name"
-              :label="$t('corp.label.name')"
+              :label="$t('provider.label.name')"
               :rules="[
                 {
                   required: true,
-                  message: $t('corp.error.name.required'),
+                  message: $t('provider.error.name.required'),
                 },
                 {
                   match: /^.{1,100}$/,
-                  message: $t('corp.error.name.pattern'),
+                  message: $t('provider.error.name.pattern'),
                 },
               ]"
             >
               <a-input
                 v-model="formData.name"
-                :placeholder="$t('corp.placeholder.name')"
+                :placeholder="$t('provider.placeholder.name')"
                 allow-clear
               />
             </a-form-item>
             <a-form-item
               field="code"
-              :label="$t('corp.label.code')"
+              :label="$t('provider.label.code')"
               :rules="[
                 {
                   required: true,
-                  message: $t('corp.error.code.required'),
+                  message: $t('provider.error.code.required'),
                 },
                 {
                   match: /^.{1,100}$/,
-                  message: $t('corp.error.code.pattern'),
+                  message: $t('provider.error.code.pattern'),
                 },
               ]"
             >
               <a-input
                 v-model="formData.code"
-                :placeholder="$t('corp.placeholder.code')"
+                :placeholder="$t('provider.placeholder.code')"
                 allow-clear
               />
             </a-form-item>
-            <a-form-item field="sort" :label="$t('corp.label.sort')">
+            <a-form-item field="sort" :label="$t('provider.label.sort')">
               <a-input-number
                 v-model="formData.sort"
-                :placeholder="$t('corp.placeholder.sort')"
+                :placeholder="$t('provider.placeholder.sort')"
                 :precision="0"
                 :min="-10"
                 :max="999"
               />
             </a-form-item>
-            <a-form-item field="is_public" :label="$t('corp.label.is_public')">
+            <a-form-item
+              field="is_public"
+              :label="$t('provider.label.is_public')"
+            >
               <a-switch v-model="formData.is_public" />
             </a-form-item>
-            <a-form-item field="remark" :label="$t('corp.label.remark')">
+            <a-form-item field="remark" :label="$t('provider.label.remark')">
               <a-textarea
                 v-model="formData.remark"
-                :placeholder="$t('corp.placeholder.remark')"
+                :placeholder="$t('provider.placeholder.remark')"
               />
             </a-form-item>
             <a-space>
@@ -85,7 +88,7 @@
                   type="secondary"
                   @click="
                     $router.push({
-                      name: 'CorpList',
+                      name: 'ProviderList',
                     })
                   "
                 >
@@ -106,7 +109,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { submitCorpCreate, CorpCreate } from '@/api/corp';
+  import { submitProviderCreate, ProviderCreate } from '@/api/provider';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { useRouter } from 'vue-router';
 
@@ -114,7 +117,7 @@
 
   const router = useRouter();
   const formRef = ref<FormInstance>();
-  const formData = ref<CorpCreate>({
+  const formData = ref<ProviderCreate>({
     name: '',
     code: '',
     sort: ref(),
@@ -128,10 +131,10 @@
     if (!res) {
       setLoading(true);
       try {
-        await submitCorpCreate(formData.value).then(() => {
+        await submitProviderCreate(formData.value).then(() => {
           proxy.$message.success('新建成功');
           router.push({
-            name: 'CorpList',
+            name: 'ProviderList',
           });
         });
       } catch (err) {
@@ -145,7 +148,7 @@
 
 <script lang="ts">
   export default {
-    name: 'CorpCreate',
+    name: 'ProviderCreate',
   };
 </script>
 

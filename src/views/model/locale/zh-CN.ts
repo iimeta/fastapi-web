@@ -5,9 +5,9 @@ export default {
   'menu.model.create': '新建模型',
   'menu.model.update': '修改模型',
   'menu.model.detail': '模型详情',
-  'model.label.corp': '公司',
-  'model.placeholder.corp': '请选择公司',
-  'model.error.corp.required': '请选择公司',
+  'model.label.provider': '公司',
+  'model.placeholder.provider': '请选择公司',
+  'model.error.provider.required': '请选择公司',
   'model.label.name': '模型名称',
   'model.placeholder.name': '如: GPT3.5',
   'model.error.name.required': '请输入模型名称',
@@ -178,7 +178,7 @@ export default {
   'model.label.is_config_model_agent': '配置代理',
   'model.label.is_cover_price': '覆盖价格',
   // detail
-  'model.detail.label.corp': '公司',
+  'model.detail.label.provider': '公司',
   'model.detail.label.name': '模型名称',
   'model.detail.label.model': '模型',
   'model.detail.label.type': '模型类型',
@@ -221,7 +221,7 @@ export default {
   'model.detail.label.created_at': '创建时间',
   'model.detail.label.updated_at': '更新时间',
   // search
-  'model.form.corp': '公司',
+  'model.form.provider': '公司',
   'model.form.name': '模型名称',
   'model.form.name.placeholder': '请输入模型名称',
   'model.form.model': '模型',
@@ -248,7 +248,7 @@ export default {
   // operation
   'model.operation.create': '新建',
   // columns
-  'model.columns.corp': '公司',
+  'model.columns.provider': '公司',
   'model.columns.name': '模型名称',
   'model.columns.model': '模型',
   'model.columns.type': '模型类型',

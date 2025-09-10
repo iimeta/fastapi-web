@@ -25,16 +25,16 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="corp" :label="$t('key.form.corp')">
+                <a-form-item field="provider" :label="$t('key.form.provider')">
                   <a-select
-                    v-model="formModel.corp"
+                    v-model="formModel.provider"
                     :placeholder="$t('key.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
                   >
                     <a-option
-                      v-for="item in corps"
+                      v-for="item in providers"
                       :key="item.id"
                       :value="item.id"
                       :label="item.name"
@@ -439,7 +439,7 @@
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
-  import { queryCorpList, CorpList } from '@/api/corp';
+  import { queryProviderList, ProviderList } from '@/api/provider';
   import { useClipboard } from '@vueuse/core';
   import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
@@ -457,20 +457,20 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const corps = ref<CorpList[]>([]);
+  const providers = ref<ProviderList[]>([]);
 
-  const getCorpList = async () => {
+  const getProviderList = async () => {
     setLoading(true);
     try {
-      const { data } = await queryCorpList();
-      corps.value = data.items;
+      const { data } = await queryProviderList();
+      providers.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }
   };
-  getCorpList();
+  getProviderList();
 
   const models = ref<ModelList[]>([]);
 
@@ -518,7 +518,7 @@
   const generateFormModel = () => {
     return {
       type: 2,
-      corp: '',
+      provider: '',
       key: '',
       models: [],
       model_agents: ref(),
@@ -570,9 +570,9 @@
   ]);
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('key.columns.corp'),
-      dataIndex: 'corp_name',
-      slotName: 'corp_name',
+      title: t('key.columns.provider'),
+      dataIndex: 'provider_name',
+      slotName: 'provider_name',
       align: 'center',
       width: 120,
     },
@@ -677,7 +677,7 @@
       pagination.total = data.paging.total;
       if (
         data.items.length > 0 &&
-        (formModel.value.corp ||
+        (formModel.value.provider ||
           formModel.value.key ||
           formModel.value.models.length > 0 ||
           formModel.value.model_agents ||
@@ -860,7 +860,7 @@
       });
     }
   };
-  
+
   /**
    * 复制内容
    *

@@ -19,19 +19,19 @@
             <a-row :gutter="16">
               <a-col :span="6">
                 <a-form-item
-                  field="corp"
-                  :label="$t('model.form.corp')"
+                  field="provider"
+                  :label="$t('model.form.provider')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-select
-                    v-model="formModel.corp"
+                    v-model="formModel.provider"
                     :placeholder="$t('model.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
                   >
                     <a-option
-                      v-for="item in corps"
+                      v-for="item in providers"
                       :key="item.id"
                       :value="item.id"
                       :label="item.name"
@@ -106,7 +106,7 @@
   } from '@/api/model';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
-  import { queryCorpList, CorpList } from '@/api/corp';
+  import { queryProviderList, ProviderList } from '@/api/provider';
 
   const { loading, setLoading } = useLoading(true);
   const props = defineProps({
@@ -125,7 +125,7 @@
 
   const generateFormModel = () => {
     return {
-      corp: '',
+      provider: '',
       name: '',
       model: '',
       type: ref(),
@@ -133,20 +133,20 @@
     };
   };
 
-  const corps = ref<CorpList[]>([]);
+  const providers = ref<ProviderList[]>([]);
 
-  const getCorpList = async () => {
+  const getProviderList = async () => {
     setLoading(true);
     try {
-      const { data } = await queryCorpList();
-      corps.value = data.items;
+      const { data } = await queryProviderList();
+      providers.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }
   };
-  getCorpList();
+  getProviderList();
 
   const { t } = useI18n();
   const renderData = ref<ModelPermissions[]>([]);
@@ -158,9 +158,9 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('model.columns.corp'),
-      dataIndex: 'corp_name',
-      slotName: 'corp_name',
+      title: t('model.columns.provider'),
+      dataIndex: 'provider_name',
+      slotName: 'provider_name',
       align: 'center',
     },
     {

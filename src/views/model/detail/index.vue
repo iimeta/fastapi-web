@@ -6,12 +6,12 @@
       :label-style="{ padding: '5px 8px 5px 15px' }"
       :value-style="{ width: '350px', padding: '5px 8px 5px 15px' }"
     >
-      <a-descriptions-item :label="t('common.corp')">
+      <a-descriptions-item :label="t('common.provider')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.corp_name }}
+          {{ currentData.provider_name }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('model.detail.label.name')">

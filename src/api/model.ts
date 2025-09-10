@@ -14,7 +14,7 @@ export function submitModelInit(data: ModelInit) {
 
 export interface ModelBaseInfo {
   id?: string;
-  corp: string;
+  provider_id: string;
   name: string;
   model: string;
   type: string;
@@ -166,8 +166,8 @@ export function submitModelCreate(data: ModelCreate) {
 
 export interface ModelPage {
   id: string;
-  corp: string;
-  corp_name: string;
+  provider_id: string;
+  provider_name: string;
   name: string;
   model: string;
   type: number;
@@ -209,7 +209,7 @@ export function queryModelPage(params: ModelPageParams) {
 
 export interface ModelList {
   id: string;
-  corp: string;
+  provider_id: string;
   name: string;
   model: string;
   type: number;
@@ -246,9 +246,9 @@ export interface ModelDetailParams {
 
 export interface ModelDetail {
   id: string;
-  corp: string;
-  corp_name: string;
-  corp_code: string;
+  provider_id: string;
+  provider_name: string;
+  provider_code: string;
   name: string;
   model: string;
   type: number;
@@ -343,7 +343,7 @@ export interface ModelPermissionsParams {
 
 export interface ModelPermissions {
   id: string;
-  corp: string;
+  provider_id: string;
   name: string;
   model: string;
   type: number;

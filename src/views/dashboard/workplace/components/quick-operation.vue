@@ -63,9 +63,9 @@
       permission: ['admin'],
     },
     {
-      text: 'workplace.corpManagement',
+      text: 'workplace.providerManagement',
       icon: 'icon-bar-chart',
-      router: 'CorpList',
+      router: 'ProviderList',
       permission: ['admin'],
     },
     {

@@ -25,24 +25,24 @@
               $t('common.title.baseInfo')
             }}</a-divider>
             <a-form-item
-              field="corp"
-              :label="$t('model.label.corp')"
+              field="provider"
+              :label="$t('model.label.provider')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.corp.required'),
+                  message: $t('model.error.provider.required'),
                 },
               ]"
             >
               <a-select
-                v-model="formData.corp"
-                :placeholder="$t('model.placeholder.corp')"
+                v-model="formData.provider_id"
+                :placeholder="$t('model.placeholder.provider')"
                 :scrollbar="false"
                 allow-search
-                @change="handleCorpChange"
+                @change="handleProviderChange"
               >
                 <a-option
-                  v-for="item in corps"
+                  v-for="item in providers"
                   :key="item.id"
                   :value="item.id"
                   :label="item.name"
@@ -2098,7 +2098,7 @@
     MidjourneyQuota,
     SearchQuota,
   } from '@/api/model';
-  import { queryCorpList, CorpList } from '@/api/corp';
+  import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { queryGroupList, GroupList } from '@/api/group';
 
@@ -2107,15 +2107,15 @@
   const route = useRoute();
   const router = useRouter();
 
-  const corps = ref<CorpList[]>([]);
-  const corpMap = new Map();
-  const getCorpList = async () => {
+  const providers = ref<ProviderList[]>([]);
+  const providerMap = new Map();
+  const getProviderList = async () => {
     setLoading(true);
     try {
-      const { data } = await queryCorpList();
-      corps.value = data.items;
-      for (let i = 0; i < corps.value.length; i += 1) {
-        corpMap.set(corps.value[i].id, corps.value[i]);
+      const { data } = await queryProviderList();
+      providers.value = data.items;
+      for (let i = 0; i < providers.value.length; i += 1) {
+        providerMap.set(providers.value[i].id, providers.value[i]);
       }
     } catch (err) {
       // you can report use errorHandler or other
@@ -2123,7 +2123,7 @@
       setLoading(false);
     }
   };
-  getCorpList();
+  getProviderList();
 
   const models = ref<ModelList[]>([]);
   const getModelList = async () => {
@@ -2169,7 +2169,7 @@
   const formRef = ref<FormInstance>();
   const formData = ref<ModelUpdate>({
     id: '',
-    corp: '',
+    provider_id: '',
     name: '',
     model: '',
     type: '1',
@@ -2305,9 +2305,9 @@
   });
 
   const submitForm = async () => {
-    const corp = corpMap.get(formData.value.corp);
+    const provider = providerMap.get(formData.value.provider_id);
     if (formData.value.type === '2') {
-      if (corp && corp.code === 'Midjourney') {
+      if (provider && provider.code === 'Midjourney') {
         formData.value.image_quota.generation_quotas = [];
         formData.value.multimodal_quota.vision_quotas = [];
       } else {
@@ -2320,7 +2320,7 @@
     } else if (formData.value.type === '100') {
       formData.value.image_quota.generation_quotas = [];
       formData.value.midjourney_quotas = [];
-      if (corp && corp.code !== 'OpenAI') {
+      if (provider && provider.code !== 'OpenAI') {
         formData.value.multimodal_quota.search_quotas = [];
       }
     } else {
@@ -2515,7 +2515,7 @@
     try {
       const { data } = await queryModelDetail(params);
       formData.value.id = data.id;
-      formData.value.corp = data.corp;
+      formData.value.provider_id = data.provider_id;
       formData.value.name = data.name;
       formData.value.model = data.model;
       formData.value.type = String(data.type);
@@ -2556,7 +2556,7 @@
 
       if (data.image_quota) {
         isShowImageQuota.value =
-          formData.value.type === '2' && data.corp_code !== 'Midjourney';
+          formData.value.type === '2' && data.provider_code !== 'Midjourney';
 
         if (!data.image_quota.generation_quotas) {
           data.image_quota.generation_quotas = [];
@@ -2612,13 +2612,13 @@
 
       if (data.multimodal_quota) {
         isShowMultimodalTextQuota.value =
-          formData.value.type === '100' && data.corp_code !== 'Midjourney';
+          formData.value.type === '100' && data.provider_code !== 'Midjourney';
         isShowMultimodalVisionQuota.value =
-          formData.value.type === '100' && data.corp_code !== 'Midjourney';
+          formData.value.type === '100' && data.provider_code !== 'Midjourney';
         isShowSearchQuota.value =
-          formData.value.type === '100' && data.corp_code === 'Google';
+          formData.value.type === '100' && data.provider_code === 'Google';
         isShowMultimodalSearchQuota.value =
-          formData.value.type === '100' && data.corp_code === 'OpenAI';
+          formData.value.type === '100' && data.provider_code === 'OpenAI';
         formData.value.multimodal_quota = data.multimodal_quota;
         formData.value.multimodal_quota.billing_rule = String(
           formData.value.multimodal_quota.billing_rule
@@ -2669,7 +2669,7 @@
 
       if (data.realtime_quota) {
         isShowRealtimeQuota.value =
-          formData.value.type === '101' && data.corp_code !== 'Midjourney';
+          formData.value.type === '101' && data.provider_code !== 'Midjourney';
         formData.value.realtime_quota = data.realtime_quota;
         formData.value.realtime_quota.text_quota.prompt_price = Number(
           priceConv(data.realtime_quota.text_quota.prompt_ratio)
@@ -2702,7 +2702,7 @@
 
       if (data.multimodal_audio_quota) {
         isShowMultimodalAudioQuota.value =
-          formData.value.type === '102' && data.corp_code !== 'Midjourney';
+          formData.value.type === '102' && data.provider_code !== 'Midjourney';
         formData.value.multimodal_audio_quota = data.multimodal_audio_quota;
         formData.value.multimodal_audio_quota.text_quota.prompt_price = Number(
           priceConv(data.multimodal_audio_quota.text_quota.prompt_ratio)
@@ -2736,7 +2736,7 @@
 
       if (data.midjourney_quotas) {
         isShowMidjourneyQuota.value =
-          formData.value.type === '2' && data.corp_code === 'Midjourney';
+          formData.value.type === '2' && data.provider_code === 'Midjourney';
         formData.value.midjourney_quotas = data.midjourney_quotas;
       }
 
@@ -2774,7 +2774,7 @@
   };
   getModelDetail();
 
-  const handleCorpChange = () => {
+  const handleProviderChange = () => {
     isShowImageQuota.value = false;
     isShowAudioQuota.value = false;
     isShowRealtimeQuota.value = false;
@@ -2782,8 +2782,8 @@
     isShowMidjourneyQuota.value = false;
     isShowSearchQuota.value = false;
     isShowMultimodalSearchQuota.value = false;
-    const corp = corpMap.get(formData.value.corp);
-    if (corp && corp.code === 'Midjourney') {
+    const provider = providerMap.get(formData.value.provider_id);
+    if (provider && provider.code === 'Midjourney') {
       handleMidjourneyQuota();
       return;
     }
@@ -2813,8 +2813,8 @@
     formData.value.text_quota.billing_method = '1';
 
     if (formData.value.type === '2') {
-      const corp = corpMap.get(formData.value.corp);
-      if (corp && corp.code === 'Midjourney') {
+      const provider = providerMap.get(formData.value.provider_id);
+      if (provider && provider.code === 'Midjourney') {
         handleMidjourneyQuota();
         return;
       }
@@ -2853,12 +2853,15 @@
     } else if (formData.value.type === '5' || formData.value.type === '6') {
       isShowAudioQuota.value = true;
     } else if (formData.value.type === '100') {
-      const corp = corpMap.get(formData.value.corp);
+      const provider = providerMap.get(formData.value.provider_id);
 
       isShowMultimodalTextQuota.value = true;
       isShowMultimodalVisionQuota.value = true;
 
-      if (corp && (corp.code === 'OpenAI' || corp.name === 'OpenAI')) {
+      if (
+        provider &&
+        (provider.code === 'OpenAI' || provider.name === 'OpenAI')
+      ) {
         isShowMultimodalSearchQuota.value = true;
       }
 
@@ -2869,14 +2872,17 @@
         }
       }
 
-      if (corp && (corp.code === 'Google' || corp.name === 'Google')) {
+      if (
+        provider &&
+        (provider.code === 'Google' || provider.name === 'Google')
+      ) {
         isShowSearchQuota.value = true;
       }
 
       if (
         formData.value.multimodal_quota.search_quotas.length === 0 &&
-        corp &&
-        (corp.code === 'OpenAI' || corp.name === 'OpenAI')
+        provider &&
+        (provider.code === 'OpenAI' || provider.name === 'OpenAI')
       ) {
         const searchContextSizes = ['medium', 'high', 'low'];
         for (let i = 0; i < searchContextSizes.length; i += 1) {

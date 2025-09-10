@@ -54,7 +54,7 @@
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
-              <span v-else>{{ currentData.corp_name }}</span>
+              <span v-else>{{ currentData.provider_name }}</span>
             </a-descriptions-item> -->
       <a-descriptions-item label="模型">
         <a-skeleton v-if="loading" :animation="true">
@@ -66,7 +66,9 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>{{ $t(`dict.model_type.${currentData.type}`) }}</span>
+        <span v-else>{{
+          $t(`dict.model_type.${currentData.model_type}`)
+        }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="提示词" :span="2">
         <a-skeleton v-if="loading" :animation="true">
@@ -124,7 +126,9 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>{{ currentData.generation_quota.fixed_quota || '-' }}</span>
+        <span v-else>{{
+          currentData.generation_quota.fixed_quota || '-'
+        }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="文本倍率">
         <a-skeleton v-if="loading" :animation="true">
@@ -335,19 +339,21 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>{{ currentData.corp_name }}</span>
+        <span v-else>{{ currentData.provider_name }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="模型类型">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>{{ $t(`dict.model_type.${currentData.type}`) }}</span>
+        <span v-else>{{
+          $t(`dict.model_type.${currentData.model_type}`)
+        }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="请求模型名称">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
-        <span v-else>{{ currentData.name || '-' }}</span>
+        <span v-else>{{ currentData.model_name || '-' }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="请求模型">
         <a-skeleton v-if="loading" :animation="true">
@@ -526,7 +532,9 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>{{ currentData.generation_quota.fixed_quota || '-' }}</span>
+        <span v-else>{{
+          currentData.generation_quota.fixed_quota || '-'
+        }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="文本倍率" :span="2">
         <a-skeleton v-if="loading" :animation="true">

@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-bar-chart />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.corp') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.corp.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.provider') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.provider.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -25,28 +25,28 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('corp.form.name')">
+                <a-form-item field="name" :label="$t('provider.form.name')">
                   <a-input
                     v-model="formModel.name"
-                    :placeholder="$t('corp.form.name.placeholder')"
+                    :placeholder="$t('provider.form.name.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="code" :label="$t('corp.form.code')">
+                <a-form-item field="code" :label="$t('provider.form.code')">
                   <a-input
                     v-model="formModel.code"
-                    :placeholder="$t('corp.form.code.placeholder')"
+                    :placeholder="$t('provider.form.code.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="remark" :label="$t('corp.form.remark')">
+                <a-form-item field="remark" :label="$t('provider.form.remark')">
                   <a-input
                     v-model="formModel.remark"
-                    :placeholder="$t('corp.form.remark.placeholder')"
+                    :placeholder="$t('provider.form.remark.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -54,11 +54,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="is_public"
-                  :label="$t('corp.form.is_public')"
+                  :label="$t('provider.form.is_public')"
                 >
                   <a-select
                     v-model="formModel.is_public"
-                    :placeholder="$t('corp.form.selectDefault')"
+                    :placeholder="$t('provider.form.selectDefault')"
                     :options="publicOptions"
                     :scrollbar="false"
                     allow-clear
@@ -66,10 +66,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('corp.form.status')">
+                <a-form-item field="status" :label="$t('provider.form.status')">
                   <a-select
                     v-model="formModel.status"
-                    :placeholder="$t('corp.form.selectDefault')"
+                    :placeholder="$t('provider.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -79,7 +79,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="updated_at"
-                  :label="$t('corp.form.updated_at')"
+                  :label="$t('provider.form.updated_at')"
                 >
                   <a-range-picker
                     v-model="formModel.updated_at"
@@ -97,13 +97,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('corp.form.search') }}
+              {{ $t('provider.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('corp.form.reset') }}
+              {{ $t('provider.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -114,9 +114,9 @@
           <a-space>
             <a-button
               type="primary"
-              @click="$router.push({ name: 'CorpCreate' })"
+              @click="$router.push({ name: 'ProviderCreate' })"
             >
-              {{ $t('corp.operation.create') }}
+              {{ $t('provider.operation.create') }}
             </a-button>
             <a-button
               type="primary"
@@ -246,7 +246,7 @@
             :checked-value="true"
             :unchecked-value="false"
             @change="
-              corpChangePublic({
+              providerChangePublic({
                 id: `${record.id}`,
                 is_public: `${record.is_public}`,
               })
@@ -262,7 +262,7 @@
             :checked-value="1"
             :unchecked-value="2"
             @change="
-              corpChangeStatus({
+              providerChangeStatus({
                 id: `${record.id}`,
                 status: Number(`${record.status}`),
               })
@@ -275,19 +275,19 @@
             size="small"
             @click="
               $router.push({
-                name: 'CorpUpdate',
+                name: 'ProviderUpdate',
                 query: { id: `${record.id}` },
               })
             "
           >
-            {{ $t('corp.columns.operations.update') }}
+            {{ $t('provider.columns.operations.update') }}
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="corpDelete({ id: `${record.id}` })"
+            @ok="providerDelete({ id: `${record.id}` })"
           >
             <a-button type="text" size="small">
-              {{ $t('corp.columns.operations.delete') }}
+              {{ $t('provider.columns.operations.delete') }}
             </a-button>
           </a-popconfirm>
         </template>
@@ -308,18 +308,18 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
-    queryCorpPage,
-    CorpPage,
-    CorpPageParams,
-    submitCorpDelete,
-    CorpDeleteParams,
-    CorpChangePublic,
-    submitCorpChangePublic,
-    CorpChangeStatus,
-    submitCorpChangeStatus,
-    CorpBatchOperate,
-    submitCorpBatchOperate,
-  } from '@/api/corp';
+    queryProviderPage,
+    ProviderPage,
+    ProviderPageParams,
+    submitProviderDelete,
+    ProviderDeleteParams,
+    ProviderChangePublic,
+    submitProviderChangePublic,
+    ProviderChangeStatus,
+    submitProviderChangeStatus,
+    ProviderBatchOperate,
+    submitProviderBatchOperate,
+  } from '@/api/provider';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -340,10 +340,10 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const corpDelete = async (params: CorpDeleteParams) => {
+  const providerDelete = async (params: ProviderDeleteParams) => {
     setLoading(true);
     try {
-      await submitCorpDelete(params);
+      await submitProviderDelete(params);
       proxy.$message.success('删除成功');
       search();
     } catch (err) {
@@ -365,7 +365,7 @@
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<CorpPage[]>([]);
+  const renderData = ref<ProviderPage[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -407,51 +407,51 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('corp.columns.name'),
+      title: t('provider.columns.name'),
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
     },
     {
-      title: t('corp.columns.code'),
+      title: t('provider.columns.code'),
       dataIndex: 'code',
       slotName: 'code',
       align: 'center',
     },
     {
-      title: t('corp.columns.sort'),
+      title: t('provider.columns.sort'),
       dataIndex: 'sort',
       slotName: 'sort',
       align: 'center',
     },
     {
-      title: t('corp.columns.is_public'),
+      title: t('provider.columns.is_public'),
       dataIndex: 'is_public',
       slotName: 'is_public',
       align: 'center',
     },
     {
-      title: t('corp.columns.remark'),
+      title: t('provider.columns.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
     },
     {
-      title: t('corp.columns.status'),
+      title: t('provider.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('corp.columns.updated_at'),
+      title: t('provider.columns.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
       align: 'center',
       width: 132,
     },
     {
-      title: t('corp.columns.operations'),
+      title: t('provider.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -460,33 +460,33 @@
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('corp.dict.status.1'),
+      label: t('provider.dict.status.1'),
       value: 1,
     },
     {
-      label: t('corp.dict.status.2'),
+      label: t('provider.dict.status.2'),
       value: 2,
     },
   ]);
   const publicOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('corp.dict.is_public.true'),
+      label: t('provider.dict.is_public.true'),
       value: 'true',
     },
     {
-      label: t('corp.dict.is_public.false'),
+      label: t('provider.dict.is_public.false'),
       value: 'false',
     },
   ]);
 
   const fetchData = async (
-    params: CorpPageParams = {
+    params: ProviderPageParams = {
       ...basePagination,
     }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryCorpPage(params);
+      const { data } = await queryProviderPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
@@ -503,7 +503,7 @@
     fetchData({
       ...basePagination,
       ...formModel.value,
-    } as unknown as CorpPageParams);
+    } as unknown as ProviderPageParams);
   };
 
   const onPageChange = (current: number) => {
@@ -522,10 +522,10 @@
     search();
   };
 
-  const corpChangePublic = async (params: CorpChangePublic) => {
+  const providerChangePublic = async (params: ProviderChangePublic) => {
     setLoading(true);
     try {
-      await submitCorpChangePublic(params);
+      await submitProviderChangePublic(params);
       proxy.$message.success('操作成功');
       search();
     } catch (err) {
@@ -535,10 +535,10 @@
     }
   };
 
-  const corpChangeStatus = async (params: CorpChangeStatus) => {
+  const providerChangeStatus = async (params: ProviderChangeStatus) => {
     setLoading(true);
     try {
-      await submitCorpChangeStatus(params);
+      await submitProviderChangeStatus(params);
       proxy.$message.success('操作成功');
       search();
     } catch (err) {
@@ -627,7 +627,7 @@
   /**
    * 批量操作
    */
-  const handleBatch = (params: CorpBatchOperate) => {
+  const handleBatch = (params: ProviderBatchOperate) => {
     if (ids.value.length === 0) {
       proxy.$message.info('请选择要操作的数据');
     } else {
@@ -654,7 +654,7 @@
         onOk: () => {
           setLoading(true);
           params.ids = ids.value;
-          submitCorpBatchOperate(params).then((res) => {
+          submitProviderBatchOperate(params).then((res) => {
             setLoading(false);
             proxy.$message.success('操作成功');
             search();
@@ -668,7 +668,7 @@
 
 <script lang="ts">
   export default {
-    name: 'CorpList',
+    name: 'ProviderList',
   };
 </script>
 

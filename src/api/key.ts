@@ -3,7 +3,7 @@ import qs from 'query-string';
 
 export interface KeyBaseInfo {
   id?: string;
-  corp: string;
+  provider_id: string;
   key: string;
   remark: string;
   status?: number;
@@ -28,8 +28,8 @@ export interface KeyPage {
   type: number;
   user_id: any;
   app_id: any;
-  corp: string;
-  corp_name: string;
+  provider_id: string;
+  provider_name: string;
   key: string;
   quota: number;
   models: string[];
@@ -79,8 +79,8 @@ export interface KeyDetail {
   type: number;
   user_id: number;
   app_id: number;
-  corp: string;
-  corp_name: string;
+  provider_id: string;
+  provider_name: string;
   key: string;
   quota: number;
   used_quota: number;
@@ -137,7 +137,7 @@ export interface KeyBatchOperate {
   ids?: string[];
   value?: any;
   type?: number;
-  corp?: string;
+  provider_id?: string;
   key?: string;
   models?: string[];
   model_agents?: string[];

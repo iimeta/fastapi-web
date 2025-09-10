@@ -24,16 +24,19 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="corp" :label="$t('model.form.corp')">
+                <a-form-item
+                  field="provider"
+                  :label="$t('model.form.provider')"
+                >
                   <a-select
-                    v-model="formModel.corp"
+                    v-model="formModel.provider"
                     :placeholder="$t('model.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
                   >
                     <a-option
-                      v-for="item in corps"
+                      v-for="item in providers"
                       :key="item.id"
                       :value="item.id"
                       :label="item.name"
@@ -720,7 +723,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { priceConv, quotaConv } from '@/utils/common';
-  import { queryCorpList, CorpList } from '@/api/corp';
+  import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryGroupList, GroupList } from '@/api/group';
 
   const { loading, setLoading } = useLoading(true);
@@ -736,7 +739,7 @@
 
   const generateFormModel = () => {
     return {
-      corp: '',
+      provider: '',
       model: '',
       type: ref(),
       group: '',
@@ -745,19 +748,19 @@
     };
   };
 
-  const corps = ref<CorpList[]>([]);
-  const getCorpList = async () => {
+  const providers = ref<ProviderList[]>([]);
+  const getProviderList = async () => {
     setLoading(true);
     try {
-      const { data } = await queryCorpList();
-      corps.value = data.items;
+      const { data } = await queryProviderList();
+      providers.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
     }
   };
-  getCorpList();
+  getProviderList();
 
   const groups = ref<GroupList[]>([]);
   const getGroupList = async () => {
@@ -812,9 +815,9 @@
   ]);
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('model.columns.corp'),
-      dataIndex: 'corp_name',
-      slotName: 'corp_name',
+      title: t('model.columns.provider'),
+      dataIndex: 'provider_name',
+      slotName: 'provider_name',
       align: 'center',
       width: 120,
     },

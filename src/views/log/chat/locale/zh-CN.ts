@@ -8,7 +8,7 @@ export default {
   'chat.detail.label.creator': '调用密钥',
   'chat.detail.label.user_id': '用户ID',
   'chat.detail.label.app_id': '应用ID',
-  'chat.detail.label.corp': '公司',
+  'chat.detail.label.provider': '公司',
   'chat.detail.label.group_name': '分组名称',
   'chat.detail.label.discount': '分组折扣',
   'chat.detail.label.model_id': '模型ID',

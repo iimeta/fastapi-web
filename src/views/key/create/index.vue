@@ -25,24 +25,24 @@
               {{ $t('common.title.baseInfo') }}
             </a-divider>
             <a-form-item
-              field="corp"
-              :label="$t('key.label.corp')"
+              field="provider"
+              :label="$t('key.label.provider')"
               :rules="[
                 {
                   required: true,
-                  message: $t('key.error.corp.required'),
+                  message: $t('key.error.provider.required'),
                 },
               ]"
             >
               <a-select
-                v-model="formData.corp"
-                :placeholder="$t('key.placeholder.corp')"
+                v-model="formData.provider_id"
+                :placeholder="$t('key.placeholder.provider')"
                 :scrollbar="false"
                 allow-search
                 @change="getKeyPlaceholder"
               >
                 <a-option
-                  v-for="item in corps"
+                  v-for="item in providers"
                   :key="item.id"
                   :value="item.id"
                   :label="item.name"
@@ -160,7 +160,7 @@
   import { useRouter } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { submitKeyCreate, KeyCreate } from '@/api/key';
-  import { queryCorpList, CorpList } from '@/api/corp';
+  import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryModelTree, Tree } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
 
@@ -169,15 +169,15 @@
   const router = useRouter();
   const { t } = useI18n();
 
-  const corps = ref<CorpList[]>([]);
-  const corpMap = new Map();
-  const getCorpList = async () => {
+  const providers = ref<ProviderList[]>([]);
+  const providerMap = new Map();
+  const getProviderList = async () => {
     setLoading(true);
     try {
-      const { data } = await queryCorpList();
-      corps.value = data.items;
-      for (let i = 0; i < corps.value.length; i += 1) {
-        corpMap.set(corps.value[i].id, corps.value[i]);
+      const { data } = await queryProviderList();
+      providers.value = data.items;
+      for (let i = 0; i < providers.value.length; i += 1) {
+        providerMap.set(providers.value[i].id, providers.value[i]);
       }
     } catch (err) {
       // you can report use errorHandler or other
@@ -185,11 +185,11 @@
       setLoading(false);
     }
   };
-  getCorpList();
+  getProviderList();
 
   const keyPlaceholder = ref(t('key.placeholder.key'));
   const getKeyPlaceholder = async () => {
-    switch (corpMap.get(formData.value.corp).code) {
+    switch (providerMap.get(formData.value.provider_id).code) {
       case 'Baidu':
         keyPlaceholder.value = t('key.placeholder.key.baidu');
         break;
@@ -237,7 +237,7 @@
 
   const formRef = ref<FormInstance>();
   const formData = ref<KeyCreate>({
-    corp: '',
+    provider_id: '',
     key: '',
     weight: ref(20),
     remark: '',

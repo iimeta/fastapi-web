@@ -3,7 +3,7 @@ import qs from 'query-string';
 
 export interface ModelAgentBaseInfo {
   id?: string;
-  corp: string;
+  provider_id: string;
   name: string;
   base_url: string;
   path: string;
@@ -32,8 +32,8 @@ export function submitModelAgentCreate(data: ModelAgentCreate) {
 
 export interface ModelAgentPage {
   id: string;
-  corp: string;
-  corp_name: string;
+  provider_id: string;
+  provider_name: string;
   name: string;
   base_url: string;
   path: string;
@@ -66,7 +66,7 @@ export function queryModelAgentPage(params: ModelAgentPageParams) {
 
 export interface ModelAgentList {
   id: string;
-  corp: string;
+  provider_id: string;
   name: string;
   base_url: string;
   path: string;
@@ -98,8 +98,8 @@ export interface ModelAgentDetailParams {
 
 export interface ModelAgentDetail {
   id: string;
-  corp: string;
-  corp_name: string;
+  provider_id: string;
+  provider_name: string;
   name: string;
   base_url: string;
   path: string;
