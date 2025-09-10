@@ -25,7 +25,7 @@
               $t('common.title.baseInfo')
             }}</a-divider>
             <a-form-item
-              field="provider"
+              field="provider_id"
               :label="$t('model.agent.label.provider')"
               :rules="[
                 {

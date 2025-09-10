@@ -50,7 +50,7 @@
         </a-skeleton>
         <span v-else>{{ currentData.app_id || '-' }}</span>
       </a-descriptions-item>
-      <!-- <a-descriptions-item label="公司">
+      <!-- <a-descriptions-item label="提供商">
               <a-skeleton v-if="loading" :animation="true">
                 <a-skeleton-line :rows="1" />
               </a-skeleton>
@@ -274,7 +274,7 @@
           currentData.is_smart_match ? '-' : currentData.app_id || '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="公司">
+      <a-descriptions-item label="提供商">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

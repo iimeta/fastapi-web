@@ -2,10 +2,10 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-bar-chart />
+        <icon-settings />
       </a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.provider') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.provider.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"

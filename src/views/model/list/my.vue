@@ -25,11 +25,11 @@
             <a-row :gutter="16">
               <a-col :span="8">
                 <a-form-item
-                  field="provider"
+                  field="provider_id"
                   :label="$t('model.form.provider')"
                 >
                   <a-select
-                    v-model="formModel.provider"
+                    v-model="formModel.provider_id"
                     :placeholder="$t('model.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -739,7 +739,7 @@
 
   const generateFormModel = () => {
     return {
-      provider: '',
+      provider_id: '',
       model: '',
       type: ref(),
       group: '',

@@ -26,11 +26,11 @@
             <a-row :gutter="16">
               <a-col :span="8">
                 <a-form-item
-                  field="provider"
+                  field="provider_id"
                   :label="$t('model.agent.form.provider')"
                 >
                   <a-select
-                    v-model="formModel.provider"
+                    v-model="formModel.provider_id"
                     :placeholder="$t('model.agent.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -368,7 +368,7 @@
         unmount-on-close
         hide-cancel
         simple
-        width="920px"
+        width="1080px"
         ok-text="关闭"
       >
         <Models :id="recordId" :action="action" />
@@ -384,7 +384,7 @@
         unmount-on-close
         hide-cancel
         simple
-        width="920px"
+        width="1080px"
         ok-text="关闭"
       >
         <Models :id="recordId" :action="action" />
@@ -483,7 +483,7 @@
 
   const generateFormModel = () => {
     return {
-      provider: '',
+      provider_id: '',
       name: '',
       base_url: '',
       models: [],

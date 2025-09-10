@@ -204,7 +204,7 @@
         unmount-on-close
         hide-cancel
         simple
-        width="920px"
+        width="1080px"
         ok-text="关闭"
       >
         <Models :id="recordId" :action="action" />

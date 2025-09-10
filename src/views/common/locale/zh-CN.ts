@@ -13,7 +13,7 @@ export default {
   'common.app_id': '应用ID',
   'common.app_name': '应用名称',
   'common.key': '密钥',
-  'common.provider': '公司',
+  'common.provider': '提供商',
   'common.model': '模型',
   'common.models': '模型权限',
   'common.model_name': '模型名称',

@@ -25,9 +25,12 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="provider" :label="$t('key.form.provider')">
+                <a-form-item
+                  field="provider_id"
+                  :label="$t('key.form.provider')"
+                >
                   <a-select
-                    v-model="formModel.provider"
+                    v-model="formModel.provider_id"
                     :placeholder="$t('key.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -395,7 +398,7 @@
         unmount-on-close
         hide-cancel
         simple
-        width="920px"
+        width="1080px"
         ok-text="关闭"
       >
         <Models :id="recordId" :action="action" />
@@ -518,7 +521,7 @@
   const generateFormModel = () => {
     return {
       type: 2,
-      provider: '',
+      provider_id: '',
       key: '',
       models: [],
       model_agents: ref(),
@@ -677,7 +680,7 @@
       pagination.total = data.paging.total;
       if (
         data.items.length > 0 &&
-        (formModel.value.provider ||
+        (formModel.value.provider_id ||
           formModel.value.key ||
           formModel.value.models.length > 0 ||
           formModel.value.model_agents ||

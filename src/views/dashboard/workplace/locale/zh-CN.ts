@@ -18,7 +18,7 @@ export default {
   'workplace.appKeyManagement': '应用密钥',
   'workplace.agentManagement': '代理管理',
   'workplace.userManagement': '用户管理',
-  'workplace.providerManagement': '公司管理',
+  'workplace.providerManagement': '提供商',
   'workplace.financeCenter': '财务中心',
   'workplace.chatManagement': '日志管理',
   'workplace.sysManagement': '系统管理',

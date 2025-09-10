@@ -1,9 +1,9 @@
 export default {
-  'menu.provider': '公司管理',
-  'menu.provider.list': '公司列表',
-  'menu.provider.create': '新建公司',
-  'menu.provider.update': '修改公司',
-  'menu.provider.detail': '公司详情',
+  'menu.provider': '提供商',
+  'menu.provider.list': '提供商列表',
+  'menu.provider.create': '新建提供商',
+  'menu.provider.update': '修改提供商',
+  'menu.provider.detail': '提供商详情',
   'provider.label.name': '名称',
   'provider.placeholder.name': '名称, 最多100字符',
   'provider.error.name.required': '请输入名称',
@@ -18,7 +18,7 @@ export default {
   'provider.label.remark': '备注',
   'provider.placeholder.remark': '请输入备注',
   // detail
-  'provider.detail.label.name': '公司名称',
+  'provider.detail.label.name': '提供商名称',
   'provider.detail.label.code': '代码',
   'provider.detail.label.remark': '备注',
   'provider.detail.label.created_at': '创建时间',

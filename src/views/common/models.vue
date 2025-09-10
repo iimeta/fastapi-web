@@ -17,14 +17,14 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="6">
+              <a-col :span="8">
                 <a-form-item
-                  field="provider"
+                  field="provider_id"
                   :label="$t('model.form.provider')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-select
-                    v-model="formModel.provider"
+                    v-model="formModel.provider_id"
                     :placeholder="$t('model.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -39,7 +39,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="10">
+              <a-col :span="8">
                 <a-form-item
                   field="name"
                   :label="$t('model.form.name')"
@@ -53,7 +53,11 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="model" :label="$t('model.form.model')">
+                <a-form-item
+                  field="model"
+                  :label="$t('model.form.model')"
+                  :label-col-props="{ span: 6 }"
+                >
                   <a-input
                     v-model="formModel.model"
                     :placeholder="$t('model.form.model.placeholder')"
@@ -125,7 +129,7 @@
 
   const generateFormModel = () => {
     return {
-      provider: '',
+      provider_id: '',
       name: '',
       model: '',
       type: ref(),

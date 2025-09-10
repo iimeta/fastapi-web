@@ -14,6 +14,41 @@ const SYS: AppRouteRecordRaw = {
   },
   children: [
     {
+      path: 'provider/list',
+      name: 'ProviderList',
+      component: () => import('@/views/system/provider/list/index.vue'),
+      meta: {
+        locale: 'menu.provider',
+        requiresAuth: true,
+        roles: ['admin'],
+        activeMenu: 'ProviderList',
+      },
+    },
+    {
+      path: 'provider/create',
+      name: 'ProviderCreate',
+      component: () => import('@/views/system/provider/create/index.vue'),
+      meta: {
+        locale: 'menu.provider.create',
+        requiresAuth: true,
+        roles: ['admin'],
+        hideInMenu: true,
+        activeMenu: 'ProviderList',
+      },
+    },
+    {
+      path: 'provider/update',
+      name: 'ProviderUpdate',
+      component: () => import('@/views/system/provider/update/index.vue'),
+      meta: {
+        locale: 'menu.provider.update',
+        requiresAuth: true,
+        roles: ['admin'],
+        hideInMenu: true,
+        activeMenu: 'ProviderList',
+      },
+    },
+    {
       path: 'reseller/list',
       name: 'ResellerList',
       component: () => import('@/views/system/reseller/list/index.vue'),
