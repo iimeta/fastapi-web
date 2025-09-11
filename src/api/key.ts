@@ -26,17 +26,11 @@ export function submitKeyCreate(data: KeyCreate) {
 export interface KeyPage {
   id: string;
   type: number;
-  user_id: any;
-  app_id: any;
   provider_id: string;
   provider_name: string;
   key: string;
-  quota: number;
   models: string[];
-  model_names: string[];
   model_agents: string[];
-  ip_whitelist: string[];
-  ip_blacklist: string[];
   status: number;
   remark: string;
 }
@@ -76,30 +70,17 @@ export interface KeyDetailParams {
 
 export interface KeyDetail {
   id: string;
-  type: number;
-  user_id: number;
-  app_id: number;
   provider_id: string;
   provider_name: string;
   key: string;
-  quota: number;
   used_quota: number;
-  quota_expires_rule: number;
-  quota_expires_at: string;
-  quota_expires_minutes: number;
   weight: number;
   models: string[];
   model_names: string[];
   model_agents: string[];
   model_agent_names: string[];
-  is_limit_quota: boolean;
   is_agents_only: boolean;
   is_never_disable: boolean;
-  is_bind_group: boolean;
-  group: string;
-  group_name: string;
-  ip_whitelist: string[];
-  ip_blacklist: string[];
   status: number;
   remark: string;
   is_auto_disabled: boolean;
@@ -136,7 +117,6 @@ export interface KeyBatchOperate {
   action: string;
   ids?: string[];
   value?: any;
-  type?: number;
   provider_id?: string;
   key?: string;
   models?: string[];

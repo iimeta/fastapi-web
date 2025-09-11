@@ -1090,28 +1090,23 @@
   import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import { quotaConv } from '@/utils/common';
+  import { queryAppList, AppList } from '@/api/app';
   import {
-    queryKeyPage,
-    KeyPage,
-    KeyPageParams,
-    submitKeyDelete,
-    KeyDeleteParams,
-    KeyChangeStatus,
-    submitKeyChangeStatus,
-    KeyBatchOperate,
-    submitKeyBatchOperate,
-    queryKeyDetail,
-  } from '@/api/key';
-  import {
-    queryAppList,
-    AppList,
+    queryAppKeyPage,
+    AppKeyPage,
+    AppKeyPageParams,
+    submitAppKeyDelete,
+    AppKeyDeleteParams,
+    AppKeyChangeStatus,
+    submitAppKeyChangeStatus,
+    queryAppKeyDetail,
     submitAppKeyConfig,
     AppKeyConfig,
     AppKeyExportParams,
     submitAppKeyExport,
     AppKeyBatchOperate,
     submitAppKeyBatchOperate,
-  } from '@/api/app';
+  } from '@/api/app_key';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -1194,10 +1189,10 @@
   };
   getGroupList();
 
-  const keyDelete = async (params: KeyDeleteParams) => {
+  const keyDelete = async (params: AppKeyDeleteParams) => {
     setLoading(true);
     try {
-      await submitKeyDelete(params);
+      await submitAppKeyDelete(params);
       proxy.$message.success('删除成功');
       search();
     } catch (err) {
@@ -1220,7 +1215,7 @@
     };
   };
 
-  const renderData = ref<KeyPage[]>([]);
+  const renderData = ref<AppKeyPage[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -1361,7 +1356,7 @@
     },
   ]);
   const fetchData = async (
-    params: KeyPageParams = {
+    params: AppKeyPageParams = {
       ...basePagination,
       type: 1,
       app_id: route.query.app_id,
@@ -1369,7 +1364,7 @@
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryKeyPage(params);
+      const { data } = await queryAppKeyPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
@@ -1401,7 +1396,7 @@
     fetchData({
       ...basePagination,
       ...formModel.value,
-    } as unknown as KeyPageParams);
+    } as unknown as AppKeyPageParams);
   };
 
   const onPageChange = (current: number) => {
@@ -1420,10 +1415,10 @@
     search();
   };
 
-  const keyChangeStatus = async (params: KeyChangeStatus) => {
+  const keyChangeStatus = async (params: AppKeyChangeStatus) => {
     setLoading(true);
     try {
-      await submitKeyChangeStatus(params);
+      await submitAppKeyChangeStatus(params);
       proxy.$message.success('操作成功');
       search();
     } catch (err) {
@@ -1645,7 +1640,7 @@
   /**
    * 批量操作
    */
-  const handleBatch = (params: KeyBatchOperate) => {
+  const handleBatch = (params: AppKeyBatchOperate) => {
     if (ids.value.length === 0) {
       proxy.$message.info('请选择要操作的数据');
     } else {
@@ -1672,7 +1667,7 @@
         onOk: () => {
           setLoading(true);
           params.ids = ids.value;
-          submitKeyBatchOperate(params).then((res) => {
+          submitAppKeyBatchOperate(params).then((res) => {
             setLoading(false);
             proxy.$message.success('操作成功');
             search();
@@ -1760,7 +1755,7 @@
    */
   const { copy, copied } = useClipboard();
   const handleCopy = async (id: string) => {
-    const { data } = await queryKeyDetail({ id });
+    const { data } = await queryAppKeyDetail({ id });
     copy(data.key);
   };
   watch(copied, () => {
@@ -1786,7 +1781,7 @@
   const modelsHandle = (id: string) => {
     modelsVisible.value = true;
     recordId.value = id;
-    action.value = 'key';
+    action.value = 'app_key';
   };
 
   const appKeyExportForm = ref<FormInstance>();

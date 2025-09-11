@@ -18,7 +18,7 @@ const APP_KEY: AppRouteRecordRaw = {
     {
       path: '',
       name: 'AppKeyList',
-      component: () => import('@/views/key/list/app.vue'),
+      component: () => import('@/views/app_key/list/index.vue'),
       meta: {
         locale: 'menu.key.app.list',
         requiresAuth: true,

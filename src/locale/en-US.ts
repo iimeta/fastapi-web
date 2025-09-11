@@ -9,6 +9,7 @@ import localeUserCenter from '@/views/user/center/locale/en-US';
 
 import localeUser from '@/views/user/locale/en-US';
 import localeApp from '@/views/app/locale/en-US';
+import localeAppKey from '@/views/app_key/locale/en-US';
 import localeModel from '@/views/model/locale/en-US';
 import localeKey from '@/views/key/locale/en-US';
 import localeAgent from '@/views/agent/locale/en-US';
@@ -35,6 +36,7 @@ export default {
   ...localeUserCenter,
   ...localeUser,
   ...localeApp,
+  ...localeAppKey,
   ...localeModel,
   ...localeKey,
   ...localeAgent,

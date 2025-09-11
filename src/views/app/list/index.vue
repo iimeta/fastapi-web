@@ -642,15 +642,17 @@
     AppPageParams,
     submitAppDelete,
     AppDeleteParams,
-    submitAppCreateKey,
-    AppCreateKeyParams,
-    submitAppKeyConfig,
-    AppKeyConfig,
     AppChangeStatus,
     submitAppChangeStatus,
     AppBatchOperate,
     submitAppBatchOperate,
   } from '@/api/app';
+  import {
+    submitAppKeyCreate,
+    AppKeyCreate,
+    submitAppKeyConfig,
+    AppKeyConfig,
+  } from '@/api/app_key';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -1008,8 +1010,8 @@
     formData.value.quota = quota * 500000;
   };
 
-  const createKey = async (params: AppCreateKeyParams) => {
-    const { data } = await submitAppCreateKey(params);
+  const createKey = async (params: AppKeyCreate) => {
+    const { data } = await submitAppKeyCreate(params);
     formData.value.app_id = data.app_id;
     formData.value.key = data.key;
     formData.value.quota_expires_rule = '1';

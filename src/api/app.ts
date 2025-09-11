@@ -147,35 +147,6 @@ export function submitAppChangeStatus(data: AppChangeStatus) {
   return axios.post('/api/v1/app/change/status', data);
 }
 
-export interface AppCreateKeyParams {
-  app_id: any;
-}
-
-export function submitAppCreateKey(data: AppCreateKeyParams) {
-  return axios.post('/api/v1/app/create/key', data);
-}
-
-export interface AppKeyConfig {
-  id: string;
-  app_id: number;
-  key: string;
-  models: string[];
-  is_limit_quota: boolean;
-  quota: number;
-  quota_expires_rule: string;
-  quota_expires_at: string;
-  quota_expires_minutes: any;
-  is_bind_group: boolean;
-  group: string;
-  ip_whitelist: string;
-  ip_blacklist: string;
-  remark: string;
-}
-
-export function submitAppKeyConfig(data: AppKeyConfig) {
-  return axios.post('/api/v1/app/key/config', data);
-}
-
 export interface AppBatchOperate {
   action: string;
   ids?: string[];
@@ -184,54 +155,4 @@ export interface AppBatchOperate {
 
 export function submitAppBatchOperate(data: AppBatchOperate) {
   return axios.post('/api/v1/app/batch/operate', data);
-}
-
-export interface AppKeyQueryParams {
-  user_id?: number;
-  app_id?: number;
-  key?: string;
-  models?: string[];
-  quota?: number;
-  quota_expires_at?: any;
-  status?: any;
-  remark?: string;
-}
-
-export interface AppKeyBatchOperate {
-  action: string;
-  ids?: string[];
-  value?: any;
-  id?: string;
-  user_id?: number;
-  app_id?: number;
-  key?: string;
-  n?: number;
-  models?: string[];
-  is_limit_quota?: boolean;
-  quota?: number;
-  quota_expires_rule?: string;
-  quota_expires_at?: any;
-  quota_expires_minutes?: any;
-  is_bind_group?: boolean;
-  group?: string;
-  ip_whitelist?: string;
-  ip_blacklist?: string;
-  remark?: string;
-  query_params?: AppKeyQueryParams;
-}
-
-export function submitAppKeyBatchOperate(data: AppKeyBatchOperate) {
-  return axios.post('/api/v1/app/key/batch/operate', data);
-}
-
-export interface AppKeyExportParams {
-  ids?: string[];
-  user_id?: number;
-  app_id?: number;
-}
-
-export function submitAppKeyExport(params: AppKeyExportParams) {
-  return axios.post('/api/v1/app/key/export', params, {
-    responseType: 'blob',
-  });
 }

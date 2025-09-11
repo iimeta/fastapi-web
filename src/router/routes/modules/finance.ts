@@ -13,9 +13,9 @@ const FINANCE: AppRouteRecordRaw = {
   },
   children: [
     {
-      path: 'bill_list',
+      path: 'bill',
       name: 'BillList',
-      component: () => import('@/views/finance/list/bill_list.vue'),
+      component: () => import('@/views/finance/list/bill.vue'),
       meta: {
         locale: 'menu.bill.list',
         requiresAuth: true,
@@ -24,7 +24,7 @@ const FINANCE: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'deal_record',
+      path: 'deal',
       name: 'DealRecordList',
       component: () => import('@/views/finance/list/deal_record.vue'),
       meta: {
