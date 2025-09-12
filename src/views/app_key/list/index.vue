@@ -435,7 +435,7 @@
         :width="600"
         :title="$t('app.form.title.keyConfig')"
         :ok-text="$t('button.save')"
-        :body-style="{ height: '560px' }"
+        :body-style="{ height: '520px' }"
         @cancel="handleCancel"
         @before-ok="handleBeforeOk"
       >
@@ -694,7 +694,7 @@
         v-model:visible="batchVisible"
         :width="600"
         :title="$t('app.form.title.batch.create')"
-        :body-style="{ height: '560px' }"
+        :body-style="{ height: '520px' }"
         @cancel="handleBatchCancel"
         @before-ok="handleBatchBeforeOk"
       >
