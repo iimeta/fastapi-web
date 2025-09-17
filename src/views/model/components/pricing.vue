@@ -7,6 +7,35 @@
         :bordered="false"
       >
         <div class="wrapper">
+          <a-tabs
+            :default-active-tab="0"
+            position="right"
+            type="line"
+            style="width: 100%; height: 300px; margin-top: 20px"
+          >
+            <a-tab-pane key="0" :title="$t('sys.config.tab.title.all')">
+            </a-tab-pane>
+            <a-tab-pane key="1" :title="$t('sys.config.tab.title.global')">
+            </a-tab-pane>
+            <a-tab-pane key="2" :title="$t('sys.config.tab.title.general')">
+            </a-tab-pane>
+            <a-tab-pane key="3" :title="$t('sys.config.tab.title.task')">
+            </a-tab-pane>
+            <a-tab-pane key="4" :title="$t('sys.config.tab.title.api')">
+            </a-tab-pane>
+            <a-tab-pane key="5" :title="$t('sys.config.tab.title.api')">
+            </a-tab-pane>
+            <a-tab-pane key="6" :title="$t('sys.config.tab.title.api')">
+            </a-tab-pane>
+            <a-tab-pane key="7" :title="$t('sys.config.tab.title.api')">
+            </a-tab-pane>
+            <a-tab-pane key="8" :title="$t('sys.config.tab.title.api')">
+            </a-tab-pane>
+            <a-tab-pane key="9" :title="$t('sys.config.tab.title.api')">
+            </a-tab-pane>
+            <a-tab-pane key="10" :title="$t('sys.config.tab.title.api')">
+            </a-tab-pane>
+          </a-tabs>
           <a-form
             ref="formRef"
             :model="formData"
@@ -2285,7 +2314,7 @@
 
 <script lang="ts">
   export default {
-    name: 'ModelCreate',
+    name: 'Pricing',
   };
 </script>
 

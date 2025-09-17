@@ -21,6 +21,7 @@
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
           >
+            <Pricing />
             <a-divider orientation="left">{{
               $t('common.title.baseInfo')
             }}</a-divider>
@@ -2099,6 +2100,7 @@
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { queryGroupList, GroupList } from '@/api/group';
+  import Pricing from '../components/pricing.vue';
 
   const { loading, setLoading } = useLoading(false);
   const { proxy } = getCurrentInstance() as any;
