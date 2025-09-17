@@ -100,7 +100,7 @@
 <script lang="ts" setup>
   import { computed, ref, reactive, getCurrentInstance } from 'vue';
   import { FieldRule } from '@arco-design/web-vue';
-  import { getCaptcha } from '@/api/common';
+  import { getCaptcha } from '@/api/auth';
   import { useI18n } from 'vue-i18n';
   import { useUserStore } from '@/store';
   import { changeEmail, ChangeEmailData } from '@/api/user-center';

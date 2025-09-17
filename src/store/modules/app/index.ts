@@ -3,7 +3,7 @@ import { Notification } from '@arco-design/web-vue';
 import type { NotificationReturn } from '@arco-design/web-vue/es/notification/interface';
 import type { RouteRecordNormalized } from 'vue-router';
 import defaultSettings from '@/config/settings.json';
-import { getMenuList } from '@/api/user';
+import { getMenuList } from '@/api/auth';
 import {
   querySiteConfig,
   Carousel,
