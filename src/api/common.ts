@@ -6,6 +6,11 @@ export interface TextPricing {
   input_lte: number;
 }
 
+export interface ImagePricing {
+  input_ratio: number;
+  output_ratio: number;
+}
+
 export interface ImageGenerationPricing {
   quality: string;
   width: number;
@@ -39,12 +44,13 @@ export interface CachePricing {
 }
 
 export interface Pricing {
-  billing_rule: number;
+  billing_rule:  any;
   billing_items: string[];
   text_pricing: TextPricing;
   text_cache_pricing: CachePricing;
   tiered_text_pricing: TextPricing[];
   tiered_text_cache_pricing: CachePricing[];
+  image_pricing: ImagePricing;
   image_generation_pricing: ImageGenerationPricing[];
   image_cache_pricing: CachePricing;
   audio_pricing: AudioPricing;

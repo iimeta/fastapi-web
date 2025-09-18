@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'query-string';
+import { Pricing } from './common';
 
 export interface ModelInit {
   url: string;
@@ -136,6 +137,7 @@ export interface FallbackConfig {
 }
 
 export interface ModelAdvanced {
+  pricing: Pricing;
   text_quota: TextQuota;
   image_quota: ImageQuota;
   audio_quota: AudioQuota;

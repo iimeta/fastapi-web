@@ -2,7 +2,12 @@
   <div class="navbar">
     <div class="left-side">
       <a-space>
-        <img alt="logo" class="logo" :src="appStore.getLogo" />
+        <img
+          alt="logo"
+          class="logo"
+          :src="appStore.getLogo"
+          style="background-color: #ffffff"
+        />
         <a-typography-title
           :style="{ margin: 0, fontSize: '24px' }"
           :heading="5"
@@ -172,7 +177,11 @@
             :size="32"
             :style="{ marginRight: '8px', cursor: 'pointer' }"
           >
-            <img alt="avatar" :src="avatar || appStore.getAvatar" />
+            <img
+              alt="avatar"
+              :src="avatar || appStore.getAvatar"
+              style="background-color: #ffffff"
+            />
           </a-avatar>
           <template #content>
             <!-- <a-doption>
@@ -224,7 +233,7 @@
   import useUser from '@/hooks/user';
   import Menu from '@/components/menu/index.vue';
   import MessageBox from '../message-box/index.vue';
-  import config from "../../../package.json";
+  import config from '../../../package.json';
 
   const appStore = useAppStore();
   const userStore = useUserStore();

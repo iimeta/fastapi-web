@@ -1,7 +1,11 @@
 <template>
   <div class="root" :style="{ backgroundImage: `url(${appStore.getBgImg})` }">
     <div class="logo">
-      <img alt="logo" :src="appStore.getLogo" />
+      <img
+        alt="logo"
+        :src="appStore.getLogo"
+        style="background-color: #ffffff"
+      />
       <div class="logo-text">{{ appStore.getTitle }}</div>
     </div>
     <div class="container">

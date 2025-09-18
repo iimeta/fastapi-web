@@ -14,7 +14,11 @@
             <template #trigger-icon>
               <icon-camera />
             </template>
-            <img v-if="fileList.length" :src="fileList[0].url" />
+            <img
+              v-if="fileList.length"
+              :src="fileList[0].url"
+              style="background-color: #ffffff"
+            />
           </a-avatar>
         </template>
       </a-upload>

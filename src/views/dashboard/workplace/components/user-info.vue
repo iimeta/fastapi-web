@@ -16,7 +16,10 @@
           <template #trigger-icon>
             <icon-settings />
           </template>
-          <img :src="userInfo.avatar || appStore.getAvatar" />
+          <img
+            :src="userInfo.avatar || appStore.getAvatar"
+            style="background-color: #ffffff"
+          />
         </a-avatar>
         <a-typography-title :heading="6" style="margin: 0">
           {{ userInfo.name }}

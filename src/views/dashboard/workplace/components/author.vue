@@ -17,7 +17,11 @@
         :key="idx"
       >
         <a-link :href="carousel.jump_url" target="_blank">
-          <img class="author" :src="carousel.image_url" />
+          <img
+            class="author"
+            :src="carousel.image_url"
+            style="background-color: #ffffff"
+          />
         </a-link>
       </a-carousel-item>
     </a-carousel>
