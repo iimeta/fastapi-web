@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -30,7 +30,7 @@
                   :label="$t('site.config.form.user_id')"
                 >
                   <a-input-number
-                    v-model="formModel.user_id"
+                    v-model="formData.user_id"
                     :placeholder="$t('site.config.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
@@ -45,7 +45,7 @@
                   :label="$t('site.config.form.domain')"
                 >
                   <a-input
-                    v-model="formModel.domain"
+                    v-model="formData.domain"
                     :placeholder="$t('site.config.form.domain.placeholder')"
                     allow-clear
                   />
@@ -57,7 +57,7 @@
                   :label="$t('site.config.form.title')"
                 >
                   <a-input
-                    v-model="formModel.title"
+                    v-model="formData.title"
                     :placeholder="$t('site.config.form.title.placeholder')"
                     allow-clear
                   />
@@ -69,7 +69,7 @@
                   :label="$t('site.config.form.register_tips')"
                 >
                   <a-input
-                    v-model="formModel.register_tips"
+                    v-model="formData.register_tips"
                     :placeholder="
                       $t('site.config.form.register_tips.placeholder')
                     "
@@ -80,7 +80,7 @@
               <a-col v-permission="['admin']" :span="8">
                 <a-form-item field="logo" :label="$t('site.config.form.logo')">
                   <a-input
-                    v-model="formModel.logo"
+                    v-model="formData.logo"
                     :placeholder="$t('site.config.form.logo.placeholder')"
                     allow-clear
                   />
@@ -89,7 +89,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -391,7 +391,7 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<SiteConfigPage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -532,23 +532,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as SiteConfigPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 

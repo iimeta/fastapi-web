@@ -11,7 +11,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -24,7 +24,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-select
-                    v-model="formModel.provider_id"
+                    v-model="formData.provider_id"
                     :placeholder="$t('model.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -46,7 +46,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
-                    v-model="formModel.name"
+                    v-model="formData.name"
                     :placeholder="$t('model.form.name.placeholder')"
                     allow-clear
                   />
@@ -59,7 +59,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
-                    v-model="formModel.model"
+                    v-model="formData.model"
                     :placeholder="$t('model.form.model.placeholder')"
                     allow-clear
                   />
@@ -154,7 +154,7 @@
 
   const { t } = useI18n();
   const renderData = ref<ModelPermissions[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
 
@@ -203,7 +203,7 @@
     fetchData({
       id: props.id,
       action: props.action,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as ModelPermissionsParams);
   };
 

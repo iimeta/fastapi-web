@@ -18,7 +18,7 @@
       <a-row v-permission="['reseller', 'admin']">
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -27,7 +27,7 @@
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('finance.form.user_id')">
                   <a-input-number
-                    v-model="formModel.user_id"
+                    v-model="formData.user_id"
                     :placeholder="$t('finance.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
@@ -41,7 +41,7 @@
                   :label="$t('finance.form.stat_date')"
                 >
                   <a-range-picker
-                    v-model="formModel.stat_date"
+                    v-model="formData.stat_date"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -272,7 +272,7 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<BillPage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -375,23 +375,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as BillPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 

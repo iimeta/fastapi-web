@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -30,7 +30,7 @@
                   :label="$t('model.form.provider')"
                 >
                   <a-select
-                    v-model="formModel.provider_id"
+                    v-model="formData.provider_id"
                     :placeholder="$t('model.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -48,7 +48,7 @@
               <a-col :span="8">
                 <a-form-item field="model" :label="$t('model.form.model')">
                   <a-input
-                    v-model="formModel.model"
+                    v-model="formData.model"
                     :placeholder="$t('model.form.model.placeholder')"
                     allow-clear
                   />
@@ -57,7 +57,7 @@
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('model.form.name')">
                   <a-input
-                    v-model="formModel.name"
+                    v-model="formData.name"
                     :placeholder="$t('model.form.name.placeholder')"
                     allow-clear
                   />
@@ -66,7 +66,7 @@
               <a-col :span="8">
                 <a-form-item field="group" :label="$t('model.form.group')">
                   <a-select
-                    v-model="formModel.group"
+                    v-model="formData.group"
                     :placeholder="$t('model.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -84,7 +84,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('model.form.status')">
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('model.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -95,7 +95,7 @@
               <a-col :span="8">
                 <a-form-item field="type" :label="$t('model.form.type')">
                   <a-select
-                    v-model="formModel.type"
+                    v-model="formData.type"
                     :placeholder="$t('model.form.selectDefault')"
                     :options="typeOptions"
                     :scrollbar="false"
@@ -1301,7 +1301,7 @@
   };
   const { t } = useI18n();
   const renderData = ref<ModelPage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -1471,23 +1471,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as ModelPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 

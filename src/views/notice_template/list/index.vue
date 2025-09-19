@@ -20,7 +20,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -32,7 +32,7 @@
                   :label="$t('notice.template.form.name')"
                 >
                   <a-input
-                    v-model="formModel.name"
+                    v-model="formData.name"
                     :placeholder="$t('notice.template.form.name.placeholder')"
                     allow-clear
                   />
@@ -44,7 +44,7 @@
                   :label="$t('notice.template.form.title')"
                 >
                   <a-input
-                    v-model="formModel.title"
+                    v-model="formData.title"
                     :placeholder="$t('notice.template.form.title.placeholder')"
                     allow-clear
                   />
@@ -56,7 +56,7 @@
                   :label="$t('notice.template.form.content')"
                 >
                   <a-input
-                    v-model="formModel.content"
+                    v-model="formData.content"
                     :placeholder="
                       $t('notice.template.form.content.placeholder')
                     "
@@ -70,7 +70,7 @@
                   :label="$t('notice.template.form.scenes')"
                 >
                   <a-select
-                    v-model="formModel.scenes"
+                    v-model="formData.scenes"
                     :placeholder="$t('notice.template.form.selectDefault')"
                     :options="scenesOptions"
                     :scrollbar="false"
@@ -84,7 +84,7 @@
                   :label="$t('notice.template.form.status')"
                 >
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('notice.template.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -98,7 +98,7 @@
                   :label="$t('notice.template.form.remark')"
                 >
                   <a-input
-                    v-model="formModel.remark"
+                    v-model="formData.remark"
                     :placeholder="$t('notice.template.form.remark.placeholder')"
                     allow-clear
                   />
@@ -411,7 +411,7 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<NoticeTemplatePage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -620,23 +620,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as NoticeTemplatePageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 

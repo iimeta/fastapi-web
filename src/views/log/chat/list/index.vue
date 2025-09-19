@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -27,7 +27,7 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item field="app_id" :label="$t('chat.form.app_id')">
                   <a-select
-                    v-model="formModel.app_id"
+                    v-model="formData.app_id"
                     :placeholder="$t('chat.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -48,7 +48,7 @@
                   :label="$t('chat.form.user.trace_id')"
                 >
                   <a-input
-                    v-model="formModel.trace_id"
+                    v-model="formData.trace_id"
                     :placeholder="$t('chat.form.trace_id.placeholder')"
                     allow-clear
                   />
@@ -60,7 +60,7 @@
                   :label="$t('chat.form.reseller.user_id')"
                 >
                   <a-input-number
-                    v-model="formModel.user_id"
+                    v-model="formData.user_id"
                     :placeholder="$t('chat.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
@@ -71,7 +71,7 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item field="key" :label="$t('chat.form.key')">
                   <a-input
-                    v-model="formModel.key"
+                    v-model="formData.key"
                     :placeholder="$t('chat.form.key.placeholder')"
                     allow-clear
                   />
@@ -83,7 +83,7 @@
                   :label="$t('chat.form.user.trace_id')"
                 >
                   <a-input
-                    v-model="formModel.trace_id"
+                    v-model="formData.trace_id"
                     :placeholder="$t('chat.form.trace_id.placeholder')"
                     allow-clear
                   />
@@ -95,7 +95,7 @@
                   :label="$t('chat.form.total_time')"
                 >
                   <a-input-number
-                    v-model="formModel.total_time"
+                    v-model="formData.total_time"
                     :placeholder="$t('chat.form.total_time.placeholder')"
                     :precision="0"
                     :min="1"
@@ -106,7 +106,7 @@
               <a-col :span="8">
                 <a-form-item field="models" :label="$t('chat.form.models')">
                   <a-select
-                    v-model="formModel.models"
+                    v-model="formData.models"
                     :placeholder="$t('chat.form.selectDefault')"
                     :max-tag-count="1"
                     :scrollbar="false"
@@ -126,7 +126,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('chat.form.status')">
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('chat.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -137,7 +137,7 @@
               <a-col :span="8">
                 <a-form-item field="req_time" :label="$t('chat.form.req_time')">
                   <a-range-picker
-                    v-model="formModel.req_time"
+                    v-model="formData.req_time"
                     :placeholder="['开始时间', '结束时间']"
                     :time-picker-props="{
                       defaultValue: ['00:00:00', '23:59:59'],
@@ -155,7 +155,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
-                    v-model="formModel.trace_id"
+                    v-model="formData.trace_id"
                     :placeholder="$t('chat.form.trace_id.placeholder')"
                     allow-clear
                   />
@@ -168,7 +168,7 @@
                   :label-col-props="{ span: 5 }"
                 >
                   <a-select
-                    v-model="formModel.models"
+                    v-model="formData.models"
                     :placeholder="$t('chat.form.selectDefault')"
                     :max-tag-count="1"
                     :scrollbar="false"
@@ -192,7 +192,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
-                    v-model="formModel.key"
+                    v-model="formData.key"
                     :placeholder="$t('chat.form.key.placeholder')"
                     allow-clear
                   />
@@ -204,7 +204,7 @@
                   :label="$t('chat.form.total_time')"
                 >
                   <a-input-number
-                    v-model="formModel.total_time"
+                    v-model="formData.total_time"
                     :placeholder="$t('chat.form.total_time.placeholder')"
                     :precision="0"
                     :min="1"
@@ -219,7 +219,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input-number
-                    v-model="formModel.user_id"
+                    v-model="formData.user_id"
                     :placeholder="$t('chat.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
@@ -234,7 +234,7 @@
                   :label-col-props="{ span: 5 }"
                 >
                   <a-select
-                    v-model="formModel.model_agents"
+                    v-model="formData.model_agents"
                     :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="1"
                     :scrollbar="false"
@@ -258,7 +258,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('chat.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -269,7 +269,7 @@
               <a-col :span="8">
                 <a-form-item field="req_time" :label="$t('chat.form.req_time')">
                   <a-range-picker
-                    v-model="formModel.req_time"
+                    v-model="formData.req_time"
                     :placeholder="['开始时间', '结束时间']"
                     :time-picker-props="{
                       defaultValue: ['00:00:00', '23:59:59'],
@@ -884,7 +884,7 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<ChatPage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -1053,7 +1053,7 @@
   const fetchData = async (
     params: ChatPageParams = {
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     }
   ) => {
     setLoading(true);
@@ -1075,23 +1075,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as ChatPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 
@@ -1178,7 +1178,7 @@
   const tpm = ref(0);
   const getPerMinute = async (
     params: PerMinuteParams = {
-      ...formModel.value,
+      ...formData.value,
     }
   ) => {
     const { data } = await queryPerMinute(params);

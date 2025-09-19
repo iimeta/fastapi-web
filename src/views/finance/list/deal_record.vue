@@ -18,7 +18,7 @@
       <a-row v-permission="['reseller', 'admin']">
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -27,7 +27,7 @@
               <a-col :span="6">
                 <a-form-item field="name" :label="$t('finance.form.user_id')">
                   <a-input-number
-                    v-model="formModel.user_id"
+                    v-model="formData.user_id"
                     :placeholder="$t('finance.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
@@ -38,7 +38,7 @@
               <a-col :span="6">
                 <a-form-item field="type" :label="$t('finance.form.type')">
                   <a-select
-                    v-model="formModel.type"
+                    v-model="formData.type"
                     :placeholder="$t('finance.form.selectDefault')"
                     :options="typeOptions"
                     :scrollbar="false"
@@ -49,7 +49,7 @@
               <a-col :span="6">
                 <a-form-item field="status" :label="$t('finance.form.status')">
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('finance.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -63,7 +63,7 @@
                   :label="$t('finance.form.created_at')"
                 >
                   <a-range-picker
-                    v-model="formModel.created_at"
+                    v-model="formData.created_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -243,7 +243,7 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<DealRecordPage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -370,23 +370,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as DealRecordPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 

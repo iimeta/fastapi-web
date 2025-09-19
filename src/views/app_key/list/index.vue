@@ -17,7 +17,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -26,7 +26,7 @@
               <a-col v-permission="['reseller', 'admin']" :span="8">
                 <a-form-item field="user_id" :label="$t('key.form.userId')">
                   <a-input-number
-                    v-model="formModel.user_id"
+                    v-model="formData.user_id"
                     :placeholder="$t('key.form.userId.placeholder')"
                     :precision="0"
                     :min="1"
@@ -38,7 +38,7 @@
               <a-col v-permission="['reseller', 'admin']" :span="8">
                 <a-form-item field="app_id" :label="$t('key.form.appId')">
                   <a-input-number
-                    v-model="formModel.app_id"
+                    v-model="formData.app_id"
                     :placeholder="$t('key.form.appId.placeholder')"
                     :precision="0"
                     :min="1"
@@ -50,7 +50,7 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item field="app_id" :label="$t('key.form.app')">
                   <a-select
-                    v-model="formModel.app_id"
+                    v-model="formData.app_id"
                     :placeholder="$t('key.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -68,7 +68,7 @@
               <a-col :span="8">
                 <a-form-item field="key" :label="$t('key.form.appkey')">
                   <a-input
-                    v-model="formModel.key"
+                    v-model="formData.key"
                     :placeholder="$t('key.form.appkey.placeholder')"
                     allow-clear
                   />
@@ -77,7 +77,7 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item field="models" :label="$t('key.form.app.models')">
                   <a-select
-                    v-model="formModel.models"
+                    v-model="formData.models"
                     :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="2"
                     :scrollbar="false"
@@ -97,7 +97,7 @@
               <a-col :span="8">
                 <a-form-item field="quota" :label="$t('key.form.quota')">
                   <a-input-number
-                    v-model="formModel.quota"
+                    v-model="formData.quota"
                     :placeholder="$t('key.form.quota.placeholder')"
                     :min="0.000001"
                     :max="9999999999999"
@@ -108,7 +108,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('key.form.status')">
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('key.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -122,7 +122,7 @@
                   :label="$t('key.form.quota_expires_at')"
                 >
                   <a-range-picker
-                    v-model="formModel.quota_expires_at"
+                    v-model="formData.quota_expires_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -1143,7 +1143,7 @@
       const { data } = await queryAppList();
       apps.value = data.items;
       if (route.query.app_id) {
-        formModel.value.app_id = Number(route.query.app_id);
+        formData.value.app_id = Number(route.query.app_id);
       }
     } catch (err) {
       // you can report use errorHandler or other
@@ -1216,7 +1216,7 @@
   };
 
   const renderData = ref<AppKeyPage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -1371,14 +1371,14 @@
       pagination.total = data.paging.total;
       if (
         data.items.length > 0 &&
-        (formModel.value.user_id ||
-          formModel.value.app_id ||
-          formModel.value.key ||
-          formModel.value.models.length > 0 ||
-          formModel.value.quota ||
-          formModel.value.status ||
-          (formModel.value.quota_expires_at &&
-            formModel.value.quota_expires_at.length > 0))
+        (formData.value.user_id ||
+          formData.value.app_id ||
+          formData.value.key ||
+          formData.value.models.length > 0 ||
+          formData.value.quota ||
+          formData.value.status ||
+          (formData.value.quota_expires_at &&
+            formData.value.quota_expires_at.length > 0))
       ) {
         allMultiple.value = false;
       } else {
@@ -1395,23 +1395,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as AppKeyPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 
@@ -1598,14 +1598,14 @@
     try {
       batchFormData.value.ids = ids.value;
       batchFormData.value.query_params = {};
-      batchFormData.value.query_params.user_id = formModel.value.user_id;
-      batchFormData.value.query_params.app_id = formModel.value.app_id;
-      batchFormData.value.query_params.key = formModel.value.key;
-      batchFormData.value.query_params.models = formModel.value.models;
-      batchFormData.value.query_params.quota = formModel.value.quota;
+      batchFormData.value.query_params.user_id = formData.value.user_id;
+      batchFormData.value.query_params.app_id = formData.value.app_id;
+      batchFormData.value.query_params.key = formData.value.key;
+      batchFormData.value.query_params.models = formData.value.models;
+      batchFormData.value.query_params.quota = formData.value.quota;
       batchFormData.value.query_params.quota_expires_at =
-        formModel.value.quota_expires_at;
-      batchFormData.value.query_params.status = formModel.value.status;
+        formData.value.quota_expires_at;
+      batchFormData.value.query_params.status = formData.value.status;
       const { data } = await submitAppKeyBatchOperate(batchFormData.value);
       navigator.clipboard.writeText(data.keys);
       if (batchFormData.value.action === 'create') {
@@ -1727,15 +1727,15 @@
           setLoading(true);
           params.ids = ids.value;
           params.query_params = {};
-          params.query_params.user_id = formModel.value.user_id;
-          params.query_params.app_id = formModel.value.app_id;
-          params.query_params.key = formModel.value.key;
-          params.query_params.models = formModel.value.models;
-          params.query_params.quota = formModel.value.quota;
+          params.query_params.user_id = formData.value.user_id;
+          params.query_params.app_id = formData.value.app_id;
+          params.query_params.key = formData.value.key;
+          params.query_params.models = formData.value.models;
+          params.query_params.quota = formData.value.quota;
           params.query_params.quota_expires_at =
-            formModel.value.quota_expires_at;
-          params.query_params.status = formModel.value.status;
-          submitAppKeyBatchOperate({ ...params, ...formModel.value }).then(
+            formData.value.quota_expires_at;
+          params.query_params.status = formData.value.status;
+          submitAppKeyBatchOperate({ ...params, ...formData.value }).then(
             (res) => {
               setLoading(false);
               proxy.$message.success('操作成功, 任务已提交');

@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -30,7 +30,7 @@
                   :label="$t('key.form.provider')"
                 >
                   <a-select
-                    v-model="formModel.provider_id"
+                    v-model="formData.provider_id"
                     :placeholder="$t('key.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -48,7 +48,7 @@
               <a-col :span="7">
                 <a-form-item field="key" :label="$t('key.form.key')">
                   <a-input
-                    v-model="formModel.key"
+                    v-model="formData.key"
                     :placeholder="$t('key.form.key.placeholder')"
                     allow-clear
                   />
@@ -57,7 +57,7 @@
               <a-col :span="9">
                 <a-form-item field="models" :label="$t('key.form.models')">
                   <a-select
-                    v-model="formModel.models"
+                    v-model="formData.models"
                     :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="2"
                     :scrollbar="false"
@@ -80,7 +80,7 @@
                   :label="$t('key.form.modelAgents')"
                 >
                   <a-select
-                    v-model="formModel.model_agents"
+                    v-model="formData.model_agents"
                     :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="2"
                     :scrollbar="false"
@@ -100,7 +100,7 @@
               <a-col :span="7">
                 <a-form-item field="status" :label="$t('key.form.status')">
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('key.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -111,7 +111,7 @@
               <a-col :span="9">
                 <a-form-item field="remark" :label="$t('key.form.remark')">
                   <a-input
-                    v-model="formModel.remark"
+                    v-model="formData.remark"
                     :placeholder="$t('key.form.remark.placeholder')"
                     allow-clear
                   />
@@ -497,7 +497,7 @@
       const modelAgentId = new Array(0);
       if (route.query.agent_id) {
         modelAgentId[0] = route.query.agent_id;
-        formModel.value.model_agents = modelAgentId;
+        formData.value.model_agents = modelAgentId;
       }
     } catch (err) {
       // you can report use errorHandler or other
@@ -532,7 +532,7 @@
   };
   const { t } = useI18n();
   const renderData = ref<KeyPage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -680,12 +680,12 @@
       pagination.total = data.paging.total;
       if (
         data.items.length > 0 &&
-        (formModel.value.provider_id ||
-          formModel.value.key ||
-          formModel.value.models.length > 0 ||
-          formModel.value.model_agents ||
-          formModel.value.status ||
-          formModel.value.remark)
+        (formData.value.provider_id ||
+          formData.value.key ||
+          formData.value.models.length > 0 ||
+          formData.value.model_agents ||
+          formData.value.status ||
+          formData.value.remark)
       ) {
         allMultiple.value = false;
       } else {
@@ -702,23 +702,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as KeyPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 
@@ -851,7 +851,7 @@
         onOk: () => {
           setLoading(true);
           params.ids = ids.value;
-          submitKeyBatchOperate({ ...params, ...formModel.value }).then(
+          submitKeyBatchOperate({ ...params, ...formData.value }).then(
             (res) => {
               setLoading(false);
               proxy.$message.success('操作成功, 任务已提交');

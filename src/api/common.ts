@@ -1,60 +1,68 @@
 export interface TextPricing {
-  input_ratio: number;
-  output_ratio: number;
+  input_ratio: any;
+  output_ratio: any;
   thinking: string;
-  input_gt: number;
-  input_lte: number;
+  input_gt: any;
+  input_lte: any;
 }
 
 export interface ImagePricing {
-  input_ratio: number;
-  output_ratio: number;
+  input_ratio: any;
+  output_ratio: any;
 }
 
 export interface ImageGenerationPricing {
-  quality: string;
-  width: number;
-  height: number;
-  fixed_quota: number;
+  quality: any;
+  width: any;
+  height: any;
+  fixed_quota: any;
   is_default: string;
 }
 
 export interface AudioPricing {
-  input_ratio: number;
-  output_ratio: number;
+  input_ratio: any;
+  output_ratio: any;
 }
 
 export interface VisionPricing {
   mode: string;
-  fixed_quota: number;
+  fixed_quota: any;
   is_default: string;
 }
 
 export interface SearchPricing {
-  search_context_size: string;
-  fixed_quota: number;
+  search_context_size?: string;
+  fixed_quota: any;
   is_default: string;
 }
 
 export interface CachePricing {
-  input_ratio: number;
-  output_ratio: number;
-  input_gt: number;
-  input_lte: number;
+  read_ratio: any;
+  write_ratio: any;
+  input_gt: any;
+  input_lte: any;
+}
+
+export interface MidjourneyPricing {
+  name: any;
+  action: any;
+  path: any;
+  fixed_quota: any;
 }
 
 export interface Pricing {
   billing_rule:  any;
   billing_items: string[];
-  text_pricing: TextPricing;
-  text_cache_pricing: CachePricing;
-  tiered_text_pricing: TextPricing[];
-  tiered_text_cache_pricing: CachePricing[];
-  image_pricing: ImagePricing;
-  image_generation_pricing: ImageGenerationPricing[];
-  image_cache_pricing: CachePricing;
-  audio_pricing: AudioPricing;
-  audio_cache_pricing: CachePricing;
-  vision_pricing: VisionPricing[];
-  search_pricing: SearchPricing[];
+  text: TextPricing;
+  text_cache: CachePricing;
+  tiered_text: TextPricing[];
+  tiered_text_cache: CachePricing[];
+  image: ImagePricing;
+  image_generation: ImageGenerationPricing[];
+  image_cache: CachePricing;
+  audio: AudioPricing;
+  audio_cache: CachePricing;
+  vision: VisionPricing[];
+  search: SearchPricing[];
+  midjourney: MidjourneyPricing[];
 }

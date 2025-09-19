@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -27,7 +27,7 @@
               <a-col :span="8">
                 <a-form-item field="title" :label="$t('notice.form.title')">
                   <a-input
-                    v-model="formModel.title"
+                    v-model="formData.title"
                     :placeholder="$t('notice.form.title.placeholder')"
                     allow-clear
                   />
@@ -36,7 +36,7 @@
               <a-col :span="8">
                 <a-form-item field="content" :label="$t('notice.form.content')">
                   <a-input
-                    v-model="formModel.content"
+                    v-model="formData.content"
                     :placeholder="$t('notice.form.content.placeholder')"
                     allow-clear
                   />
@@ -48,7 +48,7 @@
                   :label="$t('notice.form.category')"
                 >
                   <a-select
-                    v-model="formModel.category"
+                    v-model="formData.category"
                     :placeholder="$t('notice.form.selectDefault')"
                     :options="publicOptions"
                     :scrollbar="false"
@@ -59,7 +59,7 @@
               <a-col :span="8">
                 <a-form-item field="remark" :label="$t('notice.form.remark')">
                   <a-input
-                    v-model="formModel.remark"
+                    v-model="formData.remark"
                     :placeholder="$t('notice.form.remark.placeholder')"
                     allow-clear
                   />
@@ -68,7 +68,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('notice.form.status')">
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('notice.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -82,7 +82,7 @@
                   :label="$t('notice.form.publish_time')"
                 >
                   <a-range-picker
-                    v-model="formModel.publish_time"
+                    v-model="formData.publish_time"
                     :placeholder="['开始时间', '结束时间']"
                     :time-picker-props="{
                       defaultValue: ['00:00:00', '23:59:59'],
@@ -368,7 +368,7 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const renderData = ref<NoticePage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -543,23 +543,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as NoticePageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 

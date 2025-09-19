@@ -17,7 +17,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -26,7 +26,7 @@
               <a-col v-permission="['reseller', 'admin']" :span="8">
                 <a-form-item field="user_id" :label="$t('app.form.userId')">
                   <a-input-number
-                    v-model="formModel.user_id"
+                    v-model="formData.user_id"
                     :placeholder="$t('app.form.userId.placeholder')"
                     :precision="0"
                     :min="1"
@@ -38,7 +38,7 @@
               <a-col :span="8">
                 <a-form-item field="app_id" :label="$t('app.form.appId')">
                   <a-input-number
-                    v-model="formModel.app_id"
+                    v-model="formData.app_id"
                     :placeholder="$t('app.form.appId.placeholder')"
                     :precision="0"
                     :min="1"
@@ -50,7 +50,7 @@
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('app.form.name')">
                   <a-input
-                    v-model="formModel.name"
+                    v-model="formData.name"
                     :placeholder="$t('app.form.name.placeholder')"
                     allow-clear
                   />
@@ -59,7 +59,7 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item field="models" :label="$t('app.form.models')">
                   <a-select
-                    v-model="formModel.models"
+                    v-model="formData.models"
                     :placeholder="$t('app.form.selectDefault')"
                     :max-tag-count="2"
                     :scrollbar="false"
@@ -79,7 +79,7 @@
               <a-col :span="8">
                 <a-form-item field="key" :label="$t('app.form.key')">
                   <a-input
-                    v-model="formModel.app_key"
+                    v-model="formData.app_key"
                     :placeholder="$t('app.form.key.placeholder')"
                     allow-clear
                   />
@@ -88,7 +88,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('app.form.status')">
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('app.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -102,7 +102,7 @@
                   :label="$t('app.form.quota_expires_at')"
                 >
                   <a-range-picker
-                    v-model="formModel.quota_expires_at"
+                    v-model="formData.quota_expires_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -746,7 +746,7 @@
   };
 
   const renderData = ref<AppPage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -902,23 +902,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as AppPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 

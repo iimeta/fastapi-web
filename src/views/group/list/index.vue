@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -27,7 +27,7 @@
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('group.form.name')">
                   <a-input
-                    v-model="formModel.name"
+                    v-model="formData.name"
                     :placeholder="$t('group.form.name.placeholder')"
                     allow-clear
                   />
@@ -36,7 +36,7 @@
               <a-col :span="8">
                 <a-form-item field="models" :label="$t('group.form.models')">
                   <a-select
-                    v-model="formModel.models"
+                    v-model="formData.models"
                     :placeholder="$t('group.form.selectDefault')"
                     :max-tag-count="2"
                     :scrollbar="false"
@@ -59,7 +59,7 @@
                   :label="$t('group.form.model_agents')"
                 >
                   <a-select
-                    v-model="formModel.model_agents"
+                    v-model="formData.model_agents"
                     :placeholder="$t('group.form.selectDefault')"
                     :max-tag-count="2"
                     :scrollbar="false"
@@ -79,7 +79,7 @@
               <a-col :span="8">
                 <a-form-item field="remark" :label="$t('group.form.remark')">
                   <a-input
-                    v-model="formModel.remark"
+                    v-model="formData.remark"
                     :placeholder="$t('group.form.remark.placeholder')"
                     allow-clear
                   />
@@ -88,7 +88,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('group.form.status')">
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('group.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -102,7 +102,7 @@
                   :label="$t('group.form.expires_at')"
                 >
                   <a-range-picker
-                    v-model="formModel.expires_at"
+                    v-model="formData.expires_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -570,7 +570,7 @@
 
   const { t } = useI18n();
   const renderData = ref<GroupPage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -725,23 +725,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as GroupPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 

@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -30,7 +30,7 @@
                   :label="$t('reseller.form.userId')"
                 >
                   <a-input-number
-                    v-model="formModel.user_id"
+                    v-model="formData.user_id"
                     :placeholder="$t('reseller.form.userId.placeholder')"
                     :precision="0"
                     :min="1"
@@ -45,7 +45,7 @@
                   :label="$t('reseller.form.account')"
                 >
                   <a-input
-                    v-model="formModel.account"
+                    v-model="formData.account"
                     :placeholder="$t('reseller.form.account.placeholder')"
                     allow-clear
                   />
@@ -54,7 +54,7 @@
               <a-col :span="9">
                 <a-form-item field="name" :label="$t('reseller.form.name')">
                   <a-input
-                    v-model="formModel.name"
+                    v-model="formData.name"
                     :placeholder="$t('reseller.form.name.placeholder')"
                     allow-clear
                   />
@@ -63,7 +63,7 @@
               <a-col :span="8">
                 <a-form-item field="quota" :label="$t('reseller.form.quota')">
                   <a-input-number
-                    v-model="formModel.quota"
+                    v-model="formData.quota"
                     :placeholder="$t('reseller.form.quota.placeholder')"
                     :min="0.000001"
                     :max="9999999999999"
@@ -74,7 +74,7 @@
               <a-col :span="7">
                 <a-form-item field="status" :label="$t('reseller.form.status')">
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('reseller.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -88,7 +88,7 @@
                   :label="$t('reseller.form.quota_expires_at')"
                 >
                   <a-range-picker
-                    v-model="formModel.quota_expires_at"
+                    v-model="formData.quota_expires_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -864,7 +864,7 @@
   };
 
   const renderData = ref<ResellerPage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -1024,23 +1024,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as ResellerPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 

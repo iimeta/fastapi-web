@@ -21,10 +21,9 @@
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
           >
-            <Pricing />
-            <a-divider orientation="left">{{
-              $t('common.title.baseInfo')
-            }}</a-divider>
+            <a-divider orientation="left">
+              {{ $t('common.title.baseInfo') }}
+            </a-divider>
             <a-form-item
               field="provider_id"
               :label="$t('model.label.provider')"
@@ -126,9 +125,12 @@
                 :placeholder="$t('model.placeholder.remark')"
               />
             </a-form-item>
-            <a-divider orientation="left">{{
-              $t('common.title.advanced')
-            }}</a-divider>
+
+            <a-divider orientation="left">
+              {{ $t('common.title.advanced') }}
+            </a-divider>
+
+            <Pricing v-model="formData.pricing" />
 
             <!-- 文本额度 -->
             <a-form-item
@@ -2181,6 +2183,49 @@
       min_tokens: ref(),
       max_tokens: ref(),
       is_support_stream: true,
+    },
+    pricing: {
+      billing_rule: 1,
+      billing_items: [],
+      text: {
+        input_ratio: ref(),
+        output_ratio: ref(),
+        thinking: '',
+        input_gt: ref(),
+        input_lte: ref(),
+      },
+      text_cache: {
+        read_ratio: ref(),
+        write_ratio: ref(),
+        input_gt: ref(),
+        input_lte: ref(),
+      },
+      tiered_text: [],
+      tiered_text_cache: [],
+      image: {
+        input_ratio: ref(),
+        output_ratio: ref(),
+      },
+      image_generation: [],
+      image_cache: {
+        read_ratio: ref(),
+        write_ratio: ref(),
+        input_gt: ref(),
+        input_lte: ref(),
+      },
+      audio: {
+        input_ratio: ref(),
+        output_ratio: ref(),
+      },
+      audio_cache: {
+        read_ratio: ref(),
+        write_ratio: ref(),
+        input_gt: ref(),
+        input_lte: ref(),
+      },
+      vision: [],
+      search: [],
+      midjourney: [],
     },
     text_quota: {
       billing_method: '1',

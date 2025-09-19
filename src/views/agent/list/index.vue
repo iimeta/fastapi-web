@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formModel"
+            :model="formData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -30,7 +30,7 @@
                   :label="$t('model.agent.form.provider')"
                 >
                   <a-select
-                    v-model="formModel.provider_id"
+                    v-model="formData.provider_id"
                     :placeholder="$t('model.agent.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -48,7 +48,7 @@
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('model.agent.form.name')">
                   <a-input
-                    v-model="formModel.name"
+                    v-model="formData.name"
                     :placeholder="$t('model.agent.form.name.placeholder')"
                     allow-clear
                   />
@@ -60,7 +60,7 @@
                   :label="$t('model.agent.form.base_url')"
                 >
                   <a-input
-                    v-model="formModel.base_url"
+                    v-model="formData.base_url"
                     :placeholder="$t('model.agent.form.base_url.placeholder')"
                     allow-clear
                   />
@@ -72,7 +72,7 @@
                   :label="$t('model.agent.form.models')"
                 >
                   <a-select
-                    v-model="formModel.models"
+                    v-model="formData.models"
                     :placeholder="$t('model.agent.form.selectDefault')"
                     :max-tag-count="2"
                     :scrollbar="false"
@@ -95,7 +95,7 @@
                   :label="$t('model.agent.form.status')"
                 >
                   <a-select
-                    v-model="formModel.status"
+                    v-model="formData.status"
                     :placeholder="$t('model.agent.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -109,7 +109,7 @@
                   :label="$t('model.agent.form.remark')"
                 >
                   <a-input
-                    v-model="formModel.remark"
+                    v-model="formData.remark"
                     :placeholder="$t('model.agent.form.remark.placeholder')"
                     allow-clear
                   />
@@ -493,7 +493,7 @@
   };
   const { t } = useI18n();
   const renderData = ref<ModelAgentPage[]>([]);
-  const formModel = ref(generateFormModel());
+  const formData = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -641,23 +641,23 @@
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formModel.value,
+      ...formData.value,
     } as unknown as ModelAgentPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formModel.value, current });
+    fetchData({ ...basePagination, ...formData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formModel.value });
+    fetchData({ ...basePagination, ...formData.value });
   };
 
   fetchData();
 
   const reset = () => {
-    formModel.value = generateFormModel();
+    formData.value = generateFormModel();
     search();
   };
 
