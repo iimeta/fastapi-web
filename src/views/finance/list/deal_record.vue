@@ -18,7 +18,7 @@
       <a-row v-permission="['reseller', 'admin']">
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -27,7 +27,7 @@
               <a-col :span="6">
                 <a-form-item field="name" :label="$t('finance.form.user_id')">
                   <a-input-number
-                    v-model="formData.user_id"
+                    v-model="searchFormData.user_id"
                     :placeholder="$t('finance.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
@@ -38,7 +38,7 @@
               <a-col :span="6">
                 <a-form-item field="type" :label="$t('finance.form.type')">
                   <a-select
-                    v-model="formData.type"
+                    v-model="searchFormData.type"
                     :placeholder="$t('finance.form.selectDefault')"
                     :options="typeOptions"
                     :scrollbar="false"
@@ -49,7 +49,7 @@
               <a-col :span="6">
                 <a-form-item field="status" :label="$t('finance.form.status')">
                   <a-select
-                    v-model="formData.status"
+                    v-model="searchFormData.status"
                     :placeholder="$t('finance.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -63,7 +63,7 @@
                   :label="$t('finance.form.created_at')"
                 >
                   <a-range-picker
-                    v-model="formData.created_at"
+                    v-model="searchFormData.created_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -225,13 +225,16 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
+  const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
+
   const rowSelection = reactive({
     type: 'checkbox',
     showCheckedAll: true,
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       user_id: ref(),
       type: ref(),
@@ -240,10 +243,8 @@
     };
   };
 
-  const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
   const renderData = ref<DealRecordPage[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -366,27 +367,26 @@
       tableRef.value.selectAll(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as DealRecordPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formData.value, current });
+    fetchData({ ...basePagination, ...searchFormData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formData.value });
+    fetchData({ ...basePagination, ...searchFormData.value });
   };
 
-  fetchData();
-
   const reset = () => {
-    formData.value = generateFormModel();
+    searchFormData.value = generateSearchParams();
     search();
   };
 

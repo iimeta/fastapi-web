@@ -18,7 +18,7 @@
       <a-row v-permission="['reseller', 'admin']">
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -27,7 +27,7 @@
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('finance.form.user_id')">
                   <a-input-number
-                    v-model="formData.user_id"
+                    v-model="searchFormData.user_id"
                     :placeholder="$t('finance.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
@@ -41,7 +41,7 @@
                   :label="$t('finance.form.stat_date')"
                 >
                   <a-range-picker
-                    v-model="formData.stat_date"
+                    v-model="searchFormData.stat_date"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -256,23 +256,24 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
+  const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
+
   const rowSelection = reactive({
     type: 'checkbox',
     showCheckedAll: true,
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       user_id: ref(),
       stat_date: [],
     };
   };
 
-  const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
   const renderData = ref<BillPage[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -371,27 +372,26 @@
       tableRef.value.selectAll(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as BillPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formData.value, current });
+    fetchData({ ...basePagination, ...searchFormData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formData.value });
+    fetchData({ ...basePagination, ...searchFormData.value });
   };
 
-  fetchData();
-
   const reset = () => {
-    formData.value = generateFormModel();
+    searchFormData.value = generateSearchParams();
     search();
   };
 

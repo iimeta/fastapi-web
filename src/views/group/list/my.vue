@@ -17,7 +17,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -26,7 +26,7 @@
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('group.form.name')">
                   <a-input
-                    v-model="formData.name"
+                    v-model="searchFormData.name"
                     :placeholder="$t('group.form.name.placeholder')"
                     allow-clear
                   />
@@ -35,7 +35,7 @@
               <a-col :span="8">
                 <a-form-item field="models" :label="$t('group.form.models')">
                   <a-select
-                    v-model="formData.models"
+                    v-model="searchFormData.models"
                     :placeholder="$t('group.form.selectDefault')"
                     :max-tag-count="2"
                     :scrollbar="false"
@@ -55,7 +55,7 @@
               <a-col :span="8">
                 <a-form-item field="remark" :label="$t('group.form.remark')">
                   <a-input
-                    v-model="formData.remark"
+                    v-model="searchFormData.remark"
                     :placeholder="$t('group.form.remark.placeholder')"
                     allow-clear
                   />
@@ -229,6 +229,7 @@
   import { queryModelList, ModelList } from '@/api/model';
 
   const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -239,19 +240,7 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const models = ref<ModelList[]>([]);
-
-  const getModelList = async () => {
-    try {
-      const { data } = await queryModelList();
-      models.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelList();
-
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       name: '',
       models: [],
@@ -262,9 +251,8 @@
     };
   };
 
-  const { t } = useI18n();
   const renderData = ref<GroupPage[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -364,27 +352,26 @@
       tableRef.value.selectAll(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as GroupPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formData.value, current });
+    fetchData({ ...basePagination, ...searchFormData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formData.value });
+    fetchData({ ...basePagination, ...searchFormData.value });
   };
 
-  fetchData();
-
   const reset = () => {
-    formData.value = generateFormModel();
+    searchFormData.value = generateSearchParams();
     search();
   };
 
@@ -453,6 +440,18 @@
     },
     { deep: true, immediate: true }
   );
+
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelList();
 
   const modelsVisible = ref(false);
   const recordId = ref();

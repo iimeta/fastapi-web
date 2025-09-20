@@ -11,7 +11,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -24,7 +24,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-select
-                    v-model="formData.provider_id"
+                    v-model="searchFormData.provider_id"
                     :placeholder="$t('model.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -46,7 +46,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
-                    v-model="formData.name"
+                    v-model="searchFormData.name"
                     :placeholder="$t('model.form.name.placeholder')"
                     allow-clear
                   />
@@ -59,7 +59,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
-                    v-model="formData.model"
+                    v-model="searchFormData.model"
                     :placeholder="$t('model.form.model.placeholder')"
                     allow-clear
                   />
@@ -112,7 +112,12 @@
   import cloneDeep from 'lodash/cloneDeep';
   import { queryProviderList, ProviderList } from '@/api/provider';
 
+  type SizeProps = 'mini' | 'small' | 'medium' | 'large';
+  type Column = TableColumnData & { checked?: true };
+
   const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
+
   const props = defineProps({
     id: {
       type: String,
@@ -124,10 +129,7 @@
     },
   });
 
-  type SizeProps = 'mini' | 'small' | 'medium' | 'large';
-  type Column = TableColumnData & { checked?: true };
-
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       provider_id: '',
       name: '',
@@ -137,27 +139,10 @@
     };
   };
 
-  const providers = ref<ProviderList[]>([]);
-
-  const getProviderList = async () => {
-    setLoading(true);
-    try {
-      const { data } = await queryProviderList();
-      providers.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getProviderList();
-
-  const { t } = useI18n();
   const renderData = ref<ModelPermissions[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
-
   const size = ref<SizeProps>('medium');
 
   const columns = computed<TableColumnData[]>(() => [
@@ -198,16 +183,15 @@
       setLoading(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       id: props.id,
       action: props.action,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as ModelPermissionsParams);
   };
-
-  fetchData();
 
   watch(
     () => columns.value,
@@ -220,6 +204,21 @@
     },
     { deep: true, immediate: true }
   );
+
+  const providers = ref<ProviderList[]>([]);
+
+  const getProviderList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryProviderList();
+      providers.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getProviderList();
 </script>
 
 <script lang="ts">

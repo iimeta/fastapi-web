@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -30,7 +30,7 @@
                   :label="$t('site.config.form.user_id')"
                 >
                   <a-input-number
-                    v-model="formData.user_id"
+                    v-model="searchFormData.user_id"
                     :placeholder="$t('site.config.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
@@ -45,7 +45,7 @@
                   :label="$t('site.config.form.domain')"
                 >
                   <a-input
-                    v-model="formData.domain"
+                    v-model="searchFormData.domain"
                     :placeholder="$t('site.config.form.domain.placeholder')"
                     allow-clear
                   />
@@ -57,7 +57,7 @@
                   :label="$t('site.config.form.title')"
                 >
                   <a-input
-                    v-model="formData.title"
+                    v-model="searchFormData.title"
                     :placeholder="$t('site.config.form.title.placeholder')"
                     allow-clear
                   />
@@ -69,7 +69,7 @@
                   :label="$t('site.config.form.register_tips')"
                 >
                   <a-input
-                    v-model="formData.register_tips"
+                    v-model="searchFormData.register_tips"
                     :placeholder="
                       $t('site.config.form.register_tips.placeholder')
                     "
@@ -80,7 +80,7 @@
               <a-col v-permission="['admin']" :span="8">
                 <a-form-item field="logo" :label="$t('site.config.form.logo')">
                   <a-input
-                    v-model="formData.logo"
+                    v-model="searchFormData.logo"
                     :placeholder="$t('site.config.form.logo.placeholder')"
                     allow-clear
                   />
@@ -89,7 +89,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
-                    v-model="formData.status"
+                    v-model="searchFormData.status"
                     :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -353,10 +353,12 @@
   import { useAppStore } from '@/store';
   import Detail from '../detail/index.vue';
 
-  const { proxy } = getCurrentInstance() as any;
-
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
+
+  const { loading, setLoading } = useLoading(true);
+  const { proxy } = getCurrentInstance() as any;
+  const { t } = useI18n();
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -364,21 +366,7 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const siteDelete = async (params: SiteConfigDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitSiteConfigDelete(params);
-      proxy.$message.success('删除成功');
-      useAppStore().init();
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       user_id: ref(),
       domain: '',
@@ -388,10 +376,9 @@
       status: ref(),
     };
   };
-  const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
+
   const renderData = ref<SiteConfigPage[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -528,42 +515,27 @@
       tableRef.value.selectAll(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as SiteConfigPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formData.value, current });
+    fetchData({ ...basePagination, ...searchFormData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formData.value });
+    fetchData({ ...basePagination, ...searchFormData.value });
   };
-
-  fetchData();
 
   const reset = () => {
-    formData.value = generateFormModel();
+    searchFormData.value = generateSearchParams();
     search();
-  };
-
-  const siteChangeStatus = async (params: SiteConfigChangeStatus) => {
-    setLoading(true);
-    try {
-      await submitSiteConfigChangeStatus(params);
-      proxy.$message.success('操作成功');
-      useAppStore().init();
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleSelectDensity = (
@@ -631,6 +603,34 @@
     },
     { deep: true, immediate: true }
   );
+
+  const siteDelete = async (params: SiteConfigDeleteParams) => {
+    setLoading(true);
+    try {
+      await submitSiteConfigDelete(params);
+      proxy.$message.success('删除成功');
+      useAppStore().init();
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const siteChangeStatus = async (params: SiteConfigChangeStatus) => {
+    setLoading(true);
+    try {
+      await submitSiteConfigChangeStatus(params);
+      proxy.$message.success('操作成功');
+      useAppStore().init();
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 
   /**
    * 已选择的数据行发生改变时触发

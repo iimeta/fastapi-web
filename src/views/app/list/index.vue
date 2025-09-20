@@ -17,7 +17,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -26,7 +26,7 @@
               <a-col v-permission="['reseller', 'admin']" :span="8">
                 <a-form-item field="user_id" :label="$t('app.form.userId')">
                   <a-input-number
-                    v-model="formData.user_id"
+                    v-model="searchFormData.user_id"
                     :placeholder="$t('app.form.userId.placeholder')"
                     :precision="0"
                     :min="1"
@@ -38,7 +38,7 @@
               <a-col :span="8">
                 <a-form-item field="app_id" :label="$t('app.form.appId')">
                   <a-input-number
-                    v-model="formData.app_id"
+                    v-model="searchFormData.app_id"
                     :placeholder="$t('app.form.appId.placeholder')"
                     :precision="0"
                     :min="1"
@@ -50,7 +50,7 @@
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('app.form.name')">
                   <a-input
-                    v-model="formData.name"
+                    v-model="searchFormData.name"
                     :placeholder="$t('app.form.name.placeholder')"
                     allow-clear
                   />
@@ -59,7 +59,7 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item field="models" :label="$t('app.form.models')">
                   <a-select
-                    v-model="formData.models"
+                    v-model="searchFormData.models"
                     :placeholder="$t('app.form.selectDefault')"
                     :max-tag-count="2"
                     :scrollbar="false"
@@ -79,7 +79,7 @@
               <a-col :span="8">
                 <a-form-item field="key" :label="$t('app.form.key')">
                   <a-input
-                    v-model="formData.app_key"
+                    v-model="searchFormData.app_key"
                     :placeholder="$t('app.form.key.placeholder')"
                     allow-clear
                   />
@@ -88,7 +88,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('app.form.status')">
                   <a-select
-                    v-model="formData.status"
+                    v-model="searchFormData.status"
                     :placeholder="$t('app.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -102,7 +102,7 @@
                   :label="$t('app.form.quota_expires_at')"
                 >
                   <a-range-picker
-                    v-model="formData.quota_expires_at"
+                    v-model="searchFormData.quota_expires_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -360,6 +360,7 @@
       >
         <Detail :id="recordId" />
       </a-drawer>
+
       <a-modal
         v-model:visible="visible"
         :width="600"
@@ -667,12 +668,12 @@
   import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
 
+  type SizeProps = 'mini' | 'small' | 'medium' | 'large';
+  type Column = TableColumnData & { checked?: true };
+
   const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-
-  type SizeProps = 'mini' | 'small' | 'medium' | 'large';
-  type Column = TableColumnData & { checked?: true };
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -680,58 +681,7 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const models = ref<ModelList[]>([]);
-  const getModelList = async () => {
-    try {
-      const { data } = await queryModelList();
-      models.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelList();
-
-  const treeData = ref<Tree[]>([]);
-  const getModelTree = async () => {
-    setLoading(true);
-    try {
-      const { data } = await queryModelTree();
-      treeData.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getModelTree();
-
-  const groups = ref<GroupList[]>([]);
-  const getGroupList = async () => {
-    try {
-      const { data } = await queryGroupList();
-      groups.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getGroupList();
-
-  const appDelete = async (params: AppDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitAppDelete(params);
-      proxy.$message.success('删除成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       user_id: ref(),
       app_id: ref(),
@@ -746,7 +696,7 @@
   };
 
   const renderData = ref<AppPage[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -898,41 +848,27 @@
       tableRef.value.selectAll(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as AppPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formData.value, current });
+    fetchData({ ...basePagination, ...searchFormData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formData.value });
+    fetchData({ ...basePagination, ...searchFormData.value });
   };
-
-  fetchData();
 
   const reset = () => {
-    formData.value = generateFormModel();
+    searchFormData.value = generateSearchParams();
     search();
-  };
-
-  const appChangeStatus = async (params: AppChangeStatus) => {
-    setLoading(true);
-    try {
-      await submitAppChangeStatus(params);
-      proxy.$message.success('操作成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleSelectDensity = (
@@ -1000,6 +936,71 @@
     },
     { deep: true, immediate: true }
   );
+
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelList();
+
+  const treeData = ref<Tree[]>([]);
+  const getModelTree = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelTree();
+      treeData.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelTree();
+
+  const groups = ref<GroupList[]>([]);
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getGroupList();
+
+  const appDelete = async (params: AppDeleteParams) => {
+    setLoading(true);
+    try {
+      await submitAppDelete(params);
+      proxy.$message.success('删除成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const appChangeStatus = async (params: AppChangeStatus) => {
+    setLoading(true);
+    try {
+      await submitAppChangeStatus(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const visible = ref(false);
 

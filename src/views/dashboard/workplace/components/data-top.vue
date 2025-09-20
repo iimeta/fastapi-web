@@ -140,8 +140,8 @@
   import { queryDataTop } from '@/api/dashboard';
   import type { TableData } from '@arco-design/web-vue/es/table/interface';
 
-  const userRole = localStorage.getItem('userRole');
   const { loading, setLoading } = useLoading();
+  const userRole = localStorage.getItem('userRole');
 
   const dateRange = ref(15);
 
@@ -152,6 +152,7 @@
   }
 
   const renderList = ref<TableData[]>();
+
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -164,6 +165,7 @@
       setLoading(false);
     }
   };
+  fetchData();
 
   const typeChange = (type: string) => {
     dataType = type;
@@ -179,8 +181,6 @@
     day = days;
     fetchData();
   };
-
-  fetchData();
 </script>
 
 <script lang="ts">

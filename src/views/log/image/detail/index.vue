@@ -795,6 +795,7 @@
   const handleCopy = (content: string) => {
     copy(content);
   };
+
   watch(copied, () => {
     if (copied.value) {
       proxy.$message.success('复制成功');

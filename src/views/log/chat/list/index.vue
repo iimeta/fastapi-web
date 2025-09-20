@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -27,7 +27,7 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item field="app_id" :label="$t('chat.form.app_id')">
                   <a-select
-                    v-model="formData.app_id"
+                    v-model="searchFormData.app_id"
                     :placeholder="$t('chat.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -48,7 +48,7 @@
                   :label="$t('chat.form.user.trace_id')"
                 >
                   <a-input
-                    v-model="formData.trace_id"
+                    v-model="searchFormData.trace_id"
                     :placeholder="$t('chat.form.trace_id.placeholder')"
                     allow-clear
                   />
@@ -60,7 +60,7 @@
                   :label="$t('chat.form.reseller.user_id')"
                 >
                   <a-input-number
-                    v-model="formData.user_id"
+                    v-model="searchFormData.user_id"
                     :placeholder="$t('chat.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
@@ -71,7 +71,7 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item field="key" :label="$t('chat.form.key')">
                   <a-input
-                    v-model="formData.key"
+                    v-model="searchFormData.key"
                     :placeholder="$t('chat.form.key.placeholder')"
                     allow-clear
                   />
@@ -83,7 +83,7 @@
                   :label="$t('chat.form.user.trace_id')"
                 >
                   <a-input
-                    v-model="formData.trace_id"
+                    v-model="searchFormData.trace_id"
                     :placeholder="$t('chat.form.trace_id.placeholder')"
                     allow-clear
                   />
@@ -95,7 +95,7 @@
                   :label="$t('chat.form.total_time')"
                 >
                   <a-input-number
-                    v-model="formData.total_time"
+                    v-model="searchFormData.total_time"
                     :placeholder="$t('chat.form.total_time.placeholder')"
                     :precision="0"
                     :min="1"
@@ -106,7 +106,7 @@
               <a-col :span="8">
                 <a-form-item field="models" :label="$t('chat.form.models')">
                   <a-select
-                    v-model="formData.models"
+                    v-model="searchFormData.models"
                     :placeholder="$t('chat.form.selectDefault')"
                     :max-tag-count="1"
                     :scrollbar="false"
@@ -126,7 +126,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('chat.form.status')">
                   <a-select
-                    v-model="formData.status"
+                    v-model="searchFormData.status"
                     :placeholder="$t('chat.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -137,7 +137,7 @@
               <a-col :span="8">
                 <a-form-item field="req_time" :label="$t('chat.form.req_time')">
                   <a-range-picker
-                    v-model="formData.req_time"
+                    v-model="searchFormData.req_time"
                     :placeholder="['开始时间', '结束时间']"
                     :time-picker-props="{
                       defaultValue: ['00:00:00', '23:59:59'],
@@ -155,7 +155,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
-                    v-model="formData.trace_id"
+                    v-model="searchFormData.trace_id"
                     :placeholder="$t('chat.form.trace_id.placeholder')"
                     allow-clear
                   />
@@ -168,7 +168,7 @@
                   :label-col-props="{ span: 5 }"
                 >
                   <a-select
-                    v-model="formData.models"
+                    v-model="searchFormData.models"
                     :placeholder="$t('chat.form.selectDefault')"
                     :max-tag-count="1"
                     :scrollbar="false"
@@ -192,7 +192,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
-                    v-model="formData.key"
+                    v-model="searchFormData.key"
                     :placeholder="$t('chat.form.key.placeholder')"
                     allow-clear
                   />
@@ -204,7 +204,7 @@
                   :label="$t('chat.form.total_time')"
                 >
                   <a-input-number
-                    v-model="formData.total_time"
+                    v-model="searchFormData.total_time"
                     :placeholder="$t('chat.form.total_time.placeholder')"
                     :precision="0"
                     :min="1"
@@ -219,7 +219,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input-number
-                    v-model="formData.user_id"
+                    v-model="searchFormData.user_id"
                     :placeholder="$t('chat.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
@@ -234,7 +234,7 @@
                   :label-col-props="{ span: 5 }"
                 >
                   <a-select
-                    v-model="formData.model_agents"
+                    v-model="searchFormData.model_agents"
                     :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="1"
                     :scrollbar="false"
@@ -258,7 +258,7 @@
                   :label-col-props="{ span: 6 }"
                 >
                   <a-select
-                    v-model="formData.status"
+                    v-model="searchFormData.status"
                     :placeholder="$t('chat.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -269,7 +269,7 @@
               <a-col :span="8">
                 <a-form-item field="req_time" :label="$t('chat.form.req_time')">
                   <a-range-picker
-                    v-model="formData.req_time"
+                    v-model="searchFormData.req_time"
                     :placeholder="['开始时间', '结束时间']"
                     :time-picker-props="{
                       defaultValue: ['00:00:00', '23:59:59'],
@@ -815,6 +815,8 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
+  const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
 
   const rowSelection = reactive({
@@ -823,49 +825,7 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const apps = ref<AppList[]>([]);
-
-  const getAppList = async () => {
-    try {
-      const { data } = await queryAppList();
-      apps.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-
-  if (userRole === 'user') {
-    getAppList();
-  }
-
-  const models = ref<ModelList[]>([]);
-
-  const getModelList = async () => {
-    try {
-      const { data } = await queryModelList();
-      models.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelList();
-
-  const modelAgents = ref<ModelAgentList[]>([]);
-
-  const getModelAgentList = async () => {
-    try {
-      const { data } = await queryModelAgentList();
-      modelAgents.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-
-  if (userRole === 'admin') {
-    getModelAgentList();
-  }
-
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       app_id: ref(),
       trace_id: ref(),
@@ -881,10 +841,9 @@
       ],
     };
   };
-  const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
+
   const renderData = ref<ChatPage[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -1053,11 +1012,10 @@
   const fetchData = async (
     params: ChatPageParams = {
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     }
   ) => {
     setLoading(true);
-
     try {
       const { data } = await queryChatPage(params);
       renderData.value = data.items;
@@ -1071,27 +1029,26 @@
       tableRef.value.selectAll(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as ChatPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formData.value, current });
+    fetchData({ ...basePagination, ...searchFormData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formData.value });
+    fetchData({ ...basePagination, ...searchFormData.value });
   };
 
-  fetchData();
-
   const reset = () => {
-    formData.value = generateFormModel();
+    searchFormData.value = generateSearchParams();
     search();
   };
 
@@ -1161,6 +1118,48 @@
     { deep: true, immediate: true }
   );
 
+  const apps = ref<AppList[]>([]);
+
+  const getAppList = async () => {
+    try {
+      const { data } = await queryAppList();
+      apps.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+
+  if (userRole === 'user') {
+    getAppList();
+  }
+
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelList();
+
+  const modelAgents = ref<ModelAgentList[]>([]);
+
+  const getModelAgentList = async () => {
+    try {
+      const { data } = await queryModelAgentList();
+      modelAgents.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+
+  if (userRole === 'admin') {
+    getModelAgentList();
+  }
+
   const { proxy } = getCurrentInstance() as any;
 
   const detailVisible = ref(false);
@@ -1178,7 +1177,7 @@
   const tpm = ref(0);
   const getPerMinute = async (
     params: PerMinuteParams = {
-      ...formData.value,
+      ...searchFormData.value,
     }
   ) => {
     const { data } = await queryPerMinute(params);

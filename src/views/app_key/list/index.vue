@@ -17,7 +17,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -26,7 +26,7 @@
               <a-col v-permission="['reseller', 'admin']" :span="8">
                 <a-form-item field="user_id" :label="$t('key.form.userId')">
                   <a-input-number
-                    v-model="formData.user_id"
+                    v-model="searchFormData.user_id"
                     :placeholder="$t('key.form.userId.placeholder')"
                     :precision="0"
                     :min="1"
@@ -38,7 +38,7 @@
               <a-col v-permission="['reseller', 'admin']" :span="8">
                 <a-form-item field="app_id" :label="$t('key.form.appId')">
                   <a-input-number
-                    v-model="formData.app_id"
+                    v-model="searchFormData.app_id"
                     :placeholder="$t('key.form.appId.placeholder')"
                     :precision="0"
                     :min="1"
@@ -50,7 +50,7 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item field="app_id" :label="$t('key.form.app')">
                   <a-select
-                    v-model="formData.app_id"
+                    v-model="searchFormData.app_id"
                     :placeholder="$t('key.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -68,7 +68,7 @@
               <a-col :span="8">
                 <a-form-item field="key" :label="$t('key.form.appkey')">
                   <a-input
-                    v-model="formData.key"
+                    v-model="searchFormData.key"
                     :placeholder="$t('key.form.appkey.placeholder')"
                     allow-clear
                   />
@@ -77,7 +77,7 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item field="models" :label="$t('key.form.app.models')">
                   <a-select
-                    v-model="formData.models"
+                    v-model="searchFormData.models"
                     :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="2"
                     :scrollbar="false"
@@ -97,7 +97,7 @@
               <a-col :span="8">
                 <a-form-item field="quota" :label="$t('key.form.quota')">
                   <a-input-number
-                    v-model="formData.quota"
+                    v-model="searchFormData.quota"
                     :placeholder="$t('key.form.quota.placeholder')"
                     :min="0.000001"
                     :max="9999999999999"
@@ -108,7 +108,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('key.form.status')">
                   <a-select
-                    v-model="formData.status"
+                    v-model="searchFormData.status"
                     :placeholder="$t('key.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -122,7 +122,7 @@
                   :label="$t('key.form.quota_expires_at')"
                 >
                   <a-range-picker
-                    v-model="formData.quota_expires_at"
+                    v-model="searchFormData.quota_expires_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -1122,13 +1122,13 @@
   import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
 
-  const { proxy } = getCurrentInstance() as any;
-  const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
-
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
   const route = useRoute();
+
+  const { proxy } = getCurrentInstance() as any;
+  const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -1136,73 +1136,7 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const apps = ref<AppList[]>([]);
-
-  const getAppList = async () => {
-    try {
-      const { data } = await queryAppList();
-      apps.value = data.items;
-      if (route.query.app_id) {
-        formData.value.app_id = Number(route.query.app_id);
-      }
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getAppList();
-
-  const models = ref<ModelList[]>([]);
-  const getModelList = async () => {
-    try {
-      const { data } = await queryModelList();
-      models.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelList();
-
-  const treeData = ref<Tree[]>([]);
-  const getModelTree = async () => {
-    setLoading(true);
-    try {
-      const { data } = await queryModelTree();
-      treeData.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getModelTree();
-
-  const groups = ref<GroupList[]>([]);
-  const getGroupList = async () => {
-    try {
-      const { data } = await queryGroupList();
-      groups.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getGroupList();
-
-  const keyDelete = async (params: AppKeyDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitAppKeyDelete(params);
-      proxy.$message.success('删除成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       type: 1,
       user_id: ref(),
@@ -1216,7 +1150,7 @@
   };
 
   const renderData = ref<AppKeyPage[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -1255,6 +1189,7 @@
       value: 'large',
     },
   ]);
+
   const columns = computed<TableColumnData[]>(() => [
     {
       title: t('key.columns.user_id'),
@@ -1355,6 +1290,7 @@
       value: 2,
     },
   ]);
+
   const fetchData = async (
     params: AppKeyPageParams = {
       ...basePagination,
@@ -1371,14 +1307,14 @@
       pagination.total = data.paging.total;
       if (
         data.items.length > 0 &&
-        (formData.value.user_id ||
-          formData.value.app_id ||
-          formData.value.key ||
-          formData.value.models.length > 0 ||
-          formData.value.quota ||
-          formData.value.status ||
-          (formData.value.quota_expires_at &&
-            formData.value.quota_expires_at.length > 0))
+        (searchFormData.value.user_id ||
+          searchFormData.value.app_id ||
+          searchFormData.value.key ||
+          searchFormData.value.models.length > 0 ||
+          searchFormData.value.quota ||
+          searchFormData.value.status ||
+          (searchFormData.value.quota_expires_at &&
+            searchFormData.value.quota_expires_at.length > 0))
       ) {
         allMultiple.value = false;
       } else {
@@ -1391,41 +1327,27 @@
       tableRef.value.selectAll(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as AppKeyPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formData.value, current });
+    fetchData({ ...basePagination, ...searchFormData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formData.value });
+    fetchData({ ...basePagination, ...searchFormData.value });
   };
-
-  fetchData();
 
   const reset = () => {
-    formData.value = generateFormModel();
+    searchFormData.value = generateSearchParams();
     search();
-  };
-
-  const keyChangeStatus = async (params: AppKeyChangeStatus) => {
-    setLoading(true);
-    try {
-      await submitAppKeyChangeStatus(params);
-      proxy.$message.success('操作成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleSelectDensity = (
@@ -1493,6 +1415,85 @@
     },
     { deep: true, immediate: true }
   );
+
+  const apps = ref<AppList[]>([]);
+
+  const getAppList = async () => {
+    try {
+      const { data } = await queryAppList();
+      apps.value = data.items;
+      if (route.query.app_id) {
+        searchFormData.value.app_id = Number(route.query.app_id);
+      }
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getAppList();
+
+  const models = ref<ModelList[]>([]);
+  const getModelList = async () => {
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelList();
+
+  const treeData = ref<Tree[]>([]);
+  const getModelTree = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelTree();
+      treeData.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelTree();
+
+  const groups = ref<GroupList[]>([]);
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getGroupList();
+
+  const keyDelete = async (params: AppKeyDeleteParams) => {
+    setLoading(true);
+    try {
+      await submitAppKeyDelete(params);
+      proxy.$message.success('删除成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const keyChangeStatus = async (params: AppKeyChangeStatus) => {
+    setLoading(true);
+    try {
+      await submitAppKeyChangeStatus(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const visible = ref(false);
   const batchVisible = ref(false);
@@ -1598,14 +1599,14 @@
     try {
       batchFormData.value.ids = ids.value;
       batchFormData.value.query_params = {};
-      batchFormData.value.query_params.user_id = formData.value.user_id;
-      batchFormData.value.query_params.app_id = formData.value.app_id;
-      batchFormData.value.query_params.key = formData.value.key;
-      batchFormData.value.query_params.models = formData.value.models;
-      batchFormData.value.query_params.quota = formData.value.quota;
+      batchFormData.value.query_params.user_id = searchFormData.value.user_id;
+      batchFormData.value.query_params.app_id = searchFormData.value.app_id;
+      batchFormData.value.query_params.key = searchFormData.value.key;
+      batchFormData.value.query_params.models = searchFormData.value.models;
+      batchFormData.value.query_params.quota = searchFormData.value.quota;
       batchFormData.value.query_params.quota_expires_at =
-        formData.value.quota_expires_at;
-      batchFormData.value.query_params.status = formData.value.status;
+        searchFormData.value.quota_expires_at;
+      batchFormData.value.query_params.status = searchFormData.value.status;
       const { data } = await submitAppKeyBatchOperate(batchFormData.value);
       navigator.clipboard.writeText(data.keys);
       if (batchFormData.value.action === 'create') {
@@ -1727,15 +1728,15 @@
           setLoading(true);
           params.ids = ids.value;
           params.query_params = {};
-          params.query_params.user_id = formData.value.user_id;
-          params.query_params.app_id = formData.value.app_id;
-          params.query_params.key = formData.value.key;
-          params.query_params.models = formData.value.models;
-          params.query_params.quota = formData.value.quota;
+          params.query_params.user_id = searchFormData.value.user_id;
+          params.query_params.app_id = searchFormData.value.app_id;
+          params.query_params.key = searchFormData.value.key;
+          params.query_params.models = searchFormData.value.models;
+          params.query_params.quota = searchFormData.value.quota;
           params.query_params.quota_expires_at =
-            formData.value.quota_expires_at;
-          params.query_params.status = formData.value.status;
-          submitAppKeyBatchOperate({ ...params, ...formData.value }).then(
+            searchFormData.value.quota_expires_at;
+          params.query_params.status = searchFormData.value.status;
+          submitAppKeyBatchOperate({ ...params, ...searchFormData.value }).then(
             (res) => {
               setLoading(false);
               proxy.$message.success('操作成功, 任务已提交');
@@ -1758,6 +1759,7 @@
     const { data } = await queryAppKeyDetail({ id });
     copy(data.key);
   };
+
   watch(copied, () => {
     if (copied.value) {
       proxy.$message.success('复制成功');

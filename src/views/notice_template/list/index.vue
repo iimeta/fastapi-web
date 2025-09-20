@@ -20,7 +20,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -32,7 +32,7 @@
                   :label="$t('notice.template.form.name')"
                 >
                   <a-input
-                    v-model="formData.name"
+                    v-model="searchFormData.name"
                     :placeholder="$t('notice.template.form.name.placeholder')"
                     allow-clear
                   />
@@ -44,7 +44,7 @@
                   :label="$t('notice.template.form.title')"
                 >
                   <a-input
-                    v-model="formData.title"
+                    v-model="searchFormData.title"
                     :placeholder="$t('notice.template.form.title.placeholder')"
                     allow-clear
                   />
@@ -56,7 +56,7 @@
                   :label="$t('notice.template.form.content')"
                 >
                   <a-input
-                    v-model="formData.content"
+                    v-model="searchFormData.content"
                     :placeholder="
                       $t('notice.template.form.content.placeholder')
                     "
@@ -70,7 +70,7 @@
                   :label="$t('notice.template.form.scenes')"
                 >
                   <a-select
-                    v-model="formData.scenes"
+                    v-model="searchFormData.scenes"
                     :placeholder="$t('notice.template.form.selectDefault')"
                     :options="scenesOptions"
                     :scrollbar="false"
@@ -84,7 +84,7 @@
                   :label="$t('notice.template.form.status')"
                 >
                   <a-select
-                    v-model="formData.status"
+                    v-model="searchFormData.status"
                     :placeholder="$t('notice.template.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -98,7 +98,7 @@
                   :label="$t('notice.template.form.remark')"
                 >
                   <a-input
-                    v-model="formData.remark"
+                    v-model="searchFormData.remark"
                     :placeholder="$t('notice.template.form.remark.placeholder')"
                     allow-clear
                   />
@@ -374,10 +374,12 @@
   import Sortable from 'sortablejs';
   import Detail from '../detail/index.vue';
 
-  const { proxy } = getCurrentInstance() as any;
-
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
+
+  const { loading, setLoading } = useLoading(true);
+  const { proxy } = getCurrentInstance() as any;
+  const { t } = useI18n();
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -385,20 +387,7 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const noticeDelete = async (params: NoticeTemplateDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitNoticeTemplateDelete(params);
-      proxy.$message.success('删除成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       name: '',
       scenes: [],
@@ -408,10 +397,9 @@
       remark: '',
     };
   };
-  const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
+
   const renderData = ref<NoticeTemplatePage[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -616,54 +604,27 @@
       tableRef.value.selectAll(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as NoticeTemplatePageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formData.value, current });
+    fetchData({ ...basePagination, ...searchFormData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formData.value });
+    fetchData({ ...basePagination, ...searchFormData.value });
   };
-
-  fetchData();
 
   const reset = () => {
-    formData.value = generateFormModel();
+    searchFormData.value = generateSearchParams();
     search();
-  };
-
-  const changePublic = async (params: NoticeTemplateChangePublic) => {
-    setLoading(true);
-    try {
-      await submitNoticeTemplateChangePublic(params);
-      proxy.$message.success('操作成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const changeStatus = async (params: NoticeTemplateChangeStatus) => {
-    setLoading(true);
-    try {
-      await submitNoticeTemplateChangeStatus(params);
-      proxy.$message.success('操作成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleSelectDensity = (
@@ -731,6 +692,45 @@
     },
     { deep: true, immediate: true }
   );
+
+  const noticeDelete = async (params: NoticeTemplateDeleteParams) => {
+    setLoading(true);
+    try {
+      await submitNoticeTemplateDelete(params);
+      proxy.$message.success('删除成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const changePublic = async (params: NoticeTemplateChangePublic) => {
+    setLoading(true);
+    try {
+      await submitNoticeTemplateChangePublic(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const changeStatus = async (params: NoticeTemplateChangeStatus) => {
+    setLoading(true);
+    try {
+      await submitNoticeTemplateChangeStatus(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 
   /**
    * 已选择的数据行发生改变时触发

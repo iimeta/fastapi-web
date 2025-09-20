@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -30,7 +30,7 @@
                   :label="$t('reseller.form.userId')"
                 >
                   <a-input-number
-                    v-model="formData.user_id"
+                    v-model="searchFormData.user_id"
                     :placeholder="$t('reseller.form.userId.placeholder')"
                     :precision="0"
                     :min="1"
@@ -45,7 +45,7 @@
                   :label="$t('reseller.form.account')"
                 >
                   <a-input
-                    v-model="formData.account"
+                    v-model="searchFormData.account"
                     :placeholder="$t('reseller.form.account.placeholder')"
                     allow-clear
                   />
@@ -54,7 +54,7 @@
               <a-col :span="9">
                 <a-form-item field="name" :label="$t('reseller.form.name')">
                   <a-input
-                    v-model="formData.name"
+                    v-model="searchFormData.name"
                     :placeholder="$t('reseller.form.name.placeholder')"
                     allow-clear
                   />
@@ -63,7 +63,7 @@
               <a-col :span="8">
                 <a-form-item field="quota" :label="$t('reseller.form.quota')">
                   <a-input-number
-                    v-model="formData.quota"
+                    v-model="searchFormData.quota"
                     :placeholder="$t('reseller.form.quota.placeholder')"
                     :min="0.000001"
                     :max="9999999999999"
@@ -74,7 +74,7 @@
               <a-col :span="7">
                 <a-form-item field="status" :label="$t('reseller.form.status')">
                   <a-select
-                    v-model="formData.status"
+                    v-model="searchFormData.status"
                     :placeholder="$t('reseller.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -88,7 +88,7 @@
                   :label="$t('reseller.form.quota_expires_at')"
                 >
                   <a-range-picker
-                    v-model="formData.quota_expires_at"
+                    v-model="searchFormData.quota_expires_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -775,12 +775,12 @@
   import { queryGroupList, GroupList } from '@/api/group';
   import Detail from '../detail/index.vue';
 
-  const { proxy } = getCurrentInstance() as any;
-  const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
-
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
+
+  const { loading, setLoading } = useLoading(true);
+  const { proxy } = getCurrentInstance() as any;
+  const { t } = useI18n();
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -788,71 +788,7 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const treeData = ref<Tree[]>([]);
-  const getModelTree = async () => {
-    setLoading(true);
-    try {
-      const { data } = await queryModelTree();
-      treeData.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getModelTree();
-
-  const groups = ref<GroupList[]>([]);
-  const getGroupList = async () => {
-    try {
-      const { data } = await queryGroupList();
-      groups.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getGroupList();
-
-  const delDataMap = new Map();
-  delDataMap.set(1, '用户数据');
-  delDataMap.set(2, '应用数据');
-  delDataMap.set(3, '交易记录');
-  delDataMap.set(4, '账单明细');
-  delDataMap.set(5, '日志数据');
-
-  const resellerDelete = async (params: ResellerDeleteParams) => {
-    let alertContent = `是否确定删除代理商: ${params.name}?`;
-
-    if (params.data && params.data.length > 0) {
-      let delData = '';
-      for (let i = 0; i < params.data.length; i += 1) {
-        if (i === 0) {
-          delData = delDataMap.get(params.data[i]);
-        } else {
-          delData += `、${delDataMap.get(params.data[i])}`;
-        }
-      }
-      alertContent = `是否确定删除代理商: ${params.name} 以及同时删除: ${delData}?`;
-    }
-
-    proxy.$modal.warning({
-      title: '警告',
-      titleAlign: 'center',
-      content: alertContent,
-      hideCancel: false,
-      onOk: () => {
-        setLoading(true);
-        submitResellerDelete(params).then((res) => {
-          setLoading(false);
-          proxy.$message.success('操作成功, 任务已提交');
-          search();
-          tableRef.value.selectAll(false);
-        });
-      },
-    });
-  };
-
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       user_id: ref(),
       name: '',
@@ -864,7 +800,7 @@
   };
 
   const renderData = ref<ResellerPage[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -1020,54 +956,27 @@
       tableRef.value.selectAll(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as ResellerPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formData.value, current });
+    fetchData({ ...basePagination, ...searchFormData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formData.value });
+    fetchData({ ...basePagination, ...searchFormData.value });
   };
-
-  fetchData();
 
   const reset = () => {
-    formData.value = generateFormModel();
+    searchFormData.value = generateSearchParams();
     search();
-  };
-
-  const userChangeQuotaExpire = async (params: ResellerChangeQuotaExpire) => {
-    setLoading(true);
-    try {
-      await submitResellerChangeQuotaExpire(params);
-      proxy.$message.success('操作成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const userChangeStatus = async (params: ResellerChangeStatus) => {
-    setLoading(true);
-    try {
-      await submitResellerChangeStatus(params);
-      proxy.$message.success('操作成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleSelectDensity = (
@@ -1135,6 +1044,98 @@
     },
     { deep: true, immediate: true }
   );
+
+  const treeData = ref<Tree[]>([]);
+
+  const getModelTree = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryModelTree();
+      treeData.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelTree();
+
+  const groups = ref<GroupList[]>([]);
+
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getGroupList();
+
+  const delDataMap = new Map();
+  delDataMap.set(1, '用户数据');
+  delDataMap.set(2, '应用数据');
+  delDataMap.set(3, '交易记录');
+  delDataMap.set(4, '账单明细');
+  delDataMap.set(5, '日志数据');
+
+  const resellerDelete = async (params: ResellerDeleteParams) => {
+    let alertContent = `是否确定删除代理商: ${params.name}?`;
+
+    if (params.data && params.data.length > 0) {
+      let delData = '';
+      for (let i = 0; i < params.data.length; i += 1) {
+        if (i === 0) {
+          delData = delDataMap.get(params.data[i]);
+        } else {
+          delData += `、${delDataMap.get(params.data[i])}`;
+        }
+      }
+      alertContent = `是否确定删除代理商: ${params.name} 以及同时删除: ${delData}?`;
+    }
+
+    proxy.$modal.warning({
+      title: '警告',
+      titleAlign: 'center',
+      content: alertContent,
+      hideCancel: false,
+      onOk: () => {
+        setLoading(true);
+        submitResellerDelete(params).then((res) => {
+          setLoading(false);
+          proxy.$message.success('操作成功, 任务已提交');
+          search();
+          tableRef.value.selectAll(false);
+        });
+      },
+    });
+  };
+
+  const userChangeQuotaExpire = async (params: ResellerChangeQuotaExpire) => {
+    setLoading(true);
+    try {
+      await submitResellerChangeQuotaExpire(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const userChangeStatus = async (params: ResellerChangeStatus) => {
+    setLoading(true);
+    try {
+      await submitResellerChangeStatus(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const quotaQuick = ref(0);
   const rechargeVisible = ref(false);

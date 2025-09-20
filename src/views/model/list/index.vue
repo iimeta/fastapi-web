@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -30,7 +30,7 @@
                   :label="$t('model.form.provider')"
                 >
                   <a-select
-                    v-model="formData.provider_id"
+                    v-model="searchFormData.provider_id"
                     :placeholder="$t('model.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -48,7 +48,7 @@
               <a-col :span="8">
                 <a-form-item field="model" :label="$t('model.form.model')">
                   <a-input
-                    v-model="formData.model"
+                    v-model="searchFormData.model"
                     :placeholder="$t('model.form.model.placeholder')"
                     allow-clear
                   />
@@ -57,7 +57,7 @@
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('model.form.name')">
                   <a-input
-                    v-model="formData.name"
+                    v-model="searchFormData.name"
                     :placeholder="$t('model.form.name.placeholder')"
                     allow-clear
                   />
@@ -66,7 +66,7 @@
               <a-col :span="8">
                 <a-form-item field="group" :label="$t('model.form.group')">
                   <a-select
-                    v-model="formData.group"
+                    v-model="searchFormData.group"
                     :placeholder="$t('model.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -84,7 +84,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('model.form.status')">
                   <a-select
-                    v-model="formData.status"
+                    v-model="searchFormData.status"
                     :placeholder="$t('model.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -95,7 +95,7 @@
               <a-col :span="8">
                 <a-form-item field="type" :label="$t('model.form.type')">
                   <a-select
-                    v-model="formData.type"
+                    v-model="searchFormData.type"
                     :placeholder="$t('model.form.selectDefault')"
                     :options="typeOptions"
                     :scrollbar="false"
@@ -136,7 +136,7 @@
               {{ $t('model.operation.create') }}
             </a-button>
             <a-button
-              v-if="initBtn"
+              v-if="renderData.length === 0"
               type="primary"
               status="success"
               @click="initModel()"
@@ -1212,11 +1212,12 @@
   import { queryGroupList, GroupList } from '@/api/group';
   import Detail from '../detail/index.vue';
 
-  const { loading, setLoading } = useLoading(true);
-  const { proxy } = getCurrentInstance() as any;
-
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
+
+  const { loading, setLoading } = useLoading(true);
+  const { proxy } = getCurrentInstance() as any;
+  const { t } = useI18n();
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -1224,72 +1225,7 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const providers = ref<ProviderList[]>([]);
-
-  const getProviderList = async () => {
-    setLoading(true);
-    try {
-      const { data } = await queryProviderList();
-      providers.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getProviderList();
-
-  const models = ref<ModelList[]>([]);
-
-  const getModelList = async () => {
-    try {
-      const { data } = await queryModelList();
-      models.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelList();
-
-  const modelAgents = ref<ModelAgentList[]>([]);
-
-  const getModelAgentList = async () => {
-    try {
-      const { data } = await queryModelAgentList();
-      modelAgents.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelAgentList();
-
-  const groups = ref<GroupList[]>([]);
-  const getGroupList = async () => {
-    try {
-      const { data } = await queryGroupList();
-      groups.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getGroupList();
-
-  const modelDelete = async (params: ModelDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitModelDelete(params);
-      proxy.$message.success('删除成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       provider_id: '',
       model: '',
@@ -1299,16 +1235,15 @@
       status: ref(),
     };
   };
-  const { t } = useI18n();
+
   const renderData = ref<ModelPage[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
   const ids = ref<Array<string>>([]);
   const multiple = ref(true);
   const tableRef = ref();
-  let initBtn = false;
 
   const basePagination: Pagination = {
     current: 1,
@@ -1340,6 +1275,7 @@
       value: 'large',
     },
   ]);
+
   const columns = computed<TableColumnData[]>(() => [
     {
       title: t('model.columns.provider'),
@@ -1437,6 +1373,7 @@
       value: 102,
     },
   ]);
+
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('model.dict.status.1'),
@@ -1447,6 +1384,7 @@
       value: 2,
     },
   ]);
+
   const fetchData = async (
     params: ModelPageParams = {
       ...basePagination,
@@ -1459,7 +1397,6 @@
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
       pagination.total = data.paging.total;
-      initBtn = data.items.length === 0;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -1467,41 +1404,27 @@
       tableRef.value.selectAll(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as ModelPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formData.value, current });
+    fetchData({ ...basePagination, ...searchFormData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formData.value });
+    fetchData({ ...basePagination, ...searchFormData.value });
   };
-
-  fetchData();
 
   const reset = () => {
-    formData.value = generateFormModel();
+    searchFormData.value = generateSearchParams();
     search();
-  };
-
-  const modelChangeStatus = async (params: ModelChangeStatus) => {
-    setLoading(true);
-    try {
-      await submitModelChangeStatus(params);
-      proxy.$message.success('操作成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleSelectDensity = (
@@ -1569,6 +1492,85 @@
     },
     { deep: true, immediate: true }
   );
+
+  const providers = ref<ProviderList[]>([]);
+
+  const getProviderList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryProviderList();
+      providers.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getProviderList();
+
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelList();
+
+  const modelAgents = ref<ModelAgentList[]>([]);
+
+  const getModelAgentList = async () => {
+    try {
+      const { data } = await queryModelAgentList();
+      modelAgents.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelAgentList();
+
+  const groups = ref<GroupList[]>([]);
+
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getGroupList();
+
+  const modelDelete = async (params: ModelDeleteParams) => {
+    setLoading(true);
+    try {
+      await submitModelDelete(params);
+      proxy.$message.success('删除成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const modelChangeStatus = async (params: ModelChangeStatus) => {
+    setLoading(true);
+    try {
+      await submitModelChangeStatus(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const initModelVisible = ref(false);
   const initForm = ref<FormInstance>();

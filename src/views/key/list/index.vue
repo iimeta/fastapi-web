@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -30,7 +30,7 @@
                   :label="$t('key.form.provider')"
                 >
                   <a-select
-                    v-model="formData.provider_id"
+                    v-model="searchFormData.provider_id"
                     :placeholder="$t('key.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
@@ -48,7 +48,7 @@
               <a-col :span="7">
                 <a-form-item field="key" :label="$t('key.form.key')">
                   <a-input
-                    v-model="formData.key"
+                    v-model="searchFormData.key"
                     :placeholder="$t('key.form.key.placeholder')"
                     allow-clear
                   />
@@ -57,7 +57,7 @@
               <a-col :span="9">
                 <a-form-item field="models" :label="$t('key.form.models')">
                   <a-select
-                    v-model="formData.models"
+                    v-model="searchFormData.models"
                     :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="2"
                     :scrollbar="false"
@@ -80,7 +80,7 @@
                   :label="$t('key.form.modelAgents')"
                 >
                   <a-select
-                    v-model="formData.model_agents"
+                    v-model="searchFormData.model_agents"
                     :placeholder="$t('key.form.selectDefault')"
                     :max-tag-count="2"
                     :scrollbar="false"
@@ -100,7 +100,7 @@
               <a-col :span="7">
                 <a-form-item field="status" :label="$t('key.form.status')">
                   <a-select
-                    v-model="formData.status"
+                    v-model="searchFormData.status"
                     :placeholder="$t('key.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -111,7 +111,7 @@
               <a-col :span="9">
                 <a-form-item field="remark" :label="$t('key.form.remark')">
                   <a-input
-                    v-model="formData.remark"
+                    v-model="searchFormData.remark"
                     :placeholder="$t('key.form.remark.placeholder')"
                     allow-clear
                   />
@@ -447,11 +447,12 @@
   import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
 
-  const { loading, setLoading } = useLoading(true);
-  const { proxy } = getCurrentInstance() as any;
-
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
+
+  const { loading, setLoading } = useLoading(true);
+  const { proxy } = getCurrentInstance() as any;
+  const { t } = useI18n();
   const route = useRoute();
 
   const rowSelection = reactive({
@@ -460,65 +461,7 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const providers = ref<ProviderList[]>([]);
-
-  const getProviderList = async () => {
-    setLoading(true);
-    try {
-      const { data } = await queryProviderList();
-      providers.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getProviderList();
-
-  const models = ref<ModelList[]>([]);
-
-  const getModelList = async () => {
-    try {
-      const { data } = await queryModelList();
-      models.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelList();
-
-  const modelAgents = ref<ModelAgentList[]>([]);
-
-  const getModelAgentList = async () => {
-    try {
-      const { data } = await queryModelAgentList();
-      modelAgents.value = data.items;
-
-      const modelAgentId = new Array(0);
-      if (route.query.agent_id) {
-        modelAgentId[0] = route.query.agent_id;
-        formData.value.model_agents = modelAgentId;
-      }
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelAgentList();
-
-  const keyDelete = async (params: KeyDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitKeyDelete(params);
-      proxy.$message.success('删除成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       type: 2,
       provider_id: '',
@@ -530,9 +473,9 @@
       remark: '',
     };
   };
-  const { t } = useI18n();
+
   const renderData = ref<KeyPage[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -571,6 +514,7 @@
       value: 'large',
     },
   ]);
+
   const columns = computed<TableColumnData[]>(() => [
     {
       title: t('key.columns.provider'),
@@ -680,12 +624,12 @@
       pagination.total = data.paging.total;
       if (
         data.items.length > 0 &&
-        (formData.value.provider_id ||
-          formData.value.key ||
-          formData.value.models.length > 0 ||
-          formData.value.model_agents ||
-          formData.value.status ||
-          formData.value.remark)
+        (searchFormData.value.provider_id ||
+          searchFormData.value.key ||
+          searchFormData.value.models.length > 0 ||
+          searchFormData.value.model_agents ||
+          searchFormData.value.status ||
+          searchFormData.value.remark)
       ) {
         allMultiple.value = false;
       } else {
@@ -698,41 +642,27 @@
       tableRef.value.selectAll(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as KeyPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formData.value, current });
+    fetchData({ ...basePagination, ...searchFormData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formData.value });
+    fetchData({ ...basePagination, ...searchFormData.value });
   };
-
-  fetchData();
 
   const reset = () => {
-    formData.value = generateFormModel();
+    searchFormData.value = generateSearchParams();
     search();
-  };
-
-  const keyChangeStatus = async (params: KeyChangeStatus) => {
-    setLoading(true);
-    try {
-      await submitKeyChangeStatus(params);
-      proxy.$message.success('操作成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleSelectDensity = (
@@ -801,6 +731,77 @@
     { deep: true, immediate: true }
   );
 
+  const providers = ref<ProviderList[]>([]);
+
+  const getProviderList = async () => {
+    setLoading(true);
+    try {
+      const { data } = await queryProviderList();
+      providers.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getProviderList();
+
+  const models = ref<ModelList[]>([]);
+
+  const getModelList = async () => {
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelList();
+
+  const modelAgents = ref<ModelAgentList[]>([]);
+
+  const getModelAgentList = async () => {
+    try {
+      const { data } = await queryModelAgentList();
+      modelAgents.value = data.items;
+
+      const modelAgentId = new Array(0);
+      if (route.query.agent_id) {
+        modelAgentId[0] = route.query.agent_id;
+        searchFormData.value.model_agents = modelAgentId;
+      }
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelAgentList();
+
+  const keyDelete = async (params: KeyDeleteParams) => {
+    setLoading(true);
+    try {
+      await submitKeyDelete(params);
+      proxy.$message.success('删除成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const keyChangeStatus = async (params: KeyChangeStatus) => {
+    setLoading(true);
+    try {
+      await submitKeyChangeStatus(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
   /**
    * 已选择的数据行发生改变时触发
    *
@@ -851,7 +852,7 @@
         onOk: () => {
           setLoading(true);
           params.ids = ids.value;
-          submitKeyBatchOperate({ ...params, ...formData.value }).then(
+          submitKeyBatchOperate({ ...params, ...searchFormData.value }).then(
             (res) => {
               setLoading(false);
               proxy.$message.success('操作成功, 任务已提交');
@@ -874,6 +875,7 @@
     const { data } = await queryKeyDetail({ id });
     copy(data.key);
   };
+
   watch(copied, () => {
     if (copied.value) {
       proxy.$message.success('复制成功');

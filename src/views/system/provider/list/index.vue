@@ -18,7 +18,7 @@
       <a-row>
         <a-col :flex="1">
           <a-form
-            :model="formData"
+            :model="searchFormData"
             :label-col-props="{ span: 5 }"
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
@@ -27,7 +27,7 @@
               <a-col :span="8">
                 <a-form-item field="name" :label="$t('provider.form.name')">
                   <a-input
-                    v-model="formData.name"
+                    v-model="searchFormData.name"
                     :placeholder="$t('provider.form.name.placeholder')"
                     allow-clear
                   />
@@ -36,7 +36,7 @@
               <a-col :span="8">
                 <a-form-item field="code" :label="$t('provider.form.code')">
                   <a-input
-                    v-model="formData.code"
+                    v-model="searchFormData.code"
                     :placeholder="$t('provider.form.code.placeholder')"
                     allow-clear
                   />
@@ -45,7 +45,7 @@
               <a-col :span="8">
                 <a-form-item field="remark" :label="$t('provider.form.remark')">
                   <a-input
-                    v-model="formData.remark"
+                    v-model="searchFormData.remark"
                     :placeholder="$t('provider.form.remark.placeholder')"
                     allow-clear
                   />
@@ -57,7 +57,7 @@
                   :label="$t('provider.form.is_public')"
                 >
                   <a-select
-                    v-model="formData.is_public"
+                    v-model="searchFormData.is_public"
                     :placeholder="$t('provider.form.selectDefault')"
                     :options="publicOptions"
                     :scrollbar="false"
@@ -68,7 +68,7 @@
               <a-col :span="8">
                 <a-form-item field="status" :label="$t('provider.form.status')">
                   <a-select
-                    v-model="formData.status"
+                    v-model="searchFormData.status"
                     :placeholder="$t('provider.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
@@ -82,7 +82,7 @@
                   :label="$t('provider.form.updated_at')"
                 >
                   <a-range-picker
-                    v-model="formData.updated_at"
+                    v-model="searchFormData.updated_at"
                     style="width: 100%"
                   />
                 </a-form-item>
@@ -329,10 +329,12 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
 
-  const { proxy } = getCurrentInstance() as any;
-
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
+
+  const { loading, setLoading } = useLoading(true);
+  const { proxy } = getCurrentInstance() as any;
+  const { t } = useI18n();
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -340,20 +342,7 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
-  const providerDelete = async (params: ProviderDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitProviderDelete(params);
-      proxy.$message.success('删除成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const generateFormModel = () => {
+  const generateSearchParams = () => {
     return {
       name: '',
       code: '',
@@ -363,10 +352,9 @@
       updated_at: [],
     };
   };
-  const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
+
   const renderData = ref<ProviderPage[]>([]);
-  const formData = ref(generateFormModel());
+  const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
@@ -458,6 +446,7 @@
       width: 130,
     },
   ]);
+
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('provider.dict.status.1'),
@@ -498,54 +487,27 @@
       tableRef.value.selectAll(false);
     }
   };
+  fetchData();
 
   const search = () => {
     fetchData({
       ...basePagination,
-      ...formData.value,
+      ...searchFormData.value,
     } as unknown as ProviderPageParams);
   };
 
   const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, ...formData.value, current });
+    fetchData({ ...basePagination, ...searchFormData.value, current });
   };
 
   const onPageSizeChange = (pageSize: number) => {
     basePagination.pageSize = pageSize;
-    fetchData({ ...basePagination, ...formData.value });
+    fetchData({ ...basePagination, ...searchFormData.value });
   };
-
-  fetchData();
 
   const reset = () => {
-    formData.value = generateFormModel();
+    searchFormData.value = generateSearchParams();
     search();
-  };
-
-  const providerChangePublic = async (params: ProviderChangePublic) => {
-    setLoading(true);
-    try {
-      await submitProviderChangePublic(params);
-      proxy.$message.success('操作成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const providerChangeStatus = async (params: ProviderChangeStatus) => {
-    setLoading(true);
-    try {
-      await submitProviderChangeStatus(params);
-      proxy.$message.success('操作成功');
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleSelectDensity = (
@@ -613,6 +575,45 @@
     },
     { deep: true, immediate: true }
   );
+
+  const providerDelete = async (params: ProviderDeleteParams) => {
+    setLoading(true);
+    try {
+      await submitProviderDelete(params);
+      proxy.$message.success('删除成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const providerChangePublic = async (params: ProviderChangePublic) => {
+    setLoading(true);
+    try {
+      await submitProviderChangePublic(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const providerChangeStatus = async (params: ProviderChangeStatus) => {
+    setLoading(true);
+    try {
+      await submitProviderChangeStatus(params);
+      proxy.$message.success('操作成功');
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
 
   /**
    * 已选择的数据行发生改变时触发
