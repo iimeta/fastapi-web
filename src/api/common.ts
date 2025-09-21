@@ -1,7 +1,7 @@
 export interface TextPricing {
   input_ratio: any;
   output_ratio: any;
-  thinking: string;
+  thinking?: string;
   input_gt: any;
   input_lte: any;
 }

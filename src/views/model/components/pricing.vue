@@ -7,6 +7,21 @@
     :wrapper-col-props="{ span: 18 }"
   >
     <a-form-item
+      field="billing_rule"
+      :label="$t('model.label.billing_rule')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.billing_rule.required'),
+        },
+      ]"
+    >
+      <a-space size="large">
+        <a-radio v-model="formData.billing_rule" value="1"> 按官方 </a-radio>
+        <a-radio v-model="formData.billing_rule" value="2"> 按系统 </a-radio>
+      </a-space>
+    </a-form-item>
+    <a-form-item
       field="billing_items"
       :label="$t('model.label.pricing.billing_items')"
       :rules="[
@@ -15,7 +30,7 @@
           message: $t('model.error.pricing.billing_items.required'),
         },
       ]"
-      style="width: 928px"
+      style="width: 888px; margin-bottom: 0"
     >
       <a-space size="large">
         <a-checkbox-group
@@ -24,7 +39,9 @@
         />
       </a-space>
     </a-form-item>
-    <a-tabs position="right" type="line" style="width: 828px">
+
+    <a-tabs position="right" type="line" style="width: 888px">
+      <!-- 文本 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('text')"
         key="text"
@@ -45,9 +62,16 @@
             :placeholder="$t('model.placeholder.input_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 85%; margin-right: 5px"
+            :style="{
+              width:
+                formData.billing_items.includes('tiered_text_cache') ||
+                formData.billing_items.includes('midjourney')
+                  ? '480px'
+                  : '500px',
+              marginRight: '5px',
+            }"
           />
-          <div> ${{ formData.text.input_ratio || '0.00' }} / M </div>
+          <div>${{ formData.text.input_ratio || '0.00' }} / M</div>
         </a-form-item>
         <a-form-item
           field="text.output_ratio"
@@ -64,11 +88,20 @@
             :placeholder="$t('model.placeholder.output_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 85%; margin-right: 5px"
+            :style="{
+              width:
+                formData.billing_items.includes('tiered_text_cache') ||
+                formData.billing_items.includes('midjourney')
+                  ? '480px'
+                  : '500px',
+              marginRight: '5px',
+            }"
           />
-          <div> ${{ formData.text.output_ratio || '0.00' }} / M </div>
+          <div>${{ formData.text.output_ratio || '0.00' }} / M</div>
         </a-form-item>
       </a-tab-pane>
+
+      <!-- 文本缓存 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('text_cache')"
         key="text_cache"
@@ -89,80 +122,150 @@
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="margin-right: 5px"
+            :style="{
+              width:
+                formData.billing_items.includes('tiered_text_cache') ||
+                formData.billing_items.includes('midjourney')
+                  ? '480px'
+                  : '500px',
+              marginRight: '5px',
+            }"
           />
-          <div> ${{ formData.text_cache.read_ratio || '0.00' }} / M </div>
+          <div>${{ formData.text_cache.read_ratio || '0.00' }} / M</div>
         </a-form-item>
       </a-tab-pane>
+
+      <!-- 阶梯文本 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('tiered_text')"
         key="tiered_text"
         :title="$t('model.dict.billing_items.tiered_text')"
       >
         <a-form-item
-          field="text.input_ratio"
-          :label="$t('model.label.input_ratio')"
+          v-for="(tiered_text, index) of formData.tiered_text"
+          :key="index"
+          :field="
+            `tiered_text[${index}].input_gt` &&
+            `tiered_text[${index}].input_lte` &&
+            `tiered_text[${index}].input_ratio` &&
+            `tiered_text[${index}].output_ratio`
+          "
+          :label="`${index + 1}. ` + $t('model.label.tiered_text')"
           :rules="[
             {
               required: true,
-              message: $t('model.error.input_ratio.required'),
+              message: $t('model.error.tiered_text.required'),
             },
           ]"
         >
           <a-input-number
-            v-model="formData.text.input_ratio"
-            :placeholder="$t('model.placeholder.input_ratio')"
-            :min="0.000001"
-            :max="9999999999999"
-            style="margin-right: 5px"
+            v-model="formData.tiered_text[index].input_gt"
+            :placeholder="$t('model.placeholder.tiered_input_gt')"
+            style="width: 100px; margin-right: 5px"
           />
-          <div> ${{ formData.text.input_ratio || '0.00' }} / M </div>
-        </a-form-item>
-        <a-form-item
-          field="text.output_ratio"
-          :label="$t('model.label.output_ratio')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.error.output_ratio.required'),
-            },
-          ]"
-        >
           <a-input-number
-            v-model="formData.text.output_ratio"
-            :placeholder="$t('model.placeholder.output_ratio')"
+            v-model="formData.tiered_text[index].input_lte"
+            :placeholder="$t('model.placeholder.tiered_input_lte')"
+            style="width: 100px; margin-right: 5px"
+          />
+          <a-input-number
+            v-model="formData.tiered_text[index].input_ratio"
+            :placeholder="$t('model.placeholder.tiered_input_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="margin-right: 5px"
+            style="width: 125px; margin-right: 5px"
           />
-          <div> ${{ formData.text.output_ratio || '0.00' }} / M </div>
+          <a-input-number
+            v-model="formData.tiered_text[index].output_ratio"
+            :placeholder="$t('model.placeholder.tiered_output_ratio')"
+            :min="0.000001"
+            :max="9999999999999"
+            style="width: 125px; margin-right: 5px"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleTieredTextPricingAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleTieredTextPricingDel(index)"
+          >
+            <icon-minus />
+          </a-button>
         </a-form-item>
       </a-tab-pane>
+
+      <!-- 阶梯文本缓存 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('tiered_text_cache')"
         key="tiered_text_cache"
         :title="$t('model.dict.billing_items.tiered_text_cache')"
       >
         <a-form-item
-          field="text.read_ratio"
-          :label="$t('model.label.read_ratio')"
+          v-for="(tiered_text_cache, index) of formData.tiered_text_cache"
+          :key="index"
+          :field="
+            `tiered_text_cache[${index}].input_gt` &&
+            `tiered_text_cache[${index}].input_lte` &&
+            `tiered_text_cache[${index}].read_ratio` &&
+            `tiered_text_cache[${index}].write_ratio`
+          "
+          :label="`${index + 1}. ` + $t('model.label.tiered_text_cache')"
           :rules="[
             {
               required: true,
-              message: $t('model.error.read_ratio.required'),
+              message: $t('model.error.tiered_text_cache.required'),
             },
           ]"
         >
           <a-input-number
-            v-model="formData.tiered_text_cache[0].read_ratio"
-            :placeholder="$t('model.placeholder.read_ratio')"
+            v-model="formData.tiered_text_cache[index].input_gt"
+            :placeholder="$t('model.placeholder.tiered_input_gt')"
+            style="width: 100px; margin-right: 5px"
+          />
+          <a-input-number
+            v-model="formData.tiered_text_cache[index].input_lte"
+            :placeholder="$t('model.placeholder.tiered_input_lte')"
+            style="width: 100px; margin-right: 5px"
+          />
+          <a-input-number
+            v-model="formData.tiered_text_cache[index].read_ratio"
+            :placeholder="$t('model.placeholder.tiered_cache_read_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="margin-right: 5px"
+            style="width: 125px; margin-right: 5px"
           />
-          <div> ${{ formData.tiered_text_cache[0] || '0.00' }} / M </div>
+          <a-input-number
+            v-model="formData.tiered_text_cache[index].write_ratio"
+            :placeholder="$t('model.placeholder.tiered_cache_write_ratio')"
+            :min="0.000001"
+            :max="9999999999999"
+            style="width: 125px; margin-right: 5px"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleTieredTextCachePricingAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleTieredTextCachePricingDel(index)"
+          >
+            <icon-minus />
+          </a-button>
         </a-form-item>
       </a-tab-pane>
+
+      <!-- 图像 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('image')"
         key="image"
@@ -183,9 +286,16 @@
             :placeholder="$t('model.placeholder.input_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 90%; margin-right: 5px"
+            :style="{
+              width:
+                formData.billing_items.includes('tiered_text_cache') ||
+                formData.billing_items.includes('midjourney')
+                  ? '480px'
+                  : '500px',
+              marginRight: '5px',
+            }"
           />
-          <div> ${{ formData.image.input_ratio || '0.00' }} / M </div>
+          <div>${{ formData.image.input_ratio || '0.00' }} / M</div>
         </a-form-item>
         <a-form-item
           field="image.output_ratio"
@@ -202,11 +312,20 @@
             :placeholder="$t('model.placeholder.output_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 90%; margin-right: 5px"
+            :style="{
+              width:
+                formData.billing_items.includes('tiered_text_cache') ||
+                formData.billing_items.includes('midjourney')
+                  ? '480px'
+                  : '500px',
+              marginRight: '5px',
+            }"
           />
-          <div> ${{ formData.image.output_ratio || '0.00' }} / M </div>
+          <div>${{ formData.image.output_ratio || '0.00' }} / M</div>
         </a-form-item>
       </a-tab-pane>
+
+      <!-- 图像生成 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('image_generation')"
         key="image_generation"
@@ -237,18 +356,18 @@
           <a-input-number
             v-model="formData.image_generation[index].width"
             :placeholder="$t('model.placeholder.image_generation.width')"
-            style="width: 78px; margin-right: 5px"
+            style="width: 88px; margin-right: 5px"
           />
           ×
           <a-input-number
             v-model="formData.image_generation[index].height"
             :placeholder="$t('model.placeholder.image_generation.height')"
-            style="width: 78px; margin-left: 5px; margin-right: 5px"
+            style="width: 88px; margin-left: 5px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.image_generation[index].fixed_quota"
             :placeholder="$t('model.placeholder.image_generation.fixed_quota')"
-            style="width: 118px; margin-right: 5px"
+            style="width: 110px; margin-right: 5px"
           />
           <a-radio
             v-model="formData.image_generation[index].is_default"
@@ -274,6 +393,8 @@
           </a-button>
         </a-form-item>
       </a-tab-pane>
+
+      <!-- 图像缓存 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('image_cache')"
         key="image_cache"
@@ -294,11 +415,20 @@
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 90%; margin-right: 5px"
+            :style="{
+              width:
+                formData.billing_items.includes('tiered_text_cache') ||
+                formData.billing_items.includes('midjourney')
+                  ? '480px'
+                  : '500px',
+              marginRight: '5px',
+            }"
           />
-          <div> ${{ formData.image_cache.read_ratio || '0.00' }} / M </div>
+          <div>${{ formData.image_cache.read_ratio || '0.00' }} / M</div>
         </a-form-item>
       </a-tab-pane>
+
+      <!-- 音频 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('audio')"
         key="audio"
@@ -319,9 +449,16 @@
             :placeholder="$t('model.placeholder.input_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 90%; margin-right: 5px"
+            :style="{
+              width:
+                formData.billing_items.includes('tiered_text_cache') ||
+                formData.billing_items.includes('midjourney')
+                  ? '480px'
+                  : '500px',
+              marginRight: '5px',
+            }"
           />
-          <div> ${{ formData.audio.input_ratio || '0.00' }} / M </div>
+          <div>${{ formData.audio.input_ratio || '0.00' }} / M</div>
         </a-form-item>
         <a-form-item
           field="audio.output_ratio"
@@ -338,11 +475,20 @@
             :placeholder="$t('model.placeholder.output_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 90%; margin-right: 5px"
+            :style="{
+              width:
+                formData.billing_items.includes('tiered_text_cache') ||
+                formData.billing_items.includes('midjourney')
+                  ? '480px'
+                  : '500px',
+              marginRight: '5px',
+            }"
           />
-          <div> ${{ formData.audio.output_ratio || '0.00' }}/min </div>
+          <div>${{ formData.audio.output_ratio || '0.00' }} / min</div>
         </a-form-item>
       </a-tab-pane>
+
+      <!-- 音频缓存 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('audio_cache')"
         key="audio_cache"
@@ -363,11 +509,20 @@
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 90%; margin-right: 5px"
+            :style="{
+              width:
+                formData.billing_items.includes('tiered_text_cache') ||
+                formData.billing_items.includes('midjourney')
+                  ? '480px'
+                  : '500px',
+              marginRight: '5px',
+            }"
           />
-          <div> ${{ formData.audio_cache.read_ratio || '0.00' }} / M </div>
+          <div>${{ formData.audio_cache.read_ratio || '0.00' }} / M</div>
         </a-form-item>
       </a-tab-pane>
+
+      <!-- 识图 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('vision')"
         key="vision"
@@ -388,37 +543,39 @@
           <a-input
             v-model="formData.vision[index].mode"
             :placeholder="$t('model.placeholder.vision.mode')"
-            style="width: 185px; margin-right: 5px"
+            style="width: 200px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.vision[index].fixed_quota"
             :placeholder="$t('model.placeholder.vision.fixed_quota')"
-            style="width: 185px; margin-right: 5px"
+            style="width: 200px; margin-right: 5px"
           />
           <a-radio
             v-model="formData.vision[index].is_default"
             value="1"
             style="width: 60px"
-            @change="handleMultimodalVisionPricingIsDefaultChange(index)"
+            @change="handleVisionPricingIsDefaultChange(index)"
             >默认</a-radio
           >
           <a-button
             type="primary"
             shape="circle"
             style="margin: 0 10px 0 10px"
-            @click="handleMultimodalVisionPricingAdd('')"
+            @click="handleVisionPricingAdd('')"
           >
             <icon-plus />
           </a-button>
           <a-button
             type="secondary"
             shape="circle"
-            @click="handleMultimodalVisionPricingDel(index)"
+            @click="handleVisionPricingDel(index)"
           >
             <icon-minus />
           </a-button>
         </a-form-item>
       </a-tab-pane>
+
+      <!-- 搜索 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('search')"
         key="search"
@@ -442,37 +599,39 @@
           <a-input
             v-model="formData.search[index].search_context_size"
             :placeholder="$t('model.placeholder.search.search_context_size')"
-            style="width: 185px; margin-right: 5px"
+            style="width: 200px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.search[index].fixed_quota"
             :placeholder="$t('model.placeholder.search.fixed_quota')"
-            style="width: 185px; margin-right: 5px"
+            style="width: 200px; margin-right: 5px"
           />
           <a-radio
             v-model="formData.search[index].is_default"
             value="1"
             style="width: 60px"
-            @change="handleMultimodalSearchPricingIsDefaultChange(index)"
+            @change="handleSearchPricingIsDefaultChange(index)"
             >默认</a-radio
           >
           <a-button
             type="primary"
             shape="circle"
             style="margin: 0 10px 0 10px"
-            @click="handleMultimodalSearchPricingAdd()"
+            @click="handleSearchPricingAdd()"
           >
             <icon-plus />
           </a-button>
           <a-button
             type="secondary"
             shape="circle"
-            @click="handleMultimodalSearchPricingDel(index)"
+            @click="handleSearchPricingDel(index)"
           >
             <icon-minus />
           </a-button>
         </a-form-item>
       </a-tab-pane>
+
+      <!-- Midjourney -->
       <a-tab-pane
         v-if="formData.billing_items.includes('midjourney')"
         key="midjourney"
@@ -498,17 +657,17 @@
           <a-input
             v-model="formData.midjourney[index].name"
             :placeholder="$t('model.placeholder.midjourney.name')"
-            style="width: 95px; margin-right: 5px"
+            style="width: 110px; margin-right: 5px"
           />
           <a-input
             v-model="formData.midjourney[index].action"
             :placeholder="$t('model.placeholder.midjourney.action')"
-            style="width: 102px; margin-right: 5px"
+            style="width: 110px; margin-right: 5px"
           />
           <a-input
             v-model="formData.midjourney[index].path"
             :placeholder="$t('model.placeholder.midjourney.path')"
-            style="width: 138px; margin-right: 5px"
+            style="width: 150px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.midjourney[index].fixed_quota"
@@ -542,6 +701,8 @@
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import {
     Pricing,
+    TextPricing,
+    CachePricing,
     ImageGenerationPricing,
     VisionPricing,
     SearchPricing,
@@ -556,112 +717,6 @@
 
   const formRef = ref<FormInstance>();
   const formData = ref(props.modelValue);
-
-  const handleImageGenerationPricingAdd = (
-    q?: string,
-    w?: number,
-    h?: number
-  ) => {
-    const generationPricing: ImageGenerationPricing = {
-      quality: q,
-      width: w,
-      height: h,
-      fixed_quota: ref(),
-      is_default: formData.value.image_generation.length === 0 ? '1' : '',
-    };
-    formData.value.image_generation.push(generationPricing);
-  };
-
-  const handleImageGenerationPricingDel = (index: number) => {
-    if (formData.value.image_generation.length > 1) {
-      if (formData.value.image_generation[index].is_default === '1') {
-        formData.value.image_generation[index === 0 ? 1 : 0].is_default = '1';
-      }
-      formData.value.image_generation.splice(index, 1);
-    }
-  };
-
-  const handleImageGenerationPricingIsDefaultChange = (index: number) => {
-    for (let i = 0; i < formData.value.image_generation.length; i += 1) {
-      if (i === index) {
-        formData.value.image_generation[i].is_default = '1';
-      } else {
-        formData.value.image_generation[i].is_default = '';
-      }
-    }
-  };
-
-  const handleMultimodalVisionPricingAdd = (m: string) => {
-    const visionPricing: VisionPricing = {
-      mode: m,
-      fixed_quota: ref(),
-      is_default: formData.value.vision.length === 0 ? '1' : '',
-    };
-    formData.value.vision.push(visionPricing);
-  };
-
-  const handleMultimodalVisionPricingDel = (index: number) => {
-    if (formData.value.vision.length > 1) {
-      if (formData.value.vision[index].is_default === '1') {
-        formData.value.vision[index === 0 ? 1 : 0].is_default = '1';
-      }
-      formData.value.vision.splice(index, 1);
-    }
-  };
-
-  const handleMultimodalVisionPricingIsDefaultChange = (index: number) => {
-    for (let i = 0; i < formData.value.vision.length; i += 1) {
-      if (i === index) {
-        formData.value.vision[i].is_default = '1';
-      } else {
-        formData.value.vision[i].is_default = '';
-      }
-    }
-  };
-
-  const handleMultimodalSearchPricingAdd = (s?: string) => {
-    const searchPricing: SearchPricing = {
-      search_context_size: s,
-      fixed_quota: ref(),
-      is_default: formData.value.search.length === 0 ? '1' : '',
-    };
-    formData.value.search.push(searchPricing);
-  };
-
-  const handleMultimodalSearchPricingDel = (index: number) => {
-    if (formData.value.search.length > 1) {
-      if (formData.value.search[index].is_default === '1') {
-        formData.value.search[index === 0 ? 1 : 0].is_default = '1';
-      }
-      formData.value.search.splice(index, 1);
-    }
-  };
-
-  const handleMultimodalSearchPricingIsDefaultChange = (index: number) => {
-    for (let i = 0; i < formData.value.search.length; i += 1) {
-      if (i === index) {
-        formData.value.search[i].is_default = '1';
-      } else {
-        formData.value.search[i].is_default = '';
-      }
-    }
-  };
-
-  const handleMidjourneyPricingAdd = (n?: string, a?: string, p?: string) => {
-    const midjourneyPricing: MidjourneyPricing = {
-      name: n,
-      action: a,
-      path: p,
-      fixed_quota: ref(),
-    };
-    formData.value.midjourney.push(midjourneyPricing);
-  };
-
-  const handleMidjourneyPricingDel = (index: number) => {
-    if (formData.value.midjourney.length > 1) {
-      formData.value.midjourney.splice(index, 1);
-    }
-  };
 
   const billingItems = [
     {
@@ -714,6 +769,151 @@
     },
   ];
 
+  const handleTieredTextPricingAdd = (gt?: number, lte?: number) => {
+    const textPricing: TextPricing = {
+      input_gt: gt,
+      input_lte: lte,
+      input_ratio: ref(),
+      output_ratio: ref(),
+    };
+    formData.value.tiered_text.push(textPricing);
+  };
+
+  const handleTieredTextPricingDel = (index: number) => {
+    if (formData.value.tiered_text.length > 1) {
+      formData.value.tiered_text.splice(index, 1);
+    }
+  };
+
+  const handleTieredTextCachePricingAdd = (gt?: number, lte?: number) => {
+    const cachePricing: CachePricing = {
+      input_gt: gt,
+      input_lte: lte,
+      read_ratio: ref(),
+      write_ratio: ref(),
+    };
+    formData.value.tiered_text_cache.push(cachePricing);
+  };
+
+  const handleTieredTextCachePricingDel = (index: number) => {
+    if (formData.value.tiered_text_cache.length > 1) {
+      formData.value.tiered_text_cache.splice(index, 1);
+    }
+  };
+
+  const handleImageGenerationPricingAdd = (
+    q?: string,
+    w?: number,
+    h?: number
+  ) => {
+    const imageGenerationPricing: ImageGenerationPricing = {
+      quality: q,
+      width: w,
+      height: h,
+      fixed_quota: ref(),
+      is_default: formData.value.image_generation.length === 0 ? '1' : '',
+    };
+    formData.value.image_generation.push(imageGenerationPricing);
+  };
+
+  const handleImageGenerationPricingDel = (index: number) => {
+    if (formData.value.image_generation.length > 1) {
+      if (formData.value.image_generation[index].is_default === '1') {
+        formData.value.image_generation[index === 0 ? 1 : 0].is_default = '1';
+      }
+      formData.value.image_generation.splice(index, 1);
+    }
+  };
+
+  const handleImageGenerationPricingIsDefaultChange = (index: number) => {
+    for (let i = 0; i < formData.value.image_generation.length; i += 1) {
+      if (i === index) {
+        formData.value.image_generation[i].is_default = '1';
+      } else {
+        formData.value.image_generation[i].is_default = '';
+      }
+    }
+  };
+
+  const handleVisionPricingAdd = (m: string) => {
+    const visionPricing: VisionPricing = {
+      mode: m,
+      fixed_quota: ref(),
+      is_default: formData.value.vision.length === 0 ? '1' : '',
+    };
+    formData.value.vision.push(visionPricing);
+  };
+
+  const handleVisionPricingDel = (index: number) => {
+    if (formData.value.vision.length > 1) {
+      if (formData.value.vision[index].is_default === '1') {
+        formData.value.vision[index === 0 ? 1 : 0].is_default = '1';
+      }
+      formData.value.vision.splice(index, 1);
+    }
+  };
+
+  const handleVisionPricingIsDefaultChange = (index: number) => {
+    for (let i = 0; i < formData.value.vision.length; i += 1) {
+      if (i === index) {
+        formData.value.vision[i].is_default = '1';
+      } else {
+        formData.value.vision[i].is_default = '';
+      }
+    }
+  };
+
+  const handleSearchPricingAdd = (s?: string) => {
+    const searchPricing: SearchPricing = {
+      search_context_size: s,
+      fixed_quota: ref(),
+      is_default: formData.value.search.length === 0 ? '1' : '',
+    };
+    formData.value.search.push(searchPricing);
+  };
+
+  const handleSearchPricingDel = (index: number) => {
+    if (formData.value.search.length > 1) {
+      if (formData.value.search[index].is_default === '1') {
+        formData.value.search[index === 0 ? 1 : 0].is_default = '1';
+      }
+      formData.value.search.splice(index, 1);
+    }
+  };
+
+  const handleSearchPricingIsDefaultChange = (index: number) => {
+    for (let i = 0; i < formData.value.search.length; i += 1) {
+      if (i === index) {
+        formData.value.search[i].is_default = '1';
+      } else {
+        formData.value.search[i].is_default = '';
+      }
+    }
+  };
+
+  const handleMidjourneyPricingAdd = (n?: string, a?: string, p?: string) => {
+    const midjourneyPricing: MidjourneyPricing = {
+      name: n,
+      action: a,
+      path: p,
+      fixed_quota: ref(),
+    };
+    formData.value.midjourney.push(midjourneyPricing);
+  };
+
+  const handleMidjourneyPricingDel = (index: number) => {
+    if (formData.value.midjourney.length > 1) {
+      formData.value.midjourney.splice(index, 1);
+    }
+  };
+
+  const inputGt = [0, 0, 128, 200, 256];
+  const inputLte = [128, 200, 256, 1024, 1024];
+  for (let i = 0; i < inputGt.length; i += 1) {
+    handleTieredTextPricingAdd(inputGt[i], inputLte[i]);
+    handleTieredTextCachePricingAdd(inputGt[i], inputLte[i]);
+  }
+
   const qualities = [
     'high',
     'high',
@@ -733,12 +933,12 @@
 
   const modes = ['auto', 'high', 'low'];
   for (let i = 0; i < modes.length; i += 1) {
-    handleMultimodalVisionPricingAdd(modes[i]);
+    handleVisionPricingAdd(modes[i]);
   }
 
   const searchContextSizes = ['medium', 'high', 'low'];
   for (let i = 0; i < searchContextSizes.length; i += 1) {
-    handleMultimodalSearchPricingAdd(searchContextSizes[i]);
+    handleSearchPricingAdd(searchContextSizes[i]);
   }
 
   const names = [
@@ -815,5 +1015,9 @@
     margin-right: 8px;
     margin-bottom: 8px;
     width: 158px;
+  }
+
+  :deep(.arco-tabs-nav-vertical) {
+    margin-top: 20px;
   }
 </style>
