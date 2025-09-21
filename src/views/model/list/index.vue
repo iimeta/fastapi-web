@@ -141,7 +141,7 @@
               status="success"
               @click="initModel()"
             >
-              初始化
+              同步
             </a-button>
             <a-button
               v-if="renderData.length !== 0"

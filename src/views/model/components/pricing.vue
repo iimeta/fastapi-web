@@ -170,17 +170,17 @@
       >
         <a-form-item
           field="image.input_ratio"
-          :label="$t('model.label.image.input_ratio')"
+          :label="$t('model.label.input_ratio')"
           :rules="[
             {
               required: true,
-              message: $t('model.error.image.input_ratio.required'),
+              message: $t('model.error.input_ratio.required'),
             },
           ]"
         >
           <a-input-number
             v-model="formData.image.input_ratio"
-            :placeholder="$t('model.placeholder.image.input_ratio')"
+            :placeholder="$t('model.placeholder.input_ratio')"
             :min="0.000001"
             :max="9999999999999"
             style="width: 90%; margin-right: 5px"
@@ -189,17 +189,17 @@
         </a-form-item>
         <a-form-item
           field="image.output_ratio"
-          :label="$t('model.label.image.output_ratio')"
+          :label="$t('model.label.output_ratio')"
           :rules="[
             {
               required: true,
-              message: $t('model.error.image.output_ratio.required'),
+              message: $t('model.error.output_ratio.required'),
             },
           ]"
         >
           <a-input-number
             v-model="formData.image.output_ratio"
-            :placeholder="$t('model.placeholder.image.output_ratio')"
+            :placeholder="$t('model.placeholder.output_ratio')"
             :min="0.000001"
             :max="9999999999999"
             style="width: 90%; margin-right: 5px"
@@ -281,17 +281,17 @@
       >
         <a-form-item
           field="image.read_ratio"
-          :label="$t('model.label.image.read_ratio')"
+          :label="$t('model.label.read_ratio')"
           :rules="[
             {
               required: true,
-              message: $t('model.error.image.read_ratio.required'),
+              message: $t('model.error.read_ratio.required'),
             },
           ]"
         >
           <a-input-number
             v-model="formData.image_cache.read_ratio"
-            :placeholder="$t('model.placeholder.image.read_ratio')"
+            :placeholder="$t('model.placeholder.read_ratio')"
             :min="0.000001"
             :max="9999999999999"
             style="width: 90%; margin-right: 5px"
@@ -350,17 +350,17 @@
       >
         <a-form-item
           field="realtime.audio.read_ratio"
-          :label="$t('model.label.realtime.audio.read_ratio')"
+          :label="$t('model.label.read_ratio')"
           :rules="[
             {
               required: true,
-              message: $t('model.error.realtime.audio.read_ratio.required'),
+              message: $t('model.error.read_ratio.required'),
             },
           ]"
         >
           <a-input-number
             v-model="formData.audio_cache.read_ratio"
-            :placeholder="$t('model.placeholder.realtime.audio.read_ratio')"
+            :placeholder="$t('model.placeholder.read_ratio')"
             :min="0.000001"
             :max="9999999999999"
             style="width: 90%; margin-right: 5px"
