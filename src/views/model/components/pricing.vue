@@ -30,7 +30,7 @@
           message: $t('model.error.pricing.billing_items.required'),
         },
       ]"
-      style="width: 988px; margin-bottom: 0"
+      style="width: 1088px; margin-bottom: 0"
     >
       <a-space size="large">
         <a-checkbox-group
@@ -40,7 +40,7 @@
       </a-space>
     </a-form-item>
 
-    <a-tabs position="right" type="line" style="width: 988px">
+    <a-tabs position="right" type="line" style="width: 1088px">
       <!-- 文本 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('text')"
@@ -62,7 +62,7 @@
             :placeholder="$t('model.placeholder.input_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 672px; margin-right: 5px"
+            class="input"
           >
             <template #append> / M </template>
           </a-input-number>
@@ -82,7 +82,7 @@
             :placeholder="$t('model.placeholder.output_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 672px; margin-right: 5px"
+            class="input"
           >
             <template #append> / M </template>
           </a-input-number>
@@ -110,7 +110,7 @@
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 672px; margin-right: 5px"
+            class="input"
           >
             <template #append> / M </template>
           </a-input-number>
@@ -140,10 +140,16 @@
             },
           ]"
         >
+          <a-select
+            v-model="formData.tiered_text[index].mode"
+            :placeholder="$t('model.placeholder.tiered_mode')"
+            :options="modeOptions"
+            style="width: 95px; margin-right: 5px"
+          />
           <a-input-number
             v-model="formData.tiered_text[index].input_gt"
             :placeholder="$t('model.placeholder.tiered_input_gt')"
-            style="width: 138px; margin-right: 5px"
+            style="width: 128px; margin-right: 5px"
           >
             <template #append> / k </template>
           </a-input-number>
@@ -213,10 +219,16 @@
             },
           ]"
         >
+          <a-select
+            v-model="formData.tiered_text_cache[index].mode"
+            :placeholder="$t('model.placeholder.tiered_mode')"
+            :options="modeOptions"
+            style="width: 95px; margin-right: 5px"
+          />
           <a-input-number
             v-model="formData.tiered_text_cache[index].input_gt"
             :placeholder="$t('model.placeholder.tiered_input_gt')"
-            style="width: 138px; margin-right: 5px"
+            style="width: 128px; margin-right: 5px"
           >
             <template #append> / k </template>
           </a-input-number>
@@ -284,7 +296,7 @@
             :placeholder="$t('model.placeholder.input_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 672px; margin-right: 5px"
+            class="input"
           >
             <template #append> / M </template>
           </a-input-number>
@@ -304,7 +316,7 @@
             :placeholder="$t('model.placeholder.output_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 672px; margin-right: 5px"
+            class="input"
           >
             <template #append> / M </template>
           </a-input-number>
@@ -337,23 +349,23 @@
           <a-input
             v-model="formData.image_generation[index].quality"
             :placeholder="$t('model.placeholder.image_generation.quality')"
-            style="width: 110px; margin-right: 5px"
+            style="width: 135px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.image_generation[index].width"
             :placeholder="$t('model.placeholder.image_generation.width')"
-            style="width: 118px; margin-right: 5px"
+            style="width: 145px; margin-right: 5px"
           />
           ×
           <a-input-number
             v-model="formData.image_generation[index].height"
             :placeholder="$t('model.placeholder.image_generation.height')"
-            style="width: 118px; margin-left: 5px; margin-right: 5px"
+            style="width: 145px; margin-left: 5px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.image_generation[index].fixed_quota"
             :placeholder="$t('model.placeholder.image_generation.fixed_quota')"
-            style="width: 158px; margin-right: 5px"
+            style="width: 168px; margin-right: 5px"
           >
             <template #append> / 张 </template>
           </a-input-number>
@@ -403,7 +415,7 @@
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 672px; margin-right: 5px"
+            class="input"
           >
             <template #append> / M </template>
           </a-input-number>
@@ -431,12 +443,12 @@
           <a-input
             v-model="formData.vision[index].mode"
             :placeholder="$t('model.placeholder.vision.mode')"
-            style="width: 265px; margin-right: 5px"
+            style="width: 310px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.vision[index].fixed_quota"
             :placeholder="$t('model.placeholder.vision.fixed_quota')"
-            style="width: 264px; margin-right: 5px"
+            style="width: 309px; margin-right: 5px"
           >
             <template #append> / 张 </template>
           </a-input-number>
@@ -486,7 +498,7 @@
             :placeholder="$t('model.placeholder.input_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 672px; margin-right: 5px"
+            class="input"
           >
             <template #append> / M </template>
           </a-input-number>
@@ -506,7 +518,7 @@
             :placeholder="$t('model.placeholder.output_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 672px; margin-right: 5px"
+            class="input"
           >
             <template #append> / min </template>
           </a-input-number>
@@ -534,7 +546,7 @@
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 672px; margin-right: 5px"
+            class="input"
           >
             <template #append> / M </template>
           </a-input-number>
@@ -565,12 +577,12 @@
           <a-input
             v-model="formData.search[index].search_context_size"
             :placeholder="$t('model.placeholder.search.search_context_size')"
-            style="width: 265px; margin-right: 5px"
+            style="width: 310px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.search[index].fixed_quota"
             :placeholder="$t('model.placeholder.search.fixed_quota')"
-            style="width: 264px; margin-right: 5px"
+            style="width: 309px; margin-right: 5px"
           >
             <template #append> / 次 </template>
           </a-input-number>
@@ -625,22 +637,22 @@
           <a-input
             v-model="formData.midjourney[index].name"
             :placeholder="$t('model.placeholder.midjourney.name')"
-            style="width: 110px; margin-right: 5px"
+            style="width: 165px; margin-right: 5px"
           />
           <a-input
             v-model="formData.midjourney[index].action"
             :placeholder="$t('model.placeholder.midjourney.action')"
-            style="width: 150px; margin-right: 5px"
+            style="width: 165px; margin-right: 5px"
           />
           <a-input
             v-model="formData.midjourney[index].path"
             :placeholder="$t('model.placeholder.midjourney.path')"
-            style="width: 158px; margin-right: 5px"
+            style="width: 168px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.midjourney[index].fixed_quota"
             :placeholder="$t('model.placeholder.midjourney.fixed_quota')"
-            style="width: 158px"
+            style="width: 168px"
           >
             <template #append> / 次 </template>
           </a-input-number>
@@ -739,6 +751,21 @@
     },
   ];
 
+  const modeOptions = [
+    {
+      label: t('model.dict.mode.all'),
+      value: 'all',
+    },
+    {
+      label: t('model.dict.mode.thinking'),
+      value: 'thinking',
+    },
+    {
+      label: t('model.dict.mode.non_thinking'),
+      value: 'non_thinking',
+    },
+  ];
+
   watch(
     () => props.modelValue,
     (val) => {
@@ -753,8 +780,13 @@
 
   defineExpose({ validate });
 
-  const handleTieredTextPricingAdd = (gt?: number, lte?: number) => {
+  const handleTieredTextPricingAdd = (
+    m?: string,
+    gt?: number,
+    lte?: number
+  ) => {
     const textPricing: TextPricing = {
+      mode: m,
       input_gt: gt,
       input_lte: lte,
       input_ratio: ref(),
@@ -769,8 +801,13 @@
     }
   };
 
-  const handleTieredTextCachePricingAdd = (gt?: number, lte?: number) => {
+  const handleTieredTextCachePricingAdd = (
+    m?: string,
+    gt?: number,
+    lte?: number
+  ) => {
     const cachePricing: CachePricing = {
+      mode: m,
       input_gt: gt,
       input_lte: lte,
       read_ratio: ref(),
@@ -894,8 +931,8 @@
   const inputGt = [0, 0, 128, 200, 256];
   const inputLte = [128, 200, 256, 1024, 1024];
   for (let i = 0; i < inputGt.length; i += 1) {
-    handleTieredTextPricingAdd(inputGt[i], inputLte[i]);
-    handleTieredTextCachePricingAdd(inputGt[i], inputLte[i]);
+    handleTieredTextPricingAdd('all', inputGt[i], inputLte[i]);
+    handleTieredTextCachePricingAdd('all', inputGt[i], inputLte[i]);
   }
 
   const qualities = [
@@ -1003,5 +1040,9 @@
 
   :deep(.arco-tabs-nav-vertical) {
     margin-top: 20px;
+  }
+
+  .input {
+    width: 762px;
   }
 </style>

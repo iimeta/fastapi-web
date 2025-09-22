@@ -39,6 +39,7 @@
                 :placeholder="$t('model.placeholder.provider')"
                 :scrollbar="false"
                 allow-search
+                style="width: 762px"
                 @change="handleProviderChange"
               >
                 <a-option
@@ -62,6 +63,7 @@
               <a-input
                 v-model="formData.name"
                 :placeholder="$t('model.placeholder.name')"
+                class="input"
               />
             </a-form-item>
             <a-form-item
@@ -77,6 +79,7 @@
               <a-input
                 v-model="formData.model"
                 :placeholder="$t('model.placeholder.model')"
+                class="input"
               />
             </a-form-item>
             <a-form-item
@@ -94,6 +97,7 @@
                 :placeholder="$t('model.placeholder.type')"
                 :scrollbar="false"
                 allow-search
+                style="width: 762px"
                 @change="handleTypeChange"
               >
                 <a-option value="1">{{ $t('dict.model_type.1') }}</a-option>
@@ -111,18 +115,21 @@
               <a-input
                 v-model="formData.base_url"
                 :placeholder="$t('model.placeholder.base_url')"
+                class="input"
               />
             </a-form-item>
             <a-form-item field="path" :label="$t('model.label.path')">
               <a-input
                 v-model="formData.path"
                 :placeholder="$t('model.placeholder.path')"
+                class="input"
               />
             </a-form-item>
             <a-form-item field="remark" :label="$t('model.label.remark')">
               <a-textarea
                 v-model="formData.remark"
                 :placeholder="$t('model.placeholder.remark')"
+                class="input"
               />
             </a-form-item>
 
@@ -199,6 +206,7 @@
                 multiple
                 allow-search
                 allow-clear
+                style="width: 762px"
               >
                 <a-option
                   v-for="item in groups"
@@ -237,6 +245,7 @@
                   $t('model.placeholder.preset_config.system_role_prompt')
                 "
                 :auto-size="{ minRows: 5, maxRows: 10 }"
+                class="input"
               />
             </a-form-item>
             <a-form-item
@@ -247,7 +256,7 @@
               <a-input-number
                 v-model="formData.preset_config.min_tokens"
                 :placeholder="$t('model.placeholder.preset_config.min_tokens')"
-                style="width: 260px; margin-right: 5px"
+                style="width: 378px; margin-right: 5px"
                 :precision="0"
                 :min="0"
                 :max="2097152"
@@ -255,7 +264,7 @@
               <a-input-number
                 v-model="formData.preset_config.max_tokens"
                 :placeholder="$t('model.placeholder.preset_config.max_tokens')"
-                style="width: 260px"
+                style="width: 379px"
                 :precision="0"
                 :min="0"
                 :max="2097152"
@@ -314,6 +323,7 @@
                 multiple
                 allow-search
                 allow-clear
+                style="width: 762px"
               >
                 <a-option
                   v-for="item in modelAgents"
@@ -347,6 +357,7 @@
                 v-model="formData.forward_config.forward_rule"
                 :placeholder="$t('model.placeholder.forwardRule')"
                 :scrollbar="false"
+                style="width: 762px"
                 @change="handleForwardRuleChange"
               >
                 <a-option value="1">全部转发</a-option>
@@ -374,6 +385,7 @@
                 :precision="0"
                 :min="1"
                 :max="9999999999999"
+                class="input"
               />
             </a-form-item>
             <a-form-item
@@ -396,6 +408,7 @@
                 :placeholder="$t('model.placeholder.targetModel')"
                 :scrollbar="false"
                 allow-search
+                style="width: 762px"
               >
                 <a-option
                   v-for="item in models"
@@ -453,6 +466,7 @@
                 :placeholder="$t('model.placeholder.decisionModel')"
                 :scrollbar="false"
                 allow-search
+                style="width: 762px"
               >
                 <a-option
                   v-for="item in models"
@@ -484,13 +498,13 @@
               <a-input
                 v-model="formData.forward_config.keywords[index]"
                 :placeholder="$t('model.placeholder.keywords')"
-                style="width: 45%; margin-right: 5px"
+                style="width: 373px; margin-right: 5px"
               />
               <a-select
                 v-model="formData.forward_config.target_models[index]"
                 :placeholder="$t('model.placeholder.targetModel')"
                 :scrollbar="false"
-                style="width: 40%"
+                style="width: 300px"
                 allow-search
               >
                 <a-option
@@ -542,6 +556,7 @@
                 :scrollbar="false"
                 allow-search
                 allow-clear
+                style="width: 762px"
               >
                 <a-option
                   v-for="item in modelAgents"
@@ -571,6 +586,7 @@
                 :scrollbar="false"
                 allow-search
                 allow-clear
+                style="width: 762px"
               >
                 <a-option
                   v-for="item in models"
@@ -713,7 +729,7 @@
       text: {
         input_ratio: ref(),
         output_ratio: ref(),
-        thinking: '',
+        mode: 'all',
         input_gt: ref(),
         input_lte: ref(),
       },
@@ -1533,7 +1549,7 @@
     background-color: var(--color-bg-2);
     :deep(.arco-form) {
       .arco-form-item {
-        width: 988px;
+        width: 1088px;
         &:first-child {
           margin-top: 20px;
         }
@@ -1566,5 +1582,9 @@
       flex: 1;
       margin: 20px 30px;
     }
+  }
+
+  .input {
+    width: 762px;
   }
 </style>

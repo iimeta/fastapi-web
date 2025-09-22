@@ -264,6 +264,7 @@ export default {
   'model.placeholder.midjourney.action': '动作',
   'model.placeholder.midjourney.path': '路径',
   'model.placeholder.midjourney.fixed_quota': '请输入价格',
+  'model.placeholder.tiered_mode': '模式',
   'model.label.tiered_text': '文本价格',
   'model.error.tiered_text.required': '请输入文本价格',
   'model.placeholder.tiered_input_gt': '大于',
@@ -275,6 +276,7 @@ export default {
   'model.placeholder.tiered_cache_read_ratio': '读取价格',
   'model.placeholder.tiered_cache_write_ratio': '写入价格',
   'model.error.pricing.required': '有未填写的计费项, 请检查并全部填写',
+
   // detail
   'model.detail.label.provider': '提供商',
   'model.detail.label.name': '模型名称',
@@ -415,4 +417,7 @@ export default {
   'model.dict.billing_items.vision': '识图',
   'model.dict.billing_items.search': '搜索',
   'model.dict.billing_items.midjourney': 'Midjourney',
+  'model.dict.mode.all': '全部',
+  'model.dict.mode.thinking': '思考',
+  'model.dict.mode.non_thinking': '非思考',
 };

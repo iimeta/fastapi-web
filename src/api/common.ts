@@ -1,7 +1,7 @@
 export interface TextPricing {
   input_ratio: any;
   output_ratio: any;
-  thinking?: string;
+  mode?: string;
   input_gt: any;
   input_lte: any;
 }
@@ -9,6 +9,7 @@ export interface TextPricing {
 export interface CachePricing {
   read_ratio: any;
   write_ratio: any;
+  mode?: string;
   input_gt: any;
   input_lte: any;
 }
