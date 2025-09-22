@@ -733,15 +733,9 @@
       text: {
         input_ratio: ref(),
         output_ratio: ref(),
-        mode: 'all',
-        input_gt: ref(),
-        input_lte: ref(),
       },
       text_cache: {
         read_ratio: ref(),
-        write_ratio: ref(),
-        input_gt: ref(),
-        input_lte: ref(),
       },
       tiered_text: [],
       tiered_text_cache: [],
@@ -752,9 +746,6 @@
       image_generation: [],
       image_cache: {
         read_ratio: ref(),
-        write_ratio: ref(),
-        input_gt: ref(),
-        input_lte: ref(),
       },
       vision: [],
       audio: {
@@ -763,9 +754,6 @@
       },
       audio_cache: {
         read_ratio: ref(),
-        write_ratio: ref(),
-        input_gt: ref(),
-        input_lte: ref(),
       },
       search: [],
       midjourney: [],

@@ -2,16 +2,16 @@ export interface TextPricing {
   input_ratio: any;
   output_ratio: any;
   mode?: string;
-  input_gt: any;
-  input_lte: any;
+  input_gt?: any;
+  input_lte?: any;
 }
 
 export interface CachePricing {
   read_ratio: any;
-  write_ratio: any;
+  write_ratio?: any;
   mode?: string;
-  input_gt: any;
-  input_lte: any;
+  input_gt?: any;
+  input_lte?: any;
 }
 
 export interface ImagePricing {
