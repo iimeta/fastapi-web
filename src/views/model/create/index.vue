@@ -18,7 +18,7 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 5 }"
+            :label-col-props="{ span: 4 }"
             :wrapper-col-props="{ span: 18 }"
           >
             <a-divider orientation="left">
@@ -131,7 +131,7 @@
             </a-divider>
 
             <!-- 定价 -->
-            <Pricing v-model="formData.pricing" />
+            <Pricing ref="pricingRef" v-model="formData.pricing" />
 
             <a-form-item
               field="request_data_format"
@@ -606,6 +606,7 @@
 
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { useRouter } from 'vue-router';
   import { FormInstance } from '@arco-design/web-vue/es/form';
@@ -627,6 +628,7 @@
 
   const { loading, setLoading } = useLoading(false);
   const { proxy } = getCurrentInstance() as any;
+  const { t } = useI18n();
   const router = useRouter();
 
   const providers = ref<ProviderList[]>([]);
@@ -706,7 +708,7 @@
       is_support_stream: true,
     },
     pricing: {
-      billing_rule: '1',
+      billing_rule: 1,
       billing_items: [],
       text: {
         input_ratio: ref(),
@@ -734,6 +736,7 @@
         input_gt: ref(),
         input_lte: ref(),
       },
+      vision: [],
       audio: {
         input_ratio: ref(),
         output_ratio: ref(),
@@ -744,7 +747,6 @@
         input_gt: ref(),
         input_lte: ref(),
       },
-      vision: [],
       search: [],
       midjourney: [],
     },
@@ -868,6 +870,9 @@
     },
   });
 
+  // 定价
+  const pricingRef = ref();
+
   const submitForm = async () => {
     if (!formData.value.is_enable_forward) {
       formData.value.forward_config.forward_rule = '';
@@ -913,6 +918,12 @@
 
     const res = await formRef.value?.validate();
     if (!res) {
+      // 定价
+      const pricingRes = await pricingRef.value?.validate();
+      if (pricingRes) {
+        proxy.$message.warning(t('model.error.pricing.required'));
+        return;
+      }
       setLoading(true);
       try {
         if (formData.value.text_quota.prompt_price) {
@@ -1522,7 +1533,7 @@
     background-color: var(--color-bg-2);
     :deep(.arco-form) {
       .arco-form-item {
-        width: 888px;
+        width: 988px;
         &:first-child {
           margin-top: 20px;
         }

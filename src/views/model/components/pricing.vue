@@ -3,7 +3,7 @@
     ref="formRef"
     :model="formData"
     class="form"
-    :label-col-props="{ span: 5 }"
+    :label-col-props="{ span: 4 }"
     :wrapper-col-props="{ span: 18 }"
   >
     <a-form-item
@@ -17,8 +17,8 @@
       ]"
     >
       <a-space size="large">
-        <a-radio v-model="formData.billing_rule" value="1"> 按官方 </a-radio>
-        <a-radio v-model="formData.billing_rule" value="2"> 按系统 </a-radio>
+        <a-radio v-model="formData.billing_rule" :value="1"> 按官方 </a-radio>
+        <a-radio v-model="formData.billing_rule" :value="2"> 按系统 </a-radio>
       </a-space>
     </a-form-item>
     <a-form-item
@@ -30,7 +30,7 @@
           message: $t('model.error.pricing.billing_items.required'),
         },
       ]"
-      style="width: 888px; margin-bottom: 0"
+      style="width: 988px; margin-bottom: 0"
     >
       <a-space size="large">
         <a-checkbox-group
@@ -40,7 +40,7 @@
       </a-space>
     </a-form-item>
 
-    <a-tabs position="right" type="line" style="width: 888px">
+    <a-tabs position="right" type="line" style="width: 988px">
       <!-- 文本 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('text')"
@@ -62,16 +62,10 @@
             :placeholder="$t('model.placeholder.input_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            :style="{
-              width:
-                formData.billing_items.includes('tiered_text_cache') ||
-                formData.billing_items.includes('midjourney')
-                  ? '480px'
-                  : '500px',
-              marginRight: '5px',
-            }"
-          />
-          <div>${{ formData.text.input_ratio || '0.00' }} / M</div>
+            style="width: 672px; margin-right: 5px"
+          >
+            <template #append> / M </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           field="text.output_ratio"
@@ -88,16 +82,10 @@
             :placeholder="$t('model.placeholder.output_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            :style="{
-              width:
-                formData.billing_items.includes('tiered_text_cache') ||
-                formData.billing_items.includes('midjourney')
-                  ? '480px'
-                  : '500px',
-              marginRight: '5px',
-            }"
-          />
-          <div>${{ formData.text.output_ratio || '0.00' }} / M</div>
+            style="width: 672px; margin-right: 5px"
+          >
+            <template #append> / M </template>
+          </a-input-number>
         </a-form-item>
       </a-tab-pane>
 
@@ -108,7 +96,7 @@
         :title="$t('model.dict.billing_items.text_cache')"
       >
         <a-form-item
-          field="text.read_ratio"
+          field="text_cache.read_ratio"
           :label="$t('model.label.read_ratio')"
           :rules="[
             {
@@ -122,16 +110,10 @@
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            :style="{
-              width:
-                formData.billing_items.includes('tiered_text_cache') ||
-                formData.billing_items.includes('midjourney')
-                  ? '480px'
-                  : '500px',
-              marginRight: '5px',
-            }"
-          />
-          <div>${{ formData.text_cache.read_ratio || '0.00' }} / M</div>
+            style="width: 672px; margin-right: 5px"
+          >
+            <template #append> / M </template>
+          </a-input-number>
         </a-form-item>
       </a-tab-pane>
 
@@ -161,27 +143,35 @@
           <a-input-number
             v-model="formData.tiered_text[index].input_gt"
             :placeholder="$t('model.placeholder.tiered_input_gt')"
-            style="width: 100px; margin-right: 5px"
-          />
+            style="width: 138px; margin-right: 5px"
+          >
+            <template #append> / k </template>
+          </a-input-number>
           <a-input-number
             v-model="formData.tiered_text[index].input_lte"
             :placeholder="$t('model.placeholder.tiered_input_lte')"
-            style="width: 100px; margin-right: 5px"
-          />
+            style="width: 138px; margin-right: 5px"
+          >
+            <template #append> / k </template>
+          </a-input-number>
           <a-input-number
             v-model="formData.tiered_text[index].input_ratio"
             :placeholder="$t('model.placeholder.tiered_input_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 125px; margin-right: 5px"
-          />
+            style="width: 150px; margin-right: 5px"
+          >
+            <template #append> / M </template>
+          </a-input-number>
           <a-input-number
             v-model="formData.tiered_text[index].output_ratio"
             :placeholder="$t('model.placeholder.tiered_output_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 125px; margin-right: 5px"
-          />
+            style="width: 150px"
+          >
+            <template #append> / M </template>
+          </a-input-number>
           <a-button
             type="primary"
             shape="circle"
@@ -226,27 +216,35 @@
           <a-input-number
             v-model="formData.tiered_text_cache[index].input_gt"
             :placeholder="$t('model.placeholder.tiered_input_gt')"
-            style="width: 100px; margin-right: 5px"
-          />
+            style="width: 138px; margin-right: 5px"
+          >
+            <template #append> / k </template>
+          </a-input-number>
           <a-input-number
             v-model="formData.tiered_text_cache[index].input_lte"
             :placeholder="$t('model.placeholder.tiered_input_lte')"
-            style="width: 100px; margin-right: 5px"
-          />
+            style="width: 138px; margin-right: 5px"
+          >
+            <template #append> / k </template>
+          </a-input-number>
           <a-input-number
             v-model="formData.tiered_text_cache[index].read_ratio"
             :placeholder="$t('model.placeholder.tiered_cache_read_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 125px; margin-right: 5px"
-          />
+            style="width: 150px; margin-right: 5px"
+          >
+            <template #append> / M </template>
+          </a-input-number>
           <a-input-number
             v-model="formData.tiered_text_cache[index].write_ratio"
             :placeholder="$t('model.placeholder.tiered_cache_write_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            style="width: 125px; margin-right: 5px"
-          />
+            style="width: 150px"
+          >
+            <template #append> / M </template>
+          </a-input-number>
           <a-button
             type="primary"
             shape="circle"
@@ -286,16 +284,10 @@
             :placeholder="$t('model.placeholder.input_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            :style="{
-              width:
-                formData.billing_items.includes('tiered_text_cache') ||
-                formData.billing_items.includes('midjourney')
-                  ? '480px'
-                  : '500px',
-              marginRight: '5px',
-            }"
-          />
-          <div>${{ formData.image.input_ratio || '0.00' }} / M</div>
+            style="width: 672px; margin-right: 5px"
+          >
+            <template #append> / M </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           field="image.output_ratio"
@@ -312,16 +304,10 @@
             :placeholder="$t('model.placeholder.output_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            :style="{
-              width:
-                formData.billing_items.includes('tiered_text_cache') ||
-                formData.billing_items.includes('midjourney')
-                  ? '480px'
-                  : '500px',
-              marginRight: '5px',
-            }"
-          />
-          <div>${{ formData.image.output_ratio || '0.00' }} / M</div>
+            style="width: 672px; margin-right: 5px"
+          >
+            <template #append> / M </template>
+          </a-input-number>
         </a-form-item>
       </a-tab-pane>
 
@@ -351,24 +337,26 @@
           <a-input
             v-model="formData.image_generation[index].quality"
             :placeholder="$t('model.placeholder.image_generation.quality')"
-            style="width: 88px; margin-right: 5px"
+            style="width: 110px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.image_generation[index].width"
             :placeholder="$t('model.placeholder.image_generation.width')"
-            style="width: 88px; margin-right: 5px"
+            style="width: 118px; margin-right: 5px"
           />
           ×
           <a-input-number
             v-model="formData.image_generation[index].height"
             :placeholder="$t('model.placeholder.image_generation.height')"
-            style="width: 88px; margin-left: 5px; margin-right: 5px"
+            style="width: 118px; margin-left: 5px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.image_generation[index].fixed_quota"
             :placeholder="$t('model.placeholder.image_generation.fixed_quota')"
-            style="width: 110px; margin-right: 5px"
-          />
+            style="width: 158px; margin-right: 5px"
+          >
+            <template #append> / 张 </template>
+          </a-input-number>
           <a-radio
             v-model="formData.image_generation[index].is_default"
             value="1"
@@ -379,7 +367,7 @@
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            style="margin: 0 10px 0 2px"
             @click="handleImageGenerationPricingAdd()"
           >
             <icon-plus />
@@ -401,7 +389,7 @@
         :title="$t('model.dict.billing_items.image_cache')"
       >
         <a-form-item
-          field="image.read_ratio"
+          field="image_cache.read_ratio"
           :label="$t('model.label.read_ratio')"
           :rules="[
             {
@@ -415,110 +403,10 @@
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0.000001"
             :max="9999999999999"
-            :style="{
-              width:
-                formData.billing_items.includes('tiered_text_cache') ||
-                formData.billing_items.includes('midjourney')
-                  ? '480px'
-                  : '500px',
-              marginRight: '5px',
-            }"
-          />
-          <div>${{ formData.image_cache.read_ratio || '0.00' }} / M</div>
-        </a-form-item>
-      </a-tab-pane>
-
-      <!-- 音频 -->
-      <a-tab-pane
-        v-if="formData.billing_items.includes('audio')"
-        key="audio"
-        :title="$t('model.dict.billing_items.audio')"
-      >
-        <a-form-item
-          field="audio.input_ratio"
-          :label="$t('model.label.input_ratio')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.error.input_ratio.required'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="formData.audio.input_ratio"
-            :placeholder="$t('model.placeholder.input_ratio')"
-            :min="0.000001"
-            :max="9999999999999"
-            :style="{
-              width:
-                formData.billing_items.includes('tiered_text_cache') ||
-                formData.billing_items.includes('midjourney')
-                  ? '480px'
-                  : '500px',
-              marginRight: '5px',
-            }"
-          />
-          <div>${{ formData.audio.input_ratio || '0.00' }} / M</div>
-        </a-form-item>
-        <a-form-item
-          field="audio.output_ratio"
-          :label="$t('model.label.output_ratio')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.error.output_ratio.required'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="formData.audio.output_ratio"
-            :placeholder="$t('model.placeholder.output_ratio')"
-            :min="0.000001"
-            :max="9999999999999"
-            :style="{
-              width:
-                formData.billing_items.includes('tiered_text_cache') ||
-                formData.billing_items.includes('midjourney')
-                  ? '480px'
-                  : '500px',
-              marginRight: '5px',
-            }"
-          />
-          <div>${{ formData.audio.output_ratio || '0.00' }} / min</div>
-        </a-form-item>
-      </a-tab-pane>
-
-      <!-- 音频缓存 -->
-      <a-tab-pane
-        v-if="formData.billing_items.includes('audio_cache')"
-        key="audio_cache"
-        :title="$t('model.dict.billing_items.audio_cache')"
-      >
-        <a-form-item
-          field="realtime.audio.read_ratio"
-          :label="$t('model.label.read_ratio')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.error.read_ratio.required'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="formData.audio_cache.read_ratio"
-            :placeholder="$t('model.placeholder.read_ratio')"
-            :min="0.000001"
-            :max="9999999999999"
-            :style="{
-              width:
-                formData.billing_items.includes('tiered_text_cache') ||
-                formData.billing_items.includes('midjourney')
-                  ? '480px'
-                  : '500px',
-              marginRight: '5px',
-            }"
-          />
-          <div>${{ formData.audio_cache.read_ratio || '0.00' }} / M</div>
+            style="width: 672px; margin-right: 5px"
+          >
+            <template #append> / M </template>
+          </a-input-number>
         </a-form-item>
       </a-tab-pane>
 
@@ -543,13 +431,15 @@
           <a-input
             v-model="formData.vision[index].mode"
             :placeholder="$t('model.placeholder.vision.mode')"
-            style="width: 200px; margin-right: 5px"
+            style="width: 265px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.vision[index].fixed_quota"
             :placeholder="$t('model.placeholder.vision.fixed_quota')"
-            style="width: 200px; margin-right: 5px"
-          />
+            style="width: 264px; margin-right: 5px"
+          >
+            <template #append> / 张 </template>
+          </a-input-number>
           <a-radio
             v-model="formData.vision[index].is_default"
             value="1"
@@ -560,7 +450,7 @@
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            style="margin: 0 10px 0 2px"
             @click="handleVisionPricingAdd('')"
           >
             <icon-plus />
@@ -572,6 +462,82 @@
           >
             <icon-minus />
           </a-button>
+        </a-form-item>
+      </a-tab-pane>
+
+      <!-- 音频 -->
+      <a-tab-pane
+        v-if="formData.billing_items.includes('audio')"
+        key="audio"
+        :title="$t('model.dict.billing_items.audio')"
+      >
+        <a-form-item
+          field="audio.input_ratio"
+          :label="$t('model.label.input_ratio')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.error.input_ratio.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="formData.audio.input_ratio"
+            :placeholder="$t('model.placeholder.input_ratio')"
+            :min="0.000001"
+            :max="9999999999999"
+            style="width: 672px; margin-right: 5px"
+          >
+            <template #append> / M </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          field="audio.output_ratio"
+          :label="$t('model.label.output_ratio')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.error.output_ratio.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="formData.audio.output_ratio"
+            :placeholder="$t('model.placeholder.output_ratio')"
+            :min="0.000001"
+            :max="9999999999999"
+            style="width: 672px; margin-right: 5px"
+          >
+            <template #append> / min </template>
+          </a-input-number>
+        </a-form-item>
+      </a-tab-pane>
+
+      <!-- 音频缓存 -->
+      <a-tab-pane
+        v-if="formData.billing_items.includes('audio_cache')"
+        key="audio_cache"
+        :title="$t('model.dict.billing_items.audio_cache')"
+      >
+        <a-form-item
+          field="audio_cache.read_ratio"
+          :label="$t('model.label.read_ratio')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.error.read_ratio.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="formData.audio_cache.read_ratio"
+            :placeholder="$t('model.placeholder.read_ratio')"
+            :min="0.000001"
+            :max="9999999999999"
+            style="width: 672px; margin-right: 5px"
+          >
+            <template #append> / M </template>
+          </a-input-number>
         </a-form-item>
       </a-tab-pane>
 
@@ -599,13 +565,15 @@
           <a-input
             v-model="formData.search[index].search_context_size"
             :placeholder="$t('model.placeholder.search.search_context_size')"
-            style="width: 200px; margin-right: 5px"
+            style="width: 265px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.search[index].fixed_quota"
             :placeholder="$t('model.placeholder.search.fixed_quota')"
-            style="width: 200px; margin-right: 5px"
-          />
+            style="width: 264px; margin-right: 5px"
+          >
+            <template #append> / 次 </template>
+          </a-input-number>
           <a-radio
             v-model="formData.search[index].is_default"
             value="1"
@@ -616,7 +584,7 @@
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            style="margin: 0 10px 0 2px"
             @click="handleSearchPricingAdd()"
           >
             <icon-plus />
@@ -662,18 +630,20 @@
           <a-input
             v-model="formData.midjourney[index].action"
             :placeholder="$t('model.placeholder.midjourney.action')"
-            style="width: 110px; margin-right: 5px"
+            style="width: 150px; margin-right: 5px"
           />
           <a-input
             v-model="formData.midjourney[index].path"
             :placeholder="$t('model.placeholder.midjourney.path')"
-            style="width: 150px; margin-right: 5px"
+            style="width: 158px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.midjourney[index].fixed_quota"
             :placeholder="$t('model.placeholder.midjourney.fixed_quota')"
-            style="width: 90px"
-          />
+            style="width: 158px"
+          >
+            <template #append> / 次 </template>
+          </a-input-number>
           <a-button
             type="primary"
             shape="circle"
@@ -696,7 +666,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { FormInstance } from '@arco-design/web-vue/es/form';
   import {
@@ -748,16 +718,16 @@
       value: 'image_cache',
     },
     {
+      label: t('model.dict.billing_items.vision'),
+      value: 'vision',
+    },
+    {
       label: t('model.dict.billing_items.audio'),
       value: 'audio',
     },
     {
       label: t('model.dict.billing_items.audio_cache'),
       value: 'audio_cache',
-    },
-    {
-      label: t('model.dict.billing_items.vision'),
-      value: 'vision',
     },
     {
       label: t('model.dict.billing_items.search'),
@@ -768,6 +738,20 @@
       value: 'midjourney',
     },
   ];
+
+  watch(
+    () => props.modelValue,
+    (val) => {
+      formData.value = val;
+    },
+    { deep: true, immediate: true }
+  );
+
+  const validate = async () => {
+    return formRef.value?.validate();
+  };
+
+  defineExpose({ validate });
 
   const handleTieredTextPricingAdd = (gt?: number, lte?: number) => {
     const textPricing: TextPricing = {
@@ -1014,7 +998,7 @@
   :deep(.arco-checkbox-group .arco-checkbox) {
     margin-right: 8px;
     margin-bottom: 8px;
-    width: 158px;
+    width: 115px;
   }
 
   :deep(.arco-tabs-nav-vertical) {

@@ -257,6 +257,7 @@ export interface ModelDetail {
   base_url: string;
   path: string;
   billing_method: any;
+  pricing: Pricing;
   groups: string[];
   group_names: string[];
   text_quota: TextQuota;

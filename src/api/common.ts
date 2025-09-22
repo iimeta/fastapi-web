@@ -6,6 +6,13 @@ export interface TextPricing {
   input_lte: any;
 }
 
+export interface CachePricing {
+  read_ratio: any;
+  write_ratio: any;
+  input_gt: any;
+  input_lte: any;
+}
+
 export interface ImagePricing {
   input_ratio: any;
   output_ratio: any;
@@ -19,28 +26,21 @@ export interface ImageGenerationPricing {
   is_default: string;
 }
 
-export interface AudioPricing {
-  input_ratio: any;
-  output_ratio: any;
-}
-
 export interface VisionPricing {
   mode: string;
   fixed_quota: any;
   is_default: string;
 }
 
+export interface AudioPricing {
+  input_ratio: any;
+  output_ratio: any;
+}
+
 export interface SearchPricing {
   search_context_size?: string;
   fixed_quota: any;
   is_default: string;
-}
-
-export interface CachePricing {
-  read_ratio: any;
-  write_ratio: any;
-  input_gt: any;
-  input_lte: any;
 }
 
 export interface MidjourneyPricing {
@@ -60,9 +60,9 @@ export interface Pricing {
   image: ImagePricing;
   image_generation: ImageGenerationPricing[];
   image_cache: CachePricing;
+  vision: VisionPricing[];
   audio: AudioPricing;
   audio_cache: CachePricing;
-  vision: VisionPricing[];
   search: SearchPricing[];
   midjourney: MidjourneyPricing[];
 }
