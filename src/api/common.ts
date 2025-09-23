@@ -23,13 +23,13 @@ export interface ImageGenerationPricing {
   quality: any;
   width: any;
   height: any;
-  fixed_quota: any;
+  once_ratio: any;
   is_default: string;
 }
 
 export interface VisionPricing {
   mode: string;
-  fixed_quota: any;
+  once_ratio: any;
   is_default: string;
 }
 
@@ -40,7 +40,7 @@ export interface AudioPricing {
 
 export interface SearchPricing {
   search_context_size?: string;
-  fixed_quota: any;
+  once_ratio: any;
   is_default: string;
 }
 
@@ -48,11 +48,16 @@ export interface MidjourneyPricing {
   name: any;
   action: any;
   path: any;
-  fixed_quota: any;
+  once_ratio: any;
+}
+
+export interface OncePricing {
+  once_ratio: any;
 }
 
 export interface Pricing {
-  billing_rule:  any;
+  billing_rule: any;
+  billing_methods: number[];
   billing_items: string[];
   text: TextPricing;
   text_cache: CachePricing;
@@ -66,4 +71,5 @@ export interface Pricing {
   audio_cache: CachePricing;
   search: SearchPricing[];
   midjourney: MidjourneyPricing[];
+  once: OncePricing;
 }

@@ -15,10 +15,45 @@
           message: $t('model.error.billing_rule.required'),
         },
       ]"
+      style="margin-bottom: 12px"
     >
       <a-space size="large">
-        <a-radio v-model="formData.billing_rule" :value="1"> 按官方 </a-radio>
+        <a-radio
+          v-model="formData.billing_rule"
+          :value="1"
+          style="margin-right: 30px"
+        >
+          按官方
+        </a-radio>
         <a-radio v-model="formData.billing_rule" :value="2"> 按系统 </a-radio>
+      </a-space>
+    </a-form-item>
+    <a-form-item
+      field="billing_methods"
+      :label="$t('model.label.billing_methods')"
+      :rules="[
+        {
+          required: true,
+          message: $t('model.error.billing_methods.required'),
+        },
+      ]"
+      style="margin-bottom: 20px"
+    >
+      <a-space size="large">
+        <a-checkbox
+          v-model="formData.billing_methods"
+          :value="1"
+          style="margin-right: 44px"
+        >
+          按量
+        </a-checkbox>
+        <a-checkbox
+          v-model="formData.billing_methods"
+          :value="2"
+          @change="handleBillingMethodsChange"
+        >
+          按次
+        </a-checkbox>
       </a-space>
     </a-form-item>
     <a-form-item
@@ -32,12 +67,112 @@
       ]"
       style="width: 1088px; margin-bottom: 0"
     >
-      <a-space size="large">
-        <a-checkbox-group
+      <a-space size="small" wrap>
+        <a-checkbox
           v-model="formData.billing_items"
-          :options="billingItems"
+          value="text"
+          class="billing-items"
           @change="handleBillingItemsChange"
-        />
+        >
+          {{ t('model.dict.billing_items.text') }}
+        </a-checkbox>
+        <a-checkbox
+          v-model="formData.billing_items"
+          value="text_cache"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.text_cache') }}
+        </a-checkbox>
+        <a-checkbox
+          v-model="formData.billing_items"
+          value="tiered_text"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.tiered_text') }}
+        </a-checkbox>
+        <a-checkbox
+          v-model="formData.billing_items"
+          value="tiered_text_cache"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.tiered_text_cache') }}
+        </a-checkbox>
+        <a-checkbox
+          v-model="formData.billing_items"
+          value="image"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.image') }}
+        </a-checkbox>
+        <a-checkbox
+          v-model="formData.billing_items"
+          value="image_generation"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.image_generation') }}
+        </a-checkbox>
+        <a-checkbox
+          v-model="formData.billing_items"
+          value="image_cache"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.image_cache') }}
+        </a-checkbox>
+        <a-checkbox
+          v-model="formData.billing_items"
+          value="audio"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.audio') }}
+        </a-checkbox>
+        <a-checkbox
+          v-model="formData.billing_items"
+          value="audio_cache"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.audio_cache') }}
+        </a-checkbox>
+        <a-checkbox
+          v-model="formData.billing_items"
+          value="vision"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.vision') }}
+        </a-checkbox>
+        <a-checkbox
+          v-model="formData.billing_items"
+          value="search"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.search') }}
+        </a-checkbox>
+        <a-checkbox
+          v-model="formData.billing_items"
+          value="midjourney"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.midjourney') }}
+        </a-checkbox>
+        <a-checkbox
+          v-if="formData.billing_methods.includes(2)"
+          v-model="formData.billing_items"
+          value="once"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.once') }}
+        </a-checkbox>
       </a-space>
     </a-form-item>
 
@@ -344,7 +479,7 @@
             `image_generation[${index}].quality` &&
             `image_generation[${index}].width` &&
             `image_generation[${index}].height` &&
-            `image_generation[${index}].fixed_quota`
+            `image_generation[${index}].once_ratio`
           "
           :label="`${index + 1}. ` + $t('model.label.image_generation')"
           :rules="[
@@ -371,8 +506,8 @@
             style="width: 145px; margin-left: 5px; margin-right: 5px"
           />
           <a-input-number
-            v-model="formData.image_generation[index].fixed_quota"
-            :placeholder="$t('model.placeholder.image_generation.fixed_quota')"
+            v-model="formData.image_generation[index].once_ratio"
+            :placeholder="$t('model.placeholder.image_generation.once_ratio')"
             style="width: 168px; margin-right: 5px"
           >
             <template #append> / 张 </template>
@@ -439,7 +574,7 @@
         <a-form-item
           v-for="(_, index) of formData.vision"
           :key="index"
-          :field="`vision[${index}].mode` && `vision[${index}].fixed_quota`"
+          :field="`vision[${index}].mode` && `vision[${index}].once_ratio`"
           :label="`${index + 1}. ` + $t('model.label.vision')"
           :rules="[
             {
@@ -454,8 +589,8 @@
             style="width: 310px; margin-right: 5px"
           />
           <a-input-number
-            v-model="formData.vision[index].fixed_quota"
-            :placeholder="$t('model.placeholder.vision.fixed_quota')"
+            v-model="formData.vision[index].once_ratio"
+            :placeholder="$t('model.placeholder.vision.once_ratio')"
             style="width: 309px; margin-right: 5px"
           >
             <template #append> / 张 </template>
@@ -572,7 +707,7 @@
           :key="index"
           :field="
             `search[${index}].search_context_size` &&
-            `search[${index}].fixed_quota`
+            `search[${index}].once_ratio`
           "
           :label="`${index + 1}. ` + $t('model.label.search')"
           :rules="[
@@ -588,8 +723,8 @@
             style="width: 310px; margin-right: 5px"
           />
           <a-input-number
-            v-model="formData.search[index].fixed_quota"
-            :placeholder="$t('model.placeholder.search.fixed_quota')"
+            v-model="formData.search[index].once_ratio"
+            :placeholder="$t('model.placeholder.search.once_ratio')"
             style="width: 309px; margin-right: 5px"
           >
             <template #append> / 次 </template>
@@ -632,7 +767,7 @@
             `midjourney[${index}].name` &&
             `midjourney[${index}].action` &&
             `midjourney[${index}].path` &&
-            `midjourney[${index}].fixed_quota`
+            `midjourney[${index}].once_ratio`
           "
           :label="`${index + 1}. ` + $t('model.label.midjourney')"
           :rules="[
@@ -658,8 +793,8 @@
             style="width: 168px; margin-right: 5px"
           />
           <a-input-number
-            v-model="formData.midjourney[index].fixed_quota"
-            :placeholder="$t('model.placeholder.midjourney.fixed_quota')"
+            v-model="formData.midjourney[index].once_ratio"
+            :placeholder="$t('model.placeholder.midjourney.once_ratio')"
             style="width: 168px"
           >
             <template #append> / 次 </template>
@@ -679,6 +814,34 @@
           >
             <icon-minus />
           </a-button>
+        </a-form-item>
+      </a-tab-pane>
+
+      <!-- 一次 -->
+      <a-tab-pane
+        v-if="formData.billing_items.includes('once')"
+        key="once"
+        :title="$t('model.dict.billing_items.once')"
+      >
+        <a-form-item
+          field="once.once_ratio"
+          :label="$t('model.label.once_ratio')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.error.once_ratio.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="formData.once.once_ratio"
+            :placeholder="$t('model.placeholder.once_ratio')"
+            :min="0.000001"
+            :max="9999999999999"
+            class="input"
+          >
+            <template #append> / 次 </template>
+          </a-input-number>
         </a-form-item>
       </a-tab-pane>
     </a-tabs>
@@ -757,6 +920,10 @@
       label: t('model.dict.billing_items.midjourney'),
       value: 'midjourney',
     },
+    {
+      label: t('model.dict.billing_items.once'),
+      value: 'once',
+    },
   ];
 
   const modeOptions = [
@@ -792,6 +959,12 @@
   const lastLength = ref(0);
 
   const handleBillingItemsChange = () => {
+    if (!formData.value.billing_items.includes('once')) {
+      formData.value.billing_methods = formData.value.billing_methods.filter(
+        (item) => item !== 2
+      );
+    }
+
     if (formData.value.billing_items.includes(activeKey.value)) {
       if (formData.value.billing_items.length > lastLength.value) {
         activeKey.value =
@@ -809,6 +982,19 @@
         return;
       }
     }
+  };
+
+  const handleBillingMethodsChange = () => {
+    if (formData.value.billing_methods.includes(2)) {
+      if (!formData.value.billing_items.includes('once')) {
+        formData.value.billing_items.push('once');
+      }
+    } else {
+      formData.value.billing_items = formData.value.billing_items.filter(
+        (item) => item !== 'once'
+      );
+    }
+    handleBillingItemsChange();
   };
 
   const handleTieredTextPricingAdd = (
@@ -862,7 +1048,7 @@
       quality: q,
       width: w,
       height: h,
-      fixed_quota: ref(),
+      once_ratio: ref(),
       is_default: formData.value.image_generation.length === 0 ? '1' : '',
     };
     formData.value.image_generation.push(imageGenerationPricing);
@@ -890,7 +1076,7 @@
   const handleVisionPricingAdd = (m: string) => {
     const visionPricing: VisionPricing = {
       mode: m,
-      fixed_quota: ref(),
+      once_ratio: ref(),
       is_default: formData.value.vision.length === 0 ? '1' : '',
     };
     formData.value.vision.push(visionPricing);
@@ -918,7 +1104,7 @@
   const handleSearchPricingAdd = (s?: string) => {
     const searchPricing: SearchPricing = {
       search_context_size: s,
-      fixed_quota: ref(),
+      once_ratio: ref(),
       is_default: formData.value.search.length === 0 ? '1' : '',
     };
     formData.value.search.push(searchPricing);
@@ -948,7 +1134,7 @@
       name: n,
       action: a,
       path: p,
-      fixed_quota: ref(),
+      once_ratio: ref(),
     };
     formData.value.midjourney.push(midjourneyPricing);
   };
@@ -1063,9 +1249,7 @@
     align-items: center;
   }
 
-  :deep(.arco-checkbox-group .arco-checkbox) {
-    margin-right: 8px;
-    margin-bottom: 8px;
+  .billing-items {
     width: 115px;
   }
 

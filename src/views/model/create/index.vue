@@ -719,6 +719,7 @@
     },
     pricing: {
       billing_rule: 1,
+      billing_methods: [1],
       billing_items: [],
       text: {
         input_ratio: ref(),
@@ -747,6 +748,9 @@
       },
       search: [],
       midjourney: [],
+      once: {
+        once_ratio: ref(),
+      },
     },
     request_data_format: '1',
     response_data_format: '1',
