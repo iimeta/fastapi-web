@@ -13,18 +13,6 @@ export function submitModelInit(data: ModelInit) {
   return axios.post('/api/v1/model/init', data);
 }
 
-export interface ModelBaseInfo {
-  id?: string;
-  provider_id: string;
-  name: string;
-  model: string;
-  type: string;
-  base_url: string;
-  path: string;
-  remark: string;
-  status?: number;
-}
-
 export interface PresetConfig {
   is_support_system_role: boolean;
   system_role_prompt: string;
@@ -136,15 +124,16 @@ export interface FallbackConfig {
   model_name?: string;
 }
 
-export interface ModelAdvanced {
+export interface Model {
+  id?: string;
+  provider_id: string;
+  name: string;
+  model: string;
+  type: string;
+  base_url: string;
+  path: string;
+  remark: string;
   pricing: Pricing;
-  text_quota: TextQuota;
-  image_quota: ImageQuota;
-  audio_quota: AudioQuota;
-  multimodal_quota: MultimodalQuota;
-  realtime_quota: RealtimeQuota;
-  multimodal_audio_quota: MultimodalAudioQuota;
-  midjourney_quotas: MidjourneyQuota[];
   request_data_format: string;
   response_data_format: string;
   is_public: boolean;
@@ -158,11 +147,10 @@ export interface ModelAdvanced {
   forward_config: ForwardConfig;
   is_enable_fallback: boolean;
   fallback_config: FallbackConfig;
+  status?: number;
 }
 
-export type ModelCreate = ModelBaseInfo & ModelAdvanced;
-
-export function submitModelCreate(data: ModelCreate) {
+export function submitModelCreate(data: Model) {
   return axios.post('/api/v1/model/create', data);
 }
 
@@ -295,9 +283,7 @@ export function queryModelDetail(params: ModelDetailParams) {
   });
 }
 
-export type ModelUpdate = ModelBaseInfo & ModelAdvanced;
-
-export function submitModelUpdate(data: ModelUpdate) {
+export function submitModelUpdate(data: Model) {
   return axios.post('/api/v1/model/update', data);
 }
 

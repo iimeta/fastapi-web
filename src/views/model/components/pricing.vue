@@ -23,11 +23,11 @@
     </a-form-item>
     <a-form-item
       field="billing_items"
-      :label="$t('model.label.pricing.billing_items')"
+      :label="$t('model.label.billing_items')"
       :rules="[
         {
           required: true,
-          message: $t('model.error.pricing.billing_items.required'),
+          message: $t('model.error.billing_items.required'),
         },
       ]"
       style="width: 1088px; margin-bottom: 0"
@@ -36,11 +36,17 @@
         <a-checkbox-group
           v-model="formData.billing_items"
           :options="billingItems"
+          @change="handleBillingItemsChange"
         />
       </a-space>
     </a-form-item>
 
-    <a-tabs position="right" type="line" style="width: 1088px">
+    <a-tabs
+      v-model:activeKey="activeKey"
+      position="right"
+      type="line"
+      style="width: 1088px"
+    >
       <!-- 文本 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('text')"
@@ -124,9 +130,10 @@
         :title="$t('model.dict.billing_items.tiered_text')"
       >
         <a-form-item
-          v-for="(tiered_text, index) of formData.tiered_text"
+          v-for="(_, index) of formData.tiered_text"
           :key="index"
           :field="
+            `tiered_text[${index}].mode` &&
             `tiered_text[${index}].input_gt` &&
             `tiered_text[${index}].input_lte` &&
             `tiered_text[${index}].input_ratio` &&
@@ -203,9 +210,10 @@
         :title="$t('model.dict.billing_items.tiered_text_cache')"
       >
         <a-form-item
-          v-for="(tiered_text_cache, index) of formData.tiered_text_cache"
+          v-for="(_, index) of formData.tiered_text_cache"
           :key="index"
           :field="
+            `tiered_text_cache[${index}].mode` &&
             `tiered_text_cache[${index}].input_gt` &&
             `tiered_text_cache[${index}].input_lte` &&
             `tiered_text_cache[${index}].read_ratio` &&
@@ -330,7 +338,7 @@
         :title="$t('model.dict.billing_items.image_generation')"
       >
         <a-form-item
-          v-for="(generation, index) of formData.image_generation"
+          v-for="(_, index) of formData.image_generation.length"
           :key="index"
           :field="
             `image_generation[${index}].quality` &&
@@ -429,7 +437,7 @@
         :title="$t('model.dict.billing_items.vision')"
       >
         <a-form-item
-          v-for="(vision, index) of formData.vision"
+          v-for="(_, index) of formData.vision"
           :key="index"
           :field="`vision[${index}].mode` && `vision[${index}].fixed_quota`"
           :label="`${index + 1}. ` + $t('model.label.vision')"
@@ -560,7 +568,7 @@
         :title="$t('model.dict.billing_items.search')"
       >
         <a-form-item
-          v-for="(search, index) of formData.search"
+          v-for="(_, index) of formData.search"
           :key="index"
           :field="
             `search[${index}].search_context_size` &&
@@ -618,7 +626,7 @@
         :title="$t('model.dict.billing_items.midjourney')"
       >
         <a-form-item
-          v-for="(midjourney, index) of formData.midjourney"
+          v-for="(_, index) of formData.midjourney"
           :key="index"
           :field="
             `midjourney[${index}].name` &&
@@ -779,6 +787,29 @@
   };
 
   defineExpose({ validate });
+
+  const activeKey = ref('text');
+  const lastLength = ref(0);
+
+  const handleBillingItemsChange = () => {
+    if (formData.value.billing_items.includes(activeKey.value)) {
+      if (formData.value.billing_items.length > lastLength.value) {
+        activeKey.value =
+          formData.value.billing_items[formData.value.billing_items.length - 1];
+      }
+      lastLength.value = formData.value.billing_items.length;
+      return;
+    }
+
+    lastLength.value = formData.value.billing_items.length;
+
+    for (let i = 0; i < billingItems.length; i += 1) {
+      if (formData.value.billing_items.includes(billingItems[i].value)) {
+        activeKey.value = billingItems[i].value;
+        return;
+      }
+    }
+  };
 
   const handleTieredTextPricingAdd = (
     m?: string,
