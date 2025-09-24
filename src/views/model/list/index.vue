@@ -406,7 +406,7 @@
         <template #type="{ record }">
           {{ $t(`dict.model_type.${record.type}`) }}
         </template>
-        <template #prompt_ratio="{ record }">
+        <template #pricing="{ record }">
           <span v-if="record.type === 2">
             <span v-if="record.image_quota.billing_method === 2">
               {{ `$${quotaConv(record.image_quota.fixed_quota)}/次` }}
@@ -469,7 +469,7 @@
               v-else
               type="text"
               size="small"
-              @click="viewTextQuota(record.text_quota)"
+              @click="viewPricing(record.pricing)"
             >
               查看
             </a-button>
@@ -748,45 +748,15 @@
         </a-form>
       </a-modal>
 
-      <!-- 文本价格 -->
+      <!-- 定价 -->
       <a-modal
-        v-model:visible="textQuotaVisible"
-        :title="$t('model.columns.text_price')"
+        v-model:visible="pricingVisible"
+        :title="$t('model.columns.pricing')"
         width="600px"
         hide-cancel
         simple
       >
-        <a-table :data="textQuotas" :pagination="false" :bordered="false">
-          <template #columns>
-            <a-table-column
-              title="提问价格"
-              data-index="prompt_ratio"
-              align="center"
-            >
-              <template #cell="{ record }">
-                {{ `$${priceConv(record.prompt_ratio)}/k` }}
-              </template>
-            </a-table-column>
-            <a-table-column
-              title="回答价格"
-              data-index="completion_ratio"
-              align="center"
-            >
-              <template #cell="{ record }">
-                {{ `$${priceConv(record.completion_ratio)}/k` }}
-              </template>
-            </a-table-column>
-            <a-table-column
-              title="缓存价格"
-              data-index="cached_ratio"
-              align="center"
-            >
-              <template #cell="{ record }">
-                {{ `$${priceConv(record.cached_ratio)}/k` }}
-              </template>
-            </a-table-column>
-          </template>
-        </a-table>
+        <PricingDetail v-model="pricing" />
       </a-modal>
 
       <!-- 绘图价格 -->
@@ -1174,6 +1144,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { priceConv, quotaConv } from '@/utils/common';
+  import { Pricing } from '@/api/common';
   import {
     ModelInit,
     submitModelInit,
@@ -1211,6 +1182,7 @@
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryGroupList, GroupList } from '@/api/group';
   import Detail from '../detail/index.vue';
+  import PricingDetail from '../components/pricing_detail.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -1293,9 +1265,9 @@
       tooltip: true,
     },
     {
-      title: t('model.columns.price'),
-      dataIndex: 'prompt_ratio',
-      slotName: 'prompt_ratio',
+      title: t('model.columns.pricing'),
+      dataIndex: 'pricing',
+      slotName: 'pricing',
       align: 'center',
     },
     {
@@ -1803,11 +1775,11 @@
     }
   };
 
-  const textQuotaVisible = ref(false);
-  const textQuotas = ref<TextQuota[]>([]);
-  const viewTextQuota = (params: TextQuota) => {
-    textQuotaVisible.value = true;
-    textQuotas.value[0] = params;
+  const pricingVisible = ref(false);
+  const pricing = ref<Pricing>({ billing_items: [] } as unknown as Pricing);
+  const viewPricing = (params: Pricing) => {
+    pricingVisible.value = true;
+    pricing.value = params;
   };
 
   const imageQuotaVisible = ref(false);

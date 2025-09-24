@@ -43,9 +43,10 @@
         <a-checkbox
           v-model="formData.billing_methods"
           :value="1"
-          style="margin-right: 44px"
+          style="margin-right: 12px"
+          @change="handleBillingMethodsChange"
         >
-          按量
+          按Tokens
         </a-checkbox>
         <a-checkbox
           v-model="formData.billing_methods"
@@ -69,6 +70,7 @@
     >
       <a-space size="small" wrap>
         <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
           v-model="formData.billing_items"
           value="text"
           class="billing-items"
@@ -77,6 +79,7 @@
           {{ t('model.dict.billing_items.text') }}
         </a-checkbox>
         <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
           v-model="formData.billing_items"
           value="text_cache"
           class="billing-items"
@@ -85,46 +88,7 @@
           {{ t('model.dict.billing_items.text_cache') }}
         </a-checkbox>
         <a-checkbox
-          v-model="formData.billing_items"
-          value="tiered_text"
-          class="billing-items"
-          @change="handleBillingItemsChange"
-        >
-          {{ t('model.dict.billing_items.tiered_text') }}
-        </a-checkbox>
-        <a-checkbox
-          v-model="formData.billing_items"
-          value="tiered_text_cache"
-          class="billing-items"
-          @change="handleBillingItemsChange"
-        >
-          {{ t('model.dict.billing_items.tiered_text_cache') }}
-        </a-checkbox>
-        <a-checkbox
-          v-model="formData.billing_items"
-          value="image"
-          class="billing-items"
-          @change="handleBillingItemsChange"
-        >
-          {{ t('model.dict.billing_items.image') }}
-        </a-checkbox>
-        <a-checkbox
-          v-model="formData.billing_items"
-          value="image_generation"
-          class="billing-items"
-          @change="handleBillingItemsChange"
-        >
-          {{ t('model.dict.billing_items.image_generation') }}
-        </a-checkbox>
-        <a-checkbox
-          v-model="formData.billing_items"
-          value="image_cache"
-          class="billing-items"
-          @change="handleBillingItemsChange"
-        >
-          {{ t('model.dict.billing_items.image_cache') }}
-        </a-checkbox>
-        <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
           v-model="formData.billing_items"
           value="audio"
           class="billing-items"
@@ -133,6 +97,7 @@
           {{ t('model.dict.billing_items.audio') }}
         </a-checkbox>
         <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
           v-model="formData.billing_items"
           value="audio_cache"
           class="billing-items"
@@ -141,6 +106,52 @@
           {{ t('model.dict.billing_items.audio_cache') }}
         </a-checkbox>
         <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
+          v-model="formData.billing_items"
+          value="tiered_text"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.tiered_text') }}
+        </a-checkbox>
+        <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
+          v-model="formData.billing_items"
+          value="tiered_text_cache"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.tiered_text_cache') }}
+        </a-checkbox>
+        <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
+          v-model="formData.billing_items"
+          value="image"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.image') }}
+        </a-checkbox>
+        <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
+          v-model="formData.billing_items"
+          value="image_generation"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.image_generation') }}
+        </a-checkbox>
+        <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
+          v-model="formData.billing_items"
+          value="image_cache"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.image_cache') }}
+        </a-checkbox>
+        <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
           v-model="formData.billing_items"
           value="vision"
           class="billing-items"
@@ -149,6 +160,7 @@
           {{ t('model.dict.billing_items.vision') }}
         </a-checkbox>
         <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
           v-model="formData.billing_items"
           value="search"
           class="billing-items"
@@ -157,6 +169,7 @@
           {{ t('model.dict.billing_items.search') }}
         </a-checkbox>
         <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
           v-model="formData.billing_items"
           value="midjourney"
           class="billing-items"
@@ -169,6 +182,9 @@
           v-model="formData.billing_items"
           value="once"
           class="billing-items"
+          :style="{
+            marginTop: formData.billing_methods.includes(1) ? '0' : '8px',
+          }"
           @change="handleBillingItemsChange"
         >
           {{ t('model.dict.billing_items.once') }}
@@ -248,6 +264,82 @@
         >
           <a-input-number
             v-model="formData.text_cache.read_ratio"
+            :placeholder="$t('model.placeholder.read_ratio')"
+            :min="0.000001"
+            :max="9999999999999"
+            class="input"
+          >
+            <template #append> / M </template>
+          </a-input-number>
+        </a-form-item>
+      </a-tab-pane>
+
+      <!-- 音频 -->
+      <a-tab-pane
+        v-if="formData.billing_items.includes('audio')"
+        key="audio"
+        :title="$t('model.dict.billing_items.audio')"
+      >
+        <a-form-item
+          field="audio.input_ratio"
+          :label="$t('model.label.input_ratio')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.error.input_ratio.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="formData.audio.input_ratio"
+            :placeholder="$t('model.placeholder.input_ratio')"
+            :min="0.000001"
+            :max="9999999999999"
+            class="input"
+          >
+            <template #append> / M </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          field="audio.output_ratio"
+          :label="$t('model.label.output_ratio')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.error.output_ratio.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="formData.audio.output_ratio"
+            :placeholder="$t('model.placeholder.output_ratio')"
+            :min="0.000001"
+            :max="9999999999999"
+            class="input"
+          >
+            <template #append> / min </template>
+          </a-input-number>
+        </a-form-item>
+      </a-tab-pane>
+
+      <!-- 音频缓存 -->
+      <a-tab-pane
+        v-if="formData.billing_items.includes('audio_cache')"
+        key="audio_cache"
+        :title="$t('model.dict.billing_items.audio_cache')"
+      >
+        <a-form-item
+          field="audio_cache.read_ratio"
+          :label="$t('model.label.read_ratio')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.error.read_ratio.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="formData.audio_cache.read_ratio"
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0.000001"
             :max="9999999999999"
@@ -620,82 +712,6 @@
         </a-form-item>
       </a-tab-pane>
 
-      <!-- 音频 -->
-      <a-tab-pane
-        v-if="formData.billing_items.includes('audio')"
-        key="audio"
-        :title="$t('model.dict.billing_items.audio')"
-      >
-        <a-form-item
-          field="audio.input_ratio"
-          :label="$t('model.label.input_ratio')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.error.input_ratio.required'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="formData.audio.input_ratio"
-            :placeholder="$t('model.placeholder.input_ratio')"
-            :min="0.000001"
-            :max="9999999999999"
-            class="input"
-          >
-            <template #append> / M </template>
-          </a-input-number>
-        </a-form-item>
-        <a-form-item
-          field="audio.output_ratio"
-          :label="$t('model.label.output_ratio')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.error.output_ratio.required'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="formData.audio.output_ratio"
-            :placeholder="$t('model.placeholder.output_ratio')"
-            :min="0.000001"
-            :max="9999999999999"
-            class="input"
-          >
-            <template #append> / min </template>
-          </a-input-number>
-        </a-form-item>
-      </a-tab-pane>
-
-      <!-- 音频缓存 -->
-      <a-tab-pane
-        v-if="formData.billing_items.includes('audio_cache')"
-        key="audio_cache"
-        :title="$t('model.dict.billing_items.audio_cache')"
-      >
-        <a-form-item
-          field="audio_cache.read_ratio"
-          :label="$t('model.label.read_ratio')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.error.read_ratio.required'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="formData.audio_cache.read_ratio"
-            :placeholder="$t('model.placeholder.read_ratio')"
-            :min="0.000001"
-            :max="9999999999999"
-            class="input"
-          >
-            <template #append> / M </template>
-          </a-input-number>
-        </a-form-item>
-      </a-tab-pane>
-
       <!-- 搜索 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('search')"
@@ -881,6 +897,14 @@
       value: 'text_cache',
     },
     {
+      label: t('model.dict.billing_items.audio'),
+      value: 'audio',
+    },
+    {
+      label: t('model.dict.billing_items.audio_cache'),
+      value: 'audio_cache',
+    },
+    {
       label: t('model.dict.billing_items.tiered_text'),
       value: 'tiered_text',
     },
@@ -903,14 +927,6 @@
     {
       label: t('model.dict.billing_items.vision'),
       value: 'vision',
-    },
-    {
-      label: t('model.dict.billing_items.audio'),
-      value: 'audio',
-    },
-    {
-      label: t('model.dict.billing_items.audio_cache'),
-      value: 'audio_cache',
     },
     {
       label: t('model.dict.billing_items.search'),
@@ -955,7 +971,7 @@
 
   defineExpose({ validate });
 
-  const activeKey = ref('text');
+  const activeKey = ref();
   const lastLength = ref(0);
 
   const handleBillingItemsChange = () => {
@@ -994,6 +1010,13 @@
         (item) => item !== 'once'
       );
     }
+
+    if (!formData.value.billing_methods.includes(1)) {
+      formData.value.billing_items = formData.value.billing_items.filter(
+        (item) => item === 'once'
+      );
+    }
+
     handleBillingItemsChange();
   };
 

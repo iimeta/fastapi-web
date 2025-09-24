@@ -163,6 +163,7 @@ export interface ModelPage {
   type: number;
   groups: string[];
   group_names: string[];
+  pricing: Pricing;
   text_quota: TextQuota;
   image_quota: ImageQuota;
   audio_quota: AudioQuota;
