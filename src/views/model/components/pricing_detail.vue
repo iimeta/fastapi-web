@@ -9,12 +9,14 @@
     style="margin-bottom: 15px"
   >
     <template #input_ratio="{ record }">
-      ${{ record.input_ratio }} / M
+      ${{ record.input_ratio || '0.00' }} / M
     </template>
     <template #output_ratio="{ record }">
-      ${{ record.output_ratio }} / M
+      ${{ record.output_ratio || '0.00' }} / M
     </template>
-    <template #read_ratio="{ record }"> ${{ record.read_ratio }} / M </template>
+    <template #read_ratio="{ record }">
+      ${{ record.read_ratio || '0.00' }} / M
+    </template>
   </a-table>
 
   <!-- 文本缓存 -->
@@ -29,7 +31,9 @@
     :bordered="false"
     style="margin-bottom: 15px"
   >
-    <template #read_ratio="{ record }"> ${{ record.read_ratio }} / M </template>
+    <template #read_ratio="{ record }">
+      ${{ record.read_ratio || '0.00' }} / M
+    </template>
   </a-table>
 
   <!-- 音频 -->
@@ -42,12 +46,14 @@
     style="margin-bottom: 15px"
   >
     <template #input_ratio="{ record }">
-      ${{ record.input_ratio }} / M
+      ${{ record.input_ratio || '0.00' }} / M
     </template>
     <template #output_ratio="{ record }">
-      ${{ record.output_ratio }} / M
+      ${{ record.output_ratio || '0.00' }} / min
     </template>
-    <template #read_ratio="{ record }"> ${{ record.read_ratio }} / M </template>
+    <template #read_ratio="{ record }">
+      ${{ record.read_ratio || '0.00' }} / M
+    </template>
   </a-table>
 
   <!-- 音频缓存 -->
@@ -62,7 +68,9 @@
     :bordered="false"
     style="margin-bottom: 15px"
   >
-    <template #read_ratio="{ record }"> ${{ record.read_ratio }} / M </template>
+    <template #read_ratio="{ record }">
+      ${{ record.read_ratio || '0.00' }} / M
+    </template>
   </a-table>
 
   <!-- 阶梯文本 -->
@@ -81,10 +89,10 @@
       {{ record.input_gt }}k - {{ record.input_lte }}k
     </template>
     <template #input_ratio="{ record }">
-      ${{ record.input_ratio }} / M
+      ${{ record.input_ratio || '0.00' }} / M
     </template>
     <template #output_ratio="{ record }">
-      ${{ record.output_ratio }} / M
+      ${{ record.output_ratio || '0.00' }} / M
     </template>
   </a-table>
 
@@ -103,9 +111,11 @@
     <template #input_gt="{ record }">
       {{ record.input_gt }}k - {{ record.input_lte }}k
     </template>
-    <template #read_ratio="{ record }"> ${{ record.read_ratio }} / M </template>
+    <template #read_ratio="{ record }">
+      ${{ record.read_ratio || '0.00' }} / M
+    </template>
     <template #write_ratio="{ record }">
-      ${{ record.write_ratio }} / M
+      ${{ record.write_ratio || '0.00' }} / M
     </template>
   </a-table>
 
@@ -119,12 +129,14 @@
     style="margin-bottom: 15px"
   >
     <template #input_ratio="{ record }">
-      ${{ record.input_ratio }} / M
+      ${{ record.input_ratio || '0.00' }} / M
     </template>
     <template #output_ratio="{ record }">
-      ${{ record.output_ratio }} / M
+      ${{ record.output_ratio || '0.00' }} / M
     </template>
-    <template #read_ratio="{ record }"> ${{ record.read_ratio }} / M </template>
+    <template #read_ratio="{ record }">
+      ${{ record.read_ratio || '0.00' }} / M
+    </template>
   </a-table>
 
   <!-- 图像生成 -->
@@ -140,7 +152,7 @@
       {{ record.width }} × {{ record.height }}
     </template>
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio }} / 张
+      ${{ record.once_ratio || '0.00' }} / 张
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? '是' : '-' }}
@@ -159,7 +171,9 @@
     :bordered="false"
     style="margin-bottom: 15px"
   >
-    <template #read_ratio="{ record }"> ${{ record.read_ratio }} / M </template>
+    <template #read_ratio="{ record }">
+      ${{ record.read_ratio || '0.00' }} / M
+    </template>
   </a-table>
 
   <!-- 识图 -->
@@ -172,7 +186,7 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio }} / 张
+      ${{ record.once_ratio || '0.00' }} / 张
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? '是' : '-' }}
@@ -189,7 +203,7 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio }} / 次
+      ${{ record.once_ratio || '0.00' }} / 次
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? '是' : '-' }}
@@ -206,7 +220,7 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio }} / 次
+      ${{ record.once_ratio || '0.00' }} / 次
     </template>
   </a-table>
 
@@ -220,7 +234,7 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio }} / 次
+      ${{ record.once_ratio || '0.00' }} / 次
     </template>
   </a-table>
 </template>
