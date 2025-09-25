@@ -722,7 +722,7 @@
           v-for="(_, index) of formData.search"
           :key="index"
           :field="
-            `search[${index}].search_context_size` &&
+            `search[${index}].context_size` &&
             `search[${index}].once_ratio`
           "
           :label="`${index + 1}. ` + $t('model.label.search')"
@@ -734,8 +734,8 @@
           ]"
         >
           <a-input
-            v-model="formData.search[index].search_context_size"
-            :placeholder="$t('model.placeholder.search.search_context_size')"
+            v-model="formData.search[index].context_size"
+            :placeholder="$t('model.placeholder.search.context_size')"
             style="width: 310px; margin-right: 5px"
           />
           <a-input-number
@@ -957,10 +957,22 @@
     },
   ];
 
+  const activeKey = ref();
+  const lastLength = ref(0);
+
   watch(
     () => props.modelValue,
     (val) => {
       formData.value = val;
+      if (!activeKey.value) {
+        lastLength.value = formData.value.billing_items.length;
+        for (let i = 0; i < billingItems.length; i += 1) {
+          if (formData.value.billing_items.includes(billingItems[i].value)) {
+            activeKey.value = billingItems[i].value;
+            break;
+          }
+        }
+      }
     },
     { deep: true, immediate: true }
   );
@@ -970,9 +982,6 @@
   };
 
   defineExpose({ validate });
-
-  const activeKey = ref();
-  const lastLength = ref(0);
 
   const handleBillingItemsChange = () => {
     if (!formData.value.billing_items.includes('once')) {
@@ -1124,9 +1133,9 @@
     }
   };
 
-  const handleSearchPricingAdd = (s?: string) => {
+  const handleSearchPricingAdd = (c?: string) => {
     const searchPricing: SearchPricing = {
-      search_context_size: s,
+      context_size: c,
       once_ratio: ref(),
       is_default: formData.value.search.length === 0 ? '1' : '',
     };
@@ -1197,9 +1206,9 @@
     handleVisionPricingAdd(modes[i]);
   }
 
-  const searchContextSizes = ['medium', 'high', 'low'];
-  for (let i = 0; i < searchContextSizes.length; i += 1) {
-    handleSearchPricingAdd(searchContextSizes[i]);
+  const contextSizes = ['medium', 'high', 'low'];
+  for (let i = 0; i < contextSizes.length; i += 1) {
+    handleSearchPricingAdd(contextSizes[i]);
   }
 
   const names = [

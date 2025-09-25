@@ -4,6 +4,7 @@ export interface TextPricing {
   mode?: string;
   input_gt?: any;
   input_lte?: any;
+  read_ratio?: any;
 }
 
 export interface CachePricing {
@@ -17,6 +18,7 @@ export interface CachePricing {
 export interface ImagePricing {
   input_ratio: any;
   output_ratio: any;
+  read_ratio?: any;
 }
 
 export interface ImageGenerationPricing {
@@ -36,10 +38,11 @@ export interface VisionPricing {
 export interface AudioPricing {
   input_ratio: any;
   output_ratio: any;
+  read_ratio?: any;
 }
 
 export interface SearchPricing {
-  search_context_size?: string;
+  context_size?: string;
   once_ratio: any;
   is_default: string;
 }
