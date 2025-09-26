@@ -20,3 +20,9 @@ export function quotaConv4(quota: number) {
 export function ratioConv(price: number) {
   return price * 500;
 }
+
+export function parserPrice(price: string) {
+  // 使用正则匹配最多6位小数
+  const match = price.match(/^(-?\d*)(\.\d{0,6})?/);
+  return match ? match[0] : price;
+}
