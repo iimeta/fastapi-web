@@ -217,10 +217,11 @@
           <a-input-number
             v-model="formData.text.input_ratio"
             :placeholder="$t('model.placeholder.input_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
-            :step="0.000001"
             class="input"
+            @blur="formatter"
           >
             <template #append> / M </template>
           </a-input-number>
@@ -238,6 +239,7 @@
           <a-input-number
             v-model="formData.text.output_ratio"
             :placeholder="$t('model.placeholder.output_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -267,6 +269,7 @@
           <a-input-number
             v-model="formData.text_cache.read_ratio"
             :placeholder="$t('model.placeholder.read_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -296,6 +299,7 @@
           <a-input-number
             v-model="formData.audio.input_ratio"
             :placeholder="$t('model.placeholder.input_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -317,6 +321,7 @@
           <a-input-number
             v-model="formData.audio.output_ratio"
             :placeholder="$t('model.placeholder.output_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -346,6 +351,7 @@
           <a-input-number
             v-model="formData.audio_cache.read_ratio"
             :placeholder="$t('model.placeholder.read_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -389,9 +395,9 @@
           <a-input-number
             v-model="formData.tiered_text[index].input_gt"
             :placeholder="$t('model.placeholder.tiered_input_gt')"
+            :precision="0"
             :min="0"
             :max="999999"
-            :precision="0"
             :step="1"
             style="width: 128px; margin-right: 5px"
           >
@@ -400,9 +406,9 @@
           <a-input-number
             v-model="formData.tiered_text[index].input_lte"
             :placeholder="$t('model.placeholder.tiered_input_lte')"
+            :precision="0"
             :min="0"
             :max="999999"
-            :precision="0"
             :step="1"
             style="width: 138px; margin-right: 5px"
           >
@@ -411,6 +417,7 @@
           <a-input-number
             v-model="formData.tiered_text[index].input_ratio"
             :placeholder="$t('model.placeholder.tiered_input_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -421,6 +428,7 @@
           <a-input-number
             v-model="formData.tiered_text[index].output_ratio"
             :placeholder="$t('model.placeholder.tiered_output_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -479,9 +487,9 @@
           <a-input-number
             v-model="formData.tiered_text_cache[index].input_gt"
             :placeholder="$t('model.placeholder.tiered_input_gt')"
+            :precision="0"
             :min="0"
             :max="999999"
-            :precision="0"
             :step="1"
             style="width: 128px; margin-right: 5px"
           >
@@ -490,9 +498,9 @@
           <a-input-number
             v-model="formData.tiered_text_cache[index].input_lte"
             :placeholder="$t('model.placeholder.tiered_input_lte')"
+            :precision="0"
             :min="0"
             :max="999999"
-            :precision="0"
             :step="1"
             style="width: 138px; margin-right: 5px"
           >
@@ -501,6 +509,7 @@
           <a-input-number
             v-model="formData.tiered_text_cache[index].read_ratio"
             :placeholder="$t('model.placeholder.tiered_cache_read_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -511,6 +520,7 @@
           <a-input-number
             v-model="formData.tiered_text_cache[index].write_ratio"
             :placeholder="$t('model.placeholder.tiered_cache_write_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -555,6 +565,7 @@
           <a-input-number
             v-model="formData.image.input_ratio"
             :placeholder="$t('model.placeholder.input_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -576,6 +587,7 @@
           <a-input-number
             v-model="formData.image.output_ratio"
             :placeholder="$t('model.placeholder.output_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -617,9 +629,9 @@
           <a-input-number
             v-model="formData.image_generation[index].width"
             :placeholder="$t('model.placeholder.image_generation.width')"
+            :precision="0"
             :min="1"
             :max="999999"
-            :precision="0"
             :step="1"
             style="width: 145px; margin-right: 5px"
           />
@@ -627,15 +639,16 @@
           <a-input-number
             v-model="formData.image_generation[index].height"
             :placeholder="$t('model.placeholder.image_generation.height')"
+            :precision="0"
             :min="1"
             :max="999999"
-            :precision="0"
             :step="1"
             style="width: 145px; margin-left: 5px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.image_generation[index].once_ratio"
             :placeholder="$t('model.placeholder.image_generation.once_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -687,6 +700,7 @@
           <a-input-number
             v-model="formData.image_cache.read_ratio"
             :placeholder="$t('model.placeholder.read_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -723,6 +737,7 @@
           <a-input-number
             v-model="formData.vision[index].once_ratio"
             :placeholder="$t('model.placeholder.vision.once_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -783,6 +798,7 @@
           <a-input-number
             v-model="formData.search[index].once_ratio"
             :placeholder="$t('model.placeholder.search.once_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -856,6 +872,7 @@
           <a-input-number
             v-model="formData.midjourney[index].once_ratio"
             :placeholder="$t('model.placeholder.midjourney.once_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -900,6 +917,7 @@
           <a-input-number
             v-model="formData.once.once_ratio"
             :placeholder="$t('model.placeholder.once_ratio')"
+            :precision="0"
             :min="0"
             :max="9999999999999"
             :step="0.000001"
@@ -1031,6 +1049,12 @@
   };
 
   defineExpose({ validate });
+
+  const formatter = () => {
+    formData.value.text.input_ratio = parseFloat(
+      formData.value.text.input_ratio.toFixed(6)
+    );
+  };
 
   const handleBillingItemsChange = () => {
     if (!formData.value.billing_items.includes('once')) {

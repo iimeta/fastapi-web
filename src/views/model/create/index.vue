@@ -624,7 +624,6 @@
   import useLoading from '@/hooks/loading';
   import { useRouter } from 'vue-router';
   import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { quotaConv, ratioConv } from '@/utils/common';
   import {
     Model,
     submitModelCreate,
