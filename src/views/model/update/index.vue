@@ -826,28 +826,34 @@
       formData.value.status = data.status;
       formData.value.pricing = data.pricing;
 
-      for (
-        let i = 0;
-        i < formData.value.pricing.image_generation.length;
-        i += 1
-      ) {
-        if (formData.value.pricing.image_generation[i].is_default) {
-          formData.value.pricing.image_generation[i].is_default = '1';
-          break;
+      if (formData.value.pricing.image_generation) {
+        for (
+          let i = 0;
+          i < formData.value.pricing.image_generation.length;
+          i += 1
+        ) {
+          if (formData.value.pricing.image_generation[i].is_default) {
+            formData.value.pricing.image_generation[i].is_default = '1';
+            break;
+          }
         }
       }
 
-      for (let i = 0; i < formData.value.pricing.vision.length; i += 1) {
-        if (formData.value.pricing.vision[i].is_default) {
-          formData.value.pricing.vision[i].is_default = '1';
-          break;
+      if (formData.value.pricing.vision) {
+        for (let i = 0; i < formData.value.pricing.vision.length; i += 1) {
+          if (formData.value.pricing.vision[i].is_default) {
+            formData.value.pricing.vision[i].is_default = '1';
+            break;
+          }
         }
       }
 
-      for (let i = 0; i < formData.value.pricing.search.length; i += 1) {
-        if (formData.value.pricing.search[i].is_default) {
-          formData.value.pricing.search[i].is_default = '1';
-          break;
+      if (formData.value.pricing.search) {
+        for (let i = 0; i < formData.value.pricing.search.length; i += 1) {
+          if (formData.value.pricing.search[i].is_default) {
+            formData.value.pricing.search[i].is_default = '1';
+            break;
+          }
         }
       }
 
