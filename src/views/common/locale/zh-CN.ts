@@ -122,6 +122,7 @@ export default {
   'dict.model_type.100': '多模态',
   'dict.model_type.101': '多模态实时',
   'dict.model_type.102': '多模态语音',
+  'dict.model_type.103': '多模态向量化',
   'dict.data_format.1': '统一格式',
   'dict.data_format.2': '官方格式',
   'dict.billing_method.1': '倍率',

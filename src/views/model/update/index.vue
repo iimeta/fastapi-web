@@ -108,6 +108,7 @@
                 <a-option value="100">{{ $t('dict.model_type.100') }}</a-option>
                 <a-option value="101">{{ $t('dict.model_type.101') }}</a-option>
                 <a-option value="102">{{ $t('dict.model_type.102') }}</a-option>
+                <a-option value="103">{{ $t('dict.model_type.103') }}</a-option>
               </a-select>
             </a-form-item>
             <a-form-item field="base_url" :label="$t('model.label.base_url')">
