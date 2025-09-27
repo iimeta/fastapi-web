@@ -104,6 +104,7 @@
                 <a-option value="4">{{ $t('dict.model_type.4') }}</a-option>
                 <a-option value="5">{{ $t('dict.model_type.5') }}</a-option>
                 <a-option value="6">{{ $t('dict.model_type.6') }}</a-option>
+                <a-option value="7">{{ $t('dict.model_type.7') }}</a-option>
                 <a-option value="100">{{ $t('dict.model_type.100') }}</a-option>
                 <a-option value="101">{{ $t('dict.model_type.101') }}</a-option>
                 <a-option value="102">{{ $t('dict.model_type.102') }}</a-option>
@@ -199,7 +200,7 @@
               <a-select
                 v-model="formData.groups"
                 :placeholder="$t('model.placeholder.groups')"
-                :max-tag-count="3"
+                :max-tag-count="5"
                 :scrollbar="false"
                 multiple
                 allow-search
@@ -316,7 +317,7 @@
               <a-select
                 v-model="formData.model_agents"
                 :placeholder="$t('model.placeholder.modelAgents')"
-                :max-tag-count="3"
+                :max-tag-count="5"
                 :scrollbar="false"
                 multiple
                 allow-search

@@ -400,6 +400,10 @@
       value: 6,
     },
     {
+      label: t('dict.model_type.7'),
+      value: 7,
+    },
+    {
       label: t('dict.model_type.100'),
       value: 100,
     },

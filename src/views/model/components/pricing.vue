@@ -222,6 +222,7 @@
             :parser="parserPrice"
             class="input"
           >
+            <template #prefix> $ </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -243,6 +244,7 @@
             :parser="parserPrice"
             class="input"
           >
+            <template #prefix> $ </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -272,6 +274,7 @@
             :parser="parserPrice"
             class="input"
           >
+            <template #prefix> $ </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -301,6 +304,7 @@
             :parser="parserPrice"
             class="input"
           >
+            <template #prefix> $ </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -322,6 +326,7 @@
             :parser="parserPrice"
             class="input"
           >
+            <template #prefix> $ </template>
             <template #append> / min </template>
           </a-input-number>
         </a-form-item>
@@ -351,6 +356,7 @@
             :parser="parserPrice"
             class="input"
           >
+            <template #prefix> $ </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -393,10 +399,10 @@
             :min="0"
             :max="999999"
             :step="1"
-            style="width: 128px; margin-right: 5px"
+            style="width: 87px; margin-right: 5px"
           >
-            <template #append> / k </template>
           </a-input-number>
+          -
           <a-input-number
             v-model="formData.tiered_text[index].input_lte"
             :placeholder="$t('model.placeholder.tiered_input_lte')"
@@ -404,7 +410,7 @@
             :min="0"
             :max="999999"
             :step="1"
-            style="width: 138px; margin-right: 5px"
+            style="width: 138px; margin-left: 5px; margin-right: 5px"
           >
             <template #append> / k </template>
           </a-input-number>
@@ -414,8 +420,9 @@
             :min="0"
             :max="9999999999999"
             :parser="parserPrice"
-            style="width: 150px; margin-right: 5px"
+            style="width: 165px; margin-right: 5px"
           >
+            <template #prefix> $ </template>
             <template #append> / M </template>
           </a-input-number>
           <a-input-number
@@ -424,8 +431,9 @@
             :min="0"
             :max="9999999999999"
             :parser="parserPrice"
-            style="width: 150px"
+            style="width: 165px"
           >
+            <template #prefix> $ </template>
             <template #append> / M </template>
           </a-input-number>
           <a-button
@@ -483,10 +491,10 @@
             :min="0"
             :max="999999"
             :step="1"
-            style="width: 128px; margin-right: 5px"
+            style="width: 87px; margin-right: 5px"
           >
-            <template #append> / k </template>
           </a-input-number>
+          -
           <a-input-number
             v-model="formData.tiered_text_cache[index].input_lte"
             :placeholder="$t('model.placeholder.tiered_input_lte')"
@@ -494,7 +502,7 @@
             :min="0"
             :max="999999"
             :step="1"
-            style="width: 138px; margin-right: 5px"
+            style="width: 138px; margin-left: 5px; margin-right: 5px"
           >
             <template #append> / k </template>
           </a-input-number>
@@ -504,8 +512,9 @@
             :min="0"
             :max="9999999999999"
             :parser="parserPrice"
-            style="width: 150px; margin-right: 5px"
+            style="width: 165px; margin-right: 5px"
           >
+            <template #prefix> $ </template>
             <template #append> / M </template>
           </a-input-number>
           <a-input-number
@@ -514,8 +523,9 @@
             :min="0"
             :max="9999999999999"
             :parser="parserPrice"
-            style="width: 150px"
+            style="width: 165px"
           >
+            <template #prefix> $ </template>
             <template #append> / M </template>
           </a-input-number>
           <a-button
@@ -560,6 +570,7 @@
             :parser="parserPrice"
             class="input"
           >
+            <template #prefix> $ </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -581,6 +592,7 @@
             :parser="parserPrice"
             class="input"
           >
+            <template #prefix> $ </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -621,7 +633,7 @@
             :min="1"
             :max="999999"
             :step="1"
-            style="width: 145px; margin-right: 5px"
+            style="width: 135px; margin-right: 5px"
           />
           ×
           <a-input-number
@@ -631,7 +643,7 @@
             :min="1"
             :max="999999"
             :step="1"
-            style="width: 145px; margin-left: 5px; margin-right: 5px"
+            style="width: 135px; margin-left: 5px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.image_generation[index].once_ratio"
@@ -639,8 +651,9 @@
             :min="0"
             :max="9999999999999"
             :parser="parserPrice"
-            style="width: 168px; margin-right: 5px"
+            style="width: 188px; margin-right: 5px"
           >
+            <template #prefix> $ </template>
             <template #append> / 张 </template>
           </a-input-number>
           <a-radio
@@ -692,6 +705,7 @@
             :parser="parserPrice"
             class="input"
           >
+            <template #prefix> $ </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -728,6 +742,7 @@
             :parser="parserPrice"
             style="width: 309px; margin-right: 5px"
           >
+            <template #prefix> $ </template>
             <template #append> / 张 </template>
           </a-input-number>
           <a-radio
@@ -788,6 +803,7 @@
             :parser="parserPrice"
             style="width: 309px; margin-right: 5px"
           >
+            <template #prefix> $ </template>
             <template #append> / 次 </template>
           </a-input-number>
           <a-radio
@@ -841,12 +857,12 @@
           <a-input
             v-model="formData.midjourney[index].name"
             :placeholder="$t('model.placeholder.midjourney.name')"
-            style="width: 165px; margin-right: 5px"
+            style="width: 155px; margin-right: 5px"
           />
           <a-input
             v-model="formData.midjourney[index].action"
             :placeholder="$t('model.placeholder.midjourney.action')"
-            style="width: 165px; margin-right: 5px"
+            style="width: 155px; margin-right: 5px"
           />
           <a-input
             v-model="formData.midjourney[index].path"
@@ -859,8 +875,9 @@
             :min="0"
             :max="9999999999999"
             :parser="parserPrice"
-            style="width: 168px"
+            style="width: 188px"
           >
+            <template #prefix> $ </template>
             <template #append> / 次 </template>
           </a-input-number>
           <a-button
@@ -905,6 +922,7 @@
             :parser="parserPrice"
             class="input"
           >
+            <template #prefix> $ </template>
             <template #append> / 次 </template>
           </a-input-number>
         </a-form-item>
