@@ -388,7 +388,7 @@
     </a-descriptions>
 
     <!-- 定价 -->
-    <PricingDetail v-model="pricing" />
+    <PricingDetail v-model="pricing" :model-type="modelType" />
   </div>
 </template>
 
@@ -415,6 +415,7 @@
   });
 
   const pricing = ref<Pricing>({ billing_items: [] } as unknown as Pricing);
+  const modelType = ref(0);
 
   const getModelDetail = async (
     params: ModelDetailParams = { id: props.id }
@@ -424,6 +425,7 @@
       const { data } = await queryModelDetail(params);
       currentData.value = data;
       pricing.value = data.pricing;
+      modelType.value = data.type;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {

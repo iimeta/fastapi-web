@@ -327,7 +327,9 @@
             class="input"
           >
             <template #prefix> $ </template>
-            <template #append> / min </template>
+            <template #append>
+              {{ modelType === '5' || modelType === '6' ? '/ min' : '/ M' }}
+            </template>
           </a-input-number>
         </a-form-item>
       </a-tab-pane>
@@ -373,8 +375,8 @@
           :key="index"
           :field="
             `tiered_text[${index}].mode` &&
-            `tiered_text[${index}].input_gt` &&
-            `tiered_text[${index}].input_lte` &&
+            `tiered_text[${index}].gt` &&
+            `tiered_text[${index}].lte` &&
             `tiered_text[${index}].input_ratio` &&
             `tiered_text[${index}].output_ratio`
           "
@@ -393,8 +395,8 @@
             style="width: 95px; margin-right: 5px"
           />
           <a-input-number
-            v-model="formData.tiered_text[index].input_gt"
-            :placeholder="$t('model.placeholder.tiered_input_gt')"
+            v-model="formData.tiered_text[index].gt"
+            :placeholder="$t('model.placeholder.tiered_gt')"
             :precision="0"
             :min="0"
             :max="999999"
@@ -404,8 +406,8 @@
           </a-input-number>
           -
           <a-input-number
-            v-model="formData.tiered_text[index].input_lte"
-            :placeholder="$t('model.placeholder.tiered_input_lte')"
+            v-model="formData.tiered_text[index].lte"
+            :placeholder="$t('model.placeholder.tiered_lte')"
             :precision="0"
             :min="0"
             :max="999999"
@@ -465,8 +467,8 @@
           :key="index"
           :field="
             `tiered_text_cache[${index}].mode` &&
-            `tiered_text_cache[${index}].input_gt` &&
-            `tiered_text_cache[${index}].input_lte` &&
+            `tiered_text_cache[${index}].gt` &&
+            `tiered_text_cache[${index}].lte` &&
             `tiered_text_cache[${index}].read_ratio` &&
             `tiered_text_cache[${index}].write_ratio`
           "
@@ -485,8 +487,8 @@
             style="width: 95px; margin-right: 5px"
           />
           <a-input-number
-            v-model="formData.tiered_text_cache[index].input_gt"
-            :placeholder="$t('model.placeholder.tiered_input_gt')"
+            v-model="formData.tiered_text_cache[index].gt"
+            :placeholder="$t('model.placeholder.tiered_gt')"
             :precision="0"
             :min="0"
             :max="999999"
@@ -496,8 +498,8 @@
           </a-input-number>
           -
           <a-input-number
-            v-model="formData.tiered_text_cache[index].input_lte"
-            :placeholder="$t('model.placeholder.tiered_input_lte')"
+            v-model="formData.tiered_text_cache[index].lte"
+            :placeholder="$t('model.placeholder.tiered_lte')"
             :precision="0"
             :min="0"
             :max="999999"
@@ -950,6 +952,7 @@
 
   const props = defineProps<{
     modelValue: Pricing;
+    modelType: string;
   }>();
 
   const formRef = ref<FormInstance>();
@@ -1051,7 +1054,314 @@
 
   defineExpose({ validate });
 
+  const handleTieredTextPricingAdd = (m?: string, g?: number, l?: number) => {
+    const textPricing: TextPricing = {
+      mode: m,
+      gt: g,
+      lte: l,
+      input_ratio: ref(),
+      output_ratio: ref(),
+    };
+    formData.value.tiered_text.push(textPricing);
+  };
+
+  const handleTieredTextPricingDel = (index: number) => {
+    if (formData.value.tiered_text.length > 1) {
+      formData.value.tiered_text.splice(index, 1);
+    }
+  };
+
+  const initTieredTextPricing = () => {
+    const gt = [0, 0, 128, 200, 256];
+    const lte = [128, 200, 256, 1024, 1024];
+    for (let i = 0; i < gt.length; i += 1) {
+      handleTieredTextPricingAdd('all', gt[i], lte[i]);
+    }
+  };
+
+  const handleTieredTextCachePricingAdd = (
+    m?: string,
+    g?: number,
+    l?: number
+  ) => {
+    const cachePricing: CachePricing = {
+      mode: m,
+      gt: g,
+      lte: l,
+      read_ratio: ref(),
+      write_ratio: ref(),
+    };
+    formData.value.tiered_text_cache.push(cachePricing);
+  };
+
+  const handleTieredTextCachePricingDel = (index: number) => {
+    if (formData.value.tiered_text_cache.length > 1) {
+      formData.value.tiered_text_cache.splice(index, 1);
+    }
+  };
+
+  const initTieredTextCachePricing = () => {
+    const gt = [0, 0, 128, 200, 256];
+    const lte = [128, 200, 256, 1024, 1024];
+    for (let i = 0; i < gt.length; i += 1) {
+      handleTieredTextCachePricingAdd('all', gt[i], lte[i]);
+    }
+  };
+
+  const handleImageGenerationPricingAdd = (
+    q?: string,
+    w?: number,
+    h?: number
+  ) => {
+    const imageGenerationPricing: ImageGenerationPricing = {
+      quality: q,
+      width: w,
+      height: h,
+      once_ratio: ref(),
+      is_default: formData.value.image_generation.length === 0 ? '1' : '',
+    };
+    formData.value.image_generation.push(imageGenerationPricing);
+  };
+
+  const handleImageGenerationPricingDel = (index: number) => {
+    if (formData.value.image_generation.length > 1) {
+      if (formData.value.image_generation[index].is_default === '1') {
+        formData.value.image_generation[index === 0 ? 1 : 0].is_default = '1';
+      }
+      formData.value.image_generation.splice(index, 1);
+    }
+  };
+
+  const handleImageGenerationPricingIsDefaultChange = (index: number) => {
+    for (let i = 0; i < formData.value.image_generation.length; i += 1) {
+      if (i === index) {
+        formData.value.image_generation[i].is_default = '1';
+      } else {
+        formData.value.image_generation[i].is_default = '';
+      }
+    }
+  };
+
+  const initImageGenerationPricing = () => {
+    const qualities = [
+      'high',
+      'high',
+      'high',
+      'medium',
+      'medium',
+      'medium',
+      'low',
+      'low',
+      'low',
+    ];
+    const widths = [1024, 1024, 1536, 1024, 1024, 1536, 1024, 1024, 1536];
+    const heights = [1024, 1536, 1024, 1024, 1536, 1024, 1024, 1536, 1024];
+    for (let i = 0; i < qualities.length; i += 1) {
+      handleImageGenerationPricingAdd(qualities[i], widths[i], heights[i]);
+    }
+  };
+
+  const handleVisionPricingAdd = (m: string) => {
+    const visionPricing: VisionPricing = {
+      mode: m,
+      once_ratio: ref(),
+      is_default: formData.value.vision.length === 0 ? '1' : '',
+    };
+    formData.value.vision.push(visionPricing);
+  };
+
+  const handleVisionPricingDel = (index: number) => {
+    if (formData.value.vision.length > 1) {
+      if (formData.value.vision[index].is_default === '1') {
+        formData.value.vision[index === 0 ? 1 : 0].is_default = '1';
+      }
+      formData.value.vision.splice(index, 1);
+    }
+  };
+
+  const handleVisionPricingIsDefaultChange = (index: number) => {
+    for (let i = 0; i < formData.value.vision.length; i += 1) {
+      if (i === index) {
+        formData.value.vision[i].is_default = '1';
+      } else {
+        formData.value.vision[i].is_default = '';
+      }
+    }
+  };
+
+  const initVisionPricing = () => {
+    const modes = ['auto', 'high', 'low'];
+    for (let i = 0; i < modes.length; i += 1) {
+      handleVisionPricingAdd(modes[i]);
+    }
+  };
+
+  const handleSearchPricingAdd = (c?: string) => {
+    const searchPricing: SearchPricing = {
+      context_size: c,
+      once_ratio: ref(),
+      is_default: formData.value.search.length === 0 ? '1' : '',
+    };
+    formData.value.search.push(searchPricing);
+  };
+
+  const handleSearchPricingDel = (index: number) => {
+    if (formData.value.search.length > 1) {
+      if (formData.value.search[index].is_default === '1') {
+        formData.value.search[index === 0 ? 1 : 0].is_default = '1';
+      }
+      formData.value.search.splice(index, 1);
+    }
+  };
+
+  const handleSearchPricingIsDefaultChange = (index: number) => {
+    for (let i = 0; i < formData.value.search.length; i += 1) {
+      if (i === index) {
+        formData.value.search[i].is_default = '1';
+      } else {
+        formData.value.search[i].is_default = '';
+      }
+    }
+  };
+
+  const initSearchPricing = () => {
+    const contextSizes = ['medium', 'high', 'low'];
+    for (let i = 0; i < contextSizes.length; i += 1) {
+      handleSearchPricingAdd(contextSizes[i]);
+    }
+  };
+
+  const handleMidjourneyPricingAdd = (n?: string, a?: string, p?: string) => {
+    const midjourneyPricing: MidjourneyPricing = {
+      name: n,
+      action: a,
+      path: p,
+      once_ratio: ref(),
+    };
+    formData.value.midjourney.push(midjourneyPricing);
+  };
+
+  const handleMidjourneyPricingDel = (index: number) => {
+    if (formData.value.midjourney.length > 1) {
+      formData.value.midjourney.splice(index, 1);
+    }
+  };
+
+  const initMidjourneyPricing = () => {
+    const names = [
+      '绘图',
+      '放大',
+      '变换',
+      '强变换',
+      '弱变换',
+      '描述',
+      '混图',
+      '重绘',
+      '局部重绘',
+      '变焦',
+      '自定义变焦',
+      '平移',
+      '缩词',
+      '窗口',
+      '换脸',
+      '任务',
+    ];
+    const actions = [
+      'IMAGINE',
+      'UPSCALE',
+      'VARIATION',
+      'HIGH_VARIATION',
+      'LOW_VARIATION',
+      'DESCRIBE',
+      'BLEND',
+      'REROLL',
+      'INPAINT',
+      'ZOOM',
+      'CUSTOM_ZOOM',
+      'PAN',
+      'SHORTEN',
+      'MODAL',
+      'SWAP_FACE',
+      'TASK',
+    ];
+    const paths = [
+      '/submit/imagine',
+      '/submit/change',
+      '/submit/change',
+      '/submit/action',
+      '/submit/action',
+      '/submit/describe',
+      '/submit/blend',
+      '/submit/action',
+      '/submit/action',
+      '/submit/action',
+      '/submit/action',
+      '/submit/action',
+      '/submit/shorten',
+      '/submit/modal',
+      '/insight-face/swap',
+      '/task/*',
+    ];
+    for (let i = 0; i < names.length; i += 1) {
+      handleMidjourneyPricingAdd(names[i], actions[i], paths[i]);
+    }
+  };
+
   const handleBillingItemsChange = () => {
+    if (formData.value.billing_items.includes('tiered_text')) {
+      if (!formData.value.tiered_text) {
+        formData.value.tiered_text = [];
+      }
+      if (formData.value.tiered_text.length === 0) {
+        initTieredTextPricing();
+      }
+    }
+
+    if (formData.value.billing_items.includes('tiered_text_cache')) {
+      if (!formData.value.tiered_text_cache) {
+        formData.value.tiered_text_cache = [];
+      }
+      if (formData.value.tiered_text_cache.length === 0) {
+        initTieredTextCachePricing();
+      }
+    }
+
+    if (formData.value.billing_items.includes('image_generation')) {
+      if (!formData.value.image_generation) {
+        formData.value.image_generation = [];
+      }
+      if (formData.value.image_generation.length === 0) {
+        initImageGenerationPricing();
+      }
+    }
+
+    if (formData.value.billing_items.includes('vision')) {
+      if (!formData.value.vision) {
+        formData.value.vision = [];
+      }
+      if (formData.value.vision.length === 0) {
+        initVisionPricing();
+      }
+    }
+
+    if (formData.value.billing_items.includes('search')) {
+      if (!formData.value.search) {
+        formData.value.search = [];
+      }
+      if (formData.value.search.length === 0) {
+        initSearchPricing();
+      }
+    }
+
+    if (formData.value.billing_items.includes('midjourney')) {
+      if (!formData.value.midjourney) {
+        formData.value.midjourney = [];
+      }
+      if (formData.value.midjourney.length === 0) {
+        initMidjourneyPricing();
+      }
+    }
+
     if (!formData.value.billing_items.includes('once')) {
       formData.value.billing_methods = formData.value.billing_methods.filter(
         (item) => item !== 2
@@ -1096,246 +1406,6 @@
 
     handleBillingItemsChange();
   };
-
-  const handleTieredTextPricingAdd = (
-    m?: string,
-    gt?: number,
-    lte?: number
-  ) => {
-    const textPricing: TextPricing = {
-      mode: m,
-      input_gt: gt,
-      input_lte: lte,
-      input_ratio: ref(),
-      output_ratio: ref(),
-    };
-    formData.value.tiered_text.push(textPricing);
-  };
-
-  const handleTieredTextPricingDel = (index: number) => {
-    if (formData.value.tiered_text.length > 1) {
-      formData.value.tiered_text.splice(index, 1);
-    }
-  };
-
-  const handleTieredTextCachePricingAdd = (
-    m?: string,
-    gt?: number,
-    lte?: number
-  ) => {
-    const cachePricing: CachePricing = {
-      mode: m,
-      input_gt: gt,
-      input_lte: lte,
-      read_ratio: ref(),
-      write_ratio: ref(),
-    };
-    formData.value.tiered_text_cache.push(cachePricing);
-  };
-
-  const handleTieredTextCachePricingDel = (index: number) => {
-    if (formData.value.tiered_text_cache.length > 1) {
-      formData.value.tiered_text_cache.splice(index, 1);
-    }
-  };
-
-  const handleImageGenerationPricingAdd = (
-    q?: string,
-    w?: number,
-    h?: number
-  ) => {
-    const imageGenerationPricing: ImageGenerationPricing = {
-      quality: q,
-      width: w,
-      height: h,
-      once_ratio: ref(),
-      is_default: formData.value.image_generation.length === 0 ? '1' : '',
-    };
-    formData.value.image_generation.push(imageGenerationPricing);
-  };
-
-  const handleImageGenerationPricingDel = (index: number) => {
-    if (formData.value.image_generation.length > 1) {
-      if (formData.value.image_generation[index].is_default === '1') {
-        formData.value.image_generation[index === 0 ? 1 : 0].is_default = '1';
-      }
-      formData.value.image_generation.splice(index, 1);
-    }
-  };
-
-  const handleImageGenerationPricingIsDefaultChange = (index: number) => {
-    for (let i = 0; i < formData.value.image_generation.length; i += 1) {
-      if (i === index) {
-        formData.value.image_generation[i].is_default = '1';
-      } else {
-        formData.value.image_generation[i].is_default = '';
-      }
-    }
-  };
-
-  const handleVisionPricingAdd = (m: string) => {
-    const visionPricing: VisionPricing = {
-      mode: m,
-      once_ratio: ref(),
-      is_default: formData.value.vision.length === 0 ? '1' : '',
-    };
-    formData.value.vision.push(visionPricing);
-  };
-
-  const handleVisionPricingDel = (index: number) => {
-    if (formData.value.vision.length > 1) {
-      if (formData.value.vision[index].is_default === '1') {
-        formData.value.vision[index === 0 ? 1 : 0].is_default = '1';
-      }
-      formData.value.vision.splice(index, 1);
-    }
-  };
-
-  const handleVisionPricingIsDefaultChange = (index: number) => {
-    for (let i = 0; i < formData.value.vision.length; i += 1) {
-      if (i === index) {
-        formData.value.vision[i].is_default = '1';
-      } else {
-        formData.value.vision[i].is_default = '';
-      }
-    }
-  };
-
-  const handleSearchPricingAdd = (c?: string) => {
-    const searchPricing: SearchPricing = {
-      context_size: c,
-      once_ratio: ref(),
-      is_default: formData.value.search.length === 0 ? '1' : '',
-    };
-    formData.value.search.push(searchPricing);
-  };
-
-  const handleSearchPricingDel = (index: number) => {
-    if (formData.value.search.length > 1) {
-      if (formData.value.search[index].is_default === '1') {
-        formData.value.search[index === 0 ? 1 : 0].is_default = '1';
-      }
-      formData.value.search.splice(index, 1);
-    }
-  };
-
-  const handleSearchPricingIsDefaultChange = (index: number) => {
-    for (let i = 0; i < formData.value.search.length; i += 1) {
-      if (i === index) {
-        formData.value.search[i].is_default = '1';
-      } else {
-        formData.value.search[i].is_default = '';
-      }
-    }
-  };
-
-  const handleMidjourneyPricingAdd = (n?: string, a?: string, p?: string) => {
-    const midjourneyPricing: MidjourneyPricing = {
-      name: n,
-      action: a,
-      path: p,
-      once_ratio: ref(),
-    };
-    formData.value.midjourney.push(midjourneyPricing);
-  };
-
-  const handleMidjourneyPricingDel = (index: number) => {
-    if (formData.value.midjourney.length > 1) {
-      formData.value.midjourney.splice(index, 1);
-    }
-  };
-
-  const inputGt = [0, 0, 128, 200, 256];
-  const inputLte = [128, 200, 256, 1024, 1024];
-  for (let i = 0; i < inputGt.length; i += 1) {
-    handleTieredTextPricingAdd('all', inputGt[i], inputLte[i]);
-    handleTieredTextCachePricingAdd('all', inputGt[i], inputLte[i]);
-  }
-
-  const qualities = [
-    'high',
-    'high',
-    'high',
-    'medium',
-    'medium',
-    'medium',
-    'low',
-    'low',
-    'low',
-  ];
-  const widths = [1024, 1024, 1536, 1024, 1024, 1536, 1024, 1024, 1536];
-  const heights = [1024, 1536, 1024, 1024, 1536, 1024, 1024, 1536, 1024];
-  for (let i = 0; i < qualities.length; i += 1) {
-    handleImageGenerationPricingAdd(qualities[i], widths[i], heights[i]);
-  }
-
-  const modes = ['auto', 'high', 'low'];
-  for (let i = 0; i < modes.length; i += 1) {
-    handleVisionPricingAdd(modes[i]);
-  }
-
-  const contextSizes = ['medium', 'high', 'low'];
-  for (let i = 0; i < contextSizes.length; i += 1) {
-    handleSearchPricingAdd(contextSizes[i]);
-  }
-
-  const names = [
-    '绘图',
-    '放大',
-    '变换',
-    '强变换',
-    '弱变换',
-    '描述',
-    '混图',
-    '重绘',
-    '局部重绘',
-    '变焦',
-    '自定义变焦',
-    '平移',
-    '缩词',
-    '窗口',
-    '换脸',
-    '任务',
-  ];
-  const actions = [
-    'IMAGINE',
-    'UPSCALE',
-    'VARIATION',
-    'HIGH_VARIATION',
-    'LOW_VARIATION',
-    'DESCRIBE',
-    'BLEND',
-    'REROLL',
-    'INPAINT',
-    'ZOOM',
-    'CUSTOM_ZOOM',
-    'PAN',
-    'SHORTEN',
-    'MODAL',
-    'SWAP_FACE',
-    'TASK',
-  ];
-  const paths = [
-    '/submit/imagine',
-    '/submit/change',
-    '/submit/change',
-    '/submit/action',
-    '/submit/action',
-    '/submit/describe',
-    '/submit/blend',
-    '/submit/action',
-    '/submit/action',
-    '/submit/action',
-    '/submit/action',
-    '/submit/action',
-    '/submit/shorten',
-    '/submit/modal',
-    '/insight-face/swap',
-    '/task/*',
-  ];
-  for (let i = 0; i < names.length; i += 1) {
-    handleMidjourneyPricingAdd(names[i], actions[i], paths[i]);
-  }
 </script>
 
 <script lang="ts">

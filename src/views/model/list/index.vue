@@ -410,7 +410,7 @@
           <a-button
             type="text"
             size="small"
-            @click="viewPricing(record.pricing)"
+            @click="viewPricing(record.pricing, record.type)"
           >
             查看
           </a-button>
@@ -700,7 +700,7 @@
         hide-cancel
         simple
       >
-        <PricingDetail v-model="pricing" />
+        <PricingDetail v-model="pricing" :model-type="modelType" />
       </a-modal>
     </a-card>
   </div>
@@ -1323,9 +1323,11 @@
 
   const pricingVisible = ref(false);
   const pricing = ref<Pricing>({ billing_items: [] } as unknown as Pricing);
-  const viewPricing = (params: Pricing) => {
+  const modelType = ref(0);
+  const viewPricing = (p: Pricing, t: number) => {
     pricingVisible.value = true;
-    pricing.value = params;
+    pricing.value = p;
+    modelType.value = t;
   };
 
   const detailVisible = ref(false);

@@ -49,7 +49,8 @@
       ${{ record.input_ratio || '0.00' }} / M
     </template>
     <template #output_ratio="{ record }">
-      ${{ record.output_ratio || '0.00' }} / min
+      ${{ record.output_ratio || '0.00' }}
+      {{ modelType === 5 || modelType === 6 ? '/ min' : '/ M' }}
     </template>
     <template #read_ratio="{ record }">
       ${{ record.read_ratio || '0.00' }} / M
@@ -85,9 +86,7 @@
     <template #mode="{ record }">
       {{ $t(`model.dict.mode.${record.mode}`) }}
     </template>
-    <template #input_gt="{ record }">
-      {{ record.input_gt }}k - {{ record.input_lte }}k
-    </template>
+    <template #gt="{ record }"> {{ record.gt }}k - {{ record.lte }}k </template>
     <template #input_ratio="{ record }">
       ${{ record.input_ratio || '0.00' }} / M
     </template>
@@ -108,9 +107,7 @@
     <template #mode="{ record }">
       {{ $t(`model.dict.mode.${record.mode}`) }}
     </template>
-    <template #input_gt="{ record }">
-      {{ record.input_gt }}k - {{ record.input_lte }}k
-    </template>
+    <template #gt="{ record }"> {{ record.gt }}k - {{ record.lte }}k </template>
     <template #read_ratio="{ record }">
       ${{ record.read_ratio || '0.00' }} / M
     </template>
@@ -260,6 +257,7 @@
 
   const props = defineProps<{
     modelValue: Pricing;
+    modelType: number;
   }>();
 
   const pricing = ref(props.modelValue);
@@ -366,8 +364,8 @@
         },
         {
           title: t('model.label.tiered.input_tokens'),
-          dataIndex: 'input_gt',
-          slotName: 'input_gt',
+          dataIndex: 'gt',
+          slotName: 'gt',
           align: 'center',
           width: 200,
         },
@@ -405,8 +403,8 @@
         },
         {
           title: t('model.label.tiered.input_tokens'),
-          dataIndex: 'input_gt',
-          slotName: 'input_gt',
+          dataIndex: 'gt',
+          slotName: 'gt',
           align: 'center',
           width: 200,
         },

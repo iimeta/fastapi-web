@@ -138,7 +138,11 @@
             </a-divider>
 
             <!-- 定价 -->
-            <Pricing ref="pricingRef" v-model="formData.pricing" />
+            <Pricing
+              ref="pricingRef"
+              v-model="formData.pricing"
+              :model-type="formData.type"
+            />
 
             <a-form-item
               field="request_data_format"
