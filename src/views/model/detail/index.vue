@@ -55,16 +55,6 @@
           {{ currentData.path || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.billingMethod')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            $t(`model.dict.billing_method.${currentData.billing_method || 1}`)
-          }}
-        </span>
-      </a-descriptions-item>
       <a-descriptions-item :label="t('model.detail.label.billing_rule')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -72,9 +62,19 @@
         <span v-else>
           {{
             $t(
-              `model.dict.billing_rule.${
-                currentData.multimodal_quota.billing_rule || 1
-              }`
+              `model.dict.billing_rule.${currentData.pricing.billing_rule || 1}`
+            )
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('model.detail.label.billing_methods')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            $t(
+              `model.dict.billing_methods.${currentData.pricing.billing_methods}`
             )
           }}
         </span>

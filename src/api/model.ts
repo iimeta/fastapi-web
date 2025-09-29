@@ -34,89 +34,6 @@ export interface ForwardConfig {
   content_length: any;
 }
 
-export interface TextQuota {
-  billing_method: any;
-  prompt_ratio: number;
-  completion_ratio: number;
-  cached_ratio: number;
-  fixed_quota: any;
-  prompt_price: any;
-  completion_price: any;
-  cached_price: any;
-}
-
-export interface GenerationQuota {
-  quality: any;
-  width: any;
-  height: any;
-  fixed_quota: any;
-  is_default: string;
-}
-
-export interface ImageQuota {
-  billing_method: any;
-  generation_quotas: GenerationQuota[];
-  text_ratio: number;
-  input_ratio: number;
-  output_ratio: number;
-  cached_ratio: number;
-  fixed_quota: any;
-  text_price: any;
-  input_price: any;
-  output_price: any;
-  cached_price: any;
-}
-
-export interface VisionQuota {
-  mode: string;
-  fixed_quota: any;
-  is_default: string;
-}
-
-export interface AudioQuota {
-  billing_method: any;
-  prompt_ratio: number;
-  completion_ratio: number;
-  cached_ratio: number;
-  fixed_quota: any;
-  prompt_price: any;
-  completion_price: any;
-  cached_price: any;
-}
-
-export interface SearchQuota {
-  search_context_size?: string;
-  fixed_quota: any;
-  is_default: string;
-}
-
-export interface MultimodalQuota {
-  billing_rule: any;
-  text_quota: TextQuota;
-  vision_quotas: VisionQuota[];
-  search_quota: any;
-  search_quotas: SearchQuota[];
-}
-
-export interface RealtimeQuota {
-  text_quota: TextQuota;
-  audio_quota: AudioQuota;
-  fixed_quota: any;
-}
-
-export interface MultimodalAudioQuota {
-  text_quota: TextQuota;
-  audio_quota: AudioQuota;
-  fixed_quota: any;
-}
-
-export interface MidjourneyQuota {
-  name: any;
-  action: any;
-  path: any;
-  fixed_quota: any;
-}
-
 export interface FallbackConfig {
   model_agent?: string;
   model_agent_name?: string;
@@ -161,16 +78,9 @@ export interface ModelPage {
   name: string;
   model: string;
   type: number;
+  pricing: Pricing;
   groups: string[];
   group_names: string[];
-  pricing: Pricing;
-  text_quota: TextQuota;
-  image_quota: ImageQuota;
-  audio_quota: AudioQuota;
-  multimodal_quota: MultimodalQuota;
-  realtime_quota: RealtimeQuota;
-  multimodal_audio_quota: MultimodalAudioQuota;
-  midjourney_quotas: MidjourneyQuota[];
   request_data_format: number;
   response_data_format: number;
   is_public: boolean;
@@ -204,10 +114,6 @@ export interface ModelList {
   name: string;
   model: string;
   type: number;
-  billing_method: number;
-  prompt_ratio: number;
-  completion_ratio: number;
-  fixed_quota: number;
   request_data_format: number;
   response_data_format: number;
   is_public: boolean;
@@ -245,17 +151,9 @@ export interface ModelDetail {
   type: number;
   base_url: string;
   path: string;
-  billing_method: any;
   pricing: Pricing;
   groups: string[];
   group_names: string[];
-  text_quota: TextQuota;
-  image_quota: ImageQuota;
-  audio_quota: AudioQuota;
-  multimodal_quota: MultimodalQuota;
-  realtime_quota: RealtimeQuota;
-  multimodal_audio_quota: MultimodalAudioQuota;
-  midjourney_quotas: MidjourneyQuota[];
   request_data_format: number;
   response_data_format: number;
   is_public: boolean;

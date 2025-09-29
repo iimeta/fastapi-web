@@ -23,9 +23,11 @@
           :value="1"
           style="margin-right: 30px"
         >
-          按官方
+          {{ t('model.dict.billing_rule.1') }}
         </a-radio>
-        <a-radio v-model="formData.billing_rule" :value="2"> 按系统 </a-radio>
+        <a-radio v-model="formData.billing_rule" :value="2">
+          {{ t('model.dict.billing_rule.2') }}
+        </a-radio>
       </a-space>
     </a-form-item>
     <a-form-item
@@ -46,14 +48,14 @@
           style="margin-right: 12px"
           @change="handleBillingMethodsChange"
         >
-          按Tokens
+          {{ t('model.dict.billing_methods.1') }}
         </a-checkbox>
         <a-checkbox
           v-model="formData.billing_methods"
           :value="2"
           @change="handleBillingMethodsChange"
         >
-          按次
+          {{ t('model.dict.billing_methods.2') }}
         </a-checkbox>
       </a-space>
     </a-form-item>
