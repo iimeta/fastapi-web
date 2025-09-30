@@ -13,6 +13,7 @@ export interface AppKeyConfig {
   id: string;
   app_id: number;
   key: string;
+  billing_methods: number[];
   models: string[];
   is_limit_quota: boolean;
   quota: number;
@@ -38,6 +39,7 @@ export interface AppKeyPage {
   provider_id: string;
   provider_name: string;
   key: string;
+  billing_methods: number[];
   quota: number;
   models: string[];
   model_names: string[];
@@ -89,6 +91,7 @@ export interface AppKeyDetail {
   provider_id: string;
   provider_name: string;
   key: string;
+  billing_methods: number[];
   quota: number;
   used_quota: number;
   quota_expires_rule: number;
@@ -153,6 +156,7 @@ export interface AppKeyBatchOperate {
   app_id?: number;
   key?: string;
   n?: number;
+  billing_methods?: number[];
   models?: string[];
   is_limit_quota?: boolean;
   quota?: number;

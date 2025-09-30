@@ -159,7 +159,7 @@
           {{ currentData?.group_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('user.detail.label.models')">
+      <a-descriptions-item :label="t('user.detail.label.models')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

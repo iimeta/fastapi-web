@@ -132,10 +132,7 @@
                 v-model="formData.quota_expires_at"
                 :placeholder="$t('app.placeholder.quota_expires_at')"
                 :time-picker-props="{ defaultValue: '23:59:59' }"
-                :disabled-date="
-                  (current) =>
-                    dayjs(current).isBefore(dayjs().subtract(1, 'day'))
-                "
+                :disabled-date="disabledDate"
                 style="width: 100%"
                 show-time
                 :shortcuts="[
@@ -297,11 +294,11 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { FormInstance } from '@arco-design/web-vue/es';
   import { useRouter } from 'vue-router';
   import dayjs from 'dayjs';
   import { Message } from '@arco-design/web-vue';
-  import { quotaConv } from '@/utils/common';
+  import { quotaConv, disabledDate } from '@/utils/common';
   import { submitAppCreate, AppCreate } from '@/api/app';
   import { queryModelTree, Tree } from '@/api/model';
   import { queryGroupList, GroupList } from '@/api/group';

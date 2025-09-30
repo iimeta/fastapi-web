@@ -378,6 +378,25 @@
               readonly
             />
           </a-form-item>
+          <a-form-item
+            field="billing_methods"
+            :label="$t('app.label.key.billing_methods')"
+            :rules="[
+              {
+                required: true,
+                message: $t('app.error.key.billing_methods.required'),
+              },
+            ]"
+          >
+            <a-space size="large">
+              <a-checkbox v-model="formData.billing_methods" :value="1">
+                {{ $t('app.key.dict.billing_methods.1') }}
+              </a-checkbox>
+              <a-checkbox v-model="formData.billing_methods" :value="2">
+                {{ $t('app.key.dict.billing_methods.2') }}
+              </a-checkbox>
+            </a-space>
+          </a-form-item>
           <a-form-item field="models" :label="$t('app.label.models')">
             <a-tree-select
               v-model="formData.models"
@@ -463,9 +482,7 @@
               v-model="formData.quota_expires_at"
               :placeholder="$t('app.placeholder.quota_expires_at')"
               :time-picker-props="{ defaultValue: '23:59:59' }"
-              :disabled-date="
-                (current) => dayjs(current).isBefore(dayjs().subtract(1, 'day'))
-              "
+              :disabled-date="disabledDate"
               style="width: 100%"
               show-time
               :shortcuts="[
@@ -635,8 +652,8 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { quotaConv } from '@/utils/common';
+  import { FormInstance } from '@arco-design/web-vue/es';
+  import { quotaConv, disabledDate } from '@/utils/common';
   import {
     queryAppPage,
     AppPage,
@@ -1005,7 +1022,7 @@
   const visible = ref(false);
 
   const formRef = ref<FormInstance>();
-  const formData = ref<AppKeyConfig>({} as AppKeyConfig);
+  const formData = ref<AppKeyConfig>({ billing_methods: [1] } as AppKeyConfig);
 
   const handleQuotaQuickChange = (quota: number) => {
     formData.value.quota = quota * 500000;

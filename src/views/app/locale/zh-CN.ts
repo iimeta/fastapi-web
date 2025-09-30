@@ -41,6 +41,8 @@ export default {
   'app.placeholder.quota_expires_minutes': '在首次使用此密钥时生成过期时间, 时长单位为: 分钟',
   'app.error.quota.required': '请输入额度',
   'app.placeholder.key.models': '此密钥可使用的模型, 为空则使用应用所选的模型',
+  'app.label.key.billing_methods': '计费方式',
+  'app.error.key.billing_methods.required': '请选择计费方式',
   'app.label.is_create_key': '创建密钥',
   'app.success.key_config': '保存成功, 密钥已复制到剪贴板',
   'app.label.n': '数量',

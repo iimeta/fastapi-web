@@ -254,7 +254,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { FormInstance } from '@arco-design/web-vue/es';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import {

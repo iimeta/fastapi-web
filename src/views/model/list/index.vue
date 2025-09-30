@@ -742,7 +742,7 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { FormInstance } from '@arco-design/web-vue/es';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryGroupList, GroupList } from '@/api/group';

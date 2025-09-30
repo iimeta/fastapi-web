@@ -291,9 +291,7 @@
             v-model="renderData[rowIndex].quota_expires_at"
             :placeholder="$t('reseller.columns.placeholder.quota_expires_at')"
             :time-picker-props="{ defaultValue: '23:59:59' }"
-            :disabled-date="
-              (current) => dayjs(current).isBefore(dayjs().subtract(1, 'day'))
-            "
+            :disabled-date="disabledDate"
             show-time
             :shortcuts="[
               {
@@ -546,9 +544,7 @@
               v-model="formData.quota_expires_at"
               :placeholder="$t('reseller.placeholder.quota_expires_at')"
               :time-picker-props="{ defaultValue: '23:59:59' }"
-              :disabled-date="
-                (current) => dayjs(current).isBefore(dayjs().subtract(1, 'day'))
-              "
+              :disabled-date="disabledDate"
               position="tl"
               style="width: 100%"
               show-time
@@ -741,8 +737,8 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { quotaConv } from '@/utils/common';
+  import { FormInstance } from '@arco-design/web-vue/es';
+  import { quotaConv, disabledDate } from '@/utils/common';
   import {
     queryResellerPage,
     ResellerPage,

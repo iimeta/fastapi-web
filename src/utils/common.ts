@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export function priceConv(ratio: number) {
   return parseFloat((1000 / (500000 / ratio)).toFixed(6)).toLocaleString(
     undefined,
@@ -26,3 +28,7 @@ export function parserPrice(price: string) {
   const match = price.match(/^(-?\d*)(\.\d{0,6})?/);
   return match ? match[0] : price;
 }
+
+export function disabledDate(current: Date) {
+  return dayjs(current).isBefore(dayjs().subtract(1, 'day'));
+};

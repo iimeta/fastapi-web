@@ -74,12 +74,39 @@
         <span v-else>
           {{
             $t(
-              `model.dict.billing_methods.${currentData.pricing.billing_methods}`
+              `model.dict.billing_methods.${
+                currentData.pricing.billing_methods || 1
+              }`
             )
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.group_names')">
+      <a-descriptions-item :label="t('model.detail.label.request_data_format')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            t(`model.dict.data_format.${currentData.request_data_format || 1}`)
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="t('model.detail.label.response_data_format')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            t(`model.dict.data_format.${currentData.response_data_format || 1}`)
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="t('model.detail.label.group_names')"
+        :span="2"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -97,7 +124,6 @@
       </a-descriptions-item>
       <a-descriptions-item
         :label="t('model.detail.label.is_enable_preset_config')"
-        :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -146,6 +172,7 @@
       </a-descriptions-item>
       <a-descriptions-item
         :label="t('model.detail.label.preset_config.system_role_prompt')"
+        :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -156,7 +183,6 @@
       </a-descriptions-item>
       <a-descriptions-item
         :label="t('model.detail.label.preset_config.min_tokens')"
-        :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -195,7 +221,10 @@
           {{ $t(`dict.lb_strategy.${currentData.lb_strategy || 1}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.modelAgentNames')">
+      <a-descriptions-item
+        :label="t('model.detail.label.modelAgentNames')"
+        :span="2"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -217,10 +246,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('model.detail.label.forwardRule')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('model.detail.label.forwardRule')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -326,36 +352,6 @@
           {{ currentData?.fallback_config?.model_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.request_data_format')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            t(`model.dict.data_format.${currentData.request_data_format || 1}`)
-          }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('model.detail.label.response_data_format')"
-      >
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            t(`model.dict.data_format.${currentData.response_data_format || 1}`)
-          }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.remark')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.remark || '-' }}
-        </span>
-      </a-descriptions-item>
       <a-descriptions-item :label="t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -367,6 +363,14 @@
           <a-tag v-else color="red">
             {{ $t(`dict.status.${currentData.status}`) }}
           </a-tag>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('model.detail.label.remark')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
+          {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('common.created_at')">

@@ -5,7 +5,7 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item :label="t('common.provider')" :span="2">
+      <a-descriptions-item :label="t('common.provider')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -13,10 +13,7 @@
           {{ currentData.provider_name }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('model.agent.detail.label.name')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('model.agent.detail.label.name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -47,17 +44,6 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('model.agent.detail.label.weight')"
-        :span="2"
-      >
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.weight }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item
         :label="t('model.agent.detail.label.models')"
         :span="2"
       >
@@ -68,9 +54,16 @@
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="t('model.agent.detail.label.weight')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.weight }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item
         :label="t('model.agent.detail.label.fallback_models')"
-        :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -81,7 +74,6 @@
       </a-descriptions-item>
       <a-descriptions-item
         :label="t('model.agent.detail.label.is_never_disable')"
-        :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -90,10 +82,7 @@
           {{ t(`dict.${currentData?.is_never_disable || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('model.agent.detail.label.lb_strategy')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('model.agent.detail.label.lb_strategy')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -109,15 +98,25 @@
           {{ currentData.key || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('key.detail.label.is_auto_disabled')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('key.detail.label.is_auto_disabled')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           {{ t(`dict.${currentData?.is_auto_disabled || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('common.status')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.status === 1" color="green">
+            {{ $t(`dict.status.${currentData.status}`) }}
+          </a-tag>
+          <a-tag v-else color="red">
+            {{ $t(`dict.status.${currentData.status}`) }}
+          </a-tag>
         </span>
       </a-descriptions-item>
       <a-descriptions-item
@@ -139,20 +138,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          <a-tag v-if="currentData.status === 1" color="green">
-            {{ $t(`dict.status.${currentData.status}`) }}
-          </a-tag>
-          <a-tag v-else color="red">
-            {{ $t(`dict.status.${currentData.status}`) }}
-          </a-tag>
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')" :span="2">
+      <a-descriptions-item :label="t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -160,7 +146,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')" :span="2">
+      <a-descriptions-item :label="t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

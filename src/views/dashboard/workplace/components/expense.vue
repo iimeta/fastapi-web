@@ -171,7 +171,7 @@
 
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { FormInstance } from '@arco-design/web-vue/es';
   import { Modal } from '@arco-design/web-vue';
   import { quotaConv4 } from '@/utils/common';
   import {

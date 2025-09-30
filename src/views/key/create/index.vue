@@ -156,7 +156,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { FormInstance } from '@arco-design/web-vue/es';
   import { useRouter } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { submitKeyCreate, KeyCreate } from '@/api/key';

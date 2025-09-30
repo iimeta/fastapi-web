@@ -73,7 +73,7 @@
           {{ t(`dict.public.${currentData.is_public || false}`) }}
         </span>
       </a-descriptions-item> -->
-      <a-descriptions-item :label="t('common.remark')" :span="2">
+      <a-descriptions-item :label="t('common.remark')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

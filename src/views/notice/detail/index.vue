@@ -24,7 +24,7 @@
         >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.category')" :span="2">
+      <a-descriptions-item :label="t('notice.detail.category')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -142,7 +142,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')" :span="2">
+      <a-descriptions-item :label="t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

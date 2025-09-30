@@ -97,10 +97,7 @@
                 v-model="formData.quota_expires_at"
                 :placeholder="$t('reseller.placeholder.quota_expires_at')"
                 :time-picker-props="{ defaultValue: '23:59:59' }"
-                :disabled-date="
-                  (current) =>
-                    dayjs(current).isBefore(dayjs().subtract(1, 'day'))
-                "
+                :disabled-date="disabledDate"
                 style="width: 100%"
                 show-time
                 :shortcuts="[
@@ -197,14 +194,15 @@
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
+  import { FormInstance } from '@arco-design/web-vue/es';
+  import { useRouter, useRoute } from 'vue-router';
+  import { disabledDate } from '@/utils/common';
   import {
     submitResellerUpdate,
     ResellerUpdate,
     ResellerDetailParams,
     queryResellerDetail,
   } from '@/api/admin_reseller';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { useRouter, useRoute } from 'vue-router';
 
   const { proxy } = getCurrentInstance() as any;
 

@@ -63,6 +63,16 @@
           }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="t('app.key.detail.label.billing_methods')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            $t(`model.dict.billing_methods.${currentData.billing_methods || 1}`)
+          }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="t('key.detail.label.quota_expires_rule')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -79,18 +89,6 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('key.detail.label.quota_expires_at')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData?.is_limit_quota
-              ? currentData.quota_expires_at || '-'
-              : '-'
-          }}
-        </span>
-      </a-descriptions-item>
       <a-descriptions-item :label="t('key.detail.label.quota_expires_minutes')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -103,6 +101,18 @@
           }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="t('key.detail.label.quota_expires_at')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData?.is_limit_quota
+              ? currentData.quota_expires_at || '-'
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="t('key.detail.label.models')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -111,10 +121,7 @@
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('app.detail.label.is_bind_group')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('app.detail.label.is_bind_group')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -192,7 +199,11 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { quotaConv } from '@/utils/common';
-  import { queryAppKeyDetail, AppKeyDetailParams, AppKeyDetail } from '@/api/app_key';
+  import {
+    queryAppKeyDetail,
+    AppKeyDetailParams,
+    AppKeyDetail,
+  } from '@/api/app_key';
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
@@ -204,7 +215,9 @@
     },
   });
 
-  const getAppKeyDetail = async (params: AppKeyDetailParams = { id: props.id }) => {
+  const getAppKeyDetail = async (
+    params: AppKeyDetailParams = { id: props.id }
+  ) => {
     setLoading(true);
     try {
       const { data } = await queryAppKeyDetail(params);

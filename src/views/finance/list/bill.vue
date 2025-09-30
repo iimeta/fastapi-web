@@ -250,7 +250,7 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { FormInstance } from '@arco-design/web-vue/es';
   import Detail from '../detail/bill.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';

@@ -73,10 +73,7 @@
           {{ currentData?.model_agent_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('key.detail.label.is_agents_only')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('key.detail.label.is_agents_only')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -84,10 +81,7 @@
           {{ t(`dict.${currentData?.is_agents_only || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('key.detail.label.is_never_disable')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('key.detail.label.is_never_disable')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -95,10 +89,7 @@
           {{ t(`dict.${currentData?.is_never_disable || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('key.detail.label.is_auto_disabled')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('key.detail.label.is_auto_disabled')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -106,10 +97,7 @@
           {{ t(`dict.${currentData?.is_auto_disabled || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('key.detail.label.auto_disabled_reason')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('key.detail.label.auto_disabled_reason')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -125,7 +113,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')" :span="2">
+      <a-descriptions-item :label="t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -133,7 +121,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')" :span="2">
+      <a-descriptions-item :label="t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

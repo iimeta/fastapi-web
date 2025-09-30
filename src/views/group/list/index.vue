@@ -334,9 +334,7 @@
             v-model="renderData[rowIndex].expires_at"
             :placeholder="$t('group.columns.placeholder.expires_at')"
             :time-picker-props="{ defaultValue: '23:59:59' }"
-            :disabled-date="
-              (current) => dayjs(current).isBefore(dayjs().subtract(1, 'day'))
-            "
+            :disabled-date="disabledDate"
             show-time
             :shortcuts="[
               {
@@ -479,7 +477,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { quotaConv } from '@/utils/common';
+  import { quotaConv, disabledDate } from '@/utils/common';
   import {
     queryGroupPage,
     GroupPage,

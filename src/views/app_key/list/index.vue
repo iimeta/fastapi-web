@@ -373,6 +373,9 @@
         <template #used_quota="{ record }">
           ${{ record.used_quota > 0 ? quotaConv(record.used_quota) : '0.00' }}
         </template>
+        <template #billing_methods="{ record }">
+          {{ $t(`model.dict.billing_methods.${record.billing_methods || 1}`) }}
+        </template>
         <template #quota_expires_at="{ record }">
           {{ record.is_limit_quota ? record.quota_expires_at || '-' : '-' }}
         </template>
@@ -446,6 +449,25 @@
               :placeholder="$t('app.placeholder.key')"
               readonly
             />
+          </a-form-item>
+          <a-form-item
+            field="billing_methods"
+            :label="$t('app.label.key.billing_methods')"
+            :rules="[
+              {
+                required: true,
+                message: $t('app.error.key.billing_methods.required'),
+              },
+            ]"
+          >
+            <a-space size="large">
+              <a-checkbox v-model="formData.billing_methods" :value="1">
+                {{ $t('app.key.dict.billing_methods.1') }}
+              </a-checkbox>
+              <a-checkbox v-model="formData.billing_methods" :value="2">
+                {{ $t('app.key.dict.billing_methods.2') }}
+              </a-checkbox>
+            </a-space>
           </a-form-item>
           <a-form-item field="models" :label="$t('app.label.models')">
             <a-tree-select
@@ -532,9 +554,7 @@
               v-model="formData.quota_expires_at"
               :placeholder="$t('app.placeholder.quota_expires_at')"
               :time-picker-props="{ defaultValue: '23:59:59' }"
-              :disabled-date="
-                (current) => dayjs(current).isBefore(dayjs().subtract(1, 'day'))
-              "
+              :disabled-date="disabledDate"
               style="width: 100%"
               show-time
               :shortcuts="[
@@ -786,6 +806,25 @@
               :max="100000"
             />
           </a-form-item>
+          <a-form-item
+            field="billing_methods"
+            :label="$t('app.label.key.billing_methods')"
+            :rules="[
+              {
+                required: true,
+                message: $t('app.error.key.billing_methods.required'),
+              },
+            ]"
+          >
+            <a-space size="large">
+              <a-checkbox v-model="batchFormData.billing_methods" :value="1">
+                {{ $t('app.key.dict.billing_methods.1') }}
+              </a-checkbox>
+              <a-checkbox v-model="batchFormData.billing_methods" :value="2">
+                {{ $t('app.key.dict.billing_methods.2') }}
+              </a-checkbox>
+            </a-space>
+          </a-form-item>
           <a-form-item field="models" :label="$t('app.label.models')">
             <a-tree-select
               v-model="batchFormData.models"
@@ -874,9 +913,7 @@
               v-model="batchFormData.quota_expires_at"
               :placeholder="$t('app.placeholder.quota_expires_at')"
               :time-picker-props="{ defaultValue: '23:59:59' }"
-              :disabled-date="
-                (current) => dayjs(current).isBefore(dayjs().subtract(1, 'day'))
-              "
+              :disabled-date="disabledDate"
               style="width: 100%"
               show-time
               :shortcuts="[
@@ -1088,8 +1125,8 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
-  import { quotaConv } from '@/utils/common';
+  import { FormInstance } from '@arco-design/web-vue/es';
+  import { quotaConv, disabledDate } from '@/utils/common';
   import { queryAppList, AppList } from '@/api/app';
   import {
     queryAppKeyPage,
@@ -1224,6 +1261,14 @@
       title: t('key.columns.used_quota'),
       dataIndex: 'used_quota',
       slotName: 'used_quota',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
+      title: t('app.key.columns.billing_methods'),
+      dataIndex: 'billing_methods',
+      slotName: 'billing_methods',
       align: 'center',
       ellipsis: true,
       tooltip: true,
@@ -1501,7 +1546,9 @@
   const formRef = ref<FormInstance>();
   const batchFormRef = ref<FormInstance>();
   const formData = ref<AppKeyConfig>({} as AppKeyConfig);
-  const batchFormData = ref<AppKeyBatchOperate>({} as AppKeyBatchOperate);
+  const batchFormData = ref<AppKeyBatchOperate>({
+    billing_methods: [1],
+  } as AppKeyBatchOperate);
 
   const handleQuotaQuickChange = (quota: number) => {
     formData.value.quota = quota * 500000;
@@ -1511,6 +1558,7 @@
   interface AppKeyConfigView {
     id: string;
     key: string;
+    billing_methods: number[];
     models: string[];
     is_limit_quota: boolean;
     quota: number;
@@ -1529,6 +1577,7 @@
     try {
       formData.value.id = params.id;
       formData.value.key = params.key;
+      formData.value.billing_methods = params.billing_methods || [1];
       formData.value.models = params.models;
       formData.value.is_limit_quota = params.is_limit_quota;
       formData.value.quota = params.quota;
@@ -1691,18 +1740,18 @@
       let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
       switch (params.action) {
         case 'create':
-          batchFormData.value = {} as AppKeyBatchOperate;
+          batchFormData.value = { billing_methods: [1] } as AppKeyBatchOperate;
           batchFormData.value.action = params.action;
           batchFormData.value.n = 1;
           batchVisible.value = true;
           return;
         case 'update':
-          batchFormData.value = {} as AppKeyBatchOperate;
+          batchFormData.value = { billing_methods: [1] } as AppKeyBatchOperate;
           batchFormData.value.action = params.action;
           batchVisible.value = true;
           return;
         case 'all-update':
-          batchFormData.value = {} as AppKeyBatchOperate;
+          batchFormData.value = { billing_methods: [1] } as AppKeyBatchOperate;
           batchFormData.value.action = params.action;
           batchVisible.value = true;
           return;

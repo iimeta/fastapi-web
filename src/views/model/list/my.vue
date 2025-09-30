@@ -210,6 +210,15 @@
             查看
           </a-button>
         </template>
+        <template #billing_methods="{ record }">
+          {{
+            $t(
+              `model.dict.billing_methods.${
+                record.pricing.billing_methods || 1
+              }`
+            )
+          }}
+        </template>
         <template #group_names="{ record }">
           {{ record?.group_names?.join(',') || '-' }}
         </template>
@@ -348,7 +357,14 @@
       dataIndex: 'pricing',
       slotName: 'pricing',
       align: 'center',
-      width: 120,
+      width: 80,
+    },
+    {
+      title: t('model.columns.billing_methods'),
+      dataIndex: 'billing_methods',
+      slotName: 'billing_methods',
+      align: 'center',
+      width: 130,
     },
     {
       title: t('model.columns.my.group_names'),

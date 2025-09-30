@@ -938,7 +938,7 @@
 <script lang="ts" setup>
   import { ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { FormInstance } from '@arco-design/web-vue/es';
   import { parserPrice } from '@/utils/common';
   import {
     Pricing,

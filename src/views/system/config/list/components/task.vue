@@ -68,17 +68,13 @@
       v-model:visible="configVisible"
       :title="$t(configTitle)"
       :body-style="{
-        padding: '20px 16px',
+        padding: '20px 20px 0 20px',
+        maxHeight: '520px',
       }"
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
-      <a-form
-        ref="configForm"
-        :model="configFormData"
-        auto-label-width
-        style="max-height: 500px"
-      >
+      <a-form ref="configForm" :model="configFormData" auto-label-width>
         <a-form-item
           v-if="configFormData.action === 'quota_task'"
           field="quota_task.cron"
@@ -213,7 +209,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { FormInstance } from '@arco-design/web-vue/es';
   import { useI18n } from 'vue-i18n';
   import {
     SysConfigItem,

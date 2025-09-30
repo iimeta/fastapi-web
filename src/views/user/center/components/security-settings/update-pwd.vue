@@ -134,7 +134,7 @@
           ),
         },
         {
-          validator: (value, callback) => {
+          validator: (value: string, callback: (arg?: string) => void) => {
             if (value === form.oldPassword) {
               callback(
                 t(
@@ -155,7 +155,7 @@
           ),
         },
         {
-          validator: (value, callback) => {
+          validator: (value: string, callback: (arg?: string) => void) => {
             if (value !== form.newPassword) {
               callback(
                 t(

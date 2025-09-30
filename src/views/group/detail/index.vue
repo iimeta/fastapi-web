@@ -85,7 +85,10 @@
           {{ $t(`dict.lb_strategy.${currentData.lb_strategy || 1}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.model_agents')">
+      <a-descriptions-item
+        :label="t('group.detail.label.model_agents')"
+        :span="2"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -207,7 +210,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.remark')">
+      <a-descriptions-item :label="t('group.detail.label.remark')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -215,10 +218,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('group.detail.label.expires_at')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('group.detail.label.expires_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

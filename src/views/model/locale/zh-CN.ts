@@ -248,6 +248,7 @@ export default {
   'model.columns.multimodal_audio_price': '多模态语音价格',
 
   'model.columns.pricing': '定价',
+  'model.columns.billing_methods': '计费方式',
   'model.columns.pricing.text': '文本',
   'model.columns.pricing.text_cache': '文本缓存',
   'model.columns.pricing.tiered_text': '阶梯文本',

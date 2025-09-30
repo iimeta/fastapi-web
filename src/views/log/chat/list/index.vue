@@ -807,7 +807,7 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { FormInstance } from '@arco-design/web-vue/es';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import Detail from '../detail/index.vue';

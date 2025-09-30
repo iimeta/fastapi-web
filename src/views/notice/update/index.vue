@@ -224,8 +224,7 @@
                 :placeholder="$t('notice.placeholder.expires_at')"
                 :time-picker-props="{ defaultValue: '23:59:59' }"
                 :disabled-date="
-                  (current) =>
-                    dayjs(current).isBefore(dayjs().subtract(1, 'day'))
+                  disabledDate
                 "
                 style="width: 100%"
                 show-time
@@ -297,8 +296,7 @@
                 v-model="formData.scheduled_time"
                 :placeholder="$t('notice.placeholder.scheduled_time')"
                 :disabled-date="
-                  (current) =>
-                    dayjs(current).isBefore(dayjs().subtract(1, 'day'))
+                  disabledDate
                 "
                 style="width: 100%"
                 show-time
@@ -353,7 +351,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { FormInstance } from '@arco-design/web-vue/es';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import {

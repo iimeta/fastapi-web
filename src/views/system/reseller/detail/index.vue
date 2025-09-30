@@ -197,7 +197,6 @@
       </a-descriptions-item>
       <a-descriptions-item
         :label="t('reseller.detail.label.login_time')"
-        :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

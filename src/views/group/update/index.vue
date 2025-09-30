@@ -492,10 +492,7 @@
                 v-model="formData.expires_at"
                 :placeholder="$t('group.placeholder.expires_at')"
                 :time-picker-props="{ defaultValue: '23:59:59' }"
-                :disabled-date="
-                  (current) =>
-                    dayjs(current).isBefore(dayjs().subtract(1, 'day'))
-                "
+                :disabled-date="disabledDate"
                 allow-clear
                 style="width: 100%"
                 show-time
@@ -587,9 +584,9 @@
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { FormInstance } from '@arco-design/web-vue/es';
   import { useRoute, useRouter } from 'vue-router';
-  import { quotaConv } from '@/utils/common';
+  import { quotaConv, disabledDate } from '@/utils/common';
   import {
     submitGroupUpdate,
     GroupUpdate,
