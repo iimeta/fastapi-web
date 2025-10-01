@@ -737,7 +737,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance } from '@arco-design/web-vue/es';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import { quotaConv, disabledDate } from '@/utils/common';
   import {
     queryResellerPage,
@@ -766,7 +766,6 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { Message } from '@arco-design/web-vue';
   import { queryModelTree, Tree } from '@/api/model';
   import { queryGroupList, GroupList } from '@/api/group';
   import Detail from '../detail/index.vue';

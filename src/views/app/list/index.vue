@@ -652,7 +652,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance } from '@arco-design/web-vue/es';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import { quotaConv, disabledDate } from '@/utils/common';
   import {
     queryAppPage,
@@ -681,7 +681,6 @@
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { queryGroupList, GroupList } from '@/api/group';
-  import { Message } from '@arco-design/web-vue';
   import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
 

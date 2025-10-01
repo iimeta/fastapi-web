@@ -533,7 +533,7 @@
     Announcement,
     Document,
   } from '@/api/site_config';
-  import { FormInstance } from '@arco-design/web-vue/es';
+  import { FormInstance } from '@arco-design/web-vue';
   import { useRouter, useRoute } from 'vue-router';
 
   const { proxy } = getCurrentInstance() as any;

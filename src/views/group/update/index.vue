@@ -584,7 +584,7 @@
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance } from '@arco-design/web-vue/es';
+  import { FormInstance } from '@arco-design/web-vue';
   import { useRoute, useRouter } from 'vue-router';
   import { quotaConv, disabledDate } from '@/utils/common';
   import {

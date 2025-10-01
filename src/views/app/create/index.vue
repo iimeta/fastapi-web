@@ -294,10 +294,9 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { FormInstance } from '@arco-design/web-vue/es';
   import { useRouter } from 'vue-router';
   import dayjs from 'dayjs';
-  import { Message } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import { quotaConv, disabledDate } from '@/utils/common';
   import { submitAppCreate, AppCreate } from '@/api/app';
   import { queryModelTree, Tree } from '@/api/model';

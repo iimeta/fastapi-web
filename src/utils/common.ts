@@ -31,4 +31,4 @@ export function parserPrice(price: string) {
 
 export function disabledDate(current: Date) {
   return dayjs(current).isBefore(dayjs().subtract(1, 'day'));
-};
+}

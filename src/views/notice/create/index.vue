@@ -349,7 +349,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import { useRouter } from 'vue-router';
-  import { FormInstance } from '@arco-design/web-vue/es';
+  import { FormInstance } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { submitNoticeCreate, Notice } from '@/api/notice';
