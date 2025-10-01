@@ -5,7 +5,7 @@
 # 智元 Fast API WEB
 
 [![Release](https://img.shields.io/github/v/release/iimeta/fastapi-web?color=blue)](https://github.com/iimeta/fastapi-web/releases)
-[![License](https://img.shields.io/static/v1?label=license&message=MIT&color=green)](https://github.com/iimeta/fastapi-web/blob/main/LICENSE)
+[![License](https://img.shields.io/static/v1?label=license&message=Apache-2.0&color=green)](https://github.com/iimeta/fastapi-web/blob/main/LICENSE)
 
 </div>
 
