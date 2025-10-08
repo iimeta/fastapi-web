@@ -1,5 +1,7 @@
 import axios from 'axios';
 import qs from 'query-string';
+import { ForwardConfig, FallbackConfig } from './model';
+import { Spend } from './common';
 
 export interface ChatPage {
   id: string;
@@ -7,9 +9,7 @@ export interface ChatPage {
   user_id: any;
   app_id: any;
   model: string;
-  prompt_tokens: number;
-  completion_tokens: number;
-  total_tokens: number;
+  spend: Spend;
   stream: boolean;
   conn_time: number;
   duration: number;
@@ -43,94 +43,12 @@ export interface DetailParams {
   id: any;
 }
 
-export interface TextQuota {
-  billing_method: number;
-  prompt_ratio: number;
-  completion_ratio: number;
-  cached_ratio: number;
-  fixed_quota: number;
-}
-
-export interface GenerationQuota {
-  quality: string;
-  width: any;
-  height: any;
-  fixed_quota: any;
-  is_default: string;
-}
-
-export interface ImageQuota {
-  billing_method: any;
-  generation_quotas: GenerationQuota[];
-  text_ratio: number;
-  input_ratio: number;
-  output_ratio: number;
-  cached_ratio: number;
-  fixed_quota: any;
-}
-
-export interface VisionQuota {
-  mode: string;
-  fixed_quota: any;
-  is_default: string;
-}
-
-export interface AudioQuota {
-  billing_method: any;
-  prompt_ratio: number;
-  completion_ratio: number;
-  cached_ratio: number;
-  fixed_quota: number;
-}
-
-export interface MultimodalQuota {
-  text_quota: TextQuota;
-  vision_quotas: VisionQuota[];
-}
-
-export interface RealtimeQuota {
-  text_quota: TextQuota;
-  audio_quota: AudioQuota;
-  fixed_quota: number;
-}
-
-export interface MultimodalAudioQuota {
-  text_quota: TextQuota;
-  audio_quota: AudioQuota;
-  fixed_quota: number;
-}
-
-export interface MidjourneyQuota {
-  name: any;
-  action: any;
-  path: any;
-  fixed_quota: any;
-}
-
-export interface ForwardConfig {
-  forward_rule: string;
-  target_model: string;
-  target_model_name?: string;
-  keywords: string[];
-  target_models: string[];
-  target_model_names?: string[];
-}
-
-export interface FallbackConfig {
-  model_agent: string;
-  model_agent_name?: string;
-  model: string;
-  model_name?: string;
-}
-
 export interface ChatDetail {
   id: string;
   host: string;
   trace_id: string;
   user_id: any;
   app_id: any;
-  group_name: string;
-  discount: number;
   provider_id: string;
   provider_name: string;
   model_id: string;
@@ -152,16 +70,7 @@ export interface ChatDetail {
   prompt: string;
   completion: string;
   messages: any;
-  text_quota: TextQuota;
-  multimodal_quota: MultimodalQuota;
-  realtime_quota: RealtimeQuota;
-  multimodal_audio_quota: MultimodalAudioQuota;
-  prompt_tokens: number;
-  completion_tokens: number;
-  search_tokens: number;
-  cache_write_tokens: number;
-  cache_hit_tokens: number;
-  total_tokens: number;
+  spend: Spend;
   stream: boolean;
   conn_time: number;
   duration: number;
@@ -232,8 +141,6 @@ export interface ImageDetail {
   host: string;
   user_id: any;
   app_id: any;
-  group_name: string;
-  discount: number;
   provider_id: string;
   provider_name: string;
   model_id: string;
@@ -257,13 +164,7 @@ export interface ImageDetail {
   n: number;
   quality: string;
   image_data: any;
-  image_quota: ImageQuota;
-  generation_quota: GenerationQuota;
-  input_tokens: number;
-  output_tokens: number;
-  text_tokens: number;
-  image_tokens: number;
-  total_tokens: number;
+  spend: Spend;
   total_time: number;
   internal_time: number;
   req_time: string;
@@ -331,8 +232,6 @@ export interface AudioDetail {
   host: string;
   user_id: any;
   app_id: any;
-  group_name: string;
-  discount: number;
   provider_id: string;
   provider_name: string;
   model_id: string;
@@ -353,10 +252,7 @@ export interface AudioDetail {
   fallback_config: FallbackConfig;
   input: string;
   text: string;
-  characters: number;
-  minute: number;
-  audio_quota: AudioQuota;
-  total_tokens: number;
+  spend: Spend;
   total_time: number;
   internal_time: number;
   req_time: string;

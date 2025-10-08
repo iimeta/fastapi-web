@@ -15,7 +15,7 @@ const LOG: AppRouteRecordRaw = {
     {
       path: 'chat',
       name: 'ChatList',
-      component: () => import('@/views/log/chat/list/index.vue'),
+      component: () => import('@/views/log/list/chat.vue'),
       meta: {
         locale: 'menu.chat.list',
         requiresAuth: true,
@@ -26,7 +26,7 @@ const LOG: AppRouteRecordRaw = {
     {
       path: 'image',
       name: 'ImageList',
-      component: () => import('@/views/log/image/list/index.vue'),
+      component: () => import('@/views/log/list/image.vue'),
       meta: {
         locale: 'menu.image.list',
         requiresAuth: true,
@@ -37,7 +37,7 @@ const LOG: AppRouteRecordRaw = {
     {
       path: 'audio',
       name: 'AudioList',
-      component: () => import('@/views/log/audio/list/index.vue'),
+      component: () => import('@/views/log/list/audio.vue'),
       meta: {
         locale: 'menu.audio.list',
         requiresAuth: true,

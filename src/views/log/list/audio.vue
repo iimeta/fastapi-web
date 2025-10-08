@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-message />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.image') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.image.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.audio') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.audio.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -376,15 +376,11 @@
         <template #user_id="{ record }">
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
-        <template #images="{ record }">
-          <a-button type="text" size="small" @click="viewImage(record.id)"
-            >查看</a-button
-          >
-          <a-image-preview-group
-            v-if="imageVisibleId === record.id"
-            v-model:visible="imageVisible"
-            :src-list="record.images"
-          />
+        <template #characters="{ record }">
+          {{ record.characters || '-' }}
+        </template>
+        <template #minute="{ record }">
+          {{ record.minute || '-' }}
         </template>
         <template #total_tokens="{ record }">
           {{
@@ -517,7 +513,7 @@
       </a-table>
 
       <a-drawer
-        :title="$t('menu.image.detail')"
+        :title="$t('menu.audio.detail')"
         :width="700"
         :footer="false"
         :visible="detailVisible"
@@ -537,7 +533,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { quotaConv } from '@/utils/common';
-  import { queryImagePage, ImagePage, ImagePageParams } from '@/api/log';
+  import { queryAudioPage, AudioPage, AudioPageParams } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -549,7 +545,7 @@
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
-  import Detail from '../detail/index.vue';
+  import Detail from '../detail/audio.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -581,7 +577,7 @@
     };
   };
 
-  const renderData = ref<ImagePage[]>([]);
+  const renderData = ref<AudioPage[]>([]);
   const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -638,17 +634,17 @@
       align: 'center',
     },
     {
-      title: t('chat.columns.prompt'),
-      dataIndex: 'prompt',
-      slotName: 'prompt',
+      title: t('chat.columns.characters'),
+      dataIndex: 'characters',
+      slotName: 'characters',
       align: 'center',
       ellipsis: true,
       tooltip: true,
     },
     {
-      title: t('chat.columns.images'),
-      dataIndex: 'images',
-      slotName: 'images',
+      title: t('chat.columns.minute'),
+      dataIndex: 'minute',
+      slotName: 'minute',
       align: 'center',
     },
     {
@@ -725,14 +721,14 @@
   }
 
   const fetchData = async (
-    params: ImagePageParams = {
+    params: AudioPageParams = {
       ...basePagination,
       ...searchFormData.value,
     }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryImagePage(params);
+      const { data } = await queryAudioPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
@@ -749,7 +745,7 @@
     fetchData({
       ...basePagination,
       ...searchFormData.value,
-    } as unknown as ImagePageParams);
+    } as unknown as AudioPageParams);
   };
 
   const onPageChange = (current: number) => {
@@ -874,13 +870,6 @@
     getModelAgentList();
   }
 
-  const imageVisibleId = ref();
-  const imageVisible = ref(false);
-  const viewImage = (id: any) => {
-    imageVisibleId.value = id;
-    imageVisible.value = true;
-  };
-
   const detailVisible = ref(false);
   const recordId = ref();
 
@@ -895,7 +884,7 @@
 
 <script lang="ts">
   export default {
-    name: 'ImageList',
+    name: 'AudioList',
   };
 </script>
 

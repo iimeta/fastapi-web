@@ -76,3 +76,82 @@ export interface Pricing {
   midjourney: MidjourneyPricing[];
   once: OncePricing;
 }
+
+export interface TextSpend {
+  pricing: TextPricing;
+  input_tokens: number;
+  output_tokens: number;
+  spend_tokens: number;
+}
+
+export interface CacheSpend {
+  pricing: CachePricing;
+  read_tokens: number;
+  write_tokens: number;
+  spend_tokens: number;
+}
+
+export interface ImageSpend {
+  pricing: ImagePricing;
+  input_tokens: number;
+  output_tokens: number;
+  spend_tokens: number;
+}
+
+export interface ImageGenerationSpend {
+  pricing: ImageGenerationPricing;
+  n: number;
+  spend_tokens: number;
+}
+
+export interface VisionSpend {
+  pricing: VisionPricing;
+  spend_tokens: number;
+}
+
+export interface AudioSpend {
+  pricing: AudioPricing;
+  input_tokens: number;
+  output_tokens: number;
+  spend_tokens: number;
+}
+
+export interface SearchSpend {
+  pricing: SearchPricing;
+  spend_tokens: number;
+}
+
+export interface MidjourneySpend {
+  pricing: MidjourneyPricing;
+  spend_tokens: number;
+}
+
+export interface OnceSpend {
+  pricing: OncePricing;
+  spend_tokens: number;
+  input_tokens: number;
+  output_tokens: number;
+}
+
+export interface Spend {
+  billing_rule: number;
+  billing_methods: number[];
+  billing_items: string[];
+  text: TextSpend;
+  text_cache: CacheSpend;
+  tiered_text: TextSpend;
+  tiered_text_cache: CacheSpend;
+  image: ImageSpend;
+  image_generation: ImageGenerationSpend;
+  image_cache: CacheSpend;
+  vision: VisionSpend;
+  audio: AudioSpend;
+  audio_cache: CacheSpend;
+  search: SearchSpend;
+  midjourney: MidjourneySpend;
+  once: OnceSpend;
+  group_id: string;
+  group_name: string;
+  group_discount: number;
+  total_spend_tokens: number;
+}

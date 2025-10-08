@@ -50,12 +50,12 @@
         </a-skeleton>
         <span v-else>{{ currentData.app_id || '-' }}</span>
       </a-descriptions-item>
-      <!-- <a-descriptions-item label="提供商">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.provider_name }}</span>
-            </a-descriptions-item> -->
+      <a-descriptions-item label="提供商">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.provider_name }}</span>
+      </a-descriptions-item>
       <a-descriptions-item label="模型">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -90,7 +90,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>{{ currentData.group_name || '-' }}</span>
+        <span v-else>{{ currentData.spend.group_name || '-' }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="分组折扣" :span="2">
         <a-skeleton v-if="loading" :animation="true">
@@ -98,66 +98,34 @@
         </a-skeleton>
         <span v-else>
           {{
-            currentData.discount > 0
-              ? Number((currentData.discount * 100).toFixed(2)) + '%'
+            currentData.spend.group_discount > 0
+              ? Number((currentData.spend.group_discount * 100).toFixed(2)) +
+                '%'
               : '-'
           }}
         </span>
-      </a-descriptions-item>
-      <a-descriptions-item label="提问倍率">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          currentData.model_type !== 6
-            ? currentData.audio_quota.prompt_ratio || '-'
-            : '-'
-        }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="回答倍率" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          currentData.model_type !== 5
-            ? currentData.audio_quota.completion_ratio || '-'
-            : '-'
-        }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="提问字符数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.characters || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="回答分钟数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.minute || '-' }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="计费方式">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{
-          $t(
-            `chat.dict.billing_method.${currentData.audio_quota.billing_method}`
-          )
+          $t(`model.dict.billing_methods.${currentData.spend.billing_methods}`)
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="花费令牌数">
+      <a-descriptions-item label="花费">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>{{
-          currentData.total_tokens
-            ? currentData.total_tokens
-            : currentData.status === 1 &&
-              currentData.audio_quota.billing_method === 2
-            ? 0
-            : '-'
-        }}</span>
+        <span v-else>
+          {{
+            currentData.spend.total_spend_tokens
+              ? currentData.spend.total_spend_tokens
+              : currentData.status === 1
+              ? 0
+              : '-'
+          }}
+        </span>
       </a-descriptions-item>
       <a-descriptions-item label="总耗时">
         <a-skeleton v-if="loading" :animation="true">
@@ -312,20 +280,20 @@
         </a-skeleton>
         <span v-else>{{ currentData.real_model }}</span>
       </a-descriptions-item>
-      <!-- <a-descriptions-item label="启用后备">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>
-                {{
-                  $t(
-                    `chat.dict.is_enable_fallback.${
-                      currentData.is_enable_fallback || false
-                    }`
-                  )
-                }}
-              </span>
-            </a-descriptions-item> -->
+      <a-descriptions-item label="启用后备">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            $t(
+              `chat.dict.is_enable_fallback.${
+                currentData.is_enable_fallback || false
+              }`
+            )
+          }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item label="后备代理">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
@@ -435,7 +403,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>{{ currentData.group_name || '-' }}</span>
+        <span v-else>{{ currentData.spend.group_name || '-' }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="分组折扣">
         <a-skeleton v-if="loading" :animation="true">
@@ -443,66 +411,38 @@
         </a-skeleton>
         <span v-else>
           {{
-            currentData.discount > 0
-              ? Number((currentData.discount * 100).toFixed(2)) + '%'
+            currentData.spend.group_discount > 0
+              ? Number((currentData.spend.group_discount * 100).toFixed(2)) +
+                '%'
               : '-'
           }}
         </span>
-      </a-descriptions-item>
-      <a-descriptions-item label="提问倍率" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          currentData.model_type !== 6
-            ? currentData.audio_quota.prompt_ratio || '-'
-            : '-'
-        }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="回答倍率">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          currentData.model_type !== 5
-            ? currentData.audio_quota.completion_ratio || '-'
-            : '-'
-        }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="提问字符数" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.characters || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="回答分钟数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.minute || '-' }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="计费方式" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>{{
-          $t(
-            `chat.dict.billing_method.${currentData.audio_quota.billing_method}`
-          )
-        }}</span>
+        <span v-else>
+          {{
+            $t(
+              `model.dict.billing_methods.${currentData.spend.billing_methods}`
+            )
+          }}
+        </span>
       </a-descriptions-item>
-      <a-descriptions-item label="花费令牌数">
+      <a-descriptions-item label="花费">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>{{
-          currentData.total_tokens
-            ? currentData.total_tokens
-            : currentData.status === 1 &&
-              currentData.audio_quota.billing_method === 2
-            ? 0
-            : '-'
-        }}</span>
+        <span v-else>
+          {{
+            currentData.spend.total_spend_tokens
+              ? currentData.spend.total_spend_tokens
+              : currentData.status === 1
+              ? 0
+              : '-'
+          }}
+        </span>
       </a-descriptions-item>
       <a-descriptions-item label="总耗时">
         <a-skeleton v-if="loading" :animation="true">

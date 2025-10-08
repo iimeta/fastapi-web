@@ -67,10 +67,9 @@ export default {
   'chat.columns.user_id': '用户ID',
   'chat.columns.app_id': '应用ID',
   'chat.columns.model': '模型',
-  'chat.columns.prompt_tokens': '提问',
-  'chat.columns.completion_tokens': '回答',
-  'chat.columns.total_tokens': '总消耗',
-  'chat.columns.total_price': '花费',
+  'chat.columns.input_tokens': '输入',
+  'chat.columns.output_tokens': '输出',
+  'chat.columns.total_spend_tokens': '花费',
   'chat.columns.stream': '流式',
   'chat.columns.conn_time': '连接',
   'chat.columns.duration': '持续',
@@ -99,4 +98,24 @@ export default {
   'chat.dict.forward_rule.1': '全部转发',
   'chat.dict.forward_rule.2': '按关键字',
   'chat.dict.forward_rule.3': '内容长度',
+
+  'menu.audio': '日志管理',
+  'menu.audio.list': '音频日志',
+  'menu.audio.detail': '音频详情',
+  // detail
+  'chat.detail.title.audioInfo': '音频详情',
+  // search
+  // columns
+  'chat.columns.characters': '字符数',
+  'chat.columns.minute': '分钟数',
+  // dict
+  'menu.image': '日志管理',
+  'menu.image.list': '绘图日志',
+  'menu.image.detail': '绘图详情',
+  // detail
+  // search
+  // columns
+  'chat.columns.prompt': '提示词',
+  'chat.columns.images': '图像',
+  // dict
 };

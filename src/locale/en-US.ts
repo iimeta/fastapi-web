@@ -15,9 +15,7 @@ import localeKey from '@/views/key/locale/en-US';
 import localeAgent from '@/views/agent/locale/en-US';
 import localeProvider from '@/views/system/provider/locale/en-US';
 import localeFinance from '@/views/finance/locale/en-US';
-import localeChat from '@/views/log/chat/locale/en-US';
-import localeImage from '@/views/log/image/locale/en-US';
-import localeAudio from '@/views/log/audio/locale/en-US';
+import localeLog from '@/views/log/locale/en-US';
 import localeReseller from '@/views/system/reseller/locale/en-US';
 import localeSiteConfig from '@/views/system/site_config/locale/en-US';
 import localeSysConfig from '@/views/system/config/locale/en-US';
@@ -42,9 +40,7 @@ export default {
   ...localeAgent,
   ...localeProvider,
   ...localeFinance,
-  ...localeChat,
-  ...localeImage,
-  ...localeAudio,
+  ...localeLog,
   ...localeReseller,
   ...localeSiteConfig,
   ...localeSysConfig,

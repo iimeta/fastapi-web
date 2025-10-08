@@ -44,18 +44,18 @@
         </a-skeleton>
         <span v-else>{{ currentData.user_id || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="应用ID" :span="2">
+      <a-descriptions-item label="应用ID">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.app_id || '-' }}</span>
       </a-descriptions-item>
-      <!-- <a-descriptions-item label="提供商">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>{{ currentData.provider_name }}</span>
-            </a-descriptions-item> -->
+      <a-descriptions-item label="提供商">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.provider_name }}</span>
+      </a-descriptions-item>
       <a-descriptions-item label="模型">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -70,7 +70,15 @@
           $t(`dict.model_type.${currentData.model_type}`)
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="提示词" :span="2">
+      <a-descriptions-item label="流式">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{
+          $t(`chat.dict.stream.${currentData.stream || false}`)
+        }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="提问" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -78,119 +86,12 @@
           {{ currentData.prompt || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答">
+      <a-descriptions-item label="回答" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else style="max-height: 220px; display: block; overflow: auto">
-          {{ currentData.image_data || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item label="分组名称">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.group_name || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="分组折扣" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData.discount > 0
-              ? Number((currentData.discount * 100).toFixed(2)) + '%'
-              : '-'
-          }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像质量">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.quality || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像大小" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.size || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像张数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.n || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像令牌数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          currentData.generation_quota.fixed_quota || '-'
-        }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="文本倍率">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.image_quota.text_ratio || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="文本令牌数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData.text_tokens
-              ? currentData.text_tokens
-              : currentData.status === 1 &&
-                currentData.image_quota.billing_method === 2
-              ? 0
-              : '-'
-          }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像输入倍率">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.image_quota.input_ratio || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像输入令牌数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData.image_tokens
-              ? currentData.image_tokens
-              : currentData.status === 1 &&
-                currentData.image_quota.billing_method === 2
-              ? 0
-              : '-'
-          }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像输出倍率">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.image_quota.output_ratio || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像输出令牌数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData.output_tokens
-              ? currentData.output_tokens
-              : currentData.status === 1 &&
-                currentData.image_quota.billing_method === 2
-              ? 0
-              : '-'
-          }}
+          {{ currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item label="计费方式">
@@ -200,24 +101,80 @@
         <span v-else>
           {{
             $t(
-              `chat.dict.billing_method.${currentData.image_quota.billing_method}`
+              `model.dict.billing_methods.${currentData.spend.billing_methods}`
             )
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="花费令牌数">
+      <a-descriptions-item label="分组名称">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.spend.group_name || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="分组折扣">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           {{
-            currentData.total_tokens
-              ? currentData.total_tokens
-              : currentData.status === 1 &&
-                currentData.image_quota.billing_method === 2
+            currentData.spend.group_discount > 0
+              ? Number((currentData.spend.group_discount * 100).toFixed(2)) +
+                '%'
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item label="花费">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.spend.total_spend_tokens
+              ? currentData.spend.total_spend_tokens
+              : currentData.status === 1
               ? 0
               : '-'
           }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item label="连接耗时">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.conn_time > 30000" color="red">
+            {{ currentData.conn_time }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.conn_time > 15000" color="orange">
+            {{ currentData.conn_time }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.conn_time > 5000" color="gold">
+            {{ currentData.conn_time }} ms
+          </a-tag>
+          <a-tag v-else color="green"
+            >{{ currentData.conn_time || '-' }} ms</a-tag
+          >
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item label="持续时长">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.duration > 180000" color="red">
+            {{ currentData.duration }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.duration > 120000" color="orange">
+            {{ currentData.duration }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.duration > 90000" color="gold">
+            {{ currentData.duration }} ms
+          </a-tag>
+          <a-tag v-else color="green"
+            >{{ currentData.duration || '-' }} ms</a-tag
+          >
         </span>
       </a-descriptions-item>
       <a-descriptions-item label="总耗时">
@@ -298,7 +255,7 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="Host">
+      <a-descriptions-item label="Host" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -327,7 +284,7 @@
           currentData.is_smart_match ? '-' : currentData.user_id || '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="应用ID" :span="2">
+      <a-descriptions-item label="应用ID">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
@@ -373,20 +330,28 @@
         </a-skeleton>
         <span v-else>{{ currentData.real_model }}</span>
       </a-descriptions-item>
-      <!-- <a-descriptions-item label="启用后备">
-              <a-skeleton v-if="loading" :animation="true">
-                <a-skeleton-line :rows="1" />
-              </a-skeleton>
-              <span v-else>
-                {{
-                  $t(
-                    `chat.dict.is_enable_fallback.${
-                      currentData.is_enable_fallback || false
-                    }`
-                  )
-                }}
-              </span>
-            </a-descriptions-item> -->
+      <a-descriptions-item label="流式">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`chat.dict.stream.${currentData.stream || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item label="启用后备">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            $t(
+              `chat.dict.is_enable_fallback.${
+                currentData.is_enable_fallback || false
+              }`
+            )
+          }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item label="后备代理">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
@@ -429,7 +394,7 @@
             : '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="启用代理" :span="2">
+      <a-descriptions-item label="启用代理">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -447,7 +412,7 @@
         </a-skeleton>
         <span v-else>{{ currentData?.model_agent?.name || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="密钥">
+      <a-descriptions-item label="密钥" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -476,7 +441,7 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="提示词" :span="2">
+      <a-descriptions-item label="提问" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -484,119 +449,12 @@
           {{ currentData.prompt || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答">
+      <a-descriptions-item label="回答" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else style="max-height: 220px; display: block; overflow: auto">
-          {{ currentData.image_data || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item label="分组名称" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.group_name || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="分组折扣">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData.discount > 0
-              ? Number((currentData.discount * 100).toFixed(2)) + '%'
-              : '-'
-          }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像质量" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.quality || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像大小">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.size || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像张数" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.n || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像令牌数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          currentData.generation_quota.fixed_quota || '-'
-        }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="文本倍率" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.image_quota.text_ratio || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="文本令牌数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData.text_tokens
-              ? currentData.text_tokens
-              : currentData.status === 1 &&
-                currentData.image_quota.billing_method === 2
-              ? 0
-              : '-'
-          }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像输入倍率">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.image_quota.input_ratio || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像输入令牌数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData.image_tokens
-              ? currentData.image_tokens
-              : currentData.status === 1 &&
-                currentData.image_quota.billing_method === 2
-              ? 0
-              : '-'
-          }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像输出倍率">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.image_quota.output_ratio || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像输出令牌数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData.output_tokens
-              ? currentData.output_tokens
-              : currentData.status === 1 &&
-                currentData.image_quota.billing_method === 2
-              ? 0
-              : '-'
-          }}
+          {{ currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item label="计费方式">
@@ -606,24 +464,80 @@
         <span v-else>
           {{
             $t(
-              `chat.dict.billing_method.${currentData.image_quota.billing_method}`
+              `model.dict.billing_methods.${currentData.spend.billing_methods}`
             )
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="花费令牌数">
+      <a-descriptions-item label="分组名称">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.spend.group_name || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="分组折扣">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           {{
-            currentData.total_tokens
-              ? currentData.total_tokens
-              : currentData.status === 1 &&
-                currentData.image_quota.billing_method === 2
+            currentData.spend.group_discount > 0
+              ? Number((currentData.spend.group_discount * 100).toFixed(2)) +
+                '%'
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item label="花费">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.spend.total_spend_tokens
+              ? currentData.spend.total_spend_tokens
+              : currentData.status === 1
               ? 0
               : '-'
           }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item label="连接耗时">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.conn_time > 10000" color="red">
+            {{ currentData.conn_time }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.conn_time > 5000" color="orange">
+            {{ currentData.conn_time }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.conn_time > 3000" color="gold">
+            {{ currentData.conn_time }} ms
+          </a-tag>
+          <a-tag v-else color="green"
+            >{{ currentData.conn_time || '-' }} ms</a-tag
+          >
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item label="持续时长">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.duration > 120000" color="red">
+            {{ currentData.duration }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.duration > 90000" color="orange">
+            {{ currentData.duration }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.duration > 60000" color="gold">
+            {{ currentData.duration }} ms
+          </a-tag>
+          <a-tag v-else color="green"
+            >{{ currentData.duration || '-' }} ms</a-tag
+          >
         </span>
       </a-descriptions-item>
       <a-descriptions-item label="总耗时">
@@ -722,13 +636,44 @@
         </span>
       </a-descriptions-item>
     </a-descriptions>
+
+    <!-- 提问上下文 -->
+    <a-descriptions
+      layout="inline-vertical"
+      :column="1"
+      style="margin-top: 10px; position: relative"
+    >
+      <a-descriptions-item>
+        <a-tabs type="card">
+          <a-tab-pane key="1" title="提问上下文">
+            <a-skeleton v-if="loading" :animation="true">
+              <a-skeleton-line :rows="3" />
+            </a-skeleton>
+            <a-space
+              v-else
+              style="max-height: 220px; display: block; overflow: auto"
+            >
+              <VueJsonPretty
+                v-if="currentData.messages"
+                :path="'res'"
+                :data="currentData.messages"
+                :show-length="true"
+              />
+              <span v-else>-</span>
+            </a-space>
+          </a-tab-pane>
+        </a-tabs>
+      </a-descriptions-item>
+    </a-descriptions>
+
+    <!-- 模型代理 -->
     <a-descriptions
       v-permission="['admin']"
       layout="inline-vertical"
-      :column="2"
+      :column="1"
       style="margin-top: 10px; position: relative"
     >
-      <a-descriptions-item :span="2">
+      <a-descriptions-item>
         <a-tabs type="card">
           <a-tab-pane key="1" title="模型代理">
             <a-skeleton v-if="loading" :animation="true">
@@ -755,15 +700,15 @@
   import { useClipboard } from '@vueuse/core';
   import VueJsonPretty from 'vue-json-pretty';
   import {
-    queryImageDetail,
+    queryChatDetail,
     DetailParams,
-    ImageDetail,
-    imageCopyField,
+    ChatDetail,
+    chatCopyField,
   } from '@/api/log';
   import 'vue-json-pretty/lib/styles.css';
 
   const { loading, setLoading } = useLoading(true);
-  const currentData = ref<ImageDetail>({} as ImageDetail);
+  const currentData = ref<ChatDetail>({} as ChatDetail);
   const { copy, copied } = useClipboard();
   const { proxy } = getCurrentInstance() as any;
 
@@ -774,10 +719,10 @@
     },
   });
 
-  const getImageDetail = async (params: DetailParams = { id: props.id }) => {
+  const getChatDetail = async (params: DetailParams = { id: props.id }) => {
     setLoading(true);
     try {
-      const { data } = await queryImageDetail(params);
+      const { data } = await queryChatDetail(params);
       currentData.value = data;
     } catch (err) {
       // you can report use errorHandler or other
@@ -785,7 +730,7 @@
       setLoading(false);
     }
   };
-  getImageDetail();
+  getChatDetail();
 
   /**
    * 复制内容
@@ -806,14 +751,14 @@
    * 复制字段值
    */
   const handleCopyField = async (id: string, field: string) => {
-    const { data } = await imageCopyField({ id, field });
+    const { data } = await chatCopyField({ id, field });
     copy(data.value);
   };
 </script>
 
 <script lang="ts">
   export default {
-    name: 'ImageDetail',
+    name: 'ChatDetail',
   };
 </script>
 

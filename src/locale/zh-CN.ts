@@ -15,9 +15,7 @@ import localeKey from '@/views/key/locale/zh-CN';
 import localeAgent from '@/views/agent/locale/zh-CN';
 import localeProvider from '@/views/system/provider/locale/zh-CN';
 import localeFinance from '@/views/finance/locale/zh-CN';
-import localeChat from '@/views/log/chat/locale/zh-CN';
-import localeImage from '@/views/log/image/locale/zh-CN';
-import localeAudio from '@/views/log/audio/locale/zh-CN';
+import localeLog from '@/views/log/locale/zh-CN';
 import localeReseller from '@/views/system/reseller/locale/zh-CN';
 import localeSiteConfig from '@/views/system/site_config/locale/zh-CN';
 import localeSysConfig from '@/views/system/config/locale/zh-CN';
@@ -42,9 +40,7 @@ export default {
   ...localeAgent,
   ...localeProvider,
   ...localeFinance,
-  ...localeChat,
-  ...localeImage,
-  ...localeAudio,
+  ...localeLog,
   ...localeReseller,
   ...localeSiteConfig,
   ...localeSysConfig,

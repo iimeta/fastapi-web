@@ -321,8 +321,8 @@
           </a-space>
         </a-col>
         <a-col :span="14">
-          花费 = ( 提问 × 提问倍率 + 回答 × 回答倍率 ) × 分组折扣 ÷ 500000
-          &nbsp;&nbsp;或&nbsp;&nbsp; 回答 × 分组折扣 ÷ 500000
+          花费 = ( 输入 × 输入价格 + 输出 × 输出价格 ) × 分组折扣 ÷ 500000
+          &nbsp;&nbsp;或&nbsp;&nbsp; 输出 × 分组折扣 ÷ 500000
         </a-col>
         <a-col :span="2"> RPM: &nbsp;{{ rpm.toLocaleString() }} </a-col>
         <a-col :span="3"> TPM: &nbsp;{{ tpm.toLocaleString() }} </a-col>
@@ -403,29 +403,29 @@
         <template #user_id="{ record }">
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
-        <template #prompt_tokens="{ record }">
+        <template #input_tokens="{ record }">
           {{
-            record.prompt_tokens
-              ? record.prompt_tokens
-              : record.status === 1 && record.billing_method === 2
+            record.spend.text.input_tokens
+              ? record.spend.text.input_tokens
+              : record.status === 1
               ? 0
               : '-'
           }}
         </template>
-        <template #completion_tokens="{ record }">
+        <template #output_tokens="{ record }">
           {{
-            record.completion_tokens
-              ? record.completion_tokens
-              : record.status === 1 && record.billing_method === 2
+            record.spend.text.output_tokens
+              ? record.spend.text.output_tokens
+              : record.status === 1
               ? 0
               : '-'
           }}
         </template>
-        <template #total_tokens="{ record }">
+        <template #total_spend_tokens="{ record }">
           {{
-            record.total_tokens
-              ? `$${quotaConv(record.total_tokens)}`
-              : record.status === 1 && record.billing_method === 2
+            record.spend.total_spend_tokens
+              ? `$${quotaConv(record.spend.total_spend_tokens)}`
+              : record.status === 1
               ? 0
               : '-'
           }}
@@ -455,9 +455,9 @@
           >
             {{ record.conn_time }}
           </a-tag>
-          <a-tag v-else v-permission="['reseller', 'user']" color="green">{{
-            record.conn_time || '-'
-          }}</a-tag>
+          <a-tag v-else v-permission="['reseller', 'user']" color="green">
+            {{ record.conn_time || '-' }}
+          </a-tag>
           <a-tag
             v-if="record.conn_time > 10000"
             v-permission="['admin']"
@@ -479,9 +479,9 @@
           >
             {{ record.conn_time }}
           </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">{{
-            record.conn_time || '-'
-          }}</a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">
+            {{ record.conn_time || '-' }}
+          </a-tag>
         </template>
         <template #duration="{ record }">
           <a-tag
@@ -505,9 +505,9 @@
           >
             {{ record.duration }}
           </a-tag>
-          <a-tag v-else v-permission="['reseller', 'user']" color="green">{{
-            record.duration || '-'
-          }}</a-tag>
+          <a-tag v-else v-permission="['reseller', 'user']" color="green">
+            {{ record.duration || '-' }}
+          </a-tag>
           <a-tag
             v-if="record.duration > 120000"
             v-permission="['admin']"
@@ -529,9 +529,9 @@
           >
             {{ record.duration }}
           </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">{{
-            record.duration || '-'
-          }}</a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">
+            {{ record.duration || '-' }}
+          </a-tag>
         </template>
         <template #total_time="{ record }">
           <a-tag
@@ -555,9 +555,9 @@
           >
             {{ record.total_time }}
           </a-tag>
-          <a-tag v-else v-permission="['reseller', 'user']" color="green">{{
-            record.total_time || '-'
-          }}</a-tag>
+          <a-tag v-else v-permission="['reseller', 'user']" color="green">
+            {{ record.total_time || '-' }}
+          </a-tag>
           <a-tag
             v-if="record.total_time > 120000"
             v-permission="['admin']"
@@ -579,9 +579,9 @@
           >
             {{ record.total_time }}
           </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">{{
-            record.total_time || '-'
-          }}</a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">
+            {{ record.total_time || '-' }}
+          </a-tag>
         </template>
         <template #internal_time="{ record }">
           <a-tag
@@ -605,9 +605,9 @@
           >
             {{ record.internal_time }}
           </a-tag>
-          <a-tag v-else v-permission="['reseller', 'user']" color="green">{{
-            record.internal_time || '-'
-          }}</a-tag>
+          <a-tag v-else v-permission="['reseller', 'user']" color="green">
+            {{ record.internal_time || '-' }}
+          </a-tag>
           <a-tag
             v-if="record.internal_time > 500"
             v-permission="['admin']"
@@ -629,23 +629,23 @@
           >
             {{ record.internal_time }}
           </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">{{
-            record.internal_time || '-'
-          }}</a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">
+            {{ record.internal_time || '-' }}
+          </a-tag>
         </template>
         <template #status="{ record }">
-          <a-tag v-if="record.status === -1" color="red">{{
-            $t(`chat.dict.status.${record.status}`)
-          }}</a-tag>
-          <a-tag v-else-if="record.status === 2" color="gold">{{
-            $t(`chat.dict.status.${record.status}`)
-          }}</a-tag>
-          <a-tag v-else-if="record.status === 3" color="orange">{{
-            $t(`chat.dict.status.${record.status}`)
-          }}</a-tag>
-          <a-tag v-else color="green">{{
-            $t(`chat.dict.status.${record.status}`)
-          }}</a-tag>
+          <a-tag v-if="record.status === -1" color="red">
+            {{ $t(`chat.dict.status.${record.status}`) }}
+          </a-tag>
+          <a-tag v-else-if="record.status === 2" color="gold">
+            {{ $t(`chat.dict.status.${record.status}`) }}
+          </a-tag>
+          <a-tag v-else-if="record.status === 3" color="orange">
+            {{ $t(`chat.dict.status.${record.status}`) }}
+          </a-tag>
+          <a-tag v-else color="green">
+            {{ $t(`chat.dict.status.${record.status}`) }}
+          </a-tag>
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
@@ -810,7 +810,7 @@
   import { FormInstance } from '@arco-design/web-vue';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
-  import Detail from '../detail/index.vue';
+  import Detail from '../detail/chat.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -904,23 +904,23 @@
       tooltip: true,
     },
     {
-      title: t('chat.columns.prompt_tokens'),
-      dataIndex: 'prompt_tokens',
-      slotName: 'prompt_tokens',
+      title: t('chat.columns.input_tokens'),
+      dataIndex: 'input_tokens',
+      slotName: 'input_tokens',
       align: 'center',
       width: 75,
     },
     {
-      title: t('chat.columns.completion_tokens'),
-      dataIndex: 'completion_tokens',
-      slotName: 'completion_tokens',
+      title: t('chat.columns.output_tokens'),
+      dataIndex: 'output_tokens',
+      slotName: 'output_tokens',
       align: 'center',
       width: 75,
     },
     {
-      title: t('chat.columns.total_price'),
-      dataIndex: 'total_tokens',
-      slotName: 'total_tokens',
+      title: t('chat.columns.total_spend_tokens'),
+      dataIndex: 'total_spend_tokens',
+      slotName: 'total_spend_tokens',
       align: 'center',
     },
     {
