@@ -422,13 +422,15 @@
           }}
         </template>
         <template #total_spend_tokens="{ record }">
-          {{
-            record.spend.total_spend_tokens
-              ? `$${quotaConv(record.spend.total_spend_tokens)}`
-              : record.status === 1
-              ? 0
-              : '-'
-          }}
+          <span class="spend" @click="spendHandle(record.spend, record.model_type)">
+            {{
+              record.spend.total_spend_tokens
+                ? `$${quotaConv(record.spend.total_spend_tokens)}`
+                : record.status === 1
+                ? '$0.00'
+                : '-'
+            }}
+          </span>
         </template>
         <template #stream="{ record }">
           {{ $t(`chat.dict.stream.${record.stream || false}`) }}
@@ -666,6 +668,7 @@
         <Detail :id="recordId" />
       </a-drawer>
 
+      <!-- 导出聊天日志 -->
       <a-modal
         v-model:visible="chatExportFormVisible"
         :title="$t('chat.form.title.chat_export')"
@@ -707,6 +710,8 @@
           </a-form-item>
         </a-form>
       </a-modal>
+
+      <!-- 删除聊天日志 -->
       <a-modal
         v-model:visible="chatDelFormVisible"
         :title="$t('chat.form.title.chat_del')"
@@ -769,6 +774,21 @@
           </a-form-item>
         </a-form>
       </a-modal>
+
+      <!-- 花费明细 -->
+      <a-modal
+        v-model:visible="spendVisible"
+        :modal-style="{
+          padding: '0px 5px 20px 5px',
+        }"
+        unmount-on-close
+        hide-cancel
+        simple
+        width="920px"
+        ok-text="关闭"
+      >
+        <SpendDetail v-model="spend" :model-type="modelType" />
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -810,7 +830,9 @@
   import { FormInstance } from '@arco-design/web-vue';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+  import { Spend } from '@/api/common';
   import Detail from '../detail/chat.vue';
+  import SpendDetail from '../components/spend.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -1379,6 +1401,16 @@
       });
     }
   };
+
+  const spendVisible = ref(false);
+  const spend = ref();
+  const modelType = ref();
+
+  const spendHandle = async (s: Spend, t: string) => {
+    spendVisible.value = true;
+    spend.value = s;
+    modelType.value = t;
+  };
 </script>
 
 <script lang="ts">
@@ -1430,5 +1462,13 @@
   :deep(.arco-tabs-content) {
     padding-top: 5px;
     padding-left: 15px;
+  }
+  .spend {
+    color: rgb(var(--gray-10));
+    padding: 0;
+  }
+  .spend:hover {
+    color: rgb(var(--link-6));
+    cursor: pointer;
   }
 </style>

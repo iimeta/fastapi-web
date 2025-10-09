@@ -699,6 +699,7 @@
         hide-title
         hide-cancel
         simple
+        ok-text="关闭"
       >
         <PricingDetail v-model="pricing" :model-type="modelType" />
       </a-modal>

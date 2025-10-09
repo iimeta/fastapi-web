@@ -117,5 +117,9 @@ export default {
   // columns
   'chat.columns.prompt': '提示词',
   'chat.columns.images': '图像',
-  // dict
+
+  'chat.label.input_tokens': '输入Token数',
+  'chat.label.output_tokens': '输出Token数',
+  'chat.label.read_tokens': '读取Token数',
+  'chat.label.spend_tokens': '花费',
 };
