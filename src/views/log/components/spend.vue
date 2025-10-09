@@ -1,4 +1,35 @@
 <template>
+  <!-- 总花费 -->
+  <a-table
+    :columns="totalSpendColumns"
+    :data="totalSpend"
+    :pagination="false"
+    :bordered="false"
+    style="margin-bottom: 15px"
+  >
+    <template #text="{ record }">
+      ${{
+        record.text.spend_tokens
+          ? `${quotaConv(record.text.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+    <template #text_cache="{ record }">
+      ${{
+        record.text_cache.spend_tokens
+          ? `${quotaConv(record.text_cache.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+    <template #total_spend_tokens="{ record }">
+      ${{
+        record.total_spend_tokens
+          ? `${quotaConv(record.total_spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+  </a-table>
+
   <!-- 文本 -->
   <a-table
     v-if="spend.billing_items.includes('text')"
@@ -289,43 +320,52 @@
 
   const spend = ref(props.modelValue);
 
+  // 总花费
+  const totalSpend = ref<Spend[]>([]);
+  const totalSpendColumns = ref<TableColumnData[]>([
+    {
+      title: t('chat.columns.total_spend_tokens'),
+      headerCellStyle: { background: '#ffffff' },
+    },
+  ]);
+
   // 文本
   const textSpend = ref<TextSpend[]>([]);
   const textSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.text'),
+      title: t('chat.columns.spend.text'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.label.input_tokens'),
+          title: t('chat.columns.spend.input_tokens'),
           dataIndex: 'input_tokens',
           slotName: 'input_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('model.label.input_ratio'),
+          title: t('chat.columns.spend.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.label.output_tokens'),
+          title: t('chat.columns.spend.output_tokens'),
           dataIndex: 'output_tokens',
           slotName: 'output_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('model.label.output_ratio'),
+          title: t('chat.columns.spend.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.label.spend_tokens'),
+          title: t('chat.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -339,25 +379,25 @@
   const textCacheSpend = ref<CacheSpend[]>([]);
   const textCacheSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.text_cache'),
+      title: t('chat.columns.spend.text_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.label.read_tokens'),
+          title: t('chat.columns.spend.read_tokens'),
           dataIndex: 'read_tokens',
           slotName: 'read_tokens',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.read_ratio'),
+          title: t('chat.columns.spend.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
           width: 200,
         },
         {
-          title: t('chat.label.spend_tokens'),
+          title: t('chat.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -371,18 +411,18 @@
   const audioPricing = ref<AudioPricing[]>([]);
   const audioPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.audio'),
+      title: t('chat.columns.spend.audio'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.input_ratio'),
+          title: t('chat.columns.spend.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.output_ratio'),
+          title: t('chat.columns.spend.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
           align: 'center',
@@ -396,11 +436,11 @@
   const audioCachePricing = ref<CachePricing[]>([]);
   const audioCachePricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.audio_cache'),
+      title: t('chat.columns.spend.audio_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.read_ratio'),
+          title: t('chat.columns.spend.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
@@ -414,32 +454,32 @@
   const tieredTextPricing = ref<TextPricing[]>([]);
   const tieredTextPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.tiered_text'),
+      title: t('chat.columns.spend.tiered_text'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.mode'),
+          title: t('chat.columns.spend.mode'),
           dataIndex: 'mode',
           slotName: 'mode',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.tiered.input_tokens'),
+          title: t('chat.columns.spend.tiered.input_tokens'),
           dataIndex: 'gt',
           slotName: 'gt',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.tiered.input_ratio'),
+          title: t('chat.columns.spend.tiered.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.tiered.output_ratio'),
+          title: t('chat.columns.spend.tiered.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
           align: 'center',
@@ -453,32 +493,32 @@
   const tieredTextCachePricing = ref<CachePricing[]>([]);
   const tieredTextCachePricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.tiered_text_cache'),
+      title: t('chat.columns.spend.tiered_text_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.mode'),
+          title: t('chat.columns.spend.mode'),
           dataIndex: 'mode',
           slotName: 'mode',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.tiered.input_tokens'),
+          title: t('chat.columns.spend.tiered.input_tokens'),
           dataIndex: 'gt',
           slotName: 'gt',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.tiered.read_ratio'),
+          title: t('chat.columns.spend.tiered.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.tiered.write_ratio'),
+          title: t('chat.columns.spend.tiered.write_ratio'),
           dataIndex: 'write_ratio',
           slotName: 'write_ratio',
           align: 'center',
@@ -492,18 +532,18 @@
   const imagePricing = ref<ImagePricing[]>([]);
   const imagePricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.image'),
+      title: t('chat.columns.spend.image'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.input_ratio'),
+          title: t('chat.columns.spend.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.output_ratio'),
+          title: t('chat.columns.spend.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
           align: 'center',
@@ -517,32 +557,32 @@
   const imageGenerationPricing = ref<ImageGenerationPricing[]>([]);
   const imageGenerationPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.image_generation'),
+      title: t('chat.columns.spend.image_generation'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.image.generation.quality'),
+          title: t('chat.columns.spend.image.generation.quality'),
           dataIndex: 'quality',
           slotName: 'quality',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.image.generation.width_height'),
+          title: t('chat.columns.spend.image.generation.width_height'),
           dataIndex: 'width',
           slotName: 'width',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.image.generation.once_ratio'),
+          title: t('chat.columns.spend.image.generation.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.is_default'),
+          title: t('chat.columns.spend.is_default'),
           dataIndex: 'is_default',
           slotName: 'is_default',
           align: 'center',
@@ -556,11 +596,11 @@
   const imageCachePricing = ref<CachePricing[]>([]);
   const imageCachePricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.image_cache'),
+      title: t('chat.columns.spend.image_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.read_ratio'),
+          title: t('chat.columns.spend.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
@@ -574,25 +614,25 @@
   const visionPricing = ref<VisionPricing[]>([]);
   const visionPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.vision'),
+      title: t('chat.columns.spend.vision'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.mode'),
+          title: t('chat.columns.spend.mode'),
           dataIndex: 'mode',
           slotName: 'mode',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.vision.once_ratio'),
+          title: t('chat.columns.spend.vision.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.is_default'),
+          title: t('chat.columns.spend.is_default'),
           dataIndex: 'is_default',
           slotName: 'is_default',
           align: 'center',
@@ -606,25 +646,25 @@
   const videoPricing = ref<VideoPricing[]>([]);
   const videoPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.video'),
+      title: t('chat.columns.spend.video'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.video.width_height'),
+          title: t('chat.columns.spend.video.width_height'),
           dataIndex: 'width',
           slotName: 'width',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.video.once_ratio'),
+          title: t('chat.columns.spend.video.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.is_default'),
+          title: t('chat.columns.spend.is_default'),
           dataIndex: 'is_default',
           slotName: 'is_default',
           align: 'center',
@@ -638,25 +678,25 @@
   const searchPricing = ref<SearchPricing[]>([]);
   const searchPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.search'),
+      title: t('chat.columns.spend.search'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.search.context_size'),
+          title: t('chat.columns.spend.search.context_size'),
           dataIndex: 'context_size',
           slotName: 'context_size',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.search.once_ratio'),
+          title: t('chat.columns.spend.search.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.is_default'),
+          title: t('chat.columns.spend.is_default'),
           dataIndex: 'is_default',
           slotName: 'is_default',
           align: 'center',
@@ -670,32 +710,32 @@
   const midjourneyPricing = ref<MidjourneyPricing[]>([]);
   const midjourneyPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.midjourney'),
+      title: t('chat.columns.spend.midjourney'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.midjourney.name'),
+          title: t('chat.columns.spend.midjourney.name'),
           dataIndex: 'name',
           slotName: 'name',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.midjourney.action'),
+          title: t('chat.columns.spend.midjourney.action'),
           dataIndex: 'action',
           slotName: 'action',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.midjourney.path'),
+          title: t('chat.columns.spend.midjourney.path'),
           dataIndex: 'path',
           slotName: 'path',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.once_ratio'),
+          title: t('chat.columns.spend.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
@@ -709,11 +749,11 @@
   const oncePricing = ref<OncePricing[]>([]);
   const oncePricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.once'),
+      title: t('chat.columns.spend.once'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.once_ratio'),
+          title: t('chat.columns.spend.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
@@ -724,14 +764,34 @@
   ]);
 
   const handlePricing = () => {
+    // 总花费
+    totalSpend.value[0] = spend.value;
+    totalSpendColumns.value[0].children = [];
+
     // 文本
     if (spend.value.billing_items.includes('text')) {
       textSpend.value[0] = spend.value.text;
+
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.text'),
+        dataIndex: 'text',
+        slotName: 'text',
+        align: 'center',
+        width: 100,
+      });
     }
 
     // 文本缓存
     if (spend.value.billing_items.includes('text_cache')) {
       textCacheSpend.value[0] = spend.value.text_cache;
+
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.text_cache'),
+        dataIndex: 'text_cache',
+        slotName: 'text_cache',
+        align: 'center',
+        width: 100,
+      });
     }
 
     // 音频
@@ -793,6 +853,15 @@
     if (spend.value.billing_items.includes('once')) {
       oncePricing.value[0] = spend.value.once.pricing;
     }
+
+    // 总花费
+    totalSpendColumns.value[0].children.push({
+      title: t('chat.columns.total_spend_tokens'),
+      dataIndex: 'total_spend_tokens',
+      slotName: 'total_spend_tokens',
+      align: 'center',
+      width: 100,
+    });
   };
 
   watch(
