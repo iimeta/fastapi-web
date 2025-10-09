@@ -902,6 +902,10 @@
       value: 7,
     },
     {
+      label: t('dict.model_type.8'),
+      value: 8,
+    },
+    {
       label: t('dict.model_type.100'),
       value: 100,
     },

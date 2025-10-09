@@ -164,6 +164,15 @@
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
           v-model="formData.billing_items"
+          value="video"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.video') }}
+        </a-checkbox>
+        <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
+          v-model="formData.billing_items"
           value="search"
           class="billing-items"
           @change="handleBillingItemsChange"
@@ -774,6 +783,83 @@
         </a-form-item>
       </a-tab-pane>
 
+      <!-- 视频 -->
+      <a-tab-pane
+        v-if="formData.billing_items.includes('video')"
+        key="video"
+        :title="$t('model.dict.billing_items.video')"
+      >
+        <a-form-item
+          v-for="(_, index) of formData.video.length"
+          :key="index"
+          :field="
+            `video[${index}].width` &&
+            `video[${index}].height` &&
+            `video[${index}].once_ratio`
+          "
+          :label="`${index + 1}. ` + $t('model.label.video')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.error.video.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="formData.video[index].width"
+            :placeholder="$t('model.placeholder.video.width')"
+            :precision="0"
+            :min="1"
+            :max="999999"
+            :step="1"
+            style="width: 188px; margin-right: 5px"
+          />
+          ×
+          <a-input-number
+            v-model="formData.video[index].height"
+            :placeholder="$t('model.placeholder.video.height')"
+            :precision="0"
+            :min="1"
+            :max="999999"
+            :step="1"
+            style="width: 188px; margin-left: 5px; margin-right: 5px"
+          />
+          <a-input-number
+            v-model="formData.video[index].once_ratio"
+            :placeholder="$t('model.placeholder.video.once_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parserPrice"
+            style="width: 223px; margin-right: 5px"
+          >
+            <template #prefix> $ </template>
+            <template #append> / 秒 </template>
+          </a-input-number>
+          <a-radio
+            v-model="formData.video[index].is_default"
+            value="1"
+            style="width: 60px"
+            @change="handleVideoPricingIsDefaultChange(index)"
+            >默认</a-radio
+          >
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 2px"
+            @click="handleVideoPricingAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleVideoPricingDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
+      </a-tab-pane>
+
       <!-- 搜索 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('search')"
@@ -946,6 +1032,7 @@
     CachePricing,
     ImageGenerationPricing,
     VisionPricing,
+    VideoPricing,
     SearchPricing,
     MidjourneyPricing,
   } from '@/api/common';
@@ -1000,6 +1087,10 @@
     {
       label: t('model.dict.billing_items.vision'),
       value: 'vision',
+    },
+    {
+      label: t('model.dict.billing_items.video'),
+      value: 'video',
     },
     {
       label: t('model.dict.billing_items.search'),
@@ -1198,6 +1289,43 @@
     }
   };
 
+  const handleVideoPricingAdd = (w?: number, h?: number) => {
+    const videoPricing: VideoPricing = {
+      width: w,
+      height: h,
+      once_ratio: ref(),
+      is_default: formData.value.video.length === 0 ? '1' : '',
+    };
+    formData.value.video.push(videoPricing);
+  };
+
+  const handleVideoPricingDel = (index: number) => {
+    if (formData.value.video.length > 1) {
+      if (formData.value.video[index].is_default === '1') {
+        formData.value.video[index === 0 ? 1 : 0].is_default = '1';
+      }
+      formData.value.video.splice(index, 1);
+    }
+  };
+
+  const handleVideoPricingIsDefaultChange = (index: number) => {
+    for (let i = 0; i < formData.value.video.length; i += 1) {
+      if (i === index) {
+        formData.value.video[i].is_default = '1';
+      } else {
+        formData.value.video[i].is_default = '';
+      }
+    }
+  };
+
+  const initVideoPricing = () => {
+    const widths = [720, 1280, 1024, 1792];
+    const heights = [1280, 720, 1792, 1024];
+    for (let i = 0; i < widths.length; i += 1) {
+      handleVideoPricingAdd(widths[i], heights[i]);
+    }
+  };
+
   const handleSearchPricingAdd = (c?: string) => {
     const searchPricing: SearchPricing = {
       context_size: c,
@@ -1343,6 +1471,15 @@
       }
       if (formData.value.vision.length === 0) {
         initVisionPricing();
+      }
+    }
+
+    if (formData.value.billing_items.includes('video')) {
+      if (!formData.value.video) {
+        formData.value.video = [];
+      }
+      if (formData.value.video.length === 0) {
+        initVideoPricing();
       }
     }
 

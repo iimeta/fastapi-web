@@ -105,6 +105,7 @@
                 <a-option value="5">{{ $t('dict.model_type.5') }}</a-option>
                 <a-option value="6">{{ $t('dict.model_type.6') }}</a-option>
                 <a-option value="7">{{ $t('dict.model_type.7') }}</a-option>
+                <a-option value="8">{{ $t('dict.model_type.8') }}</a-option>
                 <a-option value="100">{{ $t('dict.model_type.100') }}</a-option>
                 <a-option value="101">{{ $t('dict.model_type.101') }}</a-option>
                 <a-option value="102">{{ $t('dict.model_type.102') }}</a-option>
@@ -751,6 +752,7 @@
       audio_cache: {
         read_ratio: ref(),
       },
+      video: [],
       search: [],
       midjourney: [],
       once: {

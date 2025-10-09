@@ -119,6 +119,7 @@ export default {
   'dict.model_type.5': '文生语音',
   'dict.model_type.6': '语音生文',
   'dict.model_type.7': '文本向量化',
+  'dict.model_type.8': '文生视频',
   'dict.model_type.100': '多模态',
   'dict.model_type.101': '多模态实时',
   'dict.model_type.102': '多模态语音',

@@ -41,6 +41,13 @@ export interface AudioPricing {
   read_ratio?: any;
 }
 
+export interface VideoPricing {
+  width: any;
+  height: any;
+  once_ratio: any;
+  is_default: string;
+}
+
 export interface SearchPricing {
   context_size?: string;
   once_ratio: any;
@@ -72,6 +79,7 @@ export interface Pricing {
   vision: VisionPricing[];
   audio: AudioPricing;
   audio_cache: CachePricing;
+  video: VideoPricing[];
   search: SearchPricing[];
   midjourney: MidjourneyPricing[];
   once: OncePricing;
@@ -116,6 +124,11 @@ export interface AudioSpend {
   spend_tokens: number;
 }
 
+export interface VideoSpend {
+  pricing: VideoPricing;
+  spend_tokens: number;
+}
+
 export interface SearchSpend {
   pricing: SearchPricing;
   spend_tokens: number;
@@ -147,6 +160,7 @@ export interface Spend {
   vision: VisionSpend;
   audio: AudioSpend;
   audio_cache: CacheSpend;
+  video: VideoSpend;
   search: SearchSpend;
   midjourney: MidjourneySpend;
   once: OnceSpend;

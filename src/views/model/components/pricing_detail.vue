@@ -190,6 +190,26 @@
     </template>
   </a-table>
 
+  <!-- 视频 -->
+  <a-table
+    v-if="pricing.billing_items.includes('video')"
+    :columns="videoPricingColumns"
+    :data="videoPricing"
+    :pagination="false"
+    :bordered="false"
+    style="margin-bottom: 15px"
+  >
+    <template #width="{ record }">
+      {{ record.width }} × {{ record.height }}
+    </template>
+    <template #once_ratio="{ record }">
+      ${{ record.once_ratio || '0.00' }} / 秒
+    </template>
+    <template #is_default="{ record }">
+      {{ record.is_default ? '是' : '-' }}
+    </template>
+  </a-table>
+
   <!-- 搜索 -->
   <a-table
     v-if="pricing.billing_items.includes('search')"
@@ -247,6 +267,7 @@
     ImagePricing,
     ImageGenerationPricing,
     VisionPricing,
+    VideoPricing,
     SearchPricing,
     MidjourneyPricing,
     OncePricing,
@@ -540,6 +561,38 @@
     },
   ]);
 
+  // 视频
+  const videoPricing = ref<VideoPricing[]>([]);
+  const videoPricingColumns = ref<TableColumnData[]>([
+    {
+      title: t('model.columns.pricing.video'),
+      headerCellStyle: { background: '#ffffff' },
+      children: [
+        {
+          title: t('model.label.video.width_height'),
+          dataIndex: 'width',
+          slotName: 'width',
+          align: 'center',
+          width: 200,
+        },
+        {
+          title: t('model.label.video.once_ratio'),
+          dataIndex: 'once_ratio',
+          slotName: 'once_ratio',
+          align: 'center',
+          width: 200,
+        },
+        {
+          title: t('model.label.is_default'),
+          dataIndex: 'is_default',
+          slotName: 'is_default',
+          align: 'center',
+          width: 200,
+        },
+      ],
+    },
+  ]);
+
   // 搜索
   const searchPricing = ref<SearchPricing[]>([]);
   const searchPricingColumns = ref<TableColumnData[]>([
@@ -738,6 +791,11 @@
     // 识图
     if (pricing.value.billing_items.includes('vision')) {
       visionPricing.value = pricing.value.vision;
+    }
+
+    // 视频
+    if (pricing.value.billing_items.includes('video')) {
+      videoPricing.value = pricing.value.video;
     }
 
     // 搜索
