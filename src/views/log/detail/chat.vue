@@ -94,18 +94,6 @@
           {{ currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="计费方式">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            $t(
-              `model.dict.billing_methods.${currentData.spend.billing_methods}`
-            )
-          }}
-        </span>
-      </a-descriptions-item>
       <a-descriptions-item label="分组名称">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -125,16 +113,32 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="花费">
+      <a-descriptions-item label="计费方式">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           {{
+            $t(
+              `model.dict.billing_methods.${currentData.spend.billing_methods}`
+            )
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item label="总花费">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span
+          v-else
+          class="spend"
+          @click="spendHandle(currentData.spend, currentData.model_type)"
+        >
+          {{
             currentData.spend.total_spend_tokens
-              ? currentData.spend.total_spend_tokens
+              ? `$${quotaConv(currentData.spend.total_spend_tokens)}`
               : currentData.status === 1
-              ? 0
+              ? '$0.00'
               : '-'
           }}
         </span>
@@ -457,18 +461,6 @@
           {{ currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="计费方式">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            $t(
-              `model.dict.billing_methods.${currentData.spend.billing_methods}`
-            )
-          }}
-        </span>
-      </a-descriptions-item>
       <a-descriptions-item label="分组名称">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -488,16 +480,32 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="花费">
+      <a-descriptions-item label="计费方式">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           {{
+            $t(
+              `model.dict.billing_methods.${currentData.spend.billing_methods}`
+            )
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item label="总花费">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span
+          v-else
+          class="spend"
+          @click="spendHandle(currentData.spend, currentData.model_type)"
+        >
+          {{
             currentData.spend.total_spend_tokens
-              ? currentData.spend.total_spend_tokens
+              ? `$${quotaConv(currentData.spend.total_spend_tokens)}`
               : currentData.status === 1
-              ? 0
+              ? '$0.00'
               : '-'
           }}
         </span>
@@ -691,6 +699,23 @@
         </a-tabs>
       </a-descriptions-item>
     </a-descriptions>
+
+    <!-- 花费明细 -->
+    <a-modal
+      v-model:visible="spendVisible"
+      :width="888"
+      :body-style="{ maxHeight: '520px' }"
+      :modal-style="{
+        padding: '25px 20px 20px 20px',
+      }"
+      hide-title
+      hide-cancel
+      unmount-on-close
+      simple
+      ok-text="关闭"
+    >
+      <SpendDetail v-model="spend" :model-type="modelType" />
+    </a-modal>
   </div>
 </template>
 
@@ -699,6 +724,7 @@
   import useLoading from '@/hooks/loading';
   import { useClipboard } from '@vueuse/core';
   import VueJsonPretty from 'vue-json-pretty';
+  import { quotaConv } from '@/utils/common';
   import {
     queryChatDetail,
     DetailParams,
@@ -706,6 +732,8 @@
     chatCopyField,
   } from '@/api/log';
   import 'vue-json-pretty/lib/styles.css';
+  import { Spend } from '@/api/common';
+  import SpendDetail from '../components/spend.vue';
 
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<ChatDetail>({} as ChatDetail);
@@ -754,6 +782,16 @@
     const { data } = await chatCopyField({ id, field });
     copy(data.value);
   };
+
+  const spendVisible = ref(false);
+  const spend = ref();
+  const modelType = ref();
+
+  const spendHandle = async (s: Spend, t: number) => {
+    spendVisible.value = true;
+    spend.value = s;
+    modelType.value = t;
+  };
 </script>
 
 <script lang="ts">
@@ -769,5 +807,13 @@
   }
   .copy-btn:hover {
     color: rgb(var(--arcoblue-6));
+  }
+  .spend {
+    color: rgb(var(--link-6));
+    padding: 0;
+  }
+  .spend:hover {
+    color: rgb(var(--link-6));
+    cursor: pointer;
   }
 </style>

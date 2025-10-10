@@ -7,6 +7,7 @@
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <!-- 文本 -->
     <template #text="{ record }">
       ${{
         record.text.spend_tokens
@@ -14,6 +15,8 @@
           : '0.00'
       }}
     </template>
+
+    <!-- 文本缓存 -->
     <template #text_cache="{ record }">
       ${{
         record.text_cache.spend_tokens
@@ -21,6 +24,125 @@
           : '0.00'
       }}
     </template>
+
+    <!-- 音频 -->
+    <template #audio="{ record }">
+      ${{
+        record.audio.spend_tokens
+          ? `${quotaConv(record.audio.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+
+    <!-- 音频缓存 -->
+    <template #audio_cache="{ record }">
+      ${{
+        record.audio_cache.spend_tokens
+          ? `${quotaConv(record.audio_cache.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+
+    <!-- 阶梯文本 -->
+    <template #tiered_text="{ record }">
+      ${{
+        record.tiered_text.spend_tokens
+          ? `${quotaConv(record.tiered_text.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+
+    <!-- 阶梯文本缓存 -->
+    <template #tiered_text_cache="{ record }">
+      ${{
+        record.tiered_text_cache.spend_tokens
+          ? `${quotaConv(record.tiered_text_cache.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+
+    <!-- 图像 -->
+    <template #image="{ record }">
+      ${{
+        record.image.spend_tokens
+          ? `${quotaConv(record.image.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+
+    <!-- 图像生成 -->
+    <template #image_generation="{ record }">
+      ${{
+        record.image_generation.spend_tokens
+          ? `${quotaConv(record.image_generation.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+
+    <!-- 图像缓存 -->
+    <template #image_cache="{ record }">
+      ${{
+        record.image_cache.spend_tokens
+          ? `${quotaConv(record.image_cache.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+
+    <!-- 识图 -->
+    <template #vision="{ record }">
+      ${{
+        record.vision.spend_tokens
+          ? `${quotaConv(record.vision.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+
+    <!-- 视频 -->
+    <template #video="{ record }">
+      ${{
+        record.video.spend_tokens
+          ? `${quotaConv(record.video.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+
+    <!-- 搜索 -->
+    <template #search="{ record }">
+      ${{
+        record.search.spend_tokens
+          ? `${quotaConv(record.search.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+
+    <!-- Midjourney -->
+    <template #midjourney="{ record }">
+      ${{
+        record.midjourney.spend_tokens
+          ? `${quotaConv(record.midjourney.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+
+    <!-- 一次 -->
+    <template #once="{ record }">
+      ${{
+        record.once.spend_tokens
+          ? `${quotaConv(record.once.spend_tokens)}`
+          : '0.00'
+      }}
+    </template>
+
+    <!-- 分组折扣 -->
+    <template #group_discount="{ record }">
+      {{
+        record.group_discount > 0
+          ? Number((record.group_discount * 100).toFixed(2)) + '%'
+          : '-'
+      }}
+    </template>
+
+    <!-- 总花费 -->
     <template #total_spend_tokens="{ record }">
       ${{
         record.total_spend_tokens
@@ -79,213 +201,290 @@
   <!-- 音频 -->
   <a-table
     v-if="spend.billing_items.includes('audio')"
-    :columns="audioPricingColumns"
-    :data="audioPricing"
+    :columns="audioSpendColumns"
+    :data="audioSpend"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #input_tokens="{ record }">
+      {{ record.input_tokens || '0' }}
+    </template>
     <template #input_ratio="{ record }">
-      ${{ record.input_ratio || '0.00' }} / M
+      ${{ record.pricing.input_ratio || '0.00' }} / M
+    </template>
+    <template #output_tokens="{ record }">
+      {{ record.output_tokens || '0' }}
     </template>
     <template #output_ratio="{ record }">
-      ${{ record.output_ratio || '0.00' }}
+      ${{ record.pricing.output_ratio || '0.00' }}
       {{ modelType === 5 || modelType === 6 ? '/ min' : '/ M' }}
     </template>
-    <template #read_ratio="{ record }">
-      ${{ record.read_ratio || '0.00' }} / M
+    <template #spend_tokens="{ record }">
+      ${{ record.spend_tokens ? `${quotaConv(record.spend_tokens)}` : '0.00' }}
     </template>
   </a-table>
 
   <!-- 音频缓存 -->
   <a-table
     v-if="spend.billing_items.includes('audio_cache')"
-    :columns="audioCachePricingColumns"
-    :data="audioCachePricing"
+    :columns="audioCacheSpendColumns"
+    :data="audioCacheSpend"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #read_tokens="{ record }">
+      {{ record.read_tokens || '0' }}
+    </template>
     <template #read_ratio="{ record }">
-      ${{ record.read_ratio || '0.00' }} / M
+      ${{ record.pricing.read_ratio || '0.00' }} / M
+    </template>
+    <template #spend_tokens="{ record }">
+      ${{ record.spend_tokens ? `${quotaConv(record.spend_tokens)}` : '0.00' }}
     </template>
   </a-table>
 
   <!-- 阶梯文本 -->
   <a-table
     v-if="spend.billing_items.includes('tiered_text')"
-    :columns="tieredTextPricingColumns"
-    :data="tieredTextPricing"
+    :columns="tieredTextSpendColumns"
+    :data="tieredTextSpend"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
     <template #mode="{ record }">
-      {{ $t(`model.dict.mode.${record.mode}`) }}
+      {{ $t(`model.dict.mode.${record.pricing.mode}`) }}
     </template>
-    <template #gt="{ record }"> {{ record.gt }}k - {{ record.lte }}k </template>
+    <template #gt="{ record }">
+      {{ record.pricing.gt }}k - {{ record.pricing.lte }}k
+    </template>
+    <template #input_tokens="{ record }">
+      {{ record.input_tokens || '0' }}
+    </template>
     <template #input_ratio="{ record }">
-      ${{ record.input_ratio || '0.00' }} / M
+      ${{ record.pricing.input_ratio || '0.00' }} / M
+    </template>
+    <template #output_tokens="{ record }">
+      {{ record.output_tokens || '0' }}
     </template>
     <template #output_ratio="{ record }">
-      ${{ record.output_ratio || '0.00' }} / M
+      ${{ record.pricing.output_ratio || '0.00' }} / M
+    </template>
+    <template #spend_tokens="{ record }">
+      ${{ record.spend_tokens ? `${quotaConv(record.spend_tokens)}` : '0.00' }}
     </template>
   </a-table>
 
   <!-- 阶梯文本缓存 -->
   <a-table
     v-if="spend.billing_items.includes('tiered_text_cache')"
-    :columns="tieredTextCachePricingColumns"
-    :data="tieredTextCachePricing"
+    :columns="tieredTextCacheSpendColumns"
+    :data="tieredTextCacheSpend"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
     <template #mode="{ record }">
-      {{ $t(`model.dict.mode.${record.mode}`) }}
+      {{ $t(`model.dict.mode.${record.pricing.mode}`) }}
     </template>
-    <template #gt="{ record }"> {{ record.gt }}k - {{ record.lte }}k </template>
+    <template #gt="{ record }">
+      {{ record.pricing.gt }}k - {{ record.pricing.lte }}k
+    </template>
+    <template #read_tokens="{ record }">
+      {{ record.read_tokens || '0' }}
+    </template>
     <template #read_ratio="{ record }">
-      ${{ record.read_ratio || '0.00' }} / M
+      ${{ record.pricing.read_ratio || '0.00' }} / M
+    </template>
+    <template #write_tokens="{ record }">
+      {{ record.write_tokens || '0' }}
     </template>
     <template #write_ratio="{ record }">
-      ${{ record.write_ratio || '0.00' }} / M
+      ${{ record.pricing.write_ratio || '0.00' }} / M
+    </template>
+    <template #spend_tokens="{ record }">
+      ${{ record.spend_tokens ? `${quotaConv(record.spend_tokens)}` : '0.00' }}
     </template>
   </a-table>
 
   <!-- 图像 -->
   <a-table
     v-if="spend.billing_items.includes('image')"
-    :columns="imagePricingColumns"
-    :data="imagePricing"
+    :columns="imageSpendColumns"
+    :data="imageSpend"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #input_tokens="{ record }">
+      {{ record.input_tokens || '0' }}
+    </template>
     <template #input_ratio="{ record }">
-      ${{ record.input_ratio || '0.00' }} / M
+      ${{ record.pricing.input_ratio || '0.00' }} / M
+    </template>
+    <template #output_tokens="{ record }">
+      {{ record.output_tokens || '0' }}
     </template>
     <template #output_ratio="{ record }">
-      ${{ record.output_ratio || '0.00' }} / M
+      ${{ record.pricing.output_ratio || '0.00' }} / M
     </template>
-    <template #read_ratio="{ record }">
-      ${{ record.read_ratio || '0.00' }} / M
+    <template #spend_tokens="{ record }">
+      ${{ record.spend_tokens ? `${quotaConv(record.spend_tokens)}` : '0.00' }}
     </template>
   </a-table>
 
   <!-- 图像生成 -->
   <a-table
     v-if="spend.billing_items.includes('image_generation')"
-    :columns="imageGenerationPricingColumns"
-    :data="imageGenerationPricing"
+    :columns="imageGenerationSpendColumns"
+    :data="imageGenerationSpend"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #quality="{ record }">
+      {{ record.pricing.quality || '-' }}
+    </template>
     <template #width="{ record }">
-      {{ record.width }} × {{ record.height }}
+      {{ record.pricing.width }} × {{ record.pricing.height }}
     </template>
+    <template #n="{ record }"> {{ record.n || '0' }} </template>
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio || '0.00' }} / 张
+      ${{ record.pricing.once_ratio || '0.00' }} / 张
     </template>
-    <template #is_default="{ record }">
-      {{ record.is_default ? '是' : '-' }}
+    <template #spend_tokens="{ record }">
+      ${{ record.spend_tokens ? `${quotaConv(record.spend_tokens)}` : '0.00' }}
     </template>
   </a-table>
 
   <!-- 图像缓存 -->
   <a-table
     v-if="spend.billing_items.includes('image_cache')"
-    :columns="imageCachePricingColumns"
-    :data="imageCachePricing"
+    :columns="imageCacheSpendColumns"
+    :data="imageCacheSpend"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #read_tokens="{ record }">
+      {{ record.read_tokens || '0' }}
+    </template>
     <template #read_ratio="{ record }">
-      ${{ record.read_ratio || '0.00' }} / M
+      ${{ record.pricing.read_ratio || '0.00' }} / M
+    </template>
+    <template #spend_tokens="{ record }">
+      ${{ record.spend_tokens ? `${quotaConv(record.spend_tokens)}` : '0.00' }}
     </template>
   </a-table>
 
   <!-- 识图 -->
   <a-table
     v-if="spend.billing_items.includes('vision')"
-    :columns="visionPricingColumns"
-    :data="visionPricing"
+    :columns="visionSpendColumns"
+    :data="visionSpend"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
-    <template #once_ratio="{ record }">
-      ${{ record.once_ratio || '0.00' }} / 张
+    <template #mode="{ record }">
+      {{ record.pricing.mode }}
     </template>
-    <template #is_default="{ record }">
-      {{ record.is_default ? '是' : '-' }}
+    <template #once_ratio="{ record }">
+      ${{ record.pricing.once_ratio || '0.00' }} / 张
+    </template>
+    <template #spend_tokens="{ record }">
+      ${{ record.spend_tokens ? `${quotaConv(record.spend_tokens)}` : '0.00' }}
     </template>
   </a-table>
 
   <!-- 视频 -->
   <a-table
     v-if="spend.billing_items.includes('video')"
-    :columns="videoPricingColumns"
-    :data="videoPricing"
+    :columns="videoSpendColumns"
+    :data="videoSpend"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
     <template #width="{ record }">
-      {{ record.width }} × {{ record.height }}
+      {{ record.pricing.width }} × {{ record.pricing.height }}
     </template>
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio || '0.00' }} / 秒
+      ${{ record.pricing.once_ratio || '0.00' }} / 秒
     </template>
-    <template #is_default="{ record }">
-      {{ record.is_default ? '是' : '-' }}
+    <template #spend_tokens="{ record }">
+      ${{ record.spend_tokens ? `${quotaConv(record.spend_tokens)}` : '0.00' }}
     </template>
   </a-table>
 
   <!-- 搜索 -->
   <a-table
     v-if="spend.billing_items.includes('search')"
-    :columns="searchPricingColumns"
-    :data="searchPricing"
+    :columns="searchSpendColumns"
+    :data="searchSpend"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
-    <template #once_ratio="{ record }">
-      ${{ record.once_ratio || '0.00' }} / 次
+    <template #context_size="{ record }">
+      {{ record.pricing.context_size }}
     </template>
-    <template #is_default="{ record }">
-      {{ record.is_default ? '是' : '-' }}
+    <template #once_ratio="{ record }">
+      ${{ record.pricing.once_ratio || '0.00' }} / 次
+    </template>
+    <template #spend_tokens="{ record }">
+      ${{ record.spend_tokens ? `${quotaConv(record.spend_tokens)}` : '0.00' }}
     </template>
   </a-table>
 
   <!-- Midjourney -->
   <a-table
     v-if="spend.billing_items.includes('midjourney')"
-    :columns="midjourneyPricingColumns"
-    :data="midjourneyPricing"
+    :columns="midjourneySpendColumns"
+    :data="midjourneySpend"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #name="{ record }">
+      {{ record.pricing.name }}
+    </template>
+    <template #action="{ record }">
+      {{ record.pricing.action }}
+    </template>
+    <template #path="{ record }">
+      {{ record.pricing.path }}
+    </template>
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio || '0.00' }} / 次
+      ${{ record.pricing.once_ratio || '0.00' }} / 次
+    </template>
+    <template #spend_tokens="{ record }">
+      ${{ record.spend_tokens ? `${quotaConv(record.spend_tokens)}` : '0.00' }}
     </template>
   </a-table>
 
   <!-- 一次 -->
   <a-table
     v-if="spend.billing_items.includes('once')"
-    :columns="oncePricingColumns"
-    :data="oncePricing"
+    :columns="onceSpendColumns"
+    :data="onceSpend"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #input_tokens="{ record }">
+      {{ record.input_tokens || '0' }}
+    </template>
+    <template #output_tokens="{ record }">
+      {{ record.output_tokens || '0' }}
+    </template>
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio || '0.00' }} / 次
+      ${{ record.pricing.once_ratio || '0.00' }} / 次
+    </template>
+    <template #spend_tokens="{ record }">
+      ${{ record.spend_tokens ? `${quotaConv(record.spend_tokens)}` : '0.00' }}
     </template>
   </a-table>
 </template>
@@ -298,16 +497,14 @@
     Spend,
     TextSpend,
     CacheSpend,
-    TextPricing,
-    CachePricing,
-    AudioPricing,
-    ImagePricing,
-    ImageGenerationPricing,
-    VisionPricing,
-    VideoPricing,
-    SearchPricing,
-    MidjourneyPricing,
-    OncePricing,
+    AudioSpend,
+    ImageSpend,
+    ImageGenerationSpend,
+    VisionSpend,
+    VideoSpend,
+    SearchSpend,
+    MidjourneySpend,
+    OnceSpend,
   } from '@/api/common';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
 
@@ -324,7 +521,7 @@
   const totalSpend = ref<Spend[]>([]);
   const totalSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.total_spend_tokens'),
+      title: t('chat.columns.spend.total_spend_tokens'),
       headerCellStyle: { background: '#ffffff' },
     },
   ]);
@@ -387,72 +584,107 @@
           dataIndex: 'read_tokens',
           slotName: 'read_tokens',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('chat.columns.spend.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('chat.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
-          width: 200,
+          width: 100,
         },
       ],
     },
   ]);
 
   // 音频
-  const audioPricing = ref<AudioPricing[]>([]);
-  const audioPricingColumns = ref<TableColumnData[]>([
+  const audioSpend = ref<AudioSpend[]>([]);
+  const audioSpendColumns = ref<TableColumnData[]>([
     {
       title: t('chat.columns.spend.audio'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
+          title: t('chat.columns.spend.input_tokens'),
+          dataIndex: 'input_tokens',
+          slotName: 'input_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
           title: t('chat.columns.spend.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.output_tokens'),
+          dataIndex: 'output_tokens',
+          slotName: 'output_tokens',
+          align: 'center',
+          width: 100,
         },
         {
           title: t('chat.columns.spend.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
+          align: 'center',
+          width: 100,
         },
       ],
     },
   ]);
 
   // 音频缓存
-  const audioCachePricing = ref<CachePricing[]>([]);
-  const audioCachePricingColumns = ref<TableColumnData[]>([
+  const audioCacheSpend = ref<CacheSpend[]>([]);
+  const audioCacheSpendColumns = ref<TableColumnData[]>([
     {
       title: t('chat.columns.spend.audio_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
+          title: t('chat.columns.spend.read_tokens'),
+          dataIndex: 'read_tokens',
+          slotName: 'read_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
           title: t('chat.columns.spend.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
+          align: 'center',
+          width: 100,
         },
       ],
     },
   ]);
 
   // 阶梯文本
-  const tieredTextPricing = ref<TextPricing[]>([]);
-  const tieredTextPricingColumns = ref<TableColumnData[]>([
+  const tieredTextSpend = ref<TextSpend[]>([]);
+  const tieredTextSpendColumns = ref<TableColumnData[]>([
     {
       title: t('chat.columns.spend.tiered_text'),
       headerCellStyle: { background: '#ffffff' },
@@ -462,36 +694,57 @@
           dataIndex: 'mode',
           slotName: 'mode',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('chat.columns.spend.tiered.input_tokens'),
           dataIndex: 'gt',
           slotName: 'gt',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.input_tokens'),
+          dataIndex: 'input_tokens',
+          slotName: 'input_tokens',
+          align: 'center',
+          width: 100,
         },
         {
           title: t('chat.columns.spend.tiered.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.output_tokens'),
+          dataIndex: 'output_tokens',
+          slotName: 'output_tokens',
+          align: 'center',
+          width: 100,
         },
         {
           title: t('chat.columns.spend.tiered.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
+          align: 'center',
+          width: 100,
         },
       ],
     },
   ]);
 
   // 阶梯文本缓存
-  const tieredTextCachePricing = ref<CachePricing[]>([]);
-  const tieredTextCachePricingColumns = ref<TableColumnData[]>([
+  const tieredTextCacheSpend = ref<CacheSpend[]>([]);
+  const tieredTextCacheSpendColumns = ref<TableColumnData[]>([
     {
       title: t('chat.columns.spend.tiered_text_cache'),
       headerCellStyle: { background: '#ffffff' },
@@ -501,61 +754,103 @@
           dataIndex: 'mode',
           slotName: 'mode',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('chat.columns.spend.tiered.input_tokens'),
           dataIndex: 'gt',
           slotName: 'gt',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.read_tokens'),
+          dataIndex: 'read_tokens',
+          slotName: 'read_tokens',
+          align: 'center',
+          width: 100,
         },
         {
           title: t('chat.columns.spend.tiered.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.write_tokens'),
+          dataIndex: 'write_tokens',
+          slotName: 'write_tokens',
+          align: 'center',
+          width: 100,
         },
         {
           title: t('chat.columns.spend.tiered.write_ratio'),
           dataIndex: 'write_ratio',
           slotName: 'write_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
+          align: 'center',
+          width: 100,
         },
       ],
     },
   ]);
 
   // 图像
-  const imagePricing = ref<ImagePricing[]>([]);
-  const imagePricingColumns = ref<TableColumnData[]>([
+  const imageSpend = ref<ImageSpend[]>([]);
+  const imageSpendColumns = ref<TableColumnData[]>([
     {
       title: t('chat.columns.spend.image'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
+          title: t('chat.columns.spend.input_tokens'),
+          dataIndex: 'input_tokens',
+          slotName: 'input_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
           title: t('chat.columns.spend.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.output_tokens'),
+          dataIndex: 'output_tokens',
+          slotName: 'output_tokens',
+          align: 'center',
+          width: 100,
         },
         {
           title: t('chat.columns.spend.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
+          align: 'center',
+          width: 100,
         },
       ],
     },
   ]);
 
   // 图像生成
-  const imageGenerationPricing = ref<ImageGenerationPricing[]>([]);
-  const imageGenerationPricingColumns = ref<TableColumnData[]>([
+  const imageGenerationSpend = ref<ImageGenerationSpend[]>([]);
+  const imageGenerationSpendColumns = ref<TableColumnData[]>([
     {
       title: t('chat.columns.spend.image_generation'),
       headerCellStyle: { background: '#ffffff' },
@@ -565,54 +860,75 @@
           dataIndex: 'quality',
           slotName: 'quality',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('chat.columns.spend.image.generation.width_height'),
           dataIndex: 'width',
           slotName: 'width',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.image.generation.n'),
+          dataIndex: 'n',
+          slotName: 'n',
+          align: 'center',
+          width: 100,
         },
         {
           title: t('chat.columns.spend.image.generation.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
-          title: t('chat.columns.spend.is_default'),
-          dataIndex: 'is_default',
-          slotName: 'is_default',
+          title: t('chat.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
           align: 'center',
-          width: 200,
+          width: 100,
         },
       ],
     },
   ]);
 
   // 图像缓存
-  const imageCachePricing = ref<CachePricing[]>([]);
-  const imageCachePricingColumns = ref<TableColumnData[]>([
+  const imageCacheSpend = ref<CacheSpend[]>([]);
+  const imageCacheSpendColumns = ref<TableColumnData[]>([
     {
       title: t('chat.columns.spend.image_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
+          title: t('chat.columns.spend.read_tokens'),
+          dataIndex: 'read_tokens',
+          slotName: 'read_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
           title: t('chat.columns.spend.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
+          align: 'center',
+          width: 100,
         },
       ],
     },
   ]);
 
   // 识图
-  const visionPricing = ref<VisionPricing[]>([]);
-  const visionPricingColumns = ref<TableColumnData[]>([
+  const visionSpend = ref<VisionSpend[]>([]);
+  const visionSpendColumns = ref<TableColumnData[]>([
     {
       title: t('chat.columns.spend.vision'),
       headerCellStyle: { background: '#ffffff' },
@@ -622,29 +938,29 @@
           dataIndex: 'mode',
           slotName: 'mode',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('chat.columns.spend.vision.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
-          title: t('chat.columns.spend.is_default'),
-          dataIndex: 'is_default',
-          slotName: 'is_default',
+          title: t('chat.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
           align: 'center',
-          width: 200,
+          width: 100,
         },
       ],
     },
   ]);
 
   // 视频
-  const videoPricing = ref<VideoPricing[]>([]);
-  const videoPricingColumns = ref<TableColumnData[]>([
+  const videoSpend = ref<VideoSpend[]>([]);
+  const videoSpendColumns = ref<TableColumnData[]>([
     {
       title: t('chat.columns.spend.video'),
       headerCellStyle: { background: '#ffffff' },
@@ -654,29 +970,29 @@
           dataIndex: 'width',
           slotName: 'width',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('chat.columns.spend.video.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
-          title: t('chat.columns.spend.is_default'),
-          dataIndex: 'is_default',
-          slotName: 'is_default',
+          title: t('chat.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
           align: 'center',
-          width: 200,
+          width: 100,
         },
       ],
     },
   ]);
 
   // 搜索
-  const searchPricing = ref<SearchPricing[]>([]);
-  const searchPricingColumns = ref<TableColumnData[]>([
+  const searchSpend = ref<SearchSpend[]>([]);
+  const searchSpendColumns = ref<TableColumnData[]>([
     {
       title: t('chat.columns.spend.search'),
       headerCellStyle: { background: '#ffffff' },
@@ -686,29 +1002,29 @@
           dataIndex: 'context_size',
           slotName: 'context_size',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('chat.columns.spend.search.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
-          title: t('chat.columns.spend.is_default'),
-          dataIndex: 'is_default',
-          slotName: 'is_default',
+          title: t('chat.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
           align: 'center',
-          width: 200,
+          width: 100,
         },
       ],
     },
   ]);
 
   // Midjourney
-  const midjourneyPricing = ref<MidjourneyPricing[]>([]);
-  const midjourneyPricingColumns = ref<TableColumnData[]>([
+  const midjourneySpend = ref<MidjourneySpend[]>([]);
+  const midjourneySpendColumns = ref<TableColumnData[]>([
     {
       title: t('chat.columns.spend.midjourney'),
       headerCellStyle: { background: '#ffffff' },
@@ -718,60 +1034,87 @@
           dataIndex: 'name',
           slotName: 'name',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('chat.columns.spend.midjourney.action'),
           dataIndex: 'action',
           slotName: 'action',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('chat.columns.spend.midjourney.path'),
           dataIndex: 'path',
           slotName: 'path',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('chat.columns.spend.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
+          align: 'center',
+          width: 100,
         },
       ],
     },
   ]);
 
   // 一次
-  const oncePricing = ref<OncePricing[]>([]);
-  const oncePricingColumns = ref<TableColumnData[]>([
+  const onceSpend = ref<OnceSpend[]>([]);
+  const onceSpendColumns = ref<TableColumnData[]>([
     {
       title: t('chat.columns.spend.once'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
+          title: t('chat.columns.spend.input_tokens'),
+          dataIndex: 'input_tokens',
+          slotName: 'input_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.output_tokens'),
+          dataIndex: 'output_tokens',
+          slotName: 'output_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
           title: t('chat.columns.spend.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
+        },
+        {
+          title: t('chat.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
+          align: 'center',
+          width: 100,
         },
       ],
     },
   ]);
 
-  const handlePricing = () => {
+  const handleSpend = () => {
     // 总花费
     totalSpend.value[0] = spend.value;
     totalSpendColumns.value[0].children = [];
 
     // 文本
-    if (spend.value.billing_items.includes('text')) {
+    if (spend.value.billing_items.includes('text') && spend.value.text) {
       textSpend.value[0] = spend.value.text;
-
       totalSpendColumns.value[0].children.push({
         title: t('chat.columns.spend.text'),
         dataIndex: 'text',
@@ -782,9 +1125,11 @@
     }
 
     // 文本缓存
-    if (spend.value.billing_items.includes('text_cache')) {
+    if (
+      spend.value.billing_items.includes('text_cache') &&
+      spend.value.text_cache
+    ) {
       textCacheSpend.value[0] = spend.value.text_cache;
-
       totalSpendColumns.value[0].children.push({
         title: t('chat.columns.spend.text_cache'),
         dataIndex: 'text_cache',
@@ -795,68 +1140,179 @@
     }
 
     // 音频
-    if (spend.value.billing_items.includes('audio')) {
-      audioPricing.value[0] = spend.value.audio.pricing;
+    if (spend.value.billing_items.includes('audio') && spend.value.audio) {
+      audioSpend.value[0] = spend.value.audio;
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.audio'),
+        dataIndex: 'audio',
+        slotName: 'audio',
+        align: 'center',
+        width: 100,
+      });
     }
 
     // 音频缓存
-    if (spend.value.billing_items.includes('audio_cache')) {
-      audioCachePricing.value[0] = spend.value.audio_cache.pricing;
+    if (
+      spend.value.billing_items.includes('audio_cache') &&
+      spend.value.audio_cache
+    ) {
+      audioCacheSpend.value[0] = spend.value.audio_cache;
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.audio_cache'),
+        dataIndex: 'audio_cache',
+        slotName: 'audio_cache',
+        align: 'center',
+        width: 100,
+      });
     }
 
-    // 文本缓存
-    if (spend.value.billing_items.includes('tiered_text')) {
-      tieredTextPricing.value[0] = spend.value.tiered_text.pricing;
+    // 阶梯文本
+    if (
+      spend.value.billing_items.includes('tiered_text') &&
+      spend.value.tiered_text
+    ) {
+      tieredTextSpend.value[0] = spend.value.tiered_text;
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.tiered_text'),
+        dataIndex: 'tiered_text',
+        slotName: 'tiered_text',
+        align: 'center',
+        width: 100,
+      });
     }
 
     // 阶梯文本缓存
-    if (spend.value.billing_items.includes('tiered_text_cache')) {
-      tieredTextCachePricing.value[0] = spend.value.tiered_text_cache.pricing;
+    if (
+      spend.value.billing_items.includes('tiered_text_cache') &&
+      spend.value.tiered_text_cache
+    ) {
+      tieredTextCacheSpend.value[0] = spend.value.tiered_text_cache;
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.tiered_text_cache'),
+        dataIndex: 'tiered_text_cache',
+        slotName: 'tiered_text_cache',
+        align: 'center',
+        width: 100,
+      });
     }
 
     // 图像
-    if (spend.value.billing_items.includes('image')) {
-      imagePricing.value[0] = spend.value.image.pricing;
+    if (spend.value.billing_items.includes('image') && spend.value.image) {
+      imageSpend.value[0] = spend.value.image;
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.image'),
+        dataIndex: 'image',
+        slotName: 'image',
+        align: 'center',
+        width: 100,
+      });
     }
 
     // 图像生成
-    if (spend.value.billing_items.includes('image_generation')) {
-      imageGenerationPricing.value[0] = spend.value.image_generation.pricing;
+    if (
+      spend.value.billing_items.includes('image_generation') &&
+      spend.value.image_generation
+    ) {
+      imageGenerationSpend.value[0] = spend.value.image_generation;
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.image_generation'),
+        dataIndex: 'image_generation',
+        slotName: 'image_generation',
+        align: 'center',
+        width: 100,
+      });
     }
 
     // 图像缓存
-    if (spend.value.billing_items.includes('image_cache')) {
-      imageCachePricing.value[0] = spend.value.image_cache.pricing;
+    if (
+      spend.value.billing_items.includes('image_cache') &&
+      spend.value.image_cache
+    ) {
+      imageCacheSpend.value[0] = spend.value.image_cache;
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.image_cache'),
+        dataIndex: 'image_cache',
+        slotName: 'image_cache',
+        align: 'center',
+        width: 100,
+      });
     }
 
     // 识图
-    if (spend.value.billing_items.includes('vision')) {
-      visionPricing.value[0] = spend.value.vision.pricing;
+    if (spend.value.billing_items.includes('vision') && spend.value.vision) {
+      visionSpend.value[0] = spend.value.vision;
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.vision'),
+        dataIndex: 'vision',
+        slotName: 'vision',
+        align: 'center',
+        width: 100,
+      });
     }
 
     // 视频
-    if (spend.value.billing_items.includes('video')) {
-      videoPricing.value[0] = spend.value.video.pricing;
+    if (spend.value.billing_items.includes('video') && spend.value.video) {
+      videoSpend.value[0] = spend.value.video;
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.video'),
+        dataIndex: 'video',
+        slotName: 'video',
+        align: 'center',
+        width: 100,
+      });
     }
 
     // 搜索
-    if (spend.value.billing_items.includes('search')) {
-      searchPricing.value[0] = spend.value.search.pricing;
+    if (spend.value.billing_items.includes('search') && spend.value.search) {
+      searchSpend.value[0] = spend.value.search;
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.search'),
+        dataIndex: 'search',
+        slotName: 'search',
+        align: 'center',
+        width: 100,
+      });
     }
 
     // Midjourney
-    if (spend.value.billing_items.includes('midjourney')) {
-      midjourneyPricing.value[0] = spend.value.midjourney.pricing;
+    if (
+      spend.value.billing_items.includes('midjourney') &&
+      spend.value.midjourney
+    ) {
+      midjourneySpend.value[0] = spend.value.midjourney;
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.midjourney'),
+        dataIndex: 'midjourney',
+        slotName: 'midjourney',
+        align: 'center',
+        width: 100,
+      });
     }
 
     // 一次
-    if (spend.value.billing_items.includes('once')) {
-      oncePricing.value[0] = spend.value.once.pricing;
+    if (spend.value.billing_items.includes('once') && spend.value.once) {
+      onceSpend.value[0] = spend.value.once;
+      totalSpendColumns.value[0].children.push({
+        title: t('chat.columns.spend.once'),
+        dataIndex: 'once',
+        slotName: 'once',
+        align: 'center',
+        width: 100,
+      });
     }
+
+    // 分组折扣
+    totalSpendColumns.value[0].children.push({
+      title: t('chat.columns.spend.group_discount'),
+      dataIndex: 'group_discount',
+      slotName: 'group_discount',
+      align: 'center',
+      width: 100,
+    });
 
     // 总花费
     totalSpendColumns.value[0].children.push({
-      title: t('chat.columns.total_spend_tokens'),
+      title: t('chat.columns.spend.total_spend_tokens'),
       dataIndex: 'total_spend_tokens',
       slotName: 'total_spend_tokens',
       align: 'center',
@@ -868,7 +1324,7 @@
     () => props.modelValue,
     (val) => {
       spend.value = val;
-      handlePricing();
+      handleSpend();
     },
     { deep: true, immediate: true }
   );

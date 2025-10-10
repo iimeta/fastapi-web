@@ -743,7 +743,7 @@
       }
     }
 
-    // 文本缓存
+    // 阶梯文本
     if (pricing.value.billing_items.includes('tiered_text')) {
       tieredTextPricing.value = pricing.value.tiered_text;
     }

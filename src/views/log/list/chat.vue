@@ -321,8 +321,8 @@
           </a-space>
         </a-col>
         <a-col :span="14">
-          花费 = ( 输入 × 输入价格 + 输出 × 输出价格 ) × 分组折扣 ÷ 500000
-          &nbsp;&nbsp;或&nbsp;&nbsp; 输出 × 分组折扣 ÷ 500000
+          总花费 = 各计费项总和 × 分组折扣 &nbsp;&nbsp;或&nbsp;&nbsp; 按次 ×
+          分组折扣
         </a-col>
         <a-col :span="2"> RPM: &nbsp;{{ rpm.toLocaleString() }} </a-col>
         <a-col :span="3"> TPM: &nbsp;{{ tpm.toLocaleString() }} </a-col>
@@ -422,7 +422,10 @@
           }}
         </template>
         <template #total_spend_tokens="{ record }">
-          <span class="spend" @click="spendHandle(record.spend, record.model_type)">
+          <span
+            class="spend"
+            @click="spendHandle(record.spend, record.model_type)"
+          >
             {{
               record.spend.total_spend_tokens
                 ? `$${quotaConv(record.spend.total_spend_tokens)}`
@@ -778,13 +781,15 @@
       <!-- 花费明细 -->
       <a-modal
         v-model:visible="spendVisible"
+        :width="888"
+        :body-style="{ maxHeight: '520px' }"
         :modal-style="{
-          padding: '0px 5px 20px 5px',
+          padding: '25px 20px 20px 20px',
         }"
-        unmount-on-close
+        hide-title
         hide-cancel
+        unmount-on-close
         simple
-        width="920px"
         ok-text="关闭"
       >
         <SpendDetail v-model="spend" :model-type="modelType" />
@@ -1406,7 +1411,7 @@
   const spend = ref();
   const modelType = ref();
 
-  const spendHandle = async (s: Spend, t: string) => {
+  const spendHandle = async (s: Spend, t: number) => {
     spendVisible.value = true;
     spend.value = s;
     modelType.value = t;
