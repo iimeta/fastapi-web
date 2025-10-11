@@ -154,7 +154,7 @@
 
   <!-- 文本 -->
   <a-table
-    v-if="spend.billing_items.includes('text')"
+    v-if="spend.billing_items.includes('text') && textSpend.length"
     :columns="textSpendColumns"
     :data="textSpend"
     :pagination="false"
@@ -180,7 +180,7 @@
 
   <!-- 文本缓存 -->
   <a-table
-    v-if="spend.billing_items.includes('text_cache')"
+    v-if="spend.billing_items.includes('text_cache') && textCacheSpend.length"
     :columns="textCacheSpendColumns"
     :data="textCacheSpend"
     :pagination="false"
@@ -200,7 +200,7 @@
 
   <!-- 音频 -->
   <a-table
-    v-if="spend.billing_items.includes('audio')"
+    v-if="spend.billing_items.includes('audio') && audioSpend.length"
     :columns="audioSpendColumns"
     :data="audioSpend"
     :pagination="false"
@@ -227,7 +227,7 @@
 
   <!-- 音频缓存 -->
   <a-table
-    v-if="spend.billing_items.includes('audio_cache')"
+    v-if="spend.billing_items.includes('audio_cache') && audioCacheSpend.length"
     :columns="audioCacheSpendColumns"
     :data="audioCacheSpend"
     :pagination="false"
@@ -247,7 +247,7 @@
 
   <!-- 阶梯文本 -->
   <a-table
-    v-if="spend.billing_items.includes('tiered_text')"
+    v-if="spend.billing_items.includes('tiered_text') && tieredTextSpend.length"
     :columns="tieredTextSpendColumns"
     :data="tieredTextSpend"
     :pagination="false"
@@ -279,7 +279,10 @@
 
   <!-- 阶梯文本缓存 -->
   <a-table
-    v-if="spend.billing_items.includes('tiered_text_cache')"
+    v-if="
+      spend.billing_items.includes('tiered_text_cache') &&
+      tieredTextCacheSpend.length
+    "
     :columns="tieredTextCacheSpendColumns"
     :data="tieredTextCacheSpend"
     :pagination="false"
@@ -311,7 +314,7 @@
 
   <!-- 图像 -->
   <a-table
-    v-if="spend.billing_items.includes('image')"
+    v-if="spend.billing_items.includes('image') && imageSpend.length"
     :columns="imageSpendColumns"
     :data="imageSpend"
     :pagination="false"
@@ -337,7 +340,10 @@
 
   <!-- 图像生成 -->
   <a-table
-    v-if="spend.billing_items.includes('image_generation')"
+    v-if="
+      spend.billing_items.includes('image_generation') &&
+      imageGenerationSpend.length
+    "
     :columns="imageGenerationSpendColumns"
     :data="imageGenerationSpend"
     :pagination="false"
@@ -361,7 +367,7 @@
 
   <!-- 图像缓存 -->
   <a-table
-    v-if="spend.billing_items.includes('image_cache')"
+    v-if="spend.billing_items.includes('image_cache') && imageCacheSpend.length"
     :columns="imageCacheSpendColumns"
     :data="imageCacheSpend"
     :pagination="false"
@@ -381,7 +387,7 @@
 
   <!-- 识图 -->
   <a-table
-    v-if="spend.billing_items.includes('vision')"
+    v-if="spend.billing_items.includes('vision') && visionSpend.length"
     :columns="visionSpendColumns"
     :data="visionSpend"
     :pagination="false"
@@ -401,7 +407,7 @@
 
   <!-- 视频 -->
   <a-table
-    v-if="spend.billing_items.includes('video')"
+    v-if="spend.billing_items.includes('video') && videoSpend.length"
     :columns="videoSpendColumns"
     :data="videoSpend"
     :pagination="false"
@@ -421,7 +427,7 @@
 
   <!-- 搜索 -->
   <a-table
-    v-if="spend.billing_items.includes('search')"
+    v-if="spend.billing_items.includes('search') && searchSpend.length"
     :columns="searchSpendColumns"
     :data="searchSpend"
     :pagination="false"
@@ -441,7 +447,7 @@
 
   <!-- Midjourney -->
   <a-table
-    v-if="spend.billing_items.includes('midjourney')"
+    v-if="spend.billing_items.includes('midjourney') && midjourneySpend.length"
     :columns="midjourneySpendColumns"
     :data="midjourneySpend"
     :pagination="false"
@@ -467,7 +473,7 @@
 
   <!-- 一次 -->
   <a-table
-    v-if="spend.billing_items.includes('once')"
+    v-if="spend.billing_items.includes('once') && onceSpend.length"
     :columns="onceSpendColumns"
     :data="onceSpend"
     :pagination="false"
