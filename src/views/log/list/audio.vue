@@ -377,19 +377,36 @@
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
         <template #characters="{ record }">
-          {{ record.characters || '-' }}
-        </template>
-        <template #minute="{ record }">
-          {{ record.minute || '-' }}
-        </template>
-        <template #total_tokens="{ record }">
           {{
-            record.total_tokens
-              ? `$${quotaConv(record.total_tokens)}`
-              : record.status === 1 && record.billing_method === 2
+            record.spend.audio.input_tokens
+              ? record.spend.audio.input_tokens
+              : record.status === 1 && record.model_type === 2
               ? 0
               : '-'
           }}
+        </template>
+        <template #minute="{ record }">
+          {{
+            record.spend.audio.output_tokens
+              ? record.spend.audio.output_tokens / 1000
+              : record.status === 1 && record.model_type === 3
+              ? 0
+              : '-'
+          }}
+        </template>
+        <template #total_spend_tokens="{ record }">
+          <span
+            class="spend"
+            @click="spendHandle(record.spend, record.model_type)"
+          >
+            {{
+              record.spend.total_spend_tokens
+                ? `$${quotaConv(record.spend.total_spend_tokens)}`
+                : record.status === 1
+                ? '$0.00'
+                : '-'
+            }}
+          </span>
         </template>
         <template #total_time="{ record }">
           <a-tag
@@ -523,6 +540,23 @@
       >
         <Detail :id="recordId" />
       </a-drawer>
+
+      <!-- 花费明细 -->
+      <a-modal
+        v-model:visible="spendVisible"
+        :width="888"
+        :body-style="{ maxHeight: '520px' }"
+        :modal-style="{
+          padding: '25px 20px 20px 20px',
+        }"
+        hide-title
+        hide-cancel
+        unmount-on-close
+        simple
+        ok-text="关闭"
+      >
+        <SpendDetail v-model="spend" :model-type="modelType" />
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -545,7 +579,9 @@
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+  import { Spend } from '@/api/common';
   import Detail from '../detail/audio.vue';
+  import SpendDetail from '../components/spend.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -648,9 +684,9 @@
       align: 'center',
     },
     {
-      title: t('chat.columns.total_price'),
-      dataIndex: 'total_tokens',
-      slotName: 'total_tokens',
+      title: t('chat.columns.total_spend_tokens'),
+      dataIndex: 'total_spend_tokens',
+      slotName: 'total_spend_tokens',
       align: 'center',
     },
     {
@@ -880,6 +916,16 @@
   const detailHandleCancel = () => {
     detailVisible.value = false;
   };
+
+  const spendVisible = ref(false);
+  const spend = ref();
+  const modelType = ref();
+
+  const spendHandle = async (s: Spend, t: number) => {
+    spendVisible.value = true;
+    spend.value = s;
+    modelType.value = t;
+  };
 </script>
 
 <script lang="ts">
@@ -931,5 +977,13 @@
   :deep(.arco-tabs-content) {
     padding-top: 5px;
     padding-left: 15px;
+  }
+  .spend {
+    color: rgb(var(--gray-10));
+    padding: 0;
+  }
+  .spend:hover {
+    color: rgb(var(--link-6));
+    cursor: pointer;
   }
 </style>

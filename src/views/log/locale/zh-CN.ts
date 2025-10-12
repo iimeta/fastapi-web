@@ -143,6 +143,8 @@ export default {
   'chat.columns.spend.read_tokens': '读取Token数',
   'chat.columns.spend.write_tokens': '写入Token数',
   'chat.columns.spend.mode': '模式',
+  'chat.columns.spend.audio.input_tokens': '输入字符数',
+  'chat.columns.spend.audio.output_tokens': '输出分钟数',
   'chat.columns.spend.tiered.input_tokens': '输入Token数',
   'chat.columns.spend.tiered.input_ratio': '输入价格',
   'chat.columns.spend.tiered.output_ratio': '输出价格',

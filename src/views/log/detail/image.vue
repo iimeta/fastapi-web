@@ -44,7 +44,7 @@
         </a-skeleton>
         <span v-else>{{ currentData.user_id || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="应用ID" :span="2">
+      <a-descriptions-item label="应用ID">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
@@ -78,7 +78,7 @@
           {{ currentData.prompt || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答">
+      <a-descriptions-item label="回答" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -92,7 +92,7 @@
         </a-skeleton>
         <span v-else>{{ currentData.spend.group_name || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="分组折扣" :span="2">
+      <a-descriptions-item label="分组折扣">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -104,24 +104,6 @@
               : '-'
           }}
         </span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像质量">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.quality || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像大小" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.size || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像张数">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.n || '-' }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="计费方式">
         <a-skeleton v-if="loading" :animation="true">
@@ -135,16 +117,20 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="花费">
+      <a-descriptions-item label="总花费">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
+        <span
+          v-else
+          class="spend"
+          @click="spendHandle(currentData.spend, currentData.model_type)"
+        >
           {{
             currentData.spend.total_spend_tokens
-              ? currentData.spend.total_spend_tokens
+              ? `$${quotaConv(currentData.spend.total_spend_tokens)}`
               : currentData.status === 1
-              ? 0
+              ? '$0.00'
               : '-'
           }}
         </span>
@@ -227,7 +213,7 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="Host">
+      <a-descriptions-item label="Host" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -256,7 +242,7 @@
           currentData.is_smart_match ? '-' : currentData.user_id || '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="应用ID" :span="2">
+      <a-descriptions-item label="应用ID">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
@@ -358,7 +344,7 @@
             : '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="启用代理" :span="2">
+      <a-descriptions-item label="启用代理">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -376,7 +362,7 @@
         </a-skeleton>
         <span v-else>{{ currentData?.model_agent?.name || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="密钥">
+      <a-descriptions-item label="密钥" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -413,7 +399,7 @@
           {{ currentData.prompt || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答">
+      <a-descriptions-item label="回答" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -421,7 +407,7 @@
           {{ currentData.image_data || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="分组名称" :span="2">
+      <a-descriptions-item label="分组名称">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -440,24 +426,6 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="图像质量" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.quality || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像大小">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.size || '-' }}</span>
-      </a-descriptions-item>
-      <a-descriptions-item label="图像张数" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{ currentData.n || '-' }}</span>
-      </a-descriptions-item>
       <a-descriptions-item label="计费方式">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -470,16 +438,20 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="花费">
+      <a-descriptions-item label="总花费">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
+        <span
+          v-else
+          class="spend"
+          @click="spendHandle(currentData.spend, currentData.model_type)"
+        >
           {{
             currentData.spend.total_spend_tokens
-              ? currentData.spend.total_spend_tokens
+              ? `$${quotaConv(currentData.spend.total_spend_tokens)}`
               : currentData.status === 1
-              ? 0
+              ? '$0.00'
               : '-'
           }}
         </span>
@@ -586,7 +558,7 @@
       :column="2"
       style="margin-top: 10px; position: relative"
     >
-      <a-descriptions-item :span="2">
+      <a-descriptions-item>
         <a-tabs type="card">
           <a-tab-pane key="1" title="模型代理">
             <a-skeleton v-if="loading" :animation="true">
@@ -604,6 +576,23 @@
         </a-tabs>
       </a-descriptions-item>
     </a-descriptions>
+
+    <!-- 花费明细 -->
+    <a-modal
+      v-model:visible="spendVisible"
+      :width="888"
+      :body-style="{ maxHeight: '520px' }"
+      :modal-style="{
+        padding: '25px 20px 20px 20px',
+      }"
+      hide-title
+      hide-cancel
+      unmount-on-close
+      simple
+      ok-text="关闭"
+    >
+      <SpendDetail v-model="spend" :model-type="modelType" />
+    </a-modal>
   </div>
 </template>
 
@@ -612,6 +601,7 @@
   import useLoading from '@/hooks/loading';
   import { useClipboard } from '@vueuse/core';
   import VueJsonPretty from 'vue-json-pretty';
+  import { quotaConv } from '@/utils/common';
   import {
     queryImageDetail,
     DetailParams,
@@ -619,6 +609,8 @@
     imageCopyField,
   } from '@/api/log';
   import 'vue-json-pretty/lib/styles.css';
+  import { Spend } from '@/api/common';
+  import SpendDetail from '../components/spend.vue';
 
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<ImageDetail>({} as ImageDetail);
@@ -667,6 +659,16 @@
     const { data } = await imageCopyField({ id, field });
     copy(data.value);
   };
+
+  const spendVisible = ref(false);
+  const spend = ref();
+  const modelType = ref();
+
+  const spendHandle = async (s: Spend, t: number) => {
+    spendVisible.value = true;
+    spend.value = s;
+    modelType.value = t;
+  };
 </script>
 
 <script lang="ts">
@@ -682,5 +684,13 @@
   }
   .copy-btn:hover {
     color: rgb(var(--arcoblue-6));
+  }
+  .spend {
+    color: rgb(var(--link-6));
+    padding: 0;
+  }
+  .spend:hover {
+    color: rgb(var(--link-6));
+    cursor: pointer;
   }
 </style>

@@ -214,7 +214,11 @@
       ${{ record.pricing.input_ratio || '0.00' }} / M
     </template>
     <template #output_tokens="{ record }">
-      {{ record.output_tokens || '0' }}
+      {{
+        modelType === 6
+          ? record.output_tokens / 1000 || '0'
+          : record.output_tokens || '0'
+      }}
     </template>
     <template #output_ratio="{ record }">
       ${{ record.pricing.output_ratio || '0.00' }}
@@ -618,7 +622,11 @@
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.input_tokens'),
+          title: t(
+            props.modelType === 5
+              ? 'chat.columns.spend.audio.input_tokens'
+              : 'chat.columns.spend.input_tokens'
+          ),
           dataIndex: 'input_tokens',
           slotName: 'input_tokens',
           align: 'center',
@@ -632,7 +640,11 @@
           width: 100,
         },
         {
-          title: t('chat.columns.spend.output_tokens'),
+          title: t(
+            props.modelType === 6
+              ? 'chat.columns.spend.audio.output_tokens'
+              : 'chat.columns.spend.output_tokens'
+          ),
           dataIndex: 'output_tokens',
           slotName: 'output_tokens',
           align: 'center',
