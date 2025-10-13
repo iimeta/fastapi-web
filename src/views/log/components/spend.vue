@@ -216,7 +216,7 @@
     <template #output_tokens="{ record }">
       {{
         modelType === 6
-          ? record.output_tokens / 1000 || '0'
+          ? record.output_tokens / 1000000 || '0'
           : record.output_tokens || '0'
       }}
     </template>

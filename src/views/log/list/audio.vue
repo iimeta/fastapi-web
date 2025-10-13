@@ -388,7 +388,7 @@
         <template #minute="{ record }">
           {{
             record.spend.audio.output_tokens
-              ? record.spend.audio.output_tokens / 1000
+              ? record.spend.audio.output_tokens / 1000000
               : record.status === 1 && record.model_type === 3
               ? 0
               : '-'
