@@ -246,19 +246,6 @@
                 />
               </a-select>
             </a-form-item>
-            <a-form-item field="models" :label="$t('reseller.label.models')">
-              <a-tree-select
-                v-model="formData.models"
-                :placeholder="$t('reseller.placeholder.create.models')"
-                :allow-search="true"
-                :allow-clear="true"
-                :tree-checkable="true"
-                :data="treeData"
-                :max-tag-count="3"
-                :scrollbar="false"
-                tree-checked-strategy="child"
-              />
-            </a-form-item>
             <a-form-item field="remark" :label="$t('reseller.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -297,26 +284,11 @@
   import { useRouter } from 'vue-router';
   import { quotaConv, disabledDate } from '@/utils/common';
   import { submitResellerCreate, ResellerCreate } from '@/api/admin_reseller';
-  import { queryModelTree, Tree } from '@/api/model';
   import { queryGroupList, GroupList } from '@/api/group';
 
   const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(false);
   const router = useRouter();
-
-  const treeData = ref<Tree[]>([]);
-  const getModelTree = async () => {
-    setLoading(true);
-    try {
-      const { data } = await queryModelTree();
-      treeData.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getModelTree();
 
   const groups = ref<GroupList[]>([]);
 
@@ -339,7 +311,6 @@
     quota: ref(),
     quota_type: '1',
     quota_expires_at: '',
-    models: [],
     groups: [],
     remark: '',
   });

@@ -381,19 +381,6 @@
           >
             {{ $t('user.columns.operations.recharge') }}
           </a-button>
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              userPermissions({
-                user_id: `${record.user_id}`,
-                models: `${record.models}`.split(','),
-                groups: `${record.groups}`.split(','),
-              })
-            "
-          >
-            {{ $t('user.columns.operations.permissions') }}
-          </a-button>
           <a-button type="text" size="small" @click="detailHandle(record.id)">
             {{ $t('user.columns.operations.view') }}
           </a-button>
@@ -606,57 +593,6 @@
       </a-modal>
 
       <a-modal
-        v-model:visible="permissionsVisible"
-        :title="$t('user.form.title.permissions')"
-        :ok-text="$t('button.save')"
-        :width="700"
-        @cancel="permissionsHandleCancel"
-        @before-ok="permissionsHandleBeforeOk"
-      >
-        <a-form ref="permissionsFormRef" :model="permissionsFormData">
-          <a-form-item
-            field="groups"
-            :label="$t('user.label.groups')"
-            style="align-items: center"
-          >
-            <a-select
-              v-model="permissionsFormData.groups"
-              :placeholder="$t('user.placeholder.groups')"
-              :scrollbar="false"
-              multiple
-              allow-search
-              allow-clear
-              style="max-height: 220px; display: block; overflow: auto"
-            >
-              <a-option
-                v-for="item in groups"
-                :key="item.id"
-                :value="item.id"
-                :label="item.name"
-              />
-            </a-select>
-          </a-form-item>
-          <a-form-item
-            field="models"
-            :label="$t('user.label.models')"
-            style="align-items: center"
-          >
-            <a-tree-select
-              v-model="permissionsFormData.models"
-              :placeholder="$t('user.placeholder.models')"
-              :allow-search="true"
-              :allow-clear="true"
-              :tree-checkable="true"
-              :data="treeData"
-              :scrollbar="false"
-              tree-checked-strategy="child"
-              style="max-height: 220px; display: block; overflow: auto"
-            />
-          </a-form-item>
-        </a-form>
-      </a-modal>
-
-      <a-modal
         v-model:visible="delVisible"
         :title="$t('user.form.title.del')"
         :width="600"
@@ -737,9 +673,6 @@
     submitUserChangeQuotaExpire,
     UserChangeStatus,
     submitUserChangeStatus,
-    UserPermissionsParams,
-    submitUserPermissions,
-    UserPermissions,
     UserBatchOperate,
     submitUserBatchOperate,
   } from '@/api/admin_user';
@@ -887,7 +820,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 262,
+      width: 220,
     },
   ]);
 
@@ -1103,13 +1036,10 @@
 
   const quotaQuick = ref(0);
   const rechargeVisible = ref(false);
-  const permissionsVisible = ref(false);
   const delVisible = ref(false);
 
   const formRef = ref<FormInstance>();
   const formData = ref<UserRecharge>({} as UserRecharge);
-  const permissionsFormRef = ref<FormInstance>();
-  const permissionsFormData = ref<UserPermissions>({} as UserPermissions);
   const delFormRef = ref<FormInstance>();
   const delFormData = ref<UserDeleteParams>({} as UserDeleteParams);
 
@@ -1133,38 +1063,6 @@
 
   const handleQuotaQuickChange = (quota: number) => {
     formData.value.quota = quota * 500000;
-  };
-
-  const userPermissions = async (params: UserPermissionsParams) => {
-    setLoading(true);
-    try {
-      permissionsFormData.value.user_id = params.user_id;
-      if (
-        params.models &&
-        params.models.length > 0 &&
-        params.models[0] !== 'undefined'
-      ) {
-        permissionsFormData.value.models = params.models;
-      } else {
-        permissionsFormData.value.models = [];
-      }
-
-      if (
-        params.groups &&
-        params.groups.length > 0 &&
-        params.groups[0] !== 'undefined'
-      ) {
-        permissionsFormData.value.groups = params.groups;
-      } else {
-        permissionsFormData.value.groups = [];
-      }
-
-      permissionsVisible.value = true;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleBeforeOk = async (done: any) => {
@@ -1202,31 +1100,6 @@
 
   const handleCancel = () => {
     rechargeVisible.value = false;
-  };
-
-  const permissionsHandleBeforeOk = async (done: any) => {
-    const res = await permissionsFormRef.value?.validate();
-    if (res) {
-      permissionsVisible.value = true;
-      done(false);
-      return;
-    }
-
-    setLoading(true);
-    try {
-      await submitUserPermissions(permissionsFormData.value);
-      Message.success(t('success.save'));
-      done();
-      search();
-    } catch (err) {
-      done(false);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const permissionsHandleCancel = () => {
-    permissionsVisible.value = false;
   };
 
   const detailVisible = ref(false);

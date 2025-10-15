@@ -29,7 +29,7 @@ export default {
   'user.placeholder.create.models': '请授权模型权限, 默认授权所有公开模型',
   'user.placeholder.reseller.create.models': '请授权模型权限, 默认授权您账号的所有模型',
   'user.label.groups': '分组权限',
-  'user.placeholder.groups': '请授权分组权限, 分组权限优先于模型权限',
+  'user.placeholder.groups': '请授权分组权限',
   'user.placeholder.create.groups': '请授权分组权限, 默认授权所有公开分组',
   'user.placeholder.reseller.create.groups': '请授权分组权限, 默认授权您账号的所有分组',
   'user.label.isLimitQuota': '限制额度',

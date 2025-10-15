@@ -9,7 +9,6 @@ export interface UserCreate {
   quota: any;
   quota_type: any;
   quota_expires_at: string;
-  models: string[];
   groups: string[];
   remark: string;
 }
@@ -26,7 +25,6 @@ export interface UserPage {
   quota: number;
   used_quota: number;
   quota_expires_at: any;
-  models: string[];
   groups: string[];
   remark: string;
   status: number;
@@ -91,7 +89,7 @@ export interface UserDetail {
   quota: number;
   used_quota: number;
   quota_expires_at: string;
-  model_names: string[];
+  groups: string[];
   group_names: string[];
   quota_warning: boolean;
   warning_threshold: number;
@@ -126,6 +124,7 @@ export interface UserUpdate {
   account: string;
   password: string;
   quota_expires_at: string;
+  groups: string[];
   remark: string;
   status: number;
 }
@@ -167,23 +166,6 @@ export interface UserRecharge {
 
 export function submitUserRecharge(data: UserRecharge) {
   return axios.post('/api/v1/admin/user/recharge', data);
-}
-
-export interface UserPermissionsParams {
-  user_id: any;
-  models: string[];
-  groups: string[];
-}
-
-export interface UserPermissions {
-  id: string;
-  user_id: number;
-  models: string[];
-  groups: string[];
-}
-
-export function submitUserPermissions(data: UserPermissions) {
-  return axios.post('/api/v1/admin/user/permissions', data);
 }
 
 export interface UserBatchOperate {

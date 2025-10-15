@@ -159,14 +159,6 @@
           {{ currentData?.group_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('user.detail.label.models')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 220px; display: block; overflow: auto">
-          {{ currentData?.model_names?.join('\n') || '-' }}
-        </span>
-      </a-descriptions-item>
       <a-descriptions-item :label="t('common.remark')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

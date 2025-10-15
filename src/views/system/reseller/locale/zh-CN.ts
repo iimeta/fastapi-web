@@ -28,7 +28,7 @@ export default {
   'reseller.placeholder.models': '请授权模型权限',
   'reseller.placeholder.create.models': '请授权模型权限, 默认授权所有公开模型',
   'reseller.label.groups': '分组权限',
-  'reseller.placeholder.groups': '请授权分组权限, 分组权限优先于模型权限',
+  'reseller.placeholder.groups': '请授权分组权限',
   'reseller.placeholder.create.groups': '请授权分组权限, 默认授权所有公开分组',
   'reseller.label.isLimitQuota': '限制额度',
   'reseller.label.ip_whitelist': 'IP白名单',

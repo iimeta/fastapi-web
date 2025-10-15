@@ -160,6 +160,27 @@
                 ]"
               />
             </a-form-item>
+            <a-form-item
+              field="groups"
+              :label="$t('reseller.label.groups')"
+              style="align-items: center"
+            >
+              <a-select
+                v-model="formData.groups"
+                :placeholder="$t('reseller.placeholder.groups')"
+                :scrollbar="false"
+                multiple
+                allow-search
+                allow-clear
+              >
+                <a-option
+                  v-for="item in groups"
+                  :key="item.id"
+                  :value="item.id"
+                  :label="item.name"
+                />
+              </a-select>
+            </a-form-item>
             <a-form-item field="remark" :label="$t('reseller.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -203,12 +224,25 @@
     ResellerDetailParams,
     queryResellerDetail,
   } from '@/api/admin_reseller';
+  import { queryGroupList, GroupList } from '@/api/group';
 
   const { proxy } = getCurrentInstance() as any;
-
   const { loading, setLoading } = useLoading(false);
   const route = useRoute();
   const router = useRouter();
+
+  const groups = ref<GroupList[]>([]);
+
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getGroupList();
+
   const formRef = ref<FormInstance>();
   const formData = ref<ResellerUpdate>({
     id: '',
@@ -217,6 +251,7 @@
     account: '',
     password: '',
     quota_expires_at: '',
+    groups: [],
     remark: '',
     status: 1,
   });
@@ -232,6 +267,7 @@
       formData.value.email = data.email;
       formData.value.account = data.account;
       formData.value.quota_expires_at = data.quota_expires_at;
+      formData.value.groups = data.groups;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
     } catch (err) {

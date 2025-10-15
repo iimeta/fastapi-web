@@ -393,19 +393,6 @@
           >
             {{ $t('reseller.columns.operations.recharge') }}
           </a-button>
-          <a-button
-            type="text"
-            size="small"
-            @click="
-              resellerPermissions({
-                user_id: `${record.user_id}`,
-                models: `${record.models}`.split(','),
-                groups: `${record.groups}`.split(','),
-              })
-            "
-          >
-            {{ $t('reseller.columns.operations.permissions') }}
-          </a-button>
           <a-button type="text" size="small" @click="detailHandle(record.id)">
             {{ $t('reseller.columns.operations.view') }}
           </a-button>
@@ -618,57 +605,6 @@
       </a-modal>
 
       <a-modal
-        v-model:visible="permissionsVisible"
-        :title="$t('reseller.form.title.permissions')"
-        :ok-text="$t('button.save')"
-        :width="700"
-        @cancel="permissionsHandleCancel"
-        @before-ok="permissionsHandleBeforeOk"
-      >
-        <a-form ref="permissionsFormRef" :model="permissionsFormData">
-          <a-form-item
-            field="groups"
-            :label="$t('reseller.label.groups')"
-            style="align-items: center"
-          >
-            <a-select
-              v-model="permissionsFormData.groups"
-              :placeholder="$t('reseller.placeholder.groups')"
-              :scrollbar="false"
-              multiple
-              allow-search
-              allow-clear
-              style="max-height: 220px; display: block; overflow: auto"
-            >
-              <a-option
-                v-for="item in groups"
-                :key="item.id"
-                :value="item.id"
-                :label="item.name"
-              />
-            </a-select>
-          </a-form-item>
-          <a-form-item
-            field="models"
-            :label="$t('reseller.label.models')"
-            style="align-items: center"
-          >
-            <a-tree-select
-              v-model="permissionsFormData.models"
-              :placeholder="$t('reseller.placeholder.models')"
-              :allow-search="true"
-              :allow-clear="true"
-              :tree-checkable="true"
-              :data="treeData"
-              :scrollbar="false"
-              tree-checked-strategy="child"
-              style="max-height: 220px; display: block; overflow: auto"
-            />
-          </a-form-item>
-        </a-form>
-      </a-modal>
-
-      <a-modal
         v-model:visible="delVisible"
         :title="$t('reseller.form.title.del')"
         :width="700"
@@ -752,9 +688,6 @@
     submitResellerChangeQuotaExpire,
     ResellerChangeStatus,
     submitResellerChangeStatus,
-    ResellerPermissionsParams,
-    submitResellerPermissions,
-    ResellerPermissions,
     ResellerBatchOperate,
     submitResellerBatchOperate,
   } from '@/api/admin_reseller';
@@ -917,7 +850,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 262,
+      width: 220,
     },
   ]);
 
@@ -1134,15 +1067,10 @@
 
   const quotaQuick = ref(0);
   const rechargeVisible = ref(false);
-  const permissionsVisible = ref(false);
   const delVisible = ref(false);
 
   const formRef = ref<FormInstance>();
   const formData = ref<ResellerRecharge>({} as ResellerRecharge);
-  const permissionsFormRef = ref<FormInstance>();
-  const permissionsFormData = ref<ResellerPermissions>(
-    {} as ResellerPermissions
-  );
   const delFormRef = ref<FormInstance>();
   const delFormData = ref<ResellerDeleteParams>({} as ResellerDeleteParams);
 
@@ -1166,38 +1094,6 @@
 
   const handleQuotaQuickChange = (quota: number) => {
     formData.value.quota = quota * 500000;
-  };
-
-  const resellerPermissions = async (params: ResellerPermissionsParams) => {
-    setLoading(true);
-    try {
-      permissionsFormData.value.user_id = params.user_id;
-      if (
-        params.models &&
-        params.models.length > 0 &&
-        params.models[0] !== 'undefined'
-      ) {
-        permissionsFormData.value.models = params.models;
-      } else {
-        permissionsFormData.value.models = [];
-      }
-
-      if (
-        params.groups &&
-        params.groups.length > 0 &&
-        params.groups[0] !== 'undefined'
-      ) {
-        permissionsFormData.value.groups = params.groups;
-      } else {
-        permissionsFormData.value.groups = [];
-      }
-
-      permissionsVisible.value = true;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleBeforeOk = async (done: any) => {
@@ -1235,31 +1131,6 @@
 
   const handleCancel = () => {
     rechargeVisible.value = false;
-  };
-
-  const permissionsHandleBeforeOk = async (done: any) => {
-    const res = await permissionsFormRef.value?.validate();
-    if (res) {
-      permissionsVisible.value = true;
-      done(false);
-      return;
-    }
-
-    setLoading(true);
-    try {
-      await submitResellerPermissions(permissionsFormData.value); // The mock api default success
-      Message.success(t('success.save'));
-      done();
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const permissionsHandleCancel = () => {
-    permissionsVisible.value = false;
   };
 
   const detailVisible = ref(false);

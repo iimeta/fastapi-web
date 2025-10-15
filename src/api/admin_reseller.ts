@@ -9,7 +9,6 @@ export interface ResellerCreate {
   quota: any;
   quota_type: any;
   quota_expires_at: string;
-  models: string[];
   groups: string[];
   remark: string;
 }
@@ -26,7 +25,6 @@ export interface ResellerPage {
   quota: number;
   used_quota: number;
   quota_expires_at: any;
-  models: string[];
   groups: string[];
   remark: string;
   status: number;
@@ -93,7 +91,7 @@ export interface ResellerDetail {
   allocated_quota: number;
   to_be_allocated: number;
   quota_expires_at: string;
-  model_names: string[];
+  groups: string[];
   group_names: string[];
   quota_warning: boolean;
   warning_threshold: number;
@@ -127,6 +125,7 @@ export interface ResellerUpdate {
   account: string;
   password: string;
   quota_expires_at: string;
+  groups: string[];
   remark: string;
   status: number;
 }
@@ -168,23 +167,6 @@ export interface ResellerRecharge {
 
 export function submitResellerRecharge(data: ResellerRecharge) {
   return axios.post('/api/v1/admin/reseller/recharge', data);
-}
-
-export interface ResellerPermissionsParams {
-  user_id: any;
-  models: string[];
-  groups: string[];
-}
-
-export interface ResellerPermissions {
-  id: string;
-  user_id: number;
-  groups: string[];
-  models: string[];
-}
-
-export function submitResellerPermissions(data: ResellerPermissions) {
-  return axios.post('/api/v1/admin/reseller/permissions', data);
 }
 
 export interface ResellerBatchOperate {
