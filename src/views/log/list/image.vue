@@ -389,12 +389,16 @@
         <template #total_spend_tokens="{ record }">
           <span
             class="spend"
-            @click="spendHandle(record.spend, record.model_type)"
+            @click="
+              record.status === 1 || record.status === 2
+                ? spendHandle(record.spend, record.model_type)
+                : undefined
+            "
           >
             {{
               record.spend.total_spend_tokens
                 ? `$${quotaConv(record.spend.total_spend_tokens)}`
-                : record.status === 1
+                : record.status === 1 || record.status === 2
                 ? '$0.00'
                 : '-'
             }}

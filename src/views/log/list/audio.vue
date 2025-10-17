@@ -378,8 +378,8 @@
         </template>
         <template #characters="{ record }">
           {{
-            record.spend.audio.input_tokens
-              ? record.spend.audio.input_tokens
+            record.spend.audio?.input_tokens
+              ? record.spend.audio?.input_tokens
               : record.status === 1 && record.model_type === 2
               ? 0
               : '-'
@@ -387,8 +387,8 @@
         </template>
         <template #minute="{ record }">
           {{
-            record.spend.audio.output_tokens
-              ? record.spend.audio.output_tokens / 1000000
+            record.spend.audio?.output_tokens
+              ? record.spend.audio?.output_tokens / 1000000
               : record.status === 1 && record.model_type === 3
               ? 0
               : '-'
@@ -397,12 +397,16 @@
         <template #total_spend_tokens="{ record }">
           <span
             class="spend"
-            @click="spendHandle(record.spend, record.model_type)"
+            @click="
+              record.status === 1 || record.status === 2
+                ? spendHandle(record.spend, record.model_type)
+                : undefined
+            "
           >
             {{
               record.spend.total_spend_tokens
                 ? `$${quotaConv(record.spend.total_spend_tokens)}`
-                : record.status === 1
+                : record.status === 1 || record.status === 2
                 ? '$0.00'
                 : '-'
             }}

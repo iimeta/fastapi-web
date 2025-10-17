@@ -111,9 +111,11 @@
         </a-skeleton>
         <span v-else>
           {{
-            $t(
-              `model.dict.billing_methods.${currentData.spend.billing_methods}`
-            )
+            currentData.spend.billing_methods
+              ? $t(
+                  `model.dict.billing_methods.${currentData.spend.billing_methods}`
+                )
+              : '-'
           }}
         </span>
       </a-descriptions-item>
@@ -124,12 +126,16 @@
         <span
           v-else
           class="spend"
-          @click="spendHandle(currentData.spend, currentData.model_type)"
+          @click="
+            currentData.status === 1 || currentData.status === 2
+              ? spendHandle(currentData.spend, currentData.model_type)
+              : undefined
+          "
         >
           {{
             currentData.spend.total_spend_tokens
               ? `$${quotaConv(currentData.spend.total_spend_tokens)}`
-              : currentData.status === 1
+              : currentData.status === 1 || currentData.status === 2
               ? '$0.00'
               : '-'
           }}
@@ -432,9 +438,11 @@
         </a-skeleton>
         <span v-else>
           {{
-            $t(
-              `model.dict.billing_methods.${currentData.spend.billing_methods}`
-            )
+            currentData.spend.billing_methods
+              ? $t(
+                  `model.dict.billing_methods.${currentData.spend.billing_methods}`
+                )
+              : '-'
           }}
         </span>
       </a-descriptions-item>
@@ -445,12 +453,16 @@
         <span
           v-else
           class="spend"
-          @click="spendHandle(currentData.spend, currentData.model_type)"
+          @click="
+            currentData.status === 1 || currentData.status === 2
+              ? spendHandle(currentData.spend, currentData.model_type)
+              : undefined
+          "
         >
           {{
             currentData.spend.total_spend_tokens
               ? `$${quotaConv(currentData.spend.total_spend_tokens)}`
-              : currentData.status === 1
+              : currentData.status === 1 || currentData.status === 2
               ? '$0.00'
               : '-'
           }}
