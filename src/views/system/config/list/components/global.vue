@@ -67,6 +67,7 @@
     <a-modal
       v-model:visible="configVisible"
       :title="$t(configTitle)"
+      :width="configFormData.action === 'core' ? 580 : 520"
       :body-style="{
         padding: '20px 20px 0 20px',
         maxHeight: '520px',
@@ -215,6 +216,12 @@
           v-if="configFormData.action === 'core'"
           field="core.secret_key_prefix"
           :label="$t('sys.config.label.core.secret_key_prefix')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.core.secret_key_prefix.required'),
+            },
+          ]"
         >
           <a-input
             v-model="configFormData.core.secret_key_prefix"
@@ -226,10 +233,29 @@
           v-if="configFormData.action === 'core'"
           field="core.error_prefix"
           :label="$t('sys.config.label.core.error_prefix')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.core.error_prefix.required'),
+            },
+          ]"
         >
           <a-input
             v-model="configFormData.core.error_prefix"
             :placeholder="$t('sys.config.placeholder.core.error_prefix')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'core'"
+          field="core.replace_error_prefixes"
+          :label="$t('sys.config.label.core.replace_error_prefixes')"
+        >
+          <a-input
+            v-model="configFormData.core.replace_error_prefixes"
+            :placeholder="
+              $t('sys.config.placeholder.core.replace_error_prefixes')
+            "
             allow-clear
           />
         </a-form-item>
@@ -296,6 +322,10 @@
 
     setLoading(true);
     try {
+      if (configFormData.value.core.replace_error_prefixes) {
+        configFormData.value.core.replace_error_prefixes =
+          configFormData.value.core.replace_error_prefixes.split(',');
+      }
       await submitSysConfigUpdate(configFormData.value);
       done();
       proxy.$message.success('操作成功');
@@ -345,6 +375,8 @@
     configFormData.value.email = data.email;
     configFormData.value.http = data.http;
     configFormData.value.core = data.core;
+    configFormData.value.core.replace_error_prefixes =
+      configFormData.value.core.replace_error_prefixes?.join(',');
     configFormData.value.debug = data.debug;
     sysConfigItems.value = [
       {

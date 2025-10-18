@@ -15,6 +15,7 @@ export interface SysConfigItem {
 export interface Core {
   secret_key_prefix: string;
   error_prefix: string;
+  replace_error_prefixes: any;
 }
 
 export interface Http {
