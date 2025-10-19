@@ -301,7 +301,7 @@
       </a-row>
       <a-divider style="margin-top: 0; margin-bottom: 16px" />
       <a-row style="margin-bottom: 16px; align-items: center">
-        <a-col :span="3">
+        <a-col :span="16">
           <a-space>
             <a-button type="primary" @click="handleChatExport({})">
               导出
@@ -320,11 +320,7 @@
             </a-button>
           </a-space>
         </a-col>
-        <a-col :span="14">
-          总花费 = 各计费项总和 × 分组折扣 &nbsp;&nbsp;或&nbsp;&nbsp; 按次 ×
-          分组折扣
-        </a-col>
-        <a-col :span="2"> RPM: &nbsp;{{ rpm.toLocaleString() }} </a-col>
+        <a-col :span="3"> RPM: &nbsp;{{ rpm.toLocaleString() }} </a-col>
         <a-col :span="3"> TPM: &nbsp;{{ tpm.toLocaleString() }} </a-col>
         <a-col
           :span="2"
@@ -810,6 +806,7 @@
   import {
     computed,
     ref,
+    h,
     reactive,
     watch,
     nextTick,
@@ -840,7 +837,8 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Tooltip } from '@arco-design/web-vue';
+  import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { Spend } from '@/api/common';
@@ -957,6 +955,40 @@
       dataIndex: 'total_spend_tokens',
       slotName: 'total_spend_tokens',
       align: 'center',
+      slots: {
+        title: () => [
+          h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                justifyContent: 'center',
+              },
+            },
+            [
+              h('span', t('chat.columns.total_spend_tokens')),
+              h(
+                Tooltip,
+                {
+                  content:
+                    '各计费项总和 × 分组折扣 \u00A0\u00A0 或 \u00A0\u00A0 按次 × 分组折扣',
+                },
+                {
+                  default: () =>
+                    h(IconQuestionCircle, {
+                      style: {
+                        color: 'var(--color-text-3)',
+                        whiteSpace: 'pre',
+                      },
+                    }),
+                }
+              ),
+            ]
+          ),
+        ],
+      },
     },
     {
       title: t('chat.columns.stream'),

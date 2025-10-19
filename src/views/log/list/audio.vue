@@ -566,7 +566,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import { computed, ref, h, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
@@ -581,6 +581,8 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { Tooltip } from '@arco-design/web-vue';
+  import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { Spend } from '@/api/common';
@@ -692,6 +694,40 @@
       dataIndex: 'total_spend_tokens',
       slotName: 'total_spend_tokens',
       align: 'center',
+      slots: {
+        title: () => [
+          h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                justifyContent: 'center',
+              },
+            },
+            [
+              h('span', t('chat.columns.total_spend_tokens')),
+              h(
+                Tooltip,
+                {
+                  content:
+                    '各计费项总和 × 分组折扣 \u00A0\u00A0 或 \u00A0\u00A0 按次 × 分组折扣',
+                },
+                {
+                  default: () =>
+                    h(IconQuestionCircle, {
+                      style: {
+                        color: 'var(--color-text-3)',
+                        whiteSpace: 'pre',
+                      },
+                    }),
+                }
+              ),
+            ]
+          ),
+        ],
+      },
     },
     {
       title: t('chat.columns.total_time'),
