@@ -407,6 +407,8 @@
           {{
             record.spend.text?.input_tokens
               ? record.spend.text?.input_tokens
+              : record.spend.tiered_text?.input_tokens
+              ? record.spend.tiered_text?.input_tokens
               : record.status === 1
               ? 0
               : '-'
@@ -416,6 +418,8 @@
           {{
             record.spend.text?.output_tokens
               ? record.spend.text?.output_tokens
+              : record.spend.tiered_text?.output_tokens
+              ? record.spend.tiered_text?.output_tokens
               : record.status === 1
               ? 0
               : '-'
