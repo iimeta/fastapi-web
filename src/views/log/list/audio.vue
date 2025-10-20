@@ -702,7 +702,7 @@
               style: {
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px',
+                gap: '3px',
                 justifyContent: 'center',
               },
             },
@@ -711,15 +711,17 @@
               h(
                 Tooltip,
                 {
-                  content:
-                    '各计费项总和 × 分组折扣 \u00A0\u00A0 或 \u00A0\u00A0 按次 × 分组折扣',
+                  content: t('chat.columns.tooltip.total_spend_tokens'),
+                  contentStyle: {
+                    whiteSpace: 'nowrap',
+                    maxWidth: 'none',
+                  },
                 },
                 {
                   default: () =>
                     h(IconQuestionCircle, {
                       style: {
                         color: 'var(--color-text-3)',
-                        whiteSpace: 'pre',
                       },
                     }),
                 }

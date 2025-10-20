@@ -128,6 +128,20 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item label="总花费">
+        <template #label>
+          <span>
+            总花费
+            <a-tooltip
+              :content="$t('chat.columns.tooltip.total_spend_tokens')"
+              :contentStyle="{
+                whiteSpace: 'nowrap',
+                maxWidth: 'none',
+              }"
+            >
+              <icon-question-circle style="color: var(--color-text-3)" />
+            </a-tooltip>
+          </span>
+        </template>
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -501,6 +515,20 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item label="总花费">
+        <template #label>
+          <span>
+            总花费
+            <a-tooltip
+              :content="$t('chat.columns.tooltip.total_spend_tokens')"
+              :contentStyle="{
+                whiteSpace: 'nowrap',
+                maxWidth: 'none',
+              }"
+            >
+              <icon-question-circle style="color: var(--color-text-3)" />
+            </a-tooltip>
+          </span>
+        </template>
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

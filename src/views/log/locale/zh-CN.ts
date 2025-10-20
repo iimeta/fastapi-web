@@ -70,6 +70,7 @@ export default {
   'chat.columns.input_tokens': '输入',
   'chat.columns.output_tokens': '输出',
   'chat.columns.total_spend_tokens': '总花费',
+  'chat.columns.tooltip.total_spend_tokens': '各计费项花费总和 × 分组折扣 \u00A0 或 \u00A0 一次花费 × 分组折扣',
   'chat.columns.stream': '流式',
   'chat.columns.conn_time': '连接',
   'chat.columns.duration': '持续',
