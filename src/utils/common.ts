@@ -1,26 +1,29 @@
 import dayjs from 'dayjs';
 
-export function priceConv(ratio: number) {
-  return parseFloat((1000 / (500000 / ratio)).toFixed(6)).toLocaleString(
-    undefined,
-    { maximumFractionDigits: 6 }
-  );
+const QUOTA_DEFAULT_UNIT = 1000000;
+
+export function convQuota(quota: number, reverse: boolean = false) {
+  return reverse 
+    ? quota * QUOTA_DEFAULT_UNIT 
+    : quota / QUOTA_DEFAULT_UNIT;
 }
 
 export function quotaConv(quota: number) {
-  return parseFloat((quota / 500000).toFixed(6)).toLocaleString(undefined, {
-    maximumFractionDigits: 6,
-  });
+  return parseFloat((quota / QUOTA_DEFAULT_UNIT).toFixed(6)).toLocaleString(
+    undefined,
+    {
+      maximumFractionDigits: 6,
+    }
+  );
 }
 
 export function quotaConv4(quota: number) {
-  return parseFloat((quota / 500000).toFixed(4)).toLocaleString(undefined, {
-    maximumFractionDigits: 4,
-  });
-}
-
-export function ratioConv(price: number) {
-  return price * 500;
+  return parseFloat((quota / QUOTA_DEFAULT_UNIT).toFixed(4)).toLocaleString(
+    undefined,
+    {
+      maximumFractionDigits: 4,
+    }
+  );
 }
 
 export function parserPrice(price: string) {

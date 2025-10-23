@@ -34,7 +34,7 @@ export default {
   'workplace.modelPercent': '模型占比TOP10',
   'workplace.pecs': '个',
   'workplace.expense': '费用',
-  'workplace.current.quota': '当前额度 (500000 = $1)',
+  'workplace.current.quota': '当前额度',
   'workplace.current.quota_warning': '额度预警',
   'workplace.dateRange1': '今天',
   'workplace.dateRange7': '近7天',

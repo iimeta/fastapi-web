@@ -25,7 +25,7 @@ export default {
   'group.placeholder.remark': '请输入说明',
   'group.label.is_limit_quota': '限制额度',
   'group.label.quota': '额度',
-  'group.placeholder.quota': '请输入额度, $1=500000',
+  'group.placeholder.quota': '请输入额度',
   'group.error.quota.required': '请输入额度',
   'group.label.is_enable_model_agent': '启用代理',
   'group.label.model_agents': '模型代理',
@@ -51,7 +51,7 @@ export default {
   'group.placeholder.content_length': '请输入内容长度, 全部上下文内容长度 > N',
   'group.error.content_length.required': '请输入内容长度',
   'group.label.used_quota': '额度',
-  'group.placeholder.used_quota': '请输入额度, $1=500000',
+  'group.placeholder.used_quota': '请输入额度',
   'group.error.used_quota.required': '请输入额度',
   // detail
   'group.detail.label.name': '名称',

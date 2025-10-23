@@ -34,7 +34,7 @@ export default {
   'site.config.label.register_tips': '注册提示',
   'site.config.placeholder.register_tips': '输入注册提示后, 不再支持用户注册, 会自动弹出此提示',
   'site.config.label.grant_quota': '注册赠送额度',
-  'site.config.placeholder.grant_quota': '请输入注册赠送额度, 500000 = $1',
+  'site.config.placeholder.grant_quota': '请输入注册赠送额度',
   'site.config.label.quota_expires_at': '额度过期时间',
   'site.config.placeholder.quota_expires_at': '请输入注册赠送额度过期时间, 单位: 分钟, 如: 43200',
   'site.config.label.support_email_suffix': '注册邮箱后缀',

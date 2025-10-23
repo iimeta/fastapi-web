@@ -41,7 +41,7 @@ export default {
   'user.placeholder.key': '密钥',
   'user.label.quota': '额度',
   'user.placeholder.quota': '请输入额度',
-  'user.placeholder.recharge': '请输入额度, $1=500000',
+  'user.placeholder.recharge': '请输入额度',
   'user.label.quota_expires_at': '过期时间',
   'user.placeholder.quota_expires_at': '请设置额度过期时间',
   'user.label.del.data': '删除数据',

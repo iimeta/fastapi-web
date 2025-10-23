@@ -39,7 +39,7 @@ export default {
   'reseller.placeholder.key': '密钥',
   'reseller.label.quota': '额度',
   'reseller.placeholder.quota': '请输入额度',
-  'reseller.placeholder.recharge': '请输入额度, $1=500000',
+  'reseller.placeholder.recharge': '请输入额度',
   'reseller.label.quota_expires_at': '过期时间',
   'reseller.placeholder.quota_expires_at': '请设置额度过期时间',
   'reseller.success.recharge': '充值成功',
