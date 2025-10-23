@@ -2,10 +2,8 @@ import dayjs from 'dayjs';
 
 const QUOTA_DEFAULT_UNIT = 1000000;
 
-export function convQuota(quota: number, reverse: boolean = false) {
-  return reverse 
-    ? quota * QUOTA_DEFAULT_UNIT 
-    : quota / QUOTA_DEFAULT_UNIT;
+export function convQuota(quota: number, reverse = false) {
+  return reverse ? quota * QUOTA_DEFAULT_UNIT : quota / QUOTA_DEFAULT_UNIT;
 }
 
 export function quotaConv(quota: number) {

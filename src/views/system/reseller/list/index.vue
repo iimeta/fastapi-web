@@ -68,7 +68,9 @@
                     :min="0.000001"
                     :max="9999999999999"
                     allow-clear
-                  />
+                  >
+                    <template #prefix> $ </template>
+                  </a-input-number>
                 </a-form-item>
               </a-col>
               <a-col :span="7">
@@ -441,11 +443,11 @@
         v-model:visible="rechargeVisible"
         :title="$t('reseller.form.title.recharge')"
         :ok-text="$t('button.ok')"
-        :width="660"
+        :width="728"
         @cancel="handleCancel"
         @before-ok="handleBeforeOk"
       >
-        <a-form ref="formRef" :model="formData">
+        <a-form ref="formRef" :model="formData" :label-col-props="{ span: 4 }">
           <a-form-item
             field="quota"
             :label="$t('reseller.label.quota')"
@@ -459,20 +461,18 @@
             <a-input-number
               v-model="formData.quota"
               :placeholder="$t('reseller.placeholder.recharge')"
-              :precision="0"
-              :min="1"
+              :min="0.000001"
               :max="9999999999999"
-              style="margin-right: 10px"
-            />
-            <div>
-              ${{ formData.quota ? quotaConv(formData.quota) : '0.00' }}</div
+              :parser="parserPrice"
             >
+              <template #prefix> $ </template>
+            </a-input-number>
           </a-form-item>
-          <a-form-item style="width: 280px; margin-bottom: 10px">
+          <a-form-item style="margin-bottom: 8px">
             <a-radio-group
               v-model="quotaQuick"
               type="button"
-              @change="handleQuotaQuickChange as any"
+              @change="handleQuotaQuickChange"
             >
               <a-radio :value="1"> $1 </a-radio>
               <a-radio :value="2"> $2 </a-radio>
@@ -486,11 +486,11 @@
               <a-radio :value="1000"> $1,000 </a-radio>
             </a-radio-group>
           </a-form-item>
-          <a-form-item style="width: 280px">
+          <a-form-item style="margin-bottom: 8px">
             <a-radio-group
               v-model="quotaQuick"
               type="button"
-              @change="handleQuotaQuickChange as any"
+              @change="handleQuotaQuickChange"
             >
               <a-radio :value="2000"> $2,000 </a-radio>
               <a-radio :value="3000"> $3,000 </a-radio>
@@ -499,6 +499,20 @@
               <a-radio :value="20000"> $20,000 </a-radio>
               <a-radio :value="50000"> $50,000 </a-radio>
               <a-radio :value="100000"> $100,000 </a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item style="margin-bottom: 10px">
+            <a-radio-group
+              v-model="quotaQuick"
+              type="button"
+              @change="handleQuotaQuickChange"
+            >
+              <a-radio :value="200000"> $200,000 </a-radio>
+              <a-radio :value="300000"> $300,000 </a-radio>
+              <a-radio :value="500000"> $500,000 </a-radio>
+              <a-radio :value="600000"> $600,000 </a-radio>
+              <a-radio :value="800000"> $800,000 </a-radio>
+              <a-radio :value="1000000"> $1,000,000 </a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item
@@ -674,7 +688,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { quotaConv, disabledDate } from '@/utils/common';
+  import { quotaConv, disabledDate, parserPrice } from '@/utils/common';
   import {
     queryResellerPage,
     ResellerPage,
@@ -1093,7 +1107,7 @@
   };
 
   const handleQuotaQuickChange = (quota: number) => {
-    formData.value.quota = quota * 500000;
+    formData.value.quota = quota;
   };
 
   const handleBeforeOk = async (done: any) => {
@@ -1172,13 +1186,11 @@
             formData.value.is_send_notice = true;
             rechargeVisible.value = true;
           } else if (formData.value.quota_type === '2') {
-            alertContent = `是否确定扣除所选的${
-              ids.value.length
-            }位代理商 $${quotaConv(params.value)} 额度?`;
+            alertContent = `是否确定扣除所选的${ids.value.length}位代理商 $${params.value} 额度?`;
           } else {
             alertContent = `是否确定给所选的${ids.value.length}位代理商${
               formData.value.quota_type === '1' ? '充值' : '赠送'
-            } $${quotaConv(params.value)} 额度?`;
+            } $${params.value} 额度?`;
           }
           break;
         case 'status':
