@@ -18,12 +18,12 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 5 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 3 }"
+            :wrapper-col-props="{ span: 21 }"
           >
-            <a-divider orientation="left">{{
-              $t('common.title.baseInfo')
-            }}</a-divider>
+            <a-divider orientation="left">
+              {{ $t('common.title.baseInfo') }}
+            </a-divider>
             <a-form-item
               field="name"
               :label="$t('group.label.name')"
@@ -56,8 +56,9 @@
                 :min="0.01"
                 :max="9999999999999"
                 allow-clear
-              />
-              <div style="margin-left: 10px"> % </div>
+              >
+                <template #append> %</template>
+              </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="!formData.is_default"
@@ -132,9 +133,11 @@
                 :placeholder="$t('group.placeholder.remark')"
               />
             </a-form-item>
+
             <a-divider orientation="left">
               {{ $t('common.title.advanced') }}
             </a-divider>
+
             <a-form-item
               field="is_enable_model_agent"
               :label="$t('group.label.is_enable_model_agent')"
@@ -210,30 +213,23 @@
               <a-input-number
                 v-model="formData.quota"
                 :placeholder="$t('group.placeholder.quota')"
-                :precision="0"
-                :min="1"
+                :min="0.000001"
                 :max="9999999999999"
-                allow-clear
-              />
-              <div style="margin-left: 10px">
-                ${{ formData.quota ? quotaConv(formData.quota) : '0.00' }}
-              </div>
+                :parser="parserPrice"
+              >
+                <template #prefix> $ </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item v-if="formData.is_limit_quota">
-              <a-radio-group
-                type="button"
-                @change="handleQuotaQuickChange as any"
-              >
-                <a-radio :value="1"> $1 </a-radio>
-                <a-radio :value="2"> $2 </a-radio>
-                <a-radio :value="5"> $5 </a-radio>
-                <a-radio :value="10"> $10 </a-radio>
-                <a-radio :value="20"> $20 </a-radio>
-                <a-radio :value="50"> $50 </a-radio>
+              <a-radio-group type="button" @change="handleQuotaQuickChange">
                 <a-radio :value="100"> $100 </a-radio>
-                <a-radio :value="200"> $200 </a-radio>
                 <a-radio :value="500"> $500 </a-radio>
-                <a-radio :value="1000"> $1000 </a-radio>
+                <a-radio :value="1000"> $1,000 </a-radio>
+                <a-radio :value="5000"> $5,000 </a-radio>
+                <a-radio :value="10000"> $10,000 </a-radio>
+                <a-radio :value="50000"> $50,000 </a-radio>
+                <a-radio :value="100000"> $100,000 </a-radio>
+                <a-radio :value="1000000"> $1,000,000 </a-radio>
               </a-radio-group>
             </a-form-item>
             <a-form-item
@@ -308,18 +304,12 @@
               <a-input-number
                 v-model="formData.forward_config.used_quota"
                 :placeholder="$t('group.placeholder.used_quota')"
-                :precision="0"
-                :min="1"
+                :min="0.000001"
                 :max="9999999999999"
-                allow-clear
-              />
-              <div style="margin-left: 10px">
-                ${{
-                  formData.forward_config.used_quota
-                    ? quotaConv(formData.forward_config.used_quota)
-                    : '0.00'
-                }}</div
+                :parser="parserPrice"
               >
+                <template #prefix> $ </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="
@@ -327,20 +317,15 @@
                 formData.forward_config.forward_rule === '4'
               "
             >
-              <a-radio-group
-                type="button"
-                @change="handleUsedQuotaQuickChange as any"
-              >
-                <a-radio :value="1"> $1 </a-radio>
-                <a-radio :value="2"> $2 </a-radio>
-                <a-radio :value="5"> $5 </a-radio>
-                <a-radio :value="10"> $10 </a-radio>
-                <a-radio :value="20"> $20 </a-radio>
-                <a-radio :value="50"> $50 </a-radio>
+              <a-radio-group type="button" @change="handleUsedQuotaQuickChange">
                 <a-radio :value="100"> $100 </a-radio>
-                <a-radio :value="200"> $200 </a-radio>
                 <a-radio :value="500"> $500 </a-radio>
-                <a-radio :value="1000"> $1000 </a-radio>
+                <a-radio :value="1000"> $1,000 </a-radio>
+                <a-radio :value="5000"> $5,000 </a-radio>
+                <a-radio :value="10000"> $10,000 </a-radio>
+                <a-radio :value="50000"> $50,000 </a-radio>
+                <a-radio :value="100000"> $100,000 </a-radio>
+                <a-radio :value="1000000"> $1,000,000 </a-radio>
               </a-radio-group>
             </a-form-item>
             <a-form-item
@@ -586,7 +571,7 @@
   import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
-  import { quotaConv, disabledDate } from '@/utils/common';
+  import { quotaConv, disabledDate, parserPrice } from '@/utils/common';
   import { submitGroupCreate, GroupCreate } from '@/api/group';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
@@ -685,11 +670,11 @@
   };
 
   const handleQuotaQuickChange = (quota: number) => {
-    formData.value.quota = quota * 500000;
+    formData.value.quota = quota;
   };
 
   const handleUsedQuotaQuickChange = (quota: number) => {
-    formData.value.forward_config.used_quota = quota * 500000;
+    formData.value.forward_config.used_quota = quota;
   };
 
   const handleForwardRuleChange = () => {

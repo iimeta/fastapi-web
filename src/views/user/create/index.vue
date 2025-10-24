@@ -18,8 +18,8 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 5 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 3 }"
+            :wrapper-col-props="{ span: 21 }"
           >
             <a-form-item
               field="name"
@@ -106,19 +106,15 @@
               <a-input-number
                 v-model="formData.quota"
                 :placeholder="$t('user.placeholder.quota')"
-                :precision="0"
-                :min="1"
+                :min="0.000001"
                 :max="9999999999999"
-              />
-              <div style="margin-left: 10px">
-                ${{ formData.quota ? quotaConv(formData.quota) : '0' }}</div
+                :parser="parserPrice"
               >
+                <template #prefix> $ </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item>
-              <a-radio-group
-                type="button"
-                @change="handleQuotaQuickChange as any"
-              >
+              <a-radio-group type="button" @change="handleQuotaQuickChange">
                 <a-radio :value="1"> $1 </a-radio>
                 <a-radio :value="2"> $2 </a-radio>
                 <a-radio :value="5"> $5 </a-radio>
@@ -128,7 +124,8 @@
                 <a-radio :value="100"> $100 </a-radio>
                 <a-radio :value="200"> $200 </a-radio>
                 <a-radio :value="500"> $500 </a-radio>
-                <a-radio :value="1000"> $1000 </a-radio>
+                <a-radio :value="1000"> $1,000 </a-radio>
+                <a-radio :value="2000"> $2,000 </a-radio>
               </a-radio-group>
             </a-form-item>
             <a-form-item
@@ -288,7 +285,7 @@
   import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
-  import { quotaConv, disabledDate } from '@/utils/common';
+  import { quotaConv, disabledDate, parserPrice } from '@/utils/common';
   import { submitUserCreate, UserCreate } from '@/api/admin_user';
   import { queryGroupList, GroupList } from '@/api/group';
 
@@ -341,7 +338,7 @@
     }
   };
   const handleQuotaQuickChange = (quota: number) => {
-    formData.value.quota = quota * 500000;
+    formData.value.quota = quota;
   };
 </script>
 

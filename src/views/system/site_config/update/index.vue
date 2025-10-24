@@ -18,8 +18,7 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 5 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 4 }"
           >
             <a-form-item
               field="domain"
@@ -177,32 +176,26 @@
               <a-input-number
                 v-model="formData.grant_quota"
                 :placeholder="$t('site.config.placeholder.grant_quota')"
-                :precision="0"
-                :min="0"
+                :min="0.000001"
                 :max="9999999999999"
-                style="width: 492px; margin-right: 10px"
+                :parser="parserPrice"
                 allow-clear
-              />
-              <div>
-                ${{
-                  formData.grant_quota ? quotaConv(formData.grant_quota) : '0'
-                }}</div
               >
+                <template #prefix> $ </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item v-if="!formData.register_tips">
-              <a-radio-group
-                type="button"
-                @change="handleQuotaQuickChange as any"
-              >
+              <a-radio-group type="button" @change="handleQuotaQuickChange">
                 <a-radio :value="1"> $1 </a-radio>
+                <a-radio :value="2"> $2 </a-radio>
                 <a-radio :value="5"> $5 </a-radio>
                 <a-radio :value="10"> $10 </a-radio>
                 <a-radio :value="20"> $20 </a-radio>
                 <a-radio :value="50"> $50 </a-radio>
                 <a-radio :value="100"> $100 </a-radio>
                 <a-radio :value="200"> $200 </a-radio>
-                <a-radio :value="500"> $500 </a-radio>
                 <a-radio :value="1000"> $1000 </a-radio>
+                <a-radio :value="10000"> $10000 </a-radio>
               </a-radio-group>
             </a-form-item>
             <a-form-item
@@ -523,7 +516,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { quotaConv } from '@/utils/common';
+  import { quotaConv, parserPrice } from '@/utils/common';
   import {
     submitSiteConfigUpdate,
     SiteConfigUpdate,
@@ -672,7 +665,7 @@
       formData.value.icp_beian = data.icp_beian;
       formData.value.ga_beian = data.ga_beian;
       formData.value.register_tips = data.register_tips;
-      formData.value.grant_quota = data.grant_quota;
+      formData.value.grant_quota = Number(quotaConv(data.grant_quota));
       formData.value.quota_expires_at = data.quota_expires_at;
       formData.value.support_email_suffix =
         data.support_email_suffix?.join(',');
@@ -733,7 +726,7 @@
   getSiteConfigDetail();
 
   const handleQuotaQuickChange = (quota: number) => {
-    formData.value.grant_quota = quota * 500000;
+    formData.value.grant_quota = quota;
   };
 
   const handleCarousels1Add = () => {

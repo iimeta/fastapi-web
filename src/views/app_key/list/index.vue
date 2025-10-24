@@ -435,14 +435,14 @@
 
       <a-modal
         v-model:visible="visible"
-        :width="600"
+        :width="728"
         :title="$t('app.form.title.keyConfig')"
         :ok-text="$t('button.save')"
         :body-style="{ height: '520px' }"
         @cancel="handleCancel"
         @before-ok="handleBeforeOk"
       >
-        <a-form ref="formRef" :model="formData">
+        <a-form ref="formRef" :model="formData" :label-col-props="{ span: 4 }">
           <a-form-item field="key" :label="$t('app.label.key')">
             <a-input
               v-model="formData.key"
@@ -508,27 +508,24 @@
             <a-input-number
               v-model="formData.quota"
               :placeholder="$t('app.placeholder.quota')"
-              :precision="0"
-              :min="0"
+              :min="0.000001"
               :max="9999999999999"
-              style="margin-right: 10px"
-            />
-            <div>
-              ${{ formData.quota ? quotaConv(formData.quota) : '0.00' }}</div
+              :parser="parserPrice"
             >
+              <template #prefix> $ </template>
+            </a-input-number>
           </a-form-item>
           <a-form-item v-if="formData.is_limit_quota">
-            <a-radio-group
-              type="button"
-              @change="handleQuotaQuickChange as any"
-            >
+            <a-radio-group type="button" @change="handleQuotaQuickChange">
               <a-radio :value="1"> $1 </a-radio>
               <a-radio :value="5"> $5 </a-radio>
               <a-radio :value="10"> $10 </a-radio>
-              <a-radio :value="20"> $20 </a-radio>
+              <a-radio :value="50"> $50 </a-radio>
               <a-radio :value="100"> $100 </a-radio>
               <a-radio :value="500"> $500 </a-radio>
-              <a-radio :value="1000"> $1000 </a-radio>
+              <a-radio :value="1000"> $1,000 </a-radio>
+              <a-radio :value="5000"> $5,000 </a-radio>
+              <a-radio :value="10000"> $10,000 </a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item
@@ -718,13 +715,21 @@
       <!-- 批量操作 -->
       <a-modal
         v-model:visible="batchVisible"
-        :width="600"
-        :title="$t('app.form.title.batch.create')"
+        :width="728"
+        :title="
+          batchFormData.action === 'create'
+            ? $t('app.form.title.batch.create')
+            : $t('app.form.title.batch.update')
+        "
         :body-style="{ height: '520px' }"
         @cancel="handleBatchCancel"
         @before-ok="handleBatchBeforeOk"
       >
-        <a-form ref="batchFormRef" :model="batchFormData">
+        <a-form
+          ref="batchFormRef"
+          :model="batchFormData"
+          :label-col-props="{ span: 4 }"
+        >
           <a-form-item
             v-if="
               batchFormData.action === 'create' &&
@@ -870,29 +875,24 @@
             <a-input-number
               v-model="batchFormData.quota"
               :placeholder="$t('app.placeholder.quota')"
-              :precision="0"
-              :min="0"
+              :min="0.000001"
               :max="9999999999999"
-              style="margin-right: 10px"
-            />
-            <div>
-              ${{
-                batchFormData.quota ? quotaConv(batchFormData.quota) : '0.00'
-              }}</div
+              :parser="parserPrice"
             >
+              <template #prefix> $ </template>
+            </a-input-number>
           </a-form-item>
           <a-form-item v-if="batchFormData.is_limit_quota">
-            <a-radio-group
-              type="button"
-              @change="handleQuotaQuickChange as any"
-            >
+            <a-radio-group type="button" @change="handleQuotaQuickChange">
               <a-radio :value="1"> $1 </a-radio>
               <a-radio :value="5"> $5 </a-radio>
               <a-radio :value="10"> $10 </a-radio>
-              <a-radio :value="20"> $20 </a-radio>
+              <a-radio :value="50"> $50 </a-radio>
               <a-radio :value="100"> $100 </a-radio>
               <a-radio :value="500"> $500 </a-radio>
-              <a-radio :value="1000"> $1000 </a-radio>
+              <a-radio :value="1000"> $1,000 </a-radio>
+              <a-radio :value="5000"> $5,000 </a-radio>
+              <a-radio :value="10000"> $10,000 </a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item
@@ -1138,7 +1138,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { quotaConv, disabledDate } from '@/utils/common';
+  import { quotaConv, disabledDate, parserPrice } from '@/utils/common';
   import { queryAppList, AppList } from '@/api/app';
   import {
     queryAppKeyPage,
@@ -1562,8 +1562,8 @@
   } as AppKeyBatchOperate);
 
   const handleQuotaQuickChange = (quota: number) => {
-    formData.value.quota = quota * 500000;
-    batchFormData.value.quota = quota * 500000;
+    formData.value.quota = quota;
+    batchFormData.value.quota = quota;
   };
 
   interface AppKeyConfigView {
@@ -1591,7 +1591,7 @@
       formData.value.billing_methods = params.billing_methods || [1];
       formData.value.models = params.models;
       formData.value.is_limit_quota = params.is_limit_quota;
-      formData.value.quota = params.quota;
+      formData.value.quota = Number(quotaConv(params.quota));
       formData.value.quota_expires_rule =
         String(params.quota_expires_rule) || '1';
       formData.value.quota_expires_at = params.quota_expires_at;

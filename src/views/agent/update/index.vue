@@ -18,12 +18,11 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 5 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 4 }"
           >
-            <a-divider orientation="left">{{
-              $t('common.title.baseInfo')
-            }}</a-divider>
+            <a-divider orientation="left">
+              {{ $t('common.title.baseInfo') }}
+            </a-divider>
             <a-form-item
               field="provider_id"
               :label="$t('model.agent.label.provider')"
@@ -104,9 +103,11 @@
                 :placeholder="$t('model.agent.placeholder.remark')"
               />
             </a-form-item>
+
             <a-divider orientation="left">
               {{ $t('common.title.advanced') }}
             </a-divider>
+
             <a-form-item
               field="models"
               :label="$t('model.agent.label.models')"

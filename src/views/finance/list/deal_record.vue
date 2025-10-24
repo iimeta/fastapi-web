@@ -25,7 +25,11 @@
           >
             <a-row :gutter="16">
               <a-col :span="6">
-                <a-form-item field="name" :label="$t('finance.form.user_id')">
+                <a-form-item
+                  field="name"
+                  :label="$t('finance.form.user_id')"
+                  :label-col-props="{ span: 6 }"
+                >
                   <a-input-number
                     v-model="searchFormData.user_id"
                     :placeholder="$t('finance.form.user_id.placeholder')"

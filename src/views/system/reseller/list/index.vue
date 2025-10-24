@@ -450,11 +450,11 @@
         <a-form ref="formRef" :model="formData" :label-col-props="{ span: 4 }">
           <a-form-item
             field="quota"
-            :label="$t('reseller.label.quota')"
+            :label="$t('reseller.label.recharge')"
             :rules="[
               {
                 required: true,
-                message: $t('reseller.error.quota.required'),
+                message: $t('reseller.error.recharge.required'),
               },
             ]"
           >
@@ -483,10 +483,10 @@
               <a-radio :value="100"> $100 </a-radio>
               <a-radio :value="200"> $200 </a-radio>
               <a-radio :value="500"> $500 </a-radio>
-              <a-radio :value="1000"> $1,000 </a-radio>
+              <a-radio :value="1000"> $1,000&nbsp; </a-radio>
             </a-radio-group>
           </a-form-item>
-          <a-form-item style="margin-bottom: 8px">
+          <a-form-item style="margin-bottom: 10px">
             <a-radio-group
               v-model="quotaQuick"
               type="button"
@@ -499,20 +499,6 @@
               <a-radio :value="20000"> $20,000 </a-radio>
               <a-radio :value="50000"> $50,000 </a-radio>
               <a-radio :value="100000"> $100,000 </a-radio>
-            </a-radio-group>
-          </a-form-item>
-          <a-form-item style="margin-bottom: 10px">
-            <a-radio-group
-              v-model="quotaQuick"
-              type="button"
-              @change="handleQuotaQuickChange"
-            >
-              <a-radio :value="200000"> $200,000 </a-radio>
-              <a-radio :value="300000"> $300,000 </a-radio>
-              <a-radio :value="500000"> $500,000 </a-radio>
-              <a-radio :value="600000"> $600,000 </a-radio>
-              <a-radio :value="800000"> $800,000 </a-radio>
-              <a-radio :value="1000000"> $1,000,000 </a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item

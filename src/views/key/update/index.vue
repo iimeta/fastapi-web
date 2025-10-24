@@ -18,12 +18,12 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 5 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 3 }"
+            :wrapper-col-props="{ span: 21 }"
           >
-            <a-divider orientation="left">{{
-              $t('common.title.baseInfo')
-            }}</a-divider>
+            <a-divider orientation="left">
+              {{ $t('common.title.baseInfo') }}
+            </a-divider>
             <a-form-item
               field="provider_id"
               :label="$t('key.label.provider')"
@@ -81,9 +81,11 @@
                 :placeholder="$t('key.placeholder.remark')"
               />
             </a-form-item>
+
             <a-divider orientation="left">
               {{ $t('common.title.advanced') }}
             </a-divider>
+
             <a-form-item field="models" :label="$t('key.label.models')">
               <a-tree-select
                 v-model="formData.models"

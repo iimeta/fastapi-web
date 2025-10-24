@@ -18,12 +18,9 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 5 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 3 }"
+            :wrapper-col-props="{ span: 21 }"
           >
-            <!-- <a-divider orientation="left">{{
-              $t('common.title.baseInfo')
-            }}</a-divider> -->
             <a-form-item
               v-permission="['reseller', 'admin']"
               field="user_id"
@@ -62,9 +59,6 @@
                 :placeholder="$t('app.placeholder.name')"
               />
             </a-form-item>
-            <!-- <a-divider orientation="left">{{
-              $t('common.title.advanced')
-            }}</a-divider> -->
             <a-form-item field="models" :label="$t('app.label.models')">
               <a-tree-select
                 v-model="formData.models"
@@ -98,21 +92,17 @@
               <a-input-number
                 v-model="formData.quota"
                 :placeholder="$t('app.placeholder.quota')"
-                :precision="0"
-                :min="0"
+                :min="0.000001"
                 :max="9999999999999"
-                style="width: 492px; margin-right: 10px"
-              />
-              <div>
-                ${{ formData.quota ? quotaConv(formData.quota) : '0' }}</div
+                :parser="parserPrice"
               >
+                <template #prefix> $ </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item v-if="formData.is_limit_quota">
-              <a-radio-group
-                type="button"
-                @change="handleQuotaQuickChange as any"
-              >
+              <a-radio-group type="button" @change="handleQuotaQuickChange">
                 <a-radio :value="1"> $1 </a-radio>
+                <a-radio :value="2"> $2 </a-radio>
                 <a-radio :value="5"> $5 </a-radio>
                 <a-radio :value="10"> $10 </a-radio>
                 <a-radio :value="20"> $20 </a-radio>
@@ -121,6 +111,7 @@
                 <a-radio :value="200"> $200 </a-radio>
                 <a-radio :value="500"> $500 </a-radio>
                 <a-radio :value="1000"> $1000 </a-radio>
+                <a-radio :value="10000"> $10000 </a-radio>
               </a-radio-group>
             </a-form-item>
             <a-form-item
@@ -297,7 +288,7 @@
   import { useRouter } from 'vue-router';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { quotaConv, disabledDate } from '@/utils/common';
+  import { disabledDate, parserPrice } from '@/utils/common';
   import { submitAppCreate, AppCreate } from '@/api/app';
   import { queryModelTree, Tree } from '@/api/model';
   import { queryGroupList, GroupList } from '@/api/group';
@@ -376,7 +367,7 @@
   };
 
   const handleQuotaQuickChange = (quota: number) => {
-    formData.value.quota = quota * 500000;
+    formData.value.quota = quota;
   };
 </script>
 
