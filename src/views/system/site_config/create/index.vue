@@ -299,12 +299,12 @@
                 :placeholder="
                   $t('site.config.placeholder.carousels1.image_url')
                 "
-                style="width: 220px; margin-right: 5px"
+                style="width: 42%; margin-right: 5px"
               />
               <a-input
                 v-model="formData.carousels1[index].jump_url"
                 :placeholder="$t('site.config.placeholder.carousels1.jump_url')"
-                style="width: 220px"
+                style="width: 42%"
               />
               <a-button
                 type="primary"
@@ -342,12 +342,12 @@
                 :placeholder="
                   $t('site.config.placeholder.carousels2.image_url')
                 "
-                style="width: 220px; margin-right: 5px"
+                style="width: 42%; margin-right: 5px"
               />
               <a-input
                 v-model="formData.carousels2[index].jump_url"
                 :placeholder="$t('site.config.placeholder.carousels2.jump_url')"
-                style="width: 220px"
+                style="width: 42%"
               />
               <a-button
                 type="primary"
@@ -397,14 +397,14 @@
                 :placeholder="
                   $t('site.config.placeholder.announcements.content')
                 "
-                style="width: 220px; margin-right: 5px"
+                style="width: 42%; margin-right: 5px"
               />
               <a-input
                 v-model="formData.announcements[index].jump_url"
                 :placeholder="
                   $t('site.config.placeholder.announcements.jump_url')
                 "
-                style="width: 220px"
+                style="width: 42%"
               />
               <a-button
                 type="primary"
@@ -450,12 +450,12 @@
               <a-input
                 v-model="formData.documents[index].title"
                 :placeholder="$t('site.config.placeholder.documents.title')"
-                style="width: 220px; margin-right: 5px"
+                style="width: 42%; margin-right: 5px"
               />
               <a-input
                 v-model="formData.documents[index].jump_url"
                 :placeholder="$t('site.config.placeholder.documents.jump_url')"
-                style="width: 220px"
+                style="width: 42%"
               />
               <a-button
                 type="primary"

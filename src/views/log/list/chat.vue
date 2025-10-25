@@ -941,14 +941,14 @@
       dataIndex: 'input_tokens',
       slotName: 'input_tokens',
       align: 'center',
-      width: 75,
+      width: 85,
     },
     {
       title: t('chat.columns.output_tokens'),
       dataIndex: 'output_tokens',
       slotName: 'output_tokens',
       align: 'center',
-      width: 75,
+      width: 85,
     },
     {
       title: t('chat.columns.total_spend_tokens'),

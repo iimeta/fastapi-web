@@ -154,12 +154,12 @@
               <a-input
                 v-model="formData.replace_models[index]"
                 :placeholder="$t('model.agent.placeholder.replace_models')"
-                style="width: 218px; margin-right: 5px"
+                style="width: 42%; margin-right: 5px"
               />
               <a-input
                 v-model="formData.target_models[index]"
                 :placeholder="$t('model.agent.placeholder.target_models')"
-                style="width: 218px"
+                style="width: 42%"
               />
               <a-button
                 type="primary"
