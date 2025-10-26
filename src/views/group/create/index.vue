@@ -571,7 +571,7 @@
   import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
-  import { quotaConv, disabledDate, parserPrice } from '@/utils/common';
+  import { disabledDate, parserPrice } from '@/utils/common';
   import { submitGroupCreate, GroupCreate } from '@/api/group';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';

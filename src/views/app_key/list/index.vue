@@ -362,16 +362,16 @@
           <span v-if="record.is_limit_quota">
             {{
               record.quota > 0
-                ? `$${quotaConv(record.quota)}`
+                ? `$${convQuota(record.quota)}`
                 : record.quota < 0
-                ? `-$${quotaConv(-record.quota)}`
+                ? `-$${convQuota(-record.quota)}`
                 : '$0.00'
             }}
           </span>
           <span v-else>{{ $t(`key.columns.quota.no_limit`) }}</span>
         </template>
         <template #used_quota="{ record }">
-          ${{ record.used_quota > 0 ? quotaConv(record.used_quota) : '0.00' }}
+          ${{ record.used_quota > 0 ? convQuota(record.used_quota) : '0.00' }}
         </template>
         <template #billing_methods="{ record }">
           {{ $t(`model.dict.billing_methods.${record.billing_methods || 1}`) }}
@@ -1138,7 +1138,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { quotaConv, disabledDate, parserPrice } from '@/utils/common';
+  import { disabledDate, parserPrice, convQuota } from '@/utils/common';
   import { queryAppList, AppList } from '@/api/app';
   import {
     queryAppKeyPage,
@@ -1591,7 +1591,7 @@
       formData.value.billing_methods = params.billing_methods || [1];
       formData.value.models = params.models;
       formData.value.is_limit_quota = params.is_limit_quota;
-      formData.value.quota = Number(quotaConv(params.quota));
+      formData.value.quota = convQuota(params.quota);
       formData.value.quota_expires_rule =
         String(params.quota_expires_rule) || '1';
       formData.value.quota_expires_at = params.quota_expires_at;

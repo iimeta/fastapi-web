@@ -37,7 +37,7 @@
           {{
             currentData?.is_limit_quota
               ? currentData.quota > 0
-                ? `$${quotaConv(currentData.quota)}`
+                ? `$${convQuota(currentData.quota)}`
                 : '$0.00'
               : '不限'
           }}
@@ -50,7 +50,7 @@
         <span v-else>
           {{
             currentData.used_quota > 0
-              ? `$${quotaConv(currentData.used_quota)}`
+              ? `$${convQuota(currentData.used_quota)}`
               : '$0.00'
           }}
         </span>
@@ -152,7 +152,7 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { quotaConv } from '@/utils/common';
+  import { convQuota } from '@/utils/common';
   import { queryAppDetail, AppDetailParams, AppDetail } from '@/api/app';
 
   const { t } = useI18n();

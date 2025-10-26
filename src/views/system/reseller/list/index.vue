@@ -265,26 +265,26 @@
         <template #quota="{ record }">
           {{
             record.quota > 0
-              ? `$${quotaConv(record.quota)}`
+              ? `$${convQuota(record.quota)}`
               : record.quota < 0
-              ? `-$${quotaConv(-record.quota)}`
+              ? `-$${convQuota(-record.quota)}`
               : '$0.00'
           }}
         </template>
         <template #used_quota="{ record }">
-          ${{ record.used_quota > 0 ? quotaConv(record.used_quota) : '0.00' }}
+          ${{ record.used_quota > 0 ? convQuota(record.used_quota) : '0.00' }}
         </template>
         <template #allocated_quota="{ record }">
           ${{
             record.allocated_quota > 0
-              ? quotaConv(record.allocated_quota)
+              ? convQuota(record.allocated_quota)
               : '0.00'
           }}
         </template>
         <template #to_be_allocated="{ record }">
           ${{
             record.to_be_allocated > 0
-              ? quotaConv(record.to_be_allocated)
+              ? convQuota(record.to_be_allocated)
               : '0.00'
           }}
         </template>
@@ -674,7 +674,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { quotaConv, disabledDate, parserPrice } from '@/utils/common';
+  import { disabledDate, parserPrice, convQuota } from '@/utils/common';
   import {
     queryResellerPage,
     ResellerPage,

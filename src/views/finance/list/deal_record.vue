@@ -179,9 +179,9 @@
         <template #quota="{ record }">
           {{
             record.quota > 0
-              ? `$${quotaConv(record.quota)}`
+              ? `$${convQuota(record.quota)}`
               : record.quota < 0
-              ? `-$${quotaConv(-record.quota)}`
+              ? `-$${convQuota(-record.quota)}`
               : '$0.00'
           }}
         </template>
@@ -211,7 +211,7 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { quotaConv } from '@/utils/common';
+  import { convQuota } from '@/utils/common';
   import {
     queryDealRecordPage,
     DealRecordPage,

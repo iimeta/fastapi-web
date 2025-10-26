@@ -516,7 +516,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { quotaConv, parserPrice } from '@/utils/common';
+  import { parserPrice } from '@/utils/common';
   import {
     submitSiteConfigCreate,
     SiteConfigCreate,

@@ -587,13 +587,6 @@
 
     setLoading(true);
     try {
-      if (configFormData.value.action === 'quota') {
-        configFormData.value.quota.threshold = convQuota(
-          configFormData.value.quota.threshold,
-          true
-        );
-      }
-
       await submitSysConfigUpdate(configFormData.value);
       done();
       proxy.$message.success('操作成功');

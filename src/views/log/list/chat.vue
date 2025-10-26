@@ -432,7 +432,7 @@
           >
             {{
               record.spend.total_spend_tokens
-                ? `$${quotaConv(record.spend.total_spend_tokens)}`
+                ? `$${convQuota(record.spend.total_spend_tokens)}`
                 : record.status === 1 || record.status === 2
                 ? '$0.00'
                 : '-'
@@ -817,7 +817,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { quotaConv } from '@/utils/common';
+  import { convQuota } from '@/utils/common';
   import {
     queryChatPage,
     ChatPage,

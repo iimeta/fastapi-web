@@ -279,7 +279,7 @@
   import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
-  import { quotaConv, disabledDate, parserPrice } from '@/utils/common';
+  import { disabledDate, parserPrice } from '@/utils/common';
   import { submitResellerCreate, ResellerCreate } from '@/api/admin_reseller';
   import { queryGroupList, GroupList } from '@/api/group';
 

@@ -133,7 +133,7 @@
             总花费
             <a-tooltip
               :content="$t('chat.columns.tooltip.total_spend_tokens')"
-              :contentStyle="{
+              :content-style="{
                 whiteSpace: 'nowrap',
                 maxWidth: 'none',
               }"
@@ -156,7 +156,7 @@
         >
           {{
             currentData.spend.total_spend_tokens
-              ? `$${quotaConv(currentData.spend.total_spend_tokens)}`
+              ? `$${convQuota(currentData.spend.total_spend_tokens)}`
               : currentData.status === 1 || currentData.status === 2
               ? '$0.00'
               : '-'
@@ -520,7 +520,7 @@
             总花费
             <a-tooltip
               :content="$t('chat.columns.tooltip.total_spend_tokens')"
-              :contentStyle="{
+              :content-style="{
                 whiteSpace: 'nowrap',
                 maxWidth: 'none',
               }"
@@ -543,7 +543,7 @@
         >
           {{
             currentData.spend.total_spend_tokens
-              ? `$${quotaConv(currentData.spend.total_spend_tokens)}`
+              ? `$${convQuota(currentData.spend.total_spend_tokens)}`
               : currentData.status === 1 || currentData.status === 2
               ? '$0.00'
               : '-'
@@ -764,7 +764,7 @@
   import useLoading from '@/hooks/loading';
   import { useClipboard } from '@vueuse/core';
   import VueJsonPretty from 'vue-json-pretty';
-  import { quotaConv } from '@/utils/common';
+  import { convQuota } from '@/utils/common';
   import {
     queryChatDetail,
     DetailParams,

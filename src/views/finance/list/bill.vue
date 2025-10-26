@@ -162,7 +162,7 @@
           {{ record.total.toLocaleString() }}
         </template>
         <template #tokens="{ record }">
-          {{ record.tokens > 0 ? `$${quotaConv(record.tokens)}` : '$0.00' }}
+          {{ record.tokens > 0 ? `$${convQuota(record.tokens)}` : '$0.00' }}
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
@@ -235,7 +235,7 @@
   } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { quotaConv } from '@/utils/common';
+  import { convQuota } from '@/utils/common';
   import {
     queryBillPage,
     BillPage,

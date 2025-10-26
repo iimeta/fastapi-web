@@ -516,7 +516,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { quotaConv, parserPrice } from '@/utils/common';
+  import { parserPrice, convQuota } from '@/utils/common';
   import {
     submitSiteConfigUpdate,
     SiteConfigUpdate,
@@ -665,7 +665,7 @@
       formData.value.icp_beian = data.icp_beian;
       formData.value.ga_beian = data.ga_beian;
       formData.value.register_tips = data.register_tips;
-      formData.value.grant_quota = Number(quotaConv(data.grant_quota));
+      formData.value.grant_quota = convQuota(data.grant_quota);
       formData.value.quota_expires_at = data.quota_expires_at;
       formData.value.support_email_suffix =
         data.support_email_suffix?.join(',');

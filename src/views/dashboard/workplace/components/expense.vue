@@ -16,16 +16,17 @@
         <div class="arco-statistic">
           <div class="arco-statistic-title">
             {{ $t('workplace.current.quota') }}
-            <a-link @click="quotaWarning">
+            <a-link
+              style="float: right; margin-left: 120px"
+              @click="quotaWarning"
+            >
               {{ $t('workplace.current.quota_warning') }}
             </a-link>
           </div>
           <div class="arco-statistic-content">
             <div class="arco-statistic-value">
               <span class="arco-statistic-value-integer">
-                {{
-                  expense.quota ? expense.quota.toLocaleString() : expense.quota
-                }}
+                {{ expense.quota ? convQuota(expense.quota) : expense.quota }}
               </span>
             </div>
           </div>
@@ -37,9 +38,9 @@
           <span class="quota">
             {{
               expense.quota > 0
-                ? `$${quotaConv4(expense.quota)}`
+                ? `$${convQuota(expense.quota)}`
                 : expense.quota < 0
-                ? `-$${quotaConv4(-expense.quota)}`
+                ? `-$${convQuota(-expense.quota)}`
                 : '$0.00'
             }}
           </span>
@@ -51,7 +52,7 @@
           <span class="quota">
             {{
               expense.used_quota > 0
-                ? `$${quotaConv4(expense.used_quota)}`
+                ? `$${convQuota(expense.used_quota)}`
                 : '$0.00'
             }}
           </span>
@@ -63,9 +64,9 @@
           <span class="quota">
             {{
               expense.allocated_quota > 0
-                ? `$${quotaConv4(expense.allocated_quota)}`
+                ? `$${convQuota(expense.allocated_quota)}`
                 : expense.allocated_quota < 0
-                ? `-$${quotaConv4(-expense.allocated_quota)}`
+                ? `-$${convQuota(-expense.allocated_quota)}`
                 : '$0.00'
             }}
           </span>
@@ -77,9 +78,9 @@
           <span class="quota">
             {{
               expense.to_be_allocated > 0
-                ? `$${quotaConv4(expense.to_be_allocated)}`
+                ? `$${convQuota(expense.to_be_allocated)}`
                 : expense.to_be_allocated < 0
-                ? `-$${quotaConv4(-expense.to_be_allocated)}`
+                ? `-$${convQuota(-expense.to_be_allocated)}`
                 : '$0.00'
             }}
           </span>
@@ -171,9 +172,8 @@
 
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
-  import { FormInstance } from '@arco-design/web-vue';
-  import { Modal } from '@arco-design/web-vue';
-  import { quotaConv4 } from '@/utils/common';
+  import { FormInstance, Modal } from '@arco-design/web-vue';
+  import { convQuota } from '@/utils/common';
   import {
     queryExpense,
     Expense,

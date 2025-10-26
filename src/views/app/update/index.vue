@@ -263,7 +263,7 @@
   import { FormInstance } from '@arco-design/web-vue';
   import { useRoute, useRouter } from 'vue-router';
   import dayjs from 'dayjs';
-  import { quotaConv, disabledDate, parserPrice } from '@/utils/common';
+  import { disabledDate, parserPrice, convQuota } from '@/utils/common';
   import {
     submitAppUpdate,
     AppUpdate,
@@ -353,7 +353,7 @@
       formData.value.status = data.status;
       formData.value.models = data.models;
       formData.value.is_limit_quota = data.is_limit_quota;
-      formData.value.quota = Number(quotaConv(data.quota));
+      formData.value.quota = convQuota(data.quota);
       formData.value.quota_expires_at = data.quota_expires_at;
       formData.value.is_bind_group = data.is_bind_group;
       formData.value.group = data.group;
