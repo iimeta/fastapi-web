@@ -34,11 +34,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            currentData.tokens > 0
-              ? `$${convQuota(currentData.tokens)}`
-              : '$0.00'
-          }}
+          {{ currentData.tokens > 0 ? `$${currentData.tokens}` : '$0.00' }}
         </span>
       </a-descriptions-item>
     </a-descriptions>
@@ -73,7 +69,7 @@
           align="center"
         >
           <template #cell="{ record }">
-            {{ record.tokens > 0 ? `$${convQuota(record.tokens)}` : '$0.00' }}
+            {{ record.tokens > 0 ? `$${record.tokens}` : '$0.00' }}
           </template>
         </a-table-column>
       </template>
@@ -85,7 +81,6 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { convQuota } from '@/utils/common';
   import {
     queryBillDetail,
     BillDetailParams,

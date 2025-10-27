@@ -331,7 +331,7 @@
           {{ record?.model_agent_names?.join(',') || '-' }}
         </template>
         <template #used_quota="{ record }">
-          ${{ record.used_quota > 0 ? convQuota(record.used_quota) : '0.00' }}
+          ${{ record.used_quota > 0 ? record.used_quota : '0.00' }}
         </template>
         <template #remark="{ record }">
           {{ record.remark || '-' }}
@@ -419,7 +419,6 @@
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { convQuota } from '@/utils/common';
   import {
     queryKeyPage,
     KeyPage,

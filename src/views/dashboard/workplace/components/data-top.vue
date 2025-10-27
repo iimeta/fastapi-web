@@ -121,9 +121,7 @@
               tooltip
             >
               <template #cell="{ record }">
-                {{
-                  record.tokens > 0 ? `$${convQuota(record.tokens)}` : '$0.00'
-                }}
+                {{ record.tokens > 0 ? `$${record.tokens}` : '$0.00' }}
               </template>
             </a-table-column>
           </template>
@@ -136,7 +134,6 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { convQuota } from '@/utils/common';
   import { queryDataTop } from '@/api/dashboard';
   import type { TableData } from '@arco-design/web-vue/es/table/interface';
 

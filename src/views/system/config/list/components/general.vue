@@ -517,7 +517,6 @@
   import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
-  import { convQuota } from '@/utils/common';
   import {
     SysConfigItem,
     querySysConfigDetail,
@@ -660,7 +659,7 @@
     configFormData.value.reseller_shield_error = data.reseller_shield_error;
     configFormData.value.admin_login = data.admin_login;
     configFormData.value.quota = data.quota;
-    configFormData.value.quota.threshold = convQuota(data.quota.threshold);
+    configFormData.value.quota.threshold = data.quota.threshold;
     sysConfigItems.value = [
       {
         action: 'user_login_register',

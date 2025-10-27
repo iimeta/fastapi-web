@@ -571,7 +571,7 @@
   import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue';
   import { useRoute, useRouter } from 'vue-router';
-  import { disabledDate, parserPrice, convQuota } from '@/utils/common';
+  import { disabledDate, parserPrice } from '@/utils/common';
   import {
     submitGroupUpdate,
     GroupUpdate,
@@ -696,7 +696,7 @@
       formData.value.lb_strategy = String(data.lb_strategy);
       formData.value.model_agents = data.model_agents;
       formData.value.is_limit_quota = data.is_limit_quota;
-      formData.value.quota = convQuota(data.quota);
+      formData.value.quota = data.quota;
       formData.value.is_enable_forward = data.is_enable_forward;
       formData.value.forward_config = data.forward_config;
       if (data.forward_config) {
@@ -718,9 +718,8 @@
         formData.value.forward_config.keywords = data.forward_config?.keywords;
         formData.value.forward_config.target_models =
           data.forward_config?.target_models;
-        formData.value.forward_config.used_quota = convQuota(
-          data.forward_config?.used_quota
-        );
+        formData.value.forward_config.used_quota =
+          data.forward_config?.used_quota;
       }
     } catch (err) {
       // you can report use errorHandler or other

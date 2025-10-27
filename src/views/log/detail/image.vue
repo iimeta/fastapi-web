@@ -148,7 +148,7 @@
         >
           {{
             currentData.spend.total_spend_tokens
-              ? `$${convQuota(currentData.spend.total_spend_tokens)}`
+              ? `$${currentData.spend.total_spend_tokens}`
               : currentData.status === 1 || currentData.status === 2
               ? '$0.00'
               : '-'
@@ -489,7 +489,7 @@
         >
           {{
             currentData.spend.total_spend_tokens
-              ? `$${convQuota(currentData.spend.total_spend_tokens)}`
+              ? `$${currentData.spend.total_spend_tokens}`
               : currentData.status === 1 || currentData.status === 2
               ? '$0.00'
               : '-'
@@ -641,7 +641,6 @@
   import useLoading from '@/hooks/loading';
   import { useClipboard } from '@vueuse/core';
   import VueJsonPretty from 'vue-json-pretty';
-  import { convQuota } from '@/utils/common';
   import {
     queryImageDetail,
     DetailParams,

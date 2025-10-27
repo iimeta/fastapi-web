@@ -283,7 +283,7 @@
           {{ record?.model_agent_names?.join(',') || '-' }}
         </template>
         <template #used_quota="{ record }">
-          ${{ record.used_quota > 0 ? convQuota(record.used_quota) : '0.00' }}
+          ${{ record.used_quota > 0 ? record.used_quota : '0.00' }}
         </template>
         <template #weight="{ record }">
           <span v-if="record.is_default">
@@ -477,7 +477,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { disabledDate, convQuota } from '@/utils/common';
+  import { disabledDate } from '@/utils/common';
   import {
     queryGroupPage,
     GroupPage,

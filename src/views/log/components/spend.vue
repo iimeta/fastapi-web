@@ -9,36 +9,26 @@
   >
     <!-- 文本 -->
     <template #text="{ record }">
-      ${{
-        record.text.spend_tokens
-          ? `${convQuota(record.text.spend_tokens)}`
-          : '0.00'
-      }}
+      ${{ record.text.spend_tokens ? record.text.spend_tokens : '0.00' }}
     </template>
 
     <!-- 文本缓存 -->
     <template #text_cache="{ record }">
       ${{
-        record.text_cache.spend_tokens
-          ? `${convQuota(record.text_cache.spend_tokens)}`
-          : '0.00'
+        record.text_cache.spend_tokens ? record.text_cache.spend_tokens : '0.00'
       }}
     </template>
 
     <!-- 音频 -->
     <template #audio="{ record }">
-      ${{
-        record.audio.spend_tokens
-          ? `${convQuota(record.audio.spend_tokens)}`
-          : '0.00'
-      }}
+      ${{ record.audio.spend_tokens ? record.audio.spend_tokens : '0.00' }}
     </template>
 
     <!-- 音频缓存 -->
     <template #audio_cache="{ record }">
       ${{
         record.audio_cache.spend_tokens
-          ? `${convQuota(record.audio_cache.spend_tokens)}`
+          ? record.audio_cache.spend_tokens
           : '0.00'
       }}
     </template>
@@ -47,7 +37,7 @@
     <template #tiered_text="{ record }">
       ${{
         record.tiered_text.spend_tokens
-          ? `${convQuota(record.tiered_text.spend_tokens)}`
+          ? record.tiered_text.spend_tokens
           : '0.00'
       }}
     </template>
@@ -56,25 +46,21 @@
     <template #tiered_text_cache="{ record }">
       ${{
         record.tiered_text_cache.spend_tokens
-          ? `${convQuota(record.tiered_text_cache.spend_tokens)}`
+          ? record.tiered_text_cache.spend_tokens
           : '0.00'
       }}
     </template>
 
     <!-- 图像 -->
     <template #image="{ record }">
-      ${{
-        record.image.spend_tokens
-          ? `${convQuota(record.image.spend_tokens)}`
-          : '0.00'
-      }}
+      ${{ record.image.spend_tokens ? record.image.spend_tokens : '0.00' }}
     </template>
 
     <!-- 图像生成 -->
     <template #image_generation="{ record }">
       ${{
         record.image_generation.spend_tokens
-          ? `${convQuota(record.image_generation.spend_tokens)}`
+          ? record.image_generation.spend_tokens
           : '0.00'
       }}
     </template>
@@ -83,54 +69,36 @@
     <template #image_cache="{ record }">
       ${{
         record.image_cache.spend_tokens
-          ? `${convQuota(record.image_cache.spend_tokens)}`
+          ? record.image_cache.spend_tokens
           : '0.00'
       }}
     </template>
 
     <!-- 识图 -->
     <template #vision="{ record }">
-      ${{
-        record.vision.spend_tokens
-          ? `${convQuota(record.vision.spend_tokens)}`
-          : '0.00'
-      }}
+      ${{ record.vision.spend_tokens ? record.vision.spend_tokens : '0.00' }}
     </template>
 
     <!-- 视频 -->
     <template #video="{ record }">
-      ${{
-        record.video.spend_tokens
-          ? `${convQuota(record.video.spend_tokens)}`
-          : '0.00'
-      }}
+      ${{ record.video.spend_tokens ? record.video.spend_tokens : '0.00' }}
     </template>
 
     <!-- 搜索 -->
     <template #search="{ record }">
-      ${{
-        record.search.spend_tokens
-          ? `${convQuota(record.search.spend_tokens)}`
-          : '0.00'
-      }}
+      ${{ record.search.spend_tokens ? record.search.spend_tokens : '0.00' }}
     </template>
 
     <!-- Midjourney -->
     <template #midjourney="{ record }">
       ${{
-        record.midjourney.spend_tokens
-          ? `${convQuota(record.midjourney.spend_tokens)}`
-          : '0.00'
+        record.midjourney.spend_tokens ? record.midjourney.spend_tokens : '0.00'
       }}
     </template>
 
     <!-- 一次 -->
     <template #once="{ record }">
-      ${{
-        record.once.spend_tokens
-          ? `${convQuota(record.once.spend_tokens)}`
-          : '0.00'
-      }}
+      ${{ record.once.spend_tokens ? record.once.spend_tokens : '0.00' }}
     </template>
 
     <!-- 分组折扣 -->
@@ -144,11 +112,7 @@
 
     <!-- 总花费 -->
     <template #total_spend_tokens="{ record }">
-      ${{
-        record.total_spend_tokens
-          ? `${convQuota(record.total_spend_tokens)}`
-          : '0.00'
-      }}
+      ${{ record.total_spend_tokens ? record.total_spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -174,7 +138,7 @@
       ${{ record.pricing.output_ratio || '0.00' }} / M
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -194,7 +158,7 @@
       ${{ record.pricing.read_ratio || '0.00' }} / M
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -225,7 +189,7 @@
       {{ modelType === 5 || modelType === 6 ? '/ min' : '/ M' }}
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -245,7 +209,7 @@
       ${{ record.pricing.read_ratio || '0.00' }} / M
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -277,7 +241,7 @@
       ${{ record.pricing.output_ratio || '0.00' }} / M
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -312,7 +276,7 @@
       ${{ record.pricing.write_ratio || '0.00' }} / M
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -338,7 +302,7 @@
       ${{ record.pricing.output_ratio || '0.00' }} / M
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -365,7 +329,7 @@
       ${{ record.pricing.once_ratio || '0.00' }} / 张
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -385,7 +349,7 @@
       ${{ record.pricing.read_ratio || '0.00' }} / M
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -405,7 +369,7 @@
       ${{ record.pricing.once_ratio || '0.00' }} / 张
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -425,7 +389,7 @@
       ${{ record.pricing.once_ratio || '0.00' }} / 秒
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -445,7 +409,7 @@
       ${{ record.pricing.once_ratio || '0.00' }} / 次
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -471,7 +435,7 @@
       ${{ record.pricing.once_ratio || '0.00' }} / 次
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 
@@ -494,7 +458,7 @@
       ${{ record.pricing.once_ratio || '0.00' }} / 次
     </template>
     <template #spend_tokens="{ record }">
-      ${{ record.spend_tokens ? `${convQuota(record.spend_tokens)}` : '0.00' }}
+      ${{ record.spend_tokens ? record.spend_tokens : '0.00' }}
     </template>
   </a-table>
 </template>
@@ -502,7 +466,6 @@
 <script lang="ts" setup>
   import { ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { convQuota } from '@/utils/common';
   import {
     Spend,
     TextSpend,

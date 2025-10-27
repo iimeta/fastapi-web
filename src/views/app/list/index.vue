@@ -272,16 +272,16 @@
           <span v-if="record.is_limit_quota">
             {{
               record.quota > 0
-                ? `$${convQuota(record.quota)}`
+                ? `$${record.quota}`
                 : record.quota < 0
-                ? `-$${convQuota(-record.quota)}`
+                ? `-$${-record.quota}`
                 : '$0.00'
             }}
           </span>
           <span v-else>{{ $t(`app.columns.quota.no_limit`) }}</span>
         </template>
         <template #used_quota="{ record }">
-          ${{ record.used_quota > 0 ? convQuota(record.used_quota) : '0.00' }}
+          ${{ record.used_quota > 0 ? record.used_quota : '0.00' }}
         </template>
         <template #quota_expires_at="{ record }">
           {{ record.is_limit_quota ? record.quota_expires_at || '-' : '-' }}
@@ -656,7 +656,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { disabledDate, parserPrice, convQuota } from '@/utils/common';
+  import { disabledDate, parserPrice } from '@/utils/common';
   import {
     queryAppPage,
     AppPage,

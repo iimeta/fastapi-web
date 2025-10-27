@@ -36,9 +36,7 @@
         </a-skeleton>
         <span v-else>
           {{
-            currentData.used_quota > 0
-              ? `$${convQuota(currentData.used_quota)}`
-              : '$0.00'
+            currentData.used_quota > 0 ? `$${currentData.used_quota}` : '$0.00'
           }}
         </span>
       </a-descriptions-item>
@@ -112,9 +110,9 @@
           {{
             currentData?.is_limit_quota
               ? currentData.quota > 0
-                ? `$${convQuota(currentData.quota)}`
+                ? `$${currentData.quota}`
                 : currentData.quota < 0
-                ? `-$${convQuota(-currentData.quota)}`
+                ? `-$${-currentData.quota}`
                 : '$0.00'
               : '不限'
           }}
@@ -159,7 +157,7 @@
         <span v-else>
           {{
             currentData?.forward_config?.used_quota > 0
-              ? `$${convQuota(currentData?.forward_config?.used_quota)}`
+              ? `$${currentData?.forward_config?.used_quota}`
               : '-'
           }}
         </span>
@@ -267,7 +265,6 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { convQuota } from '@/utils/common';
   import {
     queryGroupDetail,
     GroupDetailParams,

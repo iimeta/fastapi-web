@@ -26,7 +26,7 @@
           <div class="arco-statistic-content">
             <div class="arco-statistic-value">
               <span class="arco-statistic-value-integer">
-                {{ expense.quota ? convQuota(expense.quota) : expense.quota }}
+                {{ expense.quota ? expense.quota : expense.quota }}
               </span>
             </div>
           </div>
@@ -38,9 +38,9 @@
           <span class="quota">
             {{
               expense.quota > 0
-                ? `$${convQuota(expense.quota)}`
+                ? `$${expense.quota}`
                 : expense.quota < 0
-                ? `-$${convQuota(-expense.quota)}`
+                ? `-$${-expense.quota}`
                 : '$0.00'
             }}
           </span>
@@ -50,11 +50,7 @@
         <div class="quota-item-box">
           <span class="quota-title">已用额度:</span>
           <span class="quota">
-            {{
-              expense.used_quota > 0
-                ? `$${convQuota(expense.used_quota)}`
-                : '$0.00'
-            }}
+            {{ expense.used_quota > 0 ? `$${expense.used_quota}` : '$0.00' }}
           </span>
         </div>
       </div>
@@ -64,9 +60,9 @@
           <span class="quota">
             {{
               expense.allocated_quota > 0
-                ? `$${convQuota(expense.allocated_quota)}`
+                ? `$${expense.allocated_quota}`
                 : expense.allocated_quota < 0
-                ? `-$${convQuota(-expense.allocated_quota)}`
+                ? `-$${-expense.allocated_quota}`
                 : '$0.00'
             }}
           </span>
@@ -78,9 +74,9 @@
           <span class="quota">
             {{
               expense.to_be_allocated > 0
-                ? `$${convQuota(expense.to_be_allocated)}`
+                ? `$${expense.to_be_allocated}`
                 : expense.to_be_allocated < 0
-                ? `-$${convQuota(-expense.to_be_allocated)}`
+                ? `-$${-expense.to_be_allocated}`
                 : '$0.00'
             }}
           </span>
@@ -173,7 +169,6 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import { FormInstance, Modal } from '@arco-design/web-vue';
-  import { convQuota } from '@/utils/common';
   import {
     queryExpense,
     Expense,
