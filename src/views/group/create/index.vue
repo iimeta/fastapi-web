@@ -215,7 +215,7 @@
                 :placeholder="$t('group.placeholder.quota')"
                 :min="0.000001"
                 :max="9999999999999"
-                :parser="parserPrice"
+                :parser="parsePrice"
               >
                 <template #prefix> $ </template>
               </a-input-number>
@@ -306,7 +306,7 @@
                 :placeholder="$t('group.placeholder.used_quota')"
                 :min="0.000001"
                 :max="9999999999999"
-                :parser="parserPrice"
+                :parser="parsePrice"
               >
                 <template #prefix> $ </template>
               </a-input-number>
@@ -571,7 +571,7 @@
   import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
-  import { disabledDate, parserPrice } from '@/utils/common';
+  import { disabledDate, parsePrice } from '@/utils/common';
   import { submitGroupCreate, GroupCreate } from '@/api/group';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';

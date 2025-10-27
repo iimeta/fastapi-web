@@ -59,7 +59,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.weight }}
+          {{ currentData.weight || 0 }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item

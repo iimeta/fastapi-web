@@ -89,7 +89,7 @@ export interface ResellerDetail {
   quota: number;
   used_quota: number;
   allocated_quota: number;
-  to_be_allocated: number;
+  to_be_allocated_quota: number;
   quota_expires_at: string;
   groups: string[];
   group_names: string[];
@@ -139,7 +139,9 @@ export interface ResellerChangeQuotaExpire {
   quota_expires_at: string;
 }
 
-export function submitResellerChangeQuotaExpire(data: ResellerChangeQuotaExpire) {
+export function submitResellerChangeQuotaExpire(
+  data: ResellerChangeQuotaExpire
+) {
   return axios.post('/api/v1/admin/reseller/change/quota/expire', data);
 }
 

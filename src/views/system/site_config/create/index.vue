@@ -178,7 +178,7 @@
                 :placeholder="$t('site.config.placeholder.grant_quota')"
                 :min="0.000001"
                 :max="9999999999999"
-                :parser="parserPrice"
+                :parser="parsePrice"
                 allow-clear
               >
                 <template #prefix> $ </template>
@@ -516,7 +516,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { parserPrice } from '@/utils/common';
+  import { parsePrice } from '@/utils/common';
   import {
     submitSiteConfigCreate,
     SiteConfigCreate,

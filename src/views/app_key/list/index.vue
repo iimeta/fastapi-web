@@ -324,9 +324,7 @@
                     <div>
                       <a-checkbox
                         v-model="item.checked"
-                        @change="
-                          handleChange($event, item as TableColumnData, index)
-                        "
+                        @change="handleChange($event, item, index)"
                       >
                       </a-checkbox>
                     </div>
@@ -345,7 +343,7 @@
         row-key="id"
         :loading="loading"
         :pagination="pagination"
-        :columns="(cloneColumns as TableColumnData[])"
+        :columns="cloneColumns"
         :data="renderData"
         :bordered="false"
         :size="size"
@@ -510,7 +508,7 @@
               :placeholder="$t('app.placeholder.quota')"
               :min="0.000001"
               :max="9999999999999"
-              :parser="parserPrice"
+              :parser="parsePrice"
             >
               <template #prefix> $ </template>
             </a-input-number>
@@ -877,7 +875,7 @@
               :placeholder="$t('app.placeholder.quota')"
               :min="0.000001"
               :max="9999999999999"
-              :parser="parserPrice"
+              :parser="parsePrice"
             >
               <template #prefix> $ </template>
             </a-input-number>
@@ -1138,7 +1136,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { disabledDate, parserPrice } from '@/utils/common';
+  import { disabledDate, parsePrice } from '@/utils/common';
   import { queryAppList, AppList } from '@/api/app';
   import {
     queryAppKeyPage,

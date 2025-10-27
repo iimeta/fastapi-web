@@ -232,9 +232,7 @@
                     <div>
                       <a-checkbox
                         v-model="item.checked"
-                        @change="
-                          handleChange($event, item as TableColumnData, index)
-                        "
+                        @change="handleChange($event, item, index)"
                       >
                       </a-checkbox>
                     </div>
@@ -253,7 +251,7 @@
         row-key="id"
         :loading="loading"
         :pagination="pagination"
-        :columns="(cloneColumns as TableColumnData[])"
+        :columns="cloneColumns"
         :data="renderData"
         :bordered="false"
         :size="size"
@@ -265,20 +263,20 @@
         <template #quota="{ record }">
           {{
             record.quota > 0
-              ? `$${record.quota}`
+              ? `$${parseQuota(record.quota)}`
               : record.quota < 0
-              ? `-$${-record.quota}`
+              ? `-$${parseQuota(-record.quota)}`
               : '$0.00'
           }}
         </template>
         <template #used_quota="{ record }">
-          ${{ record.used_quota > 0 ? record.used_quota : '0.00' }}
+          ${{ parseQuota(record.used_quota) || '0.00' }}
         </template>
         <template #allocated_quota="{ record }">
-          ${{ record.allocated_quota > 0 ? record.allocated_quota : '0.00' }}
+          ${{ parseQuota(record.allocated_quota) || '0.00' }}
         </template>
-        <template #to_be_allocated="{ record }">
-          ${{ record.to_be_allocated > 0 ? record.to_be_allocated : '0.00' }}
+        <template #to_be_allocated_quota="{ record }">
+          ${{ parseQuota(record.to_be_allocated_quota) || '0.00' }}
         </template>
         <template #quota_expires_at="{ rowIndex }">
           <a-date-picker
@@ -455,7 +453,7 @@
               :placeholder="$t('reseller.placeholder.recharge')"
               :min="0.000001"
               :max="9999999999999"
-              :parser="parserPrice"
+              :parser="parsePrice"
             >
               <template #prefix> $ </template>
             </a-input-number>
@@ -666,7 +664,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { disabledDate, parserPrice } from '@/utils/common';
+  import { disabledDate, parsePrice, parseQuota } from '@/utils/common';
   import {
     queryResellerPage,
     ResellerPage,
@@ -815,9 +813,9 @@
       tooltip: true,
     },
     {
-      title: t('reseller.columns.to_be_allocated'),
-      dataIndex: 'to_be_allocated',
-      slotName: 'to_be_allocated',
+      title: t('reseller.columns.to_be_allocated_quota'),
+      dataIndex: 'to_be_allocated_quota',
+      slotName: 'to_be_allocated_quota',
       align: 'center',
       ellipsis: true,
       tooltip: true,

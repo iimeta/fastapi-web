@@ -10,7 +10,7 @@
         </a-avatar>
         <a-statistic
           :title="$t('workplace.call')"
-          :value="baseData.call"
+          :value="baseData.call || 0"
           show-group-separator
         >
         </a-statistic>
@@ -26,7 +26,7 @@
         </a-avatar>
         <a-statistic
           :title="$t('workplace.app')"
-          :value="baseData.app"
+          :value="baseData.app || 0"
           show-group-separator
         >
         </a-statistic>
@@ -43,7 +43,7 @@
         </a-avatar>
         <a-statistic
           :title="$t('workplace.todayApp')"
-          :value="baseData.today_app"
+          :value="baseData.today_app || 0"
           show-group-separator
         >
         </a-statistic>
@@ -60,7 +60,7 @@
         </a-avatar>
         <a-statistic
           :title="$t('workplace.appKey')"
-          :value="baseData.app_key"
+          :value="baseData.app_key || 0"
           show-group-separator
         >
         </a-statistic>
@@ -80,7 +80,7 @@
         </a-avatar>
         <a-statistic
           :title="$t('workplace.user')"
-          :value="baseData.user"
+          :value="baseData.user || 0"
           show-group-separator
         >
         </a-statistic>
@@ -98,7 +98,7 @@
         </a-avatar>
         <a-statistic
           :title="$t('workplace.todayUser')"
-          :value="baseData.today_user"
+          :value="baseData.today_user || 0"
           show-group-separator
         >
         </a-statistic>
@@ -115,7 +115,7 @@
         </a-avatar>
         <a-statistic
           :title="$t('workplace.model')"
-          :value="baseData.model"
+          :value="baseData.model || 0"
           show-group-separator
         >
         </a-statistic>
@@ -133,7 +133,7 @@
         </a-avatar>
         <a-statistic
           :title="$t('workplace.modelKey')"
-          :value="baseData.model_key"
+          :value="baseData.model_key || 0"
           show-group-separator
         >
         </a-statistic>
@@ -151,7 +151,7 @@
         </a-avatar>
         <a-statistic
           :title="$t('workplace.group')"
-          :value="baseData.group"
+          :value="baseData.group || 0"
           show-group-separator
         >
         </a-statistic>
@@ -168,7 +168,7 @@
         <a-avatar :size="54" class="col-avatar">
           <img alt="avatar" src="@/assets/images/rps.png" />
         </a-avatar>
-        <a-statistic title="RPS" :value="rps" show-group-separator>
+        <a-statistic title="RPS" :value="rps || 0" show-group-separator>
         </a-statistic>
       </a-space>
     </a-grid-item>
@@ -181,7 +181,7 @@
         <a-avatar :size="54" class="col-avatar">
           <img alt="avatar" src="@/assets/images/tps.png" />
         </a-avatar>
-        <a-statistic title="TPS" :value="tps" show-group-separator>
+        <a-statistic title="TPS" :value="tps || 0" show-group-separator>
         </a-statistic>
       </a-space>
     </a-grid-item>
@@ -194,7 +194,7 @@
         <a-avatar :size="54" class="col-avatar">
           <img alt="avatar" src="@/assets/images/rpm.png" />
         </a-avatar>
-        <a-statistic title="RPM" :value="rpm" show-group-separator>
+        <a-statistic title="RPM" :value="rpm || 0" show-group-separator>
         </a-statistic>
       </a-space>
     </a-grid-item>
@@ -207,7 +207,7 @@
         <a-avatar :size="54" class="col-avatar">
           <img alt="avatar" src="@/assets/images/tpm.png" />
         </a-avatar>
-        <a-statistic title="TPM" :value="tpm" show-group-separator>
+        <a-statistic title="TPM" :value="tpm || 0" show-group-separator>
         </a-statistic>
       </a-space>
     </a-grid-item>

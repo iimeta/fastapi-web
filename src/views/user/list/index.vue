@@ -226,9 +226,7 @@
                     <div>
                       <a-checkbox
                         v-model="item.checked"
-                        @change="
-                          handleChange($event, item as TableColumnData, index)
-                        "
+                        @change="handleChange($event, item, index)"
                       >
                       </a-checkbox>
                     </div>
@@ -247,7 +245,7 @@
         row-key="id"
         :loading="loading"
         :pagination="pagination"
-        :columns="(cloneColumns as TableColumnData[])"
+        :columns="cloneColumns"
         :data="renderData"
         :bordered="false"
         :size="size"
@@ -267,14 +265,14 @@
         <template #quota="{ record }">
           {{
             record.quota > 0
-              ? `$${record.quota}`
+              ? `$${parseQuota(record.quota)}`
               : record.quota < 0
-              ? `-$${-record.quota}`
+              ? `-$${parseQuota(-record.quota)}`
               : '$0.00'
           }}
         </template>
         <template #used_quota="{ record }">
-          ${{ record.used_quota > 0 ? record.used_quota : '0.00' }}
+          ${{ parseQuota(record.used_quota) || '0.00' }}
         </template>
         <template #quota_expires_at="{ rowIndex }">
           <a-date-picker
@@ -451,7 +449,7 @@
               :placeholder="$t('user.placeholder.recharge')"
               :min="0.000001"
               :max="9999999999999"
-              :parser="parserPrice"
+              :parser="parsePrice"
             >
               <template #prefix> $ </template>
             </a-input-number>
@@ -659,7 +657,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { disabledDate, parserPrice } from '@/utils/common';
+  import { disabledDate, parsePrice, parseQuota } from '@/utils/common';
   import {
     queryUserPage,
     UserPage,

@@ -94,7 +94,7 @@
                 :placeholder="$t('app.placeholder.quota')"
                 :min="0.000001"
                 :max="9999999999999"
-                :parser="parserPrice"
+                :parser="parsePrice"
               >
                 <template #prefix> $ </template>
               </a-input-number>
@@ -288,7 +288,7 @@
   import { useRouter } from 'vue-router';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { disabledDate, parserPrice } from '@/utils/common';
+  import { disabledDate, parsePrice } from '@/utils/common';
   import { submitAppCreate, AppCreate } from '@/api/app';
   import { queryModelTree, Tree } from '@/api/model';
   import { queryGroupList, GroupList } from '@/api/group';

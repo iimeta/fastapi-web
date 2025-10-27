@@ -230,7 +230,7 @@
             :placeholder="$t('model.placeholder.input_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             class="input"
           >
             <template #prefix> $ </template>
@@ -252,7 +252,7 @@
             :placeholder="$t('model.placeholder.output_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             class="input"
           >
             <template #prefix> $ </template>
@@ -282,7 +282,7 @@
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             class="input"
           >
             <template #prefix> $ </template>
@@ -312,7 +312,7 @@
             :placeholder="$t('model.placeholder.input_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             class="input"
           >
             <template #prefix> $ </template>
@@ -334,7 +334,7 @@
             :placeholder="$t('model.placeholder.output_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             class="input"
           >
             <template #prefix> $ </template>
@@ -366,7 +366,7 @@
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             class="input"
           >
             <template #prefix> $ </template>
@@ -432,7 +432,7 @@
             :placeholder="$t('model.placeholder.tiered_input_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             style="width: 165px; margin-right: 5px"
           >
             <template #prefix> $ </template>
@@ -443,7 +443,7 @@
             :placeholder="$t('model.placeholder.tiered_output_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             style="width: 165px"
           >
             <template #prefix> $ </template>
@@ -524,7 +524,7 @@
             :placeholder="$t('model.placeholder.tiered_cache_read_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             style="width: 165px; margin-right: 5px"
           >
             <template #prefix> $ </template>
@@ -535,7 +535,7 @@
             :placeholder="$t('model.placeholder.tiered_cache_write_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             style="width: 165px"
           >
             <template #prefix> $ </template>
@@ -580,7 +580,7 @@
             :placeholder="$t('model.placeholder.input_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             class="input"
           >
             <template #prefix> $ </template>
@@ -602,7 +602,7 @@
             :placeholder="$t('model.placeholder.output_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             class="input"
           >
             <template #prefix> $ </template>
@@ -663,7 +663,7 @@
             :placeholder="$t('model.placeholder.image_generation.once_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             style="width: 188px; margin-right: 5px"
           >
             <template #prefix> $ </template>
@@ -715,7 +715,7 @@
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             class="input"
           >
             <template #prefix> $ </template>
@@ -752,7 +752,7 @@
             :placeholder="$t('model.placeholder.vision.once_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             style="width: 309px; margin-right: 5px"
           >
             <template #prefix> $ </template>
@@ -829,7 +829,7 @@
             :placeholder="$t('model.placeholder.video.once_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             style="width: 223px; margin-right: 5px"
           >
             <template #prefix> $ </template>
@@ -890,7 +890,7 @@
             :placeholder="$t('model.placeholder.search.once_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             style="width: 309px; margin-right: 5px"
           >
             <template #prefix> $ </template>
@@ -964,7 +964,7 @@
             :placeholder="$t('model.placeholder.midjourney.once_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             style="width: 188px"
           >
             <template #prefix> $ </template>
@@ -1009,7 +1009,7 @@
             :placeholder="$t('model.placeholder.once_ratio')"
             :min="0"
             :max="9999999999999"
-            :parser="parserPrice"
+            :parser="parsePrice"
             class="input"
           >
             <template #prefix> $ </template>
@@ -1025,7 +1025,7 @@
   import { ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { FormInstance } from '@arco-design/web-vue';
-  import { parserPrice } from '@/utils/common';
+  import { parsePrice } from '@/utils/common';
   import {
     Pricing,
     TextPricing,

@@ -85,7 +85,7 @@
         row-key="id"
         :loading="loading"
         :pagination="false"
-        :columns="(cloneColumns as TableColumnData[])"
+        :columns="cloneColumns"
         :data="renderData"
         :bordered="false"
         :size="size"

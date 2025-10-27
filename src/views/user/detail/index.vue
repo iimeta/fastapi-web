@@ -52,9 +52,9 @@
         <span v-else>
           {{
             currentData.quota > 0
-              ? `$${currentData.quota}`
+              ? `$${parseQuota(currentData.quota)}`
               : currentData.quota < 0
-              ? `-$${-currentData.quota}`
+              ? `-$${parseQuota(-currentData.quota)}`
               : '$0.00'
           }}
         </span>
@@ -64,9 +64,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            currentData.used_quota > 0 ? `$${currentData.used_quota}` : '$0.00'
-          }}
+          ${{ parseQuota(currentData.used_quota) || '0.00' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('user.detail.label.quota_expires_at')">
@@ -213,6 +211,7 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { parseQuota } from '@/utils/common';
   import {
     queryUserDetail,
     UserDetailParams,

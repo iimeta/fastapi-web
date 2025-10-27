@@ -230,9 +230,7 @@
                     <div>
                       <a-checkbox
                         v-model="item.checked"
-                        @change="
-                          handleChange($event, item as TableColumnData, index)
-                        "
+                        @change="handleChange($event, item, index)"
                       >
                       </a-checkbox>
                     </div>
@@ -251,7 +249,7 @@
         row-key="id"
         :loading="loading"
         :pagination="pagination"
-        :columns="(cloneColumns as TableColumnData[])"
+        :columns="cloneColumns"
         :data="renderData"
         :bordered="false"
         :size="size"
@@ -283,7 +281,7 @@
           {{ record?.model_agent_names?.join(',') || '-' }}
         </template>
         <template #used_quota="{ record }">
-          ${{ record.used_quota > 0 ? record.used_quota : '0.00' }}
+          ${{ parseQuota(record.used_quota) || '0.00' }}
         </template>
         <template #weight="{ record }">
           <span v-if="record.is_default">
@@ -477,7 +475,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { disabledDate } from '@/utils/common';
+  import { disabledDate, parseQuota } from '@/utils/common';
   import {
     queryGroupPage,
     GroupPage,

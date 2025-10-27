@@ -13,7 +13,7 @@
         <a-radio-group
           v-model:model-value="dateRange"
           type="button"
-          @change="handleDateRangeChange as any"
+          @change="handleDateRangeChange"
         >
           <a-radio :value="1">
             {{ $t('workplace.dateRange1') }}
@@ -33,7 +33,7 @@
         <a-radio-group
           v-model:model-value="dataType"
           type="button"
-          @change="typeChange as any"
+          @change="typeChange"
         >
           <a-radio
             v-if="userRole === 'reseller' || userRole === 'admin'"
@@ -121,7 +121,7 @@
               tooltip
             >
               <template #cell="{ record }">
-                {{ record.tokens > 0 ? `$${record.tokens}` : '$0.00' }}
+                ${{ parseQuota(record.tokens) || '0.00' }}
               </template>
             </a-table-column>
           </template>
@@ -134,8 +134,9 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { queryDataTop } from '@/api/dashboard';
   import type { TableData } from '@arco-design/web-vue/es/table/interface';
+  import { parseQuota } from '@/utils/common';
+  import { queryDataTop } from '@/api/dashboard';
 
   const { loading, setLoading } = useLoading();
   const userRole = localStorage.getItem('userRole');

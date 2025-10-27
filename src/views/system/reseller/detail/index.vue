@@ -44,9 +44,9 @@
         <span v-else>
           {{
             currentData.quota > 0
-              ? `$${currentData.quota}`
+              ? `$${parseQuota(currentData.quota)}`
               : currentData.quota < 0
-              ? `-$${-currentData.quota}`
+              ? `-$${parseQuota(-currentData.quota)}`
               : '$0.00'
           }}
         </span>
@@ -56,9 +56,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            currentData.used_quota > 0 ? `$${currentData.used_quota}` : '$0.00'
-          }}
+          ${{ parseQuota(currentData.used_quota) || '0.00' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('reseller.detail.label.allocated_quota')">
@@ -66,23 +64,17 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            currentData.allocated_quota > 0
-              ? `$${currentData.allocated_quota}`
-              : '$0.00'
-          }}
+          ${{ parseQuota(currentData.allocated_quota) || '0.00' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('reseller.detail.label.to_be_allocated')">
+      <a-descriptions-item
+        :label="t('reseller.detail.label.to_be_allocated_quota')"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            currentData.to_be_allocated > 0
-              ? `$${currentData.to_be_allocated}`
-              : '$0.00'
-          }}
+          ${{ parseQuota(currentData.to_be_allocated_quota) || '0.00' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('reseller.detail.label.quota_expires_at')">
@@ -238,6 +230,7 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { parseQuota } from '@/utils/common';
   import {
     queryResellerDetail,
     ResellerDetailParams,

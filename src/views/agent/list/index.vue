@@ -238,9 +238,7 @@
                     <div>
                       <a-checkbox
                         v-model="item.checked"
-                        @change="
-                          handleChange($event, item as TableColumnData, index)
-                        "
+                        @change="handleChange($event, item, index)"
                       >
                       </a-checkbox>
                     </div>
@@ -259,7 +257,7 @@
         row-key="id"
         :loading="loading"
         :pagination="pagination"
-        :columns="(cloneColumns as TableColumnData[])"
+        :columns="cloneColumns"
         :data="renderData"
         :bordered="false"
         :size="size"
@@ -287,6 +285,9 @@
             </a-button>
           </span>
           <span v-else>{{ '-' }}</span>
+        </template>
+        <template #weight="{ record }">
+          {{ record.weight || 0 }}
         </template>
         <template #lb_strategy="{ record }">
           {{ $t(`dict.lb_strategy.${record.lb_strategy || 1}`) }}

@@ -108,7 +108,7 @@
                 :placeholder="$t('reseller.placeholder.quota')"
                 :min="0.000001"
                 :max="9999999999999"
-                :parser="parserPrice"
+                :parser="parsePrice"
               >
                 <template #prefix> $ </template>
               </a-input-number>
@@ -279,7 +279,7 @@
   import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
-  import { disabledDate, parserPrice } from '@/utils/common';
+  import { disabledDate, parsePrice } from '@/utils/common';
   import { submitResellerCreate, ResellerCreate } from '@/api/admin_reseller';
   import { queryGroupList, GroupList } from '@/api/group';
 

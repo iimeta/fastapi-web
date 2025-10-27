@@ -13,7 +13,7 @@
         <a-radio-group
           v-model:model-value="dateRange"
           type="button"
-          @change="handleDateRangeChange as any"
+          @change="handleDateRangeChange"
         >
           <a-radio :value="7">
             {{ $t('workplace.dateRange7') }}
@@ -50,9 +50,15 @@
           <span>${el.seriesName}</span>
         </p>
         <span class="tooltip-value">
-        ${el.value.toLocaleString(undefined, {
-          maximumFractionDigits: 6,
-        })}
+        ${
+          el.seriesName === '总花费'
+            ? `$${el.value.toLocaleString(undefined, {
+                maximumFractionDigits: 6,
+              })}`
+            : el.value.toLocaleString(undefined, {
+                maximumFractionDigits: 6,
+              })
+        }
         </span>
       </div>`
       )
@@ -191,7 +197,7 @@
       },
       series: [
         {
-          name: '花费($)',
+          name: '总花费',
           data: spendStatisticsData.value,
           type: 'line',
           smooth: true,
@@ -298,12 +304,12 @@
       const { data: chartData } = await queryCallData(days);
       chartData.items.forEach((el: CallData, idx: number) => {
         xAxis.value.push(el.date);
-        countStatisticsData.value.push(el.call);
-        spendStatisticsData.value.push(el.spend);
-        tokensStatisticsData.value.push(el.tokens);
-        userStatisticsData.value.push(el.user);
-        appStatisticsData.value.push(el.app);
-        abnormalStatisticsData.value.push(el.abnormal);
+        countStatisticsData.value.push(el.call || 0);
+        spendStatisticsData.value.push(el.spend || 0);
+        tokensStatisticsData.value.push(el.tokens || 0);
+        userStatisticsData.value.push(el.user || 0);
+        appStatisticsData.value.push(el.app || 0);
+        abnormalStatisticsData.value.push(el.abnormal || 0);
         if (idx === 0) {
           graphicElements.value[0].style.text = el.date;
         }

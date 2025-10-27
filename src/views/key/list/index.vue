@@ -281,9 +281,7 @@
                     <div>
                       <a-checkbox
                         v-model="item.checked"
-                        @change="
-                          handleChange($event, item as TableColumnData, index)
-                        "
+                        @change="handleChange($event, item, index)"
                       >
                       </a-checkbox>
                     </div>
@@ -302,7 +300,7 @@
         row-key="id"
         :loading="loading"
         :pagination="pagination"
-        :columns="(cloneColumns as TableColumnData[])"
+        :columns="cloneColumns"
         :data="renderData"
         :bordered="false"
         :size="size"
@@ -331,7 +329,10 @@
           {{ record?.model_agent_names?.join(',') || '-' }}
         </template>
         <template #used_quota="{ record }">
-          ${{ record.used_quota > 0 ? record.used_quota : '0.00' }}
+          ${{ parseQuota(record.used_quota) || '0.00' }}
+        </template>
+        <template #weight="{ record }">
+          {{ record.weight || 0 }}
         </template>
         <template #remark="{ record }">
           {{ record.remark || '-' }}
@@ -419,6 +420,15 @@
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { Pagination } from '@/types/global';
+  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
+  import type {
+    TableColumnData,
+    TableRowSelection,
+  } from '@arco-design/web-vue/es/table/interface';
+  import cloneDeep from 'lodash/cloneDeep';
+  import Sortable from 'sortablejs';
+  import { parseQuota } from '@/utils/common';
   import {
     queryKeyPage,
     KeyPage,
@@ -431,14 +441,6 @@
     submitKeyBatchOperate,
     queryKeyDetail,
   } from '@/api/key';
-  import { Pagination } from '@/types/global';
-  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
-  import type {
-    TableColumnData,
-    TableRowSelection,
-  } from '@arco-design/web-vue/es/table/interface';
-  import cloneDeep from 'lodash/cloneDeep';
-  import Sortable from 'sortablejs';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { queryProviderList, ProviderList } from '@/api/provider';
