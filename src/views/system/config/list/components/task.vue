@@ -67,6 +67,7 @@
     <a-modal
       v-model:visible="configVisible"
       :title="$t(configTitle)"
+      :width="528"
       :body-style="{
         padding: '20px 20px 0 20px',
         maxHeight: '520px',
@@ -109,7 +110,9 @@
             :precision="0"
             :min="1"
             allow-clear
-          />
+          >
+            <template #append> 分钟 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'statistics'"
@@ -144,7 +147,9 @@
             :placeholder="$t('sys.config.placeholder.statistics.limit')"
             :min="10"
             allow-clear
-          />
+          >
+            <template #append> 条 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'statistics'"
@@ -163,7 +168,9 @@
             :precision="0"
             :min="1"
             allow-clear
-          />
+          >
+            <template #append> 分钟 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'notice'"
@@ -199,7 +206,9 @@
             :precision="0"
             :min="1"
             allow-clear
-          />
+          >
+            <template #append> 分钟 </template>
+          </a-input-number>
         </a-form-item>
       </a-form>
     </a-modal>

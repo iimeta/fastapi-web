@@ -291,8 +291,8 @@
             :unchecked-value="2"
             @change="
               appChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
+                id: record.id,
+                status: record.status,
               })
             "
           />
@@ -307,7 +307,7 @@
             @click="
               $router.push({
                 name: 'AppUpdate',
-                query: { id: `${record.id}` },
+                query: { id: record.id },
               })
             "
           >
@@ -318,7 +318,7 @@
             size="small"
             @click="
               createKey({
-                app_id: `${record.app_id}`,
+                app_id: record.app_id,
               })
             "
           >
@@ -330,7 +330,7 @@
             @click="
               $router.push({
                 name: 'AppKeyList',
-                query: { app_id: `${record.app_id}` },
+                query: { app_id: record.app_id },
               })
             "
           >
@@ -338,7 +338,7 @@
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="appDelete({ id: `${record.id}` })"
+            @ok="appDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
               {{ $t('app.columns.operations.delete') }}

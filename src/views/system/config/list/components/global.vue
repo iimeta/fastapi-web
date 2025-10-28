@@ -67,7 +67,7 @@
     <a-modal
       v-model:visible="configVisible"
       :title="$t(configTitle)"
-      :width="configFormData.action === 'core' ? 580 : 520"
+      :width="configFormData.action === 'core' ? 588 : 528"
       :body-style="{
         padding: '20px 20px 0 20px',
         maxHeight: '520px',
@@ -180,7 +180,9 @@
             :precision="0"
             :min="0"
             allow-clear
-          />
+          >
+            <template #append> 毫秒 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'http'"
@@ -197,9 +199,11 @@
             v-model="configFormData.http.timeout"
             :placeholder="$t('sys.config.placeholder.http.timeout')"
             :precision="0"
-            :min="1"
+            :min="0"
             allow-clear
-          />
+          >
+            <template #append> 秒 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'http'"

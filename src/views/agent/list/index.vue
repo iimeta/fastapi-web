@@ -302,8 +302,8 @@
             :unchecked-value="2"
             @change="
               modelAgentChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
+                id: record.id,
+                status: record.status,
               })
             "
           />
@@ -318,7 +318,7 @@
             @click="
               $router.push({
                 name: 'ModelAgentUpdate',
-                query: { id: `${record.id}` },
+                query: { id: record.id },
               })
             "
           >
@@ -330,7 +330,7 @@
             @click="
               $router.push({
                 name: 'ModelKeyList',
-                query: { agent_id: `${record.id}` },
+                query: { agent_id: record.id },
               })
             "
           >
@@ -338,7 +338,7 @@
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="modelAgentDelete({ id: `${record.id}` })"
+            @ok="modelAgentDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
               {{ $t('model.agent.columns.operations.delete') }}

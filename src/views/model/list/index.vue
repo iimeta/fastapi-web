@@ -430,8 +430,8 @@
             :unchecked-value="2"
             @change="
               modelChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
+                id: record.id,
+                status: record.status,
               })
             "
           />
@@ -446,7 +446,7 @@
             @click="
               $router.push({
                 name: 'ModelUpdate',
-                query: { id: `${record.id}` },
+                query: { id: record.id },
               })
             "
           >
@@ -454,7 +454,7 @@
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="modelDelete({ id: `${record.id}` })"
+            @ok="modelDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
               {{ $t('model.columns.operations.delete') }}

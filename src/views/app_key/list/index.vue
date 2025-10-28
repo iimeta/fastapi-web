@@ -395,8 +395,8 @@
             :unchecked-value="2"
             @change="
               keyChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
+                id: record.id,
+                status: record.status,
               })
             "
           />
@@ -410,7 +410,7 @@
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="keyDelete({ id: `${record.id}` })"
+            @ok="keyDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
               {{ $t('key.columns.operations.delete') }}

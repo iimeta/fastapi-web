@@ -305,8 +305,8 @@
             :unchecked-value="false"
             @change="
               groupChangePublic({
-                id: `${record.id}`,
-                is_public: `${record.is_public}`,
+                id: record.id,
+                is_public: record.is_public,
               })
             "
           />
@@ -318,8 +318,8 @@
             :unchecked-value="2"
             @change="
               groupChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
+                id: record.id,
+                status: record.status,
               })
             "
           />
@@ -394,8 +394,8 @@
             ]"
             @change="
               groupChangeExpire({
-                id: `${renderData[rowIndex].id}`,
-                expires_at: `${renderData[rowIndex].expires_at}`,
+                id: renderData[rowIndex].id,
+                expires_at: renderData[rowIndex].expires_at,
               })
             "
           >
@@ -415,7 +415,7 @@
             @click="
               $router.push({
                 name: 'GroupUpdate',
-                query: { id: `${record.id}` },
+                query: { id: record.id },
               })
             "
           >
@@ -423,7 +423,7 @@
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="groupDelete({ id: `${record.id}` })"
+            @ok="groupDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
               {{ $t('group.columns.operations.delete') }}

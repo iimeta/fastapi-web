@@ -245,8 +245,8 @@
             :unchecked-value="false"
             @change="
               providerChangePublic({
-                id: `${record.id}`,
-                is_public: `${record.is_public}`,
+                id: record.id,
+                is_public: record.is_public,
               })
             "
           />
@@ -261,8 +261,8 @@
             :unchecked-value="2"
             @change="
               providerChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
+                id: record.id,
+                status: record.status,
               })
             "
           />
@@ -274,7 +274,7 @@
             @click="
               $router.push({
                 name: 'ProviderUpdate',
-                query: { id: `${record.id}` },
+                query: { id: record.id },
               })
             "
           >
@@ -282,7 +282,7 @@
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="providerDelete({ id: `${record.id}` })"
+            @ok="providerDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
               {{ $t('provider.columns.operations.delete') }}

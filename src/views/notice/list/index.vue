@@ -254,7 +254,7 @@
             @click="
               $router.push({
                 name: 'NoticeUpdate',
-                query: { id: `${record.id}`, action: 'copy' },
+                query: { id: record.id, action: 'copy' },
               })
             "
           >
@@ -267,7 +267,7 @@
             @click="
               $router.push({
                 name: 'NoticeUpdate',
-                query: { id: `${record.id}` },
+                query: { id: record.id },
               })
             "
           >
@@ -275,7 +275,7 @@
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="noticeDelete({ id: `${record.id}` })"
+            @ok="noticeDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
               {{ $t('notice.columns.operations.delete') }}

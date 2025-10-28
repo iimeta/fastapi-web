@@ -76,10 +76,10 @@
       :title="$t(configTitle)"
       :width="
         configFormData.action === 'base'
-          ? 520
+          ? 588
           : configFormData.action === 'log'
           ? 622
-          : 700
+          : 728
       "
       :body-style="{
         padding: '20px 20px 0 20px',
@@ -104,7 +104,9 @@
             v-model="configFormData.base.err_retry"
             :placeholder="$t('sys.config.placeholder.base.err_retry')"
             allow-clear
-          />
+          >
+            <template #append> 次 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'base'"
@@ -126,7 +128,9 @@
             "
             :min="0"
             allow-clear
-          />
+          >
+            <template #append> 次 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'base'"
@@ -148,7 +152,9 @@
             "
             :min="0"
             allow-clear
-          />
+          >
+            <template #append> 次 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'base'"
@@ -170,7 +176,9 @@
             "
             :min="0"
             allow-clear
-          />
+          >
+            <template #append> 次 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'base'"
@@ -188,7 +196,9 @@
             :placeholder="$t('sys.config.placeholder.base.short_timeout')"
             :min="0"
             allow-clear
-          />
+          >
+            <template #append> 秒 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'base'"
@@ -206,7 +216,9 @@
             :placeholder="$t('sys.config.placeholder.base.long_timeout')"
             :min="0"
             allow-clear
-          />
+          >
+            <template #append> 秒 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'log'"
@@ -256,7 +268,10 @@
             :placeholder="$t('sys.config.placeholder.log.chat_reserve')"
             :precision="0"
             :min="0"
-          />
+            allow-clear
+          >
+            <template #append> 天 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'log'"
@@ -274,7 +289,10 @@
             :placeholder="$t('sys.config.placeholder.log.image_reserve')"
             :precision="0"
             :min="0"
-          />
+            allow-clear
+          >
+            <template #append> 天 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'log'"
@@ -292,7 +310,10 @@
             :placeholder="$t('sys.config.placeholder.log.audio_reserve')"
             :precision="0"
             :min="0"
-          />
+            allow-clear
+          >
+            <template #append> 天 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'log'"
@@ -408,7 +429,7 @@
               $t('sys.config.placeholder.auto_enable_error.enable_errors.cron')
             "
             allow-clear
-            style="width: 122px; margin-right: 5px"
+            style="width: 20%; margin-right: 5px"
           />
           <a-input-number
             v-model="
@@ -420,8 +441,10 @@
               )
             "
             allow-clear
-            style="width: 95px; margin-right: 5px"
-          />
+            style="width: 22%; margin-right: 5px"
+          >
+            <template #append> 秒 </template>
+          </a-input-number>
           <a-input
             v-model="
               configFormData.auto_enable_error.enable_errors[index].error
@@ -430,7 +453,7 @@
               $t('sys.config.placeholder.auto_enable_error.enable_errors.error')
             "
             allow-clear
-            style="width: 305px; margin-right: 5px"
+            style="width: 42%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -651,9 +674,9 @@
     proxy.$modal.warning({
       title: '警告',
       titleAlign: 'center',
-      content: `是否确定重置${t(
-        `sys.config.item.title.${sysConfigItem.action}`
-      )}?`,
+      content: `是否确定${
+        sysConfigItem.action !== 'reset_api_error' ? '重置' : ''
+      }${t(`sys.config.item.title.${sysConfigItem.action}`)}?`,
       hideCancel: false,
       onOk: () => {
         sysConfigReset(sysConfigItem);

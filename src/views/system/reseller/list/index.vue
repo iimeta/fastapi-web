@@ -345,8 +345,8 @@
             ]"
             @change="
               userChangeQuotaExpire({
-                id: `${renderData[rowIndex].id}`,
-                quota_expires_at: `${renderData[rowIndex].quota_expires_at}`,
+                id: renderData[rowIndex].id,
+                quota_expires_at: renderData[rowIndex].quota_expires_at,
               })
             "
           >
@@ -366,8 +366,8 @@
             :unchecked-value="2"
             @change="
               userChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
+                id: record.id,
+                status: record.status,
               })
             "
           />
@@ -394,7 +394,7 @@
             @click="
               $router.push({
                 name: 'ResellerUpdate',
-                query: { id: `${record.id}` },
+                query: { id: record.id },
               })
             "
           >
@@ -405,9 +405,9 @@
             size="small"
             @click="
               handleResellerDelete({
-                id: `${record.id}`,
-                user_id: `${record.user_id}`,
-                name: `${record.name}`,
+                id: record.id,
+                user_id: record.user_id,
+                name: record.name,
                 data: [1, 2, 3, 4, 5],
               })
             "

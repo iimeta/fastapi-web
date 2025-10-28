@@ -67,6 +67,12 @@
     <a-modal
       v-model:visible="configVisible"
       :title="$t(configTitle)"
+      :width="
+        configFormData.action === 'user_shield_error' ||
+        configFormData.action === 'reseller_shield_error'
+          ? 728
+          : 528
+      "
       :body-style="{
         padding: '20px 20px 0 20px',
         maxHeight: '520px',
@@ -149,7 +155,9 @@
             "
             :min="10"
             allow-clear
-          />
+          >
+            <template #append> 秒 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-for="(item, index) of configFormData.user_shield_error.errors"
@@ -173,7 +181,7 @@
             v-model="configFormData.user_shield_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.user_shield_error.errors')"
             allow-clear
-            style="width: 75%; margin-right: 5px"
+            style="width: 84%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -269,7 +277,9 @@
             "
             :min="10"
             allow-clear
-          />
+          >
+            <template #append> 秒 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-for="(item, index) of configFormData.reseller_shield_error.errors"
@@ -298,7 +308,7 @@
               $t('sys.config.placeholder.reseller_shield_error.errors')
             "
             allow-clear
-            style="width: 75%; margin-right: 5px"
+            style="width: 84%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -372,7 +382,9 @@
             "
             :min="10"
             allow-clear
-          />
+          >
+            <template #append> 秒 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'quota'"
@@ -505,9 +517,9 @@
             :precision="0"
             :min="1"
             allow-clear
-            style="width: 339px"
-          />
-          &nbsp;&nbsp;分钟
+          >
+            <template #append> 分钟 </template>
+          </a-input-number>
         </a-form-item>
       </a-form>
     </a-modal>

@@ -270,8 +270,8 @@
             :unchecked-value="2"
             @change="
               siteChangeStatus({
-                id: `${record.id}`,
-                status: Number(`${record.status}`),
+                id: record.id,
+                status: record.status,
               })
             "
           />
@@ -286,7 +286,7 @@
             @click="
               $router.push({
                 name: 'SiteConfigUpdate',
-                query: { id: `${record.id}` },
+                query: { id: record.id },
               })
             "
           >
@@ -294,7 +294,7 @@
           </a-button>
           <a-popconfirm
             content="你确定要删除吗?"
-            @ok="siteDelete({ id: `${record.id}` })"
+            @ok="siteDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
               {{ $t('operations.delete') }}
