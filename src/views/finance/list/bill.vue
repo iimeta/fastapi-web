@@ -160,7 +160,7 @@
           {{ record.total.toLocaleString() }}
         </template>
         <template #tokens="{ record }">
-          {{ record.tokens > 0 ? `$${record.tokens}` : '$0.00' }}
+          ${{ parseQuota(record.tokens) || '0.00' }}
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
@@ -233,13 +233,6 @@
   } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import {
-    queryBillPage,
-    BillPage,
-    BillPageParams,
-    BillExportParams,
-    submitBillExport,
-  } from '@/api/finance';
   import { Pagination } from '@/types/global';
   import type {
     TableColumnData,
@@ -248,6 +241,14 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { FormInstance } from '@arco-design/web-vue';
+  import { parseQuota } from '@/utils/common';
+  import {
+    queryBillPage,
+    BillPage,
+    BillPageParams,
+    BillExportParams,
+    submitBillExport,
+  } from '@/api/finance';
   import Detail from '../detail/bill.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';

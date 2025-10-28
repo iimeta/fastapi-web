@@ -38,6 +38,7 @@
   import useChartOption from '@/hooks/chart-option';
   import { ToolTipFormatterParams } from '@/types/echarts';
   import { AnyObject } from '@/types/global';
+  import { parseQuota } from '@/utils/common';
 
   const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
     return items
@@ -52,12 +53,8 @@
         <span class="tooltip-value">
         ${
           el.seriesName === '总花费'
-            ? `$${el.value.toLocaleString(undefined, {
-                maximumFractionDigits: 6,
-              })}`
-            : el.value.toLocaleString(undefined, {
-                maximumFractionDigits: 6,
-              })
+            ? `$${parseQuota(el.value)}`
+            : parseQuota(el.value)
         }
         </span>
       </div>`
@@ -230,23 +227,6 @@
             },
           },
         },
-        // {
-        //   name: '令牌数',
-        //   data: tokensStatisticsData.value,
-        //   type: 'line',
-        //   smooth: true,
-        //   showSymbol: false,
-        //   color: isDark ? '#A079DC' : '#246EFF',
-        //   symbol: 'circle',
-        //   symbolSize: 10,
-        //   emphasis: {
-        //     focus: 'series',
-        //     itemStyle: {
-        //       borderWidth: 2,
-        //       borderColor: '#E2F2FF',
-        //     },
-        //   },
-        // },
         {
           name:
             userRole === 'reseller' || userRole === 'admin'

@@ -149,7 +149,7 @@ export default {
   'sys.config.error.admin_login.session_expire.required': '请输入会话过期时长',
   'sys.config.label.quota.warning': '额度预警',
   'sys.config.label.quota.threshold': '预警阈值',
-  'sys.config.placeholder.quota.threshold': '请输入预警阈值, 单位: $',
+  'sys.config.placeholder.quota.threshold': '请输入预警阈值',
   'sys.config.error.quota.threshold.required': '请输入预警阈值',
   'sys.config.label.quota.expired_warning': '过期预警',
   'sys.config.label.quota.expired_threshold': '过期预警阈值',

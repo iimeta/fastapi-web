@@ -109,6 +109,7 @@
                 :min="0.000001"
                 :max="9999999999999"
                 :parser="parsePrice"
+                allow-clear
               >
                 <template #prefix> $ </template>
               </a-input-number>

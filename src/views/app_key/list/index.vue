@@ -360,16 +360,16 @@
           <span v-if="record.is_limit_quota">
             {{
               record.quota > 0
-                ? `$${record.quota}`
+                ? `$${parseQuota(record.quota)}`
                 : record.quota < 0
-                ? `-$${-record.quota}`
+                ? `-$${parseQuota(-record.quota)}`
                 : '$0.00'
             }}
           </span>
           <span v-else>{{ $t(`key.columns.quota.no_limit`) }}</span>
         </template>
         <template #used_quota="{ record }">
-          ${{ record.used_quota > 0 ? record.used_quota : '0.00' }}
+          ${{ parseQuota(record.used_quota) || '0.00' }}
         </template>
         <template #billing_methods="{ record }">
           {{ $t(`model.dict.billing_methods.${record.billing_methods || 1}`) }}
@@ -509,6 +509,7 @@
               :min="0.000001"
               :max="9999999999999"
               :parser="parsePrice"
+              allow-clear
             >
               <template #prefix> $ </template>
             </a-input-number>
@@ -876,6 +877,7 @@
               :min="0.000001"
               :max="9999999999999"
               :parser="parsePrice"
+              allow-clear
             >
               <template #prefix> $ </template>
             </a-input-number>
@@ -1136,7 +1138,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { disabledDate, parsePrice } from '@/utils/common';
+  import { disabledDate, parsePrice, parseQuota } from '@/utils/common';
   import { queryAppList, AppList } from '@/api/app';
   import {
     queryAppKeyPage,

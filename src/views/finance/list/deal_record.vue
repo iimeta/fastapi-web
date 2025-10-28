@@ -177,9 +177,9 @@
         <template #quota="{ record }">
           {{
             record.quota > 0
-              ? `$${record.quota}`
+              ? `$${parseQuota(record.quota)}`
               : record.quota < 0
-              ? `-$${-record.quota}`
+              ? `-$${parseQuota(-record.quota)}`
               : '$0.00'
           }}
         </template>
@@ -209,11 +209,6 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import {
-    queryDealRecordPage,
-    DealRecordPage,
-    DealRecordPageParams,
-  } from '@/api/finance';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -222,6 +217,12 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { parseQuota } from '@/utils/common';
+  import {
+    queryDealRecordPage,
+    DealRecordPage,
+    DealRecordPageParams,
+  } from '@/api/finance';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

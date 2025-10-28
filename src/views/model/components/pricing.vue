@@ -231,6 +231,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             class="input"
           >
             <template #prefix> $ </template>
@@ -253,6 +254,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             class="input"
           >
             <template #prefix> $ </template>
@@ -283,6 +285,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             class="input"
           >
             <template #prefix> $ </template>
@@ -313,6 +316,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             class="input"
           >
             <template #prefix> $ </template>
@@ -335,6 +339,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             class="input"
           >
             <template #prefix> $ </template>
@@ -367,6 +372,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             class="input"
           >
             <template #prefix> $ </template>
@@ -433,6 +439,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             style="width: 165px; margin-right: 5px"
           >
             <template #prefix> $ </template>
@@ -444,6 +451,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             style="width: 165px"
           >
             <template #prefix> $ </template>
@@ -525,6 +533,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             style="width: 165px; margin-right: 5px"
           >
             <template #prefix> $ </template>
@@ -536,6 +545,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             style="width: 165px"
           >
             <template #prefix> $ </template>
@@ -581,6 +591,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             class="input"
           >
             <template #prefix> $ </template>
@@ -603,6 +614,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             class="input"
           >
             <template #prefix> $ </template>
@@ -664,6 +676,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             style="width: 188px; margin-right: 5px"
           >
             <template #prefix> $ </template>
@@ -716,6 +729,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             class="input"
           >
             <template #prefix> $ </template>
@@ -753,6 +767,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             style="width: 309px; margin-right: 5px"
           >
             <template #prefix> $ </template>
@@ -830,6 +845,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             style="width: 223px; margin-right: 5px"
           >
             <template #prefix> $ </template>
@@ -891,6 +907,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             style="width: 309px; margin-right: 5px"
           >
             <template #prefix> $ </template>
@@ -965,6 +982,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             style="width: 188px"
           >
             <template #prefix> $ </template>
@@ -1010,6 +1028,7 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
+            allow-clear
             class="input"
           >
             <template #prefix> $ </template>

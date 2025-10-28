@@ -403,7 +403,7 @@
           >
             {{
               record.spend.total_spend_tokens
-                ? `$${record.spend.total_spend_tokens}`
+                ? `$${parseQuota(record.spend.total_spend_tokens)}`
                 : record.status === 1 || record.status === 2
                 ? '$0.00'
                 : '-'
@@ -568,6 +568,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
+  import { parseQuota } from '@/utils/common';
   import { queryAudioPage, AudioPage, AudioPageParams } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
   import { Pagination } from '@/types/global';
@@ -691,6 +692,7 @@
       dataIndex: 'total_spend_tokens',
       slotName: 'total_spend_tokens',
       align: 'center',
+      width: 110,
       slots: {
         title: () => [
           h(
@@ -733,6 +735,42 @@
       dataIndex: 'total_time',
       slotName: 'total_time',
       align: 'center',
+      slots: {
+        title: () => [
+          h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                alignItems: 'center',
+                gap: '3px',
+                justifyContent: 'center',
+              },
+            },
+            [
+              h('span', t('chat.columns.total_time')),
+              h(
+                Tooltip,
+                {
+                  content: t('chat.columns.tooltip.total_time'),
+                  contentStyle: {
+                    whiteSpace: 'nowrap',
+                    maxWidth: 'none',
+                  },
+                },
+                {
+                  default: () =>
+                    h(IconQuestionCircle, {
+                      style: {
+                        color: 'var(--color-text-3)',
+                      },
+                    }),
+                }
+              ),
+            ]
+          ),
+        ],
+      },
     },
     {
       title: t('chat.columns.internal_time'),

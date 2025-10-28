@@ -35,11 +35,13 @@
         </a-skeleton>
         <span v-else>
           {{
-            currentData?.is_limit_quota
+            currentData.is_limit_quota
               ? currentData.quota > 0
-                ? `$${currentData.quota}`
+                ? `$${parseQuota(currentData.quota)}`
+                : currentData.quota < 0
+                ? `-$${parseQuota(-currentData.quota)}`
                 : '$0.00'
-              : '不限'
+              : $t(`app.columns.quota.no_limit`)
           }}
         </span>
       </a-descriptions-item>
@@ -48,9 +50,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            currentData.used_quota > 0 ? `$${currentData.used_quota}` : '$0.00'
-          }}
+          ${{ parseQuota(currentData.used_quota) || '0.00' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('app.detail.label.quota_expires_at')">
@@ -150,6 +150,7 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { parseQuota } from '@/utils/common';
   import { queryAppDetail, AppDetailParams, AppDetail } from '@/api/app';
 
   const { t } = useI18n();

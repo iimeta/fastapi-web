@@ -400,9 +400,9 @@
         <template #input_tokens="{ record }">
           {{
             record.spend.text?.input_tokens
-              ? record.spend.text?.input_tokens
-              : record.spend.tiered_text?.input_tokens
-              ? record.spend.tiered_text?.input_tokens
+              ? parseQuota(record.spend.text?.input_tokens)
+              : parseQuota(record.spend.tiered_text?.input_tokens)
+              ? parseQuota(record.spend.tiered_text?.input_tokens)
               : record.status === 1
               ? 0
               : '-'
@@ -411,9 +411,9 @@
         <template #output_tokens="{ record }">
           {{
             record.spend.text?.output_tokens
-              ? record.spend.text?.output_tokens
-              : record.spend.tiered_text?.output_tokens
-              ? record.spend.tiered_text?.output_tokens
+              ? parseQuota(record.spend.text?.output_tokens)
+              : parseQuota(record.spend.tiered_text?.output_tokens)
+              ? parseQuota(record.spend.tiered_text?.output_tokens)
               : record.status === 1
               ? 0
               : '-'
@@ -430,7 +430,7 @@
           >
             {{
               record.spend.total_spend_tokens
-                ? `$${record.spend.total_spend_tokens}`
+                ? `$${parseQuota(record.spend.total_spend_tokens)}`
                 : record.status === 1 || record.status === 2
                 ? '$0.00'
                 : '-'
@@ -815,6 +815,9 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
+  import { Pagination } from '@/types/global';
+  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
+  import { parseQuota } from '@/utils/common';
   import {
     queryChatPage,
     ChatPage,
@@ -826,8 +829,6 @@
   } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
   import { queryPerMinute, PerMinuteParams } from '@/api/dashboard';
-  import { Pagination } from '@/types/global';
-  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
     TableColumnData,
     TableRowSelection,
@@ -952,6 +953,7 @@
       dataIndex: 'total_spend_tokens',
       slotName: 'total_spend_tokens',
       align: 'center',
+      width: 110,
       slots: {
         title: () => [
           h(
@@ -1013,6 +1015,42 @@
       dataIndex: 'total_time',
       slotName: 'total_time',
       align: 'center',
+      slots: {
+        title: () => [
+          h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                alignItems: 'center',
+                gap: '3px',
+                justifyContent: 'center',
+              },
+            },
+            [
+              h('span', t('chat.columns.total_time')),
+              h(
+                Tooltip,
+                {
+                  content: t('chat.columns.tooltip.total_time'),
+                  contentStyle: {
+                    whiteSpace: 'nowrap',
+                    maxWidth: 'none',
+                  },
+                },
+                {
+                  default: () =>
+                    h(IconQuestionCircle, {
+                      style: {
+                        color: 'var(--color-text-3)',
+                      },
+                    }),
+                }
+              ),
+            ]
+          ),
+        ],
+      },
     },
     {
       title: t('chat.columns.internal_time'),
@@ -1247,8 +1285,8 @@
     }
   ) => {
     const { data } = await queryPerMinute(params);
-    rpm.value = data.rpm;
-    tpm.value = data.tpm;
+    rpm.value = data.rpm || 0;
+    tpm.value = data.tpm || 0;
   };
   getPerMinute();
 

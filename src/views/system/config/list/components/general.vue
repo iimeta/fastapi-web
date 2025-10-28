@@ -405,8 +405,9 @@
             :precision="0"
             :min="1"
             allow-clear
-          />
-          &nbsp;&nbsp;$&nbsp;
+          >
+            <template #prefix> $ </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'quota'"
@@ -440,8 +441,9 @@
             :precision="0"
             :min="1"
             allow-clear
-          />
-          &nbsp;&nbsp;天
+          >
+            <template #append> 天 </template>
+          </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'quota'"
