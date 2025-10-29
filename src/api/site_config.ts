@@ -34,6 +34,8 @@ export interface SiteConfigCreate {
   quota_expires_at: any;
   support_email_suffix: any;
   register_welcome: string;
+  default_language: string;
+  currency_symbol: string;
   host: string;
   port: any;
   user_name: string;
@@ -128,6 +130,8 @@ export interface SiteConfigDetail {
   quota_expires_at: number;
   support_email_suffix: any;
   register_welcome: string;
+  default_language: string;
+  currency_symbol: string;
   host: string;
   port: number;
   user_name: string;
@@ -178,6 +182,8 @@ export interface SiteConfigUpdate {
   quota_expires_at: any;
   support_email_suffix: any;
   register_welcome: string;
+  default_language: string;
+  currency_symbol: string;
   host: string;
   port: any;
   user_name: string;

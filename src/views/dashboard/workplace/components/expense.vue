@@ -3,54 +3,32 @@
     class="general-card"
     :title="$t('workplace.expense')"
     :header-style="{ padding: '10px 20px 10px 20px', height: '36px' }"
-    :body-style="{ padding: '10px 20px 10px 20px' }"
+    :body-style="{ padding: '2px 20px 10px 20px' }"
     :bordered="false"
   >
     <template #extra>
       <a-link v-if="appStore.getRechargeTips" @click="recharge">
         {{ $t('workplace.recharge') }}
       </a-link>
+      <a-link @click="quotaWarning">
+        {{ $t('workplace.current.quota_warning') }}
+      </a-link>
     </template>
     <div>
       <div>
         <div class="arco-statistic">
-          <div class="arco-statistic-title">
-            {{ $t('workplace.current.quota') }}
-            <a-link
-              style="float: right; margin-left: 120px"
-              @click="quotaWarning"
-            >
-              {{ $t('workplace.current.quota_warning') }}
-            </a-link>
-          </div>
           <div class="arco-statistic-content">
-            <div class="arco-statistic-value">
-              <span class="arco-statistic-value-integer">
-                {{ expense.quota ? expense.quota : expense.quota }}
-              </span>
+            <div class="arco-statistic-value" style="font-size: 30px">
+              ${{ parseQuota(expense.quota, 4) || '0.00' }}
             </div>
           </div>
         </div>
       </div>
       <div class="quota-box">
         <div class="quota-item-box">
-          <span class="quota-title">剩余额度:</span>
-          <span class="quota">
-            {{
-              expense.quota > 0
-                ? `$${expense.quota}`
-                : expense.quota < 0
-                ? `-$${-expense.quota}`
-                : '$0.00'
-            }}
-          </span>
-        </div>
-      </div>
-      <div class="quota-box">
-        <div class="quota-item-box">
           <span class="quota-title">已用额度:</span>
           <span class="quota">
-            {{ expense.used_quota > 0 ? `$${expense.used_quota}` : '$0.00' }}
+            ${{ parseQuota(expense.used_quota, 4) || '0.00' }}
           </span>
         </div>
       </div>
@@ -60,9 +38,9 @@
           <span class="quota">
             {{
               expense.allocated_quota > 0
-                ? `$${expense.allocated_quota}`
+                ? `$${parseQuota(expense.allocated_quota, 4)}`
                 : expense.allocated_quota < 0
-                ? `-$${-expense.allocated_quota}`
+                ? `-$${parseQuota(-expense.allocated_quota, 4)}`
                 : '$0.00'
             }}
           </span>
@@ -74,9 +52,9 @@
           <span class="quota">
             {{
               expense.to_be_allocated > 0
-                ? `$${expense.to_be_allocated}`
+                ? `$${parseQuota(expense.to_be_allocated, 4)}`
                 : expense.to_be_allocated < 0
-                ? `-$${-expense.to_be_allocated}`
+                ? `-$${parseQuota(-expense.to_be_allocated, 4)}`
                 : '$0.00'
             }}
           </span>
@@ -171,13 +149,14 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import { FormInstance, Modal } from '@arco-design/web-vue';
+  import { useAppStore } from '@/store';
+  import { parseQuota } from '@/utils/common';
   import {
     queryExpense,
     Expense,
     QuotaWarningParams,
     submitQuotaWarning,
   } from '@/api/dashboard';
-  import { useAppStore } from '@/store';
 
   const appStore = useAppStore();
   const { proxy } = getCurrentInstance() as any;

@@ -38,7 +38,7 @@ export default {
   'app.label.quota_expires_at': '过期时间',
   'app.placeholder.quota_expires_at': '请设置额度过期时间',
   'app.label.quota_expires_minutes': '过期时长',
-  'app.placeholder.quota_expires_minutes': '在首次使用此密钥时生成过期时间, 时长单位为: 分钟',
+  'app.placeholder.quota_expires_minutes': '在首次使用此密钥时生成过期时间',
   'app.error.quota.required': '请输入额度',
   'app.placeholder.key.models': '此密钥可使用的模型, 为空则使用应用所选的模型',
   'app.label.key.billing_methods': '计费方式',

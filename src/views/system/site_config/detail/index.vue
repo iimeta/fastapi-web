@@ -114,7 +114,11 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          ${{ parseQuota(currentData.grant_quota) || '-' }}
+          {{
+            currentData.grant_quota > 0
+              ? `$${parseQuota(currentData.grant_quota)}`
+              : '-'
+          }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('site.config.detail.quota_expires_at')">
@@ -144,6 +148,26 @@
           style="max-height: 500px; display: block; overflow: auto"
           v-html="currentData.register_welcome"
         >
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('site.config.detail.default_language')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.default_language
+              ? $t(`dict.language.${currentData.default_language}`)
+              : '跟随系统'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('site.config.detail.currency_symbol')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.currency_symbol || '$' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('site.config.detail.host')">

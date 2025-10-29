@@ -15,6 +15,8 @@ export interface Config {
   icp_beian?: string;
   ga_beian?: string;
   register_tips?: string;
+  default_language?: string;
+  currency_symbol?: string;
   carousel1_title?: string;
   carousels1?: Carousel[];
   carousel2_title?: string;

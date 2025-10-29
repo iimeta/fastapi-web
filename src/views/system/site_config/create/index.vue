@@ -233,6 +233,38 @@
                 :auto-size="{ minRows: 3, maxRows: 20 }"
               />
             </a-form-item>
+            <a-form-item
+              field="default_language"
+              :label="$t('site.config.label.default_language')"
+            >
+              <a-select
+                v-model="formData.default_language"
+                :placeholder="$t('site.config.placeholder.default_language')"
+                :scrollbar="false"
+                allow-search
+                allow-clear
+              >
+                <a-option value="zh-CN">
+                  {{ $t('dict.language.zh-CN') }}
+                </a-option>
+                <a-option value="zh-TW">
+                  {{ $t('dict.language.zh-TW') }}
+                </a-option>
+                <a-option value="en-US">
+                  {{ $t('dict.language.en-US') }}
+                </a-option>
+              </a-select>
+            </a-form-item>
+            <a-form-item
+              field="currency_symbol"
+              :label="$t('site.config.label.currency_symbol')"
+            >
+              <a-input
+                v-model="formData.currency_symbol"
+                :placeholder="$t('site.config.placeholder.currency_symbol')"
+                allow-clear
+              />
+            </a-form-item>
             <a-form-item field="host" :label="$t('site.config.label.host')">
               <a-input
                 v-model="formData.host"
@@ -549,6 +581,8 @@
     quota_expires_at: ref(),
     support_email_suffix: ref(),
     register_welcome: '',
+    default_language: '',
+    currency_symbol: '',
     host: '',
     port: ref(),
     user_name: '',

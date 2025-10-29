@@ -62,6 +62,12 @@ const useAppStore = defineStore('app', {
     getRegisterTips(state: AppState): string {
       return state.config.register_tips || '';
     },
+    getDefaultLanguage(state: AppState): string {
+      return state.config.default_language || 'zh-CN';
+    },
+    getCurrencySymbol(state: AppState): string {
+      return state.config.currency_symbol || '$';
+    },
     getCarousel1Title(state: AppState): string | undefined {
       return state.config.carousel1_title;
     },
@@ -69,16 +75,16 @@ const useAppStore = defineStore('app', {
       return (
         state.config.carousels1 || [
           {
-            image_url: 'https://fastapi.ai/public/images/iimyun.png',
-            jump_url: 'https://www.iimyun.com/cart?fid=3&gid=11',
+            image_url: 'https://fastapi.ai/public/images/zyyun.png',
+            jump_url: 'https://www.zyyun.com/cart?fid=3&gid=53',
           },
           {
-            image_url: 'https://fastapi.ai/public/images/iimyun.png',
-            jump_url: 'https://www.iimyun.com/cart?fid=3&gid=49',
+            image_url: 'https://fastapi.ai/public/images/zyyun.png',
+            jump_url: 'https://www.zyyun.com/cart?fid=3&gid=54',
           },
           {
-            image_url: 'https://fastapi.ai/public/images/iimyun.png',
-            jump_url: 'https://www.iimyun.com/cart?fid=6&gid=15',
+            image_url: 'https://fastapi.ai/public/images/zyyun.png',
+            jump_url: 'https://www.zyyun.com/cart?fid=6&gid=15',
           },
         ]
       );
@@ -236,6 +242,8 @@ const useAppStore = defineStore('app', {
           icp_beian: res.data.icp_beian,
           ga_beian: res.data.ga_beian,
           register_tips: res.data.register_tips,
+          default_language: res.data.default_language,
+          currency_symbol: res.data.currency_symbol,
           carousel1_title:
             res.data.carousel1_title ||
             (res.data.domain ? undefined : '赞助商'),

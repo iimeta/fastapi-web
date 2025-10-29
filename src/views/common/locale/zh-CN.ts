@@ -140,4 +140,7 @@ export default {
   'dict.lb_strategy.2': '权重',
   'dict.notice.true': '已发送',
   'dict.notice.false': '未发送',
+  'dict.language.zh-CN': '简体中文',
+  'dict.language.zh-TW': '繁體中文',
+  'dict.language.en-US': 'English',
 };

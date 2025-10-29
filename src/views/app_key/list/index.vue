@@ -632,7 +632,9 @@
               :precision="0"
               :min="1"
               :max="9999999999999"
-            />
+            >
+              <template #append> 分钟 </template>
+            </a-input-number>
           </a-form-item>
           <a-form-item
             field="is_bind_group"
@@ -1002,7 +1004,9 @@
               :precision="0"
               :min="1"
               :max="9999999999999"
-            />
+            >
+              <template #append> 分钟 </template>
+            </a-input-number>
           </a-form-item>
           <a-form-item
             field="is_bind_group"

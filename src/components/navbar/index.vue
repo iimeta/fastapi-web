@@ -109,7 +109,7 @@
             </template>
           </a-button>
         </a-tooltip>
-        <a-dropdown trigger="click" @select="changeLocale as any">
+        <a-dropdown trigger="click" @select="changeLocale">
           <div ref="triggerBtn" class="trigger-btn"></div>
           <template #content>
             <a-doption
@@ -117,10 +117,14 @@
               :key="item.value"
               :value="item.value"
             >
-              <template #icon>
-                <icon-check v-show="item.value === currentLocale" />
-              </template>
-              {{ item.label }}
+              <span
+                :style="{
+                  padding: '0 5px',
+                  fontWeight: item.value === currentLocale ? 600 : 0,
+                }"
+              >
+                {{ item.label }}
+              </span>
             </a-doption>
           </template>
         </a-dropdown>
