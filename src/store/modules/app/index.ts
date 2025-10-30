@@ -62,8 +62,8 @@ const useAppStore = defineStore('app', {
     getRegisterTips(state: AppState): string {
       return state.config.register_tips || '';
     },
-    getDefaultLanguage(state: AppState): string {
-      return state.config.default_language || 'zh-CN';
+    getDefaultLanguage(state: AppState): string | undefined  {
+      return state.config.default_language;
     },
     getCurrencySymbol(state: AppState): string {
       return state.config.currency_symbol || '$';
