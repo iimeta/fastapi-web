@@ -3,7 +3,6 @@ import { Notification } from '@arco-design/web-vue';
 import type { NotificationReturn } from '@arco-design/web-vue/es/notification/interface';
 import type { RouteRecordNormalized } from 'vue-router';
 import defaultSettings from '@/config/settings.json';
-import useLocale from '@/hooks/locale';
 import { getMenuList } from '@/api/auth';
 import {
   querySiteConfig,
@@ -286,10 +285,6 @@ const useAppStore = defineStore('app', {
             res.data.description ||
               '智元 Fast API 是企业级 LLM API 快速集成系统，支持DeepSeek、OpenAI、Azure、文心一言、讯飞星火、通义千问、智谱GLM、Gemini、豆包以及OpenAI格式的模型等，简洁的页面风格，轻量高效且稳定，支持Docker一键部署。业务系统只需要按照统一API标准，对接一次的开发工作量，即可无缝对接N个大模型，无需考虑N个大模型背后的各种复杂逻辑等等，可大大降低开发和维护成本...'
           );
-
-        // 默认语言
-        const { isChangeLocale } = useLocale();
-        isChangeLocale(res.data.default_language);
       });
     },
   },

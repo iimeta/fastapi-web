@@ -54,6 +54,7 @@
   import TabBar from '@/components/tab-bar/index.vue';
   import usePermission from '@/hooks/permission';
   import useResponsive from '@/hooks/responsive';
+  import useLocale from '@/hooks/locale';
   import PageLayout from './page-layout.vue';
 
   const isInit = ref(false);
@@ -103,6 +104,9 @@
   onMounted(() => {
     isInit.value = true;
   });
+
+  const { isChangeLocale } = useLocale();
+  isChangeLocale(appStore.getDefaultLanguage);
 </script>
 
 <style scoped lang="less">

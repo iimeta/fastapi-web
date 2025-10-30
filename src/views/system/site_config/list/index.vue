@@ -349,6 +349,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { useAppStore } from '@/store';
+  import useLocale from '@/hooks/locale';
   import Detail from '../detail/index.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -357,6 +358,8 @@
   const { loading, setLoading } = useLoading(true);
   const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
+  const appStore = useAppStore();
+  const { isChangeLocale } = useLocale();
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -510,6 +513,8 @@
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
+      appStore.init();
+      isChangeLocale(appStore.getDefaultLanguage);
       tableRef.value.selectAll(false);
     }
   };
@@ -607,7 +612,6 @@
     try {
       await submitSiteConfigDelete(params);
       proxy.$message.success('删除成功');
-      useAppStore().init();
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -621,7 +625,6 @@
     try {
       await submitSiteConfigChangeStatus(params);
       proxy.$message.success('操作成功');
-      useAppStore().init();
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -673,7 +676,6 @@
           submitSiteConfigBatchOperate(params).then((res) => {
             setLoading(false);
             proxy.$message.success('操作成功');
-            useAppStore().init();
             search();
             tableRef.value.selectAll(false);
           });

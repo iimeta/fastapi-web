@@ -15,7 +15,7 @@ export default function useLocale() {
     localStorage.setItem('arco-locale', value);
   };
 
-  const isChangeLocale = (value: string) => {
+  const isChangeLocale = (value: string | undefined) => {
     if (!value || localStorage.getItem('arco-locale')) {
       return;
     }
