@@ -83,6 +83,12 @@
   };
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'GlobalSetting',
+  };
+</script>
+
 <style scoped lang="less">
   .fixed-settings {
     position: fixed;

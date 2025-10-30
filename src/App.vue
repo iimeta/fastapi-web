@@ -7,8 +7,9 @@
 
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import enUS from '@arco-design/web-vue/es/locale/lang/en-us';
   import zhCN from '@arco-design/web-vue/es/locale/lang/zh-cn';
+  import zhTW from '@arco-design/web-vue/es/locale/lang/zh-tw';
+  import enUS from '@arco-design/web-vue/es/locale/lang/en-us';
   import GlobalSetting from '@/components/global-setting/index.vue';
   import useLocale from '@/hooks/locale';
 
@@ -17,10 +18,12 @@
     switch (currentLocale.value) {
       case 'zh-CN':
         return zhCN;
+      case 'zh-TW':
+        return zhTW;
       case 'en-US':
         return enUS;
       default:
-        return enUS;
+        return zhCN;
     }
   });
 </script>

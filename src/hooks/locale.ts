@@ -6,6 +6,7 @@ export default function useLocale() {
   const currentLocale = computed(() => {
     return i18.locale.value;
   });
+
   const changeLocale = (value: string) => {
     if (i18.locale.value === value) {
       return;
@@ -13,8 +14,22 @@ export default function useLocale() {
     i18.locale.value = value;
     localStorage.setItem('arco-locale', value);
   };
+
+  const isChangeLocale = (value: string) => {
+    if (!value || localStorage.getItem('arco-locale')) {
+      return;
+    }
+
+    if (i18.locale.value === value) {
+      return;
+    }
+
+    i18.locale.value = value;
+  };
+
   return {
     currentLocale,
     changeLocale,
+    isChangeLocale,
   };
 }

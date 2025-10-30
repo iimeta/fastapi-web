@@ -3,6 +3,7 @@ import { Notification } from '@arco-design/web-vue';
 import type { NotificationReturn } from '@arco-design/web-vue/es/notification/interface';
 import type { RouteRecordNormalized } from 'vue-router';
 import defaultSettings from '@/config/settings.json';
+import useLocale from '@/hooks/locale';
 import { getMenuList } from '@/api/auth';
 import {
   querySiteConfig,
@@ -50,8 +51,10 @@ const useAppStore = defineStore('app', {
       );
     },
     getJumpUrl(state: AppState): string | undefined {
-      return state.config.jump_url ||
-        (state.config.domain ? undefined : 'https://www.fastapi.ai');
+      return (
+        state.config.jump_url ||
+        (state.config.domain ? undefined : 'https://www.fastapi.ai')
+      );
     },
     getIcpBeian(state: AppState): string | undefined {
       return state.config.icp_beian;
@@ -62,7 +65,7 @@ const useAppStore = defineStore('app', {
     getRegisterTips(state: AppState): string {
       return state.config.register_tips || '';
     },
-    getDefaultLanguage(state: AppState): string | undefined  {
+    getDefaultLanguage(state: AppState): string | undefined {
       return state.config.default_language;
     },
     getCurrencySymbol(state: AppState): string {
@@ -141,7 +144,9 @@ const useAppStore = defineStore('app', {
     getDocumentMoreUrl(state: AppState): string | undefined {
       return (
         state.config.document_more_url ||
-        (state.config.document_title && state.config.domain ? undefined : 'https://www.fastapi.ai')
+        (state.config.document_title && state.config.domain
+          ? undefined
+          : 'https://www.fastapi.ai')
       );
     },
     getDocuments(state: AppState): Document[] | undefined {
@@ -281,6 +286,10 @@ const useAppStore = defineStore('app', {
             res.data.description ||
               '智元 Fast API 是企业级 LLM API 快速集成系统，支持DeepSeek、OpenAI、Azure、文心一言、讯飞星火、通义千问、智谱GLM、Gemini、豆包以及OpenAI格式的模型等，简洁的页面风格，轻量高效且稳定，支持Docker一键部署。业务系统只需要按照统一API标准，对接一次的开发工作量，即可无缝对接N个大模型，无需考虑N个大模型背后的各种复杂逻辑等等，可大大降低开发和维护成本...'
           );
+
+        // 默认语言
+        const { isChangeLocale } = useLocale();
+        isChangeLocale(res.data.default_language);
       });
     },
   },
