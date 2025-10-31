@@ -34,15 +34,13 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            currentData.is_limit_quota
-              ? currentData.quota > 0
-                ? `$${parseQuota(currentData.quota)}`
-                : currentData.quota < 0
-                ? `-$${parseQuota(-currentData.quota)}`
-                : '$0.00'
-              : $t(`app.columns.quota.no_limit`)
-          }}
+          <Quota
+            v-if="currentData.is_limit_quota"
+            :model-value="currentData.quota"
+          />
+          <span v-else>
+            {{ $t(`app.columns.quota.no_limit`) }}
+          </span>
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('app.detail.label.used_quota')">
@@ -50,7 +48,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          ${{ parseQuota(currentData.used_quota) || '0.00' }}
+          <Quota :model-value="currentData.used_quota" />
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('app.detail.label.quota_expires_at')">
@@ -150,8 +148,8 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { parseQuota } from '@/utils/common';
   import { queryAppDetail, AppDetailParams, AppDetail } from '@/api/app';
+  import Quota from '@/views/common/quota.vue';
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);

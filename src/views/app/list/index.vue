@@ -267,19 +267,11 @@
           <span v-else>{{ $t(`app.columns.models.no_limit`) }}</span>
         </template>
         <template #quota="{ record }">
-          <span v-if="record.is_limit_quota">
-            {{
-              record.quota > 0
-                ? `$${parseQuota(record.quota)}`
-                : record.quota < 0
-                ? `-$${parseQuota(-record.quota)}`
-                : '$0.00'
-            }}
-          </span>
+          <Quota v-if="record.is_limit_quota" :model-value="record.quota" />
           <span v-else>{{ $t(`app.columns.quota.no_limit`) }}</span>
         </template>
         <template #used_quota="{ record }">
-          ${{ parseQuota(record.used_quota) || '0.00' }}
+          <Quota :model-value="record.used_quota" />
         </template>
         <template #quota_expires_at="{ record }">
           {{ record.is_limit_quota ? record.quota_expires_at || '-' : '-' }}
@@ -657,7 +649,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { disabledDate, parsePrice, parseQuota } from '@/utils/common';
+  import { disabledDate, parsePrice } from '@/utils/common';
   import {
     queryAppPage,
     AppPage,
@@ -686,6 +678,7 @@
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { queryGroupList, GroupList } from '@/api/group';
   import Models from '@/views/common/models.vue';
+  import Quota from '@/views/common/quota.vue';
   import Detail from '../detail/index.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
