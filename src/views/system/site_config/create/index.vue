@@ -181,7 +181,7 @@
                 :parser="parsePrice"
                 allow-clear
               >
-                <template #prefix> $ </template>
+                <template #prefix> {{ currencySymbol }}</template>
               </a-input-number>
             </a-form-item>
             <a-form-item v-if="!formData.register_tips">
@@ -548,6 +548,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
+  import { useAppStore } from '@/store';
   import { parsePrice } from '@/utils/common';
   import {
     submitSiteConfigCreate,
@@ -560,6 +561,7 @@
   import { useRouter } from 'vue-router';
 
   const { proxy } = getCurrentInstance() as any;
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const router = useRouter();
   const formRef = ref<FormInstance>();

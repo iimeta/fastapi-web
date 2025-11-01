@@ -42,13 +42,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            currentData.quota > 0
-              ? `$${parseQuota(currentData.quota)}`
-              : currentData.quota < 0
-              ? `-$${parseQuota(-currentData.quota)}`
-              : '$0.00'
-          }}
+          <Quota :model-value="currentData.quota" />
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('reseller.detail.label.used_quota')">
@@ -56,7 +50,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          ${{ parseQuota(currentData.used_quota) || '0.00' }}
+          <Quota :model-value="currentData.used_quota" />
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('reseller.detail.label.allocated_quota')">
@@ -64,7 +58,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          ${{ parseQuota(currentData.allocated_quota) || '0.00' }}
+          <Quota :model-value="currentData.allocated_quota" />
         </span>
       </a-descriptions-item>
       <a-descriptions-item
@@ -74,7 +68,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          ${{ parseQuota(currentData.to_be_allocated_quota) || '0.00' }}
+          <Quota :model-value="currentData.to_be_allocated_quota" />
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('reseller.detail.label.quota_expires_at')">
@@ -230,12 +224,12 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { parseQuota } from '@/utils/common';
   import {
     queryResellerDetail,
     ResellerDetailParams,
     ResellerDetail,
   } from '@/api/admin_reseller';
+  import Quota from '@/views/common/quota.vue';
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);

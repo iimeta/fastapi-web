@@ -329,7 +329,7 @@
           {{ record?.model_agent_names?.join(',') || '-' }}
         </template>
         <template #used_quota="{ record }">
-          ${{ parseQuota(record.used_quota) || '0.00' }}
+          <Quota :model-value="record.used_quota" />
         </template>
         <template #weight="{ record }">
           {{ record.weight || 0 }}
@@ -428,7 +428,6 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { parseQuota } from '@/utils/common';
   import {
     queryKeyPage,
     KeyPage,
@@ -446,6 +445,7 @@
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { useClipboard } from '@vueuse/core';
   import Models from '@/views/common/models.vue';
+  import Quota from '@/views/common/quota.vue';
   import Detail from '../detail/index.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';

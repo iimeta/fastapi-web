@@ -403,9 +403,9 @@
           >
             {{
               record.spend.total_spend_tokens
-                ? `$${parseQuota(record.spend.total_spend_tokens)}`
+                ? currencySymbol + parseQuota(record.spend.total_spend_tokens)
                 : record.status === 1 || record.status === 2
-                ? '$0.00'
+                ? currencySymbol + '0.00'
                 : '-'
             }}
           </span>
@@ -568,6 +568,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
+  import { useAppStore } from '@/store';
   import { parseQuota } from '@/utils/common';
   import { queryAudioPage, AudioPage, AudioPageParams } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
@@ -593,6 +594,7 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const rowSelection = reactive({
     type: 'checkbox',

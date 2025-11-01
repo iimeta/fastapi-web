@@ -38,7 +38,10 @@
   import useChartOption from '@/hooks/chart-option';
   import { ToolTipFormatterParams } from '@/types/echarts';
   import { AnyObject } from '@/types/global';
+  import { useAppStore } from '@/store';
   import { parseQuota } from '@/utils/common';
+
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
     return items
@@ -53,7 +56,7 @@
         <span class="tooltip-value">
         ${
           el.seriesName === '总花费'
-            ? `$${parseQuota(el.value)}`
+            ? `${currencySymbol + parseQuota(el.value)}`
             : parseQuota(el.value)
         }
         </span>

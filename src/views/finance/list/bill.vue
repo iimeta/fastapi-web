@@ -160,7 +160,7 @@
           {{ record.total.toLocaleString() }}
         </template>
         <template #tokens="{ record }">
-          ${{ parseQuota(record.tokens) || '0.00' }}
+          <Quota :model-value="record.tokens" />
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
@@ -241,7 +241,6 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { FormInstance } from '@arco-design/web-vue';
-  import { parseQuota } from '@/utils/common';
   import {
     queryBillPage,
     BillPage,
@@ -249,6 +248,7 @@
     BillExportParams,
     submitBillExport,
   } from '@/api/finance';
+  import Quota from '@/views/common/quota.vue';
   import Detail from '../detail/bill.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';

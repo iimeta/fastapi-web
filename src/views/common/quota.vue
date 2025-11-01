@@ -2,10 +2,10 @@
   <span>
     {{
       modelValue > 0
-        ? `${appStore.getCurrencySymbol + parseQuota(modelValue)}`
+        ? currencySymbol + parseQuota(modelValue)
         : modelValue < 0
-        ? `-${appStore.getCurrencySymbol + parseQuota(-modelValue)}`
-        : appStore.getCurrencySymbol + '0.00'
+        ? `-${-currencySymbol + parseQuota(-modelValue)}`
+        : currencySymbol + '0.00'
     }}
   </span>
 </template>
@@ -14,7 +14,7 @@
   import { useAppStore } from '@/store';
   import { parseQuota } from '@/utils/common';
 
-  const appStore = useAppStore();
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   defineProps<{
     modelValue: number;

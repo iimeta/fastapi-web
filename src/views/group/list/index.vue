@@ -281,7 +281,7 @@
           {{ record?.model_agent_names?.join(',') || '-' }}
         </template>
         <template #used_quota="{ record }">
-          ${{ parseQuota(record.used_quota) || '0.00' }}
+          <Quota :model-value="record.used_quota" />
         </template>
         <template #weight="{ record }">
           <span v-if="record.is_default">
@@ -475,7 +475,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { disabledDate, parseQuota } from '@/utils/common';
+  import { disabledDate } from '@/utils/common';
   import {
     queryGroupPage,
     GroupPage,
@@ -502,6 +502,7 @@
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import Models from '@/views/common/models.vue';
+  import Quota from '@/views/common/quota.vue';
   import Detail from '../detail/index.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';

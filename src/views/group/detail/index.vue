@@ -35,7 +35,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          ${{ parseQuota(currentData.used_quota) || '0.00' }}
+          <Quota :model-value="currentData.used_quota" />
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('group.detail.label.models')" :span="2">
@@ -105,15 +105,13 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            currentData?.is_limit_quota
-              ? currentData.quota > 0
-                ? `$${parseQuota(currentData.quota)}`
-                : currentData.quota < 0
-                ? `-$${parseQuota(-currentData.quota)}`
-                : '$0.00'
-              : '不限'
-          }}
+          <Quota
+            v-if="currentData.is_limit_quota"
+            :model-value="currentData.quota"
+          />
+          <span v-else>
+            {{ $t(`app.columns.quota.no_limit`) }}
+          </span>
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('group.detail.label.is_enable_forward')">
@@ -153,11 +151,11 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            currentData?.forward_config?.used_quota > 0
-              ? `$${parseQuota(currentData?.forward_config?.used_quota)}`
-              : '-'
-          }}
+          <Quota
+            v-if="currentData?.forward_config?.used_quota"
+            :model-value="currentData?.forward_config?.used_quota"
+          />
+          <span v-else> - </span>
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('group.detail.label.target_model')">
@@ -263,12 +261,12 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { parseQuota } from '@/utils/common';
   import {
     queryGroupDetail,
     GroupDetailParams,
     GroupDetail,
   } from '@/api/group';
+  import Quota from '@/views/common/quota.vue';
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);

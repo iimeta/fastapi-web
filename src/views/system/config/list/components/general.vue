@@ -418,7 +418,7 @@
             :min="1"
             allow-clear
           >
-            <template #prefix> $ </template>
+            <template #prefix> {{ currencySymbol }}</template>
           </a-input-number>
         </a-form-item>
         <a-form-item
@@ -531,6 +531,7 @@
   import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
+  import { useAppStore } from '@/store';
   import {
     SysConfigItem,
     querySysConfigDetail,
@@ -543,6 +544,7 @@
   const { proxy } = getCurrentInstance() as any;
   const { setLoading } = useLoading(true);
   const { t } = useI18n();
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const configVisible = ref(false);
   const configTitle = ref('');

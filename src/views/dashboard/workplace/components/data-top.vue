@@ -121,7 +121,7 @@
               tooltip
             >
               <template #cell="{ record }">
-                ${{ parseQuota(record.tokens) || '0.00' }}
+                <Quota :model-value="record.tokens" />
               </template>
             </a-table-column>
           </template>
@@ -135,8 +135,8 @@
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
   import type { TableData } from '@arco-design/web-vue/es/table/interface';
-  import { parseQuota } from '@/utils/common';
   import { queryDataTop } from '@/api/dashboard';
+  import Quota from '@/views/common/quota.vue';
 
   const { loading, setLoading } = useLoading();
   const userRole = localStorage.getItem('userRole');

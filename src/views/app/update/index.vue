@@ -78,7 +78,7 @@
                 :parser="parsePrice"
                 allow-clear
               >
-                <template #prefix> $ </template>
+                <template #prefix> {{ currencySymbol }}</template>
               </a-input-number>
             </a-form-item>
             <a-form-item v-if="formData.is_limit_quota">
@@ -264,6 +264,7 @@
   import { FormInstance } from '@arco-design/web-vue';
   import { useRoute, useRouter } from 'vue-router';
   import dayjs from 'dayjs';
+  import { useAppStore } from '@/store';
   import { disabledDate, parsePrice } from '@/utils/common';
   import {
     submitAppUpdate,
@@ -278,6 +279,7 @@
   const { proxy } = getCurrentInstance() as any;
   const route = useRoute();
   const router = useRouter();
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const treeData = ref<Tree[]>([]);
   const getModelTree = async () => {

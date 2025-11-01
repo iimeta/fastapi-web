@@ -113,7 +113,7 @@
             :min="1"
             allow-clear
           >
-            <template #prefix> $ </template>
+            <template #prefix> {{ currencySymbol }}</template>
           </a-input-number>
         </a-form-item>
         <a-form-item
@@ -157,9 +157,11 @@
     QuotaWarningParams,
     submitQuotaWarning,
   } from '@/api/dashboard';
+  import Quota from '@/views/common/quota.vue';
 
   const appStore = useAppStore();
   const { proxy } = getCurrentInstance() as any;
+  const currencySymbol = appStore.getCurrencySymbol;
 
   const expense = ref<Expense>({} as Expense);
   const quotaWarningVisible = ref(false);

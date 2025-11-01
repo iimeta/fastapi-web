@@ -97,7 +97,7 @@
                 :parser="parsePrice"
                 allow-clear
               >
-                <template #prefix> $ </template>
+                <template #prefix> {{ currencySymbol }}</template>
               </a-input-number>
             </a-form-item>
             <a-form-item v-if="formData.is_limit_quota">
@@ -293,12 +293,13 @@
   import { submitAppCreate, AppCreate } from '@/api/app';
   import { queryModelTree, Tree } from '@/api/model';
   import { queryGroupList, GroupList } from '@/api/group';
-  import { useUserStore } from '@/store';
+  import { useUserStore, useAppStore } from '@/store';
 
   const { loading, setLoading } = useLoading(false);
   const { proxy } = getCurrentInstance() as any;
   const router = useRouter();
   const userStore = useUserStore();
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const treeData = ref<Tree[]>([]);
   const getModelTree = async () => {

@@ -395,9 +395,9 @@
           >
             {{
               record.spend.total_spend_tokens
-                ? `$${parseQuota(record.spend.total_spend_tokens)}`
+                ? currencySymbol + parseQuota(record.spend.total_spend_tokens)
                 : record.status === 1 || record.status === 2
-                ? '$0.00'
+                ? currencySymbol + '0.00'
                 : '-'
             }}
           </span>
@@ -572,6 +572,7 @@
   import Sortable from 'sortablejs';
   import { Tooltip } from '@arco-design/web-vue';
   import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
+  import { useAppStore } from '@/store';
   import { parseQuota } from '@/utils/common';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
@@ -585,6 +586,7 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const rowSelection = reactive({
     type: 'checkbox',

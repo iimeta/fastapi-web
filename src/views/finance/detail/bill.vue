@@ -33,7 +33,9 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else> ${{ parseQuota(currentData.tokens) || '0.00' }} </span>
+        <span v-else>
+          <Quota :model-value="currentData.tokens" />
+        </span>
       </a-descriptions-item>
     </a-descriptions>
     <a-table
@@ -67,7 +69,7 @@
           align="center"
         >
           <template #cell="{ record }">
-            ${{ parseQuota(record.tokens) || '0.00' }}
+            <Quota :model-value="record.tokens" />
           </template>
         </a-table-column>
       </template>
@@ -79,12 +81,12 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { parseQuota } from '@/utils/common';
   import {
     queryBillDetail,
     BillDetailParams,
     StatisticsUser,
   } from '@/api/finance';
+  import Quota from '@/views/common/quota.vue';
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);

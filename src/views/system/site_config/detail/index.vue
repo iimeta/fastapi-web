@@ -116,7 +116,7 @@
         <span v-else>
           {{
             currentData.grant_quota > 0
-              ? `$${parseQuota(currentData.grant_quota)}`
+              ? currencySymbol + parseQuota(currentData.grant_quota)
               : '-'
           }}
         </span>
@@ -263,6 +263,7 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { useAppStore } from '@/store';
   import { parseQuota } from '@/utils/common';
   import {
     SiteConfigDetailParams,
@@ -272,6 +273,7 @@
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
+  const currencySymbol = useAppStore().getCurrencySymbol;
   const currentData = ref<SiteConfigDetail>({} as SiteConfigDetail);
   const props = defineProps({
     id: {

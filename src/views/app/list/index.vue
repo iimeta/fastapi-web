@@ -431,7 +431,7 @@
               :parser="parsePrice"
               allow-clear
             >
-              <template #prefix> $ </template>
+              <template #prefix> {{ currencySymbol }}</template>
             </a-input-number>
           </a-form-item>
           <a-form-item v-if="formData.is_limit_quota">
@@ -649,6 +649,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
+  import { useAppStore } from '@/store';
   import { disabledDate, parsePrice } from '@/utils/common';
   import {
     queryAppPage,
@@ -687,6 +688,7 @@
   const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const rowSelection = reactive({
     type: 'checkbox',

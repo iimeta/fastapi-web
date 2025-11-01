@@ -26,7 +26,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          ${{ parseQuota(currentData.used_quota) || '0.00' }}
+          <Quota :model-value="currentData.used_quota" />
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('model.agent.detail.label.weight')">
@@ -133,8 +133,8 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { parseQuota } from '@/utils/common';
   import { queryKeyDetail, KeyDetailParams, KeyDetail } from '@/api/key';
+  import Quota from '@/views/common/quota.vue';
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);

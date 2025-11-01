@@ -63,7 +63,7 @@
                     :max="9999999999999"
                     allow-clear
                   >
-                    <template #prefix> $ </template>
+                    <template #prefix> {{ currencySymbol }}</template>
                   </a-input-number>
                 </a-form-item>
               </a-col>
@@ -263,16 +263,10 @@
           </span>
         </template>
         <template #quota="{ record }">
-          {{
-            record.quota > 0
-              ? `$${parseQuota(record.quota)}`
-              : record.quota < 0
-              ? `-$${parseQuota(-record.quota)}`
-              : '$0.00'
-          }}
+          <Quota :model-value="record.quota" />
         </template>
         <template #used_quota="{ record }">
-          ${{ parseQuota(record.used_quota) || '0.00' }}
+          <Quota :model-value="record.used_quota" />
         </template>
         <template #quota_expires_at="{ rowIndex }">
           <a-date-picker
@@ -452,7 +446,7 @@
               :parser="parsePrice"
               allow-clear
             >
-              <template #prefix> $ </template>
+              <template #prefix> {{ currencySymbol }}</template>
             </a-input-number>
           </a-form-item>
           <a-form-item style="margin-bottom: 8px">
@@ -658,7 +652,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { disabledDate, parsePrice, parseQuota } from '@/utils/common';
+  import { disabledDate, parsePrice } from '@/utils/common';
   import {
     queryUserPage,
     UserPage,
@@ -683,8 +677,10 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { useAppStore } from '@/store';
   import { queryModelTree, Tree } from '@/api/model';
   import { queryGroupList, GroupList } from '@/api/group';
+  import Quota from '@/views/common/quota.vue';
   import Detail from '../detail/index.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -694,6 +690,7 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const rowSelection = reactive({
     type: 'checkbox',

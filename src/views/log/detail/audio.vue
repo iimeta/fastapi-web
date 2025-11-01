@@ -148,9 +148,10 @@
         >
           {{
             currentData.spend.total_spend_tokens
-              ? `$${parseQuota(currentData.spend.total_spend_tokens)}`
+              ? currencySymbol +
+                parseQuota(currentData.spend.total_spend_tokens)
               : currentData.status === 1 || currentData.status === 2
-              ? '$0.00'
+              ? currencySymbol + '0.00'
               : '-'
           }}
         </span>
@@ -489,9 +490,10 @@
         >
           {{
             currentData.spend.total_spend_tokens
-              ? `$${parseQuota(currentData.spend.total_spend_tokens)}`
+              ? currencySymbol +
+                parseQuota(currentData.spend.total_spend_tokens)
               : currentData.status === 1 || currentData.status === 2
-              ? '$0.00'
+              ? currencySymbol + '0.00'
               : '-'
           }}
         </span>
@@ -641,6 +643,7 @@
   import useLoading from '@/hooks/loading';
   import { useClipboard } from '@vueuse/core';
   import VueJsonPretty from 'vue-json-pretty';
+  import { useAppStore } from '@/store';
   import { parseQuota } from '@/utils/common';
   import {
     queryAudioDetail,
@@ -648,14 +651,15 @@
     AudioDetail,
     audioCopyField,
   } from '@/api/log';
-  import 'vue-json-pretty/lib/styles.css';
   import { Spend } from '@/api/common';
   import SpendDetail from '../components/spend.vue';
+  import 'vue-json-pretty/lib/styles.css';
 
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<AudioDetail>({} as AudioDetail);
   const { copy, copied } = useClipboard();
   const { proxy } = getCurrentInstance() as any;
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const props = defineProps({
     id: {

@@ -111,7 +111,7 @@
                 :parser="parsePrice"
                 allow-clear
               >
-                <template #prefix> $ </template>
+                <template #prefix> {{ currencySymbol }}</template>
               </a-input-number>
             </a-form-item>
             <a-form-item>
@@ -286,6 +286,7 @@
   import dayjs from 'dayjs';
   import { FormInstance } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
+  import { useAppStore } from '@/store';
   import { disabledDate, parsePrice } from '@/utils/common';
   import { submitUserCreate, UserCreate } from '@/api/admin_user';
   import { queryGroupList, GroupList } from '@/api/group';
@@ -294,6 +295,7 @@
   const { loading, setLoading } = useLoading(false);
   const router = useRouter();
   const userRole = localStorage.getItem('userRole');
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const groups = ref<GroupList[]>([]);
 

@@ -175,13 +175,7 @@
         @page-size-change="onPageSizeChange"
       >
         <template #quota="{ record }">
-          {{
-            record.quota > 0
-              ? `$${parseQuota(record.quota)}`
-              : record.quota < 0
-              ? `-$${parseQuota(-record.quota)}`
-              : '$0.00'
-          }}
+          <Quota :model-value="record.tokens" />
         </template>
         <template #type="{ record }">
           {{
@@ -217,12 +211,12 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { parseQuota } from '@/utils/common';
   import {
     queryDealRecordPage,
     DealRecordPage,
     DealRecordPageParams,
   } from '@/api/finance';
+  import Quota from '@/views/common/quota.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

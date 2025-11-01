@@ -9,13 +9,16 @@
     style="margin-bottom: 15px"
   >
     <template #input_ratio="{ record }">
-      ${{ record.input_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.input_ratio || '0.00' }} / M
     </template>
     <template #output_ratio="{ record }">
-      ${{ record.output_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.output_ratio || '0.00' }} / M
     </template>
     <template #read_ratio="{ record }">
-      ${{ record.read_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.read_ratio || '0.00' }} / M
     </template>
   </a-table>
 
@@ -32,7 +35,8 @@
     style="margin-bottom: 15px"
   >
     <template #read_ratio="{ record }">
-      ${{ record.read_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.read_ratio || '0.00' }} / M
     </template>
   </a-table>
 
@@ -46,14 +50,17 @@
     style="margin-bottom: 15px"
   >
     <template #input_ratio="{ record }">
-      ${{ record.input_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.input_ratio || '0.00' }} / M
     </template>
     <template #output_ratio="{ record }">
-      ${{ record.output_ratio || '0.00' }}
+      {{ currencySymbol }}
+      {{ record.output_ratio || '0.00' }}
       {{ modelType === 5 || modelType === 6 ? '/ min' : '/ M' }}
     </template>
     <template #read_ratio="{ record }">
-      ${{ record.read_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.read_ratio || '0.00' }} / M
     </template>
   </a-table>
 
@@ -70,7 +77,8 @@
     style="margin-bottom: 15px"
   >
     <template #read_ratio="{ record }">
-      ${{ record.read_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.read_ratio || '0.00' }} / M
     </template>
   </a-table>
 
@@ -88,10 +96,12 @@
     </template>
     <template #gt="{ record }"> {{ record.gt }}k - {{ record.lte }}k </template>
     <template #input_ratio="{ record }">
-      ${{ record.input_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.input_ratio || '0.00' }} / M
     </template>
     <template #output_ratio="{ record }">
-      ${{ record.output_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.output_ratio || '0.00' }} / M
     </template>
   </a-table>
 
@@ -109,10 +119,12 @@
     </template>
     <template #gt="{ record }"> {{ record.gt }}k - {{ record.lte }}k </template>
     <template #read_ratio="{ record }">
-      ${{ record.read_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.read_ratio || '0.00' }} / M
     </template>
     <template #write_ratio="{ record }">
-      ${{ record.write_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.write_ratio || '0.00' }} / M
     </template>
   </a-table>
 
@@ -126,13 +138,16 @@
     style="margin-bottom: 15px"
   >
     <template #input_ratio="{ record }">
-      ${{ record.input_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.input_ratio || '0.00' }} / M
     </template>
     <template #output_ratio="{ record }">
-      ${{ record.output_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.output_ratio || '0.00' }} / M
     </template>
     <template #read_ratio="{ record }">
-      ${{ record.read_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.read_ratio || '0.00' }} / M
     </template>
   </a-table>
 
@@ -149,7 +164,8 @@
       {{ record.width }} × {{ record.height }}
     </template>
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio || '0.00' }} / 张
+      {{ currencySymbol }}
+      {{ record.once_ratio || '0.00' }} / 张
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? '是' : '-' }}
@@ -169,7 +185,8 @@
     style="margin-bottom: 15px"
   >
     <template #read_ratio="{ record }">
-      ${{ record.read_ratio || '0.00' }} / M
+      {{ currencySymbol }}
+      {{ record.read_ratio || '0.00' }} / M
     </template>
   </a-table>
 
@@ -183,7 +200,8 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio || '0.00' }} / 张
+      {{ currencySymbol }}
+      {{ record.once_ratio || '0.00' }} / 张
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? '是' : '-' }}
@@ -203,7 +221,8 @@
       {{ record.width }} × {{ record.height }}
     </template>
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio || '0.00' }} / 秒
+      {{ currencySymbol }}
+      {{ record.once_ratio || '0.00' }} / 秒
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? '是' : '-' }}
@@ -220,7 +239,8 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio || '0.00' }} / 次
+      {{ currencySymbol }}
+      {{ record.once_ratio || '0.00' }} / 次
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? '是' : '-' }}
@@ -237,7 +257,8 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio || '0.00' }} / 次
+      {{ currencySymbol }}
+      {{ record.once_ratio || '0.00' }} / 次
     </template>
   </a-table>
 
@@ -251,7 +272,8 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      ${{ record.once_ratio || '0.00' }} / 次
+      {{ currencySymbol }}
+      {{ record.once_ratio || '0.00' }} / 次
     </template>
   </a-table>
 </template>
@@ -259,6 +281,8 @@
 <script lang="ts" setup>
   import { ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import { useAppStore } from '@/store';
   import {
     Pricing,
     TextPricing,
@@ -272,9 +296,9 @@
     MidjourneyPricing,
     OncePricing,
   } from '@/api/common';
-  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
 
   const { t } = useI18n();
+  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const props = defineProps<{
     modelValue: Pricing;
