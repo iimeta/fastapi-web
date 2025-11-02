@@ -459,16 +459,18 @@
               type="button"
               @change="handleQuotaQuickChange"
             >
-              <a-radio :value="1"> $1 </a-radio>
-              <a-radio :value="2"> $2 </a-radio>
-              <a-radio :value="5"> $5 </a-radio>
-              <a-radio :value="10"> $10 </a-radio>
-              <a-radio :value="20"> $20 </a-radio>
-              <a-radio :value="50"> $50 </a-radio>
-              <a-radio :value="100"> $100 </a-radio>
-              <a-radio :value="200"> $200 </a-radio>
-              <a-radio :value="500"> $500 </a-radio>
-              <a-radio :value="1000"> $1,000&nbsp; </a-radio>
+              <a-radio :value="1"> <Quota :model-value="1" /> </a-radio>
+              <a-radio :value="2"> <Quota :model-value="2" /> </a-radio>
+              <a-radio :value="5"> <Quota :model-value="5" /> </a-radio>
+              <a-radio :value="10"> <Quota :model-value="10" /> </a-radio>
+              <a-radio :value="20"> <Quota :model-value="20" /> </a-radio>
+              <a-radio :value="50"> <Quota :model-value="50" /> </a-radio>
+              <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
+              <a-radio :value="200"> <Quota :model-value="200" /> </a-radio>
+              <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
+              <a-radio :value="1000">
+                <Quota :model-value="1000" />&nbsp;
+              </a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item style="margin-bottom: 10px">
@@ -477,13 +479,15 @@
               type="button"
               @change="handleQuotaQuickChange"
             >
-              <a-radio :value="2000"> $2,000 </a-radio>
-              <a-radio :value="3000"> $3,000 </a-radio>
-              <a-radio :value="5000"> $5,000 </a-radio>
-              <a-radio :value="10000"> $10,000 </a-radio>
-              <a-radio :value="20000"> $20,000 </a-radio>
-              <a-radio :value="50000"> $50,000 </a-radio>
-              <a-radio :value="100000"> $100,000 </a-radio>
+              <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
+              <a-radio :value="3000"> <Quota :model-value="3000" /> </a-radio>
+              <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
+              <a-radio :value="10000"> <Quota :model-value="10000" /> </a-radio>
+              <a-radio :value="20000"> <Quota :model-value="20000" /> </a-radio>
+              <a-radio :value="50000"> <Quota :model-value="50000" /> </a-radio>
+              <a-radio :value="100000">
+                <Quota :model-value="100000" />
+              </a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item
@@ -659,7 +663,7 @@
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
-  import { disabledDate, parsePrice } from '@/utils/common';
+  import { disabledDate, parsePrice, parseQuota } from '@/utils/common';
   import {
     queryResellerPage,
     ResellerPage,
@@ -1160,11 +1164,13 @@
             formData.value.is_send_notice = true;
             rechargeVisible.value = true;
           } else if (formData.value.quota_type === '2') {
-            alertContent = `是否确定扣除所选的${ids.value.length}位代理商 $${params.value} 额度?`;
+            alertContent = `是否确定扣除所选的${
+              ids.value.length
+            }位代理商 ${currencySymbol}${parseQuota(params.value)} 额度?`;
           } else {
             alertContent = `是否确定给所选的${ids.value.length}位代理商${
               formData.value.quota_type === '1' ? '充值' : '赠送'
-            } $${params.value} 额度?`;
+            } ${currencySymbol}${parseQuota(params.value)} 额度?`;
           }
           break;
         case 'status':
@@ -1286,5 +1292,9 @@
   }
   .arco-btn-size-small {
     padding: 0 8px;
+  }
+
+  :deep(.arco-radio-button-content) {
+    padding: 0 11px;
   }
 </style>

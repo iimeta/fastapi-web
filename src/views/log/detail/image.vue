@@ -146,14 +146,11 @@
               : undefined
           "
         >
-          {{
-            currentData.spend.total_spend_tokens
-              ? currencySymbol +
-                parseQuota(currentData.spend.total_spend_tokens)
-              : currentData.status === 1 || currentData.status === 2
-              ? currencySymbol + '0.00'
-              : '-'
-          }}
+          <Quota
+            v-if="currentData.status === 1 || currentData.status === 2"
+            :model-value="currentData.spend.total_spend_tokens"
+          />
+          <span v-else> - </span>
         </span>
       </a-descriptions-item>
       <a-descriptions-item label="总耗时">
@@ -488,14 +485,11 @@
               : undefined
           "
         >
-          {{
-            currentData.spend.total_spend_tokens
-              ? currencySymbol +
-                parseQuota(currentData.spend.total_spend_tokens)
-              : currentData.status === 1 || currentData.status === 2
-              ? currencySymbol + '0.00'
-              : '-'
-          }}
+          <Quota
+            v-if="currentData.status === 1 || currentData.status === 2"
+            :model-value="currentData.spend.total_spend_tokens"
+          />
+          <span v-else> - </span>
         </span>
       </a-descriptions-item>
       <a-descriptions-item label="总耗时">
@@ -643,8 +637,6 @@
   import useLoading from '@/hooks/loading';
   import { useClipboard } from '@vueuse/core';
   import VueJsonPretty from 'vue-json-pretty';
-  import { useAppStore } from '@/store';
-  import { parseQuota } from '@/utils/common';
   import {
     queryImageDetail,
     DetailParams,
@@ -652,6 +644,7 @@
     imageCopyField,
   } from '@/api/log';
   import { Spend } from '@/api/common';
+  import Quota from '@/views/common/quota.vue';
   import SpendDetail from '../components/spend.vue';
   import 'vue-json-pretty/lib/styles.css';
 
@@ -659,7 +652,6 @@
   const currentData = ref<ImageDetail>({} as ImageDetail);
   const { copy, copied } = useClipboard();
   const { proxy } = getCurrentInstance() as any;
-  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const props = defineProps({
     id: {

@@ -114,11 +114,11 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            currentData.grant_quota > 0
-              ? currencySymbol + parseQuota(currentData.grant_quota)
-              : '-'
-          }}
+          <Quota
+            v-if="currentData.grant_quota"
+            :model-value="currentData.grant_quota"
+          />
+          <span v-else> - </span>
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('site.config.detail.quota_expires_at')">
@@ -263,17 +263,15 @@
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { useAppStore } from '@/store';
-  import { parseQuota } from '@/utils/common';
   import {
     SiteConfigDetailParams,
     querySiteConfigDetail,
     SiteConfigDetail,
   } from '@/api/site_config';
+  import Quota from '@/views/common/quota.vue';
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
-  const currencySymbol = useAppStore().getCurrencySymbol;
   const currentData = ref<SiteConfigDetail>({} as SiteConfigDetail);
   const props = defineProps({
     id: {

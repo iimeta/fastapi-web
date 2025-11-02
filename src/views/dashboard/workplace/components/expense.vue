@@ -19,7 +19,7 @@
         <div class="arco-statistic">
           <div class="arco-statistic-content">
             <div class="arco-statistic-value" style="font-size: 30px">
-              ${{ parseQuota(expense.quota, 4) || '0.00' }}
+              <Quota :model-value="expense.quota" :n="4" />
             </div>
           </div>
         </div>
@@ -27,37 +27,19 @@
       <div class="quota-box">
         <div class="quota-item-box">
           <span class="quota-title">已用额度:</span>
-          <span class="quota">
-            ${{ parseQuota(expense.used_quota, 4) || '0.00' }}
-          </span>
+          <Quota :model-value="expense.used_quota" :n="4" class="quota" />
         </div>
       </div>
       <div v-permission="['reseller']" class="quota-box">
         <div class="quota-item-box">
           <span class="quota-title">已分配额度:</span>
-          <span class="quota">
-            {{
-              expense.allocated_quota > 0
-                ? `$${parseQuota(expense.allocated_quota, 4)}`
-                : expense.allocated_quota < 0
-                ? `-$${parseQuota(-expense.allocated_quota, 4)}`
-                : '$0.00'
-            }}
-          </span>
+          <Quota :model-value="expense.allocated_quota" :n="4" class="quota" />
         </div>
       </div>
       <div v-permission="['reseller']" class="quota-box">
         <div class="quota-item-box">
           <span class="quota-title">待分配额度:</span>
-          <span class="quota">
-            {{
-              expense.to_be_allocated > 0
-                ? `$${parseQuota(expense.to_be_allocated, 4)}`
-                : expense.to_be_allocated < 0
-                ? `-$${parseQuota(-expense.to_be_allocated, 4)}`
-                : '$0.00'
-            }}
-          </span>
+          <Quota :model-value="expense.to_be_allocated" :n="4" class="quota" />
         </div>
       </div>
       <div class="quota-box">
@@ -150,7 +132,6 @@
   import { ref, getCurrentInstance } from 'vue';
   import { FormInstance, Modal } from '@arco-design/web-vue';
   import { useAppStore } from '@/store';
-  import { parseQuota } from '@/utils/common';
   import {
     queryExpense,
     Expense,
@@ -176,9 +157,9 @@
     quotaWarningFormData.value.quota_warning =
       data.quota_warning ||
       (data.warning_threshold === 0 && data.expire_warning_threshold === 0);
-    quotaWarningFormData.value.warning_threshold = data.warning_threshold || 50;
+    quotaWarningFormData.value.warning_threshold = data.warning_threshold;
     quotaWarningFormData.value.expire_warning_threshold =
-      data.expire_warning_threshold || 3;
+      data.expire_warning_threshold;
   };
   getExpense();
 

@@ -1,12 +1,18 @@
 <template>
   <span>
-    {{
-      modelValue > 0
-        ? currencySymbol + parseQuota(modelValue)
-        : modelValue < 0
-        ? `-${-currencySymbol + parseQuota(-modelValue)}`
-        : currencySymbol + '0.00'
-    }}
+    <template v-if="modelValue > 0"
+      ><span class="currency-symbol">{{ currencySymbol }}</span
+      >{{ parseQuota(modelValue, n) }}</template
+    >
+    <template v-else-if="modelValue < 0"
+      ><span class="currency-symbol">-</span
+      ><span class="currency-symbol">{{ currencySymbol }}</span
+      >{{ parseQuota(-modelValue, n) }}</template
+    >
+    <template v-else
+      ><span class="currency-symbol">{{ currencySymbol }}</span
+      >0.00</template
+    >
   </span>
 </template>
 
@@ -18,6 +24,7 @@
 
   defineProps<{
     modelValue: number;
+    n?: number;
   }>();
 </script>
 
@@ -27,4 +34,8 @@
   };
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+  .currency-symbol {
+    padding-right: 2px;
+  }
+</style>

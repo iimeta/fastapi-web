@@ -56,7 +56,7 @@
         <span class="tooltip-value">
         ${
           el.seriesName === '总花费'
-            ? `${currencySymbol + parseQuota(el.value)}`
+            ? `${currencySymbol} ${parseQuota(el.value)}`
             : parseQuota(el.value)
         }
         </span>

@@ -116,17 +116,17 @@
             </a-form-item>
             <a-form-item>
               <a-radio-group type="button" @change="handleQuotaQuickChange">
-                <a-radio :value="1"> $1 </a-radio>
-                <a-radio :value="2"> $2 </a-radio>
-                <a-radio :value="5"> $5 </a-radio>
-                <a-radio :value="10"> $10 </a-radio>
-                <a-radio :value="20"> $20 </a-radio>
-                <a-radio :value="50"> $50 </a-radio>
-                <a-radio :value="100"> $100 </a-radio>
-                <a-radio :value="200"> $200 </a-radio>
-                <a-radio :value="500"> $500 </a-radio>
-                <a-radio :value="1000"> $1,000 </a-radio>
-                <a-radio :value="2000"> $2,000 </a-radio>
+                <a-radio :value="1"> <Quota :model-value="1" /> </a-radio>
+                <a-radio :value="2"> <Quota :model-value="2" /> </a-radio>
+                <a-radio :value="5"> <Quota :model-value="5" /> </a-radio>
+                <a-radio :value="10"> <Quota :model-value="10" /> </a-radio>
+                <a-radio :value="20"> <Quota :model-value="20" /> </a-radio>
+                <a-radio :value="50"> <Quota :model-value="50" /> </a-radio>
+                <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
+                <a-radio :value="200"> <Quota :model-value="200" /> </a-radio>
+                <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
+                <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
+                <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
               </a-radio-group>
             </a-form-item>
             <a-form-item
@@ -290,6 +290,7 @@
   import { disabledDate, parsePrice } from '@/utils/common';
   import { submitUserCreate, UserCreate } from '@/api/admin_user';
   import { queryGroupList, GroupList } from '@/api/group';
+  import Quota from '@/views/common/quota.vue';
 
   const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(false);
@@ -398,5 +399,9 @@
       flex: 1;
       margin: 20px 30px;
     }
+  }
+
+  :deep(.arco-radio-button-content) {
+    padding: 0 11px;
   }
 </style>

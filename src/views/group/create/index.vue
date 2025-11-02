@@ -223,14 +223,22 @@
             </a-form-item>
             <a-form-item v-if="formData.is_limit_quota">
               <a-radio-group type="button" @change="handleQuotaQuickChange">
-                <a-radio :value="100"> $100 </a-radio>
-                <a-radio :value="500"> $500 </a-radio>
-                <a-radio :value="1000"> $1,000 </a-radio>
-                <a-radio :value="5000"> $5,000 </a-radio>
-                <a-radio :value="10000"> $10,000 </a-radio>
-                <a-radio :value="50000"> $50,000 </a-radio>
-                <a-radio :value="100000"> $100,000 </a-radio>
-                <a-radio :value="1000000"> $1,000,000 </a-radio>
+                <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
+                <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
+                <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
+                <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
+                <a-radio :value="10000">
+                  <Quota :model-value="10000" />
+                </a-radio>
+                <a-radio :value="50000"
+                  ><Quota :model-value="50000" />
+                </a-radio>
+                <a-radio :value="100000">
+                  <Quota :model-value="100000" />
+                </a-radio>
+                <a-radio :value="1000000">
+                  <Quota :model-value="1000000" />
+                </a-radio>
               </a-radio-group>
             </a-form-item>
             <a-form-item
@@ -320,14 +328,22 @@
               "
             >
               <a-radio-group type="button" @change="handleUsedQuotaQuickChange">
-                <a-radio :value="100"> $100 </a-radio>
-                <a-radio :value="500"> $500 </a-radio>
-                <a-radio :value="1000"> $1,000 </a-radio>
-                <a-radio :value="5000"> $5,000 </a-radio>
-                <a-radio :value="10000"> $10,000 </a-radio>
-                <a-radio :value="50000"> $50,000 </a-radio>
-                <a-radio :value="100000"> $100,000 </a-radio>
-                <a-radio :value="1000000"> $1,000,000 </a-radio>
+                <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
+                <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
+                <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
+                <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
+                <a-radio :value="10000">
+                  <Quota :model-value="10000" />
+                </a-radio>
+                <a-radio :value="50000"
+                  ><Quota :model-value="50000" />
+                </a-radio>
+                <a-radio :value="100000">
+                  <Quota :model-value="100000" />
+                </a-radio>
+                <a-radio :value="1000000">
+                  <Quota :model-value="1000000" />
+                </a-radio>
               </a-radio-group>
             </a-form-item>
             <a-form-item
@@ -578,6 +594,7 @@
   import { submitGroupCreate, GroupCreate } from '@/api/group';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+  import Quota from '@/views/common/quota.vue';
 
   const { loading, setLoading } = useLoading(false);
   const { proxy } = getCurrentInstance() as any;
@@ -782,5 +799,9 @@
       flex: 1;
       margin: 20px 30px;
     }
+  }
+
+  :deep(.arco-radio-button-content) {
+    padding: 0 11px;
   }
 </style>

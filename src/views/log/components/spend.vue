@@ -9,86 +9,72 @@
   >
     <!-- 文本 -->
     <template #text="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.text.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.text.spend_tokens" />
     </template>
 
     <!-- 文本缓存 -->
     <template #text_cache="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.text_cache.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.text_cache.spend_tokens" />
     </template>
 
     <!-- 音频 -->
     <template #audio="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.audio.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.audio.spend_tokens" />
     </template>
 
     <!-- 音频缓存 -->
     <template #audio_cache="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.audio_cache.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.audio_cache.spend_tokens" />
     </template>
 
     <!-- 阶梯文本 -->
     <template #tiered_text="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.tiered_text.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.tiered_text.spend_tokens" />
     </template>
 
     <!-- 阶梯文本缓存 -->
     <template #tiered_text_cache="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.tiered_text_cache.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.tiered_text_cache.spend_tokens" />
     </template>
 
     <!-- 图像 -->
     <template #image="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.image.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.image.spend_tokens" />
     </template>
 
     <!-- 图像生成 -->
     <template #image_generation="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.image_generation.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.image_generation.spend_tokens" />
     </template>
 
     <!-- 图像缓存 -->
     <template #image_cache="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.image_cache.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.image_cache.spend_tokens" />
     </template>
 
     <!-- 识图 -->
     <template #vision="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.vision.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.vision.spend_tokens" />
     </template>
 
     <!-- 视频 -->
     <template #video="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.video.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.video.spend_tokens" />
     </template>
 
     <!-- 搜索 -->
     <template #search="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.search.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.search.spend_tokens" />
     </template>
 
     <!-- Midjourney -->
     <template #midjourney="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.midjourney.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.midjourney.spend_tokens" />
     </template>
 
     <!-- 一次 -->
     <template #once="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.once.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.once.spend_tokens" />
     </template>
 
     <!-- 分组折扣 -->
@@ -102,8 +88,7 @@
 
     <!-- 总花费 -->
     <template #total_spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.total_spend_tokens) || '0.00' }}
+      <Quota :model-value="record.total_spend_tokens" />
     </template>
   </a-table>
 
@@ -120,19 +105,16 @@
       {{ parseQuota(record.input_tokens) || '0' }}
     </template>
     <template #input_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.input_ratio || '0.00' }} / M
+      <Quota :model-value="record.pricing.input_ratio" /> / M
     </template>
     <template #output_tokens="{ record }">
       {{ parseQuota(record.output_tokens) || '0' }}
     </template>
     <template #output_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.output_ratio || '0.00' }} / M
+      <Quota :model-value="record.pricing.output_ratio" /> / M
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -149,12 +131,10 @@
       {{ parseQuota(record.read_tokens) || '0' }}
     </template>
     <template #read_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.read_ratio || '0.00' }} / M
+      <Quota :model-value="record.pricing.read_ratio" /> / M
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -171,8 +151,7 @@
       {{ parseQuota(record.input_tokens) || '0' }}
     </template>
     <template #input_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.input_ratio || '0.00' }} / M
+      <Quota :model-value="record.pricing.input_ratio" /> / M
     </template>
     <template #output_tokens="{ record }">
       {{
@@ -182,13 +161,11 @@
       }}
     </template>
     <template #output_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.output_ratio || '0.00' }}
+      <Quota :model-value="record.pricing.output_ratio" />
       {{ modelType === 5 || modelType === 6 ? '/ min' : '/ M' }}
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -205,12 +182,10 @@
       {{ parseQuota(record.read_tokens) || '0' }}
     </template>
     <template #read_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.read_ratio || '0.00' }} / M
+      <Quota :model-value="record.pricing.read_ratio" /> / M
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -233,19 +208,16 @@
       {{ parseQuota(record.input_tokens) || '0' }}
     </template>
     <template #input_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.input_ratio || '0.00' }} / M
+      <Quota :model-value="record.pricing.input_ratio" /> / M
     </template>
     <template #output_tokens="{ record }">
       {{ parseQuota(record.output_tokens) || '0' }}
     </template>
     <template #output_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.output_ratio || '0.00' }} / M
+      <Quota :model-value="record.pricing.output_ratio" /> / M
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -271,19 +243,16 @@
       {{ parseQuota(record.read_tokens) || '0' }}
     </template>
     <template #read_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.read_ratio || '0.00' }} / M
+      <Quota :model-value="record.pricing.read_ratio" /> / M
     </template>
     <template #write_tokens="{ record }">
       {{ parseQuota(record.write_tokens) || '0' }}
     </template>
     <template #write_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.write_ratio || '0.00' }} / M
+      <Quota :model-value="record.pricing.write_ratio" /> / M
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -300,19 +269,16 @@
       {{ parseQuota(record.input_tokens) || '0' }}
     </template>
     <template #input_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.input_ratio || '0.00' }} / M
+      <Quota :model-value="record.pricing.input_ratio" /> / M
     </template>
     <template #output_tokens="{ record }">
       {{ parseQuota(record.output_tokens) || '0' }}
     </template>
     <template #output_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.output_ratio || '0.00' }} / M
+      <Quota :model-value="record.pricing.output_ratio" /> / M
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -336,12 +302,10 @@
     </template>
     <template #n="{ record }"> {{ record.n || '0' }} </template>
     <template #once_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.once_ratio || '0.00' }} / 张
+      <Quota :model-value="record.pricing.once_ratio" /> / 张
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -358,12 +322,10 @@
       {{ parseQuota(record.read_tokens) || '0' }}
     </template>
     <template #read_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.read_ratio || '0.00' }} / M
+      <Quota :model-value="record.pricing.read_ratio" /> / M
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -380,12 +342,10 @@
       {{ record.pricing.mode }}
     </template>
     <template #once_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.once_ratio || '0.00' }} / 张
+      <Quota :model-value="record.pricing.once_ratio" /> / 张
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -402,12 +362,10 @@
       {{ record.pricing.width }} × {{ record.pricing.height }}
     </template>
     <template #once_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.once_ratio || '0.00' }} / 秒
+      <Quota :model-value="record.pricing.once_ratio" /> / 秒
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -424,12 +382,10 @@
       {{ record.pricing.context_size }}
     </template>
     <template #once_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.once_ratio || '0.00' }} / 次
+      <Quota :model-value="record.pricing.once_ratio" /> / 次
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -452,12 +408,10 @@
       {{ record.pricing.path }}
     </template>
     <template #once_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.once_ratio || '0.00' }} / 次
+      <Quota :model-value="record.pricing.once_ratio" /> / 次
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 
@@ -477,12 +431,10 @@
       {{ parseQuota(record.output_tokens) || '0' }}
     </template>
     <template #once_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.pricing.once_ratio || '0.00' }} / 次
+      <Quota :model-value="record.pricing.once_ratio" /> / 次
     </template>
     <template #spend_tokens="{ record }">
-      {{ currencySymbol }}
-      {{ parseQuota(record.spend_tokens) || '0.00' }}
+      <Quota :model-value="record.spend_tokens" />
     </template>
   </a-table>
 </template>
@@ -492,7 +444,6 @@
   import { useI18n } from 'vue-i18n';
   import { parseQuota } from '@/utils/common';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
-  import { useAppStore } from '@/store';
   import {
     Spend,
     TextSpend,
@@ -506,9 +457,9 @@
     MidjourneySpend,
     OnceSpend,
   } from '@/api/common';
+  import Quota from '@/views/common/quota.vue';
 
   const { t } = useI18n();
-  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const props = defineProps<{
     modelValue: Spend;

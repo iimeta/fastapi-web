@@ -102,7 +102,9 @@
                     :min="0.000001"
                     :max="9999999999999"
                     allow-clear
-                  />
+                  >
+                    <template #prefix> {{ currencySymbol }}</template>
+                  </a-input-number>
                 </a-form-item>
               </a-col>
               <a-col :span="8">
@@ -425,7 +427,7 @@
 
       <a-modal
         v-model:visible="visible"
-        :width="728"
+        :width="726"
         :title="$t('app.form.title.keyConfig')"
         :ok-text="$t('button.save')"
         :body-style="{ height: '520px' }"
@@ -508,15 +510,15 @@
           </a-form-item>
           <a-form-item v-if="formData.is_limit_quota">
             <a-radio-group type="button" @change="handleQuotaQuickChange">
-              <a-radio :value="1"> $1 </a-radio>
-              <a-radio :value="5"> $5 </a-radio>
-              <a-radio :value="10"> $10 </a-radio>
-              <a-radio :value="50"> $50 </a-radio>
-              <a-radio :value="100"> $100 </a-radio>
-              <a-radio :value="500"> $500 </a-radio>
-              <a-radio :value="1000"> $1,000 </a-radio>
-              <a-radio :value="5000"> $5,000 </a-radio>
-              <a-radio :value="10000"> $10,000 </a-radio>
+              <a-radio :value="10"> <Quota :model-value="10" /> </a-radio>
+              <a-radio :value="20"> <Quota :model-value="20" /> </a-radio>
+              <a-radio :value="50"> <Quota :model-value="50" /> </a-radio>
+              <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
+              <a-radio :value="200"> <Quota :model-value="200" /> </a-radio>
+              <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
+              <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
+              <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
+              <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item
@@ -708,7 +710,7 @@
       <!-- 批量操作 -->
       <a-modal
         v-model:visible="batchVisible"
-        :width="728"
+        :width="726"
         :title="
           batchFormData.action === 'create'
             ? $t('app.form.title.batch.create')
@@ -878,15 +880,15 @@
           </a-form-item>
           <a-form-item v-if="batchFormData.is_limit_quota">
             <a-radio-group type="button" @change="handleQuotaQuickChange">
-              <a-radio :value="1"> $1 </a-radio>
-              <a-radio :value="5"> $5 </a-radio>
-              <a-radio :value="10"> $10 </a-radio>
-              <a-radio :value="50"> $50 </a-radio>
-              <a-radio :value="100"> $100 </a-radio>
-              <a-radio :value="500"> $500 </a-radio>
-              <a-radio :value="1000"> $1,000 </a-radio>
-              <a-radio :value="5000"> $5,000 </a-radio>
-              <a-radio :value="10000"> $10,000 </a-radio>
+              <a-radio :value="10"> <Quota :model-value="10" /> </a-radio>
+              <a-radio :value="20"> <Quota :model-value="20" /> </a-radio>
+              <a-radio :value="50"> <Quota :model-value="50" /> </a-radio>
+              <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
+              <a-radio :value="200"> <Quota :model-value="200" /> </a-radio>
+              <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
+              <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
+              <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
+              <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
             </a-radio-group>
           </a-form-item>
           <a-form-item
@@ -1959,5 +1961,9 @@
   }
   .copy-btn:hover {
     color: rgb(var(--arcoblue-6));
+  }
+
+  :deep(.arco-radio-button-content) {
+    padding: 0 10px;
   }
 </style>

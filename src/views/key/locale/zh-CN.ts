@@ -68,7 +68,7 @@ export default {
   'key.form.app.models': '模型权限',
   'key.form.modelAgents': '代理',
   'key.form.quota': '额度低于',
-  'key.form.quota.placeholder': '请输入额度($)',
+  'key.form.quota.placeholder': '请输入额度',
   'key.form.status': '状态',
   'key.form.remark': '备注/原因',
   'key.form.remark.placeholder': '请输入备注/禁用原因',

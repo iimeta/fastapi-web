@@ -101,7 +101,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else> ${{ currentData.warning_threshold || 50 }} </span>
+        <Quota :model-value="currentData.warning_threshold" />
       </a-descriptions-item>
       <a-descriptions-item
         :label="t('reseller.detail.label.expire_warning_threshold')"
@@ -109,7 +109,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else> {{ currentData.expire_warning_threshold || 3 }}天 </span>
+        <span v-else> {{ currentData.expire_warning_threshold }}天 </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('reseller.detail.label.warning_notice')">
         <a-skeleton v-if="loading" :animation="true">

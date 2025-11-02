@@ -36,7 +36,7 @@ export default {
   'site.config.label.grant_quota': '注册赠送额度',
   'site.config.placeholder.grant_quota': '请输入注册赠送额度',
   'site.config.label.quota_expires_at': '额度过期时间',
-  'site.config.placeholder.quota_expires_at': '请输入注册赠送额度过期时间, 单位: 分钟, 如: 43200',
+  'site.config.placeholder.quota_expires_at': '请输入注册赠送额度过期时间',
   'site.config.label.support_email_suffix': '注册邮箱后缀',
   'site.config.placeholder.support_email_suffix': '请输入注册支持的邮箱后缀, 多个用,隔开, 如: a.com,b.com,c.com, 为空则不限制',
   'site.config.label.register_welcome': '注册欢迎语',

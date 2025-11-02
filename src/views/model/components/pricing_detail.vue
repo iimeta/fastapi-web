@@ -9,16 +9,13 @@
     style="margin-bottom: 15px"
   >
     <template #input_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.input_ratio || '0.00' }} / M
+      <Quota :model-value="record.input_ratio" /> / M
     </template>
     <template #output_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.output_ratio || '0.00' }} / M
+      <Quota :model-value="record.output_ratio" /> / M
     </template>
     <template #read_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.read_ratio || '0.00' }} / M
+      <Quota :model-value="record.read_ratio" /> / M
     </template>
   </a-table>
 
@@ -35,8 +32,7 @@
     style="margin-bottom: 15px"
   >
     <template #read_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.read_ratio || '0.00' }} / M
+      <Quota :model-value="record.read_ratio" /> / M
     </template>
   </a-table>
 
@@ -50,17 +46,14 @@
     style="margin-bottom: 15px"
   >
     <template #input_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.input_ratio || '0.00' }} / M
+      <Quota :model-value="record.input_ratio" /> / M
     </template>
     <template #output_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.output_ratio || '0.00' }}
+      <Quota :model-value="record.output_ratio" />
       {{ modelType === 5 || modelType === 6 ? '/ min' : '/ M' }}
     </template>
     <template #read_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.read_ratio || '0.00' }} / M
+      <Quota :model-value="record.read_ratio" /> / M
     </template>
   </a-table>
 
@@ -77,8 +70,7 @@
     style="margin-bottom: 15px"
   >
     <template #read_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.read_ratio || '0.00' }} / M
+      <Quota :model-value="record.read_ratio" /> / M
     </template>
   </a-table>
 
@@ -96,12 +88,10 @@
     </template>
     <template #gt="{ record }"> {{ record.gt }}k - {{ record.lte }}k </template>
     <template #input_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.input_ratio || '0.00' }} / M
+      <Quota :model-value="record.input_ratio" /> / M
     </template>
     <template #output_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.output_ratio || '0.00' }} / M
+      <Quota :model-value="record.output_ratio" /> / M
     </template>
   </a-table>
 
@@ -119,12 +109,10 @@
     </template>
     <template #gt="{ record }"> {{ record.gt }}k - {{ record.lte }}k </template>
     <template #read_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.read_ratio || '0.00' }} / M
+      <Quota :model-value="record.read_ratio" /> / M
     </template>
     <template #write_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.write_ratio || '0.00' }} / M
+      <Quota :model-value="record.write_ratio" /> / M
     </template>
   </a-table>
 
@@ -138,16 +126,13 @@
     style="margin-bottom: 15px"
   >
     <template #input_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.input_ratio || '0.00' }} / M
+      <Quota :model-value="record.input_ratio" /> / M
     </template>
     <template #output_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.output_ratio || '0.00' }} / M
+      <Quota :model-value="record.output_ratio" /> / M
     </template>
     <template #read_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.read_ratio || '0.00' }} / M
+      <Quota :model-value="record.read_ratio" /> / M
     </template>
   </a-table>
 
@@ -164,8 +149,7 @@
       {{ record.width }} × {{ record.height }}
     </template>
     <template #once_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.once_ratio || '0.00' }} / 张
+      <Quota :model-value="record.once_ratio" /> / 张
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? '是' : '-' }}
@@ -185,8 +169,7 @@
     style="margin-bottom: 15px"
   >
     <template #read_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.read_ratio || '0.00' }} / M
+      <Quota :model-value="record.read_ratio" /> / M
     </template>
   </a-table>
 
@@ -200,8 +183,7 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.once_ratio || '0.00' }} / 张
+      <Quota :model-value="record.once_ratio" /> / 张
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? '是' : '-' }}
@@ -221,8 +203,7 @@
       {{ record.width }} × {{ record.height }}
     </template>
     <template #once_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.once_ratio || '0.00' }} / 秒
+      <Quota :model-value="record.once_ratio" /> / 秒
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? '是' : '-' }}
@@ -239,8 +220,7 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.once_ratio || '0.00' }} / 次
+      <Quota :model-value="record.once_ratio" /> / 次
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? '是' : '-' }}
@@ -257,8 +237,7 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.once_ratio || '0.00' }} / 次
+      <Quota :model-value="record.once_ratio" /> / 次
     </template>
   </a-table>
 
@@ -272,8 +251,7 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      {{ currencySymbol }}
-      {{ record.once_ratio || '0.00' }} / 次
+      <Quota :model-value="record.once_ratio" /> / 次
     </template>
   </a-table>
 </template>
@@ -282,7 +260,6 @@
   import { ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
-  import { useAppStore } from '@/store';
   import {
     Pricing,
     TextPricing,
@@ -296,9 +273,9 @@
     MidjourneyPricing,
     OncePricing,
   } from '@/api/common';
+  import Quota from '@/views/common/quota.vue';
 
   const { t } = useI18n();
-  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const props = defineProps<{
     modelValue: Pricing;

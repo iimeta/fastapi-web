@@ -859,7 +859,7 @@
         action: 'auto_enable_error',
         title: t('sys.config.item.title.auto_enable_error'),
         description:
-          '密钥自动禁用后, 可通过此配置自动启用, 密钥禁用原因包含有配置的错误内容时, 会根据配置的启用时间判断是否满足启用条件, 满足则会自动启用, 启用时间单位: 秒',
+          '密钥自动禁用后, 可通过此配置自动启用, 密钥禁用原因包含有配置的错误内容时, 会根据配置的启用时间判断是否满足启用条件, 满足则会自动启用',
         open: configFormData.value.auto_enable_error.open,
         config: true,
         reset: true,

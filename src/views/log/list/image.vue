@@ -100,7 +100,9 @@
                     :precision="0"
                     :min="1"
                     allow-clear
-                  />
+                  >
+                    <template #append> ms </template>
+                  </a-input-number>
                 </a-form-item>
               </a-col>
               <a-col :span="8">
@@ -209,7 +211,9 @@
                     :precision="0"
                     :min="1"
                     allow-clear
-                  />
+                  >
+                    <template #append> ms </template>
+                  </a-input-number>
                 </a-form-item>
               </a-col>
               <a-col :span="5">
@@ -393,13 +397,11 @@
                 : undefined
             "
           >
-            {{
-              record.spend.total_spend_tokens
-                ? currencySymbol + parseQuota(record.spend.total_spend_tokens)
-                : record.status === 1 || record.status === 2
-                ? currencySymbol + '0.00'
-                : '-'
-            }}
+            <Quota
+              v-if="record.status === 1 || record.status === 2"
+              :model-value="record.spend.total_spend_tokens"
+            />
+            <span v-else> - </span>
           </span>
         </template>
         <template #total_time="{ record }">
@@ -572,11 +574,10 @@
   import Sortable from 'sortablejs';
   import { Tooltip } from '@arco-design/web-vue';
   import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
-  import { useAppStore } from '@/store';
-  import { parseQuota } from '@/utils/common';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { Spend } from '@/api/common';
+  import Quota from '@/views/common/quota.vue';
   import Detail from '../detail/image.vue';
   import SpendDetail from '../components/spend.vue';
 
@@ -586,7 +587,6 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
-  const currencySymbol = useAppStore().getCurrencySymbol;
 
   const rowSelection = reactive({
     type: 'checkbox',

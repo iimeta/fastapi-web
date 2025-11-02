@@ -175,7 +175,7 @@
         @page-size-change="onPageSizeChange"
       >
         <template #quota="{ record }">
-          <Quota :model-value="record.tokens" />
+          <Quota :model-value="record.quota" />
         </template>
         <template #type="{ record }">
           {{
