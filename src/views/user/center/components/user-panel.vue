@@ -31,6 +31,7 @@
           width: '140px',
           fontWeight: 'normal',
           color: 'rgb(var(--gray-8))',
+          whiteSpace: 'pre',
         }"
         :value-style="{
           width: '200px',

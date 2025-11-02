@@ -33,17 +33,7 @@
         >
           <Expense />
         </a-grid-item>
-        <a-grid-item
-          v-if="
-            userStore.role === 'admin' ||
-            !appStore.getCarousel1Title ||
-            !appStore.getCarousel2Title ||
-            !appStore.getAnnouncementTitle ||
-            !appStore.getDocumentTitle
-          "
-          class="panel moduler-wrap"
-          :span="24"
-        >
+        <a-grid-item class="panel moduler-wrap" :span="24">
           <QuickOperation />
         </a-grid-item>
         <a-grid-item v-if="appStore.getCarousel1Title" class="panel" :span="24">

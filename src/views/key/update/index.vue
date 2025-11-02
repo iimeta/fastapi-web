@@ -194,7 +194,6 @@
       setLoading(false);
     }
   };
-  getProviderList();
 
   const keyPlaceholder = ref(t('key.placeholder.update.key'));
   const getKeyPlaceholder = async () => {
@@ -282,6 +281,7 @@
   ) => {
     setLoading(true);
     try {
+      getProviderList();
       const { data } = await queryKeyDetail(params);
       formData.value.id = data.id;
       formData.value.provider_id = data.provider_id;

@@ -119,7 +119,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`model.dict.is_public.${currentData.is_public}`) }}
+          {{ t(`model.dict.is_public.${currentData.is_public || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item
@@ -208,7 +208,9 @@
         <span v-else>
           {{
             t(
-              `model.dict.is_enable_model_agent.${currentData.is_enable_model_agent}`
+              `model.dict.is_enable_model_agent.${
+                currentData.is_enable_model_agent || false
+              }`
             )
           }}
         </span>

@@ -2,10 +2,10 @@ export default {
   'menu.user.center': '个人中心',
 
   'userCenter.label.userId': '用户ID',
-  'userCenter.label.name': '昵称',
-  'userCenter.label.email': '邮箱',
+  'userCenter.label.name': '昵    称',
+  'userCenter.label.email': '邮    箱',
   'userCenter.label.phone': '手机号码',
-  'userCenter.label.account': '账号',
+  'userCenter.label.account': '账    号',
   'userCenter.label.createdAt': '注册时间',
 
   // basic-info

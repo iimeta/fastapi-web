@@ -2,29 +2,53 @@
   <a-card
     class="general-card"
     :header-style="{ padding: '20px 20px 0 20px' }"
-    :body-style="{ padding: '20px 20px 17px 20px' }"
+    :body-style="{ padding: '8px 20px' }"
     :bordered="false"
   >
     <div class="header">
       <a-space
-        :size="userInfo.role === 'user' || userInfo.role === 'admin' ? 12 : 5"
-        direction="vertical"
+        :size="userStore.role === 'user' || userStore.role === 'admin' ? 12 : 5"
         align="center"
-        @click="$router.push({ name: 'Center' })"
       >
-        <a-avatar :size="64">
+        <!-- <a-avatar :size="50" @click="$router.push({ name: 'Center' })">
           <template #trigger-icon>
             <icon-settings />
           </template>
           <img
-            :src="userInfo.avatar || appStore.getAvatar"
+            :src="userStore.avatar || appStore.getAvatar"
             style="background-color: #ffffff"
           />
-        </a-avatar>
-        <a-typography-title :heading="6" style="margin: 0">
-          {{ userInfo.name }}
-        </a-typography-title>
-        <div v-if="userInfo.role === 'reseller'" class="user-msg">
+        </a-avatar> -->
+        <a-descriptions
+          :data="renderData"
+          :column="1"
+          align="right"
+          layout="inline-horizontal"
+          :label-style="{
+            width: '52px',
+            fontWeight: 'normal',
+            color: 'rgb(var(--gray-8))',
+            whiteSpace: 'pre',
+            verticalAlign: 'middle',
+            lineHeight: '1',
+          }"
+          :value-style="{
+            width: '180px',
+            paddingLeft: '2px',
+            textAlign: 'left',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            verticalAlign: 'middle',
+            lineHeight: '1',
+          }"
+        >
+          <template #label="{ label }">{{ $t(label) }} :</template>
+          <template #value="{ value }">
+            {{ value }}
+          </template>
+        </a-descriptions>
+        <!-- <div v-if="userStore.role === 'reseller'" class="user-msg">
           <a-space :size="64">
             <a-tag color="orange">
               <div style="font-size: 16px">
@@ -35,7 +59,7 @@
               </div>
             </a-tag>
           </a-space>
-        </div>
+        </div> -->
       </a-space>
     </div>
   </a-card>
@@ -43,9 +67,25 @@
 
 <script lang="ts" setup>
   import { useUserStore, useAppStore } from '@/store';
+  import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
-  const userInfo = useUserStore();
+  const userStore = useUserStore();
   const appStore = useAppStore();
+
+  const renderData = [
+    {
+      label: 'userCenter.label.userId',
+      value: userStore.user_id,
+    },
+    {
+      label: 'userCenter.label.account',
+      value: userStore.account,
+    },
+    {
+      label: 'userCenter.label.email',
+      value: userStore.email,
+    },
+  ] as DescData[];
 </script>
 
 <script lang="ts">
@@ -56,7 +96,6 @@
 
 <style lang="less" scoped>
   .header {
-    display: flex;
     align-items: center;
     justify-content: center;
     color: var(--gray-10);

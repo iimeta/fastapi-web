@@ -2,8 +2,8 @@
   <a-card
     class="general-card"
     :title="$t('workplace.quick.operation')"
-    :header-style="{ padding: '10px 20px 0 20px', height: '37px' }"
-    :body-style="{ padding: '10px 20px 2px 20px' }"
+    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
+    :body-style="{ padding: '2px 20px' }"
     :bordered="false"
   >
     <a-row :gutter="8">
@@ -80,17 +80,17 @@
       router: 'AppList',
       permission: ['reseller', 'admin'],
     },
-    {
-      text: 'workplace.appKeyManagement',
-      icon: 'icon-safe',
-      router: 'AppKeyList',
-      permission: ['reseller'],
-    },
+    // {
+    //   text: 'workplace.appKeyManagement',
+    //   icon: 'icon-safe',
+    //   router: 'AppKeyList',
+    //   permission: ['reseller'],
+    // },
     {
       text: 'workplace.financeCenter',
       icon: 'icon-wechatpay',
       router: 'BillList',
-      permission: ['reseller', 'admin'],
+      permission: ['admin'],
     },
     {
       text: 'workplace.chatManagement',
@@ -98,12 +98,12 @@
       router: 'ChatList',
       permission: ['reseller', 'user', 'admin'],
     },
-    {
-      text: 'workplace.sysManagement',
-      icon: 'icon-settings',
-      router: 'SiteConfig',
-      permission: ['reseller'],
-    },
+    // {
+    //   text: 'workplace.sysManagement',
+    //   icon: 'icon-settings',
+    //   router: 'SiteConfig',
+    //   permission: ['reseller'],
+    // },
     {
       text: 'menu.sys.config',
       icon: 'icon-settings',
@@ -124,5 +124,10 @@
     margin-top: 7px;
     text-align: center;
     cursor: pointer;
+  }
+
+  div.arco-typography {
+    margin-top: 0;
+    margin-bottom: 0;
   }
 </style>

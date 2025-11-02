@@ -202,10 +202,25 @@
             >
               <a-switch v-model="formData.is_public" />
             </a-form-item>
-            <a-form-item field="groups" :label="$t('model.label.groups')">
+            <a-form-item
+              field="groups"
+              :label="$t('model.label.groups')"
+              :rules="[
+                {
+                  required: !formData.is_public,
+                  message: $t('model.error.groups.required'),
+                },
+              ]"
+            >
               <a-select
                 v-model="formData.groups"
-                :placeholder="$t('model.placeholder.groups')"
+                :placeholder="
+                  $t(
+                    formData.is_public
+                      ? 'model.placeholder.create.groups'
+                      : 'model.placeholder.groups'
+                  )
+                "
                 :max-tag-count="5"
                 :scrollbar="false"
                 multiple

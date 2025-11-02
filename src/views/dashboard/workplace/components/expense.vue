@@ -2,8 +2,8 @@
   <a-card
     class="general-card"
     :title="$t('workplace.expense')"
-    :header-style="{ padding: '10px 20px 10px 20px', height: '36px' }"
-    :body-style="{ padding: '2px 20px 10px 20px' }"
+    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
+    :body-style="{ padding: '0 20px 9px 20px' }"
     :bordered="false"
   >
     <template #extra>

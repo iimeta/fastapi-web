@@ -278,7 +278,6 @@
       setLoading(false);
     }
   };
-  getProviderList();
 
   const keyPlaceholder = ref(t('key.placeholder.key'));
   const getKeyPlaceholder = async () => {
@@ -359,6 +358,7 @@
   ) => {
     setLoading(true);
     try {
+      getProviderList();
       const { data } = await queryModelAgentDetail(params);
       formData.value.id = data.id;
       formData.value.provider_id = data.provider_id;

@@ -191,7 +191,7 @@
                 </a-radio>
               </a-space>
             </a-form-item>
-            <a-form-item
+            <!-- <a-form-item
               field="is_public"
               :label="$t('model.label.isPublic')"
               :rules="[
@@ -201,8 +201,17 @@
               ]"
             >
               <a-switch v-model="formData.is_public" />
-            </a-form-item>
-            <a-form-item field="groups" :label="$t('model.label.groups')">
+            </a-form-item> -->
+            <a-form-item
+              field="groups"
+              :label="$t('model.label.groups')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.error.groups.required'),
+                },
+              ]"
+            >
               <a-select
                 v-model="formData.groups"
                 :placeholder="$t('model.placeholder.groups')"
@@ -651,15 +660,11 @@
   const router = useRouter();
 
   const providers = ref<ProviderList[]>([]);
-  const providerMap = new Map();
   const getProviderList = async () => {
     setLoading(true);
     try {
       const { data } = await queryProviderList();
       providers.value = data.items;
-      for (let i = 0; i < providers.value.length; i += 1) {
-        providerMap.set(providers.value[i].id, providers.value[i]);
-      }
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -878,11 +883,12 @@
       formData.value.response_data_format = String(
         data.response_data_format || 1
       );
-      formData.value.is_public = data.is_public;
+      formData.value.is_public = data.is_public || false;
       formData.value.groups = data.groups;
       formData.value.is_enable_preset_config = data.is_enable_preset_config;
       formData.value.preset_config = data.preset_config;
-      formData.value.is_enable_model_agent = data.is_enable_model_agent;
+      formData.value.is_enable_model_agent =
+        data.is_enable_model_agent || false;
       formData.value.lb_strategy = String(data.lb_strategy);
       formData.value.model_agents = data.model_agents;
       formData.value.is_enable_forward = data.is_enable_forward;
