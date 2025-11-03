@@ -682,8 +682,6 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { useAppStore } from '@/store';
-  import { queryModelTree, Tree } from '@/api/model';
-  import { queryGroupList, GroupList } from '@/api/group';
   import Quota from '@/views/common/quota.vue';
   import Detail from '../detail/index.vue';
 
@@ -942,33 +940,6 @@
     },
     { deep: true, immediate: true }
   );
-
-  const treeData = ref<Tree[]>([]);
-
-  const getModelTree = async () => {
-    setLoading(true);
-    try {
-      const { data } = await queryModelTree();
-      treeData.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-  getModelTree();
-
-  const groups = ref<GroupList[]>([]);
-
-  const getGroupList = async () => {
-    try {
-      const { data } = await queryGroupList();
-      groups.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getGroupList();
 
   const delDataMap = new Map();
   delDataMap.set(2, '应用数据');
