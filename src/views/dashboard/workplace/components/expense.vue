@@ -3,7 +3,10 @@
     class="general-card"
     :title="$t('workplace.expense')"
     :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
-    :body-style="{ padding: '0 20px 9px 20px' }"
+    :body-style="{
+      padding:
+        userStore.role === 'user' ? '0 20px 9px 20px' : '0 20px 15px 20px',
+    }"
     :bordered="false"
   >
     <template #extra>
@@ -131,7 +134,7 @@
 <script lang="ts" setup>
   import { ref, getCurrentInstance } from 'vue';
   import { FormInstance, Modal } from '@arco-design/web-vue';
-  import { useAppStore } from '@/store';
+  import { useUserStore, useAppStore } from '@/store';
   import {
     queryExpense,
     Expense,
@@ -140,6 +143,7 @@
   } from '@/api/dashboard';
   import Quota from '@/views/common/quota.vue';
 
+  const userStore = useUserStore();
   const appStore = useAppStore();
   const { proxy } = getCurrentInstance() as any;
   const currencySymbol = appStore.getCurrencySymbol;

@@ -3,7 +3,9 @@
     class="general-card"
     :title="$t('workplace.quick.operation')"
     :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
-    :body-style="{ padding: '2px 20px' }"
+    :body-style="{
+      padding: userStore.role === 'admin' ? '11px 20px' : '2px 20px',
+    }"
     :bordered="false"
   >
     <a-row :gutter="8">
@@ -31,6 +33,10 @@
 </template>
 
 <script lang="ts" setup>
+  import { useUserStore } from '@/store';
+
+  const userStore = useUserStore();
+
   const links = [
     {
       text: 'workplace.appManagement',
@@ -63,9 +69,9 @@
       permission: ['admin'],
     },
     {
-      text: 'workplace.providerManagement',
-      icon: 'icon-bar-chart',
-      router: 'ProviderList',
+      text: 'workplace.groupManagement',
+      icon: 'icon-user-group',
+      router: 'GroupList',
       permission: ['admin'],
     },
     {
@@ -80,12 +86,12 @@
       router: 'AppList',
       permission: ['reseller', 'admin'],
     },
-    // {
-    //   text: 'workplace.appKeyManagement',
-    //   icon: 'icon-safe',
-    //   router: 'AppKeyList',
-    //   permission: ['reseller'],
-    // },
+    {
+      text: 'workplace.noticeManagement',
+      icon: 'icon-notification',
+      router: 'NoticeList',
+      permission: ['admin'],
+    },
     {
       text: 'workplace.financeCenter',
       icon: 'icon-wechatpay',
@@ -96,18 +102,30 @@
       text: 'workplace.chatManagement',
       icon: 'icon-message',
       router: 'ChatList',
-      permission: ['reseller', 'user', 'admin'],
+      permission: ['reseller', 'user'],
     },
-    // {
-    //   text: 'workplace.sysManagement',
-    //   icon: 'icon-settings',
-    //   router: 'SiteConfig',
-    //   permission: ['reseller'],
-    // },
     {
       text: 'menu.sys.config',
       icon: 'icon-settings',
       router: 'SysConfig',
+      permission: ['admin'],
+    },
+    {
+      text: 'menu.chat.list',
+      icon: 'icon-message',
+      router: 'ChatList',
+      permission: ['admin'],
+    },
+    {
+      text: 'menu.image.list',
+      icon: 'icon-image',
+      router: 'ImageList',
+      permission: ['admin'],
+    },
+    {
+      text: 'menu.audio.list',
+      icon: 'icon-file-audio',
+      router: 'AudioList',
       permission: ['admin'],
     },
   ];

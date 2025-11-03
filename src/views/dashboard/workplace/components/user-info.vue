@@ -2,14 +2,13 @@
   <a-card
     class="general-card"
     :header-style="{ padding: '20px 20px 0 20px' }"
-    :body-style="{ padding: '8px 20px' }"
+    :body-style="{
+      padding: userStore.role === 'user' ? '8px 20px' : '11px 20px',
+    }"
     :bordered="false"
   >
     <div class="header">
-      <a-space
-        :size="userStore.role === 'user' || userStore.role === 'admin' ? 12 : 5"
-        align="center"
-      >
+      <a-space align="center">
         <!-- <a-avatar :size="50" @click="$router.push({ name: 'Center' })">
           <template #trigger-icon>
             <icon-settings />
@@ -28,8 +27,6 @@
             width: '52px',
             fontWeight: 'normal',
             color: 'rgb(var(--gray-8))',
-            whiteSpace: 'pre',
-            verticalAlign: 'middle',
             lineHeight: '1',
           }"
           :value-style="{
@@ -45,7 +42,7 @@
         >
           <template #label="{ label }">{{ $t(label) }} :</template>
           <template #value="{ value }">
-            {{ value }}
+            {{ value || '-' }}
           </template>
         </a-descriptions>
         <!-- <div v-if="userStore.role === 'reseller'" class="user-msg">
