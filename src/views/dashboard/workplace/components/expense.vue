@@ -41,8 +41,12 @@
       </div>
       <div v-permission="['reseller']" class="quota-box">
         <div class="quota-item-box">
-          <span class="quota-title">待分配额度:</span>
-          <Quota :model-value="expense.to_be_allocated" :n="4" class="quota" />
+          <span class="quota-title">可分配额度:</span>
+          <Quota
+            :model-value="expense.to_be_allocated_quota"
+            :n="4"
+            class="quota"
+          />
         </div>
       </div>
       <div class="quota-box">

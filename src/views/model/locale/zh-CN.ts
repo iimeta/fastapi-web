@@ -37,6 +37,7 @@ export default {
   'model.label.groups': '所属分组',
   'model.placeholder.groups': '请选择分组',
   'model.placeholder.create.groups': '请选择分组, 默认添加到所有公开分组',
+  'model.error.groups.required': '请选择分组',
   'model.label.is_enable_preset_config': '预设配置',
   'model.label.preset_config.is_support_system_role': '支持system角色',
   'model.label.preset_config.system_role_prompt': '预设提示词',
