@@ -234,7 +234,7 @@
             allow-clear
             class="input"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -257,7 +257,7 @@
             allow-clear
             class="input"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -288,7 +288,7 @@
             allow-clear
             class="input"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -319,7 +319,7 @@
             allow-clear
             class="input"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -342,7 +342,7 @@
             allow-clear
             class="input"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append>
               {{ modelType === '5' || modelType === '6' ? '/ min' : '/ M' }}
             </template>
@@ -375,7 +375,7 @@
             allow-clear
             class="input"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -442,7 +442,7 @@
             allow-clear
             style="width: 165px; margin-right: 5px"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
           <a-input-number
@@ -454,7 +454,7 @@
             allow-clear
             style="width: 165px"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
           <a-button
@@ -536,7 +536,7 @@
             allow-clear
             style="width: 165px; margin-right: 5px"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
           <a-input-number
@@ -548,7 +548,7 @@
             allow-clear
             style="width: 165px"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
           <a-button
@@ -594,7 +594,7 @@
             allow-clear
             class="input"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -617,7 +617,7 @@
             allow-clear
             class="input"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -679,7 +679,7 @@
             allow-clear
             style="width: 188px; margin-right: 5px"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / 张 </template>
           </a-input-number>
           <a-radio
@@ -732,7 +732,7 @@
             allow-clear
             class="input"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
         </a-form-item>
@@ -770,7 +770,7 @@
             allow-clear
             style="width: 309px; margin-right: 5px"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / 张 </template>
           </a-input-number>
           <a-radio
@@ -848,7 +848,7 @@
             allow-clear
             style="width: 223px; margin-right: 5px"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / 秒 </template>
           </a-input-number>
           <a-radio
@@ -910,7 +910,7 @@
             allow-clear
             style="width: 309px; margin-right: 5px"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / 次 </template>
           </a-input-number>
           <a-radio
@@ -985,7 +985,7 @@
             allow-clear
             style="width: 188px"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / 次 </template>
           </a-input-number>
           <a-button
@@ -1031,7 +1031,7 @@
             allow-clear
             class="input"
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / 次 </template>
           </a-input-number>
         </a-form-item>
@@ -1058,7 +1058,7 @@
   } from '@/api/common';
 
   const { t } = useI18n();
-  const currencySymbol = useAppStore().getCurrencySymbol;
+  const appStore = useAppStore();
 
   const props = defineProps<{
     modelValue: Pricing;

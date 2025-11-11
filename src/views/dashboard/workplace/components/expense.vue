@@ -102,7 +102,7 @@
             :min="1"
             allow-clear
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
           </a-input-number>
         </a-form-item>
         <a-form-item
@@ -150,7 +150,6 @@
   const userStore = useUserStore();
   const appStore = useAppStore();
   const { proxy } = getCurrentInstance() as any;
-  const currencySymbol = appStore.getCurrencySymbol;
 
   const expense = ref<Expense>({} as Expense);
   const quotaWarningVisible = ref(false);

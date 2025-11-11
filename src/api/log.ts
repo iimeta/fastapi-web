@@ -3,7 +3,7 @@ import qs from 'query-string';
 import { ForwardConfig, FallbackConfig } from './model';
 import { Spend } from './common';
 
-export interface ChatPage {
+export interface TextPage {
   id: string;
   trace_id: any;
   user_id: any;
@@ -25,25 +25,25 @@ export interface Paging {
   page_count: number;
 }
 
-export interface ChatPageParams extends Partial<ChatPage> {
+export interface TextPageParams extends Partial<TextPage> {
   current: number;
   pageSize: number;
 }
 
-export interface ChatPageRes {
-  items: ChatPage[];
+export interface TextPageRes {
+  items: TextPage[];
   paging: Paging;
 }
 
-export function queryChatPage(params: ChatPageParams) {
-  return axios.post<ChatPageRes>('/api/v1/log/chat/page', params);
+export function queryTextPage(params: TextPageParams) {
+  return axios.post<TextPageRes>('/api/v1/log/text/page', params);
 }
 
 export interface DetailParams {
   id: any;
 }
 
-export interface ChatDetail {
+export interface TextDetail {
   id: string;
   host: string;
   trace_id: string;
@@ -87,8 +87,8 @@ export interface ChatDetail {
   updated_at: string;
 }
 
-export function queryChatDetail(params: DetailParams) {
-  return axios.get<ChatDetail>('/api/v1/log/chat/detail', {
+export function queryTextDetail(params: DetailParams) {
+  return axios.get<TextDetail>('/api/v1/log/text/detail', {
     params,
     paramsSerializer: (obj) => {
       return qs.stringify(obj);
@@ -96,17 +96,17 @@ export function queryChatDetail(params: DetailParams) {
   });
 }
 
-export interface ChatCopyFieldParams {
+export interface TextCopyFieldParams {
   id: string;
   field: string;
 }
 
-export interface ChatCopyFieldRes {
+export interface TextCopyFieldRes {
   value: string;
 }
 
-export function chatCopyField(params: ChatCopyFieldParams) {
-  return axios.post<ChatCopyFieldRes>('/api/v1/log/chat/copy/field', params);
+export function textCopyField(params: TextCopyFieldParams) {
+  return axios.post<TextCopyFieldRes>('/api/v1/log/text/copy/field', params);
 }
 
 export interface ImagePage {
@@ -288,19 +288,19 @@ export function audioCopyField(params: AudioCopyFieldParams) {
   return axios.post<AudioCopyFieldRes>('/api/v1/log/audio/copy/field', params);
 }
 
-export interface ChatExportParams {
+export interface TextExportParams {
   ids?: string[];
   req_time?: any;
   user_id?: number;
 }
 
-export function submitChatExport(params: ChatExportParams) {
-  return axios.post('/api/v1/log/chat/export', params, {
+export function submitTextExport(params: TextExportParams) {
+  return axios.post('/api/v1/log/text/export', params, {
     responseType: 'blob',
   });
 }
 
-export interface ChatBatchOperate {
+export interface TextBatchOperate {
   action: string;
   ids?: string[];
   value?: any;
@@ -308,6 +308,6 @@ export interface ChatBatchOperate {
   status?: number[];
 }
 
-export function submitChatBatchOperate(data: ChatBatchOperate) {
-  return axios.post('/api/v1/log/chat/batch/operate', data);
+export function submitTextBatchOperate(data: TextBatchOperate) {
+  return axios.post('/api/v1/log/text/batch/operate', data);
 }

@@ -97,7 +97,7 @@
                 :parser="parsePrice"
                 allow-clear
               >
-                <template #prefix> {{ currencySymbol }}</template>
+                <template #prefix> {{ appStore.getCurrencySymbol }} </template>
               </a-input-number>
             </a-form-item>
             <a-form-item v-if="formData.is_limit_quota">
@@ -301,7 +301,7 @@
   const { proxy } = getCurrentInstance() as any;
   const router = useRouter();
   const userStore = useUserStore();
-  const currencySymbol = useAppStore().getCurrencySymbol;
+  const appStore = useAppStore();
 
   const treeData = ref<Tree[]>([]);
   const getModelTree = async () => {

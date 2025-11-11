@@ -6,21 +6,21 @@ const LOG: AppRouteRecordRaw = {
   name: 'log',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.chat',
+    locale: 'menu.text',
     requiresAuth: true,
     icon: 'icon-message',
     order: 130,
   },
   children: [
     {
-      path: 'chat',
-      name: 'ChatList',
-      component: () => import('@/views/log/list/chat.vue'),
+      path: 'text',
+      name: 'TextList',
+      component: () => import('@/views/log/list/text.vue'),
       meta: {
-        locale: 'menu.chat.list',
+        locale: 'menu.text.list',
         requiresAuth: true,
         roles: ['reseller', 'user', 'admin'],
-         activeMenu: 'ChatList',
+         activeMenu: 'TextList',
       },
     },
     {

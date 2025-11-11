@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-message />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.chat') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.chat.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.text') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.text.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -25,10 +25,10 @@
           >
             <a-row v-permission="['reseller', 'user']" :gutter="16">
               <a-col v-permission="['user']" :span="8">
-                <a-form-item field="app_id" :label="$t('chat.form.app_id')">
+                <a-form-item field="app_id" :label="$t('text.form.app_id')">
                   <a-select
                     v-model="searchFormData.app_id"
-                    :placeholder="$t('chat.form.selectDefault')"
+                    :placeholder="$t('text.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
@@ -45,11 +45,11 @@
               <a-col v-permission="['reseller']" :span="8">
                 <a-form-item
                   field="trace_id"
-                  :label="$t('chat.form.user.trace_id')"
+                  :label="$t('text.form.user.trace_id')"
                 >
                   <a-input
                     v-model="searchFormData.trace_id"
-                    :placeholder="$t('chat.form.trace_id.placeholder')"
+                    :placeholder="$t('text.form.trace_id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -57,11 +57,11 @@
               <a-col v-permission="['reseller']" :span="8">
                 <a-form-item
                   field="user_id"
-                  :label="$t('chat.form.reseller.user_id')"
+                  :label="$t('text.form.reseller.user_id')"
                 >
                   <a-input-number
                     v-model="searchFormData.user_id"
-                    :placeholder="$t('chat.form.user_id.placeholder')"
+                    :placeholder="$t('text.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -69,10 +69,10 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['user']" :span="8">
-                <a-form-item field="key" :label="$t('chat.form.key')">
+                <a-form-item field="key" :label="$t('text.form.key')">
                   <a-input
                     v-model="searchFormData.key"
-                    :placeholder="$t('chat.form.key.placeholder')"
+                    :placeholder="$t('text.form.key.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -80,11 +80,11 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item
                   field="trace_id"
-                  :label="$t('chat.form.user.trace_id')"
+                  :label="$t('text.form.user.trace_id')"
                 >
                   <a-input
                     v-model="searchFormData.trace_id"
-                    :placeholder="$t('chat.form.trace_id.placeholder')"
+                    :placeholder="$t('text.form.trace_id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -92,11 +92,11 @@
               <a-col v-permission="['reseller']" :span="8">
                 <a-form-item
                   field="total_time"
-                  :label="$t('chat.form.total_time')"
+                  :label="$t('text.form.total_time')"
                 >
                   <a-input-number
                     v-model="searchFormData.total_time"
-                    :placeholder="$t('chat.form.total_time.placeholder')"
+                    :placeholder="$t('text.form.total_time.placeholder')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -106,10 +106,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="models" :label="$t('chat.form.models')">
+                <a-form-item field="models" :label="$t('text.form.models')">
                   <a-select
                     v-model="searchFormData.models"
-                    :placeholder="$t('chat.form.selectDefault')"
+                    :placeholder="$t('text.form.selectDefault')"
                     :max-tag-count="1"
                     :scrollbar="false"
                     multiple
@@ -126,10 +126,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('chat.form.status')">
+                <a-form-item field="status" :label="$t('text.form.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('chat.form.selectDefault')"
+                    :placeholder="$t('text.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -137,7 +137,7 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="req_time" :label="$t('chat.form.req_time')">
+                <a-form-item field="req_time" :label="$t('text.form.req_time')">
                   <a-range-picker
                     v-model="searchFormData.req_time"
                     :placeholder="['开始时间', '结束时间']"
@@ -153,12 +153,12 @@
               <a-col :span="5">
                 <a-form-item
                   field="trace_id"
-                  :label="$t('chat.form.trace_id')"
+                  :label="$t('text.form.trace_id')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
                     v-model="searchFormData.trace_id"
-                    :placeholder="$t('chat.form.trace_id.placeholder')"
+                    :placeholder="$t('text.form.trace_id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -166,12 +166,12 @@
               <a-col :span="6">
                 <a-form-item
                   field="models"
-                  :label="$t('chat.form.models')"
+                  :label="$t('text.form.models')"
                   :label-col-props="{ span: 5 }"
                 >
                   <a-select
                     v-model="searchFormData.models"
-                    :placeholder="$t('chat.form.selectDefault')"
+                    :placeholder="$t('text.form.selectDefault')"
                     :max-tag-count="1"
                     :scrollbar="false"
                     multiple
@@ -190,12 +190,12 @@
               <a-col :span="5">
                 <a-form-item
                   field="key"
-                  :label="$t('chat.form.key')"
+                  :label="$t('text.form.key')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
                     v-model="searchFormData.key"
-                    :placeholder="$t('chat.form.key.placeholder')"
+                    :placeholder="$t('text.form.key.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -203,11 +203,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="total_time"
-                  :label="$t('chat.form.total_time')"
+                  :label="$t('text.form.total_time')"
                 >
                   <a-input-number
                     v-model="searchFormData.total_time"
-                    :placeholder="$t('chat.form.total_time.placeholder')"
+                    :placeholder="$t('text.form.total_time.placeholder')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -219,12 +219,12 @@
               <a-col :span="5">
                 <a-form-item
                   field="user_id"
-                  :label="$t('chat.form.user_id')"
+                  :label="$t('text.form.user_id')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input-number
                     v-model="searchFormData.user_id"
-                    :placeholder="$t('chat.form.user_id.placeholder')"
+                    :placeholder="$t('text.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -258,12 +258,12 @@
               <a-col :span="5">
                 <a-form-item
                   field="status"
-                  :label="$t('chat.form.status')"
+                  :label="$t('text.form.status')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('chat.form.selectDefault')"
+                    :placeholder="$t('text.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -271,7 +271,7 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="req_time" :label="$t('chat.form.req_time')">
+                <a-form-item field="req_time" :label="$t('text.form.req_time')">
                   <a-range-picker
                     v-model="searchFormData.req_time"
                     :placeholder="['开始时间', '结束时间']"
@@ -292,13 +292,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('chat.form.search') }}
+              {{ $t('text.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('chat.form.reset') }}
+              {{ $t('text.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -307,7 +307,7 @@
       <a-row style="margin-bottom: 16px; align-items: center">
         <a-col :span="16">
           <a-space>
-            <a-button type="primary" @click="handleChatExport({})">
+            <a-button type="primary" @click="handleTextExport({})">
               导出
             </a-button>
             <a-button
@@ -440,7 +440,7 @@
           </span>
         </template>
         <template #stream="{ record }">
-          {{ $t(`chat.dict.stream.${record.stream || false}`) }}
+          {{ $t(`text.dict.stream.${record.stream || false}`) }}
         </template>
         <template #conn_time="{ record }">
           <a-tag
@@ -644,27 +644,27 @@
         </template>
         <template #status="{ record }">
           <a-tag v-if="record.status === -1" color="red">
-            {{ $t(`chat.dict.status.${record.status}`) }}
+            {{ $t(`text.dict.status.${record.status}`) }}
           </a-tag>
           <a-tag v-else-if="record.status === 2" color="gold">
-            {{ $t(`chat.dict.status.${record.status}`) }}
+            {{ $t(`text.dict.status.${record.status}`) }}
           </a-tag>
           <a-tag v-else-if="record.status === 3" color="orange">
-            {{ $t(`chat.dict.status.${record.status}`) }}
+            {{ $t(`text.dict.status.${record.status}`) }}
           </a-tag>
           <a-tag v-else color="green">
-            {{ $t(`chat.dict.status.${record.status}`) }}
+            {{ $t(`text.dict.status.${record.status}`) }}
           </a-tag>
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('chat.columns.operations.view') }}
+            {{ $t('text.columns.operations.view') }}
           </a-button>
         </template>
       </a-table>
 
       <a-drawer
-        :title="$t('menu.chat.detail')"
+        :title="$t('menu.text.detail')"
         :width="700"
         :footer="false"
         :visible="detailVisible"
@@ -675,26 +675,26 @@
         <Detail :id="recordId" />
       </a-drawer>
 
-      <!-- 导出聊天日志 -->
+      <!-- 导出文本日志 -->
       <a-modal
-        v-model:visible="chatExportFormVisible"
-        :title="$t('chat.form.title.chat_export')"
-        @cancel="chatExportHandleCancel"
-        @before-ok="chatExportHandleBeforeOk"
+        v-model:visible="textExportFormVisible"
+        :title="$t('text.form.title.text_export')"
+        @cancel="textExportHandleCancel"
+        @before-ok="textExportHandleBeforeOk"
       >
-        <a-form ref="chatExportForm" :model="chatExportFormData">
+        <a-form ref="textExportForm" :model="textExportFormData">
           <a-form-item
             field="req_time"
-            :label="$t('chat.form.req_time')"
+            :label="$t('text.form.req_time')"
             :rules="[
               {
                 required: true,
-                message: $t('chat.error.req_time.required'),
+                message: $t('text.error.req_time.required'),
               },
             ]"
           >
             <a-range-picker
-              v-model="chatExportFormData.req_time"
+              v-model="textExportFormData.req_time"
               :placeholder="['开始时间', '结束时间']"
               :time-picker-props="{
                 defaultValue: ['00:00:00', '23:59:59'],
@@ -705,11 +705,11 @@
           <a-form-item
             v-permission="['reseller', 'admin']"
             field="user_id"
-            :label="$t('chat.form.req.user_id')"
+            :label="$t('text.form.req.user_id')"
           >
             <a-input-number
-              v-model="chatExportFormData.user_id"
-              :placeholder="$t('chat.form.user_id.placeholder')"
+              v-model="textExportFormData.user_id"
+              :placeholder="$t('text.form.user_id.placeholder')"
               :precision="0"
               :min="1"
               allow-clear
@@ -718,26 +718,26 @@
         </a-form>
       </a-modal>
 
-      <!-- 删除聊天日志 -->
+      <!-- 删除文本日志 -->
       <a-modal
-        v-model:visible="chatDelFormVisible"
-        :title="$t('chat.form.title.chat_del')"
-        @cancel="chatDelHandleCancel"
-        @before-ok="chatDelHandleBeforeOk"
+        v-model:visible="textDelFormVisible"
+        :title="$t('text.form.title.text_del')"
+        @cancel="textDelHandleCancel"
+        @before-ok="textDelHandleBeforeOk"
       >
-        <a-form ref="chatDelForm" :model="chatDelFormData">
+        <a-form ref="textDelForm" :model="textDelFormData">
           <a-form-item
             field="value"
-            :label="$t('chat.form.req_time')"
+            :label="$t('text.form.req_time')"
             :rules="[
               {
                 required: true,
-                message: $t('chat.error.req_time.required'),
+                message: $t('text.error.req_time.required'),
               },
             ]"
           >
             <a-range-picker
-              v-model="chatDelFormData.value"
+              v-model="textDelFormData.value"
               :placeholder="['开始时间', '结束时间']"
               :time-picker-props="{
                 defaultValue: ['00:00:00', '23:59:59'],
@@ -747,33 +747,33 @@
           </a-form-item>
           <a-form-item
             field="status"
-            :label="$t('chat.form.req.status')"
+            :label="$t('text.form.req.status')"
             :rules="[
               {
                 required: true,
-                message: $t('chat.error.req.status.required'),
+                message: $t('text.error.req.status.required'),
               },
             ]"
           >
             <a-space size="large">
-              <a-checkbox v-model="chatDelFormData.status" :value="1">
+              <a-checkbox v-model="textDelFormData.status" :value="1">
                 成功
               </a-checkbox>
-              <a-checkbox v-model="chatDelFormData.status" :value="2">
+              <a-checkbox v-model="textDelFormData.status" :value="2">
                 中止
               </a-checkbox>
-              <a-checkbox v-model="chatDelFormData.status" :value="3">
+              <a-checkbox v-model="textDelFormData.status" :value="3">
                 重试
               </a-checkbox>
-              <a-checkbox v-model="chatDelFormData.status" :value="-1">
+              <a-checkbox v-model="textDelFormData.status" :value="-1">
                 失败
               </a-checkbox>
             </a-space>
           </a-form-item>
-          <a-form-item field="user_id" :label="$t('chat.form.req.user_id')">
+          <a-form-item field="user_id" :label="$t('text.form.req.user_id')">
             <a-input-number
-              v-model="chatDelFormData.user_id"
-              :placeholder="$t('chat.form.user_id.placeholder')"
+              v-model="textDelFormData.user_id"
+              :placeholder="$t('text.form.user_id.placeholder')"
               :precision="0"
               :min="1"
               allow-clear
@@ -821,13 +821,13 @@
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import { parseQuota } from '@/utils/common';
   import {
-    queryChatPage,
-    ChatPage,
-    ChatPageParams,
-    ChatExportParams,
-    submitChatExport,
-    ChatBatchOperate,
-    submitChatBatchOperate,
+    queryTextPage,
+    TextPage,
+    TextPageParams,
+    TextExportParams,
+    submitTextExport,
+    TextBatchOperate,
+    submitTextBatchOperate,
   } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
   import { queryPerMinute, PerMinuteParams } from '@/api/dashboard';
@@ -843,7 +843,7 @@
   import { queryModelAgentList, ModelAgentList } from '@/api/agent';
   import { Spend } from '@/api/common';
   import Quota from '@/views/common/quota.vue';
-  import Detail from '../detail/chat.vue';
+  import Detail from '../detail/text.vue';
   import SpendDetail from '../components/spend.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -876,7 +876,7 @@
     };
   };
 
-  const renderData = ref<ChatPage[]>([]);
+  const renderData = ref<TextPage[]>([]);
   const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -920,8 +920,8 @@
     {
       title:
         userRole === 'reseller' || userRole === 'admin'
-          ? t('chat.columns.user_id')
-          : t('chat.columns.app_id'),
+          ? t('text.columns.user_id')
+          : t('text.columns.app_id'),
       dataIndex:
         userRole === 'reseller' || userRole === 'admin' ? 'user_id' : 'app_id',
       slotName:
@@ -930,7 +930,7 @@
       width: 75,
     },
     {
-      title: t('chat.columns.model'),
+      title: t('text.columns.model'),
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
@@ -938,21 +938,21 @@
       tooltip: true,
     },
     {
-      title: t('chat.columns.input_tokens'),
+      title: t('text.columns.input_tokens'),
       dataIndex: 'input_tokens',
       slotName: 'input_tokens',
       align: 'center',
       width: 85,
     },
     {
-      title: t('chat.columns.output_tokens'),
+      title: t('text.columns.output_tokens'),
       dataIndex: 'output_tokens',
       slotName: 'output_tokens',
       align: 'center',
       width: 85,
     },
     {
-      title: t('chat.columns.total_spend_tokens'),
+      title: t('text.columns.total_spend_tokens'),
       dataIndex: 'total_spend_tokens',
       slotName: 'total_spend_tokens',
       align: 'center',
@@ -970,11 +970,11 @@
               },
             },
             [
-              h('span', t('chat.columns.total_spend_tokens')),
+              h('span', t('text.columns.total_spend_tokens')),
               h(
                 Tooltip,
                 {
-                  content: t('chat.columns.tooltip.total_spend_tokens'),
+                  content: t('text.columns.tooltip.total_spend_tokens'),
                   contentStyle: {
                     whiteSpace: 'nowrap',
                     maxWidth: 'none',
@@ -995,26 +995,26 @@
       },
     },
     {
-      title: t('chat.columns.stream'),
+      title: t('text.columns.stream'),
       dataIndex: 'stream',
       slotName: 'stream',
       align: 'center',
       width: 60,
     },
     {
-      title: t('chat.columns.conn_time'),
+      title: t('text.columns.conn_time'),
       dataIndex: 'conn_time',
       slotName: 'conn_time',
       align: 'center',
     },
     {
-      title: t('chat.columns.duration'),
+      title: t('text.columns.duration'),
       dataIndex: 'duration',
       slotName: 'duration',
       align: 'center',
     },
     {
-      title: t('chat.columns.total_time'),
+      title: t('text.columns.total_time'),
       dataIndex: 'total_time',
       slotName: 'total_time',
       align: 'center',
@@ -1031,11 +1031,11 @@
               },
             },
             [
-              h('span', t('chat.columns.total_time')),
+              h('span', t('text.columns.total_time')),
               h(
                 Tooltip,
                 {
-                  content: t('chat.columns.tooltip.total_time'),
+                  content: t('text.columns.tooltip.total_time'),
                   contentStyle: {
                     whiteSpace: 'nowrap',
                     maxWidth: 'none',
@@ -1056,27 +1056,27 @@
       },
     },
     {
-      title: t('chat.columns.internal_time'),
+      title: t('text.columns.internal_time'),
       dataIndex: 'internal_time',
       slotName: 'internal_time',
       align: 'center',
     },
     {
-      title: t('chat.columns.status'),
+      title: t('text.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('chat.columns.req_time'),
+      title: t('text.columns.req_time'),
       dataIndex: 'req_time',
       slotName: 'req_time',
       align: 'center',
       width: 132,
     },
     {
-      title: t('chat.columns.operations'),
+      title: t('text.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -1090,15 +1090,15 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('chat.dict.status.1'),
+      label: t('text.dict.status.1'),
       value: 1,
     },
     {
-      label: t('chat.dict.status.2'),
+      label: t('text.dict.status.2'),
       value: 2,
     },
     {
-      label: t('chat.dict.status.-1'),
+      label: t('text.dict.status.-1'),
       value: -1,
     },
   ]);
@@ -1106,25 +1106,25 @@
   if (userRole === 'admin') {
     statusOptions.value.push(
       {
-        label: t('chat.dict.status.3'),
+        label: t('text.dict.status.3'),
         value: 3,
       },
       {
-        label: t('chat.dict.status.-100'),
+        label: t('text.dict.status.-100'),
         value: -100,
       }
     );
   }
 
   const fetchData = async (
-    params: ChatPageParams = {
+    params: TextPageParams = {
       ...basePagination,
       ...searchFormData.value,
     }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryChatPage(params);
+      const { data } = await queryTextPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
@@ -1142,7 +1142,7 @@
     fetchData({
       ...basePagination,
       ...searchFormData.value,
-    } as unknown as ChatPageParams);
+    } as unknown as TextPageParams);
   };
 
   const onPageChange = (current: number) => {
@@ -1348,40 +1348,40 @@
     document.removeEventListener('visibilitychange', handleVisibilityChange);
   });
 
-  const chatExportForm = ref<FormInstance>();
-  const chatExportFormVisible = ref(false);
-  const chatExportFormData = ref<ChatExportParams>({} as ChatExportParams);
+  const textExportForm = ref<FormInstance>();
+  const textExportFormVisible = ref(false);
+  const textExportFormData = ref<TextExportParams>({} as TextExportParams);
 
-  const chatExportHandleBeforeOk = async (done: any) => {
-    const res = await chatExportForm.value?.validate();
+  const textExportHandleBeforeOk = async (done: any) => {
+    const res = await textExportForm.value?.validate();
     if (res) {
-      chatExportFormVisible.value = true;
+      textExportFormVisible.value = true;
       done(false);
       return;
     }
     done();
-    handleChatExport({
-      req_time: chatExportFormData.value.req_time,
-      user_id: chatExportFormData.value.user_id,
+    handleTextExport({
+      req_time: textExportFormData.value.req_time,
+      user_id: textExportFormData.value.user_id,
     });
   };
 
-  const chatExportHandleCancel = () => {
-    chatExportFormVisible.value = false;
+  const textExportHandleCancel = () => {
+    textExportFormVisible.value = false;
   };
 
   /**
    * 导出操作
    */
-  const handleChatExport = (params: ChatExportParams) => {
+  const handleTextExport = (params: TextExportParams) => {
     if (ids.value.length === 0 && !params.req_time) {
-      chatExportFormVisible.value = true;
+      textExportFormVisible.value = true;
       return;
     }
 
     setLoading(true);
     params.ids = ids.value;
-    submitChatExport(params)
+    submitTextExport(params)
       .then((res) => {
         setLoading(false);
         proxy.$message.success('导出成功');
@@ -1395,7 +1395,7 @@
         // 创建一个a标签用于下载文件
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', '聊天日志.xlsx'); // 设置下载文件名
+        link.setAttribute('download', '文本日志.xlsx'); // 设置下载文件名
         document.body.appendChild(link);
 
         // 触发a标签的点击事件，开始下载
@@ -1410,30 +1410,30 @@
       });
   };
 
-  const chatDelForm = ref<FormInstance>();
-  const chatDelFormVisible = ref(false);
-  const chatDelFormData = ref<ChatBatchOperate>({
+  const textDelForm = ref<FormInstance>();
+  const textDelFormVisible = ref(false);
+  const textDelFormData = ref<TextBatchOperate>({
     status: [1, 2, 3, -1],
-  } as ChatBatchOperate);
+  } as TextBatchOperate);
 
-  const chatDelHandleBeforeOk = async (done: any) => {
-    const res = await chatDelForm.value?.validate();
+  const textDelHandleBeforeOk = async (done: any) => {
+    const res = await textDelForm.value?.validate();
     if (res) {
-      chatDelFormVisible.value = true;
+      textDelFormVisible.value = true;
       done(false);
       return;
     }
     done();
     handleBatch({
       action: 'time',
-      value: chatDelFormData.value.value,
-      user_id: chatDelFormData.value.user_id,
-      status: chatDelFormData.value.status,
+      value: textDelFormData.value.value,
+      user_id: textDelFormData.value.user_id,
+      status: textDelFormData.value.status,
     });
   };
 
-  const chatDelHandleCancel = () => {
-    chatDelFormVisible.value = false;
+  const textDelHandleCancel = () => {
+    textDelFormVisible.value = false;
   };
 
   /**
@@ -1449,9 +1449,9 @@
   /**
    * 批量操作
    */
-  const handleBatch = (params: ChatBatchOperate) => {
+  const handleBatch = (params: TextBatchOperate) => {
     if (ids.value.length === 0 && !params.value) {
-      chatDelFormVisible.value = true;
+      textDelFormVisible.value = true;
     } else {
       let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
       switch (params.action) {
@@ -1476,7 +1476,7 @@
         onOk: () => {
           setLoading(true);
           params.ids = ids.value;
-          submitChatBatchOperate(params).then((res) => {
+          submitTextBatchOperate(params).then((res) => {
             setLoading(false);
             proxy.$message.success('操作成功, 任务已提交');
             search();
@@ -1500,7 +1500,7 @@
 
 <script lang="ts">
   export default {
-    name: 'ChatList',
+    name: 'TextList',
   };
 </script>
 

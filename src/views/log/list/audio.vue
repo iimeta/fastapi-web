@@ -25,10 +25,10 @@
           >
             <a-row v-permission="['reseller', 'user']" :gutter="16">
               <a-col v-permission="['user']" :span="8">
-                <a-form-item field="app_id" :label="$t('chat.form.app_id')">
+                <a-form-item field="app_id" :label="$t('text.form.app_id')">
                   <a-select
                     v-model="searchFormData.app_id"
-                    :placeholder="$t('chat.form.selectDefault')"
+                    :placeholder="$t('text.form.selectDefault')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
@@ -45,11 +45,11 @@
               <a-col v-permission="['reseller']" :span="8">
                 <a-form-item
                   field="trace_id"
-                  :label="$t('chat.form.user.trace_id')"
+                  :label="$t('text.form.user.trace_id')"
                 >
                   <a-input
                     v-model="searchFormData.trace_id"
-                    :placeholder="$t('chat.form.trace_id.placeholder')"
+                    :placeholder="$t('text.form.trace_id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -57,11 +57,11 @@
               <a-col v-permission="['reseller']" :span="8">
                 <a-form-item
                   field="user_id"
-                  :label="$t('chat.form.reseller.user_id')"
+                  :label="$t('text.form.reseller.user_id')"
                 >
                   <a-input-number
                     v-model="searchFormData.user_id"
-                    :placeholder="$t('chat.form.user_id.placeholder')"
+                    :placeholder="$t('text.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -69,10 +69,10 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['user']" :span="8">
-                <a-form-item field="key" :label="$t('chat.form.key')">
+                <a-form-item field="key" :label="$t('text.form.key')">
                   <a-input
                     v-model="searchFormData.key"
-                    :placeholder="$t('chat.form.key.placeholder')"
+                    :placeholder="$t('text.form.key.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -80,11 +80,11 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item
                   field="trace_id"
-                  :label="$t('chat.form.user.trace_id')"
+                  :label="$t('text.form.user.trace_id')"
                 >
                   <a-input
                     v-model="searchFormData.trace_id"
-                    :placeholder="$t('chat.form.trace_id.placeholder')"
+                    :placeholder="$t('text.form.trace_id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -92,11 +92,11 @@
               <a-col v-permission="['reseller']" :span="8">
                 <a-form-item
                   field="total_time"
-                  :label="$t('chat.form.total_time')"
+                  :label="$t('text.form.total_time')"
                 >
                   <a-input-number
                     v-model="searchFormData.total_time"
-                    :placeholder="$t('chat.form.total_time.placeholder')"
+                    :placeholder="$t('text.form.total_time.placeholder')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -106,10 +106,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="models" :label="$t('chat.form.models')">
+                <a-form-item field="models" :label="$t('text.form.models')">
                   <a-select
                     v-model="searchFormData.models"
-                    :placeholder="$t('chat.form.selectDefault')"
+                    :placeholder="$t('text.form.selectDefault')"
                     :max-tag-count="1"
                     :scrollbar="false"
                     multiple
@@ -126,10 +126,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('chat.form.status')">
+                <a-form-item field="status" :label="$t('text.form.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('chat.form.selectDefault')"
+                    :placeholder="$t('text.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -137,7 +137,7 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="req_time" :label="$t('chat.form.req_time')">
+                <a-form-item field="req_time" :label="$t('text.form.req_time')">
                   <a-range-picker
                     v-model="searchFormData.req_time"
                     :placeholder="['开始时间', '结束时间']"
@@ -153,12 +153,12 @@
               <a-col :span="5">
                 <a-form-item
                   field="trace_id"
-                  :label="$t('chat.form.trace_id')"
+                  :label="$t('text.form.trace_id')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
                     v-model="searchFormData.trace_id"
-                    :placeholder="$t('chat.form.trace_id.placeholder')"
+                    :placeholder="$t('text.form.trace_id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -166,12 +166,12 @@
               <a-col :span="6">
                 <a-form-item
                   field="models"
-                  :label="$t('chat.form.models')"
+                  :label="$t('text.form.models')"
                   :label-col-props="{ span: 5 }"
                 >
                   <a-select
                     v-model="searchFormData.models"
-                    :placeholder="$t('chat.form.selectDefault')"
+                    :placeholder="$t('text.form.selectDefault')"
                     :max-tag-count="1"
                     :scrollbar="false"
                     multiple
@@ -190,12 +190,12 @@
               <a-col :span="5">
                 <a-form-item
                   field="key"
-                  :label="$t('chat.form.key')"
+                  :label="$t('text.form.key')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
                     v-model="searchFormData.key"
-                    :placeholder="$t('chat.form.key.placeholder')"
+                    :placeholder="$t('text.form.key.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -203,11 +203,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="total_time"
-                  :label="$t('chat.form.total_time')"
+                  :label="$t('text.form.total_time')"
                 >
                   <a-input-number
                     v-model="searchFormData.total_time"
-                    :placeholder="$t('chat.form.total_time.placeholder')"
+                    :placeholder="$t('text.form.total_time.placeholder')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -219,12 +219,12 @@
               <a-col :span="5">
                 <a-form-item
                   field="user_id"
-                  :label="$t('chat.form.user_id')"
+                  :label="$t('text.form.user_id')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input-number
                     v-model="searchFormData.user_id"
-                    :placeholder="$t('chat.form.user_id.placeholder')"
+                    :placeholder="$t('text.form.user_id.placeholder')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -258,12 +258,12 @@
               <a-col :span="5">
                 <a-form-item
                   field="status"
-                  :label="$t('chat.form.status')"
+                  :label="$t('text.form.status')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('chat.form.selectDefault')"
+                    :placeholder="$t('text.form.selectDefault')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -271,7 +271,7 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="req_time" :label="$t('chat.form.req_time')">
+                <a-form-item field="req_time" :label="$t('text.form.req_time')">
                   <a-range-picker
                     v-model="searchFormData.req_time"
                     :placeholder="['开始时间', '结束时间']"
@@ -292,13 +292,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('chat.form.search') }}
+              {{ $t('text.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('chat.form.reset') }}
+              {{ $t('text.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -514,21 +514,21 @@
         </template>
         <template #status="{ record }">
           <a-tag v-if="record.status === -1" color="red">{{
-            $t(`chat.dict.status.${record.status}`)
+            $t(`text.dict.status.${record.status}`)
           }}</a-tag>
           <a-tag v-else-if="record.status === 2" color="gold">{{
-            $t(`chat.dict.status.${record.status}`)
+            $t(`text.dict.status.${record.status}`)
           }}</a-tag>
           <a-tag v-else-if="record.status === 3" color="orange">{{
-            $t(`chat.dict.status.${record.status}`)
+            $t(`text.dict.status.${record.status}`)
           }}</a-tag>
           <a-tag v-else color="green">{{
-            $t(`chat.dict.status.${record.status}`)
+            $t(`text.dict.status.${record.status}`)
           }}</a-tag>
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('chat.columns.operations.view') }}
+            {{ $t('text.columns.operations.view') }}
           </a-button>
         </template>
       </a-table>
@@ -660,8 +660,8 @@
     {
       title:
         userRole === 'reseller' || userRole === 'admin'
-          ? t('chat.columns.user_id')
-          : t('chat.columns.app_id'),
+          ? t('text.columns.user_id')
+          : t('text.columns.app_id'),
       dataIndex:
         userRole === 'reseller' || userRole === 'admin' ? 'user_id' : 'app_id',
       slotName:
@@ -670,13 +670,13 @@
       width: 75,
     },
     {
-      title: t('chat.columns.model'),
+      title: t('text.columns.model'),
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
     },
     {
-      title: t('chat.columns.characters'),
+      title: t('text.columns.characters'),
       dataIndex: 'characters',
       slotName: 'characters',
       align: 'center',
@@ -684,13 +684,13 @@
       tooltip: true,
     },
     {
-      title: t('chat.columns.minute'),
+      title: t('text.columns.minute'),
       dataIndex: 'minute',
       slotName: 'minute',
       align: 'center',
     },
     {
-      title: t('chat.columns.total_spend_tokens'),
+      title: t('text.columns.total_spend_tokens'),
       dataIndex: 'total_spend_tokens',
       slotName: 'total_spend_tokens',
       align: 'center',
@@ -708,11 +708,11 @@
               },
             },
             [
-              h('span', t('chat.columns.total_spend_tokens')),
+              h('span', t('text.columns.total_spend_tokens')),
               h(
                 Tooltip,
                 {
-                  content: t('chat.columns.tooltip.total_spend_tokens'),
+                  content: t('text.columns.tooltip.total_spend_tokens'),
                   contentStyle: {
                     whiteSpace: 'nowrap',
                     maxWidth: 'none',
@@ -733,7 +733,7 @@
       },
     },
     {
-      title: t('chat.columns.total_time'),
+      title: t('text.columns.total_time'),
       dataIndex: 'total_time',
       slotName: 'total_time',
       align: 'center',
@@ -750,11 +750,11 @@
               },
             },
             [
-              h('span', t('chat.columns.total_time')),
+              h('span', t('text.columns.total_time')),
               h(
                 Tooltip,
                 {
-                  content: t('chat.columns.tooltip.total_time'),
+                  content: t('text.columns.tooltip.total_time'),
                   contentStyle: {
                     whiteSpace: 'nowrap',
                     maxWidth: 'none',
@@ -775,27 +775,27 @@
       },
     },
     {
-      title: t('chat.columns.internal_time'),
+      title: t('text.columns.internal_time'),
       dataIndex: 'internal_time',
       slotName: 'internal_time',
       align: 'center',
     },
     {
-      title: t('chat.columns.status'),
+      title: t('text.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('chat.columns.req_time'),
+      title: t('text.columns.req_time'),
       dataIndex: 'req_time',
       slotName: 'req_time',
       align: 'center',
       width: 132,
     },
     {
-      title: t('chat.columns.operations'),
+      title: t('text.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -809,15 +809,15 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('chat.dict.status.1'),
+      label: t('text.dict.status.1'),
       value: 1,
     },
     {
-      label: t('chat.dict.status.2'),
+      label: t('text.dict.status.2'),
       value: 2,
     },
     {
-      label: t('chat.dict.status.-1'),
+      label: t('text.dict.status.-1'),
       value: -1,
     },
   ]);
@@ -825,11 +825,11 @@
   if (userRole === 'admin') {
     statusOptions.value.push(
       {
-        label: t('chat.dict.status.3'),
+        label: t('text.dict.status.3'),
         value: 3,
       },
       {
-        label: t('chat.dict.status.-100'),
+        label: t('text.dict.status.-100'),
         value: -100,
       }
     );

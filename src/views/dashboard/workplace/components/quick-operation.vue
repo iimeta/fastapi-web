@@ -99,9 +99,9 @@
       permission: ['admin'],
     },
     {
-      text: 'workplace.chatManagement',
+      text: 'workplace.logManagement',
       icon: 'icon-message',
-      router: 'ChatList',
+      router: 'TextList',
       permission: ['reseller', 'user'],
     },
     {
@@ -111,9 +111,9 @@
       permission: ['admin'],
     },
     {
-      text: 'menu.chat.list',
+      text: 'menu.text.list',
       icon: 'icon-message',
-      router: 'ChatList',
+      router: 'TextList',
       permission: ['admin'],
     },
     {

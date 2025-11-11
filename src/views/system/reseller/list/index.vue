@@ -69,7 +69,9 @@
                     :max="9999999999999"
                     allow-clear
                   >
-                    <template #prefix> {{ currencySymbol }}</template>
+                    <template #prefix>
+                      {{ appStore.getCurrencySymbol }}
+                    </template>
                   </a-input-number>
                 </a-form-item>
               </a-col>
@@ -450,7 +452,7 @@
               :parser="parsePrice"
               allow-clear
             >
-              <template #prefix> {{ currencySymbol }}</template>
+              <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             </a-input-number>
           </a-form-item>
           <a-form-item style="margin-bottom: 8px">
@@ -698,7 +700,7 @@
   const { loading, setLoading } = useLoading(true);
   const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
-  const currencySymbol = useAppStore().getCurrencySymbol;
+  const appStore = useAppStore();
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -1137,11 +1139,11 @@
           } else if (formData.value.quota_type === '2') {
             alertContent = `是否确定扣除所选的${
               ids.value.length
-            }位代理商 ${currencySymbol}${parseQuota(params.value)} 额度?`;
+            }位代理商 ${appStore.getCurrencySymbol}${parseQuota(params.value)} 额度?`;
           } else {
             alertContent = `是否确定给所选的${ids.value.length}位代理商${
               formData.value.quota_type === '1' ? '充值' : '赠送'
-            } ${currencySymbol}${parseQuota(params.value)} 额度?`;
+            } ${appStore.getCurrencySymbol}${parseQuota(params.value)} 额度?`;
           }
           break;
         case 'status':

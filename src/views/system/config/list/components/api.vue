@@ -222,50 +222,50 @@
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'log'"
-          field="log.chat_records"
-          :label="$t('sys.config.label.log.chat_records')"
+          field="log.text_records"
+          :label="$t('sys.config.label.log.text_records')"
         >
           <a-space size="large">
             <a-checkbox
-              v-model="configFormData.log.chat_records"
+              v-model="configFormData.log.text_records"
               value="prompt"
             >
               提问
             </a-checkbox>
             <a-checkbox
-              v-model="configFormData.log.chat_records"
+              v-model="configFormData.log.text_records"
               value="completion"
             >
               回答
             </a-checkbox>
             <a-checkbox
-              v-model="configFormData.log.chat_records"
+              v-model="configFormData.log.text_records"
               value="messages"
             >
               上下文
             </a-checkbox>
-            <a-checkbox v-model="configFormData.log.chat_records" value="image">
+            <a-checkbox v-model="configFormData.log.text_records" value="image">
               图像数据
             </a-checkbox>
-            <a-checkbox v-model="configFormData.log.chat_records" value="audio">
+            <a-checkbox v-model="configFormData.log.text_records" value="audio">
               音频数据
             </a-checkbox>
           </a-space>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'log'"
-          field="log.chat_reserve"
-          :label="$t('sys.config.label.log.chat_reserve')"
+          field="log.text_reserve"
+          :label="$t('sys.config.label.log.text_reserve')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.log.chat_reserve.required'),
+              message: $t('sys.config.error.log.text_reserve.required'),
             },
           ]"
         >
           <a-input-number
-            v-model="configFormData.log.chat_reserve"
-            :placeholder="$t('sys.config.placeholder.log.chat_reserve')"
+            v-model="configFormData.log.text_reserve"
+            :placeholder="$t('sys.config.placeholder.log.text_reserve')"
             :precision="0"
             :min="0"
             allow-clear
@@ -841,7 +841,7 @@
         action: 'log',
         title: t('sys.config.item.title.log'),
         description:
-          '配置聊天日志记录内容, 支持记录: 提问、回答、上下文、多模态识图的BASE64图像数据, 以及各类日志保留天数, 当保留天数>0则会自动删除',
+          '配置文本日志记录内容, 支持记录: 提问、回答、上下文、多模态识图的BASE64图像数据, 以及各类日志保留天数, 当保留天数>0则会自动删除',
         open: configFormData.value.log.open,
         config: true,
         reset: true,

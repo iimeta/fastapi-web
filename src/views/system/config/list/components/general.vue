@@ -418,7 +418,7 @@
             :min="1"
             allow-clear
           >
-            <template #prefix> {{ currencySymbol }}</template>
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
           </a-input-number>
         </a-form-item>
         <a-form-item
@@ -544,7 +544,7 @@
   const { proxy } = getCurrentInstance() as any;
   const { setLoading } = useLoading(true);
   const { t } = useI18n();
-  const currencySymbol = useAppStore().getCurrencySymbol;
+  const appStore = useAppStore();
 
   const configVisible = ref(false);
   const configTitle = ref('');

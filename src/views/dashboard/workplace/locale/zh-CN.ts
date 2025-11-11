@@ -21,8 +21,8 @@ export default {
   'workplace.userManagement': '用户管理',
   'workplace.noticeManagement': '通知管理',
   'workplace.financeCenter': '财务中心',
-  'workplace.chatManagement': '日志管理',
-  'workplace.chatLog': '聊天日志',
+  'workplace.logManagement': '日志管理',
+  'workplace.textLog': '文本日志',
   'workplace.imageLog': '绘图日志',
   'workplace.audioLog': '音频日志',
   'workplace.sysManagement': '系统管理',
@@ -49,7 +49,9 @@ export default {
   'workplace.placeholder.quota_warning.warning_threshold': '请输入预警阈值',
   'workplace.error.quota_warning.warning_threshold.required': '请输入预警阈值',
   'workplace.label.quota_warning.expire_warning_threshold': '过期预警阈值',
-  'workplace.placeholder.quota_warning.expire_warning_threshold': '请输入过期预警阈值',
-  'workplace.error.quota_warning.expire_warning_threshold.required': '请输入过期预警阈值',
+  'workplace.placeholder.quota_warning.expire_warning_threshold':
+    '请输入过期预警阈值',
+  'workplace.error.quota_warning.expire_warning_threshold.required':
+    '请输入过期预警阈值',
   'workplace.recharge': '充值',
 };

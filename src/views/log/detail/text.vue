@@ -75,7 +75,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{
-          $t(`chat.dict.stream.${currentData.stream || false}`)
+          $t(`text.dict.stream.${currentData.stream || false}`)
         }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="提问" :span="2">
@@ -132,7 +132,7 @@
           <span>
             总花费
             <a-tooltip
-              :content="$t('chat.columns.tooltip.total_spend_tokens')"
+              :content="$t('text.columns.tooltip.total_spend_tokens')"
               :content-style="{
                 whiteSpace: 'nowrap',
                 maxWidth: 'none',
@@ -224,16 +224,16 @@
         </a-skeleton>
         <span v-else>
           <a-tag v-if="currentData.status === 1" color="green">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else-if="currentData.status === 2" color="gold">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else-if="currentData.status === 3" color="orange">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else color="red">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
         </span>
       </a-descriptions-item>
@@ -357,7 +357,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ $t(`chat.dict.stream.${currentData.stream || false}`) }}
+          {{ $t(`text.dict.stream.${currentData.stream || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item label="启用后备">
@@ -367,7 +367,7 @@
         <span v-else>
           {{
             $t(
-              `chat.dict.is_enable_fallback.${
+              `text.dict.is_enable_fallback.${
                 currentData.is_enable_fallback || false
               }`
             )
@@ -396,7 +396,7 @@
         </a-skeleton>
         <span v-else>{{
           $t(
-            `chat.dict.is_enable_forward.${
+            `text.dict.is_enable_forward.${
               currentData.is_enable_forward || false
             }`
           )
@@ -409,7 +409,7 @@
         <span v-else>{{
           currentData.is_enable_forward
             ? $t(
-                `chat.dict.forward_rule.${
+                `text.dict.forward_rule.${
                   currentData.forward_config.forward_rule || '1'
                 }`
               )
@@ -422,7 +422,7 @@
         </a-skeleton>
         <span v-else>{{
           $t(
-            `chat.dict.is_enable_model_agent.${
+            `text.dict.is_enable_model_agent.${
               currentData.is_enable_model_agent || false
             }`
           )
@@ -517,7 +517,7 @@
           <span>
             总花费
             <a-tooltip
-              :content="$t('chat.columns.tooltip.total_spend_tokens')"
+              :content="$t('text.columns.tooltip.total_spend_tokens')"
               :content-style="{
                 whiteSpace: 'nowrap',
                 maxWidth: 'none',
@@ -628,16 +628,16 @@
         </a-skeleton>
         <span v-else>
           <a-tag v-if="currentData.status === 1" color="green">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else-if="currentData.status === 2" color="gold">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else-if="currentData.status === 3" color="orange">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else color="red">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
         </span>
       </a-descriptions-item>
@@ -761,10 +761,10 @@
   import { useClipboard } from '@vueuse/core';
   import VueJsonPretty from 'vue-json-pretty';
   import {
-    queryChatDetail,
+    queryTextDetail,
     DetailParams,
-    ChatDetail,
-    chatCopyField,
+    TextDetail,
+    textCopyField,
   } from '@/api/log';
   import { Spend } from '@/api/common';
   import Quota from '@/views/common/quota.vue';
@@ -772,7 +772,7 @@
   import 'vue-json-pretty/lib/styles.css';
 
   const { loading, setLoading } = useLoading(true);
-  const currentData = ref<ChatDetail>({} as ChatDetail);
+  const currentData = ref<TextDetail>({} as TextDetail);
   const { copy, copied } = useClipboard();
   const { proxy } = getCurrentInstance() as any;
 
@@ -783,10 +783,10 @@
     },
   });
 
-  const getChatDetail = async (params: DetailParams = { id: props.id }) => {
+  const getTextDetail = async (params: DetailParams = { id: props.id }) => {
     setLoading(true);
     try {
-      const { data } = await queryChatDetail(params);
+      const { data } = await queryTextDetail(params);
       currentData.value = data;
     } catch (err) {
       // you can report use errorHandler or other
@@ -794,7 +794,7 @@
       setLoading(false);
     }
   };
-  getChatDetail();
+  getTextDetail();
 
   /**
    * 复制内容
@@ -815,7 +815,7 @@
    * 复制字段值
    */
   const handleCopyField = async (id: string, field: string) => {
-    const { data } = await chatCopyField({ id, field });
+    const { data } = await textCopyField({ id, field });
     copy(data.value);
   };
 
@@ -832,7 +832,7 @@
 
 <script lang="ts">
   export default {
-    name: 'ChatDetail',
+    name: 'TextDetail',
   };
 </script>
 

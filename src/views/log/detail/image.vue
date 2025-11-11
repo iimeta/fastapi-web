@@ -124,7 +124,7 @@
           <span>
             总花费
             <a-tooltip
-              :content="$t('chat.columns.tooltip.total_spend_tokens')"
+              :content="$t('text.columns.tooltip.total_spend_tokens')"
               :content-style="{
                 whiteSpace: 'nowrap',
                 maxWidth: 'none',
@@ -178,16 +178,16 @@
         </a-skeleton>
         <span v-else>
           <a-tag v-if="currentData.status === 1" color="green">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else-if="currentData.status === 2" color="gold">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else-if="currentData.status === 3" color="orange">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else color="red">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
         </span>
       </a-descriptions-item>
@@ -313,7 +313,7 @@
         <span v-else>
           {{
             $t(
-              `chat.dict.is_enable_fallback.${
+              `text.dict.is_enable_fallback.${
                 currentData.is_enable_fallback || false
               }`
             )
@@ -342,7 +342,7 @@
         </a-skeleton>
         <span v-else>{{
           $t(
-            `chat.dict.is_enable_forward.${
+            `text.dict.is_enable_forward.${
               currentData.is_enable_forward || false
             }`
           )
@@ -355,7 +355,7 @@
         <span v-else>{{
           currentData.is_enable_forward
             ? $t(
-                `chat.dict.forward_rule.${
+                `text.dict.forward_rule.${
                   currentData.forward_config.forward_rule || '1'
                 }`
               )
@@ -368,7 +368,7 @@
         </a-skeleton>
         <span v-else>{{
           $t(
-            `chat.dict.is_enable_model_agent.${
+            `text.dict.is_enable_model_agent.${
               currentData.is_enable_model_agent || false
             }`
           )
@@ -463,7 +463,7 @@
           <span>
             总花费
             <a-tooltip
-              :content="$t('chat.columns.tooltip.total_spend_tokens')"
+              :content="$t('text.columns.tooltip.total_spend_tokens')"
               :content-style="{
                 whiteSpace: 'nowrap',
                 maxWidth: 'none',
@@ -536,16 +536,16 @@
         </a-skeleton>
         <span v-else>
           <a-tag v-if="currentData.status === 1" color="green">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else-if="currentData.status === 2" color="gold">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else-if="currentData.status === 3" color="orange">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else color="red">
-            {{ $t(`chat.dict.status.${currentData.status}`) }}
+            {{ $t(`text.dict.status.${currentData.status}`) }}
           </a-tag>
         </span>
       </a-descriptions-item>

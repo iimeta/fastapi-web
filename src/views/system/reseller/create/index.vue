@@ -111,7 +111,7 @@
                 :parser="parsePrice"
                 allow-clear
               >
-                <template #prefix> {{ currencySymbol }}</template>
+                <template #prefix> {{ appStore.getCurrencySymbol }} </template>
               </a-input-number>
             </a-form-item>
             <a-form-item>
@@ -289,7 +289,7 @@
   const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(false);
   const router = useRouter();
-  const currencySymbol = useAppStore().getCurrencySymbol;
+  const appStore = useAppStore();
 
   const groups = ref<GroupList[]>([]);
 

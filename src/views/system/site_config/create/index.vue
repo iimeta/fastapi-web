@@ -181,7 +181,7 @@
                 :parser="parsePrice"
                 allow-clear
               >
-                <template #prefix> {{ currencySymbol }}</template>
+                <template #prefix> {{ appStore.getCurrencySymbol }} </template>
               </a-input-number>
             </a-form-item>
             <a-form-item v-if="!formData.register_tips">
@@ -566,7 +566,7 @@
   import Quota from '@/views/common/quota.vue';
 
   const { proxy } = getCurrentInstance() as any;
-  const currencySymbol = useAppStore().getCurrencySymbol;
+  const appStore = useAppStore();
 
   const router = useRouter();
   const formRef = ref<FormInstance>();

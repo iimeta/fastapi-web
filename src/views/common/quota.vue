@@ -1,16 +1,16 @@
 <template>
   <span>
     <template v-if="modelValue > 0"
-      ><span class="currency-symbol">{{ currencySymbol }}</span
+      ><span class="currency-symbol">{{ appStore.getCurrencySymbol }}</span
       >{{ parseQuota(modelValue, n) }}</template
     >
     <template v-else-if="modelValue < 0"
       ><span class="currency-symbol">-</span
-      ><span class="currency-symbol">{{ currencySymbol }}</span
+      ><span class="currency-symbol">{{ appStore.getCurrencySymbol }}</span
       >{{ parseQuota(-modelValue, n) }}</template
     >
     <template v-else
-      ><span class="currency-symbol">{{ currencySymbol }}</span
+      ><span class="currency-symbol">{{ appStore.getCurrencySymbol }}</span
       >0.00</template
     >
   </span>
@@ -20,7 +20,7 @@
   import { useAppStore } from '@/store';
   import { parseQuota } from '@/utils/common';
 
-  const currencySymbol = useAppStore().getCurrencySymbol;
+  const appStore = useAppStore();
 
   defineProps<{
     modelValue: number;

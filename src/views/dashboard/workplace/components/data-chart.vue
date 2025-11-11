@@ -41,7 +41,7 @@
   import { useAppStore } from '@/store';
   import { parseQuota } from '@/utils/common';
 
-  const currencySymbol = useAppStore().getCurrencySymbol;
+  const appStore = useAppStore();
 
   const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
     return items
@@ -56,7 +56,7 @@
         <span class="tooltip-value">
         ${
           el.seriesName === '总花费'
-            ? `${currencySymbol} ${parseQuota(el.value)}`
+            ? `${appStore.getCurrencySymbol} ${parseQuota(el.value)}`
             : parseQuota(el.value)
         }
         </span>

@@ -472,7 +472,7 @@
   const totalSpend = ref<Spend[]>([]);
   const totalSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.total_spend_tokens'),
+      title: t('text.columns.spend.total_spend_tokens'),
       headerCellStyle: { background: '#ffffff' },
     },
   ]);
@@ -481,39 +481,39 @@
   const textSpend = ref<TextSpend[]>([]);
   const textSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.text'),
+      title: t('text.columns.spend.text'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.input_tokens'),
+          title: t('text.columns.spend.input_tokens'),
           dataIndex: 'input_tokens',
           slotName: 'input_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.input_ratio'),
+          title: t('text.columns.spend.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.output_tokens'),
+          title: t('text.columns.spend.output_tokens'),
           dataIndex: 'output_tokens',
           slotName: 'output_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.output_ratio'),
+          title: t('text.columns.spend.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -527,25 +527,25 @@
   const textCacheSpend = ref<CacheSpend[]>([]);
   const textCacheSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.text_cache'),
+      title: t('text.columns.spend.text_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.read_tokens'),
+          title: t('text.columns.spend.read_tokens'),
           dataIndex: 'read_tokens',
           slotName: 'read_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.read_ratio'),
+          title: t('text.columns.spend.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -559,14 +559,14 @@
   const audioSpend = ref<AudioSpend[]>([]);
   const audioSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.audio'),
+      title: t('text.columns.spend.audio'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
           title: t(
             props.modelType === 5
-              ? 'chat.columns.spend.audio.input_tokens'
-              : 'chat.columns.spend.input_tokens'
+              ? 'text.columns.spend.audio.input_tokens'
+              : 'text.columns.spend.input_tokens'
           ),
           dataIndex: 'input_tokens',
           slotName: 'input_tokens',
@@ -574,7 +574,7 @@
           width: 100,
         },
         {
-          title: t('chat.columns.spend.input_ratio'),
+          title: t('text.columns.spend.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
           align: 'center',
@@ -583,8 +583,8 @@
         {
           title: t(
             props.modelType === 6
-              ? 'chat.columns.spend.audio.output_tokens'
-              : 'chat.columns.spend.output_tokens'
+              ? 'text.columns.spend.audio.output_tokens'
+              : 'text.columns.spend.output_tokens'
           ),
           dataIndex: 'output_tokens',
           slotName: 'output_tokens',
@@ -592,14 +592,14 @@
           width: 100,
         },
         {
-          title: t('chat.columns.spend.output_ratio'),
+          title: t('text.columns.spend.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -613,25 +613,25 @@
   const audioCacheSpend = ref<CacheSpend[]>([]);
   const audioCacheSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.audio_cache'),
+      title: t('text.columns.spend.audio_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.read_tokens'),
+          title: t('text.columns.spend.read_tokens'),
           dataIndex: 'read_tokens',
           slotName: 'read_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.read_ratio'),
+          title: t('text.columns.spend.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -645,53 +645,53 @@
   const tieredTextSpend = ref<TextSpend[]>([]);
   const tieredTextSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.tiered_text'),
+      title: t('text.columns.spend.tiered_text'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.mode'),
+          title: t('text.columns.spend.mode'),
           dataIndex: 'mode',
           slotName: 'mode',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.tiered.input_tokens'),
+          title: t('text.columns.spend.tiered.input_tokens'),
           dataIndex: 'gt',
           slotName: 'gt',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.input_tokens'),
+          title: t('text.columns.spend.input_tokens'),
           dataIndex: 'input_tokens',
           slotName: 'input_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.tiered.input_ratio'),
+          title: t('text.columns.spend.tiered.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.output_tokens'),
+          title: t('text.columns.spend.output_tokens'),
           dataIndex: 'output_tokens',
           slotName: 'output_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.tiered.output_ratio'),
+          title: t('text.columns.spend.tiered.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -705,53 +705,53 @@
   const tieredTextCacheSpend = ref<CacheSpend[]>([]);
   const tieredTextCacheSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.tiered_text_cache'),
+      title: t('text.columns.spend.tiered_text_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.mode'),
+          title: t('text.columns.spend.mode'),
           dataIndex: 'mode',
           slotName: 'mode',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.tiered.input_tokens'),
+          title: t('text.columns.spend.tiered.input_tokens'),
           dataIndex: 'gt',
           slotName: 'gt',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.read_tokens'),
+          title: t('text.columns.spend.read_tokens'),
           dataIndex: 'read_tokens',
           slotName: 'read_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.tiered.read_ratio'),
+          title: t('text.columns.spend.tiered.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.write_tokens'),
+          title: t('text.columns.spend.write_tokens'),
           dataIndex: 'write_tokens',
           slotName: 'write_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.tiered.write_ratio'),
+          title: t('text.columns.spend.tiered.write_ratio'),
           dataIndex: 'write_ratio',
           slotName: 'write_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -765,39 +765,39 @@
   const imageSpend = ref<ImageSpend[]>([]);
   const imageSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.image'),
+      title: t('text.columns.spend.image'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.input_tokens'),
+          title: t('text.columns.spend.input_tokens'),
           dataIndex: 'input_tokens',
           slotName: 'input_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.input_ratio'),
+          title: t('text.columns.spend.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.output_tokens'),
+          title: t('text.columns.spend.output_tokens'),
           dataIndex: 'output_tokens',
           slotName: 'output_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.output_ratio'),
+          title: t('text.columns.spend.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -811,39 +811,39 @@
   const imageGenerationSpend = ref<ImageGenerationSpend[]>([]);
   const imageGenerationSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.image_generation'),
+      title: t('text.columns.spend.image_generation'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.image.generation.quality'),
+          title: t('text.columns.spend.image.generation.quality'),
           dataIndex: 'quality',
           slotName: 'quality',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.image.generation.width_height'),
+          title: t('text.columns.spend.image.generation.width_height'),
           dataIndex: 'width',
           slotName: 'width',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.image.generation.n'),
+          title: t('text.columns.spend.image.generation.n'),
           dataIndex: 'n',
           slotName: 'n',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.image.generation.once_ratio'),
+          title: t('text.columns.spend.image.generation.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -857,25 +857,25 @@
   const imageCacheSpend = ref<CacheSpend[]>([]);
   const imageCacheSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.image_cache'),
+      title: t('text.columns.spend.image_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.read_tokens'),
+          title: t('text.columns.spend.read_tokens'),
           dataIndex: 'read_tokens',
           slotName: 'read_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.read_ratio'),
+          title: t('text.columns.spend.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -889,25 +889,25 @@
   const visionSpend = ref<VisionSpend[]>([]);
   const visionSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.vision'),
+      title: t('text.columns.spend.vision'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.mode'),
+          title: t('text.columns.spend.mode'),
           dataIndex: 'mode',
           slotName: 'mode',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.vision.once_ratio'),
+          title: t('text.columns.spend.vision.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -921,25 +921,25 @@
   const videoSpend = ref<VideoSpend[]>([]);
   const videoSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.video'),
+      title: t('text.columns.spend.video'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.video.width_height'),
+          title: t('text.columns.spend.video.width_height'),
           dataIndex: 'width',
           slotName: 'width',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.video.once_ratio'),
+          title: t('text.columns.spend.video.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -953,25 +953,25 @@
   const searchSpend = ref<SearchSpend[]>([]);
   const searchSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.search'),
+      title: t('text.columns.spend.search'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.search.context_size'),
+          title: t('text.columns.spend.search.context_size'),
           dataIndex: 'context_size',
           slotName: 'context_size',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.search.once_ratio'),
+          title: t('text.columns.spend.search.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -985,39 +985,39 @@
   const midjourneySpend = ref<MidjourneySpend[]>([]);
   const midjourneySpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.midjourney'),
+      title: t('text.columns.spend.midjourney'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.midjourney.name'),
+          title: t('text.columns.spend.midjourney.name'),
           dataIndex: 'name',
           slotName: 'name',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.midjourney.action'),
+          title: t('text.columns.spend.midjourney.action'),
           dataIndex: 'action',
           slotName: 'action',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.midjourney.path'),
+          title: t('text.columns.spend.midjourney.path'),
           dataIndex: 'path',
           slotName: 'path',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.once_ratio'),
+          title: t('text.columns.spend.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -1031,32 +1031,32 @@
   const onceSpend = ref<OnceSpend[]>([]);
   const onceSpendColumns = ref<TableColumnData[]>([
     {
-      title: t('chat.columns.spend.once'),
+      title: t('text.columns.spend.once'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('chat.columns.spend.input_tokens'),
+          title: t('text.columns.spend.input_tokens'),
           dataIndex: 'input_tokens',
           slotName: 'input_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.output_tokens'),
+          title: t('text.columns.spend.output_tokens'),
           dataIndex: 'output_tokens',
           slotName: 'output_tokens',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.once_ratio'),
+          title: t('text.columns.spend.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
           width: 100,
         },
         {
-          title: t('chat.columns.spend.spend_tokens'),
+          title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
           align: 'center',
@@ -1075,7 +1075,7 @@
     if (spend.value.billing_items.includes('text') && spend.value.text) {
       textSpend.value[0] = spend.value.text;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.text'),
+        title: t('text.columns.spend.text'),
         dataIndex: 'text',
         slotName: 'text',
         align: 'center',
@@ -1090,7 +1090,7 @@
     ) {
       textCacheSpend.value[0] = spend.value.text_cache;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.text_cache'),
+        title: t('text.columns.spend.text_cache'),
         dataIndex: 'text_cache',
         slotName: 'text_cache',
         align: 'center',
@@ -1102,7 +1102,7 @@
     if (spend.value.billing_items.includes('audio') && spend.value.audio) {
       audioSpend.value[0] = spend.value.audio;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.audio'),
+        title: t('text.columns.spend.audio'),
         dataIndex: 'audio',
         slotName: 'audio',
         align: 'center',
@@ -1117,7 +1117,7 @@
     ) {
       audioCacheSpend.value[0] = spend.value.audio_cache;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.audio_cache'),
+        title: t('text.columns.spend.audio_cache'),
         dataIndex: 'audio_cache',
         slotName: 'audio_cache',
         align: 'center',
@@ -1132,7 +1132,7 @@
     ) {
       tieredTextSpend.value[0] = spend.value.tiered_text;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.tiered_text'),
+        title: t('text.columns.spend.tiered_text'),
         dataIndex: 'tiered_text',
         slotName: 'tiered_text',
         align: 'center',
@@ -1147,7 +1147,7 @@
     ) {
       tieredTextCacheSpend.value[0] = spend.value.tiered_text_cache;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.tiered_text_cache'),
+        title: t('text.columns.spend.tiered_text_cache'),
         dataIndex: 'tiered_text_cache',
         slotName: 'tiered_text_cache',
         align: 'center',
@@ -1159,7 +1159,7 @@
     if (spend.value.billing_items.includes('image') && spend.value.image) {
       imageSpend.value[0] = spend.value.image;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.image'),
+        title: t('text.columns.spend.image'),
         dataIndex: 'image',
         slotName: 'image',
         align: 'center',
@@ -1174,7 +1174,7 @@
     ) {
       imageGenerationSpend.value[0] = spend.value.image_generation;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.image_generation'),
+        title: t('text.columns.spend.image_generation'),
         dataIndex: 'image_generation',
         slotName: 'image_generation',
         align: 'center',
@@ -1189,7 +1189,7 @@
     ) {
       imageCacheSpend.value[0] = spend.value.image_cache;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.image_cache'),
+        title: t('text.columns.spend.image_cache'),
         dataIndex: 'image_cache',
         slotName: 'image_cache',
         align: 'center',
@@ -1201,7 +1201,7 @@
     if (spend.value.billing_items.includes('vision') && spend.value.vision) {
       visionSpend.value[0] = spend.value.vision;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.vision'),
+        title: t('text.columns.spend.vision'),
         dataIndex: 'vision',
         slotName: 'vision',
         align: 'center',
@@ -1213,7 +1213,7 @@
     if (spend.value.billing_items.includes('video') && spend.value.video) {
       videoSpend.value[0] = spend.value.video;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.video'),
+        title: t('text.columns.spend.video'),
         dataIndex: 'video',
         slotName: 'video',
         align: 'center',
@@ -1225,7 +1225,7 @@
     if (spend.value.billing_items.includes('search') && spend.value.search) {
       searchSpend.value[0] = spend.value.search;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.search'),
+        title: t('text.columns.spend.search'),
         dataIndex: 'search',
         slotName: 'search',
         align: 'center',
@@ -1240,7 +1240,7 @@
     ) {
       midjourneySpend.value[0] = spend.value.midjourney;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.midjourney'),
+        title: t('text.columns.spend.midjourney'),
         dataIndex: 'midjourney',
         slotName: 'midjourney',
         align: 'center',
@@ -1252,7 +1252,7 @@
     if (spend.value.billing_items.includes('once') && spend.value.once) {
       onceSpend.value[0] = spend.value.once;
       totalSpendColumns.value[0].children.push({
-        title: t('chat.columns.spend.once'),
+        title: t('text.columns.spend.once'),
         dataIndex: 'once',
         slotName: 'once',
         align: 'center',
@@ -1262,7 +1262,7 @@
 
     // 分组折扣
     totalSpendColumns.value[0].children.push({
-      title: t('chat.columns.spend.group_discount'),
+      title: t('text.columns.spend.group_discount'),
       dataIndex: 'group_discount',
       slotName: 'group_discount',
       align: 'center',
@@ -1271,7 +1271,7 @@
 
     // 总花费
     totalSpendColumns.value[0].children.push({
-      title: t('chat.columns.spend.total_spend_tokens'),
+      title: t('text.columns.spend.total_spend_tokens'),
       dataIndex: 'total_spend_tokens',
       slotName: 'total_spend_tokens',
       align: 'center',

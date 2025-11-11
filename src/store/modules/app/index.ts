@@ -67,8 +67,8 @@ const useAppStore = defineStore('app', {
     getDefaultLanguage(state: AppState): string | undefined {
       return state.config.default_language;
     },
-    getCurrencySymbol(state: AppState): string {
-      return state.config.currency_symbol || '$';
+    getCurrencySymbol(state: AppState): string | undefined {
+      return state.config.currency_symbol;
     },
     getCarousel1Title(state: AppState): string | undefined {
       return state.config.carousel1_title;
@@ -247,7 +247,7 @@ const useAppStore = defineStore('app', {
           ga_beian: res.data.ga_beian,
           register_tips: res.data.register_tips,
           default_language: res.data.default_language,
-          currency_symbol: res.data.currency_symbol,
+          currency_symbol: res.data.currency_symbol || '$',
           carousel1_title:
             res.data.carousel1_title ||
             (res.data.domain ? undefined : '赞助商'),

@@ -61,8 +61,8 @@ export interface Midjourney {
 
 export interface Log {
   open: boolean;
-  chat_records: string[];
-  chat_reserve: number;
+  text_records: string[];
+  text_reserve: number;
   image_reserve: number;
   audio_reserve: number;
   status: number[];
