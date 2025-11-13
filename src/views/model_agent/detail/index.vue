@@ -44,6 +44,17 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
+        :label="t('model.agent.detail.label.groups')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else style="max-height: 220px; display: block; overflow: auto">
+          {{ currentData?.group_names?.join('\n') || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
         :label="t('model.agent.detail.label.models')"
         :span="2"
       >
@@ -166,7 +177,7 @@
     queryModelAgentDetail,
     ModelAgentDetailParams,
     ModelAgentDetail,
-  } from '@/api/agent';
+  } from '@/api/model_agent';
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);

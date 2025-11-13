@@ -441,7 +441,7 @@
     queryKeyDetail,
   } from '@/api/key';
   import { queryModelList, ModelList } from '@/api/model';
-  import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+  import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { useClipboard } from '@vueuse/core';
   import Models from '@/views/common/models.vue';

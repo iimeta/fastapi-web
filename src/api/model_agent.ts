@@ -13,6 +13,7 @@ export interface ModelAgentBaseInfo {
 }
 
 export interface ModelAgentAdvanced {
+  groups: string[];
   models: string[];
   is_enable_model_replace: boolean;
   replace_models: string[];
@@ -104,6 +105,8 @@ export interface ModelAgentDetail {
   base_url: string;
   path: string;
   weight: number;
+  groups: string[];
+  group_names: string[];
   models: string[];
   model_names: string[];
   fallback_names: string[];

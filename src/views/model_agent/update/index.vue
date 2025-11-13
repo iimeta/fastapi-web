@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-bug />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.agent') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.model.agent.create') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.model.agent') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.model.agent.update') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -93,8 +93,8 @@
                 v-model="formData.weight"
                 :placeholder="$t('model.agent.placeholder.weight')"
                 :precision="0"
-                :min="1"
-                :max="100"
+                :min="0"
+                :max="999"
               />
             </a-form-item>
             <a-form-item field="remark" :label="$t('model.agent.label.remark')">
@@ -108,7 +108,33 @@
               {{ $t('common.title.advanced') }}
             </a-divider>
 
-            <a-form-item field="models" :label="$t('model.agent.label.models')">
+            <a-form-item field="groups" :label="$t('model.agent.label.groups')">
+              <a-select
+                v-model="formData.groups"
+                :placeholder="$t('model.agent.placeholder.groups')"
+                :max-tag-count="5"
+                :scrollbar="false"
+                multiple
+                allow-search
+                allow-clear
+              >
+                <a-option
+                  v-for="item in groups"
+                  :key="item.id"
+                  :value="item.id"
+                  :label="item.name"
+                />
+              </a-select>
+            </a-form-item>
+            <a-form-item
+              field="models"
+              :label="$t('model.agent.label.models')"
+              :rules="[
+                {
+                  required: false,
+                },
+              ]"
+            >
               <a-tree-select
                 v-model="formData.models"
                 :placeholder="$t('model.agent.placeholder.models')"
@@ -237,14 +263,21 @@
   import { ref, getCurrentInstance } from 'vue';
   import useLoading from '@/hooks/loading';
   import { FormInstance } from '@arco-design/web-vue';
-  import { useRouter } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { useI18n } from 'vue-i18n';
-  import { submitModelAgentCreate, ModelAgentCreate } from '@/api/agent';
+  import {
+    submitModelAgentUpdate,
+    ModelAgentUpdate,
+    queryModelAgentDetail,
+    ModelAgentDetailParams,
+  } from '@/api/model_agent';
   import { queryProviderList, ProviderList } from '@/api/provider';
+  import { queryGroupList, GroupList } from '@/api/group';
   import { queryModelTree, Tree } from '@/api/model';
 
   const { loading, setLoading } = useLoading(false);
   const { proxy } = getCurrentInstance() as any;
+  const route = useRoute();
   const router = useRouter();
   const { t } = useI18n();
 
@@ -264,7 +297,6 @@
       setLoading(false);
     }
   };
-  getProviderList();
 
   const keyPlaceholder = ref(t('key.placeholder.key'));
   const getKeyPlaceholder = async () => {
@@ -286,6 +318,19 @@
     }
   };
 
+  const groups = ref<GroupList[]>([]);
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getGroupList();
+
   const treeData = ref<Tree[]>([]);
   const getModelTree = async () => {
     setLoading(true);
@@ -301,19 +346,22 @@
   getModelTree();
 
   const formRef = ref<FormInstance>();
-  const formData = ref<ModelAgentCreate>({
+  const formData = ref<ModelAgentUpdate>({
+    id: '',
     provider_id: '',
     name: '',
     base_url: '',
     path: '',
     weight: ref(20),
     remark: '',
+    status: 1,
+    groups: [],
     models: [],
     is_enable_model_replace: false,
     replace_models: [],
     target_models: [],
     is_never_disable: false,
-    lb_strategy: '1',
+    lb_strategy: '',
     key: '',
     is_agents_only: true,
     is_never_disable_key: false,
@@ -324,8 +372,8 @@
     if (!res) {
       setLoading(true);
       try {
-        await submitModelAgentCreate(formData.value).then(() => {
-          proxy.$message.success('新建成功');
+        await submitModelAgentUpdate(formData.value).then(() => {
+          proxy.$message.success('更新成功');
           router.push({
             name: 'ModelAgentList',
           });
@@ -337,6 +385,40 @@
       }
     }
   };
+
+  const getModelAgentDetail = async (
+    params: ModelAgentDetailParams = { id: route.query.id }
+  ) => {
+    setLoading(true);
+    try {
+      getProviderList();
+      const { data } = await queryModelAgentDetail(params);
+      formData.value.id = data.id;
+      formData.value.provider_id = data.provider_id;
+      formData.value.name = data.name;
+      formData.value.base_url = data.base_url;
+      formData.value.path = data.path;
+      formData.value.weight = data.weight;
+      formData.value.remark = data.remark;
+      formData.value.status = data.status;
+      formData.value.groups = data.groups;
+      formData.value.models = data.models;
+      formData.value.is_enable_model_replace = data.is_enable_model_replace;
+      if (data.replace_models) {
+        formData.value.replace_models = data.replace_models;
+        formData.value.target_models = data.target_models;
+      }
+      formData.value.is_never_disable = data.is_never_disable;
+      formData.value.lb_strategy = String(data.lb_strategy);
+      formData.value.key = data.key;
+      getKeyPlaceholder();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+  getModelAgentDetail();
 
   const handleIsEnableModelReplaceChange = () => {
     if (!formData.value.is_enable_model_replace) {
@@ -362,7 +444,7 @@
 
 <script lang="ts">
   export default {
-    name: 'ModelAgentCreate',
+    name: 'ModelAgentUpdate',
   };
 </script>
 

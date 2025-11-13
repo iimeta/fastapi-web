@@ -18,8 +18,7 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 3 }"
-            :wrapper-col-props="{ span: 21 }"
+            :label-col-props="{ span: 4 }"
           >
             <a-divider orientation="left">
               {{ $t('common.title.baseInfo') }}
@@ -170,7 +169,7 @@
   } from '@/api/key';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryModelTree, Tree } from '@/api/model';
-  import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+  import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
 
   const { loading, setLoading } = useLoading(false);
   const { proxy } = getCurrentInstance() as any;

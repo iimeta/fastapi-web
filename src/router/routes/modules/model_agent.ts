@@ -1,13 +1,13 @@
 import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
-const AGENT: AppRouteRecordRaw = {
-  path: '/agent',
-  name: 'agent',
+const MODEL_AGENT: AppRouteRecordRaw = {
+  path: '/model/agent',
+  name: 'model_agent',
   component: DEFAULT_LAYOUT,
-  redirect: '/agent/list',
+  redirect: '/model/agent/list',
   meta: {
-    locale: 'menu.agent',
+    locale: 'menu.model.agent',
     requiresAuth: true,
     icon: 'icon-bug',
     order: 50,
@@ -18,39 +18,39 @@ const AGENT: AppRouteRecordRaw = {
     {
       path: 'list',
       name: 'ModelAgentList',
-      component: () => import('@/views/agent/list/index.vue'),
+      component: () => import('@/views/model_agent/list/index.vue'),
       meta: {
         locale: 'menu.model.agent.list',
         requiresAuth: true,
         roles: ['admin'],
-        activeMenu: 'agent',
+        activeMenu: 'model_agent',
       },
     },
     {
       path: 'create',
       name: 'ModelAgentCreate',
-      component: () => import('@/views/agent/create/index.vue'),
+      component: () => import('@/views/model_agent/create/index.vue'),
       meta: {
         locale: 'menu.model.agent.create',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
-        activeMenu: 'agent',
+        activeMenu: 'model_agent',
       },
     },
     {
       path: 'update',
       name: 'ModelAgentUpdate',
-      component: () => import('@/views/agent/update/index.vue'),
+      component: () => import('@/views/model_agent/update/index.vue'),
       meta: {
         locale: 'menu.model.agent.update',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
-        activeMenu: 'agent',
+        activeMenu: 'model_agent',
       },
     },
   ],
 };
 
-export default AGENT;
+export default MODEL_AGENT;

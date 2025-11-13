@@ -500,7 +500,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { queryModelList, ModelList } from '@/api/model';
-  import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+  import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import Models from '@/views/common/models.vue';
   import Quota from '@/views/common/quota.vue';
   import Detail from '../detail/index.vue';

@@ -12,7 +12,7 @@ import localeApp from '@/views/app/locale/en-US';
 import localeAppKey from '@/views/app_key/locale/en-US';
 import localeModel from '@/views/model/locale/en-US';
 import localeKey from '@/views/key/locale/en-US';
-import localeAgent from '@/views/agent/locale/en-US';
+import localeAgent from '@/views/model_agent/locale/en-US';
 import localeProvider from '@/views/system/provider/locale/en-US';
 import localeFinance from '@/views/finance/locale/en-US';
 import localeLog from '@/views/log/locale/en-US';

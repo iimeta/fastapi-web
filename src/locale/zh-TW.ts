@@ -12,7 +12,7 @@ import localeApp from '@/views/app/locale/zh-CN';
 import localeAppKey from '@/views/app_key/locale/zh-CN';
 import localeModel from '@/views/model/locale/zh-CN';
 import localeKey from '@/views/key/locale/zh-CN';
-import localeAgent from '@/views/agent/locale/zh-CN';
+import localeAgent from '@/views/model_agent/locale/zh-CN';
 import localeProvider from '@/views/system/provider/locale/zh-CN';
 import localeFinance from '@/views/finance/locale/zh-CN';
 import localeLog from '@/views/log/locale/zh-CN';

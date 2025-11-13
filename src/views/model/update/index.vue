@@ -649,7 +649,7 @@
     ModelList,
   } from '@/api/model';
   import { queryProviderList, ProviderList } from '@/api/provider';
-  import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+  import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import { queryGroupList, GroupList } from '@/api/group';
   import Pricing from '../components/pricing.vue';
 

@@ -16,7 +16,7 @@ export default {
   'workplace.modelManagement': '模型管理',
   'workplace.keyManagement': '密钥管理',
   'workplace.appKeyManagement': '应用密钥',
-  'workplace.agentManagement': '代理管理',
+  'workplace.agentManagement': '模型代理',
   'workplace.groupManagement': '分组管理',
   'workplace.userManagement': '用户管理',
   'workplace.noticeManagement': '通知管理',

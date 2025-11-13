@@ -583,7 +583,7 @@
   import { Tooltip } from '@arco-design/web-vue';
   import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
   import { queryModelList, ModelList } from '@/api/model';
-  import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+  import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import { Spend } from '@/api/common';
   import Quota from '@/views/common/quota.vue';
   import Detail from '../detail/audio.vue';

@@ -4,7 +4,7 @@
       <a-breadcrumb-item>
         <icon-bug />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.agent') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.model.agent') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.model.agent.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
@@ -266,6 +266,9 @@
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
       >
+        <template #group_names="{ record }">
+          {{ record?.group_names?.join(',') || '-' }}
+        </template>
         <template #model_names="{ record }">
           <span v-if="record.model_names">
             <a-button type="text" size="small" @click="modelsHandle(record.id)">
@@ -415,7 +418,7 @@
     submitModelAgentChangeStatus,
     ModelAgentBatchOperate,
     submitModelAgentBatchOperate,
-  } from '@/api/agent';
+  } from '@/api/model_agent';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -509,6 +512,14 @@
       tooltip: true,
     },
     {
+      title: t('model.agent.columns.groups'),
+      dataIndex: 'group_names',
+      slotName: 'group_names',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
       title: t('model.agent.columns.models'),
       dataIndex: 'model_names',
       slotName: 'model_names',
@@ -516,14 +527,6 @@
       ellipsis: true,
       tooltip: true,
     },
-    // {
-    //   title: t('model.agent.columns.fallback_models'),
-    //   dataIndex: 'fallback_model_names',
-    //   slotName: 'fallback_model_names',
-    //   align: 'center',
-    //   ellipsis: true,
-    //   tooltip: true,
-    // },
     {
       title: t('common.weight'),
       dataIndex: 'weight',

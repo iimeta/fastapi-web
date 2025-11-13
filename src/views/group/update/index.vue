@@ -598,7 +598,7 @@
     queryGroupDetail,
   } from '@/api/group';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
-  import { queryModelAgentList, ModelAgentList } from '@/api/agent';
+  import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import Quota from '@/views/common/quota.vue';
 
   const { loading, setLoading } = useLoading(false);
