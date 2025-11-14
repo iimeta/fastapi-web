@@ -1,4 +1,5 @@
 export interface TextPricing {
+  service_tier?: string;
   input_ratio: any;
   output_ratio: any;
   mode?: string;
@@ -8,6 +9,7 @@ export interface TextPricing {
 }
 
 export interface CachePricing {
+  service_tier?: string;
   read_ratio: any;
   write_ratio?: any;
   mode?: string;
@@ -69,8 +71,8 @@ export interface Pricing {
   billing_rule: any;
   billing_methods: number[];
   billing_items: string[];
-  text: TextPricing;
-  text_cache: CachePricing;
+  text: TextPricing[];
+  text_cache: CachePricing[];
   tiered_text: TextPricing[];
   tiered_text_cache: CachePricing[];
   image: ImagePricing;

@@ -216,50 +216,66 @@
         :title="$t('model.dict.billing_items.text')"
       >
         <a-form-item
-          field="text.input_ratio"
-          :label="$t('model.label.input_ratio')"
+          v-for="(_, index) of formData.text"
+          :key="index"
+          :field="
+            `text[${index}].service_tier` &&
+            `text[${index}].input_ratio` &&
+            `text[${index}].output_ratio`
+          "
+          :label="`${index + 1}. ` + $t('model.label.text')"
           :rules="[
             {
               required: true,
-              message: $t('model.error.input_ratio.required'),
+              message: $t('model.error.text.required'),
             },
           ]"
         >
+          <a-select
+            v-model="formData.text[index].service_tier"
+            :placeholder="$t('model.placeholder.service_tier')"
+            :options="serviceTierOptions"
+            style="width: 215px; margin-right: 5px"
+          />
           <a-input-number
-            v-model="formData.text.input_ratio"
+            v-model="formData.text[index].input_ratio"
             :placeholder="$t('model.placeholder.input_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            class="input"
+            style="width: 228px; margin-right: 5px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
-        </a-form-item>
-        <a-form-item
-          field="text.output_ratio"
-          :label="$t('model.label.output_ratio')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.error.output_ratio.required'),
-            },
-          ]"
-        >
           <a-input-number
-            v-model="formData.text.output_ratio"
+            v-model="formData.text[index].output_ratio"
             :placeholder="$t('model.placeholder.output_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            class="input"
+            style="width: 228px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleTextPricingAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleTextPricingDel(index)"
+          >
+            <icon-minus />
+          </a-button>
         </a-form-item>
       </a-tab-pane>
 
@@ -270,27 +286,53 @@
         :title="$t('model.dict.billing_items.text_cache')"
       >
         <a-form-item
-          field="text_cache.read_ratio"
-          :label="$t('model.label.read_ratio')"
+          v-for="(_, index) of formData.text_cache"
+          :key="index"
+          :field="
+            `text_cache[${index}].service_tier` &&
+            `text_cache[${index}].read_ratio`
+          "
+          :label="`${index + 1}. ` + $t('model.label.text_cache')"
           :rules="[
             {
               required: true,
-              message: $t('model.error.read_ratio.required'),
+              message: $t('model.error.text_cache.required'),
             },
           ]"
         >
+          <a-select
+            v-model="formData.text_cache[index].service_tier"
+            :placeholder="$t('model.placeholder.service_tier')"
+            :options="serviceTierOptions"
+            style="width: 215px; margin-right: 5px"
+          />
           <a-input-number
-            v-model="formData.text_cache.read_ratio"
+            v-model="formData.text_cache[index].read_ratio"
             :placeholder="$t('model.placeholder.read_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            class="input"
+            style="width: 461px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
           </a-input-number>
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleTextCachePricingAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleTextCachePricingDel(index)"
+          >
+            <icon-minus />
+          </a-button>
         </a-form-item>
       </a-tab-pane>
 
@@ -397,7 +439,7 @@
             `tiered_text[${index}].input_ratio` &&
             `tiered_text[${index}].output_ratio`
           "
-          :label="`${index + 1}. ` + $t('model.label.tiered_text')"
+          :label="`${index + 1}. ` + $t('model.label.text')"
           :rules="[
             {
               required: true,
@@ -491,7 +533,7 @@
             `tiered_text_cache[${index}].read_ratio` &&
             `tiered_text_cache[${index}].write_ratio`
           "
-          :label="`${index + 1}. ` + $t('model.label.tiered_text_cache')"
+          :label="`${index + 1}. ` + $t('model.label.text_cache')"
           :rules="[
             {
               required: true,
@@ -1127,6 +1169,25 @@
     },
   ];
 
+  const serviceTierOptions = [
+    {
+      label: t('model.dict.service_tier.all'),
+      value: 'all',
+    },
+    {
+      label: t('model.dict.service_tier.default'),
+      value: 'default',
+    },
+    {
+      label: t('model.dict.service_tier.priority'),
+      value: 'priority',
+    },
+    {
+      label: t('model.dict.service_tier.flex'),
+      value: 'flex',
+    },
+  ];
+
   const modeOptions = [
     {
       label: t('model.dict.mode.all'),
@@ -1167,6 +1228,43 @@
   };
 
   defineExpose({ validate });
+
+  const handleTextPricingAdd = (s?: string) => {
+    const textPricing: TextPricing = {
+      service_tier: s,
+      input_ratio: ref(),
+      output_ratio: ref(),
+    };
+    formData.value.text.push(textPricing);
+  };
+
+  const handleTextPricingDel = (index: number) => {
+    if (formData.value.text.length > 1) {
+      formData.value.text.splice(index, 1);
+    }
+  };
+
+  const initTextPricing = () => {
+    handleTextPricingAdd('all');
+  };
+
+  const handleTextCachePricingAdd = (s?: string) => {
+    const cachePricing: CachePricing = {
+      service_tier: s,
+      read_ratio: ref(),
+    };
+    formData.value.text_cache.push(cachePricing);
+  };
+
+  const handleTextCachePricingDel = (index: number) => {
+    if (formData.value.text_cache.length > 1) {
+      formData.value.text_cache.splice(index, 1);
+    }
+  };
+
+  const initTextCachePricing = () => {
+    handleTextCachePricingAdd('all');
+  };
 
   const handleTieredTextPricingAdd = (m?: string, g?: number, l?: number) => {
     const textPricing: TextPricing = {
@@ -1459,6 +1557,24 @@
   };
 
   const handleBillingItemsChange = () => {
+    if (formData.value.billing_items.includes('text')) {
+      if (!formData.value.text) {
+        formData.value.text = [];
+      }
+      if (formData.value.text.length === 0) {
+        initTextPricing();
+      }
+    }
+
+    if (formData.value.billing_items.includes('text_cache')) {
+      if (!formData.value.text_cache) {
+        formData.value.text_cache = [];
+      }
+      if (formData.value.text_cache.length === 0) {
+        initTextCachePricing();
+      }
+    }
+
     if (formData.value.billing_items.includes('tiered_text')) {
       if (!formData.value.tiered_text) {
         formData.value.tiered_text = [];

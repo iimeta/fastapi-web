@@ -8,6 +8,9 @@
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #service_tier="{ record }">
+      {{ $t(`model.dict.service_tier.${record.service_tier}`) }}
+    </template>
     <template #input_ratio="{ record }">
       <Quota :model-value="record.input_ratio" /> / M
     </template>
@@ -21,16 +24,16 @@
 
   <!-- 文本缓存 -->
   <a-table
-    v-if="
-      pricing.billing_items.includes('text_cache') &&
-      !pricing.billing_items.includes('text')
-    "
+    v-if="pricing.billing_items.includes('text_cache')"
     :columns="textCachePricingColumns"
     :data="textCachePricing"
     :pagination="false"
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #service_tier="{ record }">
+      {{ $t(`model.dict.service_tier.${record.service_tier}`) }}
+    </template>
     <template #read_ratio="{ record }">
       <Quota :model-value="record.read_ratio" /> / M
     </template>
@@ -292,6 +295,13 @@
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
+          title: t('model.label.service_tier'),
+          dataIndex: 'service_tier',
+          slotName: 'service_tier',
+          align: 'center',
+          width: 200,
+        },
+        {
           title: t('model.label.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
@@ -316,6 +326,13 @@
       title: t('model.columns.pricing.text_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
+        {
+          title: t('model.label.service_tier'),
+          dataIndex: 'service_tier',
+          slotName: 'service_tier',
+          align: 'center',
+          width: 200,
+        },
         {
           title: t('model.label.read_ratio'),
           dataIndex: 'read_ratio',
@@ -686,32 +703,12 @@
   const handlePricing = () => {
     // 文本
     if (pricing.value.billing_items.includes('text')) {
-      textPricing.value[0] = pricing.value.text;
-    }
-
-    if (
-      textPricingColumns.value[0].children &&
-      textPricingColumns.value[0].children.length > 2
-    ) {
-      textPricingColumns.value[0].children.splice(2, 1);
+      textPricing.value = pricing.value.text;
     }
 
     // 文本缓存
     if (pricing.value.billing_items.includes('text_cache')) {
-      textCachePricing.value[0] = pricing.value.text_cache;
-
-      if (pricing.value.billing_items.includes('text')) {
-        textPricing.value[0].read_ratio = pricing.value.text_cache.read_ratio;
-        if (textPricingColumns.value[0].children) {
-          textPricingColumns.value[0].children.push({
-            title: t('model.label.read_ratio'),
-            dataIndex: 'read_ratio',
-            slotName: 'read_ratio',
-            align: 'center',
-            width: 200,
-          });
-        }
-      }
+      textCachePricing.value = pricing.value.text_cache;
     }
 
     // 音频

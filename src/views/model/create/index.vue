@@ -742,13 +742,8 @@
       billing_rule: 1,
       billing_methods: [1],
       billing_items: [],
-      text: {
-        input_ratio: ref(),
-        output_ratio: ref(),
-      },
-      text_cache: {
-        read_ratio: ref(),
-      },
+      text: [],
+      text_cache: [],
       tiered_text: [],
       tiered_text_cache: [],
       image: {
