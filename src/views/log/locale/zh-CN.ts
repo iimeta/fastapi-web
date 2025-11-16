@@ -137,6 +137,7 @@ export default {
   'text.columns.spend.group_discount': '分组折扣',
   'text.columns.spend.total_spend_tokens': '总花费',
 
+  'text.columns.spend.service_tier': '服务层',
   'text.columns.spend.input_ratio': '输入价格',
   'text.columns.spend.output_ratio': '输出价格',
   'text.columns.spend.read_ratio': '缓存价格',

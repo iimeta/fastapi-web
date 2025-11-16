@@ -101,6 +101,9 @@
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #service_tier="{ record }">
+      {{ $t(`model.dict.service_tier.${record.pricing.service_tier}`) }}
+    </template>
     <template #input_tokens="{ record }">
       {{ parseQuota(record.input_tokens) || '0' }}
     </template>
@@ -127,6 +130,9 @@
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #service_tier="{ record }">
+      {{ $t(`model.dict.service_tier.${record.pricing.service_tier}`) }}
+    </template>
     <template #read_tokens="{ record }">
       {{ parseQuota(record.read_tokens) || '0' }}
     </template>
@@ -485,6 +491,13 @@
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
+          title: t('text.columns.spend.service_tier'),
+          dataIndex: 'service_tier',
+          slotName: 'service_tier',
+          align: 'center',
+          width: 100,
+        },
+        {
           title: t('text.columns.spend.input_tokens'),
           dataIndex: 'input_tokens',
           slotName: 'input_tokens',
@@ -530,6 +543,13 @@
       title: t('text.columns.spend.text_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
+        {
+          title: t('text.columns.spend.service_tier'),
+          dataIndex: 'service_tier',
+          slotName: 'service_tier',
+          align: 'center',
+          width: 100,
+        },
         {
           title: t('text.columns.spend.read_tokens'),
           dataIndex: 'read_tokens',
