@@ -18,8 +18,7 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 3 }"
-            :wrapper-col-props="{ span: 21 }"
+            :label-col-props="{ span: 4 }"
           >
             <a-form-item
               field="name"
@@ -116,8 +115,6 @@
             </a-form-item>
             <a-form-item>
               <a-radio-group type="button" @change="handleQuotaQuickChange">
-                <a-radio :value="1"> <Quota :model-value="1" /> </a-radio>
-                <a-radio :value="2"> <Quota :model-value="2" /> </a-radio>
                 <a-radio :value="5"> <Quota :model-value="5" /> </a-radio>
                 <a-radio :value="10"> <Quota :model-value="10" /> </a-radio>
                 <a-radio :value="20"> <Quota :model-value="20" /> </a-radio>
@@ -127,6 +124,7 @@
                 <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
                 <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
+                <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
               </a-radio-group>
             </a-form-item>
             <a-form-item
@@ -402,6 +400,6 @@
   }
 
   :deep(.arco-radio-button-content) {
-    padding: 0 11px;
+    padding: 0 9px;
   }
 </style>

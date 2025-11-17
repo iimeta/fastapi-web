@@ -1,10 +1,10 @@
 {
   "name": "fastapi-web",
   "description": "Fast API Web",
-  "version": "1.7.0",
+  "version": "2.0.0",
   "private": true,
   "author": "IIMETA Team",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "vite --config ./config/vite.config.dev.ts",
     "build": "vue-tsc --noEmit && vite build --config ./config/vite.config.prod.ts",
