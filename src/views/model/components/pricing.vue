@@ -1245,7 +1245,7 @@
   };
 
   const initTextPricing = () => {
-    handleTextPricingAdd('');
+    handleTextPricingAdd();
   };
 
   const handleTextCachePricingAdd = (s?: string) => {
@@ -1263,7 +1263,7 @@
   };
 
   const initTextCachePricing = () => {
-    handleTextCachePricingAdd('');
+    handleTextCachePricingAdd();
   };
 
   const handleTieredTextPricingAdd = (m?: string, g?: number, l?: number) => {
