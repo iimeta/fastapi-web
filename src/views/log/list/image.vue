@@ -234,12 +234,12 @@
               <a-col :span="6">
                 <a-form-item
                   field="model_agents"
-                  :label="$t('key.form.modelAgents')"
+                  :label="$t('text.form.model_agents')"
                   :label-col-props="{ span: 5 }"
                 >
                   <a-select
                     v-model="searchFormData.model_agents"
-                    :placeholder="$t('key.form.selectDefault')"
+                    :placeholder="$t('text.form.selectDefault')"
                     :max-tag-count="1"
                     :scrollbar="false"
                     multiple

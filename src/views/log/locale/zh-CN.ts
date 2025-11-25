@@ -50,6 +50,7 @@ export default {
   'text.form.key': '密钥',
   'text.form.key.placeholder': '请输入密钥',
   'text.form.models': '模型',
+  'text.form.model_agents': '代理',
   'text.form.total_time': '耗时大于',
   'text.form.total_time.placeholder': '请输入总耗时',
   'text.form.status': '结果',
