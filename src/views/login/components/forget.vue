@@ -51,8 +51,7 @@
   import { useI18n } from 'vue-i18n';
   import { useRouter } from 'vue-router';
   import { ValidatedError } from '@arco-design/web-vue';
-  import { getCaptcha } from '@/api/auth';
-  import { forget } from '@/api/auth';
+  import { getCaptcha, forget } from '@/api/auth';
 
   const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();

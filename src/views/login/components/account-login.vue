@@ -23,10 +23,7 @@
       />
     </a-form-item>
     <div class="remember-me">
-      <a-checkbox
-        :model-value="loginConfig.rememberMe"
-        @change="setRememberMe as any"
-      >
+      <a-checkbox :model-value="loginConfig.rememberMe" @change="setRememberMe">
         {{ $t('login.rememberMe') }}
       </a-checkbox>
     </div>
