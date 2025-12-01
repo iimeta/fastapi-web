@@ -2,15 +2,11 @@
   <div class="navbar">
     <div class="left-side">
       <a-space>
-        <img
-          alt="logo"
-          class="logo"
-          :src="appStore.getLogo"
-          style="background-color: #ffffff"
-        />
+        <img alt="logo" class="logo" :src="appStore.getLogo" />
         <a-typography-title
           :style="{ margin: 0, fontSize: '24px' }"
           :heading="5"
+          class="logo-text"
         >
           {{ appStore.getTitle }}
         </a-typography-title>
@@ -303,6 +299,14 @@
     width: 32px;
     height: 32px;
   }
+
+  .logo-text {
+    background: var(--vp-home-hero-name-background);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: var(--vp-home-hero-name-color);
+  }
+
   .navbar {
     display: flex;
     justify-content: space-between;

@@ -1,11 +1,7 @@
 <template>
   <div class="root" :style="{ backgroundImage: `url(${appStore.getBgImg})` }">
     <div class="logo">
-      <img
-        alt="logo"
-        :src="appStore.getLogo"
-        style="background-color: #ffffff"
-      />
+      <img alt="logo" :src="appStore.getLogo" />
       <div class="logo-text">{{ appStore.getTitle }}</div>
     </div>
     <div class="container">
@@ -119,21 +115,6 @@
       color: #6694ff;
     }
 
-    .header {
-      padding: 32px 40px 0;
-      img {
-        vertical-align: middle;
-      }
-      .logo-text {
-        display: inline-block;
-        margin-right: 4px;
-        margin-left: 4px;
-        color: var(--color-text-1);
-        font-size: 24px;
-        vertical-align: middle;
-      }
-    }
-
     .container {
       align-items: center;
       box-sizing: border-box;
@@ -202,75 +183,6 @@
             margin: 0 30px 0 6px;
           }
         }
-
-        .oauth {
-          margin-top: 20px;
-          padding: 0 5px;
-          :deep(.arco-divider-text) {
-            color: #80838a;
-            font-size: 12px;
-            font-weight: 400;
-            line-height: 20px;
-          }
-          :deep(.arco-divider) {
-            margin-bottom: 25px;
-          }
-          .idps {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            .app {
-              margin-right: 12px;
-              align-items: center;
-              border: 1px solid #eaedf1;
-              border-radius: 32px;
-              box-sizing: border-box;
-              display: flex;
-              height: 32px;
-              justify-content: center;
-              width: 32px;
-              cursor: pointer;
-              .icon {
-                width: 21px;
-                height: 20px;
-              }
-            }
-            .app:hover {
-              background: #f3f7ff;
-              border: 1px solid #97bcff;
-            }
-            .mail {
-              min-width: 81px;
-              width: 81px;
-            }
-            .account {
-              min-width: 147px;
-              width: 147px;
-            }
-            .mail,
-            .account {
-              color: #41464f;
-              font-size: 12px;
-              font-weight: 400;
-              line-height: 20px;
-              padding: 6px 10px;
-            }
-            .mail svg,
-            .account svg {
-              font-size: 16px;
-              margin-right: 10px;
-            }
-            .mail:hover,
-            .account:hover {
-              color: rgb(var(--primary-6));
-            }
-            .mail svg:hover,
-            .account svg:hover {
-              color: rgb(var(--primary-6));
-            }
-          }
-        }
       }
     }
 
@@ -281,6 +193,7 @@
       justify-content: center;
     }
   }
+
   .actions {
     display: flex;
     justify-content: space-between;
@@ -288,13 +201,16 @@
       padding-left: 0;
     }
   }
+
   .actions-end {
     display: flex;
     justify-content: flex-end;
+
     .arco-checkbox {
       padding-left: 0;
     }
   }
+
   .logo {
     position: fixed;
     top: 20px;
@@ -312,6 +228,13 @@
       width: 32px;
       height: 32px;
       margin-right: 8px;
+    }
+
+    .logo-text {
+      background: var(--vp-home-hero-name-background);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: var(--vp-home-hero-name-color);
     }
   }
 

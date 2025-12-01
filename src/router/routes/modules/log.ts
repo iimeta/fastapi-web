@@ -19,8 +19,8 @@ const LOG: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.text.list',
         requiresAuth: true,
-        roles: ['reseller', 'user', 'admin'],
-         activeMenu: 'TextList',
+        roles: ['user', 'reseller', 'admin'],
+        activeMenu: 'TextList',
       },
     },
     {
@@ -30,7 +30,7 @@ const LOG: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.image.list',
         requiresAuth: true,
-        roles: ['reseller', 'user', 'admin'],
+        roles: ['user', 'reseller', 'admin'],
         activeMenu: 'ImageList',
       },
     },
@@ -41,7 +41,7 @@ const LOG: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.audio.list',
         requiresAuth: true,
-        roles: ['reseller', 'user', 'admin'],
+        roles: ['user', 'reseller', 'admin'],
         activeMenu: 'AudioList',
       },
     },

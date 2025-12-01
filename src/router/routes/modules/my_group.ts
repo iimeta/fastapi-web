@@ -12,7 +12,7 @@ const MY_GROUP: AppRouteRecordRaw = {
     icon: 'icon-user-group',
     order: 30,
     hideChildrenInMenu: true,
-    roles: ['reseller', 'user'],
+    roles: ['user', 'reseller'],
   },
   children: [
     {
@@ -22,7 +22,7 @@ const MY_GROUP: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.group.list',
         requiresAuth: true,
-        roles: ['reseller', 'user'],
+        roles: ['user', 'reseller'],
         activeMenu: 'my_group',
       },
     },

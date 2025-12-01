@@ -1,7 +1,7 @@
 <template>
   <div style="margin: 10px 0 30px 10px">
     <a-descriptions
-      v-permission="['reseller', 'user']"
+      v-permission="['user', 'reseller']"
       :column="2"
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"

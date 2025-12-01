@@ -23,7 +23,7 @@
             :wrapper-col-props="{ span: 18 }"
             label-align="left"
           >
-            <a-row v-permission="['reseller', 'user']" :gutter="16">
+            <a-row v-permission="['user', 'reseller']" :gutter="16">
               <a-col v-permission="['user']" :span="8">
                 <a-form-item field="app_id" :label="$t('text.form.app_id')">
                   <a-select
@@ -407,26 +407,26 @@
         <template #total_time="{ record }">
           <a-tag
             v-if="record.total_time > 180000"
-            v-permission="['reseller', 'user']"
+            v-permission="['user', 'reseller']"
             color="red"
           >
             {{ record.total_time }}
           </a-tag>
           <a-tag
             v-else-if="record.total_time > 120000"
-            v-permission="['reseller', 'user']"
+            v-permission="['user', 'reseller']"
             color="orange"
           >
             {{ record.total_time }}
           </a-tag>
           <a-tag
             v-else-if="record.total_time > 90000"
-            v-permission="['reseller', 'user']"
+            v-permission="['user', 'reseller']"
             color="gold"
           >
             {{ record.total_time }}
           </a-tag>
-          <a-tag v-else v-permission="['reseller', 'user']" color="green">{{
+          <a-tag v-else v-permission="['user', 'reseller']" color="green">{{
             record.total_time || '-'
           }}</a-tag>
           <a-tag
@@ -457,26 +457,26 @@
         <template #internal_time="{ record }">
           <a-tag
             v-if="record.internal_time > 1000"
-            v-permission="['reseller', 'user']"
+            v-permission="['user', 'reseller']"
             color="red"
           >
             {{ record.internal_time }}
           </a-tag>
           <a-tag
             v-else-if="record.internal_time > 500"
-            v-permission="['reseller', 'user']"
+            v-permission="['user', 'reseller']"
             color="orange"
           >
             {{ record.internal_time }}
           </a-tag>
           <a-tag
             v-else-if="record.internal_time > 300"
-            v-permission="['reseller', 'user']"
+            v-permission="['user', 'reseller']"
             color="gold"
           >
             {{ record.internal_time }}
           </a-tag>
-          <a-tag v-else v-permission="['reseller', 'user']" color="green">{{
+          <a-tag v-else v-permission="['user', 'reseller']" color="green">{{
             record.internal_time || '-'
           }}</a-tag>
           <a-tag

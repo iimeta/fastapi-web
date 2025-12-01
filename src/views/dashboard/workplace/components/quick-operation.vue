@@ -102,7 +102,7 @@
       text: 'workplace.logManagement',
       icon: 'icon-message',
       router: 'TextList',
-      permission: ['reseller', 'user'],
+      permission: ['user', 'reseller'],
     },
     {
       text: 'menu.sys.config',

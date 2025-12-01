@@ -57,7 +57,7 @@ const USER: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.user.center',
         requiresAuth: true,
-        roles: ['reseller', 'user', 'admin'],
+        roles: ['user', 'reseller', 'admin'],
         hideInMenu: true,
       },
     },

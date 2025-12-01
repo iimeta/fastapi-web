@@ -888,7 +888,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 223px; margin-right: 5px"
+            style="width: 222px; margin-right: 5px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / 秒 </template>

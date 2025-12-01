@@ -1,11 +1,7 @@
 <template>
   <div class="root" :style="{ backgroundImage: `url(${appStore.getBgImg})` }">
     <div class="logo">
-      <img
-        alt="logo"
-        :src="appStore.getLogo"
-        style="background-color: #ffffff"
-      />
+      <img alt="logo" :src="appStore.getLogo" />
       <div class="logo-text">{{ appStore.getTitle }}</div>
     </div>
     <div class="container">
@@ -146,21 +142,6 @@
 
     a:hover {
       color: #6694ff;
-    }
-
-    .header {
-      padding: 32px 40px 0;
-      img {
-        vertical-align: middle;
-      }
-      .logo-text {
-        display: inline-block;
-        margin-right: 4px;
-        margin-left: 4px;
-        color: var(--color-text-1);
-        font-size: 24px;
-        vertical-align: middle;
-      }
     }
 
     .container {
@@ -310,6 +291,7 @@
       justify-content: center;
     }
   }
+
   .actions {
     display: flex;
     justify-content: space-between;
@@ -317,6 +299,7 @@
       padding-left: 0;
     }
   }
+
   .actions-end {
     display: flex;
     justify-content: flex-end;
@@ -324,6 +307,7 @@
       padding-left: 0;
     }
   }
+
   .logo {
     position: fixed;
     top: 20px;
@@ -341,6 +325,13 @@
       width: 32px;
       height: 32px;
       margin-right: 8px;
+    }
+
+    .logo-text {
+      background: var(--vp-home-hero-name-background);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: var(--vp-home-hero-name-color);
     }
   }
 

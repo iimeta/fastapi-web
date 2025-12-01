@@ -12,7 +12,7 @@ const APP: AppRouteRecordRaw = {
     icon: 'icon-apps',
     order: 90,
     hideChildrenInMenu: true,
-    roles: ['reseller', 'user', 'admin'],
+    roles: ['user', 'reseller', 'admin'],
   },
   children: [
     {
@@ -22,7 +22,7 @@ const APP: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.app.list',
         requiresAuth: true,
-        roles: ['reseller', 'user', 'admin'],
+        roles: ['user', 'reseller', 'admin'],
         activeMenu: 'app',
       },
     },
@@ -33,7 +33,7 @@ const APP: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.app.create',
         requiresAuth: true,
-        roles: ['reseller', 'user', 'admin'],
+        roles: ['user', 'reseller', 'admin'],
         hideInMenu: true,
         activeMenu: 'app',
       },
@@ -45,7 +45,7 @@ const APP: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.app.update',
         requiresAuth: true,
-        roles: ['reseller', 'user', 'admin'],
+        roles: ['user', 'reseller', 'admin'],
         hideInMenu: true,
         activeMenu: 'app',
       },

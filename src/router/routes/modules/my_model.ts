@@ -12,7 +12,7 @@ const MY_MODEL: AppRouteRecordRaw = {
     icon: 'icon-common',
     order: 20,
     hideChildrenInMenu: true,
-    roles: ['reseller', 'user'],
+    roles: ['user', 'reseller'],
   },
   children: [
     {
@@ -22,7 +22,7 @@ const MY_MODEL: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.model.list',
         requiresAuth: true,
-        roles: ['reseller', 'user'],
+        roles: ['user', 'reseller'],
         activeMenu: 'my_model',
       },
     },

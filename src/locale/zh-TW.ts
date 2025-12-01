@@ -15,6 +15,7 @@ import localeKey from '@/views/key/locale/zh-CN';
 import localeAgent from '@/views/model_agent/locale/zh-CN';
 import localeProvider from '@/views/system/provider/locale/zh-CN';
 import localeFinance from '@/views/finance/locale/zh-CN';
+import localeTask from '@/views/task/locale/zh-CN';
 import localeLog from '@/views/log/locale/zh-CN';
 import localeReseller from '@/views/system/reseller/locale/zh-CN';
 import localeSiteConfig from '@/views/system/site_config/locale/zh-CN';
@@ -40,6 +41,7 @@ export default {
   ...localeAgent,
   ...localeProvider,
   ...localeFinance,
+  ...localeTask,
   ...localeLog,
   ...localeReseller,
   ...localeSiteConfig,
