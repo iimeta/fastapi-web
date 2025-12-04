@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-message />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.image') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.image.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.general') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.general.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -378,15 +378,27 @@
         <template #user_id="{ record }">
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
-        <template #images="{ record }">
-          <a-button type="text" size="small" @click="viewImage(record.id)"
-            >查看</a-button
-          >
-          <a-image-preview-group
-            v-if="imageVisibleId === record.id"
-            v-model:visible="imageVisible"
-            :src-list="record.images"
-          />
+        <template #input_tokens="{ record }">
+          {{
+            record.spend.text?.input_tokens
+              ? parseQuota(record.spend.text?.input_tokens)
+              : parseQuota(record.spend.tiered_text?.input_tokens)
+              ? parseQuota(record.spend.tiered_text?.input_tokens)
+              : record.status === 1
+              ? 0
+              : '-'
+          }}
+        </template>
+        <template #output_tokens="{ record }">
+          {{
+            record.spend.text?.output_tokens
+              ? parseQuota(record.spend.text?.output_tokens)
+              : parseQuota(record.spend.tiered_text?.output_tokens)
+              ? parseQuota(record.spend.tiered_text?.output_tokens)
+              : record.status === 1
+              ? 0
+              : '-'
+          }}
         </template>
         <template #total_spend_tokens="{ record }">
           <span
@@ -403,6 +415,109 @@
             />
             <span v-else> - </span>
           </span>
+        </template>
+        <template #stream="{ record }">
+          {{ $t(`text.dict.stream.${record.stream || false}`) }}
+        </template>
+        <template #conn_time="{ record }">
+          <a-tag
+            v-if="record.conn_time > 30000"
+            v-permission="['user', 'reseller']"
+            color="red"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.conn_time > 15000"
+            v-permission="['user', 'reseller']"
+            color="orange"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.conn_time > 5000"
+            v-permission="['user', 'reseller']"
+            color="gold"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag v-else v-permission="['user', 'reseller']" color="green">
+            {{ record.conn_time || '-' }}
+          </a-tag>
+          <a-tag
+            v-if="record.conn_time > 10000"
+            v-permission="['admin']"
+            color="red"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.conn_time > 5000"
+            v-permission="['admin']"
+            color="orange"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.conn_time > 3000"
+            v-permission="['admin']"
+            color="gold"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">
+            {{ record.conn_time || '-' }}
+          </a-tag>
+        </template>
+        <template #duration="{ record }">
+          <a-tag
+            v-if="record.duration > 180000"
+            v-permission="['user', 'reseller']"
+            color="red"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.duration > 120000"
+            v-permission="['user', 'reseller']"
+            color="orange"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.duration > 90000"
+            v-permission="['user', 'reseller']"
+            color="gold"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag v-else v-permission="['user', 'reseller']" color="green">
+            {{ record.duration || '-' }}
+          </a-tag>
+          <a-tag
+            v-if="record.duration > 120000"
+            v-permission="['admin']"
+            color="red"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.duration > 90000"
+            v-permission="['admin']"
+            color="orange"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.duration > 60000"
+            v-permission="['admin']"
+            color="gold"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">
+            {{ record.duration || '-' }}
+          </a-tag>
         </template>
         <template #total_time="{ record }">
           <a-tag
@@ -426,9 +541,9 @@
           >
             {{ record.total_time }}
           </a-tag>
-          <a-tag v-else v-permission="['user', 'reseller']" color="green">{{
-            record.total_time || '-'
-          }}</a-tag>
+          <a-tag v-else v-permission="['user', 'reseller']" color="green">
+            {{ record.total_time || '-' }}
+          </a-tag>
           <a-tag
             v-if="record.total_time > 120000"
             v-permission="['admin']"
@@ -450,9 +565,9 @@
           >
             {{ record.total_time }}
           </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">{{
-            record.total_time || '-'
-          }}</a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">
+            {{ record.total_time || '-' }}
+          </a-tag>
         </template>
         <template #internal_time="{ record }">
           <a-tag
@@ -476,9 +591,9 @@
           >
             {{ record.internal_time }}
           </a-tag>
-          <a-tag v-else v-permission="['user', 'reseller']" color="green">{{
-            record.internal_time || '-'
-          }}</a-tag>
+          <a-tag v-else v-permission="['user', 'reseller']" color="green">
+            {{ record.internal_time || '-' }}
+          </a-tag>
           <a-tag
             v-if="record.internal_time > 500"
             v-permission="['admin']"
@@ -500,23 +615,23 @@
           >
             {{ record.internal_time }}
           </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">{{
-            record.internal_time || '-'
-          }}</a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">
+            {{ record.internal_time || '-' }}
+          </a-tag>
         </template>
         <template #status="{ record }">
-          <a-tag v-if="record.status === -1" color="red">{{
-            $t(`text.dict.status.${record.status}`)
-          }}</a-tag>
-          <a-tag v-else-if="record.status === 2" color="gold">{{
-            $t(`text.dict.status.${record.status}`)
-          }}</a-tag>
-          <a-tag v-else-if="record.status === 3" color="orange">{{
-            $t(`text.dict.status.${record.status}`)
-          }}</a-tag>
-          <a-tag v-else color="green">{{
-            $t(`text.dict.status.${record.status}`)
-          }}</a-tag>
+          <a-tag v-if="record.status === -1" color="red">
+            {{ $t(`text.dict.status.${record.status}`) }}
+          </a-tag>
+          <a-tag v-else-if="record.status === 2" color="gold">
+            {{ $t(`text.dict.status.${record.status}`) }}
+          </a-tag>
+          <a-tag v-else-if="record.status === 3" color="orange">
+            {{ $t(`text.dict.status.${record.status}`) }}
+          </a-tag>
+          <a-tag v-else color="green">
+            {{ $t(`text.dict.status.${record.status}`) }}
+          </a-tag>
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
@@ -526,7 +641,7 @@
       </a-table>
 
       <a-drawer
-        :title="$t('menu.image.detail')"
+        :title="$t('menu.general.detail')"
         :width="700"
         :footer="false"
         :visible="detailVisible"
@@ -562,10 +677,11 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { queryImagePage, ImagePage, ImagePageParams } from '@/api/log';
+  import { queryGeneralPage, GeneralPage, GeneralPageParams } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
+  import { parseQuota } from '@/utils/common';
   import type {
     TableColumnData,
     TableRowSelection,
@@ -578,7 +694,7 @@
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import { Spend } from '@/api/common';
   import Quota from '@/views/common/quota.vue';
-  import Detail from '../detail/image.vue';
+  import Detail from '../detail/general.vue';
   import SpendDetail from '../components/spend.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -611,7 +727,7 @@
     };
   };
 
-  const renderData = ref<ImagePage[]>([]);
+  const renderData = ref<GeneralPage[]>([]);
   const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -666,20 +782,22 @@
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
-    },
-    {
-      title: t('text.columns.prompt'),
-      dataIndex: 'prompt',
-      slotName: 'prompt',
-      align: 'center',
       ellipsis: true,
       tooltip: true,
     },
     {
-      title: t('text.columns.images'),
-      dataIndex: 'images',
-      slotName: 'images',
+      title: t('text.columns.input_tokens'),
+      dataIndex: 'input_tokens',
+      slotName: 'input_tokens',
       align: 'center',
+      width: 85,
+    },
+    {
+      title: t('text.columns.output_tokens'),
+      dataIndex: 'output_tokens',
+      slotName: 'output_tokens',
+      align: 'center',
+      width: 85,
     },
     {
       title: t('text.columns.total_spend_tokens'),
@@ -723,6 +841,25 @@
           ),
         ],
       },
+    },
+    {
+      title: t('text.columns.stream'),
+      dataIndex: 'stream',
+      slotName: 'stream',
+      align: 'center',
+      width: 60,
+    },
+    {
+      title: t('text.columns.conn_time'),
+      dataIndex: 'conn_time',
+      slotName: 'conn_time',
+      align: 'center',
+    },
+    {
+      title: t('text.columns.duration'),
+      dataIndex: 'duration',
+      slotName: 'duration',
+      align: 'center',
     },
     {
       title: t('text.columns.total_time'),
@@ -796,7 +933,7 @@
   ]);
 
   if (userRole === 'reseller' || userRole === 'user') {
-    columns.value.splice(6, 1);
+    columns.value.splice(9, 1);
   }
 
   const statusOptions = computed<SelectOptionData[]>(() => [
@@ -828,14 +965,14 @@
   }
 
   const fetchData = async (
-    params: ImagePageParams = {
+    params: GeneralPageParams = {
       ...basePagination,
       ...searchFormData.value,
     }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryImagePage(params);
+      const { data } = await queryGeneralPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
@@ -852,7 +989,7 @@
     fetchData({
       ...basePagination,
       ...searchFormData.value,
-    } as unknown as ImagePageParams);
+    } as unknown as GeneralPageParams);
   };
 
   const onPageChange = (current: number) => {
@@ -977,13 +1114,6 @@
     getModelAgentList();
   }
 
-  const imageVisibleId = ref();
-  const imageVisible = ref(false);
-  const viewImage = (id: any) => {
-    imageVisibleId.value = id;
-    imageVisible.value = true;
-  };
-
   const detailVisible = ref(false);
   const recordId = ref();
 
@@ -1008,7 +1138,7 @@
 
 <script lang="ts">
   export default {
-    name: 'LogImageList',
+    name: 'LogGeneralList',
   };
 </script>
 

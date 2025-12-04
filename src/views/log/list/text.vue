@@ -1500,7 +1500,7 @@
 
 <script lang="ts">
   export default {
-    name: 'TextList',
+    name: 'LogTextList',
   };
 </script>
 

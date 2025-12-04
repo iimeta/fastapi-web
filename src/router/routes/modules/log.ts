@@ -14,35 +14,57 @@ const LOG: AppRouteRecordRaw = {
   children: [
     {
       path: 'text',
-      name: 'TextList',
+      name: 'LogTextList',
       component: () => import('@/views/log/list/text.vue'),
       meta: {
         locale: 'menu.text.list',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
-        activeMenu: 'TextList',
+        activeMenu: 'LogTextList',
       },
     },
     {
       path: 'image',
-      name: 'ImageList',
+      name: 'LogImageList',
       component: () => import('@/views/log/list/image.vue'),
       meta: {
         locale: 'menu.image.list',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
-        activeMenu: 'ImageList',
+        activeMenu: 'LogImageList',
       },
     },
     {
       path: 'audio',
-      name: 'AudioList',
+      name: 'LogAudioList',
       component: () => import('@/views/log/list/audio.vue'),
       meta: {
         locale: 'menu.audio.list',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
-        activeMenu: 'AudioList',
+        activeMenu: 'LogAudioList',
+      },
+    },
+    {
+      path: 'video',
+      name: 'LogVideoList',
+      component: () => import('@/views/log/list/video.vue'),
+      meta: {
+        locale: 'menu.video.list',
+        requiresAuth: true,
+        roles: ['user', 'reseller', 'admin'],
+        activeMenu: 'LogVideoList',
+      },
+    },
+    {
+      path: 'general',
+      name: 'LogGeneralList',
+      component: () => import('@/views/log/list/general.vue'),
+      meta: {
+        locale: 'menu.general.list',
+        requiresAuth: true,
+        roles: ['user', 'reseller', 'admin'],
+        activeMenu: 'LogGeneralList',
       },
     },
   ],

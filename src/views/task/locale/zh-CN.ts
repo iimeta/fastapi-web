@@ -28,7 +28,7 @@ export default {
   'task.columns.trace_id': 'TraceID',
   'task.columns.task_id': '任务ID',
   'task.columns.video_url': '视频URL',
-  'task.columns.video_time': '视频时长(秒)',
+  'task.columns.video_time': '秒数',
   'task.columns.status': '状态',
   'task.columns.created_at': '创建时间',
   'task.columns.updated_at': '更新时间',

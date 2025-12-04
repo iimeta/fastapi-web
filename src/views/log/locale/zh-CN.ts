@@ -121,6 +121,21 @@ export default {
   'text.columns.prompt': '提示词',
   'text.columns.images': '图像',
 
+  'menu.video': '日志管理',
+  'menu.video.list': '视频日志',
+  'menu.video.detail': '视频详情',
+  // detail
+  'text.detail.title.videoInfo': '视频详情',
+  // columns
+  'text.columns.width_height': '宽度 × 高度',
+  'text.columns.seconds': '秒数',
+  
+  'menu.general': '日志管理',
+  'menu.general.list': '通用日志',
+  'menu.general.detail': '通用详情',
+  // detail
+  'text.detail.title.generalInfo': '通用详情',
+
   'text.columns.spend.text': '文本',
   'text.columns.spend.text_cache': '文本缓存',
   'text.columns.spend.tiered_text': '阶梯文本',
@@ -160,6 +175,7 @@ export default {
   'text.columns.spend.image.generation.once_ratio': '价格',
   'text.columns.spend.vision.once_ratio': '价格',
   'text.columns.spend.video.width_height': '宽度 × 高度',
+  'text.columns.spend.video.seconds': '秒数',
   'text.columns.spend.video.once_ratio': '价格',
   'text.columns.spend.search.context_size': '上下文大小',
   'text.columns.spend.search.once_ratio': '价格',

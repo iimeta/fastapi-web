@@ -14,13 +14,13 @@ const TASK: AppRouteRecordRaw = {
   children: [
     {
       path: 'video',
-      name: 'VideoList',
+      name: 'TaskVideoList',
       component: () => import('@/views/task/list/video.vue'),
       meta: {
         locale: 'menu.task.video.list',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
-        activeMenu: 'VideoList',
+        activeMenu: 'TaskVideoList',
       },
     },
   ],

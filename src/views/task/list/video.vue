@@ -487,7 +487,7 @@
 
 <script lang="ts">
   export default {
-    name: 'VideoList',
+    name: 'TaskVideoList',
   };
 </script>
 

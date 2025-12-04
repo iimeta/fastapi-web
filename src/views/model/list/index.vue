@@ -920,6 +920,10 @@
       label: t('dict.model_type.103'),
       value: 103,
     },
+    {
+      label: t('dict.model_type.10000'),
+      value: 10000,
+    },
   ]);
 
   const statusOptions = computed<SelectOptionData[]>(() => [

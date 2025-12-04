@@ -110,6 +110,9 @@
                 <a-option value="101">{{ $t('dict.model_type.101') }}</a-option>
                 <a-option value="102">{{ $t('dict.model_type.102') }}</a-option>
                 <a-option value="103">{{ $t('dict.model_type.103') }}</a-option>
+                <a-option value="10000">
+                  {{ $t('dict.model_type.10000') }}
+                </a-option>
               </a-select>
             </a-form-item>
             <a-form-item field="base_url" :label="$t('model.label.base_url')">
@@ -497,7 +500,7 @@
               </a-select>
             </a-form-item>
             <a-form-item
-              v-for="(keywords, index) of formData.forward_config.keywords"
+              v-for="(_, index) of formData.forward_config?.keywords"
               v-show="
                 formData.is_enable_forward &&
                 formData.forward_config.forward_rule === '2'

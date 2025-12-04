@@ -1009,7 +1009,7 @@
 
 <script lang="ts">
   export default {
-    name: 'AudioList',
+    name: 'LogAudioList',
   };
 </script>
 

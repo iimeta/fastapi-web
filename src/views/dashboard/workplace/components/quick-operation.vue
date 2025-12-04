@@ -101,7 +101,7 @@
     {
       text: 'workplace.logManagement',
       icon: 'icon-message',
-      router: 'TextList',
+      router: 'LogTextList',
       permission: ['user', 'reseller'],
     },
     {
@@ -113,19 +113,19 @@
     {
       text: 'menu.text.list',
       icon: 'icon-message',
-      router: 'TextList',
+      router: 'LogTextList',
       permission: ['admin'],
     },
     {
       text: 'menu.image.list',
       icon: 'icon-image',
-      router: 'ImageList',
+      router: 'LogImageList',
       permission: ['admin'],
     },
     {
       text: 'menu.audio.list',
       icon: 'icon-file-audio',
-      router: 'AudioList',
+      router: 'LogAudioList',
       permission: ['admin'],
     },
   ];

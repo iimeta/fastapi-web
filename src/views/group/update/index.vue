@@ -434,7 +434,7 @@
               </a-select>
             </a-form-item>
             <a-form-item
-              v-for="(keywords, index) of formData.forward_config.keywords"
+              v-for="(_, index) of formData.forward_config?.keywords"
               v-show="
                 formData.is_enable_forward &&
                 formData.forward_config.forward_rule === '2'

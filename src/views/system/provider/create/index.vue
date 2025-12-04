@@ -35,10 +35,14 @@
                 },
               ]"
             >
-              <a-input
+              <a-select
                 v-model="formData.name"
                 :placeholder="$t('provider.placeholder.name')"
+                :options="nameOptions"
+                :scrollbar="false"
+                allow-search
                 allow-clear
+                allow-create
               />
             </a-form-item>
             <a-form-item
@@ -55,10 +59,14 @@
                 },
               ]"
             >
-              <a-input
+              <a-select
                 v-model="formData.code"
                 :placeholder="$t('provider.placeholder.code')"
+                :options="codeOptions"
+                :scrollbar="false"
+                allow-search
                 allow-clear
+                allow-create
               />
             </a-form-item>
             <a-form-item field="sort" :label="$t('provider.label.sort')">
@@ -107,13 +115,17 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
+  import { ref, getCurrentInstance, computed } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { submitProviderCreate, ProviderCreate } from '@/api/provider';
   import { FormInstance } from '@arco-design/web-vue';
+  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import { useRouter } from 'vue-router';
 
+  const { loading, setLoading } = useLoading(false);
   const { proxy } = getCurrentInstance() as any;
+  const { t } = useI18n();
 
   const router = useRouter();
   const formRef = ref<FormInstance>();
@@ -125,7 +137,136 @@
     remark: '',
   });
 
-  const { loading, setLoading } = useLoading(false);
+  const nameOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('provider.dict.name.OpenAI'),
+      value: t('provider.dict.name.OpenAI'),
+    },
+    {
+      label: t('provider.dict.name.Anthropic'),
+      value: t('provider.dict.name.Anthropic'),
+    },
+    {
+      label: t('provider.dict.name.Google'),
+      value: t('provider.dict.name.Google'),
+    },
+    {
+      label: t('provider.dict.name.Azure'),
+      value: t('provider.dict.name.Azure'),
+    },
+    {
+      label: t('provider.dict.name.DeepSeek'),
+      value: t('provider.dict.name.DeepSeek'),
+    },
+    {
+      label: t('provider.dict.name.Baidu'),
+      value: t('provider.dict.name.Baidu'),
+    },
+    {
+      label: t('provider.dict.name.Aliyun'),
+      value: t('provider.dict.name.Aliyun'),
+    },
+    {
+      label: t('provider.dict.name.Xfyun'),
+      value: t('provider.dict.name.Xfyun'),
+    },
+    {
+      label: t('provider.dict.name.ZhipuAI'),
+      value: t('provider.dict.name.ZhipuAI'),
+    },
+    {
+      label: t('provider.dict.name.VolcEngine'),
+      value: t('provider.dict.name.VolcEngine'),
+    },
+    {
+      label: t('provider.dict.name.360AI'),
+      value: t('provider.dict.name.360AI'),
+    },
+    {
+      label: t('provider.dict.name.Midjourney'),
+      value: t('provider.dict.name.Midjourney'),
+    },
+    {
+      label: t('provider.dict.name.FastAPI'),
+      value: t('provider.dict.name.FastAPI'),
+    },
+  ]);
+
+  const codeOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('provider.dict.code.OpenAI'),
+      value: t('provider.dict.code.OpenAI'),
+    },
+    {
+      label: t('provider.dict.code.Anthropic'),
+      value: t('provider.dict.code.Anthropic'),
+    },
+    {
+      label: t('provider.dict.code.Google'),
+      value: t('provider.dict.code.Google'),
+    },
+    {
+      label: t('provider.dict.code.Azure'),
+      value: t('provider.dict.code.Azure'),
+    },
+    {
+      label: t('provider.dict.code.DeepSeek'),
+      value: t('provider.dict.code.DeepSeek'),
+    },
+    {
+      label: t('provider.dict.code.DeepSeek-Baidu'),
+      value: t('provider.dict.code.DeepSeek-Baidu'),
+    },
+    {
+      label: t('provider.dict.code.Baidu'),
+      value: t('provider.dict.code.Baidu'),
+    },
+    {
+      label: t('provider.dict.code.Aliyun'),
+      value: t('provider.dict.code.Aliyun'),
+    },
+    {
+      label: t('provider.dict.code.Xfyun'),
+      value: t('provider.dict.code.Xfyun'),
+    },
+    {
+      label: t('provider.dict.code.ZhipuAI'),
+      value: t('provider.dict.code.ZhipuAI'),
+    },
+    {
+      label: t('provider.dict.code.VolcEngine'),
+      value: t('provider.dict.code.VolcEngine'),
+    },
+    {
+      label: t('provider.dict.code.Doubao'),
+      value: t('provider.dict.code.Doubao'),
+    },
+    {
+      label: t('provider.dict.code.360AI'),
+      value: t('provider.dict.code.360AI'),
+    },
+    {
+      label: t('provider.dict.code.AWSClaude'),
+      value: t('provider.dict.code.AWSClaude'),
+    },
+    {
+      label: t('provider.dict.code.GCPClaude'),
+      value: t('provider.dict.code.GCPClaude'),
+    },
+    {
+      label: t('provider.dict.code.GCPGemini'),
+      value: t('provider.dict.code.GCPGemini'),
+    },
+    {
+      label: t('provider.dict.code.Midjourney'),
+      value: t('provider.dict.code.Midjourney'),
+    },
+    {
+      label: t('provider.dict.code.FastAPI'),
+      value: t('provider.dict.code.FastAPI'),
+    },
+  ]);
+
   const submitForm = async () => {
     const res = await formRef.value?.validate();
     if (!res) {

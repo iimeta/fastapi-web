@@ -367,6 +367,9 @@
     <template #width="{ record }">
       {{ record.pricing.width }} × {{ record.pricing.height }}
     </template>
+    <template #seconds="{ record }">
+      {{ record.seconds }}
+    </template>
     <template #once_ratio="{ record }">
       <Quota :model-value="record.pricing.once_ratio" /> / 秒
     </template>
@@ -948,6 +951,13 @@
           title: t('text.columns.spend.video.width_height'),
           dataIndex: 'width',
           slotName: 'width',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('text.columns.spend.video.seconds'),
+          dataIndex: 'seconds',
+          slotName: 'seconds',
           align: 'center',
           width: 100,
         },

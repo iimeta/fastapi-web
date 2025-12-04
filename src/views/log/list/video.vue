@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-message />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.image') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.image.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.video') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.video.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -378,15 +378,15 @@
         <template #user_id="{ record }">
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
-        <template #images="{ record }">
-          <a-button type="text" size="small" @click="viewImage(record.id)"
-            >查看</a-button
-          >
-          <a-image-preview-group
-            v-if="imageVisibleId === record.id"
-            v-model:visible="imageVisible"
-            :src-list="record.images"
-          />
+        <template #width_height="{ record }">
+          {{
+            record.spend.video?.pricing?.width
+              ? `${record.spend.video?.pricing.width} × ${record.spend.video?.pricing.height}`
+              : '-'
+          }}
+        </template>
+        <template #seconds="{ record }">
+          {{ record.spend.video?.seconds || '-' }}
         </template>
         <template #total_spend_tokens="{ record }">
           <span
@@ -526,7 +526,7 @@
       </a-table>
 
       <a-drawer
-        :title="$t('menu.image.detail')"
+        :title="$t('menu.video.detail')"
         :width="700"
         :footer="false"
         :visible="detailVisible"
@@ -562,7 +562,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { queryImagePage, ImagePage, ImagePageParams } from '@/api/log';
+  import { queryVideoPage, VideoPage, VideoPageParams } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -578,7 +578,7 @@
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import { Spend } from '@/api/common';
   import Quota from '@/views/common/quota.vue';
-  import Detail from '../detail/image.vue';
+  import Detail from '../detail/video.vue';
   import SpendDetail from '../components/spend.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -611,7 +611,7 @@
     };
   };
 
-  const renderData = ref<ImagePage[]>([]);
+  const renderData = ref<VideoPage[]>([]);
   const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -668,17 +668,15 @@
       align: 'center',
     },
     {
-      title: t('text.columns.prompt'),
-      dataIndex: 'prompt',
-      slotName: 'prompt',
+      title: t('text.columns.width_height'),
+      dataIndex: 'width_height',
+      slotName: 'width_height',
       align: 'center',
-      ellipsis: true,
-      tooltip: true,
     },
     {
-      title: t('text.columns.images'),
-      dataIndex: 'images',
-      slotName: 'images',
+      title: t('text.columns.seconds'),
+      dataIndex: 'seconds',
+      slotName: 'seconds',
       align: 'center',
     },
     {
@@ -796,7 +794,7 @@
   ]);
 
   if (userRole === 'reseller' || userRole === 'user') {
-    columns.value.splice(6, 1);
+    columns.value.splice(5, 1);
   }
 
   const statusOptions = computed<SelectOptionData[]>(() => [
@@ -828,14 +826,14 @@
   }
 
   const fetchData = async (
-    params: ImagePageParams = {
+    params: VideoPageParams = {
       ...basePagination,
       ...searchFormData.value,
     }
   ) => {
     setLoading(true);
     try {
-      const { data } = await queryImagePage(params);
+      const { data } = await queryVideoPage(params);
       renderData.value = data.items;
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
@@ -852,7 +850,7 @@
     fetchData({
       ...basePagination,
       ...searchFormData.value,
-    } as unknown as ImagePageParams);
+    } as unknown as VideoPageParams);
   };
 
   const onPageChange = (current: number) => {
@@ -977,13 +975,6 @@
     getModelAgentList();
   }
 
-  const imageVisibleId = ref();
-  const imageVisible = ref(false);
-  const viewImage = (id: any) => {
-    imageVisibleId.value = id;
-    imageVisible.value = true;
-  };
-
   const detailVisible = ref(false);
   const recordId = ref();
 
@@ -1008,7 +999,7 @@
 
 <script lang="ts">
   export default {
-    name: 'LogImageList',
+    name: 'LogVideoList',
   };
 </script>
 
