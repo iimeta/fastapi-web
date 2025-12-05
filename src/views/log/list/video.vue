@@ -380,13 +380,13 @@
         </template>
         <template #width_height="{ record }">
           {{
-            record.spend.video?.pricing?.width
-              ? `${record.spend.video?.pricing.width} × ${record.spend.video?.pricing.height}`
+            record.spend.video_generation?.pricing?.width
+              ? `${record.spend.video_generation?.pricing.width} × ${record.spend.video_generation?.pricing.height}`
               : '-'
           }}
         </template>
         <template #seconds="{ record }">
-          {{ record.spend.video?.seconds || '-' }}
+          {{ record.spend.video_generation?.seconds || '-' }}
         </template>
         <template #total_spend_tokens="{ record }">
           <span

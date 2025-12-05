@@ -765,7 +765,14 @@
       audio_cache: {
         read_ratio: ref(),
       },
-      video: [],
+      video: {
+        input_ratio: ref(),
+        output_ratio: ref(),
+      },
+      video_generation: [],
+      video_cache: {
+        read_ratio: ref(),
+      },
       search: [],
       midjourney: [],
       once: {

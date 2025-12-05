@@ -759,7 +759,14 @@
       audio_cache: {
         read_ratio: ref(),
       },
-      video: [],
+      video: {
+        input_ratio: ref(),
+        output_ratio: ref(),
+      },
+      video_generation: [],
+      video_cache: {
+        read_ratio: ref(),
+      },
       search: [],
       midjourney: [],
       once: {
@@ -857,10 +864,14 @@
         }
       }
 
-      if (formData.value.pricing.video) {
-        for (let i = 0; i < formData.value.pricing.video.length; i += 1) {
-          if (formData.value.pricing.video[i].is_default) {
-            formData.value.pricing.video[i].is_default = '1';
+      if (formData.value.pricing.video_generation) {
+        for (
+          let i = 0;
+          i < formData.value.pricing.video_generation.length;
+          i += 1
+        ) {
+          if (formData.value.pricing.video_generation[i].is_default) {
+            formData.value.pricing.video_generation[i].is_default = '1';
             break;
           }
         }

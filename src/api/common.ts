@@ -44,6 +44,12 @@ export interface AudioPricing {
 }
 
 export interface VideoPricing {
+  input_ratio: any;
+  output_ratio: any;
+  read_ratio?: any;
+}
+
+export interface VideoGenerationPricing {
   width: any;
   height: any;
   once_ratio: any;
@@ -81,7 +87,9 @@ export interface Pricing {
   vision: VisionPricing[];
   audio: AudioPricing;
   audio_cache: CachePricing;
-  video: VideoPricing[];
+  video: VideoPricing;
+  video_generation: VideoGenerationPricing[];
+  video_cache: CachePricing;
   search: SearchPricing[];
   midjourney: MidjourneyPricing[];
   once: OncePricing;
@@ -128,6 +136,14 @@ export interface AudioSpend {
 
 export interface VideoSpend {
   pricing: VideoPricing;
+  input_tokens: number;
+  output_tokens: number;
+  spend_tokens: number;
+}
+
+export interface VideoGenerationSpend {
+  pricing: VideoGenerationPricing;
+  seconds: number;
   spend_tokens: number;
 }
 
@@ -163,6 +179,8 @@ export interface Spend {
   audio: AudioSpend;
   audio_cache: CacheSpend;
   video: VideoSpend;
+  video_generation: VideoGenerationSpend;
+  video_cache: CacheSpend;
   search: SearchSpend;
   midjourney: MidjourneySpend;
   once: OnceSpend;

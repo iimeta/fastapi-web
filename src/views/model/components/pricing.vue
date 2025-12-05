@@ -173,6 +173,24 @@
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
           v-model="formData.billing_items"
+          value="video_generation"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.video_generation') }}
+        </a-checkbox>
+        <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
+          v-model="formData.billing_items"
+          value="video_cache"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ t('model.dict.billing_items.video_cache') }}
+        </a-checkbox>
+        <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
+          v-model="formData.billing_items"
           value="search"
           class="billing-items"
           @change="handleBillingItemsChange"
@@ -847,24 +865,78 @@
         :title="$t('model.dict.billing_items.video')"
       >
         <a-form-item
-          v-for="(_, index) of formData.video.length"
-          :key="index"
-          :field="
-            `video[${index}].width` &&
-            `video[${index}].height` &&
-            `video[${index}].once_ratio`
-          "
-          :label="`${index + 1}. ` + $t('model.label.video')"
+          field="video.input_ratio"
+          :label="$t('model.label.input_ratio')"
           :rules="[
             {
               required: true,
-              message: $t('model.error.video.required'),
+              message: $t('model.error.input_ratio.required'),
             },
           ]"
         >
           <a-input-number
-            v-model="formData.video[index].width"
-            :placeholder="$t('model.placeholder.video.width')"
+            v-model="formData.video.input_ratio"
+            :placeholder="$t('model.placeholder.input_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parsePrice"
+            allow-clear
+            class="input"
+          >
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
+            <template #append> / M </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          field="video.output_ratio"
+          :label="$t('model.label.output_ratio')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.error.output_ratio.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="formData.video.output_ratio"
+            :placeholder="$t('model.placeholder.output_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parsePrice"
+            allow-clear
+            class="input"
+          >
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
+            <template #append> / M </template>
+          </a-input-number>
+        </a-form-item>
+      </a-tab-pane>
+
+      <!-- 视频生成 -->
+      <a-tab-pane
+        v-if="formData.billing_items.includes('video_generation')"
+        key="video_generation"
+        :title="$t('model.dict.billing_items.video_generation')"
+      >
+        <a-form-item
+          v-for="(_, index) of formData.video_generation.length"
+          :key="index"
+          :field="
+            `video_generation[${index}].width` &&
+            `video_generation[${index}].height` &&
+            `video_generation[${index}].once_ratio`
+          "
+          :label="`${index + 1}. ` + $t('model.label.video_generation')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.error.video_generation.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="formData.video_generation[index].width"
+            :placeholder="$t('model.placeholder.video_generation.width')"
             :precision="0"
             :min="1"
             :max="999999"
@@ -873,8 +945,8 @@
           />
           ×
           <a-input-number
-            v-model="formData.video[index].height"
-            :placeholder="$t('model.placeholder.video.height')"
+            v-model="formData.video_generation[index].height"
+            :placeholder="$t('model.placeholder.video_generation.height')"
             :precision="0"
             :min="1"
             :max="999999"
@@ -882,8 +954,8 @@
             style="width: 188px; margin-left: 5px; margin-right: 5px"
           />
           <a-input-number
-            v-model="formData.video[index].once_ratio"
-            :placeholder="$t('model.placeholder.video.once_ratio')"
+            v-model="formData.video_generation[index].once_ratio"
+            :placeholder="$t('model.placeholder.video_generation.once_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
@@ -894,7 +966,7 @@
             <template #append> / 秒 </template>
           </a-input-number>
           <a-radio
-            v-model="formData.video[index].is_default"
+            v-model="formData.video_generation[index].is_default"
             value="1"
             style="width: 60px"
             @change="handleVideoPricingIsDefaultChange(index)"
@@ -915,6 +987,37 @@
           >
             <icon-minus />
           </a-button>
+        </a-form-item>
+      </a-tab-pane>
+
+      <!-- 视频缓存 -->
+      <a-tab-pane
+        v-if="formData.billing_items.includes('video_cache')"
+        key="video_cache"
+        :title="$t('model.dict.billing_items.video_cache')"
+      >
+        <a-form-item
+          field="video_cache.read_ratio"
+          :label="$t('model.label.read_ratio')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.error.read_ratio.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="formData.video_cache.read_ratio"
+            :placeholder="$t('model.placeholder.read_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parsePrice"
+            allow-clear
+            class="input"
+          >
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
+            <template #append> / M </template>
+          </a-input-number>
         </a-form-item>
       </a-tab-pane>
 
@@ -1094,7 +1197,7 @@
     CachePricing,
     ImageGenerationPricing,
     VisionPricing,
-    VideoPricing,
+    VideoGenerationPricing,
     SearchPricing,
     MidjourneyPricing,
   } from '@/api/common';
@@ -1154,6 +1257,14 @@
     {
       label: t('model.dict.billing_items.video'),
       value: 'video',
+    },
+    {
+      label: t('model.dict.billing_items.video_generation'),
+      value: 'video_generation',
+    },
+    {
+      label: t('model.dict.billing_items.video_cache'),
+      value: 'video_cache',
     },
     {
       label: t('model.dict.billing_items.search'),
@@ -1409,30 +1520,30 @@
   };
 
   const handleVideoPricingAdd = (w?: number, h?: number) => {
-    const videoPricing: VideoPricing = {
+    const videoGenerationPricing: VideoGenerationPricing = {
       width: w,
       height: h,
       once_ratio: ref(),
-      is_default: formData.value.video.length === 0 ? '1' : '',
+      is_default: formData.value.video_generation.length === 0 ? '1' : '',
     };
-    formData.value.video.push(videoPricing);
+    formData.value.video_generation.push(videoGenerationPricing);
   };
 
   const handleVideoPricingDel = (index: number) => {
-    if (formData.value.video.length > 1) {
-      if (formData.value.video[index].is_default === '1') {
-        formData.value.video[index === 0 ? 1 : 0].is_default = '1';
+    if (formData.value.video_generation.length > 1) {
+      if (formData.value.video_generation[index].is_default === '1') {
+        formData.value.video_generation[index === 0 ? 1 : 0].is_default = '1';
       }
-      formData.value.video.splice(index, 1);
+      formData.value.video_generation.splice(index, 1);
     }
   };
 
   const handleVideoPricingIsDefaultChange = (index: number) => {
-    for (let i = 0; i < formData.value.video.length; i += 1) {
+    for (let i = 0; i < formData.value.video_generation.length; i += 1) {
       if (i === index) {
-        formData.value.video[i].is_default = '1';
+        formData.value.video_generation[i].is_default = '1';
       } else {
-        formData.value.video[i].is_default = '';
+        formData.value.video_generation[i].is_default = '';
       }
     }
   };
@@ -1593,12 +1704,29 @@
       }
     }
 
+    if (formData.value.billing_items.includes('image')) {
+      if (!formData.value.image) {
+        formData.value.image = {
+          input_ratio: ref(),
+          output_ratio: ref(),
+        };
+      }
+    }
+
     if (formData.value.billing_items.includes('image_generation')) {
       if (!formData.value.image_generation) {
         formData.value.image_generation = [];
       }
       if (formData.value.image_generation.length === 0) {
         initImageGenerationPricing();
+      }
+    }
+
+    if (formData.value.billing_items.includes('image_cache')) {
+      if (!formData.value.image_cache) {
+        formData.value.image_cache = {
+          read_ratio: ref(),
+        };
       }
     }
 
@@ -1611,12 +1739,46 @@
       }
     }
 
+    if (formData.value.billing_items.includes('audio')) {
+      if (!formData.value.audio) {
+        formData.value.audio = {
+          input_ratio: ref(),
+          output_ratio: ref(),
+        };
+      }
+    }
+
+    if (formData.value.billing_items.includes('audio_cache')) {
+      if (!formData.value.audio_cache) {
+        formData.value.audio_cache = {
+          read_ratio: ref(),
+        };
+      }
+    }
+
     if (formData.value.billing_items.includes('video')) {
       if (!formData.value.video) {
-        formData.value.video = [];
+        formData.value.video = {
+          input_ratio: ref(),
+          output_ratio: ref(),
+        };
       }
-      if (formData.value.video.length === 0) {
+    }
+
+    if (formData.value.billing_items.includes('video_generation')) {
+      if (!formData.value.video_generation) {
+        formData.value.video_generation = [];
+      }
+      if (formData.value.video_generation.length === 0) {
         initVideoPricing();
+      }
+    }
+
+    if (formData.value.billing_items.includes('video_cache')) {
+      if (!formData.value.video_cache) {
+        formData.value.video_cache = {
+          read_ratio: ref(),
+        };
       }
     }
 
@@ -1639,6 +1801,11 @@
     }
 
     if (!formData.value.billing_items.includes('once')) {
+      if (!formData.value.once) {
+        formData.value.once = {
+          once_ratio: ref(),
+        };
+      }
       formData.value.billing_methods = formData.value.billing_methods.filter(
         (item) => item !== 2
       );

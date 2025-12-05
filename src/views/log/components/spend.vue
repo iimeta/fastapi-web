@@ -62,6 +62,16 @@
       <Quota :model-value="record.video.spend_tokens" />
     </template>
 
+    <!-- 视频生成 -->
+    <template #video_generation="{ record }">
+      <Quota :model-value="record.video_generation.spend_tokens" />
+    </template>
+
+    <!-- 视频缓存 -->
+    <template #video_cache="{ record }">
+      <Quota :model-value="record.video_cache.spend_tokens" />
+    </template>
+
     <!-- 搜索 -->
     <template #search="{ record }">
       <Quota :model-value="record.search.spend_tokens" />
@@ -364,6 +374,35 @@
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #input_tokens="{ record }">
+      {{ parseQuota(record.input_tokens) || '0' }}
+    </template>
+    <template #input_ratio="{ record }">
+      <Quota :model-value="record.pricing.input_ratio" /> / M
+    </template>
+    <template #output_tokens="{ record }">
+      {{ parseQuota(record.output_tokens) || '0' }}
+    </template>
+    <template #output_ratio="{ record }">
+      <Quota :model-value="record.pricing.output_ratio" /> / M
+    </template>
+    <template #spend_tokens="{ record }">
+      <Quota :model-value="record.spend_tokens" />
+    </template>
+  </a-table>
+
+  <!-- 视频生成 -->
+  <a-table
+    v-if="
+      spend.billing_items.includes('video_generation') &&
+      videoGenerationSpend.length
+    "
+    :columns="videoGenerationSpendColumns"
+    :data="videoGenerationSpend"
+    :pagination="false"
+    :bordered="false"
+    style="margin-bottom: 15px"
+  >
     <template #width="{ record }">
       {{ record.pricing.width }} × {{ record.pricing.height }}
     </template>
@@ -372,6 +411,26 @@
     </template>
     <template #once_ratio="{ record }">
       <Quota :model-value="record.pricing.once_ratio" /> / 秒
+    </template>
+    <template #spend_tokens="{ record }">
+      <Quota :model-value="record.spend_tokens" />
+    </template>
+  </a-table>
+
+  <!-- 视频缓存 -->
+  <a-table
+    v-if="spend.billing_items.includes('video_cache') && videoCacheSpend.length"
+    :columns="videoCacheSpendColumns"
+    :data="videoCacheSpend"
+    :pagination="false"
+    :bordered="false"
+    style="margin-bottom: 15px"
+  >
+    <template #read_tokens="{ record }">
+      {{ parseQuota(record.read_tokens) || '0' }}
+    </template>
+    <template #read_ratio="{ record }">
+      <Quota :model-value="record.pricing.read_ratio" /> / M
     </template>
     <template #spend_tokens="{ record }">
       <Quota :model-value="record.spend_tokens" />
@@ -462,6 +521,7 @@
     ImageGenerationSpend,
     VisionSpend,
     VideoSpend,
+    VideoGenerationSpend,
     SearchSpend,
     MidjourneySpend,
     OnceSpend,
@@ -948,23 +1008,109 @@
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('text.columns.spend.video.width_height'),
+          title: t(
+            props.modelType === 5
+              ? 'text.columns.spend.video.input_tokens'
+              : 'text.columns.spend.input_tokens'
+          ),
+          dataIndex: 'input_tokens',
+          slotName: 'input_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('text.columns.spend.input_ratio'),
+          dataIndex: 'input_ratio',
+          slotName: 'input_ratio',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t(
+            props.modelType === 6
+              ? 'text.columns.spend.video.output_tokens'
+              : 'text.columns.spend.output_tokens'
+          ),
+          dataIndex: 'output_tokens',
+          slotName: 'output_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('text.columns.spend.output_ratio'),
+          dataIndex: 'output_ratio',
+          slotName: 'output_ratio',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('text.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
+          align: 'center',
+          width: 100,
+        },
+      ],
+    },
+  ]);
+
+  // 视频生成
+  const videoGenerationSpend = ref<VideoGenerationSpend[]>([]);
+  const videoGenerationSpendColumns = ref<TableColumnData[]>([
+    {
+      title: t('text.columns.spend.video_generation'),
+      headerCellStyle: { background: '#ffffff' },
+      children: [
+        {
+          title: t('text.columns.spend.video_generation.width_height'),
           dataIndex: 'width',
           slotName: 'width',
           align: 'center',
           width: 100,
         },
         {
-          title: t('text.columns.spend.video.seconds'),
+          title: t('text.columns.spend.video_generation.seconds'),
           dataIndex: 'seconds',
           slotName: 'seconds',
           align: 'center',
           width: 100,
         },
         {
-          title: t('text.columns.spend.video.once_ratio'),
+          title: t('text.columns.spend.video_generation.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('text.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
+          align: 'center',
+          width: 100,
+        },
+      ],
+    },
+  ]);
+
+  // 视频缓存
+  const videoCacheSpend = ref<CacheSpend[]>([]);
+  const videoCacheSpendColumns = ref<TableColumnData[]>([
+    {
+      title: t('text.columns.spend.video_cache'),
+      headerCellStyle: { background: '#ffffff' },
+      children: [
+        {
+          title: t('text.columns.spend.read_tokens'),
+          dataIndex: 'read_tokens',
+          slotName: 'read_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('text.columns.spend.read_ratio'),
+          dataIndex: 'read_ratio',
+          slotName: 'read_ratio',
           align: 'center',
           width: 100,
         },
@@ -1246,6 +1392,36 @@
         title: t('text.columns.spend.video'),
         dataIndex: 'video',
         slotName: 'video',
+        align: 'center',
+        width: 100,
+      });
+    }
+
+    // 视频生成
+    if (
+      spend.value.billing_items.includes('video_generation') &&
+      spend.value.video_generation
+    ) {
+      videoGenerationSpend.value[0] = spend.value.video_generation;
+      totalSpendColumns.value[0].children.push({
+        title: t('text.columns.spend.video_generation'),
+        dataIndex: 'video_generation',
+        slotName: 'video_generation',
+        align: 'center',
+        width: 100,
+      });
+    }
+
+    // 视频缓存
+    if (
+      spend.value.billing_items.includes('video_cache') &&
+      spend.value.video_cache
+    ) {
+      videoCacheSpend.value[0] = spend.value.video_cache;
+      totalSpendColumns.value[0].children.push({
+        title: t('text.columns.spend.video_cache'),
+        dataIndex: 'video_cache',
+        slotName: 'video_cache',
         align: 'center',
         width: 100,
       });

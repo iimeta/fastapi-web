@@ -202,6 +202,26 @@
     :bordered="false"
     style="margin-bottom: 15px"
   >
+    <template #input_ratio="{ record }">
+      <Quota :model-value="record.input_ratio" /> / M
+    </template>
+    <template #output_ratio="{ record }">
+      <Quota :model-value="record.output_ratio" /> / M
+    </template>
+    <template #read_ratio="{ record }">
+      <Quota :model-value="record.read_ratio" /> / M
+    </template>
+  </a-table>
+
+  <!-- 视频生成 -->
+  <a-table
+    v-if="pricing.billing_items.includes('video_generation')"
+    :columns="videoGenerationPricingColumns"
+    :data="videoGenerationPricing"
+    :pagination="false"
+    :bordered="false"
+    style="margin-bottom: 15px"
+  >
     <template #width="{ record }">
       {{ record.width }} × {{ record.height }}
     </template>
@@ -210,6 +230,23 @@
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? '是' : '-' }}
+    </template>
+  </a-table>
+
+  <!-- 视频缓存 -->
+  <a-table
+    v-if="
+      pricing.billing_items.includes('video_cache') &&
+      !pricing.billing_items.includes('video')
+    "
+    :columns="videoCachePricingColumns"
+    :data="videoCachePricing"
+    :pagination="false"
+    :bordered="false"
+    style="margin-bottom: 15px"
+  >
+    <template #read_ratio="{ record }">
+      <Quota :model-value="record.read_ratio" /> / M
     </template>
   </a-table>
 
@@ -272,6 +309,7 @@
     ImageGenerationPricing,
     VisionPricing,
     VideoPricing,
+    VideoGenerationPricing,
     SearchPricing,
     MidjourneyPricing,
     OncePricing,
@@ -587,14 +625,39 @@
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
-          title: t('model.label.video.width_height'),
+          title: t('model.label.input_ratio'),
+          dataIndex: 'input_ratio',
+          slotName: 'input_ratio',
+          align: 'center',
+          width: 200,
+        },
+        {
+          title: t('model.label.output_ratio'),
+          dataIndex: 'output_ratio',
+          slotName: 'output_ratio',
+          align: 'center',
+          width: 200,
+        },
+      ],
+    },
+  ]);
+
+  // 视频生成
+  const videoGenerationPricing = ref<VideoGenerationPricing[]>([]);
+  const videoGenerationPricingColumns = ref<TableColumnData[]>([
+    {
+      title: t('model.columns.pricing.video_generation'),
+      headerCellStyle: { background: '#ffffff' },
+      children: [
+        {
+          title: t('model.label.video_generation.width_height'),
           dataIndex: 'width',
           slotName: 'width',
           align: 'center',
           width: 200,
         },
         {
-          title: t('model.label.video.once_ratio'),
+          title: t('model.label.video_generation.once_ratio'),
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
@@ -604,6 +667,24 @@
           title: t('model.label.is_default'),
           dataIndex: 'is_default',
           slotName: 'is_default',
+          align: 'center',
+          width: 200,
+        },
+      ],
+    },
+  ]);
+
+  // 视频缓存
+  const videoCachePricing = ref<CachePricing[]>([]);
+  const videoCachePricingColumns = ref<TableColumnData[]>([
+    {
+      title: t('model.columns.pricing.video_cache'),
+      headerCellStyle: { background: '#ffffff' },
+      children: [
+        {
+          title: t('model.label.read_ratio'),
+          dataIndex: 'read_ratio',
+          slotName: 'read_ratio',
           align: 'center',
           width: 200,
         },
@@ -793,7 +874,37 @@
 
     // 视频
     if (pricing.value.billing_items.includes('video')) {
-      videoPricing.value = pricing.value.video;
+      videoPricing.value[0] = pricing.value.video;
+    }
+
+    if (
+      videoPricingColumns.value[0].children &&
+      videoPricingColumns.value[0].children.length > 2
+    ) {
+      videoPricingColumns.value[0].children.splice(2, 1);
+    }
+
+    // 视频生成
+    if (pricing.value.billing_items.includes('video_generation')) {
+      videoGenerationPricing.value = pricing.value.video_generation;
+    }
+
+    // 视频缓存
+    if (pricing.value.billing_items.includes('video_cache')) {
+      videoCachePricing.value[0] = pricing.value.video_cache;
+
+      if (pricing.value.billing_items.includes('video')) {
+        videoPricing.value[0].read_ratio = pricing.value.video_cache.read_ratio;
+        if (videoPricingColumns.value[0].children) {
+          videoPricingColumns.value[0].children.push({
+            title: t('model.label.read_ratio'),
+            dataIndex: 'read_ratio',
+            slotName: 'read_ratio',
+            align: 'center',
+            width: 200,
+          });
+        }
+      }
     }
 
     // 搜索
