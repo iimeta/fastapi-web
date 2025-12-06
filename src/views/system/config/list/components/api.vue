@@ -9,7 +9,7 @@
         :md="12"
         :lg="8"
         :xl="8"
-        :xxl="8"
+        :xxl="6"
         class="list-col"
       >
         <div class="card-wrap">
