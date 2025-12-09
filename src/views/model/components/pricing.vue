@@ -492,7 +492,7 @@
             :max="999999"
             :step="1"
             hide-button
-            style="width: 70px; margin-right: 1px"
+            style="width: 70px; margin-right: 4px"
           >
           </a-input-number>
           -
@@ -504,7 +504,7 @@
             :max="999999"
             :step="1"
             hide-button
-            style="width: 110px; margin-left: 1px; margin-right: 5px"
+            style="width: 110px; margin-left: 4px; margin-right: 5px"
           >
             <template #append> / k </template>
           </a-input-number>
@@ -537,7 +537,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             hide-button
-            style="width: 164px"
+            style="width: 152px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>

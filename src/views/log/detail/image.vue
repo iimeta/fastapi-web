@@ -616,7 +616,7 @@
     <!-- 花费明细 -->
     <a-modal
       v-model:visible="spendVisible"
-      :width="888"
+      :width="1068"
       :body-style="{ maxHeight: '520px' }"
       :modal-style="{
         padding: '25px 20px 20px 20px',

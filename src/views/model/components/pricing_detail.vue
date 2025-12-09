@@ -17,8 +17,8 @@
     <template #output_ratio="{ record }">
       <Quota :model-value="record.output_ratio" /> / M
     </template>
-    <template #read_ratio="{ record }">
-      <Quota :model-value="record.read_ratio" /> / M
+    <template #reasoning_ratio="{ record }">
+      <Quota :model-value="record.reasoning_ratio" /> / M
     </template>
   </a-table>
 
@@ -95,6 +95,9 @@
     </template>
     <template #output_ratio="{ record }">
       <Quota :model-value="record.output_ratio" /> / M
+    </template>
+    <template #reasoning_ratio="{ record }">
+      <Quota :model-value="record.reasoning_ratio" /> / M
     </template>
   </a-table>
 
@@ -353,6 +356,13 @@
           align: 'center',
           width: 200,
         },
+        {
+          title: t('model.label.reasoning_ratio'),
+          dataIndex: 'reasoning_ratio',
+          slotName: 'reasoning_ratio',
+          align: 'center',
+          width: 200,
+        },
       ],
     },
   ]);
@@ -437,28 +447,35 @@
           dataIndex: 'mode',
           slotName: 'mode',
           align: 'center',
-          width: 200,
+          width: 150,
         },
         {
           title: t('model.label.tiered.input_tokens'),
           dataIndex: 'gt',
           slotName: 'gt',
           align: 'center',
-          width: 200,
+          width: 150,
         },
         {
           title: t('model.label.tiered.input_ratio'),
           dataIndex: 'input_ratio',
           slotName: 'input_ratio',
           align: 'center',
-          width: 200,
+          width: 150,
         },
         {
           title: t('model.label.tiered.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
           align: 'center',
-          width: 200,
+          width: 150,
+        },
+        {
+          title: t('model.label.tiered.reasoning_ratio'),
+          dataIndex: 'reasoning_ratio',
+          slotName: 'reasoning_ratio',
+          align: 'center',
+          width: 150,
         },
       ],
     },

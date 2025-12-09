@@ -126,6 +126,12 @@
     <template #output_ratio="{ record }">
       <Quota :model-value="record.pricing.output_ratio" /> / M
     </template>
+    <template #reasoning_tokens="{ record }">
+      {{ parseQuota(record.reasoning_tokens) || '0' }}
+    </template>
+    <template #reasoning_ratio="{ record }">
+      <Quota :model-value="record.pricing.reasoning_ratio" /> / M
+    </template>
     <template #spend_tokens="{ record }">
       <Quota :model-value="record.spend_tokens" />
     </template>
@@ -231,6 +237,12 @@
     </template>
     <template #output_ratio="{ record }">
       <Quota :model-value="record.pricing.output_ratio" /> / M
+    </template>
+    <template #reasoning_tokens="{ record }">
+      {{ parseQuota(record.reasoning_tokens) || '0' }}
+    </template>
+    <template #reasoning_ratio="{ record }">
+      <Quota :model-value="record.pricing.reasoning_ratio" /> / M
     </template>
     <template #spend_tokens="{ record }">
       <Quota :model-value="record.spend_tokens" />
@@ -589,6 +601,20 @@
           width: 100,
         },
         {
+          title: t('text.columns.spend.reasoning_tokens'),
+          dataIndex: 'reasoning_tokens',
+          slotName: 'reasoning_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('text.columns.spend.reasoning_ratio'),
+          dataIndex: 'reasoning_ratio',
+          slotName: 'reasoning_ratio',
+          align: 'center',
+          width: 100,
+        },
+        {
           title: t('text.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
@@ -770,6 +796,20 @@
           title: t('text.columns.spend.tiered.output_ratio'),
           dataIndex: 'output_ratio',
           slotName: 'output_ratio',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('text.columns.spend.reasoning_tokens'),
+          dataIndex: 'reasoning_tokens',
+          slotName: 'reasoning_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('text.columns.spend.tiered.reasoning_ratio'),
+          dataIndex: 'reasoning_ratio',
+          slotName: 'reasoning_ratio',
           align: 'center',
           width: 100,
         },
