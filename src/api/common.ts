@@ -2,6 +2,7 @@ export interface TextPricing {
   service_tier?: string;
   input_ratio: any;
   output_ratio: any;
+  reasoning_ratio: any;
   mode?: string;
   gt?: any;
   lte?: any;
@@ -99,6 +100,7 @@ export interface TextSpend {
   pricing: TextPricing;
   input_tokens: number;
   output_tokens: number;
+  reasoning_tokens: number;
   spend_tokens: number;
 }
 

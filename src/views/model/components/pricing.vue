@@ -253,7 +253,7 @@
             v-model="formData.text[index].service_tier"
             :placeholder="$t('model.placeholder.service_tier')"
             :options="serviceTierOptions"
-            style="width: 215px; margin-right: 5px"
+            style="width: 102px; margin-right: 5px"
           />
           <a-input-number
             v-model="formData.text[index].input_ratio"
@@ -262,7 +262,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 228px; margin-right: 5px"
+            style="width: 188px; margin-right: 5px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
@@ -274,7 +274,19 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 228px"
+            style="width: 188px; margin-right: 5px"
+          >
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
+            <template #append> / M </template>
+          </a-input-number>
+          <a-input-number
+            v-model="formData.text[index].reasoning_ratio"
+            :placeholder="$t('model.placeholder.reasoning_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parsePrice"
+            allow-clear
+            style="width: 188px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
@@ -455,7 +467,8 @@
             `tiered_text[${index}].gt` &&
             `tiered_text[${index}].lte` &&
             `tiered_text[${index}].input_ratio` &&
-            `tiered_text[${index}].output_ratio`
+            `tiered_text[${index}].output_ratio` &&
+            `tiered_text[${index}].reasoning_ratio`
           "
           :label="`${index + 1}. ` + $t('model.label.text')"
           :rules="[
@@ -478,7 +491,8 @@
             :min="0"
             :max="999999"
             :step="1"
-            style="width: 87px; margin-right: 5px"
+            hide-button
+            style="width: 70px; margin-right: 1px"
           >
           </a-input-number>
           -
@@ -489,7 +503,8 @@
             :min="0"
             :max="999999"
             :step="1"
-            style="width: 138px; margin-left: 5px; margin-right: 5px"
+            hide-button
+            style="width: 110px; margin-left: 1px; margin-right: 5px"
           >
             <template #append> / k </template>
           </a-input-number>
@@ -499,11 +514,10 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
-            allow-clear
-            style="width: 165px; margin-right: 5px"
+            hide-button
+            style="width: 110px; margin-right: 5px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
-            <template #append> / M </template>
           </a-input-number>
           <a-input-number
             v-model="formData.tiered_text[index].output_ratio"
@@ -511,8 +525,19 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
-            allow-clear
-            style="width: 165px"
+            hide-button
+            style="width: 110px; margin-right: 5px"
+          >
+            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
+          </a-input-number>
+          <a-input-number
+            v-model="formData.tiered_text[index].reasoning_ratio"
+            :placeholder="$t('model.placeholder.tiered_reasoning_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parsePrice"
+            hide-button
+            style="width: 164px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
@@ -1345,6 +1370,7 @@
       service_tier: s,
       input_ratio: ref(),
       output_ratio: ref(),
+      reasoning_ratio: ref(),
     };
     formData.value.text.push(textPricing);
   };
@@ -1384,6 +1410,7 @@
       lte: l,
       input_ratio: ref(),
       output_ratio: ref(),
+      reasoning_ratio: ref(),
     };
     formData.value.tiered_text.push(textPricing);
   };

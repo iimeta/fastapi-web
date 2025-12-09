@@ -61,10 +61,22 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="task_id" :label="$t('task.form.task_id')">
+                <a-form-item field="video_id" :label="$t('task.form.video_id')">
                   <a-input
-                    v-model="formModel.task_id"
-                    :placeholder="$t('task.form.task_id.placeholder')"
+                    v-model="formModel.video_id"
+                    :placeholder="$t('task.form.video_id.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="video_url"
+                  :label="$t('task.form.video_url')"
+                >
+                  <a-input
+                    v-model="formModel.video_url"
+                    :placeholder="$t('task.form.video_url.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -196,11 +208,35 @@
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
       >
+        <template #video_id="{ record }">
+          <span class="copy-btn" @click="handleCopy(record.video_id)">
+            {{ record.video_id || '-' }}
+          </span>
+        </template>
+        <template #width_height="{ record }">
+          {{ `${record.width} × ${record.height}` }}
+        </template>
         <template #video_url="{ record }">
-          {{ record.video_url || '-' }}
+          <span class="copy-btn" @click="handleCopy(record.video_url)">
+            {{ record.video_url || '-' }}
+          </span>
         </template>
         <template #status="{ record }">
-          {{ $t(`task.dict.status.${record.status}`) }}
+          <a-tag v-if="record.status === 'completed'" color="green">
+            {{ $t(`task.dict.status.${record.status}`) }}
+          </a-tag>
+          <a-tag v-else-if="record.status === 'queued'" color="arcoblue">
+            {{ $t(`task.dict.status.${record.status}`) }}
+          </a-tag>
+          <a-tag v-else-if="record.status === 'in_progress'" color="orange">
+            {{ $t(`task.dict.status.${record.status}`) }}
+          </a-tag>
+          <a-tag v-else-if="record.status === 'failed'" color="red">
+            {{ $t(`task.dict.status.${record.status}`) }}
+          </a-tag>
+          <a-tag v-else color="gray">
+            {{ $t(`task.dict.status.${record.status}`) }}
+          </a-tag>
         </template>
       </a-table>
     </a-card>
@@ -208,7 +244,14 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import {
+    computed,
+    ref,
+    reactive,
+    watch,
+    nextTick,
+    getCurrentInstance,
+  } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { queryAppList, AppList } from '@/api/app';
@@ -221,10 +264,12 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { useClipboard } from '@vueuse/core';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
+  const { proxy } = getCurrentInstance() as any;
   const userRole = localStorage.getItem('userRole');
 
   const rowSelection = reactive({
@@ -238,7 +283,8 @@
       user_id: ref(),
       app_id: ref(),
       trace_id: '',
-      task_id: '',
+      video_id: '',
+      video_url: '',
       status: ref(),
       created_at: [],
     };
@@ -312,37 +358,44 @@
       width: 75,
     },
     {
-      title: t('task.columns.trace_id'),
-      dataIndex: 'trace_id',
-      slotName: 'trace_id',
+      title: t('task.columns.model'),
+      dataIndex: 'model',
+      slotName: 'model',
       align: 'center',
     },
     {
-      title: t('task.columns.task_id'),
-      dataIndex: 'task_id',
-      slotName: 'task_id',
+      title: t('task.columns.video_id'),
+      dataIndex: 'video_id',
+      slotName: 'video_id',
       align: 'center',
-      width: 75,
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
+      title: t('task.columns.width_height'),
+      dataIndex: 'width_height',
+      slotName: 'width_height',
+      align: 'center',
+    },
+    {
+      title: t('task.columns.seconds'),
+      dataIndex: 'seconds',
+      slotName: 'seconds',
+      align: 'center',
     },
     {
       title: t('task.columns.video_url'),
       dataIndex: 'video_url',
       slotName: 'video_url',
       align: 'center',
-    },
-    {
-      title: t('task.columns.video_time'),
-      dataIndex: 'video_time',
-      slotName: 'video_time',
-      align: 'center',
-      width: 115,
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('task.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
-      width: 75,
     },
     {
       title: t('task.columns.created_at'),
@@ -355,24 +408,24 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('task.dict.status.1'),
-      value: 1,
+      label: t('task.dict.status.queued'),
+      value: 'queued',
     },
     {
-      label: t('task.dict.status.2'),
-      value: 2,
+      label: t('task.dict.status.in_progress'),
+      value: 'in_progress',
     },
     {
-      label: t('task.dict.status.3'),
-      value: 3,
+      label: t('task.dict.status.completed'),
+      value: 'completed',
     },
     {
-      label: t('task.dict.status.-2'),
-      value: -2,
+      label: t('task.dict.status.failed'),
+      value: 'failed',
     },
     {
-      label: t('task.dict.status.-1'),
-      value: -1,
+      label: t('task.dict.status.expired'),
+      value: 'expired',
     },
   ]);
 
@@ -483,6 +536,22 @@
     },
     { deep: true, immediate: true }
   );
+
+  /**
+   * 复制内容
+   *
+   * @param content 内容
+   */
+  const { copy, copied } = useClipboard();
+  const handleCopy = async (content: string) => {
+    copy(content);
+  };
+
+  watch(copied, () => {
+    if (copied.value) {
+      proxy.$message.success('复制成功');
+    }
+  });
 </script>
 
 <script lang="ts">
@@ -530,5 +599,11 @@
   }
   .arco-btn-size-small {
     padding: 0 8px;
+  }
+  .copy-btn {
+    cursor: pointer;
+  }
+  .copy-btn:hover {
+    color: rgb(var(--arcoblue-6));
   }
 </style>
