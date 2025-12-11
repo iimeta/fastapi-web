@@ -151,6 +151,15 @@ export interface QuotaTask {
   lock_minutes: number;
 }
 
+export interface VideoTask {
+  open: boolean;
+  cron: string;
+  lock_minutes: number;
+  is_enable_storage: boolean;
+  storage_dir: string;
+  storage_base_url: string;
+}
+
 export interface ServiceUnavailable {
   open: boolean;
   ip_whitelist: string[];
@@ -181,6 +190,7 @@ export interface SysConfigDetail {
   notice: Notice;
   quota: Quota;
   quota_task: QuotaTask;
+  video_task: VideoTask;
   service_unavailable: ServiceUnavailable;
   debug: Debug;
   created_at: string;
@@ -212,6 +222,7 @@ export interface SysConfigUpdate {
   notice: Notice;
   quota: Quota;
   quota_task: QuotaTask;
+  video_task: VideoTask;
   service_unavailable: ServiceUnavailable;
   debug: Debug;
 }
