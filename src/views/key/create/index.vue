@@ -302,7 +302,7 @@
     background-color: var(--color-bg-2);
     :deep(.arco-form) {
       .arco-form-item {
-        width: 700px;
+        width: 888px;
         &:first-child {
           margin-top: 20px;
         }

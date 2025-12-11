@@ -30,7 +30,7 @@
             </template>
             <a-card-meta>
               <template #description>
-                {{ item.description }}
+                {{ item.desc }}
                 <a-descriptions
                   :data="item.data"
                   layout="inline-horizontal"
@@ -386,8 +386,7 @@
       {
         action: 'email',
         title: t('sys.config.item.title.email'),
-        description:
-          '配置发信邮箱信息, 用于注册、登录、发送消息等场景, 当有站点配置且同时配置发信邮箱信息时, 站点配置的优先',
+        desc: '配置发信邮箱信息, 用于注册、登录、发送消息等场景, 当有站点配置且同时配置发信邮箱信息时, 站点配置的优先',
         open: configFormData.value.email.open,
         config: true,
         reset: true,
@@ -395,23 +394,21 @@
       {
         action: 'http',
         title: t('sys.config.item.title.http'),
-        description: '配置HTTP请求超时时间和代理地址',
+        desc: '配置HTTP请求超时时间和代理地址',
         config: true,
         reset: true,
       },
       {
         action: 'core',
         title: t('sys.config.item.title.core'),
-        description:
-          '系统首次使用时可根据实际情况修改, 后期如若再次修改密钥前缀, 历史应用密钥将无法通过核验, 请谨慎修改',
+        desc: '系统首次使用时可根据实际情况修改, 后期如若再次修改密钥前缀, 历史应用密钥将无法通过核验, 请谨慎修改',
         config: true,
         reset: true,
       },
       {
         action: 'debug',
         title: t('sys.config.item.title.debug'),
-        description:
-          '调试开关打开后, 日志会打印更多详细信息, 日志级别(logger.level)需配置为: debug',
+        desc: '调试开关打开后, 日志会打印更多详细信息, 日志级别(logger.level)需配置为: debug',
         open: configFormData.value.debug.open,
       },
     ];

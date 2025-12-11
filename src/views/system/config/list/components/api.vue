@@ -30,7 +30,7 @@
             </template>
             <a-card-meta>
               <template #description>
-                {{ item.description }}
+                {{ item.desc }}
                 <a-descriptions
                   :data="item.data"
                   layout="inline-horizontal"
@@ -308,6 +308,48 @@
           <a-input-number
             v-model="configFormData.log.audio_reserve"
             :placeholder="$t('sys.config.placeholder.log.audio_reserve')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> 天 </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'log'"
+          field="log.video_reserve"
+          :label="$t('sys.config.label.log.video_reserve')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.log.video_reserve.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.log.video_reserve"
+            :placeholder="$t('sys.config.placeholder.log.video_reserve')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> 天 </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'log'"
+          field="log.general_reserve"
+          :label="$t('sys.config.label.log.general_reserve')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.log.general_reserve.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.log.general_reserve"
+            :placeholder="$t('sys.config.placeholder.log.general_reserve')"
             :precision="0"
             :min="0"
             allow-clear
@@ -832,16 +874,14 @@
       {
         action: 'base',
         title: t('sys.config.item.title.base'),
-        description:
-          '配置错误重试次数、各类错误禁用次数、超时时间等, 错误重试次数N > 0 重试 N 次, N < 0 重试所有key一轮, N = 0 不重试, 错误次数每天0点会自动重置, 注: 代理密钥错误时, 也会记录模型代理错误次数',
+        desc: '配置错误重试次数、各类错误禁用次数、超时时间等, 错误重试次数N > 0 重试 N 次, N < 0 重试所有key一轮, N = 0 不重试, 错误次数每天0点会自动重置, 注: 代理密钥错误时, 也会记录模型代理错误次数',
         config: true,
         reset: true,
       },
       {
         action: 'log',
         title: t('sys.config.item.title.log'),
-        description:
-          '配置文本日志记录内容, 支持记录: 提问、回答、上下文、多模态识图的BASE64图像数据, 以及各类日志保留天数, 当保留天数>0则会自动删除',
+        desc: '配置文本日志记录内容, 支持记录: 提问、回答、上下文、多模态识图的BASE64图像数据, 以及各类日志保留天数, 当保留天数>0则会自动删除',
         open: configFormData.value.log.open,
         config: true,
         reset: true,
@@ -849,8 +889,7 @@
       {
         action: 'auto_disabled_error',
         title: t('sys.config.item.title.auto_disabled_error'),
-        description:
-          '调用报错时, 包含有配置错误内容时则自动会禁用密钥或模型代理等, 为空则不会自动禁用(达到错误次数上限除外)',
+        desc: '调用报错时, 包含有配置错误内容时则自动会禁用密钥或模型代理等, 为空则不会自动禁用(达到错误次数上限除外)',
         open: configFormData.value.auto_disabled_error.open,
         config: true,
         reset: true,
@@ -858,8 +897,7 @@
       {
         action: 'auto_enable_error',
         title: t('sys.config.item.title.auto_enable_error'),
-        description:
-          '密钥自动禁用后, 可通过此配置自动启用, 密钥禁用原因包含有配置的错误内容时, 会根据配置的启用时间判断是否满足启用条件, 满足则会自动启用',
+        desc: '密钥自动禁用后, 可通过此配置自动启用, 密钥禁用原因包含有配置的错误内容时, 会根据配置的启用时间判断是否满足启用条件, 满足则会自动启用',
         open: configFormData.value.auto_enable_error.open,
         config: true,
         reset: true,
@@ -867,8 +905,7 @@
       {
         action: 'not_retry_error',
         title: t('sys.config.item.title.not_retry_error'),
-        description:
-          '调用报错时, 包含有配置错误内容时则不会自动重试, 为空则会自动重试',
+        desc: '调用报错时, 包含有配置错误内容时则不会自动重试, 为空则会自动重试',
         open: configFormData.value.not_retry_error.open,
         config: true,
         reset: true,
@@ -876,8 +913,7 @@
       {
         action: 'not_shield_error',
         title: t('sys.config.item.title.not_shield_error'),
-        description:
-          '调用报错时, 包含有配置错误内容时则会将错误内容返回给调用方, 为空则屏蔽所有错误',
+        desc: '调用报错时, 包含有配置错误内容时则会将错误内容返回给调用方, 为空则屏蔽所有错误',
         open: configFormData.value.not_shield_error.open,
         config: true,
         reset: true,
@@ -885,22 +921,19 @@
       {
         action: 'reset_api_error',
         title: t('sys.config.item.title.reset_api_error'),
-        description:
-          '当错误次数达到配置上限时可手动进行重置, 重置过程可能会造成系统的短暂不可用(一般几秒钟), 请谨慎操作, 或尝试调高基础配置的错误次数, 调高不会影响系统的正常运行',
+        desc: '当错误次数达到配置上限时可手动进行重置, 重置过程可能会造成系统的短暂不可用(一般几秒钟), 请谨慎操作, 或尝试调高基础配置的错误次数, 调高不会影响系统的正常运行',
         reset: true,
       },
       {
         action: 'refresh_api_cache',
         title: t('sys.config.item.title.refresh_api_cache'),
-        description:
-          '系统默认30分钟更新一次缓存, 如需立刻更新缓存, 请点击刷新按钮',
+        desc: '系统默认30分钟更新一次缓存, 如需立刻更新缓存, 请点击刷新按钮',
         refresh: true,
       },
       {
         action: 'service_unavailable',
         title: t('sys.config.item.title.service_unavailable'),
-        description:
-          '暂停服务开启后, 将拒绝所有API调用请求, 请谨慎操作, 此开关多用于需更新API服务场景时开启, 支持配置IP白名单, 白名单内的IP不受暂停服务限制, 可正常请求, 提前检查服务是否达到预期',
+        desc: '暂停服务开启后, 将拒绝所有API调用请求, 请谨慎操作, 此开关多用于需更新API服务场景时开启, 支持配置IP白名单, 白名单内的IP不受暂停服务限制, 可正常请求, 提前检查服务是否达到预期',
         open: configFormData.value.service_unavailable.open,
         config: true,
         reset: true,

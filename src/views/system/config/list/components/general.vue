@@ -30,7 +30,7 @@
             </template>
             <a-card-meta>
               <template #description>
-                {{ item.description }}
+                {{ item.desc }}
                 <a-descriptions
                   :data="item.data"
                   layout="inline-horizontal"
@@ -680,16 +680,14 @@
       {
         action: 'user_login_register',
         title: t('sys.config.item.title.user_login_register'),
-        description:
-          '配置登录页上的登录方式、用户注册、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示, 关闭用户注册时, 通过邮箱登录也无法自动注册',
+        desc: '配置登录页上的登录方式、用户注册、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示, 关闭用户注册时, 通过邮箱登录也无法自动注册',
         config: true,
         reset: true,
       },
       {
         action: 'user_shield_error',
         title: t('sys.config.item.title.user_shield_error'),
-        description:
-          '用户查看调用日志错误时, 包含有配置错误内容时则屏蔽显示, 为空则屏蔽所有错误显示',
+        desc: '用户查看调用日志错误时, 包含有配置错误内容时则屏蔽显示, 为空则屏蔽所有错误显示',
         open: configFormData.value.user_shield_error.open,
         config: true,
         reset: true,
@@ -697,16 +695,14 @@
       {
         action: 'reseller_login_register',
         title: t('sys.config.item.title.reseller_login_register'),
-        description:
-          '配置登录页上的登录方式、代理商注册、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示, 关闭代理商注册时, 通过邮箱登录也无法自动注册',
+        desc: '配置登录页上的登录方式、代理商注册、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示, 关闭代理商注册时, 通过邮箱登录也无法自动注册',
         config: true,
         reset: true,
       },
       {
         action: 'reseller_shield_error',
         title: t('sys.config.item.title.reseller_shield_error'),
-        description:
-          '代理商查看调用日志错误时, 包含有配置错误内容时则屏蔽显示, 为空则屏蔽所有错误显示',
+        desc: '代理商查看调用日志错误时, 包含有配置错误内容时则屏蔽显示, 为空则屏蔽所有错误显示',
         open: configFormData.value.reseller_shield_error.open,
         config: true,
         reset: true,
@@ -714,16 +710,14 @@
       {
         action: 'admin_login',
         title: t('sys.config.item.title.admin_login'),
-        description:
-          '配置登录页上的登录方式、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示',
+        desc: '配置登录页上的登录方式、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示',
         config: true,
         reset: true,
       },
       {
         action: 'quota',
         title: t('sys.config.item.title.quota'),
-        description:
-          '配置额度预警参数默认值和各类开关, 用户如若有配置额度预警和预警阈值等, 将以用户的配置优先, 额度过期清零开关默认关闭, 可按需选择是否开启',
+        desc: '配置额度预警参数默认值和各类开关, 用户如若有配置额度预警和预警阈值等, 将以用户的配置优先, 额度过期清零开关默认关闭, 可按需选择是否开启',
         config: true,
         reset: true,
       },

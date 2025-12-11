@@ -4,7 +4,7 @@ import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 export interface SysConfigItem {
   action: string;
   title: string;
-  description: string;
+  desc: string;
   open?: boolean;
   config?: boolean;
   reset?: boolean;
@@ -65,6 +65,8 @@ export interface Log {
   text_reserve: number;
   image_reserve: number;
   audio_reserve: number;
+  video_reserve: number;
+  general_reserve: number;
   status: number[];
   cron: string;
 }

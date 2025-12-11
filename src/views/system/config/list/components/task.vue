@@ -30,7 +30,7 @@
             </template>
             <a-card-meta>
               <template #description>
-                {{ item.description }}
+                {{ item.desc }}
                 <a-descriptions
                   :data="item.data"
                   layout="inline-horizontal"
@@ -67,7 +67,7 @@
     <a-modal
       v-model:visible="configVisible"
       :title="$t(configTitle)"
-      :width="528"
+      :width="568"
       :body-style="{
         padding: '20px 20px 0 20px',
         maxHeight: '520px',
@@ -171,6 +171,81 @@
           >
             <template #append> 分钟 </template>
           </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'video_task'"
+          field="video_task.cron"
+          :label="$t('sys.config.label.video_task.cron')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.video_task.cron.required'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.video_task.cron"
+            :placeholder="$t('sys.config.placeholder.video_task.cron')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'video_task'"
+          field="video_task.lock_minutes"
+          :label="$t('sys.config.label.video_task.lock_minutes')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.video_task.lock_minutes.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.video_task.lock_minutes"
+            :placeholder="$t('sys.config.placeholder.video_task.lock_minutes')"
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> 分钟 </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'video_task'"
+          field="video_task.is_enable_storage"
+          :label="$t('sys.config.label.video_task.is_enable_storage')"
+        >
+          <a-switch v-model="configFormData.video_task.is_enable_storage" />
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'video_task' &&
+            configFormData.video_task.is_enable_storage
+          "
+          field="video_task.storage_dir"
+          :label="$t('sys.config.label.video_task.storage_dir')"
+        >
+          <a-input
+            v-model="configFormData.video_task.storage_dir"
+            :placeholder="$t('sys.config.placeholder.video_task.storage_dir')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'video_task' &&
+            configFormData.video_task.is_enable_storage
+          "
+          field="video_task.storage_base_url"
+          :label="$t('sys.config.label.video_task.storage_base_url')"
+        >
+          <a-input
+            v-model="configFormData.video_task.storage_base_url"
+            :placeholder="
+              $t('sys.config.placeholder.video_task.storage_base_url')
+            "
+            allow-clear
+          />
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'notice'"
@@ -320,13 +395,13 @@
     const { data } = await querySysConfigDetail();
     configFormData.value.quota_task = data.quota_task;
     configFormData.value.statistics = data.statistics;
+    configFormData.value.video_task = data.video_task;
     configFormData.value.notice = data.notice;
     sysConfigItems.value = [
       {
         action: 'quota_task',
         title: t('sys.config.item.title.quota_task'),
-        description:
-          '定时检查各类额度配置以及发送相关通知, 单次任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        desc: '定时检查各类额度配置以及发送相关通知, 单次任务超时时间可根据实际情况配置, 建议不要低于10分钟',
         open: configFormData.value.quota_task.open,
         config: true,
         reset: true,
@@ -334,17 +409,23 @@
       {
         action: 'statistics',
         title: t('sys.config.item.title.statistics'),
-        description:
-          '仪表盘上各类数据以及账单明细的统计任务, 统计间隔时间建议控制在30分钟以内, 单次循环统计查询条数建议控制在1万以内, 单次统计任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        desc: '仪表盘上各类数据以及账单明细的统计任务, 统计间隔时间建议控制在30分钟以内, 单次循环统计查询条数建议控制在10000以内, 单次统计任务超时时间可根据实际情况配置, 建议不要低于10分钟',
         open: configFormData.value.statistics.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'video_task',
+        title: t('sys.config.item.title.video_task'),
+        desc: '定时检查各视频任务的状态并更新, 可选择是否开启存储视频, 单次视频任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        open: configFormData.value.video_task.open,
         config: true,
         reset: true,
       },
       {
         action: 'notice',
         title: t('sys.config.item.title.notice'),
-        description:
-          '定时检查各类通知配置是否需要发送通知, 单次通知任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        desc: '定时检查各类通知配置是否需要发送通知, 单次通知任务超时时间可根据实际情况配置, 建议不要低于10分钟',
         open: configFormData.value.notice.open,
         config: true,
         reset: true,

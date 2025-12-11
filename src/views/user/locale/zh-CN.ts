@@ -7,7 +7,7 @@ export default {
   'user.label.name': '姓名',
   'user.placeholder.name': '请输入姓名',
   'user.error.name.required': '请输入姓名',
-  'user.error.name.pattern': '姓名最多30字符',
+  'user.error.name.pattern': '姓名最多30个字符',
   'user.label.email': '邮箱',
   'user.placeholder.email': '请输入邮箱',
   'user.error.email.required': '请输入邮箱',

@@ -164,12 +164,12 @@
               <a-input
                 v-model="formData.replace_models[index]"
                 :placeholder="$t('model.agent.placeholder.replace_models')"
-                style="width: 42%; margin-right: 5px"
+                style="width: 43%; margin-right: 5px"
               />
               <a-input
                 v-model="formData.target_models[index]"
                 :placeholder="$t('model.agent.placeholder.target_models')"
-                style="width: 42%"
+                style="width: 43%; margin-right: 4px"
               />
               <a-button
                 type="primary"
@@ -427,7 +427,7 @@
     background-color: var(--color-bg-2);
     :deep(.arco-form) {
       .arco-form-item {
-        width: 700px;
+        width: 888px;
         &:first-child {
           margin-top: 20px;
         }

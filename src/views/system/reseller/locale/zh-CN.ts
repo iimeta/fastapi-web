@@ -7,7 +7,7 @@ export default {
   'reseller.label.name': '姓名',
   'reseller.placeholder.name': '请输入姓名',
   'reseller.error.name.required': '请输入姓名',
-  'reseller.error.name.pattern': '姓名最多30字符',
+  'reseller.error.name.pattern': '姓名最多30个字符',
   'reseller.label.email': '邮箱',
   'reseller.placeholder.email': '请输入邮箱',
   'reseller.error.email.required': '请输入邮箱',
