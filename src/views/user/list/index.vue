@@ -466,8 +466,8 @@
               <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
               <a-radio :value="200"> <Quota :model-value="200" /> </a-radio>
               <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
-              <a-radio :value="1000">
-                <Quota :model-value="1000" />&nbsp;
+              <a-radio :value="1000" style="padding: 0 3px 0 2px">
+                <Quota :model-value="1000" />
               </a-radio>
             </a-radio-group>
           </a-form-item>
@@ -483,7 +483,7 @@
               <a-radio :value="10000"> <Quota :model-value="10000" /> </a-radio>
               <a-radio :value="20000"> <Quota :model-value="20000" /> </a-radio>
               <a-radio :value="50000"> <Quota :model-value="50000" /> </a-radio>
-              <a-radio :value="100000">
+              <a-radio :value="100000" style="padding-right: 1px">
                 <Quota :model-value="100000" />
               </a-radio>
             </a-radio-group>
@@ -1114,9 +1114,9 @@
             formData.value.is_send_notice = true;
             rechargeVisible.value = true;
           } else if (formData.value.quota_type === '2') {
-            alertContent = `是否确定扣除所选的${
-              ids.value.length
-            }位用户 ${appStore.getCurrencySymbol}${parseQuota(params.value)} 额度?`;
+            alertContent = `是否确定扣除所选的${ids.value.length}位用户 ${
+              appStore.getCurrencySymbol
+            }${parseQuota(params.value)} 额度?`;
           } else {
             alertContent = `是否确定给所选的${ids.value.length}位用户${
               formData.value.quota_type === '1' ? '充值' : '赠送'
