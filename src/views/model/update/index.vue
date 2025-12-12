@@ -664,42 +664,33 @@
 
   const providers = ref<ProviderList[]>([]);
   const getProviderList = async () => {
-    setLoading(true);
     try {
       const { data } = await queryProviderList();
       providers.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getProviderList();
 
   const models = ref<ModelList[]>([]);
   const getModelList = async () => {
-    setLoading(true);
     try {
       const { data } = await queryModelList();
       models.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getModelList();
 
   const modelAgents = ref<ModelAgentList[]>([]);
   const getModelAgentList = async () => {
-    setLoading(true);
     try {
       const { data } = await queryModelAgentList();
       modelAgents.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getModelAgentList();
@@ -711,8 +702,6 @@
       groups.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getGroupList();

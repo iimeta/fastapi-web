@@ -395,7 +395,6 @@
   const noticeTemplates = ref<NoticeTemplateList[]>([]);
   const noticeTemplateMap = new Map();
   const getNoticeTemplateList = async () => {
-    setLoading(true);
     try {
       const { data } = await queryNoticeTemplateList({ scenes: ['notice'] });
       noticeTemplates.value = data.items;
@@ -407,8 +406,6 @@
       }
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getNoticeTemplateList();
@@ -425,14 +422,11 @@
   const users = ref<UserList[]>([]);
 
   const getUserList = async () => {
-    setLoading(true);
     try {
       const { data } = await queryUserList();
       users.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getUserList();
@@ -440,14 +434,11 @@
   const resellers = ref<ResellerList[]>([]);
 
   const getResellerList = async () => {
-    setLoading(true);
     try {
       const { data } = await queryResellerList();
       resellers.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getResellerList();

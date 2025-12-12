@@ -19,6 +19,7 @@
             :model="formData"
             class="form"
             :label-col-props="{ span: 4 }"
+            :wrapper-col-props="{ span: 18 }"
           >
             <a-form-item
               field="domain"
@@ -186,16 +187,18 @@
             </a-form-item>
             <a-form-item v-if="!formData.register_tips">
               <a-radio-group type="button" @change="handleQuotaQuickChange">
-                <a-radio :value="1"> <Quota :model-value="1" /> </a-radio>
                 <a-radio :value="5"> <Quota :model-value="5" /> </a-radio>
                 <a-radio :value="10"> <Quota :model-value="10" /> </a-radio>
                 <a-radio :value="20"> <Quota :model-value="20" /> </a-radio>
                 <a-radio :value="50"> <Quota :model-value="50" /> </a-radio>
                 <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
                 <a-radio :value="200"> <Quota :model-value="200" /> </a-radio>
+                <a-radio :value="300"> <Quota :model-value="300" /> </a-radio>
                 <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
-                <a-radio :value="10000">
+                <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
+                <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
+                <a-radio :value="10000" style="padding: 0 2px">
                   <Quota :model-value="10000" />
                 </a-radio>
               </a-radio-group>
@@ -263,11 +266,17 @@
               field="currency_symbol"
               :label="$t('site.config.label.currency_symbol')"
             >
-              <a-input
+              <a-select
                 v-model="formData.currency_symbol"
                 :placeholder="$t('site.config.placeholder.currency_symbol')"
+                :scrollbar="false"
+                allow-search
                 allow-clear
-              />
+                allow-create
+              >
+                <a-option value="¥"> ¥ </a-option>
+                <a-option value="$"> $ </a-option>
+              </a-select>
             </a-form-item>
             <a-form-item field="host" :label="$t('site.config.label.host')">
               <a-input
@@ -335,12 +344,12 @@
                 :placeholder="
                   $t('site.config.placeholder.carousels1.image_url')
                 "
-                style="width: 42%; margin-right: 5px"
+                style="width: 43%; margin-right: 5px"
               />
               <a-input
                 v-model="formData.carousels1[index].jump_url"
                 :placeholder="$t('site.config.placeholder.carousels1.jump_url')"
-                style="width: 42%"
+                style="width: 43%; margin-right: 4px"
               />
               <a-button
                 type="primary"
@@ -378,12 +387,12 @@
                 :placeholder="
                   $t('site.config.placeholder.carousels2.image_url')
                 "
-                style="width: 42%; margin-right: 5px"
+                style="width: 43%; margin-right: 5px"
               />
               <a-input
                 v-model="formData.carousels2[index].jump_url"
                 :placeholder="$t('site.config.placeholder.carousels2.jump_url')"
-                style="width: 42%"
+                style="width: 43%; margin-right: 4px"
               />
               <a-button
                 type="primary"
@@ -433,14 +442,14 @@
                 :placeholder="
                   $t('site.config.placeholder.announcements.content')
                 "
-                style="width: 42%; margin-right: 5px"
+                style="width: 43%; margin-right: 5px"
               />
               <a-input
                 v-model="formData.announcements[index].jump_url"
                 :placeholder="
                   $t('site.config.placeholder.announcements.jump_url')
                 "
-                style="width: 42%"
+                style="width: 43%; margin-right: 4px"
               />
               <a-button
                 type="primary"
@@ -486,12 +495,12 @@
               <a-input
                 v-model="formData.documents[index].title"
                 :placeholder="$t('site.config.placeholder.documents.title')"
-                style="width: 42%; margin-right: 5px"
+                style="width: 43%; margin-right: 5px"
               />
               <a-input
                 v-model="formData.documents[index].jump_url"
                 :placeholder="$t('site.config.placeholder.documents.jump_url')"
-                style="width: 42%"
+                style="width: 43%; margin-right: 4px"
               />
               <a-button
                 type="primary"
@@ -877,6 +886,6 @@
   }
 
   :deep(.arco-radio-button-content) {
-    padding: 0 10px;
+    padding: 0 8px;
   }
 </style>

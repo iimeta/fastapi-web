@@ -239,7 +239,8 @@
           :field="
             `text[${index}].service_tier` &&
             `text[${index}].input_ratio` &&
-            `text[${index}].output_ratio`
+            `text[${index}].output_ratio` &&
+            `text[${index}].reasoning_ratio`
           "
           :label="`${index + 1}. ` + $t('model.label.text')"
           :rules="[
@@ -504,7 +505,7 @@
             :max="999999"
             :step="1"
             hide-button
-            style="width: 110px; margin-left: 4px; margin-right: 5px"
+            style="width: 126px; margin-left: 4px; margin-right: 5px"
           >
             <template #append> / k </template>
           </a-input-number>
@@ -515,7 +516,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             hide-button
-            style="width: 110px; margin-right: 5px"
+            style="width: 102px; margin-right: 5px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
           </a-input-number>
@@ -526,7 +527,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             hide-button
-            style="width: 110px; margin-right: 5px"
+            style="width: 102px; margin-right: 5px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
           </a-input-number>

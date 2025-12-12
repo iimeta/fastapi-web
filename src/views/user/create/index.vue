@@ -19,6 +19,7 @@
             :model="formData"
             class="form"
             :label-col-props="{ span: 4 }"
+            :wrapper-col-props="{ span: 18 }"
           >
             <a-form-item
               field="name"
@@ -121,10 +122,14 @@
                 <a-radio :value="50"> <Quota :model-value="50" /> </a-radio>
                 <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
                 <a-radio :value="200"> <Quota :model-value="200" /> </a-radio>
+                <a-radio :value="300"> <Quota :model-value="300" /> </a-radio>
                 <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
                 <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
                 <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
+                <a-radio :value="10000" style="padding: 0 2px">
+                  <Quota :model-value="10000" />
+                </a-radio>
               </a-radio-group>
             </a-form-item>
             <a-form-item
@@ -400,6 +405,6 @@
   }
 
   :deep(.arco-radio-button-content) {
-    padding: 0 9px;
+    padding: 0 8px;
   }
 </style>

@@ -18,8 +18,8 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 3 }"
-            :wrapper-col-props="{ span: 21 }"
+            :label-col-props="{ span: 4 }"
+            :wrapper-col-props="{ span: 18 }"
           >
             <a-form-item
               field="name"
@@ -83,16 +83,18 @@
             </a-form-item>
             <a-form-item v-if="formData.is_limit_quota">
               <a-radio-group type="button" @change="handleQuotaQuickChange">
+                <a-radio :value="5"> <Quota :model-value="5" /> </a-radio>
                 <a-radio :value="10"> <Quota :model-value="10" /> </a-radio>
                 <a-radio :value="20"> <Quota :model-value="20" /> </a-radio>
                 <a-radio :value="50"> <Quota :model-value="50" /> </a-radio>
                 <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
                 <a-radio :value="200"> <Quota :model-value="200" /> </a-radio>
+                <a-radio :value="300"> <Quota :model-value="300" /> </a-radio>
                 <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
                 <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
                 <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
-                <a-radio :value="10000">
+                <a-radio :value="10000" style="padding: 0 2px">
                   <Quota :model-value="10000" />
                 </a-radio>
               </a-radio-group>
@@ -285,28 +287,22 @@
 
   const treeData = ref<Tree[]>([]);
   const getModelTree = async () => {
-    setLoading(true);
     try {
       const { data } = await queryModelTree();
       treeData.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getModelTree();
 
   const groups = ref<GroupList[]>([]);
   const getGroupList = async () => {
-    setLoading(true);
     try {
       const { data } = await queryGroupList();
       groups.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getGroupList();
@@ -447,6 +443,6 @@
   }
 
   :deep(.arco-radio-button-content) {
-    padding: 0 10px;
+    padding: 0 8px;
   }
 </style>

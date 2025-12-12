@@ -78,7 +78,7 @@ export default {
   'reseller.form.name.placeholder': '请输入姓名/邮箱',
   'reseller.form.account': '账号',
   'reseller.form.account.placeholder': '请输入账号',
-  'reseller.form.quota_expires_at': '额度过期时间',
+  'reseller.form.quota_expires_at': '过期时间',
   'reseller.form.status': '状态',
   'reseller.form.created_at': '创建时间',
   'reseller.form.updated_at': '更新时间',

@@ -15,7 +15,7 @@
         <a-radio-group
           v-model:model-value="dateRange"
           type="button"
-          @change="handleDateRangeChange as any"
+          @change="handleDateRangeChange"
         >
           <a-radio :value="1">
             {{ $t('workplace.dateRange1') }}

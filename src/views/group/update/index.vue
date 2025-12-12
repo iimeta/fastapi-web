@@ -18,8 +18,8 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 3 }"
-            :wrapper-col-props="{ span: 21 }"
+            :label-col-props="{ span: 4 }"
+            :wrapper-col-props="{ span: 18 }"
           >
             <a-divider orientation="left">
               {{ $t('common.title.baseInfo') }}
@@ -236,7 +236,10 @@
                 <a-radio :value="100000">
                   <Quota :model-value="100000" />
                 </a-radio>
-                <a-radio :value="1000000">
+                <a-radio :value="500000">
+                  <Quota :model-value="500000" />
+                </a-radio>
+                <a-radio :value="1000000" style="padding: 0 1px">
                   <Quota :model-value="1000000" />
                 </a-radio>
               </a-radio-group>
@@ -341,7 +344,10 @@
                 <a-radio :value="100000">
                   <Quota :model-value="100000" />
                 </a-radio>
-                <a-radio :value="1000000">
+                <a-radio :value="500000">
+                  <Quota :model-value="500000" />
+                </a-radio>
+                <a-radio :value="1000000" style="padding: 0 1px">
                   <Quota :model-value="1000000" />
                 </a-radio>
               </a-radio-group>
@@ -455,13 +461,13 @@
               <a-input
                 v-model="formData.forward_config.keywords[index]"
                 :placeholder="$t('group.placeholder.keywords')"
-                style="width: 45%; margin-right: 5px"
+                style="width: 46%; margin-right: 5px"
               />
               <a-select
                 v-model="formData.forward_config.target_models[index]"
                 :placeholder="$t('group.placeholder.target_model')"
                 :scrollbar="false"
-                style="width: 40%"
+                style="width: 40%; margin-right: 4px"
                 allow-search
               >
                 <a-option
@@ -609,42 +615,33 @@
 
   const models = ref<ModelList[]>([]);
   const getModelList = async () => {
-    setLoading(true);
     try {
       const { data } = await queryModelList();
       models.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getModelList();
 
   const treeData = ref<Tree[]>([]);
   const getModelTree = async () => {
-    setLoading(true);
     try {
       const { data } = await queryModelTree();
       treeData.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getModelTree();
 
   const modelAgents = ref<ModelAgentList[]>([]);
   const getModelAgentList = async () => {
-    setLoading(true);
     try {
       const { data } = await queryModelAgentList();
       modelAgents.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getModelAgentList();
@@ -873,6 +870,6 @@
   }
 
   :deep(.arco-radio-button-content) {
-    padding: 0 11px;
+    padding: 0 9px;
   }
 </style>

@@ -564,14 +564,11 @@
 
   const providers = ref<ProviderList[]>([]);
   const getProviderList = async () => {
-    setLoading(true);
     try {
       const { data } = await queryProviderList();
       providers.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getProviderList();
@@ -583,8 +580,6 @@
       groups.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getGroupList();

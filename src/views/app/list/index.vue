@@ -966,14 +966,11 @@
 
   const treeData = ref<Tree[]>([]);
   const getModelTree = async () => {
-    setLoading(true);
     try {
       const { data } = await queryModelTree();
       treeData.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getModelTree();
@@ -985,8 +982,6 @@
       groups.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getGroupList();

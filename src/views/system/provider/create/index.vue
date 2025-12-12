@@ -18,8 +18,8 @@
             ref="formRef"
             :model="formData"
             class="form"
-            :label-col-props="{ span: 3 }"
-            :wrapper-col-props="{ span: 21 }"
+            :label-col-props="{ span: 4 }"
+            :wrapper-col-props="{ span: 18 }"
           >
             <a-form-item
               field="name"

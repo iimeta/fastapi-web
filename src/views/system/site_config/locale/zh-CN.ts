@@ -44,7 +44,7 @@ export default {
   'site.config.label.default_language': '默认语言',
   'site.config.placeholder.default_language': '请选择默认语言, 为空则跟随系统',
   'site.config.label.currency_symbol': '货币符号',
-  'site.config.placeholder.currency_symbol': '请输入货币符号, 默认: $',
+  'site.config.placeholder.currency_symbol': '请输入或选择货币符号, 默认: $',
   'site.config.label.host': '发信服务器',
   'site.config.placeholder.host': '请输入发信服务器, 如: smtp.xxx.com',
   'site.config.label.port': '发信端口号',

@@ -19,6 +19,7 @@
             :model="formData"
             class="form"
             :label-col-props="{ span: 4 }"
+            :wrapper-col-props="{ span: 18 }"
           >
             <a-divider orientation="left">
               {{ $t('common.title.baseInfo') }}
@@ -180,7 +181,6 @@
   const providers = ref<ProviderList[]>([]);
   const providerMap = new Map();
   const getProviderList = async () => {
-    setLoading(true);
     try {
       const { data } = await queryProviderList();
       providers.value = data.items;
@@ -189,8 +189,6 @@
       }
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -216,28 +214,22 @@
 
   const treeData = ref<Tree[]>([]);
   const getModelTree = async () => {
-    setLoading(true);
     try {
       const { data } = await queryModelTree();
       treeData.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getModelTree();
 
   const modelAgents = ref<ModelAgentList[]>([]);
   const getModelAgentList = async () => {
-    setLoading(true);
     try {
       const { data } = await queryModelAgentList();
       modelAgents.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
     }
   };
   getModelAgentList();
