@@ -832,7 +832,7 @@
 
 <script lang="ts">
   export default {
-    name: 'TextDetail',
+    name: 'LogTextDetail',
   };
 </script>
 

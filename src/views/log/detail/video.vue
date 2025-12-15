@@ -70,6 +70,12 @@
           $t(`dict.model_type.${currentData.model_type}`)
         }}</span>
       </a-descriptions-item>
+      <a-descriptions-item label="接口">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.action }}</span>
+      </a-descriptions-item>
       <a-descriptions-item label="请求数据" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -305,6 +311,12 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.real_model }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item label="接口">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ currentData.action }}</span>
       </a-descriptions-item>
       <a-descriptions-item label="启用后备">
         <a-skeleton v-if="loading" :animation="true">
@@ -708,7 +720,7 @@
 
 <script lang="ts">
   export default {
-    name: 'VideoDetail',
+    name: 'LogVideoDetail',
   };
 </script>
 

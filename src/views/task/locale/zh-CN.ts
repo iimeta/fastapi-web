@@ -1,8 +1,23 @@
 export default {
   'menu.task': '任务中心',
   'menu.task.video.list': '视频任务',
+  'menu.task.video.detail': '视频任务详情',
   // detail
-  'task.detail.label.user_id': '用户ID',
+  'task.video.detail.label.trace_id': 'Trace ID',
+  'task.video.detail.label.creator': '调用密钥',
+  'task.video.detail.label.video_url': '视频URL',
+  'task.video.detail.label.model': '模型',
+  'task.video.detail.label.video_id': '视频ID',
+  'task.video.detail.label.width_height': '宽度 × 高度',
+  'task.video.detail.label.seconds': '秒数',
+  'task.video.detail.label.prompt': '提示',
+  'task.video.detail.label.progress': '进度',
+  'task.video.detail.label.remixed_from_video_id': '混合ID',
+  'task.video.detail.label.error': '错误信息',
+  'task.video.detail.label.completed_at': '完成时间',
+  'task.video.detail.label.expires_at': '过期时间',
+  'task.video.detail.label.file_name': '文件名',
+  'task.video.detail.label.file_path': '文件路径',
   // search
   'task.form.trace_id': 'TraceID',
   'task.form.trace_id.placeholder': '请输入Trace ID',
@@ -33,6 +48,8 @@ export default {
   'task.columns.status': '状态',
   'task.columns.created_at': '创建时间',
   'task.columns.updated_at': '更新时间',
+  'task.columns.operations': '操作',
+  'task.columns.operations.view': '详情',
   // dict
   'task.dict.status.queued': '排队中',
   'task.dict.status.in_progress': '进行中',

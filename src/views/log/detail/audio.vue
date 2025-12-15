@@ -708,7 +708,7 @@
 
 <script lang="ts">
   export default {
-    name: 'AudioDetail',
+    name: 'LogAudioDetail',
   };
 </script>
 

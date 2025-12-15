@@ -668,6 +668,12 @@
       align: 'center',
     },
     {
+      title: t('text.columns.action'),
+      dataIndex: 'action',
+      slotName: 'action',
+      align: 'center',
+    },
+    {
       title: t('text.columns.width_height'),
       dataIndex: 'width_height',
       slotName: 'width_height',
@@ -794,7 +800,7 @@
   ]);
 
   if (userRole === 'reseller' || userRole === 'user') {
-    columns.value.splice(5, 1);
+    columns.value.splice(7, 1);
   }
 
   const statusOptions = computed<SelectOptionData[]>(() => [

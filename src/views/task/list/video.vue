@@ -217,8 +217,11 @@
           {{ `${record.width} × ${record.height}` }}
         </template>
         <template #video_url="{ record }">
-          <span class="copy-btn" @click="handleCopy(record.video_url)">
-            {{ record.video_url || '-' }}
+          <span
+            class="copy-btn"
+            @click="handleCopy(getFullUrl(record.video_url))"
+          >
+            {{ getFullUrl(record.video_url) || '-' }}
           </span>
         </template>
         <template #status="{ record }">
@@ -238,7 +241,24 @@
             {{ $t(`task.dict.status.${record.status}`) }}
           </a-tag>
         </template>
+        <template #operations="{ record }">
+          <a-button type="text" size="small" @click="detailHandle(record.id)">
+            {{ $t('task.columns.operations.view') }}
+          </a-button>
+        </template>
       </a-table>
+
+      <a-drawer
+        :title="$t('menu.task.video.detail')"
+        unmount-on-close
+        render-to-body
+        :width="700"
+        :footer="false"
+        :visible="detailVisible"
+        @cancel="detailHandleCancel"
+      >
+        <Detail :id="recordId" />
+      </a-drawer>
     </a-card>
   </div>
 </template>
@@ -265,6 +285,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { useClipboard } from '@vueuse/core';
+  import Detail from '../detail/video.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -404,6 +425,13 @@
       align: 'center',
       width: 132,
     },
+    {
+      title: t('task.columns.operations'),
+      dataIndex: 'operations',
+      slotName: 'operations',
+      align: 'center',
+      width: 75,
+    },
   ]);
 
   const statusOptions = computed<SelectOptionData[]>(() => [
@@ -537,6 +565,17 @@
     { deep: true, immediate: true }
   );
 
+  const detailVisible = ref(false);
+  const recordId = ref();
+
+  const detailHandle = (id: string) => {
+    detailVisible.value = true;
+    recordId.value = id;
+  };
+  const detailHandleCancel = () => {
+    detailVisible.value = false;
+  };
+
   /**
    * 复制内容
    *
@@ -552,6 +591,16 @@
       proxy.$message.success('复制成功');
     }
   });
+
+  const getFullUrl = (url: string) => {
+    if (!url) return '';
+
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
+    }
+
+    return window.location.origin + (url.startsWith('/') ? url : `/${url}`);
+  };
 </script>
 
 <script lang="ts">

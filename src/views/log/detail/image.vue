@@ -709,7 +709,7 @@
 
 <script lang="ts">
   export default {
-    name: 'ImageDetail',
+    name: 'LogImageDetail',
   };
 </script>
 

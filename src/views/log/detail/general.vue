@@ -784,7 +784,7 @@
 
 <script lang="ts">
   export default {
-    name: 'GeneralDetail',
+    name: 'LogGeneralDetail',
   };
 </script>
 

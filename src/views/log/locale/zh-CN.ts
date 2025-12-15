@@ -127,9 +127,10 @@ export default {
   // detail
   'text.detail.title.videoInfo': '视频详情',
   // columns
+  'text.columns.action': '接口',
   'text.columns.width_height': '宽度 × 高度',
   'text.columns.seconds': '秒数',
-  
+
   'menu.general': '日志管理',
   'menu.general.list': '通用日志',
   'menu.general.detail': '通用详情',
