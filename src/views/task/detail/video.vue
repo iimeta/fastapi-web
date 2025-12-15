@@ -200,7 +200,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.completed_at }}
+          {{ currentData.completed_at || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('task.video.detail.label.expires_at')">
@@ -208,7 +208,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.expires_at }}
+          {{ currentData.expires_at || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('common.created_at')">
