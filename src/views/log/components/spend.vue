@@ -419,7 +419,7 @@
       {{ record.pricing.width }} × {{ record.pricing.height }}
     </template>
     <template #seconds="{ record }">
-      {{ record.seconds }}
+      {{ record.seconds || '-' }}
     </template>
     <template #once_ratio="{ record }">
       <Quota :model-value="record.pricing.once_ratio" /> / 秒
