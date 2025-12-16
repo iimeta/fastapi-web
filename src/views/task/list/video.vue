@@ -87,6 +87,7 @@
                     v-model="formModel.status"
                     :options="statusOptions"
                     :placeholder="$t('task.form.selectDefault')"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
@@ -456,6 +457,13 @@
       value: 'expired',
     },
   ]);
+
+  if (userRole === 'admin') {
+    statusOptions.value.push({
+      label: t('task.dict.status.deleted'),
+      value: 'deleted',
+    });
+  }
 
   const fetchData = async (
     params: VideoPageParams = {

@@ -56,4 +56,5 @@ export default {
   'task.dict.status.completed': '已完成',
   'task.dict.status.failed': '已失败',
   'task.dict.status.expired': '已过期',
+  'task.dict.status.deleted': '已删除',
 };
