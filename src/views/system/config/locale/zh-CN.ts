@@ -186,7 +186,7 @@ export default {
   'sys.config.label.video_task.storage_base_url': '访问地址',
   'sys.config.placeholder.video_task.storage_base_url': '默认访问地址为admin端域名, 如: http(s)://www.abc.com',
   'sys.config.label.video_task.storage_expires_at': '过期时间',
-  'sys.config.placeholder.video_task.storage_expires_at': '请输入存储过期时间, 为空默认任务实际过期时间',
+  'sys.config.placeholder.video_task.storage_expires_at': '资源文件的过期时间, 为空默认使用任务的过期时间',
   'sys.config.label.video_task.storage_expired_delete': '过期删除',
   'sys.config.label.service_unavailable.ip_whitelist': 'IP白名单',
   'sys.config.placeholder.service_unavailable.ip_whitelist': '白名单内的IP不受暂停服务限制, 可正常请求, 提前检查服务是否达到预期',

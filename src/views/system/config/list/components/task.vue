@@ -248,7 +248,10 @@
           />
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'video_task'"
+          v-if="
+            configFormData.action === 'video_task' &&
+            configFormData.video_task.is_enable_storage
+          "
           field="video_task.storage_expires_at"
           :label="$t('sys.config.label.video_task.storage_expires_at')"
         >
@@ -265,7 +268,10 @@
           </a-input-number>
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'video_task'"
+          v-if="
+            configFormData.action === 'video_task' &&
+            configFormData.video_task.is_enable_storage
+          "
           field="video_task.storage_expired_delete"
           :label="$t('sys.config.label.video_task.storage_expired_delete')"
         >
