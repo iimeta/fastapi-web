@@ -174,7 +174,7 @@ export default {
   'text.columns.spend.tiered.output_ratio': '输出价格',
   'text.columns.spend.tiered.reasoning_ratio': '思考价格',
   'text.columns.spend.tiered.read_ratio': '读取价格',
-  'text.columns.spend.tiered.write_ratio': '输入价格',
+  'text.columns.spend.tiered.write_ratio': '写入价格',
   'text.columns.spend.image.generation.quality': '质量',
   'text.columns.spend.image.generation.width_height': '宽度 × 高度',
   'text.columns.spend.image.generation.n': '张数',

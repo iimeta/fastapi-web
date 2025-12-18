@@ -152,7 +152,7 @@ export default {
   'model.label.tiered.output_ratio': '输出价格',
   'model.label.tiered.reasoning_ratio': '思考价格',
   'model.label.tiered.read_ratio': '读取价格',
-  'model.label.tiered.write_ratio': '输入价格',
+  'model.label.tiered.write_ratio': '写入价格',
   'model.label.image.generation.quality': '质量',
   'model.label.image.generation.width_height': '宽度 × 高度',
   'model.label.image.generation.once_ratio': '价格',

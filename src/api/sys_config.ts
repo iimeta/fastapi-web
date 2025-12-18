@@ -160,6 +160,8 @@ export interface VideoTask {
   is_enable_storage: boolean;
   storage_dir: string;
   storage_base_url: string;
+  storage_expires_at: number;
+  storage_expired_delete: boolean;
 }
 
 export interface ServiceUnavailable {

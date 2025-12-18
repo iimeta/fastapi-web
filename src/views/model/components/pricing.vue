@@ -76,6 +76,7 @@
           v-model="formData.billing_items"
           value="text"
           class="billing-items"
+          :disabled="formData.billing_items.includes('tiered_text')"
           @change="handleBillingItemsChange"
         >
           {{ t('model.dict.billing_items.text') }}
@@ -85,6 +86,7 @@
           v-model="formData.billing_items"
           value="text_cache"
           class="billing-items"
+          :disabled="formData.billing_items.includes('tiered_text_cache')"
           @change="handleBillingItemsChange"
         >
           {{ t('model.dict.billing_items.text_cache') }}
@@ -112,6 +114,7 @@
           v-model="formData.billing_items"
           value="tiered_text"
           class="billing-items"
+          :disabled="formData.billing_items.includes('text')"
           @change="handleBillingItemsChange"
         >
           {{ t('model.dict.billing_items.tiered_text') }}
@@ -121,6 +124,7 @@
           v-model="formData.billing_items"
           value="tiered_text_cache"
           class="billing-items"
+          :disabled="formData.billing_items.includes('text_cache')"
           @change="handleBillingItemsChange"
         >
           {{ t('model.dict.billing_items.tiered_text_cache') }}

@@ -248,6 +248,32 @@
           />
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'video_task'"
+          field="video_task.storage_expires_at"
+          :label="$t('sys.config.label.video_task.storage_expires_at')"
+        >
+          <a-input-number
+            v-model="configFormData.video_task.storage_expires_at"
+            :placeholder="
+              $t('sys.config.placeholder.video_task.storage_expires_at')
+            "
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> 分钟 </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'video_task'"
+          field="video_task.storage_expired_delete"
+          :label="$t('sys.config.label.video_task.storage_expired_delete')"
+        >
+          <a-switch
+            v-model="configFormData.video_task.storage_expired_delete"
+          />
+        </a-form-item>
+        <a-form-item
           v-if="configFormData.action === 'notice'"
           field="notice.cron"
           :label="$t('sys.config.label.notice.cron')"
