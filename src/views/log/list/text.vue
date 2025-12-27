@@ -1084,7 +1084,7 @@
     },
   ]);
 
-  if (userRole === 'reseller' || userRole === 'user') {
+  if (userRole !== 'admin') {
     columns.value.splice(9, 1);
   }
 

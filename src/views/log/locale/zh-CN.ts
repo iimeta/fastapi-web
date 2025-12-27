@@ -128,6 +128,7 @@ export default {
   'text.detail.title.videoInfo': '视频详情',
   // columns
   'text.columns.action': '接口',
+  'text.columns.video_id': '视频ID',
   'text.columns.width_height': '宽度 × 高度',
   'text.columns.seconds': '秒数',
 

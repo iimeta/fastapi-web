@@ -378,6 +378,11 @@
         <template #user_id="{ record }">
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
+        <template #video_id="{ record }">
+          <span class="copy-btn" @click="handleCopy(record.video_id)">
+            {{ record.video_id || '-' }}
+          </span>
+        </template>
         <template #width_height="{ record }">
           {{
             record.spend.video_generation?.pricing?.width
@@ -558,7 +563,15 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, h, reactive, watch, nextTick } from 'vue';
+  import {
+    computed,
+    ref,
+    h,
+    reactive,
+    watch,
+    nextTick,
+    getCurrentInstance,
+  } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
@@ -576,6 +589,7 @@
   import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
+  import { useClipboard } from '@vueuse/core';
   import { Spend } from '@/api/common';
   import Quota from '@/views/common/quota.vue';
   import Detail from '../detail/video.vue';
@@ -584,6 +598,7 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
+  const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
@@ -672,6 +687,14 @@
       dataIndex: 'action',
       slotName: 'action',
       align: 'center',
+    },
+    {
+      title: t('text.columns.video_id'),
+      dataIndex: 'video_id',
+      slotName: 'video_id',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('text.columns.width_height'),
@@ -799,8 +822,8 @@
     },
   ]);
 
-  if (userRole === 'reseller' || userRole === 'user') {
-    columns.value.splice(7, 1);
+  if (userRole !== 'admin') {
+    columns.value.splice(8, 1);
   }
 
   const statusOptions = computed<SelectOptionData[]>(() => [
@@ -1001,6 +1024,22 @@
     spend.value = s;
     modelType.value = t;
   };
+
+  /**
+   * 复制内容
+   *
+   * @param content 内容
+   */
+  const { copy, copied } = useClipboard();
+  const handleCopy = async (content: string) => {
+    copy(content);
+  };
+
+  watch(copied, () => {
+    if (copied.value) {
+      proxy.$message.success('复制成功');
+    }
+  });
 </script>
 
 <script lang="ts">
@@ -1060,5 +1099,11 @@
   .spend:hover {
     color: rgb(var(--link-6));
     cursor: pointer;
+  }
+  .copy-btn {
+    cursor: pointer;
+  }
+  .copy-btn:hover {
+    color: rgb(var(--arcoblue-6));
   }
 </style>

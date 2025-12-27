@@ -76,6 +76,18 @@
         </a-skeleton>
         <span v-else>{{ currentData.action }}</span>
       </a-descriptions-item>
+      <a-descriptions-item label="视频ID" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.video_id || '-' }}
+          <icon-copy
+            class="copy-btn"
+            @click="handleCopy(currentData.video_id)"
+          />
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item label="请求数据" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -418,6 +430,18 @@
           <icon-copy
             class="copy-btn"
             @click="handleCopyField(currentData.id, 'key')"
+          />
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item label="视频ID" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.video_id || '-' }}
+          <icon-copy
+            class="copy-btn"
+            @click="handleCopy(currentData.video_id)"
           />
         </span>
       </a-descriptions-item>

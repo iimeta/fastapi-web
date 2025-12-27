@@ -363,6 +363,7 @@ export interface VideoDetail {
   is_enable_fallback: boolean;
   fallback_config: FallbackConfig;
   action: string;
+  video_id: string;
   request_data: any;
   response_data: any;
   spend: Spend;
