@@ -402,6 +402,186 @@ export function videoCopyField(params: VideoCopyFieldParams) {
   return axios.post<VideoCopyFieldRes>('/api/v1/log/video/copy/field', params);
 }
 
+export interface FilePage {
+  id: string;
+  trace_id: any;
+  user_id: any;
+  app_id: any;
+  model: string;
+  total_tokens: number;
+  total_time: number;
+  internal_time: number;
+  req_time: any;
+}
+
+export interface FilePageParams extends Partial<FilePage> {
+  current: number;
+  pageSize: number;
+}
+
+export interface FilePageRes {
+  items: FilePage[];
+  paging: Paging;
+}
+
+export function queryFilePage(params: FilePageParams) {
+  return axios.post<FilePageRes>('/api/v1/log/file/page', params);
+}
+
+export interface FileDetail {
+  id: string;
+  trace_id: string;
+  host: string;
+  user_id: any;
+  app_id: any;
+  provider_id: string;
+  provider_name: string;
+  model_id: string;
+  model_name: string;
+  model: string;
+  model_type: number;
+  key: string;
+  real_model_id: string;
+  real_model_name: string;
+  real_model: string;
+  is_enable_model_agent: boolean;
+  model_agent_id: string;
+  model_agent: any;
+  is_enable_forward: boolean;
+  forward_config: ForwardConfig;
+  is_smart_match: boolean;
+  is_enable_fallback: boolean;
+  fallback_config: FallbackConfig;
+  action: string;
+  file_id: string;
+  request_data: any;
+  response_data: any;
+  spend: Spend;
+  total_time: number;
+  internal_time: number;
+  req_time: string;
+  client_ip: string;
+  remote_ip: string;
+  local_ip: string;
+  err_msg: string;
+  status: number;
+  creator: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export function queryFileDetail(params: DetailParams) {
+  return axios.get<FileDetail>('/api/v1/log/file/detail', {
+    params,
+    paramsSerializer: (obj) => {
+      return qs.stringify(obj);
+    },
+  });
+}
+
+export interface FileCopyFieldParams {
+  id: string;
+  field: string;
+}
+
+export interface FileCopyFieldRes {
+  value: string;
+}
+
+export function fileCopyField(params: FileCopyFieldParams) {
+  return axios.post<FileCopyFieldRes>('/api/v1/log/file/copy/field', params);
+}
+
+export interface BatchPage {
+  id: string;
+  trace_id: any;
+  user_id: any;
+  app_id: any;
+  model: string;
+  total_tokens: number;
+  total_time: number;
+  internal_time: number;
+  req_time: any;
+}
+
+export interface BatchPageParams extends Partial<BatchPage> {
+  current: number;
+  pageSize: number;
+}
+
+export interface BatchPageRes {
+  items: BatchPage[];
+  paging: Paging;
+}
+
+export function queryBatchPage(params: BatchPageParams) {
+  return axios.post<BatchPageRes>('/api/v1/log/batch/page', params);
+}
+
+export interface BatchDetail {
+  id: string;
+  trace_id: string;
+  host: string;
+  user_id: any;
+  app_id: any;
+  provider_id: string;
+  provider_name: string;
+  model_id: string;
+  model_name: string;
+  model: string;
+  model_type: number;
+  key: string;
+  real_model_id: string;
+  real_model_name: string;
+  real_model: string;
+  is_enable_model_agent: boolean;
+  model_agent_id: string;
+  model_agent: any;
+  is_enable_forward: boolean;
+  forward_config: ForwardConfig;
+  is_smart_match: boolean;
+  is_enable_fallback: boolean;
+  fallback_config: FallbackConfig;
+  action: string;
+  batch_id: string;
+  request_data: any;
+  response_data: any;
+  spend: Spend;
+  total_time: number;
+  internal_time: number;
+  req_time: string;
+  client_ip: string;
+  remote_ip: string;
+  local_ip: string;
+  err_msg: string;
+  status: number;
+  creator: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export function queryBatchDetail(params: DetailParams) {
+  return axios.get<BatchDetail>('/api/v1/log/batch/detail', {
+    params,
+    paramsSerializer: (obj) => {
+      return qs.stringify(obj);
+    },
+  });
+}
+
+export interface BatchCopyFieldParams {
+  id: string;
+  field: string;
+}
+
+export interface BatchCopyFieldRes {
+  value: string;
+}
+
+export function batchCopyField(params: BatchCopyFieldParams) {
+  return axios.post<BatchCopyFieldRes>('/api/v1/log/batch/copy/field', params);
+}
+
 export interface GeneralPage {
   id: string;
   trace_id: any;

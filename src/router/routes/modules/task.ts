@@ -23,6 +23,28 @@ const TASK: AppRouteRecordRaw = {
         activeMenu: 'TaskVideoList',
       },
     },
+    {
+      path: 'file',
+      name: 'TaskFileList',
+      component: () => import('@/views/task/list/file.vue'),
+      meta: {
+        locale: 'menu.task.file.list',
+        requiresAuth: true,
+        roles: ['user', 'reseller', 'admin'],
+        activeMenu: 'TaskFileList',
+      },
+    },
+    {
+      path: 'batch',
+      name: 'TaskBatchList',
+      component: () => import('@/views/task/list/batch.vue'),
+      meta: {
+        locale: 'menu.task.batch.list',
+        requiresAuth: true,
+        roles: ['user', 'reseller', 'admin'],
+        activeMenu: 'TaskBatchList',
+      },
+    },
   ],
 };
 

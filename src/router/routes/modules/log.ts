@@ -57,6 +57,28 @@ const LOG: AppRouteRecordRaw = {
       },
     },
     {
+      path: 'file',
+      name: 'LogFileList',
+      component: () => import('@/views/log/list/file.vue'),
+      meta: {
+        locale: 'menu.file.list',
+        requiresAuth: true,
+        roles: ['user', 'reseller', 'admin'],
+        activeMenu: 'LogFileList',
+      },
+    },
+    {
+      path: 'batch',
+      name: 'LogBatchList',
+      component: () => import('@/views/log/list/batch.vue'),
+      meta: {
+        locale: 'menu.batch.list',
+        requiresAuth: true,
+        roles: ['user', 'reseller', 'admin'],
+        activeMenu: 'LogBatchList',
+      },
+    },
+    {
       path: 'general',
       name: 'LogGeneralList',
       component: () => import('@/views/log/list/general.vue'),

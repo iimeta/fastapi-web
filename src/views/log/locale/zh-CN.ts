@@ -132,6 +132,22 @@ export default {
   'text.columns.width_height': '宽度 × 高度',
   'text.columns.seconds': '秒数',
 
+  'menu.file': '日志管理',
+  'menu.file.list': '文件日志',
+  'menu.file.detail': '文件详情',
+  // detail
+  'text.detail.title.fileInfo': '文件详情',
+  // columns
+  'text.columns.file_id': '文件ID',
+
+  'menu.batch': '日志管理',
+  'menu.batch.list': '批处理日志',
+  'menu.batch.detail': '批处理详情',
+  // detail
+  'text.detail.title.batchInfo': '批处理详情',
+  // columns
+  'text.columns.batch_id': '批处理ID',
+
   'menu.general': '日志管理',
   'menu.general.list': '通用日志',
   'menu.general.detail': '通用详情',
