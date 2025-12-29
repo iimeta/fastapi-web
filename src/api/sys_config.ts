@@ -66,6 +66,8 @@ export interface Log {
   image_reserve: number;
   audio_reserve: number;
   video_reserve: number;
+  file_reserve: number;
+  batch_reserve: number;
   general_reserve: number;
   status: number[];
   cron: string;

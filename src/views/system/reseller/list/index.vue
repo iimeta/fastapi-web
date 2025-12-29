@@ -177,7 +177,7 @@
               @click="
                 handleResellerDelete({
                   action: 'delete',
-                  data: [1, 2, 3, 4, 5],
+                  data: [1, 2, 3, 4, 5, 6],
                 })
               "
             >
@@ -404,7 +404,7 @@
                 id: record.id,
                 user_id: record.user_id,
                 name: record.name,
-                data: [1, 2, 3, 4, 5],
+                data: [1, 2, 3, 4, 5, 6],
               })
             "
           >
@@ -598,11 +598,15 @@
       <a-modal
         v-model:visible="delVisible"
         :title="$t('reseller.form.title.del')"
-        :width="700"
+        :width="822"
         @cancel="delHandleCancel"
         @before-ok="delHandleBeforeOk"
       >
-        <a-form ref="delFormRef" :model="delFormData">
+        <a-form
+          ref="delFormRef"
+          :model="delFormData"
+          :label-col-props="{ span: 4 }"
+        >
           <a-form-item
             v-if="delFormData.user_id"
             field="user_id"
@@ -643,6 +647,9 @@
               </a-checkbox>
               <a-checkbox v-model="delFormData.data" :value="5">
                 日志数据
+              </a-checkbox>
+              <a-checkbox v-model="delFormData.data" :value="6">
+                任务数据
               </a-checkbox>
             </a-space>
           </a-form-item>

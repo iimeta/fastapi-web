@@ -78,7 +78,7 @@
         configFormData.action === 'base'
           ? 588
           : configFormData.action === 'log'
-          ? 622
+          ? 647
           : 728
       "
       :body-style="{
@@ -329,6 +329,48 @@
           <a-input-number
             v-model="configFormData.log.video_reserve"
             :placeholder="$t('sys.config.placeholder.log.video_reserve')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> 天 </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'log'"
+          field="log.file_reserve"
+          :label="$t('sys.config.label.log.file_reserve')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.log.file_reserve.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.log.file_reserve"
+            :placeholder="$t('sys.config.placeholder.log.file_reserve')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> 天 </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'log'"
+          field="log.batch_reserve"
+          :label="$t('sys.config.label.log.batch_reserve')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.log.batch_reserve.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.log.batch_reserve"
+            :placeholder="$t('sys.config.placeholder.log.batch_reserve')"
             :precision="0"
             :min="0"
             allow-clear
