@@ -164,6 +164,23 @@ export interface VideoTask {
   storage_expired_delete: boolean;
 }
 
+export interface FileTask {
+  open: boolean;
+  cron: string;
+  lock_minutes: number;
+  is_enable_storage: boolean;
+  storage_dir: string;
+  storage_base_url: string;
+  storage_expires_at: number;
+  storage_expired_delete: boolean;
+}
+
+export interface BatchTask {
+  open: boolean;
+  cron: string;
+  lock_minutes: number;
+}
+
 export interface ServiceUnavailable {
   open: boolean;
   ip_whitelist: string[];
@@ -195,6 +212,8 @@ export interface SysConfigDetail {
   quota: Quota;
   quota_task: QuotaTask;
   video_task: VideoTask;
+  file_task: FileTask;
+  batch_task: BatchTask;
   service_unavailable: ServiceUnavailable;
   debug: Debug;
   created_at: string;
@@ -227,6 +246,8 @@ export interface SysConfigUpdate {
   quota: Quota;
   quota_task: QuotaTask;
   video_task: VideoTask;
+  file_task: FileTask;
+  batch_task: BatchTask;
   service_unavailable: ServiceUnavailable;
   debug: Debug;
 }

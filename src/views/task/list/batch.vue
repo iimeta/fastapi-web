@@ -70,13 +70,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="batch_url"
-                  :label="$t('task.form.batch_url')"
-                >
+                <a-form-item field="file_id" :label="$t('task.form.file_id')">
                   <a-input
-                    v-model="formModel.batch_url"
-                    :placeholder="$t('task.form.batch_url.placeholder')"
+                    v-model="formModel.file_id"
+                    :placeholder="$t('task.form.file_id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -214,22 +211,24 @@
             {{ record.batch_id || '-' }}
           </span>
         </template>
-        <template #width_height="{ record }">
-          {{ `${record.width} × ${record.height}` }}
+        <template #input_file_id="{ record }">
+          <span class="copy-btn" @click="handleCopy(record.input_file_id)">
+            {{ record.input_file_id || '-' }}
+          </span>
         </template>
-        <template #batch_url="{ record }">
-          <span
-            class="copy-btn"
-            @click="handleCopy(getFullUrl(record.batch_url))"
-          >
-            {{ getFullUrl(record.batch_url) || '-' }}
+        <template #output_file_id="{ record }">
+          <span class="copy-btn" @click="handleCopy(record.output_file_id)">
+            {{ record.output_file_id || '-' }}
           </span>
         </template>
         <template #status="{ record }">
           <a-tag v-if="record.status === 'completed'" color="green">
             {{ $t(`task.dict.status.${record.status}`) }}
           </a-tag>
-          <a-tag v-else-if="record.status === 'queued'" color="arcoblue">
+          <a-tag v-else-if="record.status === 'finalizing'" color="green">
+            {{ $t(`task.dict.status.${record.status}`) }}
+          </a-tag>
+          <a-tag v-else-if="record.status === 'validating'" color="arcoblue">
             {{ $t(`task.dict.status.${record.status}`) }}
           </a-tag>
           <a-tag v-else-if="record.status === 'in_progress'" color="orange">
@@ -306,7 +305,7 @@
       app_id: ref(),
       trace_id: '',
       batch_id: '',
-      batch_url: '',
+      file_id: '',
       status: ref(),
       created_at: [],
     };
@@ -394,21 +393,17 @@
       tooltip: true,
     },
     {
-      title: t('task.columns.width_height'),
-      dataIndex: 'width_height',
-      slotName: 'width_height',
+      title: t('task.columns.input_file_id'),
+      dataIndex: 'input_file_id',
+      slotName: 'input_file_id',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
-      title: t('task.columns.seconds'),
-      dataIndex: 'seconds',
-      slotName: 'seconds',
-      align: 'center',
-    },
-    {
-      title: t('task.columns.batch_url'),
-      dataIndex: 'batch_url',
-      slotName: 'batch_url',
+      title: t('task.columns.output_file_id'),
+      dataIndex: 'output_file_id',
+      slotName: 'output_file_id',
       align: 'center',
       ellipsis: true,
       tooltip: true,

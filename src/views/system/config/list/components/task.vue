@@ -280,6 +280,149 @@
           />
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'file_task'"
+          field="file_task.cron"
+          :label="$t('sys.config.label.file_task.cron')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.file_task.cron.required'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.file_task.cron"
+            :placeholder="$t('sys.config.placeholder.file_task.cron')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'file_task'"
+          field="file_task.lock_minutes"
+          :label="$t('sys.config.label.file_task.lock_minutes')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.file_task.lock_minutes.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.file_task.lock_minutes"
+            :placeholder="$t('sys.config.placeholder.file_task.lock_minutes')"
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> 分钟 </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'file_task'"
+          field="file_task.is_enable_storage"
+          :label="$t('sys.config.label.file_task.is_enable_storage')"
+        >
+          <a-switch v-model="configFormData.file_task.is_enable_storage" />
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'file_task' &&
+            configFormData.file_task.is_enable_storage
+          "
+          field="file_task.storage_dir"
+          :label="$t('sys.config.label.file_task.storage_dir')"
+        >
+          <a-input
+            v-model="configFormData.file_task.storage_dir"
+            :placeholder="$t('sys.config.placeholder.file_task.storage_dir')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'file_task' &&
+            configFormData.file_task.is_enable_storage
+          "
+          field="file_task.storage_base_url"
+          :label="$t('sys.config.label.file_task.storage_base_url')"
+        >
+          <a-input
+            v-model="configFormData.file_task.storage_base_url"
+            :placeholder="
+              $t('sys.config.placeholder.file_task.storage_base_url')
+            "
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'file_task' &&
+            configFormData.file_task.is_enable_storage
+          "
+          field="file_task.storage_expires_at"
+          :label="$t('sys.config.label.file_task.storage_expires_at')"
+        >
+          <a-input-number
+            v-model="configFormData.file_task.storage_expires_at"
+            :placeholder="
+              $t('sys.config.placeholder.file_task.storage_expires_at')
+            "
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> 分钟 </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'file_task' &&
+            configFormData.file_task.is_enable_storage
+          "
+          field="file_task.storage_expired_delete"
+          :label="$t('sys.config.label.file_task.storage_expired_delete')"
+        >
+          <a-switch v-model="configFormData.file_task.storage_expired_delete" />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'batch_task'"
+          field="batch_task.cron"
+          :label="$t('sys.config.label.batch_task.cron')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.batch_task.cron.required'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.batch_task.cron"
+            :placeholder="$t('sys.config.placeholder.batch_task.cron')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'batch_task'"
+          field="batch_task.lock_minutes"
+          :label="$t('sys.config.label.batch_task.lock_minutes')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.batch_task.lock_minutes.required'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.batch_task.lock_minutes"
+            :placeholder="$t('sys.config.placeholder.batch_task.lock_minutes')"
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> 分钟 </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
           v-if="configFormData.action === 'notice'"
           field="notice.cron"
           :label="$t('sys.config.label.notice.cron')"
@@ -428,6 +571,8 @@
     configFormData.value.quota_task = data.quota_task;
     configFormData.value.statistics = data.statistics;
     configFormData.value.video_task = data.video_task;
+    configFormData.value.file_task = data.file_task;
+    configFormData.value.batch_task = data.batch_task;
     configFormData.value.notice = data.notice;
     sysConfigItems.value = [
       {
@@ -451,6 +596,22 @@
         title: t('sys.config.item.title.video_task'),
         desc: '定时检查各视频任务的状态并更新, 可选择是否开启存储视频, 单次视频任务超时时间可根据实际情况配置, 建议不要低于10分钟',
         open: configFormData.value.video_task.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'file_task',
+        title: t('sys.config.item.title.file_task'),
+        desc: '定时检查各文件任务的状态并更新, 可选择是否开启存储文件, 单次文件任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        open: configFormData.value.file_task.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'batch_task',
+        title: t('sys.config.item.title.batch_task'),
+        desc: '定时检查各批处理任务的状态并更新, 单次批处理任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        open: configFormData.value.batch_task.open,
         config: true,
         reset: true,
       },

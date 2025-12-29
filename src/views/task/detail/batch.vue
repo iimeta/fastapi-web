@@ -60,16 +60,6 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('task.batch.detail.label.remixed_from_batch_id')"
-      >
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.remixed_from_batch_id || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item
         :label="t('task.batch.detail.label.batch_id')"
         :span="2"
       >
@@ -85,56 +75,73 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('task.batch.detail.label.batch_url')"
+        :label="t('task.batch.detail.label.input_file_id')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ getFullUrl(currentData.batch_url) || '-' }}
+          {{ currentData.input_file_id }}
           <icon-copy
             class="copy-btn"
-            @click="handleCopy(getFullUrl(currentData.batch_url))"
+            @click="handleCopy(currentData.input_file_id)"
           />
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('task.batch.detail.label.prompt')"
+        :label="t('task.batch.detail.label.output_file_id')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.prompt }}
+          {{ currentData.output_file_id }}
+          <icon-copy
+            class="copy-btn"
+            @click="handleCopy(currentData.output_file_id)"
+          />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('task.batch.detail.label.width_height')">
+      <a-descriptions-item
+        v-if="currentData.error_file_id"
+        :label="t('task.batch.detail.label.error_file_id')"
+        :span="2"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ `${currentData.width} × ${currentData.height}` }}
+          {{ currentData.error_file_id }}
+          <icon-copy
+            class="copy-btn"
+            @click="handleCopy(currentData.error_file_id)"
+          />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('task.batch.detail.label.seconds')">
+      <a-descriptions-item
+        :label="t('task.batch.detail.label.response_data')"
+        :span="2"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
-          {{ currentData.seconds }}
+        <span v-else style="max-height: 220px; display: block; overflow: auto">
+          {{ currentData.response_data || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('task.batch.detail.label.progress')">
+      <a-descriptions-item
+        :label="t('task.batch.detail.label.error')"
+        :span="2"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
-          {{ currentData.progress || 0 }}
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
+          {{ currentData.error || '-' }}
         </span>
       </a-descriptions-item>
-
       <a-descriptions-item :label="t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -143,7 +150,13 @@
           <a-tag v-if="currentData.status === 'completed'" color="green">
             {{ $t(`task.dict.status.${currentData.status}`) }}
           </a-tag>
-          <a-tag v-else-if="currentData.status === 'queued'" color="arcoblue">
+          <a-tag v-else-if="currentData.status === 'finalizing'" color="green">
+            {{ $t(`task.dict.status.${currentData.status}`) }}
+          </a-tag>
+          <a-tag
+            v-else-if="currentData.status === 'validating'"
+            color="arcoblue"
+          >
             {{ $t(`task.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag
@@ -160,39 +173,20 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('task.batch.detail.label.error')"
-        :span="2"
-      >
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData.error || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item
-        v-if="currentData.file_name"
-        :label="t('task.batch.detail.label.file_name')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('task.batch.detail.label.in_progress_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.file_name }}
+          {{ currentData.in_progress_at || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        v-if="currentData.file_path"
-        :label="t('task.batch.detail.label.file_path')"
-        :span="2"
-      >
+      <a-descriptions-item :label="t('task.batch.detail.label.finalizing_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.file_path }}
+          {{ currentData.finalizing_at || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('task.batch.detail.label.completed_at')">
@@ -209,6 +203,14 @@
         </a-skeleton>
         <span v-else>
           {{ currentData.expires_at || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('task.batch.detail.label.cancelled_at')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.cancelled_at || currentData.cancelling_at || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('common.created_at')">

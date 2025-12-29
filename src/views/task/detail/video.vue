@@ -134,7 +134,6 @@
           {{ currentData.progress || 0 }}
         </span>
       </a-descriptions-item>
-
       <a-descriptions-item :label="t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

@@ -70,10 +70,13 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="file_url" :label="$t('task.form.file_url')">
+                <a-form-item
+                  field="file_name"
+                  :label="$t('task.form.file_name')"
+                >
                   <a-input
-                    v-model="formModel.file_url"
-                    :placeholder="$t('task.form.file_url.placeholder')"
+                    v-model="formModel.file_name"
+                    :placeholder="$t('task.form.file_name.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -211,13 +214,11 @@
             {{ record.file_id || '-' }}
           </span>
         </template>
-        <template #file_url="{ record }">
-          <span
-            class="copy-btn"
-            @click="handleCopy(getFullUrl(record.file_url))"
-          >
-            {{ getFullUrl(record.file_url) || '-' }}
-          </span>
+        <template #file_name="{ record }">
+          {{ record.file_name || '-' }}
+        </template>
+        <template #bytes="{ record }">
+          {{ formatBytes(record.bytes) || '-' }}
         </template>
         <template #status="{ record }">
           <a-tag v-if="record.status === 'processed'" color="green">
@@ -277,6 +278,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { useClipboard } from '@vueuse/core';
+  import { formatBytes } from '@/utils/common';
   import Detail from '../detail/file.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -297,7 +299,7 @@
       app_id: ref(),
       trace_id: '',
       file_id: '',
-      file_url: '',
+      file_name: '',
       status: ref(),
       created_at: [],
     };
@@ -428,20 +430,16 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('task.dict.status.queued'),
-      value: 'queued',
+      label: t('task.dict.status.uploaded'),
+      value: 'uploaded',
     },
     {
-      label: t('task.dict.status.in_progress'),
-      value: 'in_progress',
+      label: t('task.dict.status.processed'),
+      value: 'processed',
     },
     {
-      label: t('task.dict.status.completed'),
-      value: 'completed',
-    },
-    {
-      label: t('task.dict.status.failed'),
-      value: 'failed',
+      label: t('task.dict.status.error'),
+      value: 'error',
     },
     {
       label: t('task.dict.status.expired'),

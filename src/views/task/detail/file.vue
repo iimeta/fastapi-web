@@ -21,6 +21,22 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
+        v-if="currentData.batch_trace_id"
+        :label="t('task.file.detail.label.batch_trace_id')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.batch_trace_id }}
+          <icon-copy
+            class="copy-btn"
+            @click="handleCopy(currentData.batch_trace_id)"
+          />
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
         :label="t('task.file.detail.label.creator')"
         :span="2"
       >
@@ -59,14 +75,12 @@
           {{ currentData.model }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('task.file.detail.label.remixed_from_file_id')"
-      >
+      <a-descriptions-item :label="t('task.file.detail.label.purpose')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.remixed_from_file_id || '-' }}
+          {{ currentData.purpose || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item
@@ -84,7 +98,24 @@
           />
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="t('task.file.detail.label.file_name')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.file_name || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="t('task.file.detail.label.bytes')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ formatBytes(currentData.bytes) || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item
+        v-if="currentData.file_url"
         :label="t('task.file.detail.label.file_url')"
         :span="2"
       >
@@ -99,85 +130,12 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="t('task.file.detail.label.prompt')"
-        :span="2"
-      >
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.prompt }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('task.file.detail.label.width_height')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ `${currentData.width} × ${currentData.height}` }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('task.file.detail.label.seconds')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.seconds }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="t('task.file.detail.label.progress')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.progress || 0 }}
-        </span>
-      </a-descriptions-item>
-
-      <a-descriptions-item :label="t('common.status')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          <a-tag v-if="currentData.status === 'completed'" color="green">
-            {{ $t(`task.dict.status.${currentData.status}`) }}
-          </a-tag>
-          <a-tag v-else-if="currentData.status === 'queued'" color="arcoblue">
-            {{ $t(`task.dict.status.${currentData.status}`) }}
-          </a-tag>
-          <a-tag
-            v-else-if="currentData.status === 'in_progress'"
-            color="orange"
-          >
-            {{ $t(`task.dict.status.${currentData.status}`) }}
-          </a-tag>
-          <a-tag v-else-if="currentData.status === 'failed'" color="red">
-            {{ $t(`task.dict.status.${currentData.status}`) }}
-          </a-tag>
-          <a-tag v-else color="gray">
-            {{ $t(`task.dict.status.${currentData.status}`) }}
-          </a-tag>
-        </span>
-      </a-descriptions-item>
       <a-descriptions-item :label="t('task.file.detail.label.error')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else style="max-height: 110px; display: block; overflow: auto">
           {{ currentData.error || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item
-        v-if="currentData.file_name"
-        :label="t('task.file.detail.label.file_name')"
-        :span="2"
-      >
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.file_name }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item
@@ -192,12 +150,23 @@
           {{ currentData.file_path }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('task.file.detail.label.completed_at')">
+      <a-descriptions-item :label="t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.completed_at || '-' }}
+          <a-tag v-if="currentData.status === 'processed'" color="green">
+            {{ $t(`task.dict.status.${currentData.status}`) }}
+          </a-tag>
+          <a-tag v-else-if="currentData.status === 'uploaded'" color="uploaded">
+            {{ $t(`task.dict.status.${currentData.status}`) }}
+          </a-tag>
+          <a-tag v-else-if="currentData.status === 'error'" color="red">
+            {{ $t(`task.dict.status.${currentData.status}`) }}
+          </a-tag>
+          <a-tag v-else color="gray">
+            {{ $t(`task.dict.status.${currentData.status}`) }}
+          </a-tag>
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="t('task.file.detail.label.expires_at')">
@@ -233,6 +202,7 @@
   import { useClipboard } from '@vueuse/core';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { formatBytes } from '@/utils/common';
   import {
     queryFileDetail,
     DetailParams,

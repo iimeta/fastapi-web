@@ -23,3 +23,17 @@ export function parsePrice(price: string) {
 export function disabledDate(current: Date) {
   return dayjs(current).isBefore(dayjs().subtract(1, 'day'));
 }
+
+export function formatBytes(bytes: any, decimals?: number) {
+  if (!bytes) {
+    return '';
+  }
+
+  const k = 1024;
+  const dm = !decimals || decimals < 0 ? 2 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
+}
