@@ -232,7 +232,6 @@
   import useLocale from '@/hooks/locale';
   import useUser from '@/hooks/user';
   import Menu from '@/components/menu/index.vue';
-  import MessageBox from '../message-box/index.vue';
   import config from '../../../package.json';
 
   const appStore = useAppStore();

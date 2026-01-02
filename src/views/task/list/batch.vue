@@ -594,16 +594,6 @@
       proxy.$message.success('复制成功');
     }
   });
-
-  const getFullUrl = (url: string) => {
-    if (!url) return '';
-
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-      return url;
-    }
-
-    return window.location.origin + (url.startsWith('/') ? url : `/${url}`);
-  };
 </script>
 
 <script lang="ts">

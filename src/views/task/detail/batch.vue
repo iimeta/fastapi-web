@@ -293,16 +293,6 @@
     const { data } = await batchCopyField({ id, field });
     copy(data.value);
   };
-
-  const getFullUrl = (url: string) => {
-    if (!url) return '';
-
-    if (url.startsWith('http://') || url.startsWith('https://')) {
-      return url;
-    }
-
-    return window.location.origin + (url.startsWith('/') ? url : `/${url}`);
-  };
 </script>
 
 <script lang="ts">
