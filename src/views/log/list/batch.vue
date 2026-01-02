@@ -810,10 +810,6 @@
     },
   ]);
 
-  if (userRole !== 'admin') {
-    columns.value.splice(6, 1);
-  }
-
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('text.dict.status.1'),
@@ -942,6 +938,9 @@
     () => columns.value,
     (val) => {
       cloneColumns.value = cloneDeep(val);
+      if (userRole !== 'admin') {
+        cloneColumns.value.splice(6, 1);
+      }
       cloneColumns.value.forEach((item, index) => {
         item.checked = true;
       });

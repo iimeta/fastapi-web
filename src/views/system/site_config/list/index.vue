@@ -360,6 +360,7 @@
   const { t } = useI18n();
   const appStore = useAppStore();
   const { isChangeLocale } = useLocale();
+  const userRole = localStorage.getItem('userRole');
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -481,11 +482,6 @@
     },
   ]);
 
-  const userRole = localStorage.getItem('userRole');
-  if (userRole === 'reseller') {
-    columns.value.splice(0, 1);
-  }
-
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('dict.status.1'),
@@ -599,6 +595,9 @@
     () => columns.value,
     (val) => {
       cloneColumns.value = cloneDeep(val);
+      if (userRole === 'reseller') {
+        cloneColumns.value.splice(0, 1);
+      }
       cloneColumns.value.forEach((item, index) => {
         item.checked = true;
       });

@@ -1180,6 +1180,7 @@
   const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
+  const userRole = localStorage.getItem('userRole');
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -1334,11 +1335,6 @@
     },
   ]);
 
-  const userRole = localStorage.getItem('userRole');
-  if (userRole === 'user') {
-    columns.value.splice(0, 1);
-  }
-
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
       label: t('key.dict.status.1'),
@@ -1467,6 +1463,9 @@
     () => columns.value,
     (val) => {
       cloneColumns.value = cloneDeep(val);
+      if (userRole === 'user') {
+        cloneColumns.value.splice(0, 1);
+      }
       cloneColumns.value.forEach((item, index) => {
         item.checked = true;
       });
