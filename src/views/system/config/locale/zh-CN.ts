@@ -28,8 +28,9 @@ export default {
   'sys.config.item.title.not_retry_error': '不重试错误',
   'sys.config.item.title.not_shield_error': '不屏蔽错误',
   'sys.config.item.title.reset_api_error': '重置错误次数',
-  'sys.config.item.title.service_unavailable': '暂停服务',
   'sys.config.item.title.refresh_api_cache': '刷新缓存',
+  'sys.config.item.title.service_unavailable': '暂停服务',
+  'sys.config.item.title.general_api': '通用API(实验)',
   'sys.config.searchInput.placeholder': '搜索',
   'sys.config.label.email.host': '发信服务器',
   'sys.config.placeholder.email.host': '请输入发信服务器, 如: smtp.xxx.com',
@@ -219,4 +220,7 @@ export default {
   'sys.config.label.service_unavailable.ip_whitelist': 'IP白名单',
   'sys.config.placeholder.service_unavailable.ip_whitelist': '白名单内的IP不受暂停服务限制, 可正常请求, 提前检查服务是否达到预期',
   'sys.config.error.service_unavailable.ip_whitelist.required': '请输入IP白名单',
+  'sys.config.label.general_api.ip_whitelist': 'IP白名单',
+  'sys.config.placeholder.general_api.ip_whitelist': '配置IP白名单后, 仅IP白名单内的可调用通用API接口',
+  'sys.config.error.general_api.ip_whitelist.required': '请输入IP白名单',
 };

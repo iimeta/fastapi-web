@@ -188,6 +188,11 @@ export interface ServiceUnavailable {
   ip_whitelist: string[];
 }
 
+export interface GeneralApi {
+  open: boolean;
+  ip_whitelist: string[];
+}
+
 export interface Debug {
   open: boolean;
 }
@@ -217,6 +222,7 @@ export interface SysConfigDetail {
   file_task: FileTask;
   batch_task: BatchTask;
   service_unavailable: ServiceUnavailable;
+  general_api: GeneralApi;
   debug: Debug;
   created_at: string;
   updated_at: string;
@@ -251,6 +257,7 @@ export interface SysConfigUpdate {
   file_task: FileTask;
   batch_task: BatchTask;
   service_unavailable: ServiceUnavailable;
+  general_api: GeneralApi;
   debug: Debug;
 }
 

@@ -681,6 +681,46 @@
             <icon-minus />
           </a-button>
         </a-form-item>
+        <a-form-item
+          v-for="(item, index) of configFormData.general_api.ip_whitelist"
+          v-show="configFormData.action === 'general_api'"
+          :key="index"
+          :field="`general_api.ip_whitelist[${index}]`"
+          :label="
+            `${index + 1}. ` + $t('sys.config.label.general_api.ip_whitelist')
+          "
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.general_api.ip_whitelist.required'),
+            },
+          ]"
+          :label-col-style="{
+            padding: '0 16px 2px 0',
+          }"
+        >
+          <a-input
+            v-model="configFormData.general_api.ip_whitelist[index]"
+            :placeholder="$t('sys.config.placeholder.general_api.ip_whitelist')"
+            allow-clear
+            style="width: 84%; margin-right: 5px"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleGeneralApiAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleGeneralApiDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -716,6 +756,7 @@
     not_retry_error: {},
     not_shield_error: {},
     service_unavailable: {},
+    general_api: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
@@ -748,6 +789,12 @@
       configFormData.value.service_unavailable.ip_whitelist.length === 0
     ) {
       handleServiceUnavailableAdd();
+    }
+    if (
+      sysConfigItem.action === 'general_api' &&
+      configFormData.value.general_api.ip_whitelist.length === 0
+    ) {
+      handleGeneralApiAdd();
     }
     configTitle.value = t(`sys.config.item.title.${sysConfigItem.action}`);
     configFormData.value.action = sysConfigItem.action;
@@ -859,6 +906,16 @@
         configFormData.value.service_unavailable.ip_whitelist.length - 1
       );
     }
+    if (
+      configFormData.value.general_api.ip_whitelist.length > 0 &&
+      !configFormData.value.general_api.ip_whitelist[
+        configFormData.value.general_api.ip_whitelist.length - 1
+      ]
+    ) {
+      handleGeneralApiDel(
+        configFormData.value.general_api.ip_whitelist.length - 1
+      );
+    }
   };
 
   const sysConfigReset = async (sysConfigItem: SysConfigItem) => {
@@ -912,6 +969,7 @@
     configFormData.value.not_retry_error = data.not_retry_error;
     configFormData.value.not_shield_error = data.not_shield_error;
     configFormData.value.service_unavailable = data.service_unavailable;
+    configFormData.value.general_api = data.general_api;
     sysConfigItems.value = [
       {
         action: 'base',
@@ -980,6 +1038,14 @@
         config: true,
         reset: true,
       },
+      {
+        action: 'general_api',
+        title: t('sys.config.item.title.general_api'),
+        desc: '目前通用API接口处于实验阶段, 请根据需要选择是否开启, 支持配置IP白名单, 配置IP白名单后, 仅IP白名单内的可调用通用API接口',
+        open: configFormData.value.general_api.open,
+        config: true,
+        reset: true,
+      },
     ];
   };
   getSysConfigDetail();
@@ -1028,6 +1094,14 @@
 
   const handleServiceUnavailableDel = (index: number) => {
     configFormData.value.service_unavailable.ip_whitelist.splice(index, 1);
+  };
+
+  const handleGeneralApiAdd = () => {
+    configFormData.value.general_api.ip_whitelist.push('');
+  };
+
+  const handleGeneralApiDel = (index: number) => {
+    configFormData.value.general_api.ip_whitelist.splice(index, 1);
   };
 </script>
 
