@@ -2,7 +2,7 @@ import localeCommon from '@/views/common/locale/zh-CN';
 
 import localeLogin from '@/views/login/locale/zh-CN';
 
-import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
+import localeDashboard from '@/views/dashboard/locale/zh-TW';
 
 import localeUserCenter from '@/views/user/center/locale/zh-CN';
 
@@ -23,13 +23,13 @@ import localeGroup from '@/views/group/locale/zh-CN';
 import localeNotice from '@/views/notice/locale/zh-CN';
 import localeNoticeTemplate from '@/views/notice_template/locale/zh-CN';
 
-import localeSettings from './zh-CN/settings';
+import localeSettings from './zh-TW/settings';
 
 export default {
   ...localeSettings,
   ...localeCommon,
   ...localeLogin,
-  ...localeWorkplace,
+  ...localeDashboard,
   ...localeUserCenter,
   ...localeUser,
   ...localeApp,

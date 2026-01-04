@@ -12,7 +12,7 @@
         :href="appStore.getAnnouncementMoreUrl"
         target="_blank"
       >
-        {{ $t('workplace.viewMore') }}
+        {{ $t('dashboard.view_more') }}
       </a-link>
     </template>
     <div>
@@ -21,7 +21,7 @@
         :key="idx"
         class="item"
       >
-        <a-tag color="blue" size="small">通知</a-tag>
+        <a-tag color="blue" size="small">{{ $t('dashboard.tag.notice') }}</a-tag>
         <span class="item-content">
           <a-link :href="announcement.jump_url" target="_blank">
             {{ announcement.content }}

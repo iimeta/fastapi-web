@@ -9,7 +9,7 @@
           <img alt="avatar" src="@/assets/images/call.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.call')"
+          :title="$t('common.total.call')"
           :value="baseData.call || 0"
           show-group-separator
         >
@@ -25,7 +25,7 @@
           <img alt="avatar" src="@/assets/images/app.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.app')"
+          :title="$t('dashboard.app')"
           :value="baseData.app || 0"
           show-group-separator
         >
@@ -42,7 +42,7 @@
           <img alt="avatar" src="@/assets/images/today-app.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.todayApp')"
+          :title="$t('dashboard.today_app')"
           :value="baseData.today_app || 0"
           show-group-separator
         >
@@ -59,7 +59,7 @@
           <img alt="avatar" src="@/assets/images/app-key.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.appKey')"
+          :title="$t('dashboard.app_key')"
           :value="baseData.app_key || 0"
           show-group-separator
         >
@@ -79,7 +79,7 @@
           <img alt="avatar" src="@/assets/images/user.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.user')"
+          :title="$t('dashboard.user')"
           :value="baseData.user || 0"
           show-group-separator
         >
@@ -97,7 +97,7 @@
           <img alt="avatar" src="@/assets/images/today-user.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.todayUser')"
+          :title="$t('dashboard.today_user')"
           :value="baseData.today_user || 0"
           show-group-separator
         >
@@ -114,7 +114,7 @@
           <img alt="avatar" src="@/assets/images/model.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.model')"
+          :title="$t('dashboard.model')"
           :value="baseData.model || 0"
           show-group-separator
         >
@@ -132,7 +132,7 @@
           <img alt="avatar" src="@/assets/images/model-key.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.modelKey')"
+          :title="$t('dashboard.model_key')"
           :value="baseData.model_key || 0"
           show-group-separator
         >
@@ -150,7 +150,7 @@
           <img alt="avatar" src="@/assets/images/group.png" />
         </a-avatar>
         <a-statistic
-          :title="$t('workplace.group')"
+          :title="$t('dashboard.group')"
           :value="baseData.group || 0"
           show-group-separator
         >

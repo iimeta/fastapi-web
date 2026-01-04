@@ -7,7 +7,7 @@
       :bordered="false"
     >
       <template #title>
-        {{ $t('workplace.dataTop') }}
+        {{ $t('dashboard.top') }}
       </template>
       <template #extra>
         <a-radio-group
@@ -16,16 +16,16 @@
           @change="handleDateRangeChange"
         >
           <a-radio :value="1">
-            {{ $t('workplace.dateRange1') }}
+            {{ $t('common.date_range1') }}
           </a-radio>
           <a-radio :value="7">
-            {{ $t('workplace.dateRange7') }}
+            {{ $t('common.date_range7') }}
           </a-radio>
           <a-radio :value="15">
-            {{ $t('workplace.dateRange15') }}
+            {{ $t('common.date_range15') }}
           </a-radio>
           <a-radio :value="30">
-            {{ $t('workplace.dateRange30') }}
+            {{ $t('common.date_range30') }}
           </a-radio>
         </a-radio-group>
       </template>
@@ -39,16 +39,16 @@
             v-if="userRole === 'reseller' || userRole === 'admin'"
             value="user"
           >
-            {{ $t('workplace.dataTop.user') }}
+            {{ $t('dashboard.top.user') }}
           </a-radio>
           <a-radio value="app">
-            {{ $t('workplace.dataTop.app') }}
+            {{ $t('dashboard.top.app') }}
           </a-radio>
           <a-radio v-if="userRole === 'user'" value="app_key">
-            {{ $t('workplace.dataTop.app_key') }}
+            {{ $t('dashboard.top.app_key') }}
           </a-radio>
           <a-radio value="model">
-            {{ $t('workplace.dataTop.model') }}
+            {{ $t('dashboard.top.model') }}
           </a-radio>
         </a-radio-group>
         <a-table
@@ -58,7 +58,11 @@
           :scroll="{ x: '100%', y: '500px' }"
         >
           <template #columns>
-            <a-table-column title="排名" data-index="key" :width="60">
+            <a-table-column
+              :title="$t('dashboard.ranking')"
+              data-index="key"
+              :width="60"
+            >
               <template #cell="{ rowIndex }">
                 {{ rowIndex + 1 }}
               </template>
@@ -68,14 +72,14 @@
                 dataType === 'user' &&
                 (userRole === 'reseller' || userRole === 'admin')
               "
-              title="用户ID"
+              :title="$t('common.user_id')"
               data-index="user_id"
               align="center"
             >
             </a-table-column>
             <a-table-column
               v-if="dataType === 'app_key'"
-              title="密钥"
+              :title="$t('common.key')"
               data-index="app_key"
               align="center"
               ellipsis
@@ -84,7 +88,7 @@
             </a-table-column>
             <a-table-column
               v-if="dataType === 'app' || dataType === 'app_key'"
-              title="应用ID"
+              :title="$t('common.app_id')"
               data-index="app_id"
               align="center"
             >
@@ -94,27 +98,31 @@
                 dataType === 'app' &&
                 (userRole === 'reseller' || userRole === 'admin')
               "
-              title="用户ID"
+              :title="$t('common.user_id')"
               data-index="user_id"
               align="center"
             >
             </a-table-column>
             <a-table-column
               v-if="dataType === 'model'"
-              title="模型"
+              :title="$t('common.model')"
               data-index="model"
               align="center"
               ellipsis
               tooltip
             >
             </a-table-column>
-            <a-table-column title="调用数" data-index="call" align="center">
+            <a-table-column
+              :title="$t('dashboard.chart.call')"
+              data-index="call"
+              align="center"
+            >
               <template #cell="{ record }">
                 {{ record.call.toLocaleString() }}
               </template>
             </a-table-column>
             <a-table-column
-              title="花费"
+              :title="$t('common.spend')"
               data-index="tokens"
               align="center"
               ellipsis
@@ -133,11 +141,13 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import type { TableData } from '@arco-design/web-vue/es/table/interface';
   import { queryDataTop } from '@/api/dashboard';
   import Quota from '@/views/common/quota.vue';
 
+  const { t } = useI18n();
   const { loading, setLoading } = useLoading();
   const userRole = localStorage.getItem('userRole');
 

@@ -288,13 +288,13 @@
             justify-content: end;
           "
         >
-          <a-tooltip :content="$t('actions.refresh')">
+          <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <a-tooltip :content="$t('actions.density')">
+            <a-tooltip :content="$t('action.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
             <template #content>
@@ -308,7 +308,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('actions.column_setting')">
+          <a-tooltip :content="$t('action.column_setting')">
             <a-popover
               trigger="click"
               position="bl"

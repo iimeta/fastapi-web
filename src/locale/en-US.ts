@@ -2,7 +2,7 @@ import localeCommon from '@/views/common/locale/en-US';
 
 import localeLogin from '@/views/login/locale/en-US';
 
-import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
+import localeDashboard from '@/views/dashboard/locale/en-US';
 
 import localeUserCenter from '@/views/user/center/locale/en-US';
 
@@ -29,7 +29,7 @@ export default {
   ...localeSettings,
   ...localeCommon,
   ...localeLogin,
-  ...localeWorkplace,
+  ...localeDashboard,
   ...localeUserCenter,
   ...localeUser,
   ...localeApp,

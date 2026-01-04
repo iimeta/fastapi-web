@@ -1,7 +1,7 @@
 <template>
   <a-card
     class="general-card"
-    :title="$t('workplace.quick.operation')"
+    :title="$t('dashboard.quick.operation')"
     :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
     :body-style="{
       padding: userStore.role === 'admin' ? '11px 20px' : '2px 20px',
@@ -39,67 +39,67 @@
 
   const links = [
     {
-      text: 'workplace.appManagement',
+      text: 'menu.app',
       icon: 'icon-apps',
       router: 'AppList',
       permission: ['user'],
     },
     {
-      text: 'workplace.modelManagement',
+      text: 'menu.model',
       icon: 'icon-common',
       router: 'ModelList',
       permission: ['admin'],
     },
     {
-      text: 'workplace.appKeyManagement',
+      text: 'menu.app_key',
       icon: 'icon-safe',
       router: 'AppKeyList',
       permission: ['user'],
     },
     {
-      text: 'workplace.keyManagement',
+      text: 'menu.key',
       icon: 'icon-safe',
       router: 'ModelKeyList',
       permission: ['admin'],
     },
     {
-      text: 'workplace.agentManagement',
+      text: 'menu.model.agent',
       icon: 'icon-bug',
       router: 'ModelAgentList',
       permission: ['admin'],
     },
     {
-      text: 'workplace.groupManagement',
+      text: 'menu.group',
       icon: 'icon-user-group',
       router: 'GroupList',
       permission: ['admin'],
     },
     {
-      text: 'workplace.userManagement',
+      text: 'menu.user',
       icon: 'icon-user',
       router: 'UserList',
       permission: ['reseller', 'admin'],
     },
     {
-      text: 'workplace.appManagement',
+      text: 'menu.app',
       icon: 'icon-apps',
       router: 'AppList',
       permission: ['reseller', 'admin'],
     },
     {
-      text: 'workplace.noticeManagement',
+      text: 'menu.notice',
       icon: 'icon-notification',
       router: 'NoticeList',
       permission: ['admin'],
     },
     {
-      text: 'workplace.financeCenter',
+      text: 'menu.finance',
       icon: 'icon-wechatpay',
       router: 'BillList',
       permission: ['admin'],
     },
     {
-      text: 'workplace.logManagement',
+      text: 'menu.log',
       icon: 'icon-message',
       router: 'LogTextList',
       permission: ['user', 'reseller'],

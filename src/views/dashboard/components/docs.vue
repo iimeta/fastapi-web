@@ -12,7 +12,7 @@
         :href="appStore.getDocumentMoreUrl"
         target="_blank"
       >
-        {{ $t('workplace.viewMore') }}
+        {{ $t('dashboard.view_more') }}
       </a-link>
     </template>
     <a-row>

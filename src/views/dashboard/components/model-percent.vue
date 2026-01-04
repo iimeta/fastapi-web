@@ -9,7 +9,7 @@
       :bordered="false"
     >
       <template #title>
-        {{ $t('workplace.modelPercent') }}
+        {{ $t('dashboard.model_percent') }}
       </template>
       <template #extra>
         <a-radio-group
@@ -18,16 +18,16 @@
           @change="handleDateRangeChange"
         >
           <a-radio :value="1">
-            {{ $t('workplace.dateRange1') }}
+            {{ $t('common.date_range1') }}
           </a-radio>
           <a-radio :value="7">
-            {{ $t('workplace.dateRange7') }}
+            {{ $t('common.date_range7') }}
           </a-radio>
           <a-radio :value="15">
-            {{ $t('workplace.dateRange15') }}
+            {{ $t('common.date_range15') }}
           </a-radio>
           <a-radio :value="30">
-            {{ $t('workplace.dateRange30') }}
+            {{ $t('common.date_range30') }}
           </a-radio>
         </a-radio-group>
       </template>

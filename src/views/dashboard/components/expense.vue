@@ -1,7 +1,7 @@
 <template>
   <a-card
     class="general-card"
-    :title="$t('workplace.expense')"
+    :title="$t('dashboard.expense')"
     :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
     :body-style="{
       padding:
@@ -11,10 +11,10 @@
   >
     <template #extra>
       <a-link v-if="appStore.getRechargeTips" @click="recharge">
-        {{ $t('workplace.recharge') }}
+        {{ $t('dashboard.recharge') }}
       </a-link>
       <a-link @click="quotaWarning">
-        {{ $t('workplace.current.quota_warning') }}
+        {{ $t('dashboard.current.quota_warning') }}
       </a-link>
     </template>
     <div>
@@ -60,7 +60,7 @@
     </div>
     <a-modal
       v-model:visible="quotaWarningVisible"
-      :title="$t('workplace.current.quota_warning')"
+      :title="$t('dashboard.current.quota_warning')"
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
@@ -71,7 +71,7 @@
       >
         <a-form-item
           field="quota_warning"
-          :label="$t('workplace.label.quota_warning')"
+          :label="$t('dashboard.label.quota_warning')"
           :rules="[
             {
               required: true,
@@ -83,12 +83,12 @@
         <a-form-item
           v-if="quotaWarningFormData.quota_warning"
           field="warning_threshold"
-          :label="$t('workplace.label.quota_warning.warning_threshold')"
+          :label="$t('dashboard.label.quota_warning.warning_threshold')"
           :rules="[
             {
               required: true,
               message: $t(
-                'workplace.error.quota_warning.warning_threshold.required'
+                'dashboard.error.quota_warning.warning_threshold.required'
               ),
             },
           ]"
@@ -96,7 +96,7 @@
           <a-input-number
             v-model="quotaWarningFormData.warning_threshold"
             :placeholder="
-              $t('workplace.placeholder.quota_warning.warning_threshold')
+              $t('dashboard.placeholder.quota_warning.warning_threshold')
             "
             :precision="0"
             :min="1"
@@ -108,12 +108,12 @@
         <a-form-item
           v-if="quotaWarningFormData.quota_warning"
           field="expire_warning_threshold"
-          :label="$t('workplace.label.quota_warning.expire_warning_threshold')"
+          :label="$t('dashboard.label.quota_warning.expire_warning_threshold')"
           :rules="[
             {
               required: true,
               message: $t(
-                'workplace.error.quota_warning.expire_warning_threshold.required'
+                'dashboard.error.quota_warning.expire_warning_threshold.required'
               ),
             },
           ]"
@@ -121,7 +121,7 @@
           <a-input-number
             v-model="quotaWarningFormData.expire_warning_threshold"
             :placeholder="
-              $t('workplace.placeholder.quota_warning.expire_warning_threshold')
+              $t('dashboard.placeholder.quota_warning.expire_warning_threshold')
             "
             :precision="0"
             :min="1"

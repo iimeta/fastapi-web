@@ -6,7 +6,7 @@
       :body-style="{
         padding: '10px 20px',
       }"
-      :title="$t('workplace.callData')"
+      :title="$t('dashboard.call_data')"
       :bordered="false"
     >
       <template #extra>
@@ -16,13 +16,13 @@
           @change="handleDateRangeChange"
         >
           <a-radio :value="7">
-            {{ $t('workplace.dateRange7') }}
+            {{ $t('common.date_range7') }}
           </a-radio>
           <a-radio :value="15">
-            {{ $t('workplace.dateRange15') }}
+            {{ $t('common.date_range15') }}
           </a-radio>
           <a-radio :value="30">
-            {{ $t('workplace.dateRange30') }}
+            {{ $t('common.date_range30') }}
           </a-radio>
         </a-radio-group>
       </template>
@@ -33,6 +33,7 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { queryCallData, CallData } from '@/api/dashboard';
   import useChartOption from '@/hooks/chart-option';
@@ -41,6 +42,7 @@
   import { useAppStore } from '@/store';
   import { parseQuota } from '@/utils/common';
 
+  const { t } = useI18n();
   const appStore = useAppStore();
 
   const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
@@ -55,7 +57,7 @@
         </p>
         <span class="tooltip-value">
         ${
-          el.seriesName === '总花费'
+          el.seriesName === t('dashboard.chart.spend')
             ? `${appStore.getCurrencySymbol} ${parseQuota(el.value)}`
             : parseQuota(el.value)
         }
@@ -197,7 +199,7 @@
       },
       series: [
         {
-          name: '总花费',
+          name: t('dashboard.chart.spend'),
           data: spendStatisticsData.value,
           type: 'line',
           smooth: true,
@@ -214,7 +216,7 @@
           },
         },
         {
-          name: '调用数',
+          name: t('dashboard.chart.call'),
           data: countStatisticsData.value,
           type: 'line',
           smooth: true,
@@ -233,8 +235,8 @@
         {
           name:
             userRole === 'reseller' || userRole === 'admin'
-              ? '用户数'
-              : '应用数',
+              ? t('dashboard.chart.user')
+              : t('dashboard.chart.app'),
           data:
             userRole === 'reseller' || userRole === 'admin'
               ? userStatisticsData.value
@@ -254,7 +256,7 @@
           },
         },
         {
-          name: '异常数',
+          name: t('dashboard.chart.abnormal'),
           data: abnormalStatisticsData.value,
           type: 'line',
           smooth: true,

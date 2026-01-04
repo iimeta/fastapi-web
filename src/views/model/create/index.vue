@@ -22,7 +22,7 @@
             :wrapper-col-props="{ span: 18 }"
           >
             <a-divider orientation="left">
-              {{ $t('common.title.baseInfo') }}
+              {{ $t('common.title.base_info') }}
             </a-divider>
             <a-form-item
               field="provider_id"

@@ -18,7 +18,7 @@ export default {
   'size.medium': 'middle',
   'size.large': 'large',
   // actions
-  'actions.refresh': 'refresh',
-  'actions.density': 'density',
-  'actions.column_setting': 'columnSetting',
+  'action.refresh': 'refresh',
+  'action.density': 'density',
+  'action.column_setting': 'columnSetting',
 };
