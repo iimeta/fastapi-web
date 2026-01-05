@@ -57,8 +57,10 @@
         </p>
         <span class="tooltip-value">
         ${
-          el.seriesName === t('dashboard.chart.spend')
-            ? `${appStore.getCurrencySymbol} ${parseQuota(el.value)}`
+          el.seriesName === t('common.total.spend')
+            ? `<span class="currency-symbol">${
+                appStore.getCurrencySymbol
+              }</span>${parseQuota(el.value)}`
             : parseQuota(el.value)
         }
         </span>
@@ -199,7 +201,7 @@
       },
       series: [
         {
-          name: t('dashboard.chart.spend'),
+          name: t('common.total.spend'),
           data: spendStatisticsData.value,
           type: 'line',
           smooth: true,
@@ -216,7 +218,7 @@
           },
         },
         {
-          name: t('dashboard.chart.call'),
+          name: t('common.call'),
           data: countStatisticsData.value,
           type: 'line',
           smooth: true,

@@ -11,10 +11,10 @@
   >
     <template #extra>
       <a-link v-if="appStore.getRechargeTips" @click="recharge">
-        {{ $t('dashboard.recharge') }}
+        {{ $t('common.recharge') }}
       </a-link>
       <a-link @click="quotaWarning">
-        {{ $t('dashboard.current.quota_warning') }}
+        {{ $t('dashboard.quota_warning') }}
       </a-link>
     </template>
     <div>
@@ -29,19 +29,21 @@
       </div>
       <div class="quota-box">
         <div class="quota-item-box">
-          <span class="quota-title">已用额度:</span>
+          <span class="quota-title">{{ $t('common.used_quota') }}:</span>
           <Quota :model-value="expense.used_quota" :n="4" class="quota" />
         </div>
       </div>
       <div v-permission="['reseller']" class="quota-box">
         <div class="quota-item-box">
-          <span class="quota-title">已分配额度:</span>
+          <span class="quota-title">{{ $t('common.allocated_quota') }}:</span>
           <Quota :model-value="expense.allocated_quota" :n="4" class="quota" />
         </div>
       </div>
       <div v-permission="['reseller']" class="quota-box">
         <div class="quota-item-box">
-          <span class="quota-title">可分配额度:</span>
+          <span class="quota-title"
+            >{{ $t('common.to_be_allocated_quota') }}:</span
+          >
           <Quota
             :model-value="expense.to_be_allocated_quota"
             :n="4"
@@ -51,16 +53,16 @@
       </div>
       <div class="quota-box">
         <div class="quota-item-box">
-          <span class="quota-title">额度过期:</span>
+          <span class="quota-title">{{ $t('common.quota_expires_at') }}:</span>
           <span class="expires_at">
-            {{ expense.quota_expires_at || '无期限' }}
+            {{ expense.quota_expires_at || $t('common.forever') }}
           </span>
         </div>
       </div>
     </div>
     <a-modal
       v-model:visible="quotaWarningVisible"
-      :title="$t('dashboard.current.quota_warning')"
+      :title="$t('dashboard.quota_warning')"
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
@@ -71,7 +73,7 @@
       >
         <a-form-item
           field="quota_warning"
-          :label="$t('dashboard.label.quota_warning')"
+          :label="$t('dashboard.quota_warning')"
           :rules="[
             {
               required: true,
@@ -88,7 +90,7 @@
             {
               required: true,
               message: $t(
-                'dashboard.error.quota_warning.warning_threshold.required'
+                'dashboard.placeholder.quota_warning.warning_threshold'
               ),
             },
           ]"
@@ -113,7 +115,7 @@
             {
               required: true,
               message: $t(
-                'dashboard.error.quota_warning.expire_warning_threshold.required'
+                'dashboard.placeholder.quota_warning.expire_warning_threshold'
               ),
             },
           ]"
@@ -127,7 +129,7 @@
             :min="1"
             allow-clear
           >
-            <template #append> 天 </template>
+            <template #append> {{ $t('unit.day') }} </template>
           </a-input-number>
         </a-form-item>
       </a-form>
@@ -136,8 +138,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
-  import { FormInstance, Modal } from '@arco-design/web-vue';
+  import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import { FormInstance, Modal, Message } from '@arco-design/web-vue';
   import { useUserStore, useAppStore } from '@/store';
   import {
     queryExpense,
@@ -147,9 +150,9 @@
   } from '@/api/dashboard';
   import Quota from '@/views/common/quota.vue';
 
+  const { t } = useI18n();
   const userStore = useUserStore();
   const appStore = useAppStore();
-  const { proxy } = getCurrentInstance() as any;
 
   const expense = ref<Expense>({} as Expense);
   const quotaWarningVisible = ref(false);
@@ -185,7 +188,7 @@
     try {
       await submitQuotaWarning(quotaWarningFormData.value);
       done();
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
     } catch (err) {
       done(false);
     }
@@ -197,9 +200,9 @@
 
   const recharge = () => {
     Modal.warning({
-      title: '温馨提示',
+      title: t('modal.warning.title'),
       content: appStore.getRechargeTips,
-      okText: '我知道了',
+      okText: t('modal.warning.text'),
     });
   };
 </script>

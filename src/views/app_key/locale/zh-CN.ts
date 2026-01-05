@@ -1,4 +1,5 @@
 export default {
+  'menu.app.key': '应用密钥',
   'menu.key': '密钥管理',
   'menu.key.model.list': '密钥列表',
   'menu.key.app': '应用密钥',

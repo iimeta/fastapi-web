@@ -1,6 +1,8 @@
 export default {
   // common
+  'common.user': '用户',
   'common.user_id': '用户ID',
+  'common.reseller': '代理商',
   'common.reseller_id': '代理商ID',
   'common.user_name': '用户名称',
   'common.account': '账号',
@@ -21,6 +23,7 @@ export default {
   'common.created_at': '创建时间',
   'common.updated_at': '更新时间',
   'common.req_time': '请求时间',
+  'common.recharge': '充值',
   'common.quota': '额度',
   'common.spend': '花费',
   'common.total.spend': '总花费',
@@ -54,6 +57,12 @@ export default {
   'common.ipd': 'IPD',
   'common.call': '调用数',
   'common.total.call': '总调用数',
+  'common.current_quota': '当前额度',
+  'common.used_quota': '已用额度',
+  'common.allocated_quota': '已分配额度',
+  'common.to_be_allocated_quota': '可分配额度',
+  'common.quota_expires_at': '过期时间',
+  'common.forever': '永久有效',
   // unit
   'unit.millisecond': '毫秒',
   'unit.second': '秒',
@@ -88,6 +97,9 @@ export default {
   'button.publish': '立即发布',
   'button.draft': '保存草稿',
   'button.scheduled': '定时发布',
+  // modal
+  'modal.warning.title': '温馨提示',
+  'modal.warning.text': '我知道了',
   // success
   'success.create': '新建成功',
   'success.update': '修改成功',

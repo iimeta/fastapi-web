@@ -84,6 +84,7 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import { useUserStore, useAppStore } from '@/store';
   import Footer from '@/components/footer/index.vue';
   import { Modal } from '@arco-design/web-vue';
@@ -93,9 +94,10 @@
   import Register from './components/reseller-register.vue';
   import Forget from './components/reseller-forget.vue';
 
-  useUserStore().logout();
-
+  const { t } = useI18n();
   const appStore = useAppStore();
+
+  useUserStore().logout();
 
   const isRegister = ref(false);
   const isForget = ref(false);
@@ -111,8 +113,9 @@
       isForget.value = false;
     } else {
       Modal.warning({
-        title: '温馨提示',
+        title: t('modal.warning.title'),
         content: appStore.getRegisterTips,
+        okText: t('modal.warning.text'),
       });
     }
   };

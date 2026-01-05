@@ -1,4 +1,5 @@
 export default {
+  'menu.log': '日志管理',
   'menu.text': '日志管理',
   'menu.text.list': '文本日志',
   'menu.text.detail': '文本详情',

@@ -28,7 +28,7 @@
           <div
             v-if="userStore.role === 'reseller'"
             class="user-id"
-            title="代理商"
+            :title="$t('common.reseller')"
             style="color: rgb(var(--orange-6))"
           >
             ID: {{ userStore.user_id }}

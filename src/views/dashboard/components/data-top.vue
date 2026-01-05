@@ -39,16 +39,16 @@
             v-if="userRole === 'reseller' || userRole === 'admin'"
             value="user"
           >
-            {{ $t('dashboard.top.user') }}
+            {{ $t('common.user') }}
           </a-radio>
           <a-radio value="app">
-            {{ $t('dashboard.top.app') }}
+            {{ $t('common.app') }}
           </a-radio>
           <a-radio v-if="userRole === 'user'" value="app_key">
-            {{ $t('dashboard.top.app_key') }}
+            {{ $t('common.key') }}
           </a-radio>
           <a-radio value="model">
-            {{ $t('dashboard.top.model') }}
+            {{ $t('common.model') }}
           </a-radio>
         </a-radio-group>
         <a-table
@@ -113,7 +113,7 @@
             >
             </a-table-column>
             <a-table-column
-              :title="$t('dashboard.chart.call')"
+              :title="$t('common.call')"
               data-index="call"
               align="center"
             >
@@ -141,13 +141,11 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import type { TableData } from '@arco-design/web-vue/es/table/interface';
   import { queryDataTop } from '@/api/dashboard';
   import Quota from '@/views/common/quota.vue';
 
-  const { t } = useI18n();
   const { loading, setLoading } = useLoading();
   const userRole = localStorage.getItem('userRole');
 

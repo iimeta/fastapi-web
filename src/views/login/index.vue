@@ -82,6 +82,7 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import { useUserStore, useAppStore } from '@/store';
   import { Modal } from '@arco-design/web-vue';
   import { querySysConfig, SysConfigDetail } from '@/api/sys_config';
@@ -91,9 +92,10 @@
   import Register from './components/register.vue';
   import Forget from './components/forget.vue';
 
-  useUserStore().logout();
-
+  const { t } = useI18n();
   const appStore = useAppStore();
+
+  useUserStore().logout();
 
   const isRegister = ref(false);
   const isForget = ref(false);
@@ -109,8 +111,9 @@
       isForget.value = false;
     } else {
       Modal.warning({
-        title: '温馨提示',
+        title: t('modal.warning.title'),
         content: appStore.getRegisterTips,
+        okText: t('modal.warning.text'),
       });
     }
   };

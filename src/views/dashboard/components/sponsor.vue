@@ -13,7 +13,7 @@
       :style="{
         height:
           userRole === 'user'
-            ? '191px'
+            ? '190px'
             : userRole === 'reseller'
             ? '177px'
             : '202px',

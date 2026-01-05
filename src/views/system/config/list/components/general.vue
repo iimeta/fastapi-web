@@ -454,7 +454,7 @@
             :min="1"
             allow-clear
           >
-            <template #append> 天 </template>
+            <template #append> {{ $t('unit.day') }} </template>
           </a-input-number>
         </a-form-item>
         <a-form-item

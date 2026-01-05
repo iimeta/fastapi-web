@@ -51,7 +51,7 @@
       permission: ['admin'],
     },
     {
-      text: 'menu.app_key',
+      text: 'menu.app.key',
       icon: 'icon-safe',
       router: 'AppKeyList',
       permission: ['user'],

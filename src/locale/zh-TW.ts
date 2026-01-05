@@ -1,4 +1,4 @@
-import localeCommon from '@/views/common/locale/zh-CN';
+import localeCommon from '@/views/common/locale/zh-TW';
 
 import localeLogin from '@/views/login/locale/zh-CN';
 
