@@ -132,9 +132,7 @@
                       >
                       </a-checkbox>
                     </div>
-                    <div class="title">
-                      {{ item.title === '#' ? '序列号' : item.title }}
-                    </div>
+                    <div class="title"> {{ item.title }} </div>
                   </div>
                 </div>
               </template>
@@ -164,7 +162,7 @@
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('operations.view') }}
+            {{ $t('button.detail') }}
           </a-button>
         </template>
       </a-table>

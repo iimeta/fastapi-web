@@ -6,7 +6,7 @@
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
       <a-descriptions-item
-        :label="t('task.batch.detail.label.trace_id')"
+        :label="$t('task.batch.detail.label.trace_id')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -21,7 +21,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('task.batch.detail.label.creator')"
+        :label="$t('task.batch.detail.label.creator')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -35,7 +35,7 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.app_id')">
+      <a-descriptions-item :label="$t('common.app_id')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -43,7 +43,7 @@
           {{ currentData.app_id }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.user_id')">
+      <a-descriptions-item :label="$t('common.user_id')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -51,7 +51,7 @@
           {{ currentData.user_id }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('task.batch.detail.label.model')">
+      <a-descriptions-item :label="$t('task.batch.detail.label.model')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -60,7 +60,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('task.batch.detail.label.batch_id')"
+        :label="$t('task.batch.detail.label.batch_id')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -75,7 +75,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('task.batch.detail.label.input_file_id')"
+        :label="$t('task.batch.detail.label.input_file_id')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -90,7 +90,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('task.batch.detail.label.output_file_id')"
+        :label="$t('task.batch.detail.label.output_file_id')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -106,7 +106,7 @@
       </a-descriptions-item>
       <a-descriptions-item
         v-if="currentData.error_file_id"
-        :label="t('task.batch.detail.label.error_file_id')"
+        :label="$t('task.batch.detail.label.error_file_id')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -121,7 +121,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('task.batch.detail.label.response_data')"
+        :label="$t('task.batch.detail.label.response_data')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -132,7 +132,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('task.batch.detail.label.error')"
+        :label="$t('task.batch.detail.label.error')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -142,7 +142,7 @@
           {{ currentData.error || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')">
+      <a-descriptions-item :label="$t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -173,7 +173,9 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('task.batch.detail.label.in_progress_at')">
+      <a-descriptions-item
+        :label="$t('task.batch.detail.label.in_progress_at')"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -181,7 +183,7 @@
           {{ currentData.in_progress_at || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('task.batch.detail.label.finalizing_at')">
+      <a-descriptions-item :label="$t('task.batch.detail.label.finalizing_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -189,7 +191,7 @@
           {{ currentData.finalizing_at || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('task.batch.detail.label.completed_at')">
+      <a-descriptions-item :label="$t('task.batch.detail.label.completed_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -197,7 +199,7 @@
           {{ currentData.completed_at || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('task.batch.detail.label.expires_at')">
+      <a-descriptions-item :label="$t('task.batch.detail.label.expires_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -205,7 +207,7 @@
           {{ currentData.expires_at || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('task.batch.detail.label.cancelled_at')">
+      <a-descriptions-item :label="$t('task.batch.detail.label.cancelled_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -213,7 +215,7 @@
           {{ currentData.cancelled_at || currentData.cancelling_at || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')">
+      <a-descriptions-item :label="$t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -221,7 +223,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')">
+      <a-descriptions-item :label="$t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

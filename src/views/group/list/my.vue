@@ -137,9 +137,7 @@
                       >
                       </a-checkbox>
                     </div>
-                    <div class="title">
-                      {{ item.title === '#' ? '序列号' : item.title }}
-                    </div>
+                    <div class="title"> {{ item.title }} </div>
                   </div>
                 </div>
               </template>
@@ -174,7 +172,7 @@
         <template #model_names="{ record }">
           <span v-if="record.model_names">
             <a-button type="text" size="small" @click="modelsHandle(record.id)">
-              查看
+              {{ $t('button.view') }}
             </a-button>
           </span>
           <span v-else>{{ '-' }}</span>
@@ -203,7 +201,7 @@
         hide-cancel
         simple
         width="1080px"
-        ok-text="关闭"
+        :ok-text="$t('button.close')"
       >
         <Models :id="recordId" :action="action" />
       </a-modal>

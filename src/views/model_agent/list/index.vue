@@ -150,7 +150,7 @@
               type="primary"
               status="success"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
                   action: 'status',
@@ -158,13 +158,13 @@
                 })
               "
             >
-              启用
+              {{ $t('button.enable') }}
             </a-button>
             <a-button
               type="primary"
               status="danger"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
                   action: 'status',
@@ -172,20 +172,20 @@
                 })
               "
             >
-              禁用
+              {{ $t('button.disable') }}
             </a-button>
             <a-button
               type="primary"
               status="danger"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
                   action: 'delete',
                 })
               "
             >
-              删除
+              {{ $t('button.delete') }}
             </a-button>
           </a-space>
         </a-col>
@@ -242,9 +242,7 @@
                       >
                       </a-checkbox>
                     </div>
-                    <div class="title">
-                      {{ item.title === '#' ? '序列号' : item.title }}
-                    </div>
+                    <div class="title"> {{ item.title }} </div>
                   </div>
                 </div>
               </template>
@@ -272,7 +270,7 @@
         <template #model_names="{ record }">
           <span v-if="record.model_names">
             <a-button type="text" size="small" @click="modelsHandle(record.id)">
-              查看
+              {{ $t('button.view') }}
             </a-button>
           </span>
           <span v-else>{{ '-' }}</span>
@@ -284,7 +282,7 @@
               size="small"
               @click="fallbackModelsHandle(record.id)"
             >
-              查看
+              {{ $t('button.view') }}
             </a-button>
           </span>
           <span v-else>{{ '-' }}</span>
@@ -340,7 +338,7 @@
             {{ $t('model.agent.columns.operations.manageKey') }}
           </a-button>
           <a-popconfirm
-            content="你确定要删除吗?"
+            :content="$t('placeholder.operation.delete')"
             @ok="modelAgentDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
@@ -373,7 +371,7 @@
         hide-cancel
         simple
         width="1080px"
-        ok-text="关闭"
+        :ok-text="$t('button.close')"
       >
         <Models :id="recordId" :action="action" />
       </a-modal>
@@ -389,7 +387,7 @@
         hide-cancel
         simple
         width="1080px"
-        ok-text="关闭"
+        :ok-text="$t('button.close')"
       >
         <Models :id="recordId" :action="action" />
       </a-modal>
@@ -754,7 +752,7 @@
    */
   const handleBatch = (params: ModelAgentBatchOperate) => {
     if (ids.value.length === 0) {
-      proxy.$message.info('请选择要操作的数据');
+      proxy.$message.info(t('placeholder.operation.data'));
     } else {
       let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
       switch (params.action) {
@@ -772,7 +770,7 @@
       }
 
       proxy.$modal.warning({
-        title: '警告',
+        title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
         hideCancel: false,

@@ -174,9 +174,7 @@
                       >
                       </a-checkbox>
                     </div>
-                    <div class="title">
-                      {{ item.title === '#' ? '序列号' : item.title }}
-                    </div>
+                    <div class="title"> {{ item.title }} </div>
                   </div>
                 </div>
               </template>
@@ -241,7 +239,7 @@
         hide-title
         hide-cancel
         simple
-        ok-text="关闭"
+        :ok-text="$t('button.close')"
       >
         <PricingDetail v-model="pricing" :model-type="modelType" />
       </a-modal>

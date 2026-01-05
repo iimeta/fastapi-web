@@ -152,7 +152,7 @@
               type="primary"
               status="success"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
                   action: 'status',
@@ -160,13 +160,13 @@
                 })
               "
             >
-              启用
+              {{ $t('button.enable') }}
             </a-button>
             <a-button
               type="primary"
               status="danger"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
                   action: 'status',
@@ -174,26 +174,26 @@
                 })
               "
             >
-              禁用
+              {{ $t('button.disable') }}
             </a-button>
             <a-button
               type="primary"
               status="danger"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
                   action: 'delete',
                 })
               "
             >
-              删除
+              {{ $t('button.delete') }}
             </a-button>
             <a-button
               type="primary"
               status="success"
               :disabled="allMultiple"
-              :title="allMultiple ? '请查询要操作的数据' : ''"
+              :title="allMultiple ? $t('placeholder.search.data') : ''"
               @click="
                 handleBatch({
                   action: 'all-status',
@@ -201,13 +201,13 @@
                 })
               "
             >
-              全部启用
+              {{ $t('button.all.enable') }}
             </a-button>
             <a-button
               type="primary"
               status="danger"
               :disabled="allMultiple"
-              :title="allMultiple ? '请查询要操作的数据' : ''"
+              :title="allMultiple ? $t('placeholder.search.data') : ''"
               @click="
                 handleBatch({
                   action: 'all-status',
@@ -215,20 +215,20 @@
                 })
               "
             >
-              全部禁用
+              {{ $t('button.all.disable') }}
             </a-button>
             <a-button
               type="primary"
               status="danger"
               :disabled="allMultiple"
-              :title="allMultiple ? '请查询要操作的数据' : ''"
+              :title="allMultiple ? $t('placeholder.search.data') : ''"
               @click="
                 handleBatch({
                   action: 'all-delete',
                 })
               "
             >
-              全部删除
+              {{ $t('button.all.delete') }}
             </a-button>
           </a-space>
         </a-col>
@@ -285,9 +285,7 @@
                       >
                       </a-checkbox>
                     </div>
-                    <div class="title">
-                      {{ item.title === '#' ? '序列号' : item.title }}
-                    </div>
+                    <div class="title"> {{ item.title }} </div>
                   </div>
                 </div>
               </template>
@@ -320,7 +318,7 @@
         <template #models="{ record }">
           <span v-if="record.models">
             <a-button type="text" size="small" @click="modelsHandle(record.id)">
-              查看
+              {{ $t('button.view') }}
             </a-button>
           </span>
           <span v-else>{{ '-' }}</span>
@@ -367,7 +365,7 @@
             {{ $t('key.columns.operations.update') }}
           </a-button>
           <a-popconfirm
-            content="你确定要删除吗?"
+            :content="$t('placeholder.operation.delete')"
             @ok="keyDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
@@ -400,7 +398,7 @@
         hide-cancel
         simple
         width="1080px"
-        ok-text="关闭"
+        :ok-text="$t('button.close')"
       >
         <Models :id="recordId" :action="action" />
       </a-modal>
@@ -843,7 +841,7 @@
       }
 
       proxy.$modal.warning({
-        title: '警告',
+        title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
         hideCancel: false,

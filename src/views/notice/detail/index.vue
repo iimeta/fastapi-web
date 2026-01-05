@@ -5,7 +5,7 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item :label="t('notice.detail.title')" :span="2">
+      <a-descriptions-item :label="$t('notice.detail.title')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -13,7 +13,7 @@
           {{ currentData.title }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.content')" :span="2">
+      <a-descriptions-item :label="$t('notice.detail.content')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -24,7 +24,7 @@
         >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.category')">
+      <a-descriptions-item :label="$t('notice.detail.category')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -32,7 +32,7 @@
           {{ $t(`notice.dict.category.${currentData.category}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.scope')">
+      <a-descriptions-item :label="$t('notice.detail.scope')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -40,7 +40,7 @@
           {{ $t(`notice.dict.scope.${currentData.scope}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.users')">
+      <a-descriptions-item :label="$t('notice.detail.users')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -54,7 +54,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.resellers')" :span="2">
+      <a-descriptions-item :label="$t('notice.detail.resellers')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -68,7 +68,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <!-- <a-descriptions-item :label="t('notice.detail.channels')" :span="2">
+      <!-- <a-descriptions-item :label="$t('notice.detail.channels')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -76,7 +76,7 @@
           {{ $t(`notice.dict.channels.${currentData.channels}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.is_popup')" :span="2">
+      <a-descriptions-item :label="$t('notice.detail.is_popup')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -84,7 +84,7 @@
           {{ t(`dict.${currentData.is_popup || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.priority')" :span="2">
+      <a-descriptions-item :label="$t('notice.detail.priority')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -92,7 +92,7 @@
           {{ currentData.priority }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.expires_at')" :span="2">
+      <a-descriptions-item :label="$t('notice.detail.expires_at')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -100,7 +100,7 @@
           {{ currentData.expires_at || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.scheduled_time')" :span="2">
+      <a-descriptions-item :label="$t('notice.detail.scheduled_time')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -108,7 +108,7 @@
           {{ currentData.scheduled_time || '-' }}
         </span>
       </a-descriptions-item> -->
-      <a-descriptions-item :label="t('common.remark')" :span="2">
+      <a-descriptions-item :label="$t('common.remark')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -116,7 +116,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')">
+      <a-descriptions-item :label="$t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -126,7 +126,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('notice.detail.publish_time')">
+      <a-descriptions-item :label="$t('notice.detail.publish_time')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -134,7 +134,7 @@
           {{ currentData.publish_time || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')">
+      <a-descriptions-item :label="$t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -142,7 +142,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')">
+      <a-descriptions-item :label="$t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

@@ -5,7 +5,7 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item :label="t('site.config.detail.domain')">
+      <a-descriptions-item :label="$t('site.config.detail.domain')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -13,7 +13,7 @@
           {{ currentData.domain }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.title')">
+      <a-descriptions-item :label="$t('site.config.detail.title')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -21,7 +21,7 @@
           {{ currentData.title }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.logo')">
+      <a-descriptions-item :label="$t('site.config.detail.logo')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -29,7 +29,7 @@
           {{ currentData.logo }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.favicon')">
+      <a-descriptions-item :label="$t('site.config.detail.favicon')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -37,7 +37,7 @@
           {{ currentData.favicon }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.avatar')">
+      <a-descriptions-item :label="$t('site.config.detail.avatar')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -45,7 +45,7 @@
           {{ currentData.avatar || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.bg_img')">
+      <a-descriptions-item :label="$t('site.config.detail.bg_img')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -53,7 +53,7 @@
           {{ currentData.bg_img || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.copyright')">
+      <a-descriptions-item :label="$t('site.config.detail.copyright')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -61,7 +61,7 @@
           {{ currentData.copyright || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.jump_url')">
+      <a-descriptions-item :label="$t('site.config.detail.jump_url')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -69,7 +69,7 @@
           {{ currentData.jump_url || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.keywords')">
+      <a-descriptions-item :label="$t('site.config.detail.keywords')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -77,7 +77,7 @@
           {{ currentData.keywords || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.description')">
+      <a-descriptions-item :label="$t('site.config.detail.description')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -85,7 +85,7 @@
           {{ currentData.description || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.icp_beian')">
+      <a-descriptions-item :label="$t('site.config.detail.icp_beian')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -93,7 +93,7 @@
           {{ currentData.icp_beian || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.ga_beian')">
+      <a-descriptions-item :label="$t('site.config.detail.ga_beian')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -101,7 +101,7 @@
           {{ currentData.ga_beian || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.register_tips')">
+      <a-descriptions-item :label="$t('site.config.detail.register_tips')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -109,7 +109,7 @@
           {{ currentData.register_tips || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.grant_quota')">
+      <a-descriptions-item :label="$t('site.config.detail.grant_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -121,7 +121,7 @@
           <span v-else> - </span>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.quota_expires_at')">
+      <a-descriptions-item :label="$t('site.config.detail.quota_expires_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -130,7 +130,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('site.config.detail.support_email_suffix')"
+        :label="$t('site.config.detail.support_email_suffix')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -139,7 +139,7 @@
           {{ currentData?.support_email_suffix?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.register_welcome')">
+      <a-descriptions-item :label="$t('site.config.detail.register_welcome')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -150,7 +150,7 @@
         >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.default_language')">
+      <a-descriptions-item :label="$t('site.config.detail.default_language')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -162,7 +162,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.currency_symbol')">
+      <a-descriptions-item :label="$t('site.config.detail.currency_symbol')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -170,7 +170,7 @@
           {{ currentData.currency_symbol || '$' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.host')">
+      <a-descriptions-item :label="$t('site.config.detail.host')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -178,7 +178,7 @@
           {{ currentData.host || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.port')">
+      <a-descriptions-item :label="$t('site.config.detail.port')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -186,7 +186,7 @@
           {{ currentData.port || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.user_name')">
+      <a-descriptions-item :label="$t('site.config.detail.user_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -194,7 +194,7 @@
           {{ currentData.user_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.password')">
+      <a-descriptions-item :label="$t('site.config.detail.password')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -202,7 +202,7 @@
           {{ currentData.password || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.from_name')">
+      <a-descriptions-item :label="$t('site.config.detail.from_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -210,7 +210,7 @@
           {{ currentData.from_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('site.config.detail.recharge_tips')">
+      <a-descriptions-item :label="$t('site.config.detail.recharge_tips')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -218,7 +218,7 @@
           {{ currentData.recharge_tips || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.remark')">
+      <a-descriptions-item :label="$t('common.remark')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -226,7 +226,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')">
+      <a-descriptions-item :label="$t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -239,7 +239,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')">
+      <a-descriptions-item :label="$t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -247,7 +247,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')">
+      <a-descriptions-item :label="$t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

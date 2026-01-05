@@ -748,7 +748,7 @@
       hide-cancel
       unmount-on-close
       simple
-      ok-text="关闭"
+      :ok-text="$t('button.close')"
     >
       <SpendDetail v-model="spend" :model-type="modelType" />
     </a-modal>

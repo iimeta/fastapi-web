@@ -803,7 +803,7 @@
 
   const resetHandle = async (sysConfigItem: SysConfigItem) => {
     proxy.$modal.warning({
-      title: '警告',
+      title: t('modal.warning.title'),
       titleAlign: 'center',
       content: `是否确定${
         sysConfigItem.action !== 'reset_api_error' ? '重置' : ''
@@ -817,7 +817,7 @@
 
   const refreshHandle = async (sysConfigItem: SysConfigItem) => {
     proxy.$modal.warning({
-      title: '警告',
+      title: t('modal.warning.title'),
       titleAlign: 'center',
       content: `是否确定${t(`sys.config.item.title.${sysConfigItem.action}`)}?`,
       hideCancel: false,

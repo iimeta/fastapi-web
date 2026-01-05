@@ -6,7 +6,7 @@
       :label-style="{ padding: '5px 8px 5px 15px' }"
       :value-style="{ width: '350px', padding: '5px 8px 5px 15px' }"
     >
-      <a-descriptions-item :label="t('group.detail.label.name')">
+      <a-descriptions-item :label="$t('group.detail.label.name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -14,7 +14,7 @@
           {{ currentData.name }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.is_default')">
+      <a-descriptions-item :label="$t('group.detail.label.is_default')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -22,7 +22,7 @@
           {{ t(`dict.${currentData.is_default || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.discount')">
+      <a-descriptions-item :label="$t('group.detail.label.discount')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -30,7 +30,7 @@
           {{ Number((currentData.discount * 100).toFixed(2)) }}%
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.used_quota')">
+      <a-descriptions-item :label="$t('group.detail.label.used_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -38,7 +38,7 @@
           <Quota :model-value="currentData.used_quota" />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.models')" :span="2">
+      <a-descriptions-item :label="$t('group.detail.label.models')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -46,7 +46,7 @@
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.is_public')">
+      <a-descriptions-item :label="$t('common.is_public')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -54,7 +54,7 @@
           {{ t(`dict.public.${currentData.is_public || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.weight')">
+      <a-descriptions-item :label="$t('group.detail.label.weight')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -64,7 +64,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('group.detail.label.is_enable_model_agent')"
+        :label="$t('group.detail.label.is_enable_model_agent')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -73,7 +73,7 @@
           {{ t(`dict.enable.${currentData.is_enable_model_agent || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.lb_strategy')">
+      <a-descriptions-item :label="$t('model.detail.label.lb_strategy')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -82,7 +82,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('group.detail.label.model_agents')"
+        :label="$t('group.detail.label.model_agents')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -92,7 +92,7 @@
           {{ currentData?.model_agent_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.is_limit_quota')">
+      <a-descriptions-item :label="$t('group.detail.label.is_limit_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -100,7 +100,7 @@
           {{ t(`dict.${currentData?.is_limit_quota || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.quota')">
+      <a-descriptions-item :label="$t('group.detail.label.quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -110,11 +110,11 @@
             :model-value="currentData.quota"
           />
           <span v-else>
-            {{ $t(`app.columns.quota.no_limit`) }}
+            {{ $t(`common.no_limit`) }}
           </span>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.is_enable_forward')">
+      <a-descriptions-item :label="$t('group.detail.label.is_enable_forward')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -122,7 +122,7 @@
           {{ t(`dict.enable.${currentData.is_enable_forward || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.forward_rule')">
+      <a-descriptions-item :label="$t('group.detail.label.forward_rule')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -138,7 +138,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.content_length')">
+      <a-descriptions-item :label="$t('group.detail.label.content_length')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -146,7 +146,7 @@
           {{ currentData?.forward_config?.content_length || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.used_quota')">
+      <a-descriptions-item :label="$t('group.detail.label.used_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -158,7 +158,7 @@
           <span v-else> - </span>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.target_model')">
+      <a-descriptions-item :label="$t('group.detail.label.target_model')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -166,7 +166,7 @@
           {{ currentData?.forward_config?.target_model_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.match_rule')">
+      <a-descriptions-item :label="$t('group.detail.label.match_rule')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -182,7 +182,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.decision_model')">
+      <a-descriptions-item :label="$t('group.detail.label.decision_model')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -190,7 +190,7 @@
           {{ currentData?.forward_config?.decision_model_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.keywords')">
+      <a-descriptions-item :label="$t('group.detail.label.keywords')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -198,7 +198,7 @@
           {{ currentData?.forward_config?.keywords?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.target_model')">
+      <a-descriptions-item :label="$t('group.detail.label.target_model')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -208,7 +208,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.remark')" :span="2">
+      <a-descriptions-item :label="$t('group.detail.label.remark')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -216,7 +216,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('group.detail.label.expires_at')">
+      <a-descriptions-item :label="$t('group.detail.label.expires_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -224,7 +224,7 @@
           {{ currentData.expires_at || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')">
+      <a-descriptions-item :label="$t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -237,7 +237,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')">
+      <a-descriptions-item :label="$t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -245,7 +245,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')">
+      <a-descriptions-item :label="$t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

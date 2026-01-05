@@ -215,7 +215,7 @@
                 :min="1"
                 allow-clear
               >
-                <template #append> 分钟 </template>
+                <template #append> {{ $t('unit.minute') }} </template>
               </a-input-number>
             </a-form-item>
             <a-form-item

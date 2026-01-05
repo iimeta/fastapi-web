@@ -113,7 +113,7 @@
       isForget.value = false;
     } else {
       Modal.warning({
-        title: t('modal.warning.title'),
+        title: t('modal.warning.title.warm'),
         content: appStore.getRegisterTips,
         okText: t('modal.warning.text'),
       });

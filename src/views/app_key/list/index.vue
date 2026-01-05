@@ -170,20 +170,20 @@
               type="primary"
               status="warning"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleAppKeyBatch({
                   action: 'update',
                 })
               "
             >
-              修改
+              {{ $t('button.update') }}
             </a-button>
             <a-button
               type="primary"
               status="success"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
                   action: 'status',
@@ -191,13 +191,13 @@
                 })
               "
             >
-              启用
+              {{ $t('button.enable') }}
             </a-button>
             <a-button
               type="primary"
               status="danger"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
                   action: 'status',
@@ -205,39 +205,39 @@
                 })
               "
             >
-              禁用
+              {{ $t('button.disable') }}
             </a-button>
             <a-button
               type="primary"
               status="danger"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
                   action: 'delete',
                 })
               "
             >
-              删除
+              {{ $t('button.delete') }}
             </a-button>
             <a-button
               type="primary"
               status="warning"
               :disabled="allMultiple"
-              :title="allMultiple ? '请查询要操作的数据' : ''"
+              :title="allMultiple ? $t('placeholder.search.data') : ''"
               @click="
                 handleAppKeyBatch({
                   action: 'all-update',
                 })
               "
             >
-              全部修改
+              {{ $t('button.all.update') }}
             </a-button>
             <a-button
               type="primary"
               status="success"
               :disabled="allMultiple"
-              :title="allMultiple ? '请查询要操作的数据' : ''"
+              :title="allMultiple ? $t('placeholder.search.data') : ''"
               @click="
                 handleAppKeyBatch({
                   action: 'all-status',
@@ -245,13 +245,13 @@
                 })
               "
             >
-              全部启用
+              {{ $t('button.all.enable') }}
             </a-button>
             <a-button
               type="primary"
               status="danger"
               :disabled="allMultiple"
-              :title="allMultiple ? '请查询要操作的数据' : ''"
+              :title="allMultiple ? $t('placeholder.search.data') : ''"
               @click="
                 handleAppKeyBatch({
                   action: 'all-status',
@@ -259,20 +259,20 @@
                 })
               "
             >
-              全部禁用
+              {{ $t('button.all.disable') }}
             </a-button>
             <a-button
               type="primary"
               status="danger"
               :disabled="allMultiple"
-              :title="allMultiple ? '请查询要操作的数据' : ''"
+              :title="allMultiple ? $t('placeholder.search.data') : ''"
               @click="
                 handleAppKeyBatch({
                   action: 'all-delete',
                 })
               "
             >
-              全部删除
+              {{ $t('button.all.delete') }}
             </a-button>
             <a-button type="primary" @click="handleAppKeyExport({})">
               导出
@@ -332,9 +332,7 @@
                       >
                       </a-checkbox>
                     </div>
-                    <div class="title">
-                      {{ item.title === '#' ? '序列号' : item.title }}
-                    </div>
+                    <div class="title"> {{ item.title }} </div>
                   </div>
                 </div>
               </template>
@@ -376,7 +374,7 @@
         <template #models="{ record }">
           <span v-if="record.models">
             <a-button type="text" size="small" @click="modelsHandle(record.id)">
-              查看
+              {{ $t('button.view') }}
             </a-button>
           </span>
           <span v-else>{{ $t(`key.columns.app.models.no_limit`) }}</span>
@@ -405,7 +403,7 @@
             {{ $t('key.columns.operations.update') }}
           </a-button>
           <a-popconfirm
-            content="你确定要删除吗?"
+            :content="$t('placeholder.operation.delete')"
             @ok="keyDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
@@ -430,27 +428,27 @@
       <a-modal
         v-model:visible="visible"
         :width="726"
-        :title="$t('app.form.title.keyConfig')"
+        :title="$t('app.form.title.key_config')"
         :ok-text="$t('button.save')"
         :body-style="{ height: '520px' }"
         @cancel="handleCancel"
         @before-ok="handleBeforeOk"
       >
         <a-form ref="formRef" :model="formData" :label-col-props="{ span: 4 }">
-          <a-form-item field="key" :label="$t('app.label.key')">
+          <a-form-item field="key" :label="$t('common.key')">
             <a-input
               v-model="formData.key"
-              :placeholder="$t('app.placeholder.key')"
+              :placeholder="$t('common.key')"
               readonly
             />
           </a-form-item>
           <a-form-item
             field="billing_methods"
-            :label="$t('app.label.key.billing_methods')"
+            :label="$t('common.billing_methods')"
             :rules="[
               {
                 required: true,
-                message: $t('app.error.key.billing_methods.required'),
+                message: $t('placeholder.billing_methods'),
               },
             ]"
           >
@@ -469,7 +467,7 @@
               </a-checkbox>
             </a-space>
           </a-form-item>
-          <a-form-item field="models" :label="$t('app.label.models')">
+          <a-form-item field="models" :label="$t('common.models')">
             <a-tree-select
               v-model="formData.models"
               :placeholder="$t('app.placeholder.key.models')"
@@ -482,20 +480,17 @@
               tree-checked-strategy="child"
             />
           </a-form-item>
-          <a-form-item
-            field="is_limit_quota"
-            :label="$t('app.label.isLimitQuota')"
-          >
+          <a-form-item field="is_limit_quota" :label="$t('common.limit_quota')">
             <a-switch v-model="formData.is_limit_quota" />
           </a-form-item>
           <a-form-item
             v-if="formData.is_limit_quota"
             field="quota"
-            :label="$t('app.label.quota')"
+            :label="$t('common.quota')"
             :rules="[
               {
                 required: true,
-                message: $t('app.error.quota.required'),
+                message: $t('placeholder.quota'),
               },
             ]"
           >
@@ -534,11 +529,11 @@
                 value="1"
                 :default-checked="true"
               >
-                固定
+                {{ $t('dict.quota_expires_rule.1') }}
               </a-radio>
-              <a-radio v-model="formData.quota_expires_rule" value="2"
-                >时长</a-radio
-              >
+              <a-radio v-model="formData.quota_expires_rule" value="2">
+                {{ $t('dict.quota_expires_rule.2') }}
+              </a-radio>
             </a-space>
           </a-form-item>
           <a-form-item
@@ -546,7 +541,7 @@
               formData.is_limit_quota && formData.quota_expires_rule === '1'
             "
             field="quota_expires_at"
-            :label="$t('app.label.quota_expires_at')"
+            :label="$t('common.expires_at')"
           >
             <a-date-picker
               v-model="formData.quota_expires_at"
@@ -629,19 +624,16 @@
               :min="1"
               :max="9999999999999"
             >
-              <template #append> 分钟 </template>
+              <template #append> {{ $t('unit.minute') }} </template>
             </a-input-number>
           </a-form-item>
-          <a-form-item
-            field="is_bind_group"
-            :label="$t('app.label.is_bind_group')"
-          >
+          <a-form-item field="is_bind_group" :label="$t('common.bind_group')">
             <a-switch v-model="formData.is_bind_group" />
           </a-form-item>
           <a-form-item
             v-if="formData.is_bind_group"
             field="group"
-            :label="$t('app.label.group')"
+            :label="$t('common.groups')"
             :rules="[
               {
                 required: true,
@@ -664,20 +656,14 @@
               />
             </a-select>
           </a-form-item>
-          <a-form-item
-            field="ip_whitelist"
-            :label="$t('app.label.ip_whitelist')"
-          >
+          <a-form-item field="ip_whitelist" :label="$t('common.ip_whitelist')">
             <a-textarea
               v-model="formData.ip_whitelist"
               :placeholder="$t('app.placeholder.ip_whitelist')"
               :auto-size="{ minRows: 5, maxRows: 5 }"
             />
           </a-form-item>
-          <a-form-item
-            field="ip_blacklist"
-            :label="$t('app.label.ip_blacklist')"
-          >
+          <a-form-item field="ip_blacklist" :label="$t('common.ip_blacklist')">
             <a-textarea
               v-model="formData.ip_blacklist"
               :placeholder="$t('app.placeholder.ip_blacklist')"
@@ -687,7 +673,7 @@
           <a-form-item field="remark" :label="$t('common.remark')">
             <a-textarea
               v-model="formData.remark"
-              :placeholder="$t('app.placeholder.remark')"
+              :placeholder="$t('placeholder.remark')"
             />
           </a-form-item>
         </a-form>
@@ -704,7 +690,7 @@
         hide-cancel
         simple
         width="1080px"
-        ok-text="关闭"
+        :ok-text="$t('button.close')"
       >
         <Models :id="recordId" :action="action" />
       </a-modal>
@@ -733,17 +719,17 @@
               (userRole === 'reseller' || userRole === 'admin')
             "
             field="user_id"
-            :label="$t('app.label.user_id')"
+            :label="$t('common.user_id')"
             :rules="[
               {
                 required: userRole === 'reseller' || userRole === 'admin',
-                message: $t('app.error.user_id.required'),
+                message: $t('placeholder.user_id'),
               },
             ]"
           >
             <a-input-number
               v-model="batchFormData.user_id"
-              :placeholder="$t('app.placeholder.user_id')"
+              :placeholder="$t('placeholder.user_id')"
               :precision="0"
               :min="1"
             />
@@ -754,17 +740,17 @@
               (userRole === 'reseller' || userRole === 'admin')
             "
             field="app_id"
-            :label="$t('app.label.app_id')"
+            :label="$t('common.app_id')"
             :rules="[
               {
                 required: userRole === 'reseller' || userRole === 'admin',
-                message: $t('app.error.app_id.required'),
+                message: $t('placeholder.app_id'),
               },
             ]"
           >
             <a-input-number
               v-model="batchFormData.app_id"
-              :placeholder="$t('app.placeholder.app_id')"
+              :placeholder="$t('placeholder.app_id')"
               :precision="0"
               :min="1"
             />
@@ -776,13 +762,13 @@
             :rules="[
               {
                 required: userRole === 'user',
-                message: $t('app.error.app.required'),
+                message: $t('placeholder.app'),
               },
             ]"
           >
             <a-select
               v-model="batchFormData.app_id"
-              :placeholder="$t('app.placeholder.app')"
+              :placeholder="$t('placeholder.app')"
               :scrollbar="false"
               allow-search
               allow-clear
@@ -802,7 +788,7 @@
             :rules="[
               {
                 required: true,
-                message: $t('app.error.n.required'),
+                message: $t('app.placeholder.n'),
               },
             ]"
           >
@@ -816,11 +802,11 @@
           </a-form-item>
           <a-form-item
             field="billing_methods"
-            :label="$t('app.label.key.billing_methods')"
+            :label="$t('common.billing_methods')"
             :rules="[
               {
                 required: true,
-                message: $t('app.error.key.billing_methods.required'),
+                message: $t('placeholder.billing_methods'),
               },
             ]"
           >
@@ -839,7 +825,7 @@
               </a-checkbox>
             </a-space>
           </a-form-item>
-          <a-form-item field="models" :label="$t('app.label.models')">
+          <a-form-item field="models" :label="$t('common.models')">
             <a-tree-select
               v-model="batchFormData.models"
               :placeholder="$t('app.placeholder.key.models')"
@@ -852,20 +838,17 @@
               tree-checked-strategy="child"
             />
           </a-form-item>
-          <a-form-item
-            field="is_limit_quota"
-            :label="$t('app.label.isLimitQuota')"
-          >
+          <a-form-item field="is_limit_quota" :label="$t('common.limit_quota')">
             <a-switch v-model="batchFormData.is_limit_quota" />
           </a-form-item>
           <a-form-item
             v-if="batchFormData.is_limit_quota"
             field="quota"
-            :label="$t('app.label.quota')"
+            :label="$t('common.quota')"
             :rules="[
               {
                 required: true,
-                message: $t('app.error.quota.required'),
+                message: $t('placeholder.quota'),
               },
             ]"
           >
@@ -904,7 +887,7 @@
                 value="1"
                 :default-checked="true"
               >
-                固定
+                {{ $t('dict.quota_expires_rule.1') }}
               </a-radio>
               <a-radio v-model="batchFormData.quota_expires_rule" value="2"
                 >时长</a-radio
@@ -917,7 +900,7 @@
               batchFormData.quota_expires_rule === '1'
             "
             field="quota_expires_at"
-            :label="$t('app.label.quota_expires_at')"
+            :label="$t('common.expires_at')"
           >
             <a-date-picker
               v-model="batchFormData.quota_expires_at"
@@ -1001,19 +984,16 @@
               :min="1"
               :max="9999999999999"
             >
-              <template #append> 分钟 </template>
+              <template #append> {{ $t('unit.minute') }} </template>
             </a-input-number>
           </a-form-item>
-          <a-form-item
-            field="is_bind_group"
-            :label="$t('app.label.is_bind_group')"
-          >
+          <a-form-item field="is_bind_group" :label="$t('common.bind_group')">
             <a-switch v-model="batchFormData.is_bind_group" />
           </a-form-item>
           <a-form-item
             v-if="batchFormData.is_bind_group"
             field="group"
-            :label="$t('app.label.group')"
+            :label="$t('common.groups')"
             :rules="[
               {
                 required: true,
@@ -1036,20 +1016,14 @@
               />
             </a-select>
           </a-form-item>
-          <a-form-item
-            field="ip_whitelist"
-            :label="$t('app.label.ip_whitelist')"
-          >
+          <a-form-item field="ip_whitelist" :label="$t('common.ip_whitelist')">
             <a-textarea
               v-model="batchFormData.ip_whitelist"
               :placeholder="$t('app.placeholder.ip_whitelist')"
               :auto-size="{ minRows: 5, maxRows: 5 }"
             />
           </a-form-item>
-          <a-form-item
-            field="ip_blacklist"
-            :label="$t('app.label.ip_blacklist')"
-          >
+          <a-form-item field="ip_blacklist" :label="$t('common.ip_blacklist')">
             <a-textarea
               v-model="batchFormData.ip_blacklist"
               :placeholder="$t('app.placeholder.ip_blacklist')"
@@ -1059,7 +1033,7 @@
           <a-form-item field="remark" :label="$t('common.remark')">
             <a-textarea
               v-model="batchFormData.remark"
-              :placeholder="$t('app.placeholder.remark')"
+              :placeholder="$t('placeholder.remark')"
             />
           </a-form-item>
         </a-form>
@@ -1075,11 +1049,11 @@
           <a-form-item
             v-if="userRole === 'reseller' || userRole === 'admin'"
             field="user_id"
-            :label="$t('app.form.userId')"
+            :label="$t('common.user_id')"
           >
             <a-input-number
               v-model="appKeyExportFormData.user_id"
-              :placeholder="$t('app.form.userId.placeholder')"
+              :placeholder="$t('placeholder.user_id')"
               :precision="0"
               :min="1"
               allow-clear
@@ -1088,11 +1062,11 @@
           <a-form-item
             v-if="userRole === 'reseller' || userRole === 'admin'"
             field="app_id"
-            :label="$t('app.form.appId')"
+            :label="$t('common.app_id')"
           >
             <a-input-number
               v-model="appKeyExportFormData.app_id"
-              :placeholder="$t('app.form.appId.placeholder')"
+              :placeholder="$t('placeholder.app_id')"
               :precision="0"
               :min="1"
               allow-clear
@@ -1700,7 +1674,7 @@
    */
   const handleBatch = (params: AppKeyBatchOperate) => {
     if (ids.value.length === 0) {
-      proxy.$message.info('请选择要操作的数据');
+      proxy.$message.info(t('placeholder.operation.data'));
     } else {
       let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
       switch (params.action) {
@@ -1718,7 +1692,7 @@
       }
 
       proxy.$modal.warning({
-        title: '警告',
+        title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
         hideCancel: false,
@@ -1743,7 +1717,7 @@
       ids.value.length === 0 &&
       params.action !== 'create'
     ) {
-      proxy.$message.info('请选择要操作的数据');
+      proxy.$message.info(t('placeholder.operation.data'));
     } else {
       let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
       switch (params.action) {
@@ -1777,7 +1751,7 @@
       }
 
       proxy.$modal.warning({
-        title: '警告',
+        title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
         hideCancel: false,

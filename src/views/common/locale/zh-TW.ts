@@ -61,7 +61,7 @@ export default {
   'common.used_quota': '已用額度',
   'common.allocated_quota': '已分配額度',
   'common.to_be_allocated_quota': '可分配額度',
-  'common.quota_expires_at': '過期時間',
+  'common.expires_at': '過期時間',
   'common.forever': '永久有效',
   // unit
   'unit.millisecond': '毫秒',
@@ -98,7 +98,7 @@ export default {
   'button.draft': '保存草稿',
   'button.scheduled': '定時發佈',
   // modal
-  'modal.warning.title': '溫馨提示',
+  'modal.warning.title.warm': '溫馨提示',
   'modal.warning.text': '我知道了',
   // success
   'success.create': '新建成功',
@@ -109,8 +109,8 @@ export default {
   // operations
   'operations.view': '詳情',
   'operations.update': '修改',
-  'operations.status.1': '禁用',
-  'operations.status.2': '啟用',
+  'operations.disable': '禁用',
+  'operations.enable': '啟用',
   'operations.delete': '刪除',
   'operations.open.true': '開啟',
   'operations.open.false': '關閉',

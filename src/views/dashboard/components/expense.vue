@@ -53,7 +53,7 @@
       </div>
       <div class="quota-box">
         <div class="quota-item-box">
-          <span class="quota-title">{{ $t('common.quota_expires_at') }}:</span>
+          <span class="quota-title">{{ $t('common.expires_at') }}:</span>
           <span class="expires_at">
             {{ expense.quota_expires_at || $t('common.forever') }}
           </span>
@@ -200,7 +200,7 @@
 
   const recharge = () => {
     Modal.warning({
-      title: t('modal.warning.title'),
+      title: t('modal.warning.title.warm'),
       content: appStore.getRechargeTips,
       okText: t('modal.warning.text'),
     });

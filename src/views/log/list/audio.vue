@@ -353,9 +353,7 @@
                       >
                       </a-checkbox>
                     </div>
-                    <div class="title">
-                      {{ item.title === '#' ? '序列号' : item.title }}
-                    </div>
+                    <div class="title"> {{ item.title }} </div>
                   </div>
                 </div>
               </template>
@@ -557,7 +555,7 @@
         hide-cancel
         unmount-on-close
         simple
-        ok-text="关闭"
+        :ok-text="$t('button.close')"
       >
         <SpendDetail v-model="spend" :model-type="modelType" />
       </a-modal>

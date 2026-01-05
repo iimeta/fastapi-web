@@ -304,7 +304,7 @@
 
   const resetHandle = async (sysConfigItem: SysConfigItem) => {
     proxy.$modal.warning({
-      title: '警告',
+      title: t('modal.warning.title'),
       titleAlign: 'center',
       content: `是否确定重置${t(
         `sys.config.item.title.${sysConfigItem.action}`

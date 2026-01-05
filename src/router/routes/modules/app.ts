@@ -7,7 +7,7 @@ const APP: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   redirect: '/app/list',
   meta: {
-    locale: 'menu.app',
+    locale: 'app.menu',
     requiresAuth: true,
     icon: 'icon-apps',
     order: 90,
@@ -20,7 +20,7 @@ const APP: AppRouteRecordRaw = {
       name: 'AppList',
       component: () => import('@/views/app/list/index.vue'),
       meta: {
-        locale: 'menu.app.list',
+        locale: 'app.menu.list',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'app',
@@ -31,7 +31,7 @@ const APP: AppRouteRecordRaw = {
       name: 'AppCreate',
       component: () => import('@/views/app/create/index.vue'),
       meta: {
-        locale: 'menu.app.create',
+        locale: 'app.menu.create',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         hideInMenu: true,
@@ -43,7 +43,7 @@ const APP: AppRouteRecordRaw = {
       name: 'AppUpdate',
       component: () => import('@/views/app/update/index.vue'),
       meta: {
-        locale: 'menu.app.update',
+        locale: 'app.menu.update',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         hideInMenu: true,

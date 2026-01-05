@@ -39,7 +39,7 @@
 
   const links = [
     {
-      text: 'menu.app',
+      text: 'app.menu',
       icon: 'icon-apps',
       router: 'AppList',
       permission: ['user'],
@@ -51,7 +51,7 @@
       permission: ['admin'],
     },
     {
-      text: 'menu.app.key',
+      text: 'app.menu.key',
       icon: 'icon-safe',
       router: 'AppKeyList',
       permission: ['user'],
@@ -81,7 +81,7 @@
       permission: ['reseller', 'admin'],
     },
     {
-      text: 'menu.app',
+      text: 'app.menu',
       icon: 'icon-apps',
       router: 'AppList',
       permission: ['reseller', 'admin'],

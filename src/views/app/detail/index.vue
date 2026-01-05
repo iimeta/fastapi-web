@@ -5,7 +5,7 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item :label="t('common.app_id')">
+      <a-descriptions-item :label="$t('common.app_id')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -13,7 +13,7 @@
           {{ currentData.app_id }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.name')">
+      <a-descriptions-item :label="$t('common.app_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -21,15 +21,15 @@
           {{ currentData.name }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.is_limit_quota')">
+      <a-descriptions-item :label="$t('common.limit_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.${currentData?.is_limit_quota || false}`) }}
+          {{ $t(`dict.${currentData?.is_limit_quota || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.quota')">
+      <a-descriptions-item :label="$t('common.current_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -39,11 +39,11 @@
             :model-value="currentData.quota"
           />
           <span v-else>
-            {{ $t(`app.columns.quota.no_limit`) }}
+            {{ $t(`common.no_limit`) }}
           </span>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.used_quota')">
+      <a-descriptions-item :label="$t('common.used_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -51,7 +51,7 @@
           <Quota :model-value="currentData.used_quota" />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.quota_expires_at')">
+      <a-descriptions-item :label="$t('common.expires_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -63,7 +63,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.models')" :span="2">
+      <a-descriptions-item :label="$t('common.models')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -71,15 +71,15 @@
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.is_bind_group')">
+      <a-descriptions-item :label="$t('common.bind_group')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.enable.${currentData.is_bind_group || false}`) }}
+          {{ $t(`dict.enable.${currentData.is_bind_group || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.group')">
+      <a-descriptions-item :label="$t('common.groups')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -87,7 +87,7 @@
           {{ currentData.group_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.ip_whitelist')">
+      <a-descriptions-item :label="$t('common.ip_whitelist')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -95,7 +95,7 @@
           {{ currentData?.ip_whitelist?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('app.detail.label.ip_blacklist')">
+      <a-descriptions-item :label="$t('common.ip_blacklist')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -103,7 +103,7 @@
           {{ currentData?.ip_blacklist?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.remark')">
+      <a-descriptions-item :label="$t('common.remark')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -111,7 +111,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')">
+      <a-descriptions-item :label="$t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -124,7 +124,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')">
+      <a-descriptions-item :label="$t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -132,7 +132,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')">
+      <a-descriptions-item :label="$t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -146,12 +146,10 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { queryAppDetail, AppDetailParams, AppDetail } from '@/api/app';
   import Quota from '@/views/common/quota.vue';
 
-  const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<AppDetail>({} as AppDetail);
   const props = defineProps({

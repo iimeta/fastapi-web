@@ -7,7 +7,7 @@
       :value-style="{ width: '350px', padding: '5px 8px 5px 15px' }"
       style="margin-bottom: 15px"
     >
-      <a-descriptions-item :label="t('common.provider')">
+      <a-descriptions-item :label="$t('common.provider')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -15,7 +15,7 @@
           {{ currentData.provider_name }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.name')">
+      <a-descriptions-item :label="$t('model.detail.label.name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -23,7 +23,7 @@
           {{ currentData.name }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.model')">
+      <a-descriptions-item :label="$t('model.detail.label.model')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -31,7 +31,7 @@
           {{ currentData.model }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.type')">
+      <a-descriptions-item :label="$t('model.detail.label.type')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -39,7 +39,7 @@
           {{ t(`dict.model_type.${currentData.type}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.baseUrl')">
+      <a-descriptions-item :label="$t('model.detail.label.baseUrl')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -47,7 +47,7 @@
           {{ currentData.base_url || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.path')">
+      <a-descriptions-item :label="$t('model.detail.label.path')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -55,7 +55,7 @@
           {{ currentData.path || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.billing_rule')">
+      <a-descriptions-item :label="$t('model.detail.label.billing_rule')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -67,7 +67,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.billing_methods')">
+      <a-descriptions-item :label="$t('model.detail.label.billing_methods')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -81,7 +81,9 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.request_data_format')">
+      <a-descriptions-item
+        :label="$t('model.detail.label.request_data_format')"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -92,7 +94,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('model.detail.label.response_data_format')"
+        :label="$t('model.detail.label.response_data_format')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -104,7 +106,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('model.detail.label.group_names')"
+        :label="$t('model.detail.label.group_names')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -114,7 +116,7 @@
           {{ currentData?.group_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.isPublic')">
+      <a-descriptions-item :label="$t('model.detail.label.isPublic')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -123,7 +125,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('model.detail.label.is_enable_preset_config')"
+        :label="$t('model.detail.label.is_enable_preset_config')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -139,7 +141,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('model.detail.label.preset_config.is_support_system_role')"
+        :label="$t('model.detail.label.preset_config.is_support_system_role')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -155,7 +157,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('model.detail.label.preset_config.is_support_stream')"
+        :label="$t('model.detail.label.preset_config.is_support_stream')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -171,7 +173,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('model.detail.label.preset_config.system_role_prompt')"
+        :label="$t('model.detail.label.preset_config.system_role_prompt')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -182,7 +184,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('model.detail.label.preset_config.min_tokens')"
+        :label="$t('model.detail.label.preset_config.min_tokens')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -192,7 +194,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('model.detail.label.preset_config.max_tokens')"
+        :label="$t('model.detail.label.preset_config.max_tokens')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -201,7 +203,7 @@
           {{ currentData?.preset_config?.max_tokens || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.isEnableModelAgent')">
+      <a-descriptions-item :label="$t('model.detail.label.isEnableModelAgent')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -215,7 +217,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.lb_strategy')">
+      <a-descriptions-item :label="$t('model.detail.label.lb_strategy')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -224,7 +226,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('model.detail.label.modelAgentNames')"
+        :label="$t('model.detail.label.modelAgentNames')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -234,7 +236,7 @@
           {{ currentData?.model_agent_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.isEnableForward')">
+      <a-descriptions-item :label="$t('model.detail.label.isEnableForward')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -248,7 +250,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.forwardRule')">
+      <a-descriptions-item :label="$t('model.detail.label.forwardRule')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -264,7 +266,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.content_length')">
+      <a-descriptions-item :label="$t('model.detail.label.content_length')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -272,7 +274,7 @@
           {{ currentData?.forward_config?.content_length || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.targetModelName')">
+      <a-descriptions-item :label="$t('model.detail.label.targetModelName')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -280,7 +282,7 @@
           {{ currentData?.forward_config?.target_model_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.matchRule')">
+      <a-descriptions-item :label="$t('model.detail.label.matchRule')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -296,7 +298,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.decisionModelName')">
+      <a-descriptions-item :label="$t('model.detail.label.decisionModelName')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -304,7 +306,7 @@
           {{ currentData?.forward_config?.decision_model_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.keywords')">
+      <a-descriptions-item :label="$t('model.detail.label.keywords')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -312,7 +314,7 @@
           {{ currentData?.forward_config?.keywords?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.targetModelNames')">
+      <a-descriptions-item :label="$t('model.detail.label.targetModelNames')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -322,7 +324,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.is_enable_fallback')">
+      <a-descriptions-item :label="$t('model.detail.label.is_enable_fallback')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -337,7 +339,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('model.detail.label.fallback_model_agent_name')"
+        :label="$t('model.detail.label.fallback_model_agent_name')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -346,7 +348,9 @@
           {{ currentData?.fallback_config?.model_agent_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.fallback_model_name')">
+      <a-descriptions-item
+        :label="$t('model.detail.label.fallback_model_name')"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -354,7 +358,7 @@
           {{ currentData?.fallback_config?.model_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')">
+      <a-descriptions-item :label="$t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -367,7 +371,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('model.detail.label.remark')" :span="2">
+      <a-descriptions-item :label="$t('model.detail.label.remark')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -375,7 +379,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')">
+      <a-descriptions-item :label="$t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -383,7 +387,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')">
+      <a-descriptions-item :label="$t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

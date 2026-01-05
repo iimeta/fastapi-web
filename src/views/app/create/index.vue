@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-apps />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.app.create') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('app.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('app.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -24,29 +24,29 @@
             <a-form-item
               v-permission="['reseller', 'admin']"
               field="user_id"
-              :label="$t('app.label.user_id')"
+              :label="$t('common.user_id')"
               :rules="[
                 {
                   required:
                     userStore.role === 'reseller' || userStore.role === 'admin',
-                  message: $t('app.error.user_id.required'),
+                  message: $t('placeholder.user_id'),
                 },
               ]"
             >
               <a-input-number
                 v-model="formData.user_id"
-                :placeholder="$t('app.placeholder.user_id')"
+                :placeholder="$t('placeholder.user_id')"
                 :precision="0"
                 :min="1"
               />
             </a-form-item>
             <a-form-item
               field="name"
-              :label="$t('app.label.name')"
+              :label="$t('common.app_name')"
               :rules="[
                 {
                   required: true,
-                  message: $t('app.error.name.required'),
+                  message: $t('common.app_name'),
                 },
                 {
                   match: /^.{1,100}$/,
@@ -56,10 +56,10 @@
             >
               <a-input
                 v-model="formData.name"
-                :placeholder="$t('app.placeholder.name')"
+                :placeholder="$t('common.app_name')"
               />
             </a-form-item>
-            <a-form-item field="models" :label="$t('app.label.models')">
+            <a-form-item field="models" :label="$t('common.models')">
               <a-tree-select
                 v-model="formData.models"
                 :placeholder="$t('app.placeholder.models')"
@@ -74,18 +74,18 @@
             </a-form-item>
             <a-form-item
               field="is_limit_quota"
-              :label="$t('app.label.isLimitQuota')"
+              :label="$t('common.limit_quota')"
             >
               <a-switch v-model="formData.is_limit_quota" />
             </a-form-item>
             <a-form-item
               v-if="formData.is_limit_quota"
               field="quota"
-              :label="$t('app.label.quota')"
+              :label="$t('common.quota')"
               :rules="[
                 {
                   required: true,
-                  message: $t('app.error.quota.required'),
+                  message: $t('placeholder.quota'),
                 },
               ]"
             >
@@ -121,7 +121,7 @@
             <a-form-item
               v-if="formData.is_limit_quota"
               field="quota_expires_at"
-              :label="$t('app.label.quota_expires_at')"
+              :label="$t('common.expires_at')"
             >
               <a-date-picker
                 v-model="formData.quota_expires_at"
@@ -190,16 +190,13 @@
                 ]"
               />
             </a-form-item>
-            <a-form-item
-              field="is_bind_group"
-              :label="$t('app.label.is_bind_group')"
-            >
+            <a-form-item field="is_bind_group" :label="$t('common.bind_group')">
               <a-switch v-model="formData.is_bind_group" />
             </a-form-item>
             <a-form-item
               v-if="formData.is_bind_group"
               field="group"
-              :label="$t('app.label.group')"
+              :label="$t('common.groups')"
               :rules="[
                 {
                   required: true,
@@ -224,7 +221,7 @@
             </a-form-item>
             <a-form-item
               field="ip_whitelist"
-              :label="$t('app.label.ip_whitelist')"
+              :label="$t('common.ip_whitelist')"
             >
               <a-textarea
                 v-model="formData.ip_whitelist"
@@ -234,7 +231,7 @@
             </a-form-item>
             <a-form-item
               field="ip_blacklist"
-              :label="$t('app.label.ip_blacklist')"
+              :label="$t('common.ip_blacklist')"
             >
               <a-textarea
                 v-model="formData.ip_blacklist"
@@ -250,7 +247,7 @@
             </a-form-item>
             <a-form-item
               field="remark"
-              :label="$t('app.label.remark')"
+              :label="$t('common.remark')"
               :rules="[
                 {
                   required: false,
@@ -259,7 +256,7 @@
             >
               <a-textarea
                 v-model="formData.remark"
-                :placeholder="$t('app.placeholder.remark')"
+                :placeholder="$t('placeholder.remark')"
               />
             </a-form-item>
             <a-space>
@@ -287,7 +284,8 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
+  import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { useRouter } from 'vue-router';
   import dayjs from 'dayjs';
@@ -299,8 +297,8 @@
   import { useUserStore, useAppStore } from '@/store';
   import Quota from '@/views/common/quota.vue';
 
+  const { t } = useI18n();
   const { loading, setLoading } = useLoading(false);
-  const { proxy } = getCurrentInstance() as any;
   const router = useRouter();
   const userStore = useUserStore();
   const appStore = useAppStore();
@@ -351,9 +349,9 @@
         const { data } = await submitAppCreate(formData.value);
         if (data.key) {
           navigator.clipboard.writeText(data.key);
-          Message.success('新建成功, 密钥已复制到剪贴板');
+          Message.success(t('app.success.create'));
         } else {
-          proxy.$message.success('新建成功');
+          Message.success(t('success.create'));
         }
         router.push({
           name: 'AppList',

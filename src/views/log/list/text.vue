@@ -320,7 +320,7 @@
                 })
               "
             >
-              删除
+              {{ $t('button.delete') }}
             </a-button>
           </a-space>
         </a-col>
@@ -374,9 +374,7 @@
                       >
                       </a-checkbox>
                     </div>
-                    <div class="title">
-                      {{ item.title === '#' ? '序列号' : item.title }}
-                    </div>
+                    <div class="title"> {{ item.title }} </div>
                   </div>
                 </div>
               </template>
@@ -794,7 +792,7 @@
         hide-cancel
         unmount-on-close
         simple
-        ok-text="关闭"
+        :ok-text="$t('button.close')"
       >
         <SpendDetail v-model="spend" :model-type="modelType" />
       </a-modal>
@@ -1468,7 +1466,7 @@
       }
 
       proxy.$modal.warning({
-        title: '警告',
+        title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
         hideCancel: false,

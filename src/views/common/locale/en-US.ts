@@ -61,7 +61,7 @@ export default {
   'common.used_quota': 'Used Quota',
   'common.allocated_quota': 'Allocated Quota',
   'common.to_be_allocated_quota': 'Allocatable Quota',
-  'common.quota_expires_at': 'Expiration Time',
+  'common.expires_at': 'Expiration Time',
   'common.forever': 'Permanent',
   // unit
   'unit.millisecond': 'Millisecond',
@@ -98,7 +98,7 @@ export default {
   'button.draft': 'Save Draft',
   'button.scheduled': 'Schedule Publish',
   // modal
-  'modal.warning.title': 'Friendly Reminder',
+  'modal.warning.title.warm': 'Friendly Reminder',
   'modal.warning.text': 'I Understand',
   // success
   'success.create': 'Created Successfully',
@@ -109,8 +109,8 @@ export default {
   // operations
   'operations.view': 'Details',
   'operations.update': 'Edit',
-  'operations.status.1': 'Disable',
-  'operations.status.2': 'Enable',
+  'operations.disable': 'Disable',
+  'operations.enable': 'Enable',
   'operations.delete': 'Delete',
   'operations.open.true': 'Open',
   'operations.open.false': 'Close',

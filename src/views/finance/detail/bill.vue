@@ -5,7 +5,7 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item :label="t('bill.detail.label.stat_date')">
+      <a-descriptions-item :label="$t('bill.detail.label.stat_date')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -13,7 +13,7 @@
           {{ currentData.stat_date || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('bill.detail.label.user_id')">
+      <a-descriptions-item :label="$t('bill.detail.label.user_id')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -21,7 +21,7 @@
           {{ currentData.user_id || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('bill.detail.label.total')">
+      <a-descriptions-item :label="$t('bill.detail.label.total')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -29,7 +29,7 @@
           {{ currentData.total.toLocaleString() }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('bill.detail.label.tokens')">
+      <a-descriptions-item :label="$t('bill.detail.label.tokens')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -46,7 +46,7 @@
     >
       <template #columns>
         <a-table-column
-          :title="t('bill.detail.label.model')"
+          :title="$t('bill.detail.label.model')"
           data-index="model"
           align="center"
         >
@@ -55,7 +55,7 @@
           </template>
         </a-table-column>
         <a-table-column
-          :title="t('bill.detail.label.total')"
+          :title="$t('bill.detail.label.total')"
           data-index="total"
           align="center"
         >
@@ -64,7 +64,7 @@
           </template>
         </a-table-column>
         <a-table-column
-          :title="t('bill.detail.label.tokens')"
+          :title="$t('bill.detail.label.tokens')"
           data-index="tokens"
           align="center"
         >

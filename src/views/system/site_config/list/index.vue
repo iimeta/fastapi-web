@@ -141,7 +141,7 @@
               type="primary"
               status="success"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
                   action: 'status',
@@ -149,13 +149,13 @@
                 })
               "
             >
-              启用
+              {{ $t('button.enable') }}
             </a-button>
             <a-button
               type="primary"
               status="danger"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
                   action: 'status',
@@ -163,20 +163,20 @@
                 })
               "
             >
-              禁用
+              {{ $t('button.disable') }}
             </a-button>
             <a-button
               type="primary"
               status="danger"
               :disabled="multiple"
-              :title="multiple ? '请选择要操作的数据' : ''"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
                   action: 'delete',
                 })
               "
             >
-              删除
+              {{ $t('button.delete') }}
             </a-button>
           </a-space>
         </a-col>
@@ -233,9 +233,7 @@
                       >
                       </a-checkbox>
                     </div>
-                    <div class="title">
-                      {{ item.title === '#' ? '序列号' : item.title }}
-                    </div>
+                    <div class="title"> {{ item.title }} </div>
                   </div>
                 </div>
               </template>
@@ -278,7 +276,7 @@
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('operations.view') }}
+            {{ $t('button.detail') }}
           </a-button>
           <a-button
             type="text"
@@ -290,14 +288,15 @@
               })
             "
           >
-            {{ $t('operations.update') }}
+            {{ $t('button.update') }}
           </a-button>
           <a-popconfirm
-            content="你确定要删除吗?"
+            :content="$t('placeholder.operation.delete')"
             @ok="siteDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
-              {{ $t('operations.delete') }}
+              {{ $t('button.delete') }}
+            </a-button>
             </a-button>
           </a-popconfirm>
         </template>
@@ -647,7 +646,7 @@
    */
   const handleBatch = (params: SiteConfigBatchOperate) => {
     if (ids.value.length === 0) {
-      proxy.$message.info('请选择要操作的数据');
+      proxy.$message.info(t('placeholder.operation.data'));
     } else {
       let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
       switch (params.action) {
@@ -665,7 +664,7 @@
       }
 
       proxy.$modal.warning({
-        title: '警告',
+        title: t('modal.warning.title'),
         titleAlign: 'start',
         content: alertContent,
         hideCancel: false,

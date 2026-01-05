@@ -5,7 +5,7 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item :label="t('common.reseller_id')">
+      <a-descriptions-item :label="$t('common.reseller_id')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -13,7 +13,7 @@
           {{ currentData.user_id }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.account')">
+      <a-descriptions-item :label="$t('common.account')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -21,7 +21,7 @@
           {{ currentData.account }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.name')">
+      <a-descriptions-item :label="$t('common.name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -29,7 +29,7 @@
           {{ currentData.name }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.email')">
+      <a-descriptions-item :label="$t('common.email')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -37,7 +37,7 @@
           {{ currentData.email }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('reseller.detail.label.quota')">
+      <a-descriptions-item :label="$t('reseller.detail.label.quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -45,7 +45,7 @@
           <Quota :model-value="currentData.quota" />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('reseller.detail.label.used_quota')">
+      <a-descriptions-item :label="$t('reseller.detail.label.used_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -53,7 +53,7 @@
           <Quota :model-value="currentData.used_quota" />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('reseller.detail.label.allocated_quota')">
+      <a-descriptions-item :label="$t('reseller.detail.label.allocated_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -62,7 +62,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('reseller.detail.label.to_be_allocated_quota')"
+        :label="$t('reseller.detail.label.to_be_allocated_quota')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -71,7 +71,9 @@
           <Quota :model-value="currentData.to_be_allocated_quota" />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('reseller.detail.label.quota_expires_at')">
+      <a-descriptions-item
+        :label="$t('reseller.detail.label.quota_expires_at')"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -79,14 +81,14 @@
           {{ currentData.quota_expires_at || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('reseller.detail.label.quota_warning')">
+      <a-descriptions-item :label="$t('reseller.detail.label.quota_warning')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           {{
             $t(
-              `operations.open.${
+              `dict.open.${
                 currentData.quota_warning ||
                 (currentData.warning_threshold === 0 &&
                   currentData.expire_warning_threshold === 0)
@@ -96,7 +98,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('reseller.detail.label.warning_threshold')"
+        :label="$t('reseller.detail.label.warning_threshold')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -104,14 +106,14 @@
         <Quota :model-value="currentData.warning_threshold" />
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('reseller.detail.label.expire_warning_threshold')"
+        :label="$t('reseller.detail.label.expire_warning_threshold')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else> {{ currentData.expire_warning_threshold }}天 </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('reseller.detail.label.warning_notice')">
+      <a-descriptions-item :label="$t('reseller.detail.label.warning_notice')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -120,7 +122,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('reseller.detail.label.expire_warning_notice')"
+        :label="$t('reseller.detail.label.expire_warning_notice')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -130,7 +132,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="t('reseller.detail.label.exhaustion_notice')"
+        :label="$t('reseller.detail.label.exhaustion_notice')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -139,7 +141,7 @@
           {{ $t(`dict.notice.${currentData.exhaustion_notice || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('reseller.detail.label.expire_notice')">
+      <a-descriptions-item :label="$t('reseller.detail.label.expire_notice')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -147,7 +149,10 @@
           {{ $t(`dict.notice.${currentData.expire_notice || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('reseller.detail.label.groups')" :span="2">
+      <a-descriptions-item
+        :label="$t('reseller.detail.label.groups')"
+        :span="2"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -155,7 +160,7 @@
           {{ currentData?.group_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.remark')" :span="2">
+      <a-descriptions-item :label="$t('common.remark')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -163,7 +168,7 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('reseller.detail.label.login_ip')">
+      <a-descriptions-item :label="$t('reseller.detail.label.login_ip')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -171,7 +176,7 @@
           {{ currentData.login_ip || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('reseller.detail.label.login_time')">
+      <a-descriptions-item :label="$t('reseller.detail.label.login_time')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -179,7 +184,7 @@
           {{ currentData.login_time || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('reseller.detail.label.login_domain')">
+      <a-descriptions-item :label="$t('reseller.detail.label.login_domain')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -187,7 +192,7 @@
           {{ currentData.login_domain || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.status')">
+      <a-descriptions-item :label="$t('common.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -200,7 +205,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.created_at')">
+      <a-descriptions-item :label="$t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -208,7 +213,7 @@
           {{ currentData.created_at }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="t('common.updated_at')">
+      <a-descriptions-item :label="$t('common.updated_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
