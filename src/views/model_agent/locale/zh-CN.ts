@@ -15,8 +15,6 @@ export default {
   'model.agent.error.baseUrl.required': '请输入代理地址',
   'model.agent.label.path': '代理路径',
   'model.agent.placeholder.path': '可选, 如: /chat/completions',
-  'model.agent.label.weight': '权重',
-  'model.agent.placeholder.weight': '请输入权重',
   'model.agent.label.remark': '备注',
   'model.agent.placeholder.remark': '请输入备注',
   'model.agent.label.groups': '绑定分组',

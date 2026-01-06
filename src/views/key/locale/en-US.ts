@@ -1,3 +1,27 @@
 export default {
-  'menu.list.searchTable': 'Search Table',
+  'key.menu': 'Key Management',
+  'key.menu.create': 'Create Key',
+  'key.menu.update': 'Edit Key',
+  'key.menu.detail': 'Key Details',
+  'key.placeholder.key': 'One key per line. Add multiple lines at once.\nFormat:\nsk-aaa\nsk-bbb\nsk-ccc',
+  'key.placeholder.key.baidu': 'One key per line. Add multiple lines at once.\nFormat:\nclient_id丨client_secret\nclient_id丨client_secret\nclient_id丨client_secret',
+  'key.placeholder.key.xfyun': 'One key per line. Add multiple lines at once.\nFormat:\nAPPID丨APISecret丨APIKey\nAPPID丨APISecret丨APIKey\nAPPID丨APISecret丨APIKey',
+  'key.placeholder.key.deepseek.baidu': 'One key per line. Add multiple lines at once.\nFormat:\nAPPID丨APIKey\nAPPID丨APIKey\nAPPID丨APIKey',
+  'key.placeholder.key.volcengine': 'One key per line. Add multiple lines at once.\nFormat:\nep-xxx丨APIKey\nep-xxx丨APIKey\nep-xxx丨APIKey',
+  'key.placeholder.update.key': 'Please enter key. Format: sk-aaa',
+  'key.placeholder.update.key.baidu': 'Please enter key. Format: client_id丨client_secret',
+  'key.placeholder.update.key.xfyun': 'Please enter key. Format: APPID丨APISecret丨APIKey',
+  'key.placeholder.update.key.deepseek.baidu': 'Please enter key. Format: APPID丨APIKey',
+  'key.placeholder.update.key.volcengine': 'Please enter key. Format: ep-xxx丨APIKey',
+  'key.error.required.key': 'Please enter key',
+  'key.placeholder.models': 'Please bind models (can bind multiple models)',
+  'key.placeholder.model_agents': 'Please bind model agents (can bind multiple model agents)',
+  'key.label.is_agents_only': 'Model Agents Only',
+  'key.label.is_never_disable': 'Never Disable',
+  // detail
+  'key.detail.is_auto_disabled': 'Auto Disabled',
+  'key.detail.auto_disabled_reason': 'Disable Reason',
+  // form
+  'key.form.remark': 'Remark/Reason',
+  'key.form.placeholder.remark': 'Please enter remark/disable reason',
 };

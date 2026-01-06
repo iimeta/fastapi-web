@@ -89,10 +89,10 @@
                 :placeholder="$t('model.agent.placeholder.path')"
               />
             </a-form-item>
-            <a-form-item field="weight" :label="$t('model.agent.label.weight')">
+            <a-form-item field="weight" :label="$t('common.weight')">
               <a-input-number
                 v-model="formData.weight"
-                :placeholder="$t('model.agent.placeholder.weight')"
+                :placeholder="$t('placeholder.weight')"
                 :precision="0"
                 :min="0"
                 :max="999"

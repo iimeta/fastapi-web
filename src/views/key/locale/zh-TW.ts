@@ -1,0 +1,27 @@
+export default {
+  'key.menu': '密鑰管理',
+  'key.menu.create': '新建密鑰',
+  'key.menu.update': '修改密鑰',
+  'key.menu.detail': '密鑰詳情',
+  'key.placeholder.key': '密鑰一行一個, 可一次性添加多個多行\n格式:\nsk-aaa\nsk-bbb\nsk-ccc',
+  'key.placeholder.key.baidu': '密鑰一行一個, 可一次性添加多個多行\n格式:\nclient_id丨client_secret\nclient_id丨client_secret\nclient_id丨client_secret',
+  'key.placeholder.key.xfyun': '密鑰一行一個, 可一次性添加多個多行\n格式:\nAPPID丨APISecret丨APIKey\nAPPID丨APISecret丨APIKey\nAPPID丨APISecret丨APIKey',
+  'key.placeholder.key.deepseek.baidu': '密鑰一行一個, 可一次性添加多個多行\n格式:\nAPPID丨APIKey\nAPPID丨APIKey\nAPPID丨APIKey',
+  'key.placeholder.key.volcengine': '密鑰一行一個, 可一次性添加多個多行\n格式:\nep-xxx丨APIKey\nep-xxx丨APIKey\nep-xxx丨APIKey',
+  'key.placeholder.update.key': '請輸入密鑰, 格式: sk-aaa',
+  'key.placeholder.update.key.baidu': '請輸入密鑰, 格式: client_id丨client_secret',
+  'key.placeholder.update.key.xfyun': '請輸入密鑰, 格式: APPID丨APISecret丨APIKey',
+  'key.placeholder.update.key.deepseek.baidu': '請輸入密鑰, 格式: APPID丨APIKey',
+  'key.placeholder.update.key.volcengine': '請輸入密鑰, 格式: ep-xxx丨APIKey',
+  'key.error.required.key': '請輸入密鑰',
+  'key.placeholder.models': '請綁定模型, 可同時綁定多個模型',
+  'key.placeholder.model_agents': '請綁定模型代理, 可同時綁定多個模型代理',
+  'key.label.is_agents_only': '模型代理專用',
+  'key.label.is_never_disable': '永不禁用',
+  // detail
+  'key.detail.is_auto_disabled': '自動禁用',
+  'key.detail.auto_disabled_reason': '禁用原因',
+  // form
+  'key.form.remark': '備註/原因',
+  'key.form.placeholder.remark': '請輸入備註/禁用原因',
+};

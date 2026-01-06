@@ -65,13 +65,13 @@
                 :auto-size="{ minRows: 5, maxRows: 10 }"
               />
             </a-form-item>
-            <a-form-item field="weight" :label="$t('model.agent.label.weight')">
+            <a-form-item field="weight" :label="$t('common.weight')">
               <a-input-number
                 v-model="formData.weight"
                 :precision="0"
                 :min="1"
                 :max="100"
-                :placeholder="$t('model.agent.placeholder.weight')"
+                :placeholder="$t('placeholder.weight')"
               />
             </a-form-item>
             <a-form-item field="remark" :label="$t('common.remark')">

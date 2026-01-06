@@ -48,14 +48,14 @@
           style="margin-right: 12px"
           @change="handleBillingMethodsChange"
         >
-          {{ t('model.dict.billing_methods.1') }}
+          {{ t('dict.billing_methods.1') }}
         </a-checkbox>
         <a-checkbox
           v-model="formData.billing_methods"
           :value="2"
           @change="handleBillingMethodsChange"
         >
-          {{ t('model.dict.billing_methods.2') }}
+          {{ t('dict.billing_methods.2') }}
         </a-checkbox>
       </a-space>
     </a-form-item>

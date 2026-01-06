@@ -366,7 +366,7 @@
           <Quota :model-value="record.used_quota" />
         </template>
         <template #billing_methods="{ record }">
-          {{ $t(`model.dict.billing_methods.${record.billing_methods || 1}`) }}
+          {{ $t(`dict.billing_methods.${record.billing_methods || 1}`) }}
         </template>
         <template #quota_expires_at="{ record }">
           {{ record.is_limit_quota ? record.quota_expires_at || '-' : '-' }}

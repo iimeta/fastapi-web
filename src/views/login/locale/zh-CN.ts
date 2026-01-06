@@ -25,7 +25,7 @@ export default {
   'login.email.error.required.password': '请输入密码',
 
   'login.captcha': '验证码',
-  'login.rememberMe': '记住我',
+  'login.remember_me': '记住我',
   'login.button': '立即登录',
   'register.button': '立即注册',
   'forget.button': '立即找回',

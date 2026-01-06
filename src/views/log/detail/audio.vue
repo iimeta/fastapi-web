@@ -113,7 +113,7 @@
           {{
             currentData.spend.billing_methods
               ? $t(
-                  `model.dict.billing_methods.${currentData.spend.billing_methods}`
+                  `dict.billing_methods.${currentData.spend.billing_methods}`
                 )
               : '-'
           }}
@@ -452,7 +452,7 @@
           {{
             currentData.spend.billing_methods
               ? $t(
-                  `model.dict.billing_methods.${currentData.spend.billing_methods}`
+                  `dict.billing_methods.${currentData.spend.billing_methods}`
                 )
               : '-'
           }}

@@ -31,7 +31,6 @@
   "dependencies": {
     "@arco-design/web-vue": "^2.57.0",
     "@vueuse/core": "^9.3.0",
-    "aieditor": "1.1.7",
     "arco-design-pro-vue": "^2.7.3",
     "axios": "^0.24.0",
     "crypto-js": "^4.2.0",

@@ -112,9 +112,7 @@
         <span v-else>
           {{
             currentData.spend.billing_methods
-              ? $t(
-                  `model.dict.billing_methods.${currentData.spend.billing_methods}`
-                )
+              ? $t(`dict.billing_methods.${currentData.spend.billing_methods}`)
               : '-'
           }}
         </span>
@@ -489,9 +487,7 @@
         <span v-else>
           {{
             currentData.spend.billing_methods
-              ? $t(
-                  `model.dict.billing_methods.${currentData.spend.billing_methods}`
-                )
+              ? $t(`dict.billing_methods.${currentData.spend.billing_methods}`)
               : '-'
           }}
         </span>

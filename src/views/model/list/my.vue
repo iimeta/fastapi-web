@@ -208,11 +208,7 @@
         </template>
         <template #billing_methods="{ record }">
           {{
-            $t(
-              `model.dict.billing_methods.${
-                record.pricing.billing_methods || 1
-              }`
-            )
+            $t(`dict.billing_methods.${record.pricing.billing_methods || 1}`)
           }}
         </template>
         <template #group_names="{ record }">

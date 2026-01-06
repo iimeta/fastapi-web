@@ -24,7 +24,7 @@
     </a-form-item>
     <div class="remember-me">
       <a-checkbox :model-value="loginConfig.rememberMe" @change="setRememberMe">
-        {{ $t('login.rememberMe') }}
+        {{ $t('login.remember_me') }}
       </a-checkbox>
     </div>
     <a-button class="btn" :loading="loading" type="primary" html-type="submit"

@@ -16,7 +16,7 @@
             ? '190px'
             : userRole === 'reseller'
             ? '177px'
-            : '202px',
+            : '203px',
       }"
     >
       <a-carousel-item

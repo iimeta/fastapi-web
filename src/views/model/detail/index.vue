@@ -74,9 +74,7 @@
         <span v-else>
           {{
             $t(
-              `model.dict.billing_methods.${
-                currentData.pricing.billing_methods || 1
-              }`
+              `dict.billing_methods.${currentData.pricing.billing_methods || 1}`
             )
           }}
         </span>

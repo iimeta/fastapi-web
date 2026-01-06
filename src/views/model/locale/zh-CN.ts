@@ -310,10 +310,6 @@ export default {
   'model.dict.is_enable_fallback.true': '启用',
   'model.dict.is_enable_fallback.false': '禁用',
 
-  'model.dict.billing_methods.1': '按Tokens',
-  'model.dict.billing_methods.2': '按次',
-  'model.dict.billing_methods.1,2': '按Tokens, 按次',
-  'model.dict.billing_methods.2,1': '按Tokens, 按次',
   'model.dict.billing_rule.1': '按官方',
   'model.dict.billing_rule.2': '按系统',
   'model.dict.billing_items.text': '文本',

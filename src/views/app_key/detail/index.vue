@@ -64,9 +64,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            $t(`model.dict.billing_methods.${currentData.billing_methods || 1}`)
-          }}
+          {{ $t(`dict.billing_methods.${currentData.billing_methods || 1}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('app.key.detail.quota_expires_rule')">
