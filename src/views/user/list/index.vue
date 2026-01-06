@@ -5,7 +5,6 @@
         <icon-user />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.user') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.user.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -651,18 +650,11 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    computed,
-    ref,
-    reactive,
-    watch,
-    nextTick,
-    getCurrentInstance,
-  } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance, Message } from '@arco-design/web-vue';
+  import { FormInstance, Message, Modal } from '@arco-design/web-vue';
   import { disabledDate, parsePrice, parseQuota } from '@/utils/common';
   import {
     queryUserPage,
@@ -695,7 +687,6 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
-  const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
@@ -969,7 +960,7 @@
       alertContent = `是否确定删除用户: ${params.name} 以及同时删除: ${delData}?`;
     }
 
-    proxy.$modal.warning({
+    Modal.warning({
       title: t('modal.warning.title'),
       titleAlign: 'center',
       content: alertContent,
@@ -978,7 +969,7 @@
         setLoading(true);
         submitUserDelete(params).then((res) => {
           setLoading(false);
-          proxy.$message.success('操作成功, 任务已提交');
+          Message.success(t('success.task'));
           search();
           tableRef.value.selectAll(false);
         });
@@ -990,7 +981,7 @@
     setLoading(true);
     try {
       await submitUserChangeQuotaExpire(params);
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -1003,7 +994,7 @@
     setLoading(true);
     try {
       await submitUserChangeStatus(params);
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -1106,7 +1097,7 @@
    */
   const handleBatch = (params: UserBatchOperate) => {
     if (ids.value.length === 0) {
-      proxy.$message.info(t('placeholder.operation.data'));
+      Message.info(t('placeholder.operation.data'));
     } else {
       let alertContent = `是否确定操作所选的${ids.value.length}位用户?`;
       switch (params.action) {
@@ -1156,7 +1147,7 @@
         return;
       }
 
-      proxy.$modal.warning({
+      Modal.warning({
         title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
@@ -1166,7 +1157,7 @@
           params.ids = ids.value;
           submitUserBatchOperate(params).then((res) => {
             setLoading(false);
-            proxy.$message.success('操作成功');
+            Message.success(t('success.operate'));
             search();
             tableRef.value.selectAll(false);
           });

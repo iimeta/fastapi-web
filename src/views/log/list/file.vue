@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-message />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.file') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.file.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('log.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('log.menu.file') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -529,7 +529,7 @@
       </a-table>
 
       <a-drawer
-        :title="$t('menu.file.detail')"
+        :title="$t('log.menu.file.detail')"
         :width="700"
         :footer="false"
         :visible="detailVisible"
@@ -561,16 +561,9 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    computed,
-    ref,
-    h,
-    reactive,
-    watch,
-    nextTick,
-    getCurrentInstance,
-  } from 'vue';
+  import { computed, ref, h, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { Tooltip, Message } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { queryFilePage, FilePage, FilePageParams } from '@/api/log';
@@ -583,7 +576,6 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { Tooltip } from '@arco-design/web-vue';
   import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
@@ -596,7 +588,6 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
-  const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
@@ -1022,7 +1013,7 @@
 
   watch(copied, () => {
     if (copied.value) {
-      proxy.$message.success('复制成功');
+      Message.success(t('success.copy'));
     }
   });
 </script>

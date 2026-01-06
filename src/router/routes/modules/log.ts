@@ -6,7 +6,7 @@ const LOG: AppRouteRecordRaw = {
   name: 'log',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.text',
+    locale: 'log.menu',
     requiresAuth: true,
     icon: 'icon-message',
     order: 130,
@@ -17,7 +17,7 @@ const LOG: AppRouteRecordRaw = {
       name: 'LogTextList',
       component: () => import('@/views/log/list/text.vue'),
       meta: {
-        locale: 'menu.text.list',
+        locale: 'log.menu.text',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'LogTextList',
@@ -28,7 +28,7 @@ const LOG: AppRouteRecordRaw = {
       name: 'LogImageList',
       component: () => import('@/views/log/list/image.vue'),
       meta: {
-        locale: 'menu.image.list',
+        locale: 'log.menu.image',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'LogImageList',
@@ -39,7 +39,7 @@ const LOG: AppRouteRecordRaw = {
       name: 'LogAudioList',
       component: () => import('@/views/log/list/audio.vue'),
       meta: {
-        locale: 'menu.audio.list',
+        locale: 'log.menu.audio',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'LogAudioList',
@@ -50,7 +50,7 @@ const LOG: AppRouteRecordRaw = {
       name: 'LogVideoList',
       component: () => import('@/views/log/list/video.vue'),
       meta: {
-        locale: 'menu.video.list',
+        locale: 'log.menu.video',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'LogVideoList',
@@ -61,7 +61,7 @@ const LOG: AppRouteRecordRaw = {
       name: 'LogFileList',
       component: () => import('@/views/log/list/file.vue'),
       meta: {
-        locale: 'menu.file.list',
+        locale: 'log.menu.file',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'LogFileList',
@@ -72,7 +72,7 @@ const LOG: AppRouteRecordRaw = {
       name: 'LogBatchList',
       component: () => import('@/views/log/list/batch.vue'),
       meta: {
-        locale: 'menu.batch.list',
+        locale: 'log.menu.batch',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'LogBatchList',
@@ -83,7 +83,7 @@ const LOG: AppRouteRecordRaw = {
       name: 'LogGeneralList',
       component: () => import('@/views/log/list/general.vue'),
       meta: {
-        locale: 'menu.general.list',
+        locale: 'log.menu.general',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'LogGeneralList',

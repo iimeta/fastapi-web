@@ -57,7 +57,7 @@
       permission: ['user'],
     },
     {
-      text: 'menu.key',
+      text: 'key.menu',
       icon: 'icon-safe',
       router: 'ModelKeyList',
       permission: ['admin'],
@@ -69,7 +69,7 @@
       permission: ['admin'],
     },
     {
-      text: 'menu.group',
+      text: 'group.menu',
       icon: 'icon-user-group',
       router: 'GroupList',
       permission: ['admin'],
@@ -87,19 +87,19 @@
       permission: ['reseller', 'admin'],
     },
     {
-      text: 'menu.notice',
+      text: 'notice.menu',
       icon: 'icon-notification',
       router: 'NoticeList',
       permission: ['admin'],
     },
     {
-      text: 'menu.finance',
+      text: 'finance.menu',
       icon: 'icon-wechatpay',
       router: 'BillList',
       permission: ['admin'],
     },
     {
-      text: 'menu.log',
+      text: 'log.menu',
       icon: 'icon-message',
       router: 'LogTextList',
       permission: ['user', 'reseller'],
@@ -111,19 +111,19 @@
       permission: ['admin'],
     },
     {
-      text: 'menu.text.list',
+      text: 'log.menu.text',
       icon: 'icon-message',
       router: 'LogTextList',
       permission: ['admin'],
     },
     {
-      text: 'menu.image.list',
+      text: 'log.menu.image',
       icon: 'icon-image',
       router: 'LogImageList',
       permission: ['admin'],
     },
     {
-      text: 'menu.audio.list',
+      text: 'log.menu.audio',
       icon: 'icon-file-audio',
       router: 'LogAudioList',
       permission: ['admin'],

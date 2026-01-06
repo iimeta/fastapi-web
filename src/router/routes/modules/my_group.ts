@@ -7,7 +7,7 @@ const MY_GROUP: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   redirect: '/my/group',
   meta: {
-    locale: 'menu.my.group',
+    locale: 'group.menu.my',
     requiresAuth: true,
     icon: 'icon-user-group',
     order: 30,
@@ -20,7 +20,7 @@ const MY_GROUP: AppRouteRecordRaw = {
       name: 'MyGroup',
       component: () => import('@/views/group/list/my.vue'),
       meta: {
-        locale: 'menu.group.list',
+        locale: 'group.menu',
         requiresAuth: true,
         roles: ['user', 'reseller'],
         activeMenu: 'my_group',

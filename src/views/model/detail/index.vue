@@ -36,7 +36,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.model_type.${currentData.type}`) }}
+          {{ $t(`dict.model_type.${currentData.type}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('model.detail.label.baseUrl')">
@@ -121,7 +121,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`model.dict.is_public.${currentData.is_public || false}`) }}
+          {{ $t(`model.dict.is_public.${currentData.is_public || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item
@@ -257,7 +257,7 @@
         <span v-else>
           {{
             currentData?.forward_config?.forward_rule
-              ? t(
+              ? $t(
                   `model.dict.forward_rule.${
                     currentData?.forward_config?.forward_rule || 1
                   }`
@@ -289,7 +289,7 @@
         <span v-else>
           {{
             currentData?.forward_config?.match_rule
-              ? t(
+              ? $t(
                   `model.dict.match_rule.${
                     currentData?.forward_config?.match_rule || 1
                   }`

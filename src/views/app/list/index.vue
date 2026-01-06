@@ -77,10 +77,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="key" :label="$t('app.form.key')">
+                <a-form-item field="key" :label="$t('common.app_key')">
                   <a-input
                     v-model="searchFormData.app_key"
-                    :placeholder="$t('app.form.key.placeholder')"
+                    :placeholder="$t('placeholder.app_key')"
                     allow-clear
                   />
                 </a-form-item>
@@ -352,7 +352,7 @@
       <a-modal
         v-model:visible="visible"
         :width="726"
-        :title="$t('app.form.title.key_config')"
+        :title="$t('app.key.form.title.key_config')"
         :ok-text="$t('button.save')"
         :body-style="{ height: '520px' }"
         @cancel="handleCancel"
@@ -394,7 +394,7 @@
           <a-form-item field="models" :label="$t('common.models')">
             <a-tree-select
               v-model="formData.models"
-              :placeholder="$t('app.placeholder.key.models')"
+              :placeholder="$t('app.key.placeholder.key.models')"
               :allow-search="true"
               :allow-clear="true"
               :tree-checkable="true"
@@ -445,7 +445,7 @@
           <a-form-item
             v-if="formData.is_limit_quota"
             field="quota_expires_rule"
-            :label="$t('app.label.quota_expires_rule')"
+            :label="$t('app.key.label.quota_expires_rule')"
           >
             <a-space size="large">
               <a-radio
@@ -539,11 +539,11 @@
               formData.is_limit_quota && formData.quota_expires_rule === '2'
             "
             field="quota_expires_minutes"
-            :label="$t('app.label.quota_expires_minutes')"
+            :label="$t('app.key.label.quota_expires_minutes')"
           >
             <a-input-number
               v-model="formData.quota_expires_minutes"
-              :placeholder="$t('app.placeholder.quota_expires_minutes')"
+              :placeholder="$t('app.key.placeholder.quota_expires_minutes')"
               :precision="0"
               :min="1"
               :max="9999999999999"
@@ -561,7 +561,7 @@
             :rules="[
               {
                 required: true,
-                message: $t('app.error.group.required'),
+                message: $t('app.error.required.group'),
               },
             ]"
           >
@@ -1019,7 +1019,7 @@
     try {
       await submitAppKeyConfig(formData.value);
       navigator.clipboard.writeText(formData.value.key);
-      Message.success(t('app.success.key_config'));
+      Message.success(t('app.key.success.save'));
       done();
     } catch (err) {
       done(false);
@@ -1069,17 +1069,25 @@
     if (ids.value.length === 0) {
       Message.info(t('placeholder.operation.data'));
     } else {
-      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      let alertContent = t('placeholder.batch.operation', {
+        count: ids.value.length,
+      });
       switch (params.action) {
         case 'status':
           if (params.value === 1) {
-            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.enable', {
+              count: ids.value.length,
+            });
           } else {
-            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.disable', {
+              count: ids.value.length,
+            });
           }
           break;
         case 'delete':
-          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          alertContent = t('placeholder.batch.operation.delete', {
+            count: ids.value.length,
+          });
           break;
         default:
       }

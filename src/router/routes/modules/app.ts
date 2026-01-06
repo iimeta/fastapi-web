@@ -20,7 +20,7 @@ const APP: AppRouteRecordRaw = {
       name: 'AppList',
       component: () => import('@/views/app/list/index.vue'),
       meta: {
-        locale: 'app.menu.list',
+        locale: 'app.menu',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'app',

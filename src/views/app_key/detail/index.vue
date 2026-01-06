@@ -29,15 +29,15 @@
           {{ currentData.user_id }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.is_limit_quota')">
+      <a-descriptions-item :label="$t('common.limit_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.${currentData?.is_limit_quota || false}`) }}
+          {{ $t(`dict.${currentData?.is_limit_quota || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.quota')">
+      <a-descriptions-item :label="$t('common.current_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -47,11 +47,11 @@
             :model-value="currentData.quota"
           />
           <span v-else>
-            {{ $t(`key.columns.quota.no_limit`) }}
+            {{ $t(`common.no_limit`) }}
           </span>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.used_quota')">
+      <a-descriptions-item :label="$t('common.used_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -59,7 +59,7 @@
           <Quota :model-value="currentData.used_quota" />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('app.key.detail.label.billing_methods')">
+      <a-descriptions-item :label="$t('common.billing_methods')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -69,7 +69,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.quota_expires_rule')">
+      <a-descriptions-item :label="$t('app.key.detail.quota_expires_rule')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -77,7 +77,7 @@
           {{
             currentData?.is_limit_quota
               ? $t(
-                  `key.dict.quota_expires_rule.${
+                  `dict.quota_expires_rule.${
                     currentData.quota_expires_rule || 1
                   }`
                 ) || '-'
@@ -85,9 +85,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('key.detail.label.quota_expires_minutes')"
-      >
+      <a-descriptions-item :label="$t('app.key.detail.quota_expires_minutes')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -99,7 +97,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.quota_expires_at')">
+      <a-descriptions-item :label="$t('common.expires_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -111,7 +109,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.models')" :span="2">
+      <a-descriptions-item :label="$t('common.models')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -124,7 +122,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.enable.${currentData.is_bind_group || false}`) }}
+          {{ $t(`dict.enable.${currentData.is_bind_group || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('common.groups')">
@@ -135,7 +133,7 @@
           {{ currentData.group_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.ip_whitelist')">
+      <a-descriptions-item :label="$t('common.ip_whitelist')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -143,7 +141,7 @@
           {{ currentData?.ip_whitelist?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.ip_blacklist')">
+      <a-descriptions-item :label="$t('common.ip_blacklist')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -194,7 +192,6 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
     queryAppKeyDetail,
@@ -203,7 +200,6 @@
   } from '@/api/app_key';
   import Quota from '@/views/common/quota.vue';
 
-  const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<AppKeyDetail>({} as AppKeyDetail);
   const props = defineProps({

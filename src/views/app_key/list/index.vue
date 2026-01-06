@@ -4,7 +4,7 @@
       <a-breadcrumb-item>
         <icon-safe />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.key.app') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('app.key.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -24,10 +24,10 @@
           >
             <a-row :gutter="16">
               <a-col v-permission="['reseller', 'admin']" :span="8">
-                <a-form-item field="user_id" :label="$t('key.form.userId')">
+                <a-form-item field="user_id" :label="$t('common.user_id')">
                   <a-input-number
                     v-model="searchFormData.user_id"
-                    :placeholder="$t('key.form.userId.placeholder')"
+                    :placeholder="$t('placeholder.user_id')"
                     :precision="0"
                     :min="1"
                     :max="9999999999999"
@@ -36,10 +36,10 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['reseller', 'admin']" :span="8">
-                <a-form-item field="app_id" :label="$t('key.form.appId')">
+                <a-form-item field="app_id" :label="$t('common.app_id')">
                   <a-input-number
                     v-model="searchFormData.app_id"
-                    :placeholder="$t('key.form.appId.placeholder')"
+                    :placeholder="$t('placeholder.app_id')"
                     :precision="0"
                     :min="1"
                     :max="9999999999999"
@@ -48,10 +48,10 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['user']" :span="8">
-                <a-form-item field="app_id" :label="$t('key.form.app')">
+                <a-form-item field="app_id" :label="$t('common.app')">
                   <a-select
                     v-model="searchFormData.app_id"
-                    :placeholder="$t('key.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
@@ -66,19 +66,19 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="key" :label="$t('key.form.appkey')">
+                <a-form-item field="key" :label="$t('common.app_key')">
                   <a-input
                     v-model="searchFormData.key"
-                    :placeholder="$t('key.form.appkey.placeholder')"
+                    :placeholder="$t('placeholder.app_key')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col v-permission="['user']" :span="8">
-                <a-form-item field="models" :label="$t('key.form.app.models')">
+                <a-form-item field="models" :label="$t('common.models')">
                   <a-select
                     v-model="searchFormData.models"
-                    :placeholder="$t('key.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :max-tag-count="2"
                     :scrollbar="false"
                     multiple
@@ -95,10 +95,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="quota" :label="$t('key.form.quota')">
+                <a-form-item field="quota" :label="$t('common.quota_lt')">
                   <a-input-number
                     v-model="searchFormData.quota"
-                    :placeholder="$t('key.form.quota.placeholder')"
+                    :placeholder="$t('placeholder.quota')"
                     :min="0.000001"
                     :max="9999999999999"
                     allow-clear
@@ -110,10 +110,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('key.form.status')">
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('key.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -123,7 +123,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="quota_expires_at"
-                  :label="$t('key.form.quota_expires_at')"
+                  :label="$t('common.expires_at')"
                 >
                   <a-range-picker
                     v-model="searchFormData.quota_expires_at"
@@ -141,13 +141,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('key.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('key.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -164,7 +164,7 @@
                 })
               "
             >
-              {{ $t('key.operation.create') }}
+              {{ $t('button.create') }}
             </a-button>
             <a-button
               type="primary"
@@ -275,7 +275,7 @@
               {{ $t('button.all.delete') }}
             </a-button>
             <a-button type="primary" @click="handleAppKeyExport({})">
-              导出
+              {{ $t('button.export') }}
             </a-button>
           </a-space>
         </a-col>
@@ -360,7 +360,7 @@
         </template>
         <template #quota="{ record }">
           <Quota v-if="record.is_limit_quota" :model-value="record.quota" />
-          <span v-else>{{ $t(`key.columns.quota.no_limit`) }}</span>
+          <span v-else>{{ $t(`common.no_limit`) }}</span>
         </template>
         <template #used_quota="{ record }">
           <Quota :model-value="record.used_quota" />
@@ -377,7 +377,7 @@
               {{ $t('button.view') }}
             </a-button>
           </span>
-          <span v-else>{{ $t(`key.columns.app.models.no_limit`) }}</span>
+          <span v-else>{{ $t(`common.no_limit`) }}</span>
         </template>
         <template #remark="{ record }">
           {{ record.remark || '-' }}
@@ -397,24 +397,24 @@
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('key.columns.operations.view') }}
+            {{ $t('button.detail') }}
           </a-button>
           <a-button type="text" size="small" @click="updateKey(record)">
-            {{ $t('key.columns.operations.update') }}
+            {{ $t('button.update') }}
           </a-button>
           <a-popconfirm
             :content="$t('placeholder.operation.delete')"
             @ok="keyDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
-              {{ $t('key.columns.operations.delete') }}
+              {{ $t('button.delete') }}
             </a-button>
           </a-popconfirm>
         </template>
       </a-table>
 
       <a-drawer
-        :title="$t('menu.key.detail')"
+        :title="$t('app.key.menu.detail')"
         unmount-on-close
         render-to-body
         :width="700"
@@ -428,7 +428,7 @@
       <a-modal
         v-model:visible="visible"
         :width="726"
-        :title="$t('app.form.title.key_config')"
+        :title="$t('app.key.form.title.key_config')"
         :ok-text="$t('button.save')"
         :body-style="{ height: '520px' }"
         @cancel="handleCancel"
@@ -470,7 +470,7 @@
           <a-form-item field="models" :label="$t('common.models')">
             <a-tree-select
               v-model="formData.models"
-              :placeholder="$t('app.placeholder.key.models')"
+              :placeholder="$t('app.key.placeholder.key.models')"
               :allow-search="true"
               :allow-clear="true"
               :tree-checkable="true"
@@ -521,7 +521,7 @@
           <a-form-item
             v-if="formData.is_limit_quota"
             field="quota_expires_rule"
-            :label="$t('app.label.quota_expires_rule')"
+            :label="$t('app.key.label.quota_expires_rule')"
           >
             <a-space size="large">
               <a-radio
@@ -615,11 +615,11 @@
               formData.is_limit_quota && formData.quota_expires_rule === '2'
             "
             field="quota_expires_minutes"
-            :label="$t('app.label.quota_expires_minutes')"
+            :label="$t('app.key.label.quota_expires_minutes')"
           >
             <a-input-number
               v-model="formData.quota_expires_minutes"
-              :placeholder="$t('app.placeholder.quota_expires_minutes')"
+              :placeholder="$t('app.key.placeholder.quota_expires_minutes')"
               :precision="0"
               :min="1"
               :max="9999999999999"
@@ -637,7 +637,7 @@
             :rules="[
               {
                 required: true,
-                message: $t('app.error.group.required'),
+                message: $t('app.error.required.group'),
               },
             ]"
           >
@@ -701,8 +701,8 @@
         :width="726"
         :title="
           batchFormData.action === 'create'
-            ? $t('app.form.title.batch.create')
-            : $t('app.form.title.batch.update')
+            ? $t('app.key.form.title.batch.create')
+            : $t('app.key.form.title.batch.update')
         "
         :body-style="{ height: '520px' }"
         @cancel="handleBatchCancel"
@@ -758,7 +758,7 @@
           <a-form-item
             v-if="batchFormData.action === 'create' && userRole === 'user'"
             field="app_id"
-            :label="$t('key.form.app')"
+            :label="$t('common.app')"
             :rules="[
               {
                 required: userRole === 'user',
@@ -784,17 +784,17 @@
           <a-form-item
             v-if="batchFormData.action === 'create'"
             field="n"
-            :label="$t('app.label.n')"
+            :label="$t('app.key.label.n')"
             :rules="[
               {
                 required: true,
-                message: $t('app.placeholder.n'),
+                message: $t('app.key.placeholder.n'),
               },
             ]"
           >
             <a-input-number
               v-model="batchFormData.n"
-              :placeholder="$t('app.placeholder.n')"
+              :placeholder="$t('app.key.placeholder.n')"
               :precision="0"
               :min="1"
               :max="100000"
@@ -828,7 +828,7 @@
           <a-form-item field="models" :label="$t('common.models')">
             <a-tree-select
               v-model="batchFormData.models"
-              :placeholder="$t('app.placeholder.key.models')"
+              :placeholder="$t('app.key.placeholder.key.models')"
               :allow-search="true"
               :allow-clear="true"
               :tree-checkable="true"
@@ -879,7 +879,7 @@
           <a-form-item
             v-if="batchFormData.is_limit_quota"
             field="quota_expires_rule"
-            :label="$t('app.label.quota_expires_rule')"
+            :label="$t('app.key.label.quota_expires_rule')"
           >
             <a-space size="large">
               <a-radio
@@ -889,9 +889,9 @@
               >
                 {{ $t('dict.quota_expires_rule.1') }}
               </a-radio>
-              <a-radio v-model="batchFormData.quota_expires_rule" value="2"
-                >时长</a-radio
-              >
+              <a-radio v-model="batchFormData.quota_expires_rule" value="2">
+                {{ $t('dict.quota_expires_rule.2') }}
+              </a-radio>
             </a-space>
           </a-form-item>
           <a-form-item
@@ -975,11 +975,11 @@
               batchFormData.quota_expires_rule === '2'
             "
             field="quota_expires_minutes"
-            :label="$t('app.label.quota_expires_minutes')"
+            :label="$t('app.key.label.quota_expires_minutes')"
           >
             <a-input-number
               v-model="batchFormData.quota_expires_minutes"
-              :placeholder="$t('app.placeholder.quota_expires_minutes')"
+              :placeholder="$t('app.key.placeholder.quota_expires_minutes')"
               :precision="0"
               :min="1"
               :max="9999999999999"
@@ -997,7 +997,7 @@
             :rules="[
               {
                 required: true,
-                message: $t('app.error.group.required'),
+                message: $t('app.error.required.group'),
               },
             ]"
           >
@@ -1041,7 +1041,7 @@
 
       <a-modal
         v-model:visible="appKeyExportFormVisible"
-        :title="$t('app.form.title.app_key_export')"
+        :title="$t('app.key.form.title.app_key_export')"
         @cancel="appKeyExportHandleCancel"
         @before-ok="appKeyExportHandleBeforeOk"
       >
@@ -1075,11 +1075,11 @@
           <a-form-item
             v-if="userRole === 'user'"
             field="app_id"
-            :label="$t('key.form.app')"
+            :label="$t('common.app')"
           >
             <a-select
               v-model="appKeyExportFormData.app_id"
-              :placeholder="$t('key.form.selectDefault')"
+              :placeholder="$t('common.all')"
               :scrollbar="false"
               allow-search
               allow-clear
@@ -1099,19 +1099,12 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    computed,
-    ref,
-    reactive,
-    watch,
-    nextTick,
-    getCurrentInstance,
-  } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance, Message } from '@arco-design/web-vue';
+  import { FormInstance, Message, Modal } from '@arco-design/web-vue';
   import { disabledDate, parsePrice } from '@/utils/common';
   import { queryAppList, AppList } from '@/api/app';
   import {
@@ -1151,7 +1144,6 @@
   const route = useRoute();
   const appStore = useAppStore();
 
-  const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
@@ -1218,28 +1210,28 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('key.columns.user_id'),
+      title: t('common.user_id'),
       dataIndex: 'user_id',
       slotName: 'user_id',
       align: 'center',
       width: 80,
     },
     {
-      title: t('key.columns.app_id'),
+      title: t('common.app_id'),
       dataIndex: 'app_id',
       slotName: 'app_id',
       align: 'center',
       width: 80,
     },
     {
-      title: t('key.columns.key'),
+      title: t('common.key'),
       dataIndex: 'key',
       slotName: 'key',
       align: 'center',
       width: 220,
     },
     {
-      title: t('key.columns.quota'),
+      title: t('common.current_quota'),
       dataIndex: 'quota',
       slotName: 'quota',
       align: 'center',
@@ -1247,7 +1239,7 @@
       tooltip: true,
     },
     {
-      title: t('key.columns.used_quota'),
+      title: t('common.used_quota'),
       dataIndex: 'used_quota',
       slotName: 'used_quota',
       align: 'center',
@@ -1255,7 +1247,7 @@
       tooltip: true,
     },
     {
-      title: t('app.key.columns.billing_methods'),
+      title: t('common.billing_methods'),
       dataIndex: 'billing_methods',
       slotName: 'billing_methods',
       align: 'center',
@@ -1263,7 +1255,7 @@
       tooltip: true,
     },
     {
-      title: t('key.columns.quota_expires_at'),
+      title: t('common.expires_at'),
       dataIndex: 'quota_expires_at',
       slotName: 'quota_expires_at',
       align: 'center',
@@ -1271,7 +1263,7 @@
       tooltip: true,
     },
     {
-      title: t('key.columns.app.models'),
+      title: t('common.models'),
       dataIndex: 'models',
       slotName: 'models',
       align: 'center',
@@ -1279,7 +1271,7 @@
       tooltip: true,
     },
     {
-      title: t('key.columns.remark'),
+      title: t('common.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
@@ -1287,21 +1279,14 @@
       tooltip: true,
     },
     {
-      title: t('key.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
-    // {
-    //   title: t('key.columns.updated_at'),
-    //   dataIndex: 'updated_at',
-    //   slotName: 'updated_at',
-    //   align: 'center',
-    //   width: 132,
-    // },
     {
-      title: t('key.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -1311,11 +1296,11 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('key.dict.status.1'),
+      label: t('dict.status.1'),
       value: 1,
     },
     {
-      label: t('key.dict.status.2'),
+      label: t('dict.status.2'),
       value: 2,
     },
   ]);
@@ -1500,7 +1485,7 @@
     setLoading(true);
     try {
       await submitAppKeyDelete(params);
-      proxy.$message.success('删除成功');
+      Message.success(t('success.delete'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -1513,7 +1498,7 @@
     setLoading(true);
     try {
       await submitAppKeyChangeStatus(params);
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -1598,7 +1583,7 @@
     try {
       const { data } = await submitAppKeyConfig(formData.value);
       navigator.clipboard.writeText(data.key);
-      Message.success(t('app.success.key_config'));
+      Message.success(t('app.key.success.save'));
       done();
       search();
     } catch (err) {
@@ -1641,9 +1626,9 @@
       const { data } = await submitAppKeyBatchOperate(batchFormData.value);
       navigator.clipboard.writeText(data.keys);
       if (batchFormData.value.action === 'create') {
-        Message.success('操作成功, 密钥已复制到剪贴板');
+        Message.success(t('app.success.create'));
       } else {
-        Message.success('操作成功, 任务已提交');
+        Message.success(t('success.task'));
       }
       done();
       search();
@@ -1674,24 +1659,32 @@
    */
   const handleBatch = (params: AppKeyBatchOperate) => {
     if (ids.value.length === 0) {
-      proxy.$message.info(t('placeholder.operation.data'));
+      Message.info(t('placeholder.operation.data'));
     } else {
-      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      let alertContent = t('placeholder.batch.operation', {
+        count: ids.value.length,
+      });
       switch (params.action) {
         case 'status':
           if (params.value === 1) {
-            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.enable', {
+              count: ids.value.length,
+            });
           } else {
-            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.disable', {
+              count: ids.value.length,
+            });
           }
           break;
         case 'delete':
-          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          alertContent = t('placeholder.batch.operation.delete', {
+            count: ids.value.length,
+          });
           break;
         default:
       }
 
-      proxy.$modal.warning({
+      Modal.warning({
         title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
@@ -1701,7 +1694,7 @@
           params.ids = ids.value;
           submitAppKeyBatchOperate(params).then((res) => {
             setLoading(false);
-            proxy.$message.success('操作成功');
+            Message.success(t('success.operate'));
             search();
             tableRef.value.selectAll(false);
           });
@@ -1717,9 +1710,11 @@
       ids.value.length === 0 &&
       params.action !== 'create'
     ) {
-      proxy.$message.info(t('placeholder.operation.data'));
+      Message.info(t('placeholder.operation.data'));
     } else {
-      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      let alertContent = t('placeholder.batch.operation', {
+        count: ids.value.length,
+      });
       switch (params.action) {
         case 'create':
           batchFormData.value = { billing_methods: [1] } as AppKeyBatchOperate;
@@ -1739,18 +1734,24 @@
           return;
         case 'all-status':
           if (params.value === 1) {
-            alertContent = `是否确定全部启用查询结果的${pagination.total}条数据?`;
+            alertContent = t('placeholder.batch.operation.all.enable', {
+              count: pagination.total,
+            });
           } else {
-            alertContent = `是否确定全部禁用查询结果的${pagination.total}条数据?`;
+            alertContent = t('placeholder.batch.operation.all.disable', {
+              count: pagination.total,
+            });
           }
           break;
         case 'all-delete':
-          alertContent = `是否确定全部删除查询结果的${pagination.total}条数据?`;
+          alertContent = t('placeholder.batch.operation.all.delete', {
+            count: pagination.total,
+          });
           break;
         default:
       }
 
-      proxy.$modal.warning({
+      Modal.warning({
         title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
@@ -1770,7 +1771,7 @@
           submitAppKeyBatchOperate({ ...params, ...searchFormData.value }).then(
             (res) => {
               setLoading(false);
-              proxy.$message.success('操作成功, 任务已提交');
+              Message.success(t('success.task'));
               search();
               tableRef.value.selectAll(false);
             }
@@ -1793,7 +1794,7 @@
 
   watch(copied, () => {
     if (copied.value) {
-      proxy.$message.success('复制成功');
+      Message.success(t('success.copy'));
     }
   });
 
@@ -1852,7 +1853,7 @@
     submitAppKeyExport(params)
       .then((res) => {
         setLoading(false);
-        proxy.$message.success('导出成功');
+        Message.success(t('success.export'));
         tableRef.value.selectAll(false);
         // 创建一个新的Blob对象，使用后端返回的文件流
         const blob = new Blob([res.data], { type: 'application/vnd.ms-excel' });
@@ -1863,7 +1864,7 @@
         // 创建一个a标签用于下载文件
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', '应用密钥.xlsx'); // 设置下载文件名
+        link.setAttribute('download', `${t('app.key.menu')}.xlsx`); // 设置下载文件名
         document.body.appendChild(link);
 
         // 触发a标签的点击事件，开始下载
@@ -1874,7 +1875,7 @@
         window.URL.revokeObjectURL(url);
       })
       .catch((error) => {
-        proxy.$message.error('导出失败, 请联系管理员', error);
+        Message.error(t('error.export'), error);
       });
   };
 </script>

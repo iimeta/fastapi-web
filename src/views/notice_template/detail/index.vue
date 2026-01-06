@@ -46,36 +46,6 @@
         >
         </span>
       </a-descriptions-item>
-      <!-- <a-descriptions-item
-        :label="$t('notice.template.detail.channels')"
-        :span="2"
-      >
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ $t(`notice.template.dict.channels.${currentData.channels}`) }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('notice.template.detail.is_popup')"
-        :span="2"
-      >
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ t(`dict.${currentData.is_popup || false}`) }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('common.is_public')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ t(`dict.public.${currentData.is_public || false}`) }}
-        </span>
-      </a-descriptions-item> -->
       <a-descriptions-item :label="$t('common.remark')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

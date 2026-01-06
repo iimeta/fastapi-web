@@ -658,18 +658,11 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    computed,
-    ref,
-    reactive,
-    watch,
-    nextTick,
-    getCurrentInstance,
-  } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance, Message } from '@arco-design/web-vue';
+  import { FormInstance, Message, Modal } from '@arco-design/web-vue';
   import { disabledDate, parsePrice, parseQuota } from '@/utils/common';
   import {
     queryResellerPage,
@@ -703,7 +696,6 @@
   type Column = TableColumnData & { checked?: true };
 
   const { loading, setLoading } = useLoading(true);
-  const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
   const appStore = useAppStore();
 
@@ -992,7 +984,7 @@
       alertContent = `是否确定删除代理商: ${params.name} 以及同时删除: ${delData}?`;
     }
 
-    proxy.$modal.warning({
+    Modal.warning({
       title: t('modal.warning.title'),
       titleAlign: 'center',
       content: alertContent,
@@ -1001,7 +993,7 @@
         setLoading(true);
         submitResellerDelete(params).then((res) => {
           setLoading(false);
-          proxy.$message.success('操作成功, 任务已提交');
+          Message.success(t('success.task'));
           search();
           tableRef.value.selectAll(false);
         });
@@ -1013,7 +1005,7 @@
     setLoading(true);
     try {
       await submitResellerChangeQuotaExpire(params);
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -1026,7 +1018,7 @@
     setLoading(true);
     try {
       await submitResellerChangeStatus(params);
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -1129,7 +1121,7 @@
    */
   const handleBatch = (params: ResellerBatchOperate) => {
     if (ids.value.length === 0) {
-      proxy.$message.info(t('placeholder.operation.data'));
+      Message.info(t('placeholder.operation.data'));
     } else {
       let alertContent = `是否确定操作所选的${ids.value.length}位代理商?`;
       switch (params.action) {
@@ -1179,7 +1171,7 @@
         return;
       }
 
-      proxy.$modal.warning({
+      Modal.warning({
         title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
@@ -1189,7 +1181,7 @@
           params.ids = ids.value;
           submitResellerBatchOperate(params).then((res) => {
             setLoading(false);
-            proxy.$message.success('操作成功');
+            Message.success(t('success.operate'));
             search();
             tableRef.value.selectAll(false);
           });

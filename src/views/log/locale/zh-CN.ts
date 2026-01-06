@@ -1,10 +1,20 @@
 export default {
-  'menu.log': '日志管理',
-  'menu.text': '日志管理',
-  'menu.text.list': '文本日志',
-  'menu.text.detail': '文本详情',
+  'log.menu': '日志管理',
+  'log.menu.text': '文本日志',
+  'log.menu.text.detail': '文本日志详情',
+  'log.menu.image': '绘图日志',
+  'log.menu.image.detail': '绘图日志详情',
+  'log.menu.audio': '音频日志',
+  'log.menu.audio.detail': '音频日志详情',
+  'log.menu.video': '视频日志',
+  'log.menu.video.detail': '视频日志详情',
+  'log.menu.file': '文件日志',
+  'log.menu.file.detail': '文件日志详情',
+  'log.menu.batch': '批处理日志',
+  'log.menu.batch.detail': '批处理日志详情',
+  'log.menu.general': '通用日志',
+  'log.menu.general.detail': '通用日志详情',
   // detail
-  'text.detail.title.textInfo': '文本详情',
   'text.detail.label.trace_id': 'Trace ID',
   'text.detail.label.creator': '调用密钥',
   'text.detail.label.user_id': '用户ID',
@@ -103,57 +113,28 @@ export default {
   'text.dict.forward_rule.2': '按关键字',
   'text.dict.forward_rule.3': '内容长度',
 
-  'menu.audio': '日志管理',
-  'menu.audio.list': '音频日志',
-  'menu.audio.detail': '音频详情',
-  // detail
-  'text.detail.title.audioInfo': '音频详情',
   // search
   // columns
   'text.columns.characters': '字符数',
   'text.columns.minute': '分钟数',
   // dict
-  'menu.image': '日志管理',
-  'menu.image.list': '绘图日志',
-  'menu.image.detail': '绘图详情',
+
   // detail
   // search
   // columns
   'text.columns.prompt': '提示词',
   'text.columns.images': '图像',
-
-  'menu.video': '日志管理',
-  'menu.video.list': '视频日志',
-  'menu.video.detail': '视频详情',
-  // detail
-  'text.detail.title.videoInfo': '视频详情',
   // columns
   'text.columns.action': '接口',
   'text.columns.video_id': '视频ID',
   'text.columns.width_height': '宽度 × 高度',
   'text.columns.seconds': '秒数',
 
-  'menu.file': '日志管理',
-  'menu.file.list': '文件日志',
-  'menu.file.detail': '文件详情',
-  // detail
-  'text.detail.title.fileInfo': '文件详情',
   // columns
   'text.columns.file_id': '文件ID',
 
-  'menu.batch': '日志管理',
-  'menu.batch.list': '批处理日志',
-  'menu.batch.detail': '批处理详情',
-  // detail
-  'text.detail.title.batchInfo': '批处理详情',
   // columns
   'text.columns.batch_id': '批处理ID',
-
-  'menu.general': '日志管理',
-  'menu.general.list': '通用日志',
-  'menu.general.detail': '通用详情',
-  // detail
-  'text.detail.title.generalInfo': '通用详情',
 
   'text.columns.spend.text': '文本',
   'text.columns.spend.text_cache': '文本缓存',

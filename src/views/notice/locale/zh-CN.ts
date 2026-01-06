@@ -1,6 +1,6 @@
 export default {
-  'menu.notice': '通知管理',
-  'menu.notice.list': '消息通知',
+  'notice.menu': '通知管理',
+  'notice.menu.message': '消息通知',
   'menu.notice.create': '新建消息通知',
   'menu.notice.update': '修改消息通知',
   'menu.notice.detail': '消息通知详情',

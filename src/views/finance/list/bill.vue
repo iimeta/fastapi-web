@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-wechatpay />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.finance') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.bill.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('finance.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('finance.menu.bill') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -25,10 +25,10 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('finance.form.user_id')">
+                <a-form-item field="name" :label="$t('common.user_id')">
                   <a-input-number
                     v-model="searchFormData.user_id"
-                    :placeholder="$t('finance.form.user_id.placeholder')"
+                    :placeholder="$t('placeholder.user_id')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -38,7 +38,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="stat_date"
-                  :label="$t('finance.form.stat_date')"
+                  :label="$t('finance.label.bill.stat_date')"
                 >
                   <a-range-picker
                     v-model="searchFormData.stat_date"
@@ -56,13 +56,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('finance.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <!-- <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('finance.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button> -->
           </a-space>
         </a-col>
@@ -75,7 +75,7 @@
         <a-col :span="12">
           <a-space>
             <a-button type="primary" @click="handleBillExport({})">
-              导出
+              {{ $t('button.export') }}
             </a-button>
           </a-space>
         </a-col>
@@ -168,7 +168,7 @@
       </a-table>
 
       <a-drawer
-        :title="$t('menu.bill.detail')"
+        :title="$t('finance.menu.bill.detail')"
         unmount-on-close
         render-to-body
         :width="700"
@@ -188,11 +188,11 @@
         <a-form ref="billExportForm" :model="billExportFormData">
           <a-form-item
             field="stat_date"
-            :label="$t('finance.form.stat_date')"
+            :label="$t('finance.label.bill.stat_date')"
             :rules="[
               {
                 required: true,
-                message: $t('finance.error.stat_date.required'),
+                message: $t('finance.error.required.stat_date'),
               },
             ]"
           >
@@ -204,11 +204,11 @@
           <a-form-item
             v-permission="['reseller', 'admin']"
             field="user_id"
-            :label="$t('finance.form.user_id')"
+            :label="$t('common.user_id')"
           >
             <a-input-number
               v-model="billExportFormData.user_id"
-              :placeholder="$t('finance.form.user_id.placeholder')"
+              :placeholder="$t('placeholder.user_id')"
               :precision="0"
               :min="1"
               allow-clear
@@ -221,14 +221,7 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    computed,
-    ref,
-    reactive,
-    watch,
-    nextTick,
-    getCurrentInstance,
-  } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { Pagination } from '@/types/global';
@@ -238,7 +231,7 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import {
     queryBillPage,
     BillPage,
@@ -310,14 +303,14 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('finance.columns.user_id'),
+      title: t('common.user_id'),
       dataIndex: 'user_id',
       slotName: 'user_id',
       align: 'center',
       width: 80,
     },
     {
-      title: t('finance.columns.total'),
+      title: t('common.call'),
       dataIndex: 'total',
       slotName: 'total',
       align: 'center',
@@ -329,13 +322,13 @@
       align: 'center',
     },
     {
-      title: t('finance.columns.tokens'),
+      title: t('common.spend'),
       dataIndex: 'tokens',
       slotName: 'tokens',
       align: 'center',
     },
     {
-      title: t('finance.columns.stat_date'),
+      title: t('finance.label.bill.stat_date'),
       dataIndex: 'stat_date',
       slotName: 'stat_date',
       align: 'center',
@@ -457,8 +450,6 @@
     { deep: true, immediate: true }
   );
 
-  const { proxy } = getCurrentInstance() as any;
-
   /**
    * 已选择的数据行发生改变时触发
    *
@@ -502,7 +493,7 @@
     submitBillExport(params)
       .then((res) => {
         setLoading(false);
-        proxy.$message.success('导出成功');
+        Message.success(t('success.export'));
         tableRef.value.selectAll(false);
         // 创建一个新的Blob对象，使用后端返回的文件流
         const blob = new Blob([res.data], { type: 'application/vnd.ms-excel' });
@@ -513,7 +504,7 @@
         // 创建一个a标签用于下载文件
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', '账单明细.xlsx'); // 设置下载文件名
+        link.setAttribute('download', `${t('finance.menu.bill')}.xlsx`); // 设置下载文件名
         document.body.appendChild(link);
 
         // 触发a标签的点击事件，开始下载
@@ -524,7 +515,7 @@
         window.URL.revokeObjectURL(url);
       })
       .catch((error) => {
-        proxy.$message.error('导出失败, 请联系管理员', error);
+        Message.error(t('error.export'), error);
       });
   };
 

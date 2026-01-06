@@ -5,7 +5,6 @@
         <icon-common />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.model') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.model.list') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -549,11 +548,11 @@
                 value="1"
                 :default-checked="true"
               >
-                轮询
+                {{ $t('dict.lb_strategy.1') }}
               </a-radio>
-              <a-radio v-model="agentFormData.lb_strategy" value="2"
-                >权重</a-radio
-              >
+              <a-radio v-model="agentFormData.lb_strategy" value="2">
+                {{ $t('dict.lb_strategy.2') }}
+              </a-radio>
             </a-space>
           </a-form-item>
           <a-form-item
@@ -704,14 +703,7 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    computed,
-    ref,
-    reactive,
-    watch,
-    nextTick,
-    getCurrentInstance,
-  } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { Pricing } from '@/api/common';
@@ -739,7 +731,7 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message, Modal } from '@arco-design/web-vue';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryGroupList, GroupList } from '@/api/group';
@@ -750,7 +742,6 @@
   type Column = TableColumnData & { checked?: true };
 
   const { loading, setLoading } = useLoading(true);
-  const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
 
   const rowSelection = reactive({
@@ -1085,13 +1076,13 @@
 
   const modelDelete = async (params: ModelDeleteParams) => {
     await submitModelDelete(params);
-    proxy.$message.success('删除成功');
+    Message.success(t('success.delete'));
     search();
   };
 
   const modelChangeStatus = async (params: ModelChangeStatus) => {
     await submitModelChangeStatus(params);
-    proxy.$message.success('操作成功');
+    Message.success(t('success.operate'));
     search();
   };
 
@@ -1227,9 +1218,11 @@
    */
   const handleBatch = (params: ModelBatchOperate) => {
     if (ids.value.length === 0) {
-      proxy.$message.info(t('placeholder.operation.data'));
+      Message.info(t('placeholder.operation.data'));
     } else {
-      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      let alertContent = t('placeholder.batch.operation', {
+        count: ids.value.length,
+      });
       switch (params.action) {
         case 'agent':
           if (params.value === true) {
@@ -1272,13 +1265,19 @@
           break;
         case 'status':
           if (params.value === 1) {
-            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.enable', {
+              count: ids.value.length,
+            });
           } else {
-            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.disable', {
+              count: ids.value.length,
+            });
           }
           break;
         case 'delete':
-          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          alertContent = t('placeholder.batch.operation.delete', {
+            count: ids.value.length,
+          });
           break;
         default:
       }
@@ -1307,7 +1306,7 @@
         return;
       }
 
-      proxy.$modal.warning({
+      Modal.warning({
         title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
@@ -1317,7 +1316,7 @@
           params.ids = ids.value;
           submitModelBatchOperate(params).then((res) => {
             setLoading(false);
-            proxy.$message.success('操作成功');
+            Message.success(t('success.operate'));
             search();
             tableRef.value.selectAll(false);
           });

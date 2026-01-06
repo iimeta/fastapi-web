@@ -90,7 +90,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.${currentData?.is_never_disable || false}`) }}
+          {{ $t(`dict.${currentData?.is_never_disable || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('model.agent.detail.label.lb_strategy')">
@@ -112,12 +112,12 @@
           {{ currentData.key || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.is_auto_disabled')">
+      <a-descriptions-item :label="$t('key.detail.is_auto_disabled')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.${currentData?.is_auto_disabled || false}`) }}
+          {{ $t(`dict.${currentData?.is_auto_disabled || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('common.status')">
@@ -134,7 +134,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="$t('key.detail.label.auto_disabled_reason')"
+        :label="$t('key.detail.auto_disabled_reason')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">

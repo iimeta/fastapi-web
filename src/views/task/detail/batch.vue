@@ -236,9 +236,10 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, watch, getCurrentInstance } from 'vue';
+  import { ref, watch } from 'vue';
   import { useClipboard } from '@vueuse/core';
   import { useI18n } from 'vue-i18n';
+  import { Message } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import {
     queryBatchDetail,
@@ -251,7 +252,6 @@
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<BatchDetail>({} as BatchDetail);
   const { copy, copied } = useClipboard();
-  const { proxy } = getCurrentInstance() as any;
 
   const props = defineProps({
     id: {
@@ -284,7 +284,7 @@
 
   watch(copied, () => {
     if (copied.value) {
-      proxy.$message.success('复制成功');
+      Message.success(t('success.copy'));
     }
   });
 

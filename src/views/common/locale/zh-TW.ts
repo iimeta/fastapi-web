@@ -61,7 +61,6 @@ export default {
   'common.used_quota': '已用額度',
   'common.allocated_quota': '已分配額度',
   'common.to_be_allocated_quota': '可分配額度',
-  'common.expires_at': '過期時間',
   'common.forever': '永久有效',
   // unit
   'unit.millisecond': '毫秒',

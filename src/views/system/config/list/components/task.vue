@@ -466,9 +466,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
+  import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message, Modal } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
   import {
     SysConfigItem,
@@ -479,7 +479,6 @@
     submitSysConfigChangeStatus,
   } from '@/api/sys_config';
 
-  const { proxy } = getCurrentInstance() as any;
   const { setLoading } = useLoading(true);
   const { t } = useI18n();
 
@@ -499,7 +498,7 @@
   };
 
   const resetHandle = async (sysConfigItem: SysConfigItem) => {
-    proxy.$modal.warning({
+    Modal.warning({
       title: t('modal.warning.title'),
       titleAlign: 'center',
       content: `是否确定重置${t(
@@ -524,7 +523,7 @@
     try {
       await submitSysConfigUpdate(configFormData.value);
       done();
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       getSysConfigDetail();
     } catch (err) {
       done(false);
@@ -543,7 +542,7 @@
       await submitSysConfigReset({
         action: sysConfigItem.action,
       });
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       getSysConfigDetail();
     } finally {
       setLoading(false);
@@ -557,7 +556,7 @@
         action: sysConfigItem.action,
         open: sysConfigItem.open || false,
       });
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       getSysConfigDetail();
     } finally {
       setLoading(false);

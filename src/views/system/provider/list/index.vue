@@ -293,16 +293,10 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    computed,
-    ref,
-    reactive,
-    watch,
-    nextTick,
-    getCurrentInstance,
-  } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { Message, Modal } from '@arco-design/web-vue';
   import {
     queryProviderPage,
     ProviderPage,
@@ -328,9 +322,8 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
-  const { loading, setLoading } = useLoading(true);
-  const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
+  const { loading, setLoading } = useLoading(true);
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -576,7 +569,7 @@
     setLoading(true);
     try {
       await submitProviderDelete(params);
-      proxy.$message.success('删除成功');
+      Message.success(t('success.delete'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -589,7 +582,7 @@
     setLoading(true);
     try {
       await submitProviderChangePublic(params);
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -602,7 +595,7 @@
     setLoading(true);
     try {
       await submitProviderChangeStatus(params);
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -626,24 +619,32 @@
    */
   const handleBatch = (params: ProviderBatchOperate) => {
     if (ids.value.length === 0) {
-      proxy.$message.info(t('placeholder.operation.data'));
+      Message.info(t('placeholder.operation.data'));
     } else {
-      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      let alertContent = t('placeholder.batch.operation', {
+        count: ids.value.length,
+      });
       switch (params.action) {
         case 'status':
           if (params.value === 1) {
-            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.enable', {
+              count: ids.value.length,
+            });
           } else {
-            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.disable', {
+              count: ids.value.length,
+            });
           }
           break;
         case 'delete':
-          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          alertContent = t('placeholder.batch.operation.delete', {
+            count: ids.value.length,
+          });
           break;
         default:
       }
 
-      proxy.$modal.warning({
+      Modal.warning({
         title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
@@ -653,7 +654,7 @@
           params.ids = ids.value;
           submitProviderBatchOperate(params).then((res) => {
             setLoading(false);
-            proxy.$message.success('操作成功');
+            Message.success(t('success.operate'));
             search();
             tableRef.value.selectAll(false);
           });

@@ -278,10 +278,11 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
+  import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
   import { useAppStore } from '@/store';
   import { disabledDate, parsePrice } from '@/utils/common';
@@ -289,7 +290,7 @@
   import { queryGroupList, GroupList } from '@/api/group';
   import Quota from '@/views/common/quota.vue';
 
-  const { proxy } = getCurrentInstance() as any;
+  const { t } = useI18n();
   const { loading, setLoading } = useLoading(false);
   const router = useRouter();
   const appStore = useAppStore();
@@ -325,7 +326,7 @@
       setLoading(true);
       try {
         await submitResellerCreate(formData.value).then(() => {
-          proxy.$message.success('新建成功');
+          Message.success(t('success.create'));
           router.push({
             name: 'ResellerList',
           });

@@ -1,6 +1,5 @@
 export default {
   'menu.model.agent': '模型代理',
-  'menu.model.agent.list': '模型代理列表',
   'menu.model.agent.create': '新建模型代理',
   'menu.model.agent.update': '修改模型代理',
   'menu.model.agent.detail': '模型代理详情',
@@ -32,7 +31,7 @@ export default {
   'model.agent.label.is_never_disable': '永不禁用',
   'model.agent.label.lb_strategy': '密钥负载策略',
   'model.agent.label.key': '密钥',
-  'model.agent.label.isAgentsOnly': '代理专用',
+  'model.agent.label.is_agents_only': '代理专用',
   'model.agent.label.is_never_disable_key': '密钥永不禁用',
   // detail
   'model.agent.detail.label.provider': '提供商',

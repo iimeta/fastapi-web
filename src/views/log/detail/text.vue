@@ -756,7 +756,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, watch, getCurrentInstance } from 'vue';
+  import { ref, watch } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import { Message } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import { useClipboard } from '@vueuse/core';
   import VueJsonPretty from 'vue-json-pretty';
@@ -771,10 +773,10 @@
   import SpendDetail from '../components/spend.vue';
   import 'vue-json-pretty/lib/styles.css';
 
+  const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<TextDetail>({} as TextDetail);
   const { copy, copied } = useClipboard();
-  const { proxy } = getCurrentInstance() as any;
 
   const props = defineProps({
     id: {
@@ -807,7 +809,7 @@
 
   watch(copied, () => {
     if (copied.value) {
-      proxy.$message.success('复制成功');
+      Message.success(t('success.copy'));
     }
   });
 

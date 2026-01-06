@@ -140,7 +140,7 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { FormInstance, Modal, Message } from '@arco-design/web-vue';
+  import { FormInstance, Message, Modal } from '@arco-design/web-vue';
   import { useUserStore, useAppStore } from '@/store';
   import {
     queryExpense,

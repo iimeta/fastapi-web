@@ -20,7 +20,7 @@ const MODEL: AppRouteRecordRaw = {
       name: 'ModelList',
       component: () => import('@/views/model/list/index.vue'),
       meta: {
-        locale: 'menu.model.list',
+        locale: 'menu.model',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'model',

@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-notification />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.notice') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.notice.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('notice.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('notice.menu.message') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -298,15 +298,9 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    computed,
-    ref,
-    reactive,
-    watch,
-    nextTick,
-    getCurrentInstance,
-  } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { Message, Modal } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import {
     queryNoticePage,
@@ -331,7 +325,6 @@
   type Column = TableColumnData & { checked?: true };
 
   const { loading, setLoading } = useLoading(true);
-  const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
 
   const rowSelection = reactive({
@@ -616,7 +609,7 @@
     setLoading(true);
     try {
       await submitNoticeDelete(params);
-      proxy.$message.success('删除成功');
+      Message.success(t('success.delete'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -640,20 +633,24 @@
    */
   const handleBatch = (params: NoticeBatchOperate) => {
     if (ids.value.length === 0) {
-      proxy.$message.info(t('placeholder.operation.data'));
+      Message.info(t('placeholder.operation.data'));
     } else {
-      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      let alertContent = t('placeholder.batch.operation', {
+        count: ids.value.length,
+      });
       switch (params.action) {
         case 'notice':
           alertContent = `是否确定所选的${ids.value.length}条数据再次发送通知?`;
           break;
         case 'delete':
-          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          alertContent = t('placeholder.batch.operation.delete', {
+            count: ids.value.length,
+          });
           break;
         default:
       }
 
-      proxy.$modal.warning({
+      Modal.warning({
         title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
@@ -663,7 +660,7 @@
           params.ids = ids.value;
           submitNoticeBatchOperate(params).then((res) => {
             setLoading(false);
-            proxy.$message.success('操作成功');
+            Message.success(t('success.operate'));
             search();
             tableRef.value.selectAll(false);
           });

@@ -155,10 +155,10 @@
       {{ record.width }} × {{ record.height }}
     </template>
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" /> / 张
+      <Quota :model-value="record.once_ratio" /> / {{ $t('unit.piece') }}
     </template>
     <template #is_default="{ record }">
-      {{ record.is_default ? '是' : '-' }}
+      {{ record.is_default ? $t('dict.true') : '-' }}
     </template>
   </a-table>
 
@@ -189,10 +189,10 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" /> / 张
+      <Quota :model-value="record.once_ratio" /> / {{ $t('unit.piece') }}
     </template>
     <template #is_default="{ record }">
-      {{ record.is_default ? '是' : '-' }}
+      {{ record.is_default ? $t('dict.true') : '-' }}
     </template>
   </a-table>
 
@@ -229,10 +229,10 @@
       {{ record.width }} × {{ record.height }}
     </template>
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" /> / 秒
+      <Quota :model-value="record.once_ratio" /> {{ $t('unit.second') }}
     </template>
     <template #is_default="{ record }">
-      {{ record.is_default ? '是' : '-' }}
+      {{ record.is_default ? $t('dict.true') : '-' }}
     </template>
   </a-table>
 
@@ -263,10 +263,10 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" /> / 次
+      <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
     </template>
     <template #is_default="{ record }">
-      {{ record.is_default ? '是' : '-' }}
+      {{ record.is_default ? $t('dict.true') : '-' }}
     </template>
   </a-table>
 
@@ -280,7 +280,7 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" /> / 次
+      <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
     </template>
   </a-table>
 
@@ -294,7 +294,7 @@
     style="margin-bottom: 15px"
   >
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" /> / 次
+      <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
     </template>
   </a-table>
 </template>

@@ -7,7 +7,7 @@ const GROUP: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   redirect: '/group/list',
   meta: {
-    locale: 'menu.group',
+    locale: 'group.menu',
     requiresAuth: true,
     icon: 'icon-user-group',
     order: 70,
@@ -20,7 +20,7 @@ const GROUP: AppRouteRecordRaw = {
       name: 'GroupList',
       component: () => import('@/views/group/list/index.vue'),
       meta: {
-        locale: 'menu.group.list',
+        locale: 'group.menu',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'group',
@@ -31,7 +31,7 @@ const GROUP: AppRouteRecordRaw = {
       name: 'GroupCreate',
       component: () => import('@/views/group/create/index.vue'),
       meta: {
-        locale: 'menu.group.create',
+        locale: 'group.menu.create',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
@@ -43,7 +43,7 @@ const GROUP: AppRouteRecordRaw = {
       name: 'GroupUpdate',
       component: () => import('@/views/group/update/index.vue'),
       meta: {
-        locale: 'menu.group.update',
+        locale: 'group.menu.update',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,

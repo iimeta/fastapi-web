@@ -61,7 +61,6 @@ export default {
   'common.used_quota': 'Used Quota',
   'common.allocated_quota': 'Allocated Quota',
   'common.to_be_allocated_quota': 'Allocatable Quota',
-  'common.expires_at': 'Expiration Time',
   'common.forever': 'Permanent',
   // unit
   'unit.millisecond': 'Millisecond',

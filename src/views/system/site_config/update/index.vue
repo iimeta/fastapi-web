@@ -559,7 +559,8 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
+  import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { useAppStore } from '@/store';
   import { parsePrice } from '@/utils/common';
@@ -572,11 +573,11 @@
     Announcement,
     Document,
   } from '@/api/site_config';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import { useRouter, useRoute } from 'vue-router';
   import Quota from '@/views/common/quota.vue';
 
-  const { proxy } = getCurrentInstance() as any;
+  const { t } = useI18n();
   const appStore = useAppStore();
 
   const router = useRouter();
@@ -679,7 +680,7 @@
         });
 
         await submitSiteConfigUpdate(formData.value).then(() => {
-          proxy.$message.success('更新成功');
+          Message.success(t('success.update'));
           router.push({
             name: 'SiteConfig',
           });

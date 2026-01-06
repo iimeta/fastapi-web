@@ -1,5 +1,5 @@
 export default {
-  'menu.notice.template.list': '通知模板',
+  'menu.notice.template': '通知模板',
   'menu.notice.template.create': '新建通知模板',
   'menu.notice.template.update': '修改通知模板',
   'menu.notice.template.detail': '通知模板详情',

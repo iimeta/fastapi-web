@@ -297,7 +297,6 @@
             <a-button type="text" size="small">
               {{ $t('button.delete') }}
             </a-button>
-            </a-button>
           </a-popconfirm>
         </template>
       </a-table>
@@ -318,15 +317,9 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    computed,
-    ref,
-    reactive,
-    watch,
-    nextTick,
-    getCurrentInstance,
-  } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { Message, Modal } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import {
     querySiteConfigPage,
@@ -355,7 +348,6 @@
   type Column = TableColumnData & { checked?: true };
 
   const { loading, setLoading } = useLoading(true);
-  const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
   const appStore = useAppStore();
   const { isChangeLocale } = useLocale();
@@ -609,7 +601,7 @@
     setLoading(true);
     try {
       await submitSiteConfigDelete(params);
-      proxy.$message.success('删除成功');
+      Message.success(t('success.delete'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -622,7 +614,7 @@
     setLoading(true);
     try {
       await submitSiteConfigChangeStatus(params);
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -646,24 +638,32 @@
    */
   const handleBatch = (params: SiteConfigBatchOperate) => {
     if (ids.value.length === 0) {
-      proxy.$message.info(t('placeholder.operation.data'));
+      Message.info(t('placeholder.operation.data'));
     } else {
-      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      let alertContent = t('placeholder.batch.operation', {
+        count: ids.value.length,
+      });
       switch (params.action) {
         case 'status':
           if (params.value === 1) {
-            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.enable', {
+              count: ids.value.length,
+            });
           } else {
-            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.disable', {
+              count: ids.value.length,
+            });
           }
           break;
         case 'delete':
-          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          alertContent = t('placeholder.batch.operation.delete', {
+            count: ids.value.length,
+          });
           break;
         default:
       }
 
-      proxy.$modal.warning({
+      Modal.warning({
         title: t('modal.warning.title'),
         titleAlign: 'start',
         content: alertContent,
@@ -673,7 +673,7 @@
           params.ids = ids.value;
           submitSiteConfigBatchOperate(params).then((res) => {
             setLoading(false);
-            proxy.$message.success('操作成功');
+            Message.success(t('success.operate'));
             search();
             tableRef.value.selectAll(false);
           });

@@ -1,6 +1,5 @@
 export default {
   'menu.provider': '提供商',
-  'menu.provider.list': '提供商列表',
   'menu.provider.create': '新建提供商',
   'menu.provider.update': '修改提供商',
   'menu.provider.detail': '提供商详情',

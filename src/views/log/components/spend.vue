@@ -330,7 +330,8 @@
     </template>
     <template #n="{ record }"> {{ record.n || '0' }} </template>
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.pricing.once_ratio" /> / 张
+      <Quota :model-value="record.pricing.once_ratio" /> /
+      {{ $t('unit.piece') }}
     </template>
     <template #spend_tokens="{ record }">
       <Quota :model-value="record.spend_tokens" />
@@ -370,7 +371,8 @@
       {{ record.pricing.mode }}
     </template>
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.pricing.once_ratio" /> / 张
+      <Quota :model-value="record.pricing.once_ratio" /> /
+      {{ $t('unit.piece') }}
     </template>
     <template #spend_tokens="{ record }">
       <Quota :model-value="record.spend_tokens" />
@@ -422,7 +424,7 @@
       {{ record.seconds || '-' }}
     </template>
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.pricing.once_ratio" /> / 秒
+      <Quota :model-value="record.pricing.once_ratio" /> {{ $t('unit.second') }}
     </template>
     <template #spend_tokens="{ record }">
       <Quota :model-value="record.spend_tokens" />
@@ -462,7 +464,7 @@
       {{ record.pricing.context_size }}
     </template>
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.pricing.once_ratio" /> / 次
+      <Quota :model-value="record.pricing.once_ratio" /> / {{ $t('unit.once') }}
     </template>
     <template #spend_tokens="{ record }">
       <Quota :model-value="record.spend_tokens" />
@@ -488,7 +490,7 @@
       {{ record.pricing.path }}
     </template>
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.pricing.once_ratio" /> / 次
+      <Quota :model-value="record.pricing.once_ratio" /> / {{ $t('unit.once') }}
     </template>
     <template #spend_tokens="{ record }">
       <Quota :model-value="record.spend_tokens" />
@@ -511,7 +513,7 @@
       {{ parseQuota(record.output_tokens) || '0' }}
     </template>
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.pricing.once_ratio" /> / 次
+      <Quota :model-value="record.pricing.once_ratio" /> / {{ $t('unit.once') }}
     </template>
     <template #spend_tokens="{ record }">
       <Quota :model-value="record.spend_tokens" />

@@ -4,7 +4,7 @@
       <a-breadcrumb-item>
         <icon-notification />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.notice') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('notice.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{
         $t('menu.notice.template.create')
       }}</a-breadcrumb-item>
@@ -150,42 +150,6 @@
                 </a-checkbox>
               </a-space>
             </a-form-item>
-            <!-- <a-form-item
-              field="channels"
-              :label="$t('notice.template.label.channels')"
-              :rules="[
-                {
-                  required: true,
-                  message: $t('notice.template.error.channels.required'),
-                },
-              ]"
-            >
-              <a-space size="large">
-                <a-checkbox
-                  v-model="formData.channels"
-                  value="web"
-                  :default-checked="true"
-                >
-                  {{ $t('notice.template.dict.channels.web') }}
-                </a-checkbox>
-                <a-checkbox v-model="formData.channels" value="email">
-                  {{ $t('notice.template.dict.channels.email') }}
-                </a-checkbox>
-              </a-space>
-            </a-form-item>
-            <a-form-item
-              v-if="formData.channels.includes('web')"
-              field="is_popup"
-              :label="$t('notice.template.label.is_popup')"
-            >
-              <a-switch v-model="formData.is_popup" />
-            </a-form-item>
-            <a-form-item
-              field="is_public"
-              :label="$t('notice.template.label.is_public')"
-            >
-              <a-switch v-model="formData.is_public" />
-            </a-form-item> -->
             <a-form-item
               field="title"
               :label="$t('notice.template.label.title')"
@@ -248,18 +212,18 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
+  import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import { useRouter } from 'vue-router';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
-  import dayjs from 'dayjs';
   import {
     submitNoticeTemplateCreate,
     NoticeTemplate,
   } from '@/api/notice_template';
   import Vditor from '@/views/common/vditor.vue';
 
-  const { proxy } = getCurrentInstance() as any;
+  const { t } = useI18n();
   const { loading, setLoading } = useLoading(false);
 
   const router = useRouter();
@@ -282,7 +246,7 @@
       setLoading(true);
       try {
         await submitNoticeTemplateCreate(formData.value).then(() => {
-          proxy.$message.success('新增成功');
+          Message.success('新增成功');
           router.push({
             name: 'NoticeTemplateList',
           });

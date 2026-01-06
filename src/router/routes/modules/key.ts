@@ -7,7 +7,7 @@ const KEY: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   redirect: '/key/list',
   meta: {
-    locale: 'menu.key',
+    locale: 'key.menu',
     requiresAuth: true,
     icon: 'icon-safe',
     order: 40,
@@ -20,7 +20,7 @@ const KEY: AppRouteRecordRaw = {
       name: 'ModelKeyList',
       component: () => import('@/views/key/list/index.vue'),
       meta: {
-        locale: 'menu.key.model.list',
+        locale: 'key.menu.model',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'key',
@@ -31,7 +31,7 @@ const KEY: AppRouteRecordRaw = {
       name: 'KeyCreate',
       component: () => import('@/views/key/create/index.vue'),
       meta: {
-        locale: 'menu.key.create',
+        locale: 'key.menu.create',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
@@ -43,7 +43,7 @@ const KEY: AppRouteRecordRaw = {
       name: 'KeyUpdate',
       component: () => import('@/views/key/update/index.vue'),
       meta: {
-        locale: 'menu.key.update',
+        locale: 'key.menu.update',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,

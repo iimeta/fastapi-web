@@ -5,7 +5,7 @@
         <icon-calendar />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.task') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.task.file.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('menu.task.file') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -255,15 +255,9 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    computed,
-    ref,
-    reactive,
-    watch,
-    nextTick,
-    getCurrentInstance,
-  } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { Message } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import { queryAppList, AppList } from '@/api/app';
   import { queryFilePage, FilePage, FilePageParams } from '@/api/task';
@@ -282,7 +276,6 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
-  const { proxy } = getCurrentInstance() as any;
   const userRole = localStorage.getItem('userRole');
 
   const rowSelection = reactive({
@@ -583,7 +576,7 @@
 
   watch(copied, () => {
     if (copied.value) {
-      proxy.$message.success('复制成功');
+      Message.success(t('success.copy'));
     }
   });
 </script>

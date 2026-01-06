@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-user-group />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.group') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.group.create') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('group.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('group.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -30,7 +30,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.name.required'),
+                  message: $t('group.placeholder.name'),
                 },
               ]"
             >
@@ -42,17 +42,17 @@
             </a-form-item>
             <a-form-item
               field="discount"
-              :label="$t('group.label.discount')"
+              :label="$t('common.discount')"
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.discount.required'),
+                  message: $t('placeholder.discount'),
                 },
               ]"
             >
               <a-input-number
                 v-model="formData.discount"
-                :placeholder="$t('group.placeholder.discount')"
+                :placeholder="$t('placeholder.discount')"
                 :min="0.01"
                 :max="9999999999999"
                 allow-clear
@@ -67,7 +67,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.weight.required'),
+                  message: $t('group.error.required.weight'),
                 },
               ]"
             >
@@ -82,11 +82,11 @@
             </a-form-item>
             <a-form-item
               field="models"
-              :label="$t('group.label.models')"
+              :label="$t('common.model')"
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.models.required'),
+                  message: $t('placeholder.model'),
                 },
               ]"
             >
@@ -96,7 +96,7 @@
                 :allow-clear="true"
                 :tree-checkable="true"
                 :data="treeData"
-                :placeholder="$t('group.placeholder.models')"
+                :placeholder="$t('placeholder.model')"
                 :max-tag-count="3"
                 :scrollbar="false"
                 tree-checked-strategy="child"
@@ -104,7 +104,7 @@
             </a-form-item>
             <a-form-item
               field="is_public"
-              :label="$t('group.label.is_public')"
+              :label="$t('common.public')"
               :rules="[
                 {
                   required: true,
@@ -113,10 +113,7 @@
             >
               <a-switch v-model="formData.is_public" />
             </a-form-item>
-            <a-form-item
-              field="is_default"
-              :label="$t('group.label.is_default')"
-            >
+            <a-form-item field="is_default" :label="$t('common.default')">
               <a-switch v-model="formData.is_default" />
             </a-form-item>
             <a-form-item
@@ -160,19 +157,21 @@
                   value="1"
                   :default-checked="true"
                 >
-                  轮询
+                  {{ $t('dict.lb_strategy.1') }}
                 </a-radio>
-                <a-radio v-model="formData.lb_strategy" value="2">权重</a-radio>
+                <a-radio v-model="formData.lb_strategy" value="2">
+                  {{ $t('dict.lb_strategy.2') }}
+                </a-radio>
               </a-space>
             </a-form-item>
             <a-form-item
               v-if="formData.is_enable_model_agent"
               field="model_agents"
-              :label="$t('group.label.model_agents')"
+              :label="$t('common.model_agents')"
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.model_agents.required'),
+                  message: $t('group.placeholder.model_agents'),
                 },
               ]"
             >
@@ -195,24 +194,24 @@
             </a-form-item>
             <a-form-item
               field="is_limit_quota"
-              :label="$t('group.label.is_limit_quota')"
+              :label="$t('common.limit_quota')"
             >
               <a-switch v-model="formData.is_limit_quota" />
             </a-form-item>
             <a-form-item
               v-if="formData.is_limit_quota"
               field="quota"
-              :label="$t('group.label.quota')"
+              :label="$t('common.quota')"
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.quota.required'),
+                  message: $t('placeholder.quota'),
                 },
               ]"
             >
               <a-input-number
                 v-model="formData.quota"
-                :placeholder="$t('group.placeholder.quota')"
+                :placeholder="$t('placeholder.quota')"
                 :min="0.000001"
                 :max="9999999999999"
                 :parser="parsePrice"
@@ -260,7 +259,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.forward_rule.required'),
+                  message: $t('group.placeholder.forward_rule'),
                 },
               ]"
             >
@@ -270,10 +269,10 @@
                 :scrollbar="false"
                 @change="handleForwardRuleChange"
               >
-                <a-option value="1">全部转发</a-option>
-                <a-option value="2">按关键字</a-option>
-                <a-option value="3">内容长度</a-option>
-                <a-option value="4">已用额度</a-option>
+                <a-option value="1">{{ $t('dict.forward_rule.1') }}</a-option>
+                <a-option value="2">{{ $t('dict.forward_rule.2') }}</a-option>
+                <a-option value="3">{{ $t('dict.forward_rule.3') }}</a-option>
+                <a-option value="4">{{ $t('dict.forward_rule.4') }}</a-option>
               </a-select>
             </a-form-item>
             <a-form-item
@@ -286,7 +285,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.content_length.required'),
+                  message: $t('group.error.required.content_length'),
                 },
               ]"
             >
@@ -305,17 +304,17 @@
                 formData.forward_config.forward_rule === '4'
               "
               field="forward_config.used_quota"
-              :label="$t('group.label.used_quota')"
+              :label="$t('common.quota')"
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.used_quota.required'),
+                  message: $t('placeholder.quota'),
                 },
               ]"
             >
               <a-input-number
                 v-model="formData.forward_config.used_quota"
-                :placeholder="$t('group.placeholder.used_quota')"
+                :placeholder="$t('placeholder.quota')"
                 :min="0.000001"
                 :max="9999999999999"
                 :parser="parsePrice"
@@ -364,7 +363,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.target_model.required'),
+                  message: $t('group.placeholder.target_model'),
                 },
               ]"
             >
@@ -392,7 +391,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.match_rule.required'),
+                  message: $t('group.error.required.match_rule'),
                 },
               ]"
             >
@@ -401,13 +400,15 @@
                   v-model="formData.forward_config.match_rule"
                   value="1"
                   :default-checked="true"
-                  >智能匹配</a-checkbox
                 >
+                  {{ $t('dict.match_rule.1') }}
+                </a-checkbox>
                 <a-checkbox
                   v-model="formData.forward_config.match_rule"
                   value="2"
-                  >正则匹配</a-checkbox
                 >
+                  {{ $t('dict.match_rule.2') }}
+                </a-checkbox>
               </a-space>
             </a-form-item>
             <a-form-item
@@ -421,7 +422,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.decision_model.required'),
+                  message: $t('group.placeholder.decision_model'),
                 },
               ]"
             >
@@ -454,7 +455,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('group.error.keywords_target_model.required'),
+                  message: $t('group.error.required.keywords_target_model'),
                 },
               ]"
             >
@@ -493,13 +494,10 @@
                 <icon-minus />
               </a-button>
             </a-form-item>
-            <a-form-item
-              field="expires_at"
-              :label="$t('group.label.expires_at')"
-            >
+            <a-form-item field="expires_at" :label="$t('common.expires_at')">
               <a-date-picker
                 v-model="formData.expires_at"
-                :placeholder="$t('group.placeholder.expires_at')"
+                :placeholder="$t('placeholder.expires_at')"
                 :time-picker-props="{ defaultValue: '23:59:59' }"
                 :disabled-date="disabledDate"
                 allow-clear
@@ -590,10 +588,11 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
+  import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
   import { useAppStore } from '@/store';
   import { disabledDate, parsePrice } from '@/utils/common';
@@ -602,8 +601,9 @@
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import Quota from '@/views/common/quota.vue';
 
+  const { t } = useI18n();
   const { loading, setLoading } = useLoading(false);
-  const { proxy } = getCurrentInstance() as any;
+
   const router = useRouter();
   const appStore = useAppStore();
 
@@ -674,7 +674,7 @@
       setLoading(true);
       try {
         await submitGroupCreate(formData.value).then(() => {
-          proxy.$message.success('新建成功');
+          Message.success(t('success.create'));
           router.push({
             name: 'GroupList',
           });

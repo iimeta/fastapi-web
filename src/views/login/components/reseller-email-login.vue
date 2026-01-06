@@ -50,10 +50,10 @@
 </template>
 
 <script lang="ts" setup>
-  import { getCurrentInstance, ref, toRefs, reactive, computed } from 'vue';
+  import { ref, toRefs, reactive, computed, getCurrentInstance } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useRouter } from 'vue-router';
-  import { ValidatedError } from '@arco-design/web-vue';
+  import { ValidatedError, Message } from '@arco-design/web-vue';
   import { useUserStore, useAppStore } from '@/store';
   import { getCaptcha } from '@/api/auth';
   import { querySysConfig, SysConfigDetail } from '@/api/sys_config';
@@ -171,7 +171,7 @@
               ...othersQuery,
             },
           });
-          proxy.$message.success(t('login.success'));
+          Message.success(t('login.success'));
         })
         .catch(() => {
           form.value.captcha = '';

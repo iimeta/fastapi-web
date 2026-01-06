@@ -98,14 +98,13 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, getCurrentInstance } from 'vue';
-  import { FieldRule } from '@arco-design/web-vue';
+  import { computed, ref, reactive } from 'vue';
+  import { FieldRule, Message } from '@arco-design/web-vue';
   import { getCaptcha } from '@/api/auth';
   import { useI18n } from 'vue-i18n';
   import { useUserStore } from '@/store';
   import { changeEmail, ChangeEmailData } from '@/api/user-center';
 
-  const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
   const userStore = useUserStore();
   const formRef = ref();
@@ -228,7 +227,7 @@
         }).then(() => {
           handleCancel();
           userStore.info();
-          proxy.$message.success(t('userCenter.basicInfo.form.save.success'));
+          Message.success(t('userCenter.basicInfo.form.save.success'));
         });
       }
     });

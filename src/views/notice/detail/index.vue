@@ -68,46 +68,6 @@
           }}
         </span>
       </a-descriptions-item>
-      <!-- <a-descriptions-item :label="$t('notice.detail.channels')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ $t(`notice.dict.channels.${currentData.channels}`) }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('notice.detail.is_popup')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ t(`dict.${currentData.is_popup || false}`) }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('notice.detail.priority')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.priority }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('notice.detail.expires_at')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.expires_at || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('notice.detail.scheduled_time')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.scheduled_time || '-' }}
-        </span>
-      </a-descriptions-item> -->
       <a-descriptions-item :label="$t('common.remark')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

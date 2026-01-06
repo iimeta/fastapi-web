@@ -6,7 +6,7 @@ const NOTICE: AppRouteRecordRaw = {
   name: 'notice',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.notice',
+    locale: 'notice.menu',
     requiresAuth: true,
     icon: 'icon-notification',
     order: 110,
@@ -18,7 +18,7 @@ const NOTICE: AppRouteRecordRaw = {
       name: 'NoticeList',
       component: () => import('@/views/notice/list/index.vue'),
       meta: {
-        locale: 'menu.notice.list',
+        locale: 'notice.menu.message',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'NoticeList',
@@ -53,7 +53,7 @@ const NOTICE: AppRouteRecordRaw = {
       name: 'NoticeTemplateList',
       component: () => import('@/views/notice_template/list/index.vue'),
       meta: {
-        locale: 'menu.notice.template.list',
+        locale: 'menu.notice.template',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'NoticeTemplateList',

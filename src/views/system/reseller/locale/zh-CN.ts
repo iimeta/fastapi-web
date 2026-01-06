@@ -1,7 +1,6 @@
 export default {
   'menu.sys': '系统管理',
   'menu.reseller': '代理商',
-  'menu.reseller.list': '代理商列表',
   'menu.reseller.create': '新建代理商',
   'menu.reseller.update': '修改代理商',
   'menu.reseller.detail': '代理商详情',

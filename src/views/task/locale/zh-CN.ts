@@ -1,10 +1,10 @@
 export default {
   'menu.task': '任务中心',
-  'menu.task.video.list': '视频任务',
+  'menu.task.video': '视频任务',
   'menu.task.video.detail': '视频任务详情',
-  'menu.task.file.list': '文件任务',
+  'menu.task.file': '文件任务',
   'menu.task.file.detail': '文件任务详情',
-  'menu.task.batch.list': '批处理任务',
+  'menu.task.batch': '批处理任务',
   'menu.task.batch.detail': '批处理任务详情',
   // detail
   'task.video.detail.label.trace_id': 'Trace ID',

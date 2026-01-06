@@ -47,10 +47,10 @@
 </template>
 
 <script lang="ts" setup>
-  import { getCurrentInstance, ref, toRefs, reactive, computed } from 'vue';
+  import { ref, toRefs, reactive, computed, getCurrentInstance } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useRouter } from 'vue-router';
-  import { ValidatedError } from '@arco-design/web-vue';
+  import { ValidatedError, Message } from '@arco-design/web-vue';
   import { getCaptcha, register } from '@/api/auth';
 
   const { proxy } = getCurrentInstance() as any;
@@ -157,7 +157,7 @@
         domain: window.location.hostname,
       })
         .then(() => {
-          proxy.$message.success(t('register.success'));
+          Message.success(t('register.success'));
           router.go(0);
         })
         .catch(() => {

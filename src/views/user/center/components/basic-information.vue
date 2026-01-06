@@ -32,13 +32,11 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, getCurrentInstance, toRefs } from 'vue';
-  import { FieldRule } from '@arco-design/web-vue';
+  import { computed, ref, reactive, toRefs } from 'vue';
+  import { FieldRule, Message } from '@arco-design/web-vue';
   import { UpdateInfoData, updateInfo } from '@/api/user-center';
   import { useI18n } from 'vue-i18n';
   import { useUserStore } from '@/store';
-
-  const { proxy } = getCurrentInstance() as any;
 
   const { t } = useI18n();
   const formRef = ref();
@@ -77,7 +75,7 @@
         })
           .then(() => {
             userStore.info();
-            proxy.$message.success(t('userCenter.basicInfo.form.save.success'));
+            Message.success(t('userCenter.basicInfo.form.save.success'));
           })
           .finally(() => {
             loading.value = false;

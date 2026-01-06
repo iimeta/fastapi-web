@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-message />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.general') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.general.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('log.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('log.menu.general') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -639,7 +639,7 @@
       </a-table>
 
       <a-drawer
-        :title="$t('menu.general.detail')"
+        :title="$t('log.menu.general.detail')"
         :width="700"
         :footer="false"
         :visible="detailVisible"

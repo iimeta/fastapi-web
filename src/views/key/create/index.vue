@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-safe />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.key') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.key.create') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('key.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('key.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -26,17 +26,17 @@
             </a-divider>
             <a-form-item
               field="provider_id"
-              :label="$t('key.label.provider')"
+              :label="$t('common.provider')"
               :rules="[
                 {
                   required: true,
-                  message: $t('key.error.provider.required'),
+                  message: $t('placeholder.provider'),
                 },
               ]"
             >
               <a-select
                 v-model="formData.provider_id"
-                :placeholder="$t('key.placeholder.provider')"
+                :placeholder="$t('placeholder.provider')"
                 :scrollbar="false"
                 allow-search
                 @change="getKeyPlaceholder"
@@ -51,11 +51,11 @@
             </a-form-item>
             <a-form-item
               field="key"
-              :label="$t('key.label.key')"
+              :label="$t('common.key')"
               :rules="[
                 {
                   required: true,
-                  message: $t('key.error.key.required'),
+                  message: $t('key.error.required.key'),
                 },
               ]"
             >
@@ -74,10 +74,10 @@
                 :placeholder="$t('model.agent.placeholder.weight')"
               />
             </a-form-item>
-            <a-form-item field="remark" :label="$t('key.label.remark')">
+            <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea
                 v-model="formData.remark"
-                :placeholder="$t('key.placeholder.remark')"
+                :placeholder="$t('placeholder.remark')"
               />
             </a-form-item>
 
@@ -85,7 +85,7 @@
               {{ $t('common.title.advanced') }}
             </a-divider>
 
-            <a-form-item field="models" :label="$t('key.label.models')">
+            <a-form-item field="models" :label="$t('common.bind_models')">
               <a-tree-select
                 v-model="formData.models"
                 :placeholder="$t('key.placeholder.models')"
@@ -100,11 +100,11 @@
             </a-form-item>
             <a-form-item
               field="model_agents"
-              :label="$t('key.label.modelAgents')"
+              :label="$t('common.bind_model_agents')"
             >
               <a-select
                 v-model="formData.model_agents"
-                :placeholder="$t('key.placeholder.modelAgents')"
+                :placeholder="$t('key.placeholder.model_agents')"
                 :max-tag-count="3"
                 :scrollbar="false"
                 multiple
@@ -121,7 +121,7 @@
             </a-form-item>
             <a-form-item
               field="is_agents_only"
-              :label="$t('key.label.isAgentsOnly')"
+              :label="$t('key.label.is_agents_only')"
             >
               <a-switch v-model="formData.is_agents_only" />
             </a-form-item>
@@ -156,9 +156,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
+  import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { submitKeyCreate, KeyCreate } from '@/api/key';
@@ -167,7 +167,6 @@
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
 
   const { loading, setLoading } = useLoading(false);
-  const { proxy } = getCurrentInstance() as any;
   const router = useRouter();
   const { t } = useI18n();
 
@@ -246,7 +245,7 @@
       setLoading(true);
       try {
         await submitKeyCreate(formData.value).then(() => {
-          proxy.$message.success('操作成功, 任务已提交');
+          Message.success(t('success.task'));
           router.push({
             name: 'ModelKeyList',
           });

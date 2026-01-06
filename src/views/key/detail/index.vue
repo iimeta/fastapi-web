@@ -21,7 +21,7 @@
           {{ currentData.provider_name }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.used_quota')">
+      <a-descriptions-item :label="$t('common.used_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -50,10 +50,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('key.detail.label.bind.models')"
-        :span="2"
-      >
+      <a-descriptions-item :label="$t('common.bind_models')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -61,10 +58,7 @@
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('key.detail.label.model_agent_names')"
-        :span="2"
-      >
+      <a-descriptions-item :label="$t('common.bind_model_agents')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -72,31 +66,31 @@
           {{ currentData?.model_agent_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.is_agents_only')">
+      <a-descriptions-item :label="$t('key.label.is_agents_only')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.${currentData?.is_agents_only || false}`) }}
+          {{ $t(`dict.${currentData?.is_agents_only || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.is_never_disable')">
+      <a-descriptions-item :label="$t('key.label.is_never_disable')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.${currentData?.is_never_disable || false}`) }}
+          {{ $t(`dict.${currentData?.is_never_disable || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.is_auto_disabled')">
+      <a-descriptions-item :label="$t('key.detail.is_auto_disabled')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.${currentData?.is_auto_disabled || false}`) }}
+          {{ $t(`dict.${currentData?.is_auto_disabled || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.detail.label.auto_disabled_reason')">
+      <a-descriptions-item :label="$t('key.detail.auto_disabled_reason')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

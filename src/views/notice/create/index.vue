@@ -4,7 +4,7 @@
       <a-breadcrumb-item>
         <icon-notification />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.notice') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('notice.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('menu.notice.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
@@ -174,132 +174,6 @@
                 />
               </a-select>
             </a-form-item>
-            <!-- <a-form-item
-              field="channels"
-              :label="$t('notice.label.channels')"
-              :rules="[
-                {
-                  required: true,
-                  message: $t('notice.error.channels.required'),
-                },
-              ]"
-            >
-              <a-space size="large">
-                <a-checkbox
-                  v-model="formData.channels"
-                  value="web"
-                  :default-checked="true"
-                >
-                  {{ $t('notice.dict.channels.web') }}
-                </a-checkbox>
-                <a-checkbox v-model="formData.channels" value="email">
-                  {{ $t('notice.dict.channels.email') }}
-                </a-checkbox>
-              </a-space>
-            </a-form-item>
-            <a-form-item
-              v-if="formData.channels.includes('web')"
-              field="is_popup"
-              :label="$t('notice.label.is_popup')"
-            >
-              <a-switch v-model="formData.is_popup" />
-            </a-form-item>
-            <a-form-item field="priority" :label="$t('notice.label.priority')">
-              <a-input-number
-                v-model="formData.priority"
-                :placeholder="$t('notice.placeholder.priority')"
-                :precision="0"
-                :min="-999"
-                :max="99999"
-              />
-            </a-form-item>
-            <a-form-item
-              field="expires_at"
-              :label="$t('notice.label.expires_at')"
-            >
-              <a-date-picker
-                v-model="formData.expires_at"
-                :placeholder="$t('notice.placeholder.expires_at')"
-                :time-picker-props="{ defaultValue: '23:59:59' }"
-                :disabled-date="
-                  disabledDate
-                "
-                style="width: 100%"
-                show-time
-                :shortcuts="[
-                  {
-                    label: '1',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(1, 'day'),
-                  },
-                  {
-                    label: '7',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(7, 'day'),
-                  },
-                  {
-                    label: '15',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(15, 'day'),
-                  },
-                  {
-                    label: '30',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(30, 'day'),
-                  },
-                  {
-                    label: '90',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(90, 'day'),
-                  },
-                  {
-                    label: '180',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(180, 'day'),
-                  },
-                  {
-                    label: '365',
-                    value: () =>
-                      dayjs(
-                        formData.expires_at ||
-                          new Date().setHours(23, 59, 59, 999)
-                      ).add(365, 'day'),
-                  },
-                ]"
-              />
-            </a-form-item>
-            <a-form-item
-              field="scheduled_time"
-              :label="$t('notice.label.scheduled_time')"
-            >
-              <a-date-picker
-                v-model="formData.scheduled_time"
-                :placeholder="$t('notice.placeholder.scheduled_time')"
-                :disabled-date="
-                  disabledDate
-                "
-                style="width: 100%"
-                show-time
-              />
-            </a-form-item> -->
             <a-form-item
               field="content"
               :label="$t('notice.label.content')"
@@ -347,11 +221,10 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
+  import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
-  import dayjs from 'dayjs';
   import { submitNoticeCreate, Notice } from '@/api/notice';
   import {
     queryNoticeTemplateList,
@@ -361,7 +234,6 @@
   import { ResellerList, queryResellerList } from '@/api/admin_reseller';
   import Vditor from '@/views/common/vditor.vue';
 
-  const { proxy } = getCurrentInstance() as any;
   const { loading, setLoading } = useLoading(false);
 
   const router = useRouter();
@@ -446,7 +318,7 @@
           } else if (status === 2) {
             alertContent = '保存成功';
           }
-          proxy.$message.success(alertContent);
+          Message.success(alertContent);
           router.push({
             name: 'NoticeList',
           });

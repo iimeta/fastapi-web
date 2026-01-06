@@ -20,7 +20,7 @@ const MODEL_AGENT: AppRouteRecordRaw = {
       name: 'ModelAgentList',
       component: () => import('@/views/model_agent/list/index.vue'),
       meta: {
-        locale: 'menu.model.agent.list',
+        locale: 'menu.model.agent',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'model_agent',

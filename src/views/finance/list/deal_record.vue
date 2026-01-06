@@ -4,8 +4,10 @@
       <a-breadcrumb-item>
         <icon-wechatpay />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.finance') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.deal_record.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('finance.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{
+        $t('finance.menu.deal_record')
+      }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -27,12 +29,12 @@
               <a-col :span="6">
                 <a-form-item
                   field="name"
-                  :label="$t('finance.form.user_id')"
+                  :label="$t('common.user_id')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input-number
                     v-model="searchFormData.user_id"
-                    :placeholder="$t('finance.form.user_id.placeholder')"
+                    :placeholder="$t('placeholder.user_id')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -40,10 +42,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="6">
-                <a-form-item field="type" :label="$t('finance.form.type')">
+                <a-form-item field="type" :label="$t('common.type')">
                   <a-select
                     v-model="searchFormData.type"
-                    :placeholder="$t('finance.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="typeOptions"
                     :scrollbar="false"
                     allow-clear
@@ -51,10 +53,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="6">
-                <a-form-item field="status" :label="$t('finance.form.status')">
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('finance.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -82,13 +84,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('finance.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <!-- <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('finance.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button> -->
           </a-space>
         </a-col>
@@ -277,25 +279,25 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('finance.columns.user_id'),
+      title: t('common.user_id'),
       dataIndex: 'user_id',
       slotName: 'user_id',
       align: 'center',
     },
     {
-      title: t('finance.columns.quota'),
+      title: t('common.quota'),
       dataIndex: 'quota',
       slotName: 'quota',
       align: 'center',
     },
     {
-      title: t('finance.columns.type'),
+      title: t('common.type'),
       dataIndex: 'type',
       slotName: 'type',
       align: 'center',
     },
     {
-      title: t('finance.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',

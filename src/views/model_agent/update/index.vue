@@ -212,9 +212,11 @@
                   value="1"
                   :default-checked="true"
                 >
-                  轮询
+                  {{ $t('dict.lb_strategy.1') }}
                 </a-radio>
-                <a-radio v-model="formData.lb_strategy" value="2">权重</a-radio>
+                <a-radio v-model="formData.lb_strategy" value="2">
+                  {{ $t('dict.lb_strategy.2') }}
+                </a-radio>
               </a-space>
             </a-form-item>
             <a-form-item field="key" :label="$t('model.agent.label.key')">
@@ -226,7 +228,7 @@
             </a-form-item>
             <a-form-item
               field="is_agents_only"
-              :label="$t('model.agent.label.isAgentsOnly')"
+              :label="$t('model.agent.label.is_agents_only')"
             >
               <a-switch v-model="formData.is_agents_only" />
             </a-form-item>
@@ -261,9 +263,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
+  import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import { useRoute, useRouter } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import {
@@ -277,7 +279,7 @@
   import { queryModelTree, Tree } from '@/api/model';
 
   const { loading, setLoading } = useLoading(false);
-  const { proxy } = getCurrentInstance() as any;
+
   const route = useRoute();
   const router = useRouter();
   const { t } = useI18n();
@@ -366,7 +368,7 @@
       setLoading(true);
       try {
         await submitModelAgentUpdate(formData.value).then(() => {
-          proxy.$message.success('更新成功');
+          Message.success(t('success.update'));
           router.push({
             name: 'ModelAgentList',
           });

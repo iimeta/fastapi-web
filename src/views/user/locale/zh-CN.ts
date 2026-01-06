@@ -1,6 +1,5 @@
 export default {
   'menu.user': '用户管理',
-  'menu.user.list': '用户列表',
   'menu.user.create': '新建用户',
   'menu.user.update': '修改用户',
   'menu.user.detail': '用户详情',

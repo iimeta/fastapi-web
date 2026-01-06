@@ -4,8 +4,7 @@
       <a-breadcrumb-item>
         <icon-user-group />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.group') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.group.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('group.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -25,19 +24,19 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('group.form.name')">
+                <a-form-item field="name" :label="$t('group.label.name')">
                   <a-input
                     v-model="searchFormData.name"
-                    :placeholder="$t('group.form.name.placeholder')"
+                    :placeholder="$t('group.placeholder.name')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="models" :label="$t('group.form.models')">
+                <a-form-item field="models" :label="$t('common.models')">
                   <a-select
                     v-model="searchFormData.models"
-                    :placeholder="$t('group.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :max-tag-count="2"
                     :scrollbar="false"
                     multiple
@@ -56,11 +55,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="model_agents"
-                  :label="$t('group.form.model_agents')"
+                  :label="$t('common.model_agents')"
                 >
                   <a-select
                     v-model="searchFormData.model_agents"
-                    :placeholder="$t('group.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :max-tag-count="2"
                     :scrollbar="false"
                     multiple
@@ -77,19 +76,19 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="remark" :label="$t('group.form.remark')">
+                <a-form-item field="remark" :label="$t('group.label.remark')">
                   <a-input
                     v-model="searchFormData.remark"
-                    :placeholder="$t('group.form.remark.placeholder')"
+                    :placeholder="$t('group.placeholder.remark')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('group.form.status')">
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('group.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -99,7 +98,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="expires_at"
-                  :label="$t('group.form.expires_at')"
+                  :label="$t('common.expires_at')"
                 >
                   <a-range-picker
                     v-model="searchFormData.expires_at"
@@ -117,13 +116,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('group.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('group.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -136,7 +135,7 @@
               type="primary"
               @click="$router.push({ name: 'GroupCreate' })"
             >
-              {{ $t('group.operation.create') }}
+              {{ $t('button.create') }}
             </a-button>
             <a-button
               type="primary"
@@ -257,7 +256,10 @@
         @selection-change="handleSelectionChange"
       >
         <template #name="{ record }">
-          <span v-if="record.is_default" title="默认分组">
+          <span
+            v-if="record.is_default"
+            :title="$t('group.detail.label.is_default')"
+          >
             <b>{{ record.name }}</b>
           </span>
           <span v-else>
@@ -283,7 +285,7 @@
         </template>
         <template #weight="{ record }">
           <span v-if="record.is_default">
-            <b>最高</b>
+            <b>{{ $t('common.highest') }}</b>
           </span>
           <span v-else>
             {{ record.weight || '-' }}
@@ -328,7 +330,7 @@
         <template #expires_at="{ rowIndex }">
           <a-date-picker
             v-model="renderData[rowIndex].expires_at"
-            :placeholder="$t('group.columns.placeholder.expires_at')"
+            :placeholder="$t('placeholder.expires_at')"
             :time-picker-props="{ defaultValue: '23:59:59' }"
             :disabled-date="disabledDate"
             show-time
@@ -398,14 +400,13 @@
             "
           >
             <a-button style="width: 150px">{{
-              renderData[rowIndex].expires_at ||
-              $t('group.columns.placeholder.expires_at')
+              renderData[rowIndex].expires_at || $t('placeholder.expires_at')
             }}</a-button>
           </a-date-picker>
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('group.columns.operations.view') }}
+            {{ $t('button.view') }}
           </a-button>
           <a-button
             type="text"
@@ -417,21 +418,21 @@
               })
             "
           >
-            {{ $t('group.columns.operations.update') }}
+            {{ $t('button.update') }}
           </a-button>
           <a-popconfirm
             :content="$t('placeholder.operation.delete')"
             @ok="groupDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
-              {{ $t('group.columns.operations.delete') }}
+              {{ $t('button.delete') }}
             </a-button>
           </a-popconfirm>
         </template>
       </a-table>
 
       <a-drawer
-        :title="$t('menu.group.detail')"
+        :title="$t('group.menu.detail')"
         unmount-on-close
         render-to-body
         :width="700"
@@ -462,16 +463,10 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    computed,
-    ref,
-    reactive,
-    watch,
-    nextTick,
-    getCurrentInstance,
-  } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { Message, Modal } from '@arco-design/web-vue';
   import dayjs from 'dayjs';
   import { disabledDate } from '@/utils/common';
   import {
@@ -506,9 +501,8 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
-  const { loading, setLoading } = useLoading(true);
-  const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
+  const { loading, setLoading } = useLoading(true);
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -569,7 +563,7 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('group.columns.name'),
+      title: t('group.label.name'),
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
@@ -577,13 +571,13 @@
       tooltip: true,
     },
     {
-      title: t('group.columns.discount'),
+      title: t('common.discount'),
       dataIndex: 'discount',
       slotName: 'discount',
       align: 'center',
     },
     {
-      title: t('group.columns.models'),
+      title: t('common.models'),
       dataIndex: 'model_names',
       slotName: 'model_names',
       align: 'center',
@@ -591,7 +585,7 @@
       tooltip: true,
     },
     {
-      title: t('group.columns.model_agents'),
+      title: t('common.model_agents'),
       dataIndex: 'model_agent_names',
       slotName: 'model_agent_names',
       align: 'center',
@@ -599,7 +593,7 @@
       tooltip: true,
     },
     {
-      title: t('group.columns.used_quota'),
+      title: t('common.used_quota'),
       dataIndex: 'used_quota',
       slotName: 'used_quota',
       align: 'center',
@@ -607,7 +601,7 @@
       tooltip: true,
     },
     {
-      title: t('group.columns.weight'),
+      title: t('group.label.weight'),
       dataIndex: 'weight',
       slotName: 'weight',
       align: 'center',
@@ -619,14 +613,14 @@
       align: 'center',
     },
     {
-      title: t('group.columns.is_public'),
+      title: t('common.public'),
       dataIndex: 'is_public',
       slotName: 'is_public',
       align: 'center',
       width: 65,
     },
     {
-      title: t('group.columns.remark'),
+      title: t('group.label.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
@@ -634,14 +628,14 @@
       tooltip: true,
     },
     {
-      title: t('group.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('group.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -796,7 +790,7 @@
     setLoading(true);
     try {
       await submitGroupDelete(params);
-      proxy.$message.success('删除成功');
+      Message.success(t('success.delete'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -809,7 +803,7 @@
     setLoading(true);
     try {
       await submitGroupChangePublic(params);
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -822,7 +816,7 @@
     setLoading(true);
     try {
       await submitGroupChangeExpire(params);
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -835,7 +829,7 @@
     setLoading(true);
     try {
       await submitGroupChangeStatus(params);
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -859,24 +853,32 @@
    */
   const handleBatch = (params: GroupBatchOperate) => {
     if (ids.value.length === 0) {
-      proxy.$message.info(t('placeholder.operation.data'));
+      Message.info(t('placeholder.operation.data'));
     } else {
-      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      let alertContent = t('placeholder.batch.operation', {
+        count: ids.value.length,
+      });
       switch (params.action) {
         case 'status':
           if (params.value === 1) {
-            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.enable', {
+              count: ids.value.length,
+            });
           } else {
-            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.disable', {
+              count: ids.value.length,
+            });
           }
           break;
         case 'delete':
-          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          alertContent = t('placeholder.batch.operation.delete', {
+            count: ids.value.length,
+          });
           break;
         default:
       }
 
-      proxy.$modal.warning({
+      Modal.warning({
         title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
@@ -886,7 +888,7 @@
           params.ids = ids.value;
           submitGroupBatchOperate(params).then((res) => {
             setLoading(false);
-            proxy.$message.success('操作成功');
+            Message.success(t('success.operate'));
             search();
             tableRef.value.selectAll(false);
           });

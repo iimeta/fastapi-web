@@ -50,7 +50,7 @@
                 },
                 {
                   match: /^.{1,100}$/,
-                  message: $t('app.error.name.pattern'),
+                  message: $t('app.error.pattern.name'),
                 },
               ]"
             >
@@ -200,7 +200,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('app.error.group.required'),
+                  message: $t('app.error.required.group'),
                 },
               ]"
             >

@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-message />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.audio') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.audio.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('log.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('log.menu.audio') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -532,7 +532,7 @@
       </a-table>
 
       <a-drawer
-        :title="$t('menu.audio.detail')"
+        :title="$t('log.menu.audio.detail')"
         :width="700"
         :footer="false"
         :visible="detailVisible"

@@ -4,7 +4,7 @@
       <a-breadcrumb-item>
         <icon-user-group />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.my.group') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('group.menu.my') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -24,19 +24,19 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('group.form.name')">
+                <a-form-item field="name" :label="$t('group.label.name')">
                   <a-input
                     v-model="searchFormData.name"
-                    :placeholder="$t('group.form.name.placeholder')"
+                    :placeholder="$t('group.placeholder.name')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="models" :label="$t('group.form.models')">
+                <a-form-item field="models" :label="$t('common.models')">
                   <a-select
                     v-model="searchFormData.models"
-                    :placeholder="$t('group.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :max-tag-count="2"
                     :scrollbar="false"
                     multiple
@@ -53,10 +53,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="remark" :label="$t('group.form.remark')">
+                <a-form-item field="remark" :label="$t('group.label.remark')">
                   <a-input
                     v-model="searchFormData.remark"
-                    :placeholder="$t('group.form.remark.placeholder')"
+                    :placeholder="$t('group.placeholder.remark')"
                     allow-clear
                   />
                 </a-form-item>
@@ -71,24 +71,20 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('group.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <!-- <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('group.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button> -->
           </a-space>
         </a-col>
       </a-row>
       <a-divider style="margin-top: 0" />
       <a-row style="margin-bottom: 16px">
-        <a-col :span="22">
-          说明: 分组名称加粗的为默认分组, 默认排在列表首位,
-          当应用或密钥不绑定分组时, 调用模型将按分组列表顺序依次查找,
-          推荐将应用或密钥绑定分组使用
-        </a-col>
+        <a-col :span="22"> {{ $t('group.desc') }} </a-col>
         <a-col
           :span="2"
           style="display: flex; align-items: center; justify-content: end"
@@ -159,7 +155,10 @@
         @page-size-change="onPageSizeChange"
       >
         <template #name="{ record }">
-          <span v-if="record.is_default" title="默认分组">
+          <span
+            v-if="record.is_default"
+            :title="$t('group.detail.label.is_default')"
+          >
             <b>{{ record.name }}</b>
           </span>
           <span v-else>
@@ -287,41 +286,41 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('group.columns.name'),
+      title: t('group.label.name'),
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
       width: 168,
     },
     {
-      title: t('group.columns.discount'),
+      title: t('common.discount'),
       dataIndex: 'discount',
       slotName: 'discount',
       align: 'center',
       width: 128,
     },
     {
-      title: t('group.columns.models'),
+      title: t('common.models'),
       dataIndex: 'model_names',
       slotName: 'model_names',
       align: 'center',
       width: 128,
     },
     {
-      title: t('group.columns.expires_at'),
+      title: t('common.expires_at'),
       dataIndex: 'expires_at',
       slotName: 'expires_at',
       align: 'center',
       width: 178,
     },
     {
-      title: t('group.columns.remark'),
+      title: t('group.label.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
     },
     {
-      title: t('group.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',

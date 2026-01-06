@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-message />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.text') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.text.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('log.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('log.menu.text') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -308,7 +308,7 @@
         <a-col :span="16">
           <a-space>
             <a-button type="primary" @click="handleTextExport({})">
-              导出
+              {{ $t('button.export') }}
             </a-button>
             <a-button
               v-permission="['admin']"
@@ -662,7 +662,7 @@
       </a-table>
 
       <a-drawer
-        :title="$t('menu.text.detail')"
+        :title="$t('log.menu.text.detail')"
         :width="700"
         :footer="false"
         :visible="detailVisible"
@@ -808,11 +808,11 @@
     reactive,
     watch,
     nextTick,
-    getCurrentInstance,
     onBeforeMount,
     onBeforeUnmount,
   } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { FormInstance, Tooltip, Message, Modal } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { Pagination } from '@/types/global';
@@ -835,7 +835,6 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { FormInstance, Tooltip } from '@arco-design/web-vue';
   import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
@@ -1264,8 +1263,6 @@
     getModelAgentList();
   }
 
-  const { proxy } = getCurrentInstance() as any;
-
   const detailVisible = ref(false);
   const recordId = ref();
 
@@ -1381,7 +1378,7 @@
     submitTextExport(params)
       .then((res) => {
         setLoading(false);
-        proxy.$message.success('导出成功');
+        Message.success(t('success.export'));
         tableRef.value.selectAll(false);
         // 创建一个新的Blob对象，使用后端返回的文件流
         const blob = new Blob([res.data], { type: 'application/vnd.ms-excel' });
@@ -1403,7 +1400,7 @@
         window.URL.revokeObjectURL(url);
       })
       .catch((error) => {
-        proxy.$message.error('导出失败, 请联系管理员', error);
+        Message.error(t('error.export'), error);
       });
   };
 
@@ -1450,10 +1447,14 @@
     if (ids.value.length === 0 && !params.value) {
       textDelFormVisible.value = true;
     } else {
-      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      let alertContent = t('placeholder.batch.operation', {
+        count: ids.value.length,
+      });
       switch (params.action) {
         case 'delete':
-          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          alertContent = t('placeholder.batch.operation.delete', {
+            count: ids.value.length,
+          });
           break;
         case 'time':
           if (params.user_id) {
@@ -1465,7 +1466,7 @@
         default:
       }
 
-      proxy.$modal.warning({
+      Modal.warning({
         title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
@@ -1475,7 +1476,7 @@
           params.ids = ids.value;
           submitTextBatchOperate(params).then((res) => {
             setLoading(false);
-            proxy.$message.success('操作成功, 任务已提交');
+            Message.success(t('success.task'));
             search();
             tableRef.value.selectAll(false);
           });

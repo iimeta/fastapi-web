@@ -29,13 +29,12 @@
 </template>
 
 <script lang="ts" setup>
-  import { getCurrentInstance, ref, toRefs, reactive } from 'vue';
+  import { ref, toRefs, reactive } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useUserStore } from '@/store';
-  import { ValidatedError } from '@arco-design/web-vue';
+  import { ValidatedError, Message } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
 
-  const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
   const router = useRouter();
   const userStore = useUserStore();
@@ -100,7 +99,7 @@
               ...othersQuery,
             },
           });
-          proxy.$message.success(t('login.success'));
+          Message.success(t('login.success'));
         })
         .catch(() => {})
         .finally(() => {

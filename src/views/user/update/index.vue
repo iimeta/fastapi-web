@@ -212,10 +212,11 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
+  import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import { useRouter, useRoute } from 'vue-router';
   import { disabledDate } from '@/utils/common';
   import {
@@ -226,7 +227,7 @@
   } from '@/api/admin_user';
   import { queryGroupList, GroupList } from '@/api/group';
 
-  const { proxy } = getCurrentInstance() as any;
+  const { t } = useI18n();
   const { loading, setLoading } = useLoading(false);
   const route = useRoute();
   const router = useRouter();
@@ -284,7 +285,7 @@
       setLoading(true);
       try {
         await submitUserUpdate(formData.value).then(() => {
-          proxy.$message.success('更新成功');
+          Message.success(t('success.update'));
           router.push({
             name: 'UserList',
           });

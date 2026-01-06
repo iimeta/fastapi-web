@@ -4,8 +4,7 @@
       <a-breadcrumb-item>
         <icon-safe />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.key') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.key.model.list') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('key.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -25,13 +24,10 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="provider_id"
-                  :label="$t('key.form.provider')"
-                >
+                <a-form-item field="provider_id" :label="$t('common.provider')">
                   <a-select
                     v-model="searchFormData.provider_id"
-                    :placeholder="$t('key.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
@@ -46,19 +42,19 @@
                 </a-form-item>
               </a-col>
               <a-col :span="7">
-                <a-form-item field="key" :label="$t('key.form.key')">
+                <a-form-item field="key" :label="$t('common.key')">
                   <a-input
                     v-model="searchFormData.key"
-                    :placeholder="$t('key.form.key.placeholder')"
+                    :placeholder="$t('placeholder.key')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="9">
-                <a-form-item field="models" :label="$t('key.form.models')">
+                <a-form-item field="models" :label="$t('common.model')">
                   <a-select
                     v-model="searchFormData.models"
-                    :placeholder="$t('key.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :max-tag-count="2"
                     :scrollbar="false"
                     multiple
@@ -77,11 +73,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="model_agents"
-                  :label="$t('key.form.modelAgents')"
+                  :label="$t('common.model_agents')"
                 >
                   <a-select
                     v-model="searchFormData.model_agents"
-                    :placeholder="$t('key.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :max-tag-count="2"
                     :scrollbar="false"
                     multiple
@@ -98,10 +94,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="7">
-                <a-form-item field="status" :label="$t('key.form.status')">
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('key.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -112,7 +108,7 @@
                 <a-form-item field="remark" :label="$t('key.form.remark')">
                   <a-input
                     v-model="searchFormData.remark"
-                    :placeholder="$t('key.form.remark.placeholder')"
+                    :placeholder="$t('key.form.placeholder.remark')"
                     allow-clear
                   />
                 </a-form-item>
@@ -127,13 +123,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('key.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('key.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -146,7 +142,7 @@
               type="primary"
               @click="$router.push({ name: 'KeyCreate' })"
             >
-              {{ $t('key.operation.create') }}
+              {{ $t('button.create') }}
             </a-button>
             <a-button
               type="primary"
@@ -350,7 +346,7 @@
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('key.columns.operations.view') }}
+            {{ $t('button.detail') }}
           </a-button>
           <a-button
             type="text"
@@ -362,21 +358,21 @@
               })
             "
           >
-            {{ $t('key.columns.operations.update') }}
+            {{ $t('button.update') }}
           </a-button>
           <a-popconfirm
             :content="$t('placeholder.operation.delete')"
             @ok="keyDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
-              {{ $t('key.columns.operations.delete') }}
+              {{ $t('button.delete') }}
             </a-button>
           </a-popconfirm>
         </template>
       </a-table>
 
       <a-drawer
-        :title="$t('menu.key.detail')"
+        :title="$t('key.menu.detail')"
         unmount-on-close
         render-to-body
         :width="700"
@@ -387,10 +383,10 @@
         <Detail :id="recordId" />
       </a-drawer>
 
-      <!-- 模型 -->
+      <!-- 绑定模型 -->
       <a-modal
         v-model:visible="modelsVisible"
-        title="模型"
+        :title="$t('common.bind_models')"
         :modal-style="{
           padding: '25px 15px 20px 15px',
         }"
@@ -407,17 +403,11 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    computed,
-    ref,
-    reactive,
-    watch,
-    nextTick,
-    getCurrentInstance,
-  } from 'vue';
+  import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { Message, Modal } from '@arco-design/web-vue';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -450,7 +440,6 @@
   type Column = TableColumnData & { checked?: true };
 
   const { loading, setLoading } = useLoading(true);
-  const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
   const route = useRoute();
 
@@ -516,21 +505,21 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('key.columns.provider'),
+      title: t('common.provider'),
       dataIndex: 'provider_name',
       slotName: 'provider_name',
       align: 'center',
       width: 120,
     },
     {
-      title: t('key.columns.key'),
+      title: t('common.key'),
       dataIndex: 'key',
       slotName: 'key',
       align: 'center',
       width: 230,
     },
     {
-      title: t('key.columns.models'),
+      title: t('common.bind_models'),
       dataIndex: 'models',
       slotName: 'models',
       align: 'center',
@@ -538,7 +527,7 @@
       tooltip: true,
     },
     {
-      title: t('key.columns.model_agents'),
+      title: t('common.model_agents'),
       dataIndex: 'model_agent_names',
       slotName: 'model_agent_names',
       align: 'center',
@@ -546,7 +535,7 @@
       tooltip: true,
     },
     {
-      title: t('key.columns.used_quota'),
+      title: t('common.used_quota'),
       dataIndex: 'used_quota',
       slotName: 'used_quota',
       align: 'center',
@@ -561,7 +550,7 @@
       width: 60,
     },
     {
-      title: t('key.columns.remark'),
+      title: t('common.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
@@ -569,21 +558,21 @@
       tooltip: true,
     },
     {
-      title: t('key.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('key.columns.updated_at'),
+      title: t('common.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
       align: 'center',
       width: 132,
     },
     {
-      title: t('key.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -593,11 +582,11 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('key.dict.status.1'),
+      label: t('dict.status.1'),
       value: 1,
     },
     {
-      label: t('key.dict.status.2'),
+      label: t('dict.status.2'),
       value: 2,
     },
   ]);
@@ -776,7 +765,7 @@
     setLoading(true);
     try {
       await submitKeyDelete(params);
-      proxy.$message.success('删除成功');
+      Message.success(t('success.delete'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -789,7 +778,7 @@
     setLoading(true);
     try {
       await submitKeyChangeStatus(params);
-      proxy.$message.success('操作成功');
+      Message.success(t('success.operate'));
       search();
     } catch (err) {
       // you can report use errorHandler or other
@@ -813,34 +802,48 @@
    */
   const handleBatch = (params: KeyBatchOperate) => {
     if (allMultiple.value && ids.value.length === 0) {
-      proxy.$message.info('请选择或查询要操作的数据');
+      Message.info('请选择或查询要操作的数据');
     } else {
-      let alertContent = `是否确定操作所选的${ids.value.length}条数据?`;
+      let alertContent = t('placeholder.batch.operation', {
+        count: ids.value.length,
+      });
       switch (params.action) {
         case 'status':
           if (params.value === 1) {
-            alertContent = `是否确定启用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.enable', {
+              count: ids.value.length,
+            });
           } else {
-            alertContent = `是否确定禁用所选的${ids.value.length}条数据?`;
+            alertContent = t('placeholder.batch.operation.disable', {
+              count: ids.value.length,
+            });
           }
           break;
         case 'delete':
-          alertContent = `是否确定删除所选的${ids.value.length}条数据?`;
+          alertContent = t('placeholder.batch.operation.delete', {
+            count: ids.value.length,
+          });
           break;
         case 'all-status':
           if (params.value === 1) {
-            alertContent = `是否确定全部启用查询结果的${pagination.total}条数据?`;
+            alertContent = t('placeholder.batch.operation.all.enable', {
+              count: pagination.total,
+            });
           } else {
-            alertContent = `是否确定全部禁用查询结果的${pagination.total}条数据?`;
+            alertContent = t('placeholder.batch.operation.all.disable', {
+              count: pagination.total,
+            });
           }
           break;
         case 'all-delete':
-          alertContent = `是否确定全部删除查询结果的${pagination.total}条数据?`;
+          alertContent = t('placeholder.batch.operation.all.delete', {
+            count: pagination.total,
+          });
           break;
         default:
       }
 
-      proxy.$modal.warning({
+      Modal.warning({
         title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
@@ -851,7 +854,7 @@
           submitKeyBatchOperate({ ...params, ...searchFormData.value }).then(
             (res) => {
               setLoading(false);
-              proxy.$message.success('操作成功, 任务已提交');
+              Message.success(t('success.task'));
               search();
               tableRef.value.selectAll(false);
             }
@@ -874,7 +877,7 @@
 
   watch(copied, () => {
     if (copied.value) {
-      proxy.$message.success('复制成功');
+      Message.success(t('success.copy'));
     }
   });
 

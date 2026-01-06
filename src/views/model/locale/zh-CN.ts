@@ -1,7 +1,6 @@
 export default {
   'menu.model': '模型管理',
   'menu.my.model': '我的模型',
-  'menu.model.list': '模型列表',
   'menu.model.create': '新建模型',
   'menu.model.update': '修改模型',
   'menu.model.detail': '模型详情',
@@ -30,8 +29,8 @@ export default {
   'model.error.response_data_format.required': '请选择响应数据格式',
   'model.label.isEnableModelAgent': '启用代理',
   'model.label.lb_strategy': '负载策略',
-  'model.label.modelAgents': '模型代理',
-  'model.placeholder.modelAgents': '请选择模型代理, 可同时选择多个模型代理',
+  'model.label.model_agents': '模型代理',
+  'model.placeholder.model_agents': '请选择模型代理, 可同时选择多个模型代理',
   'model.error.modelAgents.required': '请选择模型代理',
   'model.label.isPublic': '是否公开',
   'model.label.groups': '所属分组',
@@ -41,7 +40,8 @@ export default {
   'model.label.is_enable_preset_config': '预设配置',
   'model.label.preset_config.is_support_system_role': '支持system角色',
   'model.label.preset_config.system_role_prompt': '预设提示词',
-  'model.placeholder.preset_config.system_role_prompt': '预设system角色的提示词',
+  'model.placeholder.preset_config.system_role_prompt':
+    '预设system角色的提示词',
   'model.label.preset_config.max_tokens.range': 'max_tokens范围',
   'model.placeholder.preset_config.min_tokens': 'max_tokens取值的最小值',
   'model.placeholder.preset_config.max_tokens': 'max_tokens取值的最大值',
@@ -74,10 +74,12 @@ export default {
   'model.form.title.init_model': '同步模型数据',
   'model.label.url': '模型接口',
   'model.error.url.required': '请输入模型接口',
-  'model.placeholder.url': 'Fast API 模型接口, 如: https://api.fastapi.ai/v1/models',
+  'model.placeholder.url':
+    'Fast API 模型接口, 如: https://api.fastapi.ai/v1/models',
   'model.label.key': '应用密钥',
   'model.error.key.required': '请输入应用密钥',
-  'model.placeholder.key': 'Fast API 应用密钥, 如: sk-FastAPI1DKp0fzcD0Bf0sOJV1',
+  'model.placeholder.key':
+    'Fast API 应用密钥, 如: sk-FastAPI1DKp0fzcD0Bf0sOJV1',
   'model.label.is_config_model_agent': '配置代理',
   'model.label.is_cover_price': '覆盖价格',
 
@@ -104,7 +106,8 @@ export default {
   'model.error.text.required': '请输入服务层、输入、输出和思考价格',
   'model.error.text_cache.required': '请输入服务层和缓存价格',
   'model.label.text': '文本价格',
-  'model.error.tiered_text.required': '请输入模式、大于、小于等于、输入、输出和思考价格',
+  'model.error.tiered_text.required':
+    '请输入模式、大于、小于等于、输入、输出和思考价格',
   'model.placeholder.tiered_mode': '模式',
   'model.placeholder.tiered_gt': '大于',
   'model.placeholder.tiered_lte': '小于等于',
@@ -112,7 +115,8 @@ export default {
   'model.placeholder.tiered_output_ratio': '输出价格',
   'model.placeholder.tiered_reasoning_ratio': '思考价格',
   'model.label.text_cache': '缓存价格',
-  'model.error.tiered_text_cache.required': '请输入模式、大于、小于等于、读取和写入价格',
+  'model.error.tiered_text_cache.required':
+    '请输入模式、大于、小于等于、读取和写入价格',
   'model.placeholder.tiered_cache_read_ratio': '读取价格',
   'model.placeholder.tiered_cache_write_ratio': '写入价格',
   'model.label.image_generation': '生成价格',
@@ -225,8 +229,6 @@ export default {
   'model.form.reset': '重置',
   'model.form.selectDefault': '全部',
   'model.form.title.model_agent': '全部代理',
-  'model.label.model_agents': '模型代理',
-  'model.placeholder.model_agents': '请选择模型代理',
   'model.error.model_agents.required': '请选择模型代理',
   'model.form.title.forward': '全部转发',
   'model.label.target_model': '目标模型',

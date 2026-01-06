@@ -7,7 +7,7 @@ const APP_KEY: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   redirect: '/app/key',
   meta: {
-    locale: 'menu.key.app',
+    locale: 'app.key.menu',
     requiresAuth: true,
     icon: 'icon-safe',
     order: 100,
@@ -20,7 +20,7 @@ const APP_KEY: AppRouteRecordRaw = {
       name: 'AppKeyList',
       component: () => import('@/views/app_key/list/index.vue'),
       meta: {
-        locale: 'menu.key.app.list',
+        locale: 'app.key.menu',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'app_key',

@@ -115,7 +115,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance, computed } from 'vue';
+  import { ref, computed } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
@@ -124,12 +124,12 @@
     queryProviderDetail,
     ProviderDetailParams,
   } from '@/api/provider';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import { useRouter, useRoute } from 'vue-router';
 
   const { loading, setLoading } = useLoading(false);
-  const { proxy } = getCurrentInstance() as any;
+
   const { t } = useI18n();
 
   const router = useRouter();
@@ -302,7 +302,7 @@
       setLoading(true);
       try {
         await submitProviderUpdate(formData.value).then(() => {
-          proxy.$message.success('更新成功');
+          Message.success(t('success.update'));
           router.push({
             name: 'ProviderList',
           });

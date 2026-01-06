@@ -322,15 +322,17 @@
                   value="1"
                   :default-checked="true"
                 >
-                  轮询
+                  {{ $t('dict.lb_strategy.1') }}
                 </a-radio>
-                <a-radio v-model="formData.lb_strategy" value="2">权重</a-radio>
+                <a-radio v-model="formData.lb_strategy" value="2">
+                  {{ $t('dict.lb_strategy.2') }}
+                </a-radio>
               </a-space>
             </a-form-item>
             <a-form-item
               v-if="formData.is_enable_model_agent"
               field="model_agents"
-              :label="$t('model.label.modelAgents')"
+              :label="$t('model.label.model_agents')"
               :rules="[
                 {
                   required: true,
@@ -340,7 +342,7 @@
             >
               <a-select
                 v-model="formData.model_agents"
-                :placeholder="$t('model.placeholder.modelAgents')"
+                :placeholder="$t('model.placeholder.model_agents')"
                 :max-tag-count="5"
                 :scrollbar="false"
                 multiple
@@ -383,9 +385,9 @@
                 style="width: 762px"
                 @change="handleForwardRuleChange"
               >
-                <a-option value="1">全部转发</a-option>
-                <a-option value="2">按关键字</a-option>
-                <a-option value="3">内容长度</a-option>
+                <a-option value="1">{{ $t('dict.forward_rule.1') }}</a-option>
+                <a-option value="2">{{ $t('dict.forward_rule.2') }}</a-option>
+                <a-option value="3">{{ $t('dict.forward_rule.3') }}</a-option>
               </a-select>
             </a-form-item>
             <a-form-item
@@ -460,13 +462,15 @@
                   v-model="formData.forward_config.match_rule"
                   value="1"
                   :default-checked="true"
-                  >智能匹配</a-checkbox
                 >
+                  {{ $t('dict.match_rule.1') }}
+                </a-checkbox>
                 <a-checkbox
                   v-model="formData.forward_config.match_rule"
                   value="2"
-                  >正则匹配</a-checkbox
                 >
+                  {{ $t('dict.match_rule.2') }}
+                </a-checkbox>
               </a-space>
             </a-form-item>
             <a-form-item
@@ -644,11 +648,11 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, getCurrentInstance } from 'vue';
+  import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { useRouter } from 'vue-router';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import {
     Model,
     submitModelCreate,
@@ -661,7 +665,7 @@
   import Pricing from '../components/pricing.vue';
 
   const { loading, setLoading } = useLoading(false);
-  const { proxy } = getCurrentInstance() as any;
+
   const { t } = useI18n();
   const router = useRouter();
 
@@ -801,13 +805,13 @@
       // 定价
       const pricingRes = await pricingRef.value?.validate();
       if (pricingRes) {
-        proxy.$message.warning(t('model.error.pricing.required'));
+        Message.warning(t('model.error.pricing.required'));
         return;
       }
       setLoading(true);
       try {
         await submitModelCreate(formData.value).then(() => {
-          proxy.$message.success('新建成功');
+          Message.success(t('success.create'));
           router.push({
             name: 'ModelList',
           });

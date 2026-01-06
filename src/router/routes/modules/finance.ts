@@ -6,7 +6,7 @@ const FINANCE: AppRouteRecordRaw = {
   name: 'finance',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.finance',
+    locale: 'finance.menu',
     requiresAuth: true,
     icon: 'icon-wechatpay',
     order: 120,
@@ -17,7 +17,7 @@ const FINANCE: AppRouteRecordRaw = {
       name: 'BillList',
       component: () => import('@/views/finance/list/bill.vue'),
       meta: {
-        locale: 'menu.bill.list',
+        locale: 'finance.menu.bill',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'BillList',
@@ -28,7 +28,7 @@ const FINANCE: AppRouteRecordRaw = {
       name: 'DealRecordList',
       component: () => import('@/views/finance/list/deal_record.vue'),
       meta: {
-        locale: 'menu.deal_record.list',
+        locale: 'finance.menu.deal_record',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'DealRecordList',

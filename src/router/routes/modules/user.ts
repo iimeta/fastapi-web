@@ -20,7 +20,7 @@ const USER: AppRouteRecordRaw = {
       name: 'UserList',
       component: () => import('@/views/user/list/index.vue'),
       meta: {
-        locale: 'menu.user.list',
+        locale: 'menu.user',
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         activeMenu: 'user',

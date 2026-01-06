@@ -770,7 +770,7 @@
             style="width: 188px; margin-right: 5px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
-            <template #append> / 张 </template>
+            <template #append> / {{ $t('unit.piece') }} </template>
           </a-input-number>
           <a-radio
             v-model="formData.image_generation[index].is_default"
@@ -861,7 +861,7 @@
             style="width: 309px; margin-right: 5px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
-            <template #append> / 张 </template>
+            <template #append> / {{ $t('unit.piece') }} </template>
           </a-input-number>
           <a-radio
             v-model="formData.vision[index].is_default"
@@ -993,7 +993,7 @@
             style="width: 222px; margin-right: 5px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
-            <template #append> / 秒 </template>
+            <template #append> {{ $t('unit.second') }} </template>
           </a-input-number>
           <a-radio
             v-model="formData.video_generation[index].is_default"
@@ -1086,7 +1086,7 @@
             style="width: 309px; margin-right: 5px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
-            <template #append> / 次 </template>
+            <template #append> / {{ $t('unit.once') }} </template>
           </a-input-number>
           <a-radio
             v-model="formData.search[index].is_default"
@@ -1161,7 +1161,7 @@
             style="width: 188px"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
-            <template #append> / 次 </template>
+            <template #append> / {{ $t('unit.once') }} </template>
           </a-input-number>
           <a-button
             type="primary"
@@ -1207,7 +1207,7 @@
             class="input"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
-            <template #append> / 次 </template>
+            <template #append> / {{ $t('unit.once') }} </template>
           </a-input-number>
         </a-form-item>
       </a-tab-pane>
