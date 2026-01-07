@@ -96,7 +96,10 @@
                 >
                   <a-range-picker
                     v-model="formModel.created_at"
-                    :placeholder="['开始时间', '结束时间']"
+                    :placeholder="[
+                      $t('common.start_time'),
+                      $t('common.end_time'),
+                    ]"
                     :time-picker-props="{
                       defaultValue: ['00:00:00', '23:59:59'],
                     }"

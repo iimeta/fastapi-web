@@ -1,5 +1,5 @@
 export default {
-  'menu.user.center': 'User Center',
+  'user.menu.center': 'User Center',
   'userCenter.menu.title.info': 'Personal Information',
   'userCenter.menu.title.account': 'Account Setting',
   'userCenter.menu.title.password': 'Password',

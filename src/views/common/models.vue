@@ -20,12 +20,12 @@
               <a-col :span="8">
                 <a-form-item
                   field="provider_id"
-                  :label="$t('model.form.provider')"
+                  :label="$t('common.provider')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-select
                     v-model="searchFormData.provider_id"
-                    :placeholder="$t('model.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
@@ -42,7 +42,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="name"
-                  :label="$t('model.form.name')"
+                  :label="$t('common.model_name')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
@@ -55,7 +55,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="model"
-                  :label="$t('model.form.model')"
+                  :label="$t('common.model')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
@@ -75,7 +75,7 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('model.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
           </a-space>
         </a-col>
@@ -147,13 +147,13 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('model.columns.provider'),
+      title: t('common.provider'),
       dataIndex: 'provider_name',
       slotName: 'provider_name',
       align: 'center',
     },
     {
-      title: t('model.columns.name'),
+      title: t('common.model_name'),
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
@@ -161,7 +161,7 @@
       tooltip: true,
     },
     {
-      title: t('model.columns.model'),
+      title: t('common.model'),
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',

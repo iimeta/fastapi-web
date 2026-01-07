@@ -5,7 +5,7 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item :label="$t('notice.template.detail.name')">
+      <a-descriptions-item :label="$t('notice.template.label.name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -13,7 +13,7 @@
           {{ currentData.name }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('notice.template.detail.scenes')">
+      <a-descriptions-item :label="$t('notice.template.label.scenes')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -21,10 +21,7 @@
           {{ currentData.scenes.toString() }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('notice.template.detail.title')"
-        :span="2"
-      >
+      <a-descriptions-item :label="$t('notice.template.label.title')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -33,7 +30,7 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="$t('notice.template.detail.content')"
+        :label="$t('notice.template.label.content')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">

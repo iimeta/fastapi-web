@@ -12,7 +12,7 @@
       :rules="[
         {
           required: true,
-          message: $t('model.error.billing_rule.required'),
+          message: $t('model.error.required.billing_rule'),
         },
       ]"
       style="margin-bottom: 12px"
@@ -32,11 +32,11 @@
     </a-form-item>
     <a-form-item
       field="billing_methods"
-      :label="$t('model.label.billing_methods')"
+      :label="$t('common.billing_methods')"
       :rules="[
         {
           required: true,
-          message: $t('model.error.billing_methods.required'),
+          message: $t('placeholder.billing_methods'),
         },
       ]"
       style="margin-bottom: 20px"
@@ -65,7 +65,7 @@
       :rules="[
         {
           required: true,
-          message: $t('model.error.billing_items.required'),
+          message: $t('model.error.required.billing_items'),
         },
       ]"
       style="width: 1088px; margin-bottom: 0"
@@ -79,7 +79,7 @@
           :disabled="formData.billing_items.includes('tiered_text')"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.text') }}
+          {{ t('dict.billing_items.text') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -89,7 +89,7 @@
           :disabled="formData.billing_items.includes('tiered_text_cache')"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.text_cache') }}
+          {{ t('dict.billing_items.text_cache') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -98,7 +98,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.audio') }}
+          {{ t('dict.billing_items.audio') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -107,7 +107,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.audio_cache') }}
+          {{ t('dict.billing_items.audio_cache') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -117,7 +117,7 @@
           :disabled="formData.billing_items.includes('text')"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.tiered_text') }}
+          {{ t('dict.billing_items.tiered_text') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -127,7 +127,7 @@
           :disabled="formData.billing_items.includes('text_cache')"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.tiered_text_cache') }}
+          {{ t('dict.billing_items.tiered_text_cache') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -136,7 +136,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.image') }}
+          {{ t('dict.billing_items.image') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -145,7 +145,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.image_generation') }}
+          {{ t('dict.billing_items.image_generation') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -154,7 +154,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.image_cache') }}
+          {{ t('dict.billing_items.image_cache') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -163,7 +163,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.vision') }}
+          {{ t('dict.billing_items.vision') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -172,7 +172,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.video') }}
+          {{ t('dict.billing_items.video') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -181,7 +181,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.video_generation') }}
+          {{ t('dict.billing_items.video_generation') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -190,7 +190,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.video_cache') }}
+          {{ t('dict.billing_items.video_cache') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -199,7 +199,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.search') }}
+          {{ t('dict.billing_items.search') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -208,7 +208,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.midjourney') }}
+          {{ t('dict.billing_items.midjourney') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(2)"
@@ -220,7 +220,7 @@
           }"
           @change="handleBillingItemsChange"
         >
-          {{ t('model.dict.billing_items.once') }}
+          {{ t('dict.billing_items.once') }}
         </a-checkbox>
       </a-space>
     </a-form-item>
@@ -235,7 +235,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('text')"
         key="text"
-        :title="$t('model.dict.billing_items.text')"
+        :title="$t('dict.billing_items.text')"
       >
         <a-form-item
           v-for="(_, index) of formData.text"
@@ -250,13 +250,13 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.text.required'),
+              message: $t('model.error.required.text'),
             },
           ]"
         >
           <a-select
             v-model="formData.text[index].service_tier"
-            :placeholder="$t('model.placeholder.service_tier')"
+            :placeholder="$t('model.label.service_tier')"
             :options="serviceTierOptions"
             style="width: 102px; margin-right: 5px"
           />
@@ -318,7 +318,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('text_cache')"
         key="text_cache"
-        :title="$t('model.dict.billing_items.text_cache')"
+        :title="$t('dict.billing_items.text_cache')"
       >
         <a-form-item
           v-for="(_, index) of formData.text_cache"
@@ -331,13 +331,13 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.text_cache.required'),
+              message: $t('model.error.required.text_cache'),
             },
           ]"
         >
           <a-select
             v-model="formData.text_cache[index].service_tier"
-            :placeholder="$t('model.placeholder.service_tier')"
+            :placeholder="$t('model.label.service_tier')"
             :options="serviceTierOptions"
             style="width: 215px; margin-right: 5px"
           />
@@ -375,7 +375,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('audio')"
         key="audio"
-        :title="$t('model.dict.billing_items.audio')"
+        :title="$t('dict.billing_items.audio')"
       >
         <a-form-item
           field="audio.input_ratio"
@@ -383,7 +383,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.input_ratio.required'),
+              message: $t('model.error.required.input_ratio'),
             },
           ]"
         >
@@ -406,7 +406,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.output_ratio.required'),
+              message: $t('model.error.required.output_ratio'),
             },
           ]"
         >
@@ -431,7 +431,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('audio_cache')"
         key="audio_cache"
-        :title="$t('model.dict.billing_items.audio_cache')"
+        :title="$t('dict.billing_items.audio_cache')"
       >
         <a-form-item
           field="audio_cache.read_ratio"
@@ -439,7 +439,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.read_ratio.required'),
+              message: $t('model.placeholder.read_ratio'),
             },
           ]"
         >
@@ -462,7 +462,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('tiered_text')"
         key="tiered_text"
-        :title="$t('model.dict.billing_items.tiered_text')"
+        :title="$t('dict.billing_items.tiered_text')"
       >
         <a-form-item
           v-for="(_, index) of formData.tiered_text"
@@ -479,7 +479,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.tiered_text.required'),
+              message: $t('model.error.required.tiered_text'),
             },
           ]"
         >
@@ -569,7 +569,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('tiered_text_cache')"
         key="tiered_text_cache"
-        :title="$t('model.dict.billing_items.tiered_text_cache')"
+        :title="$t('dict.billing_items.tiered_text_cache')"
       >
         <a-form-item
           v-for="(_, index) of formData.tiered_text_cache"
@@ -585,7 +585,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.tiered_text_cache.required'),
+              message: $t('model.error.required.tiered_text_cache'),
             },
           ]"
         >
@@ -663,7 +663,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('image')"
         key="image"
-        :title="$t('model.dict.billing_items.image')"
+        :title="$t('dict.billing_items.image')"
       >
         <a-form-item
           field="image.input_ratio"
@@ -671,7 +671,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.input_ratio.required'),
+              message: $t('model.error.required.input_ratio'),
             },
           ]"
         >
@@ -694,7 +694,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.output_ratio.required'),
+              message: $t('model.error.required.output_ratio'),
             },
           ]"
         >
@@ -717,7 +717,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('image_generation')"
         key="image_generation"
-        :title="$t('model.dict.billing_items.image_generation')"
+        :title="$t('dict.billing_items.image_generation')"
       >
         <a-form-item
           v-for="(_, index) of formData.image_generation.length"
@@ -732,7 +732,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.image_generation.required'),
+              message: $t('model.error.required.image_generation'),
             },
           ]"
         >
@@ -801,7 +801,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('image_cache')"
         key="image_cache"
-        :title="$t('model.dict.billing_items.image_cache')"
+        :title="$t('dict.billing_items.image_cache')"
       >
         <a-form-item
           field="image_cache.read_ratio"
@@ -809,7 +809,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.read_ratio.required'),
+              message: $t('model.placeholder.read_ratio'),
             },
           ]"
         >
@@ -832,7 +832,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('vision')"
         key="vision"
-        :title="$t('model.dict.billing_items.vision')"
+        :title="$t('dict.billing_items.vision')"
       >
         <a-form-item
           v-for="(_, index) of formData.vision"
@@ -842,7 +842,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.vision.required'),
+              message: $t('model.error.required.vision'),
             },
           ]"
         >
@@ -892,7 +892,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('video')"
         key="video"
-        :title="$t('model.dict.billing_items.video')"
+        :title="$t('dict.billing_items.video')"
       >
         <a-form-item
           field="video.input_ratio"
@@ -900,7 +900,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.input_ratio.required'),
+              message: $t('model.error.required.input_ratio'),
             },
           ]"
         >
@@ -923,7 +923,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.output_ratio.required'),
+              message: $t('model.error.required.output_ratio'),
             },
           ]"
         >
@@ -946,7 +946,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('video_generation')"
         key="video_generation"
-        :title="$t('model.dict.billing_items.video_generation')"
+        :title="$t('dict.billing_items.video_generation')"
       >
         <a-form-item
           v-for="(_, index) of formData.video_generation.length"
@@ -960,7 +960,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.video_generation.required'),
+              message: $t('model.error.required.video_generation'),
             },
           ]"
         >
@@ -1024,7 +1024,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('video_cache')"
         key="video_cache"
-        :title="$t('model.dict.billing_items.video_cache')"
+        :title="$t('dict.billing_items.video_cache')"
       >
         <a-form-item
           field="video_cache.read_ratio"
@@ -1032,7 +1032,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.read_ratio.required'),
+              message: $t('model.placeholder.read_ratio'),
             },
           ]"
         >
@@ -1055,7 +1055,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('search')"
         key="search"
-        :title="$t('model.dict.billing_items.search')"
+        :title="$t('dict.billing_items.search')"
       >
         <a-form-item
           v-for="(_, index) of formData.search"
@@ -1067,7 +1067,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.search.required'),
+              message: $t('model.error.required.search'),
             },
           ]"
         >
@@ -1117,7 +1117,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('midjourney')"
         key="midjourney"
-        :title="$t('model.dict.billing_items.midjourney')"
+        :title="$t('dict.billing_items.midjourney')"
       >
         <a-form-item
           v-for="(_, index) of formData.midjourney"
@@ -1132,7 +1132,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.midjourney.required'),
+              message: $t('model.error.required.midjourney'),
             },
           ]"
         >
@@ -1185,7 +1185,7 @@
       <a-tab-pane
         v-if="formData.billing_items.includes('once')"
         key="once"
-        :title="$t('model.dict.billing_items.once')"
+        :title="$t('dict.billing_items.once')"
       >
         <a-form-item
           field="once.once_ratio"
@@ -1193,7 +1193,7 @@
           :rules="[
             {
               required: true,
-              message: $t('model.error.once_ratio.required'),
+              message: $t('model.placeholder.once_ratio'),
             },
           ]"
         >
@@ -1245,67 +1245,67 @@
 
   const billingItems = [
     {
-      label: t('model.dict.billing_items.text'),
+      label: t('dict.billing_items.text'),
       value: 'text',
     },
     {
-      label: t('model.dict.billing_items.text_cache'),
+      label: t('dict.billing_items.text_cache'),
       value: 'text_cache',
     },
     {
-      label: t('model.dict.billing_items.audio'),
+      label: t('dict.billing_items.audio'),
       value: 'audio',
     },
     {
-      label: t('model.dict.billing_items.audio_cache'),
+      label: t('dict.billing_items.audio_cache'),
       value: 'audio_cache',
     },
     {
-      label: t('model.dict.billing_items.tiered_text'),
+      label: t('dict.billing_items.tiered_text'),
       value: 'tiered_text',
     },
     {
-      label: t('model.dict.billing_items.tiered_text_cache'),
+      label: t('dict.billing_items.tiered_text_cache'),
       value: 'tiered_text_cache',
     },
     {
-      label: t('model.dict.billing_items.image'),
+      label: t('dict.billing_items.image'),
       value: 'image',
     },
     {
-      label: t('model.dict.billing_items.image_generation'),
+      label: t('dict.billing_items.image_generation'),
       value: 'image_generation',
     },
     {
-      label: t('model.dict.billing_items.image_cache'),
+      label: t('dict.billing_items.image_cache'),
       value: 'image_cache',
     },
     {
-      label: t('model.dict.billing_items.vision'),
+      label: t('dict.billing_items.vision'),
       value: 'vision',
     },
     {
-      label: t('model.dict.billing_items.video'),
+      label: t('dict.billing_items.video'),
       value: 'video',
     },
     {
-      label: t('model.dict.billing_items.video_generation'),
+      label: t('dict.billing_items.video_generation'),
       value: 'video_generation',
     },
     {
-      label: t('model.dict.billing_items.video_cache'),
+      label: t('dict.billing_items.video_cache'),
       value: 'video_cache',
     },
     {
-      label: t('model.dict.billing_items.search'),
+      label: t('dict.billing_items.search'),
       value: 'search',
     },
     {
-      label: t('model.dict.billing_items.midjourney'),
+      label: t('dict.billing_items.midjourney'),
       value: 'midjourney',
     },
     {
-      label: t('model.dict.billing_items.once'),
+      label: t('dict.billing_items.once'),
       value: 'once',
     },
   ];

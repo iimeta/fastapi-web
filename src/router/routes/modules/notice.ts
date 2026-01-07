@@ -29,7 +29,7 @@ const NOTICE: AppRouteRecordRaw = {
       name: 'NoticeCreate',
       component: () => import('@/views/notice/create/index.vue'),
       meta: {
-        locale: 'menu.notice.create',
+        locale: 'notice.menu.create',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
@@ -41,7 +41,7 @@ const NOTICE: AppRouteRecordRaw = {
       name: 'NoticeUpdate',
       component: () => import('@/views/notice/update/index.vue'),
       meta: {
-        locale: 'menu.notice.update',
+        locale: 'notice.menu.update',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
@@ -53,7 +53,7 @@ const NOTICE: AppRouteRecordRaw = {
       name: 'NoticeTemplateList',
       component: () => import('@/views/notice_template/list/index.vue'),
       meta: {
-        locale: 'menu.notice.template',
+        locale: 'notice.template.menu',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'NoticeTemplateList',
@@ -64,7 +64,7 @@ const NOTICE: AppRouteRecordRaw = {
       name: 'NoticeTemplateCreate',
       component: () => import('@/views/notice_template/create/index.vue'),
       meta: {
-        locale: 'menu.notice.template.create',
+        locale: 'notice.template.menu.create',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
@@ -76,7 +76,7 @@ const NOTICE: AppRouteRecordRaw = {
       name: 'NoticeTemplateUpdate',
       component: () => import('@/views/notice_template/update/index.vue'),
       meta: {
-        locale: 'menu.notice.template.update',
+        locale: 'notice.template.menu.update',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,

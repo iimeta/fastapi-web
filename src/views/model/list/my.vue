@@ -4,7 +4,7 @@
       <a-breadcrumb-item>
         <icon-common />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.my.model') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('model.menu.my') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -24,13 +24,10 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="provider_id"
-                  :label="$t('model.form.provider')"
-                >
+                <a-form-item field="provider_id" :label="$t('common.provider')">
                   <a-select
                     v-model="searchFormData.provider_id"
-                    :placeholder="$t('model.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
@@ -45,7 +42,7 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="model" :label="$t('model.form.model')">
+                <a-form-item field="model" :label="$t('common.model')">
                   <a-input
                     v-model="searchFormData.model"
                     :placeholder="$t('model.form.model.placeholder')"
@@ -54,10 +51,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="type" :label="$t('model.form.type')">
+                <a-form-item field="type" :label="$t('common.model_type')">
                   <a-select
                     v-model="searchFormData.type"
-                    :placeholder="$t('model.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="typeOptions"
                     :scrollbar="false"
                     allow-search
@@ -66,19 +63,19 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="remark" :label="$t('model.form.remark')">
+                <a-form-item field="remark" :label="$t('model.label.remark')">
                   <a-input
                     v-model="searchFormData.remark"
-                    :placeholder="$t('model.form.remark.placeholder')"
+                    :placeholder="$t('model.placeholder.remark')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('model.form.status')">
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('model.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -86,10 +83,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="group" :label="$t('model.form.my.group')">
+                <a-form-item field="group" :label="$t('model.label.groups')">
                   <a-select
                     v-model="searchFormData.group"
-                    :placeholder="$t('model.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
@@ -113,13 +110,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('model.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('model.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -203,7 +200,7 @@
             size="small"
             @click="viewPricing(record.pricing, record.type)"
           >
-            查看
+            {{ $t('button.view') }}
           </a-button>
         </template>
         <template #billing_methods="{ record }">
@@ -220,7 +217,7 @@
         <template #status="{ record }">
           <span v-if="record.status === 2" class="circle red"></span>
           <span v-else class="circle"></span>
-          {{ $t(`model.dict.status.${record.status}`) }}
+          {{ $t(`dict.status.${record.status}`) }}
         </template>
       </a-table>
 
@@ -323,14 +320,14 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('model.columns.provider'),
+      title: t('common.provider'),
       dataIndex: 'provider_name',
       slotName: 'provider_name',
       align: 'center',
       width: 120,
     },
     {
-      title: t('model.columns.model'),
+      title: t('common.model'),
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
@@ -339,7 +336,7 @@
       tooltip: true,
     },
     {
-      title: t('model.columns.type'),
+      title: t('common.model_type'),
       dataIndex: 'type',
       slotName: 'type',
       align: 'center',
@@ -353,14 +350,14 @@
       width: 80,
     },
     {
-      title: t('model.columns.billing_methods'),
+      title: t('common.billing_methods'),
       dataIndex: 'billing_methods',
       slotName: 'billing_methods',
       align: 'center',
       width: 130,
     },
     {
-      title: t('model.columns.my.group_names'),
+      title: t('model.label.groups'),
       dataIndex: 'group_names',
       slotName: 'group_names',
       align: 'center',
@@ -369,13 +366,13 @@
       tooltip: true,
     },
     {
-      title: t('model.columns.remark'),
+      title: t('model.label.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
     },
     {
-      title: t('model.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
@@ -440,11 +437,11 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('model.dict.status.1'),
+      label: t('dict.status.1'),
       value: 1,
     },
     {
-      label: t('model.dict.status.2'),
+      label: t('dict.status.2'),
       value: 2,
     },
   ]);

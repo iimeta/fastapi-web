@@ -5,7 +5,7 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item :label="$t('notice.detail.title')" :span="2">
+      <a-descriptions-item :label="$t('notice.label.title')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -13,7 +13,7 @@
           {{ currentData.title }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('notice.detail.content')" :span="2">
+      <a-descriptions-item :label="$t('notice.label.content')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -24,7 +24,7 @@
         >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('notice.detail.category')">
+      <a-descriptions-item :label="$t('notice.label.category')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -32,7 +32,7 @@
           {{ $t(`notice.dict.category.${currentData.category}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('notice.detail.scope')">
+      <a-descriptions-item :label="$t('notice.label.scope')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -40,28 +40,28 @@
           {{ $t(`notice.dict.scope.${currentData.scope}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('notice.detail.users')">
+      <a-descriptions-item :label="$t('common.user')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else style="max-height: 200px; display: block; overflow: auto">
           {{
             currentData.scope === 1 || currentData.scope === 2
-              ? '全部'
+              ? $t('common.all')
               : currentData.scope === 4 || currentData.scope === 6
               ? currentData.users?.join('\n') || '-'
               : '-'
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('notice.detail.resellers')" :span="2">
+      <a-descriptions-item :label="$t('common.reseller')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else style="max-height: 200px; display: block; overflow: auto">
           {{
             currentData.scope === 1 || currentData.scope === 3
-              ? '全部'
+              ? $t('common.all')
               : currentData.scope === 5 || currentData.scope === 6
               ? currentData.resellers?.join('\n') || '-'
               : '-'
@@ -86,7 +86,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('notice.detail.publish_time')">
+      <a-descriptions-item :label="$t('common.publish_time')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

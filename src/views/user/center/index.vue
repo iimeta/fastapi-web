@@ -4,7 +4,7 @@
       <a-breadcrumb-item>
         <icon-user />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.user.center') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('user.menu.center') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-row style="margin-bottom: 10px">
       <a-col :span="24">

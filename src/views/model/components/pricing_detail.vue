@@ -332,7 +332,7 @@
   const textPricing = ref<TextPricing[]>([]);
   const textPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.text'),
+      title: t('dict.billing_items.text'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -371,7 +371,7 @@
   const textCachePricing = ref<CachePricing[]>([]);
   const textCachePricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.text_cache'),
+      title: t('dict.billing_items.text_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -396,7 +396,7 @@
   const audioPricing = ref<AudioPricing[]>([]);
   const audioPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.audio'),
+      title: t('dict.billing_items.audio'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -421,7 +421,7 @@
   const audioCachePricing = ref<CachePricing[]>([]);
   const audioCachePricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.audio_cache'),
+      title: t('dict.billing_items.audio_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -439,7 +439,7 @@
   const tieredTextPricing = ref<TextPricing[]>([]);
   const tieredTextPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.tiered_text'),
+      title: t('dict.billing_items.tiered_text'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -485,7 +485,7 @@
   const tieredTextCachePricing = ref<CachePricing[]>([]);
   const tieredTextCachePricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.tiered_text_cache'),
+      title: t('dict.billing_items.tiered_text_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -524,7 +524,7 @@
   const imagePricing = ref<ImagePricing[]>([]);
   const imagePricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.image'),
+      title: t('dict.billing_items.image'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -549,7 +549,7 @@
   const imageGenerationPricing = ref<ImageGenerationPricing[]>([]);
   const imageGenerationPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.image_generation'),
+      title: t('dict.billing_items.image_generation'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -588,7 +588,7 @@
   const imageCachePricing = ref<CachePricing[]>([]);
   const imageCachePricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.image_cache'),
+      title: t('dict.billing_items.image_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -606,7 +606,7 @@
   const visionPricing = ref<VisionPricing[]>([]);
   const visionPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.vision'),
+      title: t('dict.billing_items.vision'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -638,7 +638,7 @@
   const videoPricing = ref<VideoPricing[]>([]);
   const videoPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.video'),
+      title: t('dict.billing_items.video'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -663,7 +663,7 @@
   const videoGenerationPricing = ref<VideoGenerationPricing[]>([]);
   const videoGenerationPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.video_generation'),
+      title: t('dict.billing_items.video_generation'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -695,7 +695,7 @@
   const videoCachePricing = ref<CachePricing[]>([]);
   const videoCachePricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.video_cache'),
+      title: t('dict.billing_items.video_cache'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -713,7 +713,7 @@
   const searchPricing = ref<SearchPricing[]>([]);
   const searchPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.search'),
+      title: t('dict.billing_items.search'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -745,7 +745,7 @@
   const midjourneyPricing = ref<MidjourneyPricing[]>([]);
   const midjourneyPricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.midjourney'),
+      title: t('dict.billing_items.midjourney'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {
@@ -784,7 +784,7 @@
   const oncePricing = ref<OncePricing[]>([]);
   const oncePricingColumns = ref<TableColumnData[]>([
     {
-      title: t('model.columns.pricing.once'),
+      title: t('dict.billing_items.once'),
       headerCellStyle: { background: '#ffffff' },
       children: [
         {

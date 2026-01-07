@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-common />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.model') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.model.update') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('model.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('model.menu.update') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -26,17 +26,17 @@
             </a-divider>
             <a-form-item
               field="provider_id"
-              :label="$t('model.label.provider')"
+              :label="$t('common.provider')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.provider.required'),
+                  message: $t('placeholder.provider'),
                 },
               ]"
             >
               <a-select
                 v-model="formData.provider_id"
-                :placeholder="$t('model.placeholder.provider')"
+                :placeholder="$t('placeholder.provider')"
                 :scrollbar="false"
                 allow-search
                 style="width: 762px"
@@ -51,11 +51,11 @@
             </a-form-item>
             <a-form-item
               field="name"
-              :label="$t('model.label.name')"
+              :label="$t('common.model_name')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.name.required'),
+                  message: $t('model.error.required.name'),
                 },
               ]"
             >
@@ -67,11 +67,11 @@
             </a-form-item>
             <a-form-item
               field="model"
-              :label="$t('model.label.model')"
+              :label="$t('common.model')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.model.required'),
+                  message: $t('model.error.required.model'),
                 },
               ]"
             >
@@ -83,11 +83,11 @@
             </a-form-item>
             <a-form-item
               field="type"
-              :label="$t('model.label.type')"
+              :label="$t('common.model_type')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.type.required'),
+                  message: $t('model.placeholder.type'),
                 },
               ]"
             >
@@ -154,7 +154,9 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.request_data_format.required'),
+                  message: $t(
+                    'model.error.required.request_data_format'
+                  ),
                 },
               ]"
             >
@@ -177,7 +179,9 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.response_data_format.required'),
+                  message: $t(
+                    'model.error.required.response_data_format'
+                  ),
                 },
               ]"
             >
@@ -196,7 +200,7 @@
             </a-form-item>
             <!-- <a-form-item
               field="is_public"
-              :label="$t('model.label.isPublic')"
+              :label="$t('common.is_public')"
               :rules="[
                 {
                   required: true,
@@ -211,7 +215,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.groups.required'),
+                  message: $t('model.placeholder.groups'),
                 },
               ]"
             >
@@ -296,14 +300,14 @@
             </a-form-item>
             <a-form-item
               field="is_enable_model_agent"
-              :label="$t('model.label.isEnableModelAgent')"
+              :label="$t('common.enable_model_agent')"
             >
               <a-switch v-model="formData.is_enable_model_agent" />
             </a-form-item>
             <a-form-item
               v-if="formData.is_enable_model_agent"
               field="lb_strategy"
-              :label="$t('model.label.lb_strategy')"
+              :label="$t('common.lb_strategy')"
               :rules="[
                 {
                   required: true,
@@ -326,11 +330,11 @@
             <a-form-item
               v-if="formData.is_enable_model_agent"
               field="model_agents"
-              :label="$t('model.label.model_agents')"
+              :label="$t('common.model_agents')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.modelAgents.required'),
+                  message: $t('placeholder.model_agents'),
                 },
               ]"
             >
@@ -354,7 +358,7 @@
             </a-form-item>
             <a-form-item
               field="model_forward"
-              :label="$t('model.label.modelForward')"
+              :label="$t('model.label.model_forward')"
             >
               <a-switch
                 v-model="formData.is_enable_forward"
@@ -364,17 +368,17 @@
             <a-form-item
               v-if="formData.is_enable_forward"
               field="forward_config.forward_rule"
-              :label="$t('model.label.forwardRule')"
+              :label="$t('model.label.forward_rule')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.forwardRule.required'),
+                  message: $t('model.placeholder.forward_rule'),
                 },
               ]"
             >
               <a-select
                 v-model="formData.forward_config.forward_rule"
-                :placeholder="$t('model.placeholder.forwardRule')"
+                :placeholder="$t('model.placeholder.forward_rule')"
                 :scrollbar="false"
                 style="width: 762px"
                 @change="handleForwardRuleChange"
@@ -394,7 +398,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.content_length.required'),
+                  message: $t('model.error.required.content_length'),
                 },
               ]"
             >
@@ -414,17 +418,17 @@
                   formData.forward_config.forward_rule === '3')
               "
               field="forward_config.target_model"
-              :label="$t('model.label.targetModel')"
+              :label="$t('model.label.target_model')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.targetModel.required'),
+                  message: $t('model.placeholder.target_model'),
                 },
               ]"
             >
               <a-select
                 v-model="formData.forward_config.target_model"
-                :placeholder="$t('model.placeholder.targetModel')"
+                :placeholder="$t('model.placeholder.target_model')"
                 :scrollbar="false"
                 allow-search
                 style="width: 762px"
@@ -443,11 +447,11 @@
                 formData.forward_config.forward_rule === '2'
               "
               field="forward_config.match_rule"
-              :label="$t('model.label.matchRule')"
+              :label="$t('model.label.match_rule')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.matchRule.required'),
+                  message: $t('model.error.required.match_rule'),
                 },
               ]"
             >
@@ -474,17 +478,17 @@
                 formData.forward_config.match_rule.includes('1')
               "
               field="forward_config.decision_model"
-              :label="$t('model.label.decisionModel')"
+              :label="$t('model.label.decision_model')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.decisionModel.required'),
+                  message: $t('model.placeholder.decision_model'),
                 },
               ]"
             >
               <a-select
                 v-model="formData.forward_config.decision_model"
-                :placeholder="$t('model.placeholder.decisionModel')"
+                :placeholder="$t('model.placeholder.decision_model')"
                 :scrollbar="false"
                 allow-search
                 style="width: 762px"
@@ -512,7 +516,9 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('model.error.keywordsAndtargetModel.required'),
+                  message: $t(
+                    'model.error.required.keywords_and_target_model'
+                  ),
                 },
               ]"
             >
@@ -523,7 +529,7 @@
               />
               <a-select
                 v-model="formData.forward_config.target_models[index]"
-                :placeholder="$t('model.placeholder.targetModel')"
+                :placeholder="$t('model.placeholder.target_model')"
                 :scrollbar="false"
                 style="width: 300px"
                 allow-search
@@ -567,7 +573,7 @@
                     (!formData.fallback_config.model_agent &&
                       !formData.fallback_config.model) ||
                     !formData.fallback_config.model,
-                  message: $t('model.error.fallback.required'),
+                  message: $t('model.error.required.fallback'),
                 },
               ]"
             >
@@ -597,7 +603,7 @@
                     (!formData.fallback_config.model_agent &&
                       !formData.fallback_config.model) ||
                     !formData.fallback_config.model_agent,
-                  message: $t('model.error.fallback.required'),
+                  message: $t('model.error.required.fallback'),
                 },
               ]"
             >
@@ -798,7 +804,7 @@
       // 定价
       const pricingRes = await pricingRef.value?.validate();
       if (pricingRes) {
-        Message.warning(t('model.error.pricing.required'));
+        Message.warning(t('model.error.required.pricing'));
         return;
       }
       setLoading(true);

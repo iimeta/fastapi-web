@@ -25,10 +25,10 @@
           >
             <a-row v-permission="['user', 'reseller']" :gutter="16">
               <a-col v-permission="['user']" :span="8">
-                <a-form-item field="app_id" :label="$t('text.form.app_id')">
+                <a-form-item field="app_id" :label="$t('log.form.app_id')">
                   <a-select
                     v-model="searchFormData.app_id"
-                    :placeholder="$t('text.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
@@ -45,23 +45,20 @@
               <a-col v-permission="['reseller']" :span="8">
                 <a-form-item
                   field="trace_id"
-                  :label="$t('text.form.user.trace_id')"
+                  :label="$t('log.form.user.trace_id')"
                 >
                   <a-input
                     v-model="searchFormData.trace_id"
-                    :placeholder="$t('text.form.trace_id.placeholder')"
+                    :placeholder="$t('log.form.trace_id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col v-permission="['reseller']" :span="8">
-                <a-form-item
-                  field="user_id"
-                  :label="$t('text.form.reseller.user_id')"
-                >
+                <a-form-item field="user_id" :label="$t('common.user_id')">
                   <a-input-number
                     v-model="searchFormData.user_id"
-                    :placeholder="$t('text.form.user_id.placeholder')"
+                    :placeholder="$t('placeholder.user_id')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -69,10 +66,10 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['user']" :span="8">
-                <a-form-item field="key" :label="$t('text.form.key')">
+                <a-form-item field="key" :label="$t('common.key')">
                   <a-input
                     v-model="searchFormData.key"
-                    :placeholder="$t('text.form.key.placeholder')"
+                    :placeholder="$t('placeholder.key')"
                     allow-clear
                   />
                 </a-form-item>
@@ -80,11 +77,11 @@
               <a-col v-permission="['user']" :span="8">
                 <a-form-item
                   field="trace_id"
-                  :label="$t('text.form.user.trace_id')"
+                  :label="$t('log.form.user.trace_id')"
                 >
                   <a-input
                     v-model="searchFormData.trace_id"
-                    :placeholder="$t('text.form.trace_id.placeholder')"
+                    :placeholder="$t('log.form.trace_id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -92,11 +89,11 @@
               <a-col v-permission="['reseller']" :span="8">
                 <a-form-item
                   field="total_time"
-                  :label="$t('text.form.total_time')"
+                  :label="$t('log.form.total_time')"
                 >
                   <a-input-number
                     v-model="searchFormData.total_time"
-                    :placeholder="$t('text.form.total_time.placeholder')"
+                    :placeholder="$t('log.form.total_time.placeholder')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -106,10 +103,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="models" :label="$t('text.form.models')">
+                <a-form-item field="models" :label="$t('common.model')">
                   <a-select
                     v-model="searchFormData.models"
-                    :placeholder="$t('text.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :max-tag-count="1"
                     :scrollbar="false"
                     multiple
@@ -126,10 +123,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('text.form.status')">
+                <a-form-item field="status" :label="$t('log.form.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('text.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -137,10 +134,13 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="req_time" :label="$t('text.form.req_time')">
+                <a-form-item field="req_time" :label="$t('common.req_time')">
                   <a-range-picker
                     v-model="searchFormData.req_time"
-                    :placeholder="['开始时间', '结束时间']"
+                    :placeholder="[
+                      $t('common.start_time'),
+                      $t('common.end_time'),
+                    ]"
                     :time-picker-props="{
                       defaultValue: ['00:00:00', '23:59:59'],
                     }"
@@ -153,12 +153,12 @@
               <a-col :span="5">
                 <a-form-item
                   field="trace_id"
-                  :label="$t('text.form.trace_id')"
+                  :label="$t('log.form.trace_id')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
                     v-model="searchFormData.trace_id"
-                    :placeholder="$t('text.form.trace_id.placeholder')"
+                    :placeholder="$t('log.form.trace_id.placeholder')"
                     allow-clear
                   />
                 </a-form-item>
@@ -166,12 +166,12 @@
               <a-col :span="6">
                 <a-form-item
                   field="models"
-                  :label="$t('text.form.models')"
+                  :label="$t('common.model')"
                   :label-col-props="{ span: 5 }"
                 >
                   <a-select
                     v-model="searchFormData.models"
-                    :placeholder="$t('text.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :max-tag-count="1"
                     :scrollbar="false"
                     multiple
@@ -190,12 +190,12 @@
               <a-col :span="5">
                 <a-form-item
                   field="key"
-                  :label="$t('text.form.key')"
+                  :label="$t('common.key')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input
                     v-model="searchFormData.key"
-                    :placeholder="$t('text.form.key.placeholder')"
+                    :placeholder="$t('placeholder.key')"
                     allow-clear
                   />
                 </a-form-item>
@@ -203,11 +203,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="total_time"
-                  :label="$t('text.form.total_time')"
+                  :label="$t('log.form.total_time')"
                 >
                   <a-input-number
                     v-model="searchFormData.total_time"
-                    :placeholder="$t('text.form.total_time.placeholder')"
+                    :placeholder="$t('log.form.total_time.placeholder')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -219,12 +219,12 @@
               <a-col :span="5">
                 <a-form-item
                   field="user_id"
-                  :label="$t('text.form.user_id')"
+                  :label="$t('log.form.user_id')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-input-number
                     v-model="searchFormData.user_id"
-                    :placeholder="$t('text.form.user_id.placeholder')"
+                    :placeholder="$t('placeholder.user_id')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -234,12 +234,12 @@
               <a-col :span="6">
                 <a-form-item
                   field="model_agents"
-                  :label="$t('text.form.model_agents')"
+                  :label="$t('log.form.model_agents')"
                   :label-col-props="{ span: 5 }"
                 >
                   <a-select
                     v-model="searchFormData.model_agents"
-                    :placeholder="$t('text.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :max-tag-count="1"
                     :scrollbar="false"
                     multiple
@@ -258,12 +258,12 @@
               <a-col :span="5">
                 <a-form-item
                   field="status"
-                  :label="$t('text.form.status')"
+                  :label="$t('log.form.status')"
                   :label-col-props="{ span: 6 }"
                 >
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('text.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -271,10 +271,13 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="req_time" :label="$t('text.form.req_time')">
+                <a-form-item field="req_time" :label="$t('common.req_time')">
                   <a-range-picker
                     v-model="searchFormData.req_time"
-                    :placeholder="['开始时间', '结束时间']"
+                    :placeholder="[
+                      $t('common.start_time'),
+                      $t('common.end_time'),
+                    ]"
                     :time-picker-props="{
                       defaultValue: ['00:00:00', '23:59:59'],
                     }"
@@ -292,13 +295,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('text.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('text.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -509,21 +512,21 @@
         </template>
         <template #status="{ record }">
           <a-tag v-if="record.status === -1" color="red">{{
-            $t(`text.dict.status.${record.status}`)
+            $t(`log.dict.status.${record.status}`)
           }}</a-tag>
           <a-tag v-else-if="record.status === 2" color="gold">{{
-            $t(`text.dict.status.${record.status}`)
+            $t(`log.dict.status.${record.status}`)
           }}</a-tag>
           <a-tag v-else-if="record.status === 3" color="orange">{{
-            $t(`text.dict.status.${record.status}`)
+            $t(`log.dict.status.${record.status}`)
           }}</a-tag>
           <a-tag v-else color="green">{{
-            $t(`text.dict.status.${record.status}`)
+            $t(`log.dict.status.${record.status}`)
           }}</a-tag>
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('text.columns.operations.view') }}
+            {{ $t('button.detail') }}
           </a-button>
         </template>
       </a-table>
@@ -656,8 +659,8 @@
     {
       title:
         userRole === 'reseller' || userRole === 'admin'
-          ? t('text.columns.user_id')
-          : t('text.columns.app_id'),
+          ? t('common.user_id')
+          : t('common.app_id'),
       dataIndex:
         userRole === 'reseller' || userRole === 'admin' ? 'user_id' : 'app_id',
       slotName:
@@ -666,19 +669,21 @@
       width: 75,
     },
     {
-      title: t('text.columns.model'),
+      title: t('common.model'),
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
-      title: t('text.columns.action'),
+      title: t('log.columns.action'),
       dataIndex: 'action',
       slotName: 'action',
       align: 'center',
     },
     {
-      title: t('text.columns.file_id'),
+      title: t('log.columns.file_id'),
       dataIndex: 'file_id',
       slotName: 'file_id',
       align: 'center',
@@ -686,7 +691,7 @@
       tooltip: true,
     },
     {
-      title: t('text.columns.total_spend_tokens'),
+      title: t('common.total.spend'),
       dataIndex: 'total_spend_tokens',
       slotName: 'total_spend_tokens',
       align: 'center',
@@ -704,11 +709,11 @@
               },
             },
             [
-              h('span', t('text.columns.total_spend_tokens')),
+              h('span', t('common.total.spend')),
               h(
                 Tooltip,
                 {
-                  content: t('text.columns.tooltip.total_spend_tokens'),
+                  content: t('log.columns.tooltip.total_spend_tokens'),
                   contentStyle: {
                     whiteSpace: 'nowrap',
                     maxWidth: 'none',
@@ -729,7 +734,7 @@
       },
     },
     {
-      title: t('text.columns.total_time'),
+      title: t('log.columns.total_time'),
       dataIndex: 'total_time',
       slotName: 'total_time',
       align: 'center',
@@ -746,11 +751,11 @@
               },
             },
             [
-              h('span', t('text.columns.total_time')),
+              h('span', t('log.columns.total_time')),
               h(
                 Tooltip,
                 {
-                  content: t('text.columns.tooltip.total_time'),
+                  content: t('log.columns.tooltip.total_time'),
                   contentStyle: {
                     whiteSpace: 'nowrap',
                     maxWidth: 'none',
@@ -771,27 +776,27 @@
       },
     },
     {
-      title: t('text.columns.internal_time'),
+      title: t('log.columns.internal_time'),
       dataIndex: 'internal_time',
       slotName: 'internal_time',
       align: 'center',
     },
     {
-      title: t('text.columns.status'),
+      title: t('log.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('text.columns.req_time'),
+      title: t('common.req_time'),
       dataIndex: 'req_time',
       slotName: 'req_time',
       align: 'center',
       width: 132,
     },
     {
-      title: t('text.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -801,15 +806,15 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('text.dict.status.1'),
+      label: t('log.dict.status.1'),
       value: 1,
     },
     {
-      label: t('text.dict.status.2'),
+      label: t('log.dict.status.2'),
       value: 2,
     },
     {
-      label: t('text.dict.status.-1'),
+      label: t('log.dict.status.-1'),
       value: -1,
     },
   ]);
@@ -817,11 +822,11 @@
   if (userRole === 'admin') {
     statusOptions.value.push(
       {
-        label: t('text.dict.status.3'),
+        label: t('log.dict.status.3'),
         value: 3,
       },
       {
-        label: t('text.dict.status.-100'),
+        label: t('log.dict.status.-100'),
         value: -100,
       }
     );

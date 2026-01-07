@@ -4,7 +4,7 @@
       <a-breadcrumb-item>
         <icon-common />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.model') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('model.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -24,13 +24,10 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="provider_id"
-                  :label="$t('model.form.provider')"
-                >
+                <a-form-item field="provider_id" :label="$t('common.provider')">
                   <a-select
                     v-model="searchFormData.provider_id"
-                    :placeholder="$t('model.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
@@ -45,7 +42,7 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="model" :label="$t('model.form.model')">
+                <a-form-item field="model" :label="$t('common.model')">
                   <a-input
                     v-model="searchFormData.model"
                     :placeholder="$t('model.form.model.placeholder')"
@@ -54,7 +51,7 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('model.form.name')">
+                <a-form-item field="name" :label="$t('common.model_name')">
                   <a-input
                     v-model="searchFormData.name"
                     :placeholder="$t('model.form.name.placeholder')"
@@ -63,10 +60,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="group" :label="$t('model.form.group')">
+                <a-form-item field="group" :label="$t('common.group')">
                   <a-select
                     v-model="searchFormData.group"
-                    :placeholder="$t('model.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
@@ -81,10 +78,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('model.form.status')">
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('model.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -92,10 +89,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="type" :label="$t('model.form.type')">
+                <a-form-item field="type" :label="$t('common.model_type')">
                   <a-select
                     v-model="searchFormData.type"
-                    :placeholder="$t('model.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="typeOptions"
                     :scrollbar="false"
                     allow-search
@@ -113,13 +110,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('model.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('model.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -132,7 +129,7 @@
               type="primary"
               @click="$router.push({ name: 'ModelCreate' })"
             >
-              {{ $t('model.operation.create') }}
+              {{ $t('button.create') }}
             </a-button>
             <a-button
               v-if="!loading && renderData.length === 0"
@@ -140,7 +137,7 @@
               status="success"
               @click="initModel()"
             >
-              同步
+              {{ $t('button.sync') }}
             </a-button>
             <a-button
               v-if="renderData.length !== 0"
@@ -155,7 +152,7 @@
                 })
               "
             >
-              全部代理
+              {{ $t('model.button.all_model_agent') }}
             </a-button>
             <a-button
               v-if="renderData.length !== 0"
@@ -170,7 +167,7 @@
                 })
               "
             >
-              启用代理
+              {{ $t('model.button.enable_model_agent') }}
             </a-button>
             <a-button
               v-if="renderData.length !== 0"
@@ -185,7 +182,7 @@
                 })
               "
             >
-              关闭代理
+              {{ $t('model.button.close_model_agent') }}
             </a-button>
             <a-button
               v-if="renderData.length !== 0"
@@ -200,7 +197,7 @@
                 })
               "
             >
-              全部转发
+              {{ $t('model.button.all_forward') }}
             </a-button>
             <a-button
               v-if="renderData.length !== 0"
@@ -215,7 +212,7 @@
                 })
               "
             >
-              启用转发
+              {{ $t('model.button.enable_forward') }}
             </a-button>
             <a-button
               v-if="renderData.length !== 0"
@@ -230,7 +227,7 @@
                 })
               "
             >
-              关闭转发
+              {{ $t('model.button.close_forward') }}
             </a-button>
             <a-button
               v-if="renderData.length !== 0"
@@ -245,7 +242,7 @@
                 })
               "
             >
-              全部后备
+              {{ $t('model.button.all_fallback') }}
             </a-button>
             <a-button
               v-if="renderData.length !== 0"
@@ -260,7 +257,7 @@
                 })
               "
             >
-              启用后备
+              {{ $t('model.button.enable_fallback') }}
             </a-button>
             <a-button
               v-if="renderData.length !== 0"
@@ -275,7 +272,7 @@
                 })
               "
             >
-              关闭后备
+              {{ $t('model.button.close_fallback') }}
             </a-button>
             <a-button
               v-if="renderData.length !== 0"
@@ -407,7 +404,7 @@
             size="small"
             @click="viewPricing(record.pricing, record.type)"
           >
-            查看
+            {{ $t('button.view') }}
           </a-button>
         </template>
         <template #group_names="{ record }">
@@ -435,7 +432,7 @@
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('model.columns.operations.view') }}
+            {{ $t('button.view') }}
           </a-button>
           <a-button
             type="text"
@@ -447,21 +444,21 @@
               })
             "
           >
-            {{ $t('model.columns.operations.update') }}
+            {{ $t('button.update') }}
           </a-button>
           <a-popconfirm
             :content="$t('placeholder.operation.delete')"
             @ok="modelDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
-              {{ $t('model.columns.operations.delete') }}
+              {{ $t('button.delete') }}
             </a-button>
           </a-popconfirm>
         </template>
       </a-table>
 
       <a-drawer
-        :title="$t('menu.model.detail')"
+        :title="$t('model.menu.detail')"
         unmount-on-close
         render-to-body
         :width="888"
@@ -485,7 +482,7 @@
             :rules="[
               {
                 required: true,
-                message: $t('model.error.url.required'),
+                message: $t('model.error.required.url'),
               },
             ]"
           >
@@ -497,11 +494,11 @@
           </a-form-item>
           <a-form-item
             field="key"
-            :label="$t('model.label.key')"
+            :label="$t('common.app_key')"
             :rules="[
               {
                 required: true,
-                message: $t('model.error.key.required'),
+                message: $t('placeholder.app_key'),
               },
             ]"
           >
@@ -535,7 +532,7 @@
         <a-form ref="agentForm" :model="agentFormData">
           <a-form-item
             field="lb_strategy"
-            :label="$t('model.label.lb_strategy')"
+            :label="$t('common.lb_strategy')"
             :rules="[
               {
                 required: true,
@@ -557,11 +554,11 @@
           </a-form-item>
           <a-form-item
             field="model_agents"
-            :label="$t('model.label.model_agents')"
+            :label="$t('common.model_agents')"
             :rules="[
               {
                 required: true,
-                message: $t('model.error.model_agents.required'),
+                message: $t('placeholder.model_agents'),
               },
             ]"
           >
@@ -598,7 +595,7 @@
             :rules="[
               {
                 required: true,
-                message: $t('model.error.target_model.required'),
+                message: $t('model.placeholder.target_model'),
               },
             ]"
           >
@@ -634,7 +631,7 @@
                 required:
                   (!fallbackFormData.model_agent && !fallbackFormData.model) ||
                   !fallbackFormData.model,
-                message: $t('model.error.fallback.required'),
+                message: $t('model.error.required.fallback'),
               },
             ]"
           >
@@ -661,7 +658,7 @@
                 required:
                   (!fallbackFormData.model_agent && !fallbackFormData.model) ||
                   !fallbackFormData.model_agent,
-                message: $t('model.error.fallback.required'),
+                message: $t('model.error.required.fallback'),
               },
             ]"
           >
@@ -803,14 +800,14 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('model.columns.provider'),
+      title: t('common.provider'),
       dataIndex: 'provider_name',
       slotName: 'provider_name',
       align: 'center',
       width: 120,
     },
     {
-      title: t('model.columns.model'),
+      title: t('common.model'),
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
@@ -824,7 +821,7 @@
       align: 'center',
     },
     {
-      title: t('model.columns.group_names'),
+      title: t('common.group'),
       dataIndex: 'group_names',
       slotName: 'group_names',
       align: 'center',
@@ -832,27 +829,27 @@
       tooltip: true,
     },
     {
-      title: t('model.columns.lb_strategy'),
+      title: t('common.lb_strategy'),
       dataIndex: 'lb_strategy',
       slotName: 'lb_strategy',
       align: 'center',
     },
     {
-      title: t('model.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('model.columns.updated_at'),
+      title: t('common.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
       align: 'center',
       width: 132,
     },
     {
-      title: t('model.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -917,11 +914,11 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('model.dict.status.1'),
+      label: t('dict.status.1'),
       value: 1,
     },
     {
-      label: t('model.dict.status.2'),
+      label: t('dict.status.2'),
       value: 2,
     },
   ]);

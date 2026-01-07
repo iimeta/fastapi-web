@@ -4,6 +4,7 @@ export default {
   'login.account': '账密登录',
   'login.email': '邮箱登录',
   'login.other': '其他登录方式',
+  'login.logout': '退出登录',
 
   'login.account.placeholder.username': '请输入邮箱',
   'login.admin.account.placeholder.username': '请输入账号/邮箱',

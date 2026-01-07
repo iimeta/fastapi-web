@@ -6,7 +6,7 @@
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('notice.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{
-        $t(route.query.action ? 'menu.notice.create' : 'menu.notice.update')
+        $t(route.query.action ? 'notice.menu.create' : 'notice.menu.update')
       }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
@@ -45,7 +45,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.error.title.required'),
+                  message: $t('notice.placeholder.title'),
                 },
               ]"
             >
@@ -61,7 +61,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.error.category.required'),
+                  message: $t('notice.placeholder.category'),
                 },
               ]"
             >
@@ -97,7 +97,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.error.scope.required'),
+                  message: $t('notice.placeholder.scope'),
                 },
               ]"
             >
@@ -125,11 +125,11 @@
             <a-form-item
               v-if="formData.scope === '4' || formData.scope === '6'"
               field="users"
-              :label="$t('notice.label.users')"
+              :label="$t('common.user')"
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.error.users.required'),
+                  message: $t('notice.placeholder.users'),
                 },
               ]"
             >
@@ -152,11 +152,11 @@
             <a-form-item
               v-if="formData.scope === '5' || formData.scope === '6'"
               field="resellers"
-              :label="$t('notice.label.resellers')"
+              :label="$t('common.reseller')"
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.error.resellers.required'),
+                  message: $t('notice.placeholder.resellers'),
                 },
               ]"
             >
@@ -182,16 +182,16 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.error.content.required'),
+                  message: $t('notice.placeholder.content'),
                 },
               ]"
             >
               <Vditor v-model="formData.content" style="flex: 1" />
             </a-form-item>
-            <a-form-item field="remark" :label="$t('notice.label.remark')">
+            <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea
                 v-model="formData.remark"
-                :placeholder="$t('notice.placeholder.remark')"
+                :placeholder="$t('placeholder.remark')"
               />
             </a-form-item>
             <a-space>
@@ -224,6 +224,7 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import { useRouter, useRoute } from 'vue-router';
   import { FormInstance, Message } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
@@ -242,6 +243,7 @@
   import { ResellerList, queryResellerList } from '@/api/admin_reseller';
   import Vditor from '@/views/common/vditor.vue';
 
+  const { t } = useI18n();
   const { loading, setLoading } = useLoading(false);
 
   const router = useRouter();
@@ -351,11 +353,11 @@
         formData.value.status = status;
         if (route.query.action) {
           await submitNoticeCreate(formData.value).then(() => {
-            let alertContent = '操作成功';
+            let alertContent = t('success.operate');
             if (status === 1) {
-              alertContent = '发布成功';
+              alertContent = t('success.publish');
             } else if (status === 2) {
-              alertContent = '保存成功';
+              alertContent = t('success.save');
             }
             Message.success(alertContent);
             router.push({
@@ -364,11 +366,11 @@
           });
         } else {
           await submitNoticeUpdate(formData.value).then(() => {
-            let alertContent = '更新成功';
+            let alertContent = t('success.update');
             if (status === 1) {
-              alertContent = '发布成功';
+              alertContent = t('success.publish');
             } else if (status === 2) {
-              alertContent = '保存成功';
+              alertContent = t('success.save');
             }
             Message.success(alertContent);
             router.push({

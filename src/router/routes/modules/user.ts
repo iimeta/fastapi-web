@@ -7,7 +7,7 @@ const USER: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   redirect: '/user/list',
   meta: {
-    locale: 'menu.user',
+    locale: 'user.menu',
     icon: 'icon-user',
     requiresAuth: true,
     order: 80,
@@ -20,7 +20,7 @@ const USER: AppRouteRecordRaw = {
       name: 'UserList',
       component: () => import('@/views/user/list/index.vue'),
       meta: {
-        locale: 'menu.user',
+        locale: 'user.menu',
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         activeMenu: 'user',
@@ -31,7 +31,7 @@ const USER: AppRouteRecordRaw = {
       name: 'UserCreate',
       component: () => import('@/views/user/create/index.vue'),
       meta: {
-        locale: 'menu.user.create',
+        locale: 'user.menu.create',
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         hideInMenu: true,
@@ -43,7 +43,7 @@ const USER: AppRouteRecordRaw = {
       name: 'UserUpdate',
       component: () => import('@/views/user/update/index.vue'),
       meta: {
-        locale: 'menu.user.update',
+        locale: 'user.menu.update',
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         hideInMenu: true,
@@ -55,7 +55,7 @@ const USER: AppRouteRecordRaw = {
       name: 'Center',
       component: () => import('@/views/user/center/index.vue'),
       meta: {
-        locale: 'menu.user.center',
+        locale: 'user.menu.center',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         hideInMenu: true,

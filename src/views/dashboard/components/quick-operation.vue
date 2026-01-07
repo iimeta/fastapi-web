@@ -45,7 +45,7 @@
       permission: ['user'],
     },
     {
-      text: 'menu.model',
+      text: 'model.menu',
       icon: 'icon-common',
       router: 'ModelList',
       permission: ['admin'],
@@ -63,7 +63,7 @@
       permission: ['admin'],
     },
     {
-      text: 'menu.model.agent',
+      text: 'model.agent.menu',
       icon: 'icon-bug',
       router: 'ModelAgentList',
       permission: ['admin'],
@@ -75,7 +75,7 @@
       permission: ['admin'],
     },
     {
-      text: 'menu.user',
+      text: 'user.menu',
       icon: 'icon-user',
       router: 'UserList',
       permission: ['reseller', 'admin'],

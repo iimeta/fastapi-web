@@ -4,7 +4,7 @@
       <a-breadcrumb-item>
         <icon-user />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.user') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('user.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -24,10 +24,10 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="user_id" :label="$t('user.form.userId')">
+                <a-form-item field="user_id" :label="$t('common.user_id')">
                   <a-input-number
                     v-model="searchFormData.user_id"
-                    :placeholder="$t('user.form.userId.placeholder')"
+                    :placeholder="$t('placeholder.user_id')"
                     :precision="0"
                     :min="1"
                     :max="9999999999999"
@@ -36,10 +36,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="7">
-                <a-form-item field="account" :label="$t('user.form.account')">
+                <a-form-item field="account" :label="$t('common.account')">
                   <a-input
                     v-model="searchFormData.account"
-                    :placeholder="$t('user.form.account.placeholder')"
+                    :placeholder="$t('user.error.required.account')"
                     allow-clear
                   />
                 </a-form-item>
@@ -57,7 +57,7 @@
                 <a-form-item field="quota" :label="$t('user.form.quota')">
                   <a-input-number
                     v-model="searchFormData.quota"
-                    :placeholder="$t('user.form.quota.placeholder')"
+                    :placeholder="$t('placeholder.quota')"
                     :min="0.000001"
                     :max="9999999999999"
                     allow-clear
@@ -69,10 +69,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="7">
-                <a-form-item field="status" :label="$t('user.form.status')">
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('user.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -82,7 +82,7 @@
               <a-col :span="9">
                 <a-form-item
                   field="quota_expires_at"
-                  :label="$t('user.form.quota_expires_at')"
+                  :label="$t('common.expires_at')"
                 >
                   <a-range-picker
                     v-model="searchFormData.quota_expires_at"
@@ -100,13 +100,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('user.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('user.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -119,7 +119,7 @@
               type="primary"
               @click="$router.push({ name: 'UserCreate' })"
             >
-              {{ $t('user.operation.create') }}
+              {{ $t('button.create') }}
             </a-button>
             <a-button
               type="primary"
@@ -270,7 +270,7 @@
         <template #quota_expires_at="{ rowIndex }">
           <a-date-picker
             v-model="renderData[rowIndex].quota_expires_at"
-            :placeholder="$t('user.columns.placeholder.quota_expires_at')"
+            :placeholder="$t('user.placeholder.quota_expires_at')"
             :time-picker-props="{ defaultValue: '23:59:59' }"
             :disabled-date="disabledDate"
             show-time
@@ -341,7 +341,7 @@
           >
             <a-button style="width: 150px">{{
               renderData[rowIndex].quota_expires_at ||
-              $t('user.columns.placeholder.quota_expires_at')
+              $t('user.placeholder.quota_expires_at')
             }}</a-button>
           </a-date-picker>
         </template>
@@ -372,10 +372,10 @@
               })
             "
           >
-            {{ $t('user.columns.operations.recharge') }}
+            {{ $t('button.recharge') }}
           </a-button>
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('user.columns.operations.view') }}
+            {{ $t('button.detail') }}
           </a-button>
           <a-button
             type="text"
@@ -387,7 +387,7 @@
               })
             "
           >
-            {{ $t('user.columns.operations.update') }}
+            {{ $t('button.update') }}
           </a-button>
           <a-button
             type="text"
@@ -401,13 +401,13 @@
               })
             "
           >
-            {{ $t('user.columns.operations.delete') }}
+            {{ $t('button.delete') }}
           </a-button>
         </template>
       </a-table>
 
       <a-drawer
-        :title="$t('menu.user.detail')"
+        :title="$t('user.menu.detail')"
         unmount-on-close
         render-to-body
         :width="700"
@@ -420,7 +420,7 @@
 
       <a-modal
         v-model:visible="rechargeVisible"
-        :title="$t('user.form.title.recharge')"
+        :title="$t('user.label.recharge')"
         :ok-text="$t('button.ok')"
         :width="728"
         @cancel="handleCancel"
@@ -433,7 +433,7 @@
             :rules="[
               {
                 required: true,
-                message: $t('user.error.recharge.required'),
+                message: $t('user.placeholder.recharge'),
               },
             ]"
           >
@@ -491,7 +491,7 @@
             :rules="[
               {
                 required: true,
-                message: $t('user.error.quota_type.required'),
+                message: $t('user.error.required.quota_type'),
               },
             ]"
           >
@@ -603,7 +603,7 @@
           <a-form-item
             v-if="delFormData.user_id"
             field="user_id"
-            :label="$t('user.form.userId')"
+            :label="$t('common.user_id')"
             :rules="[
               {
                 required: true,
@@ -615,7 +615,7 @@
           <a-form-item
             v-if="delFormData.name"
             field="name"
-            :label="$t('user.label.name')"
+            :label="$t('common.name')"
             :rules="[
               {
                 required: true,
@@ -751,14 +751,14 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('user.columns.userId'),
+      title: t('common.user_id'),
       dataIndex: 'user_id',
       slotName: 'user_id',
       align: 'center',
       width: 80,
     },
     {
-      title: t('user.columns.name'),
+      title: t('common.name'),
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
@@ -766,7 +766,7 @@
       tooltip: true,
     },
     {
-      title: t('user.columns.account'),
+      title: t('common.account'),
       dataIndex: 'account',
       slotName: 'account',
       align: 'center',
@@ -774,7 +774,7 @@
       tooltip: true,
     },
     {
-      title: t('user.columns.quota'),
+      title: t('common.current_quota'),
       dataIndex: 'quota',
       slotName: 'quota',
       align: 'center',
@@ -782,7 +782,7 @@
       tooltip: true,
     },
     {
-      title: t('user.columns.used_quota'),
+      title: t('common.used_quota'),
       dataIndex: 'used_quota',
       slotName: 'used_quota',
       align: 'center',
@@ -790,14 +790,14 @@
       tooltip: true,
     },
     {
-      title: t('user.columns.quota_expires_at'),
+      title: t('user.label.quota_expires_at'),
       dataIndex: 'quota_expires_at',
       slotName: 'quota_expires_at',
       align: 'center',
       width: 170,
     },
     {
-      title: t('user.columns.remark'),
+      title: t('common.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
@@ -805,14 +805,14 @@
       tooltip: true,
     },
     {
-      title: t('user.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('user.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -822,11 +822,11 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('user.dict.status.1'),
+      label: t('dict.status.1'),
       value: 1,
     },
     {
-      label: t('user.dict.status.2'),
+      label: t('dict.status.2'),
       value: 2,
     },
   ]);

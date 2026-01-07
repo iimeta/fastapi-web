@@ -7,7 +7,7 @@ const MODEL: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   redirect: '/model/list',
   meta: {
-    locale: 'menu.model',
+    locale: 'model.menu',
     requiresAuth: true,
     icon: 'icon-common',
     order: 30,
@@ -20,7 +20,7 @@ const MODEL: AppRouteRecordRaw = {
       name: 'ModelList',
       component: () => import('@/views/model/list/index.vue'),
       meta: {
-        locale: 'menu.model',
+        locale: 'model.menu',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'model',
@@ -31,7 +31,7 @@ const MODEL: AppRouteRecordRaw = {
       name: 'ModelCreate',
       component: () => import('@/views/model/create/index.vue'),
       meta: {
-        locale: 'menu.model.create',
+        locale: 'model.menu.create',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
@@ -43,7 +43,7 @@ const MODEL: AppRouteRecordRaw = {
       name: 'ModelUpdate',
       component: () => import('@/views/model/update/index.vue'),
       meta: {
-        locale: 'menu.model.update',
+        locale: 'model.menu.update',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,

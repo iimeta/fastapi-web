@@ -7,12 +7,13 @@ export default {
   'group.label.name': 'Name',
   'group.placeholder.name': 'Please enter name',
   'group.label.weight': 'Sort Order',
-  'group.placeholder.weight': 'Please enter sort order (must be unique, higher numbers have priority, range: 1-99999)',
+  'group.placeholder.weight':
+    'Please enter sort order (must be unique, higher numbers have priority, range: 1-99999)',
   'group.error.required.weight': 'Please enter sort order',
   'group.label.remark': 'Description',
   'group.placeholder.remark': 'Please enter description',
-  'group.label.is_enable_model_agent': 'Enable Proxy',
-  'group.placeholder.model_agents': 'Please select model proxy',
+  'common.enable_model_agent': 'Enable Proxy',
+  'placeholder.model_agents': 'Please select model proxy',
   'group.label.is_enable_forward': 'Model Forwarding',
   'group.label.forward_rule': 'Forwarding Rule',
   'group.placeholder.forward_rule': 'Please select forwarding rule',
@@ -24,12 +25,15 @@ export default {
   'group.placeholder.decision_model': 'Please select decision model',
   'group.label.keywords': 'Keywords',
   'group.placeholder.keywords': 'Separate multiple keywords with |',
-  'group.error.required.keywords_target_model': 'Please enter keywords and select target model',
+  'group.error.required.keywords_target_model':
+    'Please enter keywords and select target model',
   'group.label.content_length': 'Content Length',
-  'group.placeholder.content_length': 'Please enter content length (total context length > N)',
+  'group.placeholder.content_length':
+    'Please enter content length (total context length > N)',
   'group.error.required.content_length': 'Please enter content length',
   // detail
   'group.detail.label.is_default': 'Default Group',
   // desc
-  'group.desc': 'Note: Bold group names are default groups, displayed first in the list. When applications or keys are not bound to a group, models will be searched in the group list order. It is recommended to bind applications or keys to groups.',
+  'group.desc':
+    'Note: Bold group names are default groups, displayed first in the list. When applications or keys are not bound to a group, models will be searched in the group list order. It is recommended to bind applications or keys to groups.',
 };

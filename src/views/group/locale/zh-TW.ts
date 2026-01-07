@@ -7,12 +7,13 @@ export default {
   'group.label.name': '名稱',
   'group.placeholder.name': '請輸入名稱',
   'group.label.weight': '排序',
-  'group.placeholder.weight': '請輸入排序號, 不可重複, 排序號越大越優先, 範圍: 1-99999',
+  'group.placeholder.weight':
+    '請輸入排序號, 不可重複, 排序號越大越優先, 範圍: 1-99999',
   'group.error.required.weight': '請輸入排序',
   'group.label.remark': '說明',
   'group.placeholder.remark': '請輸入說明',
-  'group.label.is_enable_model_agent': '啟用代理',
-  'group.placeholder.model_agents': '請選擇模型代理',
+  'common.enable_model_agent': '啟用代理',
+  'placeholder.model_agents': '請選擇模型代理',
   'group.label.is_enable_forward': '模型轉發',
   'group.label.forward_rule': '轉發規則',
   'group.placeholder.forward_rule': '請選擇轉發規則',
@@ -31,5 +32,6 @@ export default {
   // detail
   'group.detail.label.is_default': '預設分組',
   // desc
-  'group.desc': '說明: 分組名稱加粗的為預設分組, 預設排在列表首位, 當應用或密鑰不綁定分組時, 調用模型將按分組列表順序依次查找, 推薦將應用或密鑰綁定分組使用',
+  'group.desc':
+    '說明: 分組名稱加粗的為預設分組, 預設排在列表首位, 當應用或密鑰不綁定分組時, 調用模型將按分組列表順序依次查找, 推薦將應用或密鑰綁定分組使用',
 };

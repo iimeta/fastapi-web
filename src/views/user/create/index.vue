@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-user />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.user') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.user.create') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('user.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('user.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -23,15 +23,15 @@
           >
             <a-form-item
               field="name"
-              :label="$t('user.label.name')"
+              :label="$t('common.name')"
               :rules="[
                 {
                   required: true,
-                  message: $t('user.error.name.required'),
+                  message: $t('user.placeholder.name'),
                 },
                 {
                   match: /^.{1,30}$/,
-                  message: $t('user.error.name.pattern'),
+                  message: $t('user.error.pattern.name'),
                 },
               ]"
             >
@@ -43,11 +43,11 @@
             </a-form-item>
             <a-form-item
               field="email"
-              :label="$t('user.label.email')"
+              :label="$t('common.email')"
               :rules="[
                 {
                   required: true,
-                  message: $t('user.error.email.required'),
+                  message: $t('user.placeholder.email'),
                 },
               ]"
             >
@@ -59,11 +59,11 @@
             </a-form-item>
             <a-form-item
               field="account"
-              :label="$t('user.label.account')"
+              :label="$t('common.account')"
               :rules="[
                 {
                   required: true,
-                  message: $t('user.error.account.required'),
+                  message: $t('user.error.required.account'),
                 },
               ]"
             >
@@ -79,11 +79,11 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('user.error.password.required'),
+                  message: $t('user.error.required.password'),
                 },
                 {
                   match: /^.{6,}$/,
-                  message: $t('user.error.password.pattern'),
+                  message: $t('user.error.pattern.password'),
                 },
               ]"
             >
@@ -95,17 +95,17 @@
             </a-form-item>
             <a-form-item
               field="quota"
-              :label="$t('user.label.quota')"
+              :label="$t('common.quota')"
               :rules="[
                 {
                   required: true,
-                  message: $t('user.error.quota.required'),
+                  message: $t('placeholder.quota'),
                 },
               ]"
             >
               <a-input-number
                 v-model="formData.quota"
-                :placeholder="$t('user.placeholder.quota')"
+                :placeholder="$t('placeholder.quota')"
                 :min="0.000001"
                 :max="9999999999999"
                 :parser="parsePrice"
@@ -138,7 +138,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('user.error.quota_type.required'),
+                  message: $t('user.error.required.quota_type'),
                 },
               ]"
             >
@@ -228,7 +228,7 @@
             </a-form-item>
             <a-form-item
               field="groups"
-              :label="$t('user.label.groups')"
+              :label="$t('common.groups')"
               style="align-items: center"
             >
               <a-select
@@ -253,10 +253,10 @@
                 />
               </a-select>
             </a-form-item>
-            <a-form-item field="remark" :label="$t('user.label.remark')">
+            <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea
                 v-model="formData.remark"
-                :placeholder="$t('user.placeholder.remark')"
+                :placeholder="$t('placeholder.remark')"
               />
             </a-form-item>
             <a-space>

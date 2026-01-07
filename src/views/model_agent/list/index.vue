@@ -4,7 +4,7 @@
       <a-breadcrumb-item>
         <icon-bug />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.model.agent') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('model.agent.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -24,13 +24,10 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="provider_id"
-                  :label="$t('model.agent.form.provider')"
-                >
+                <a-form-item field="provider_id" :label="$t('common.provider')">
                   <a-select
                     v-model="searchFormData.provider_id"
-                    :placeholder="$t('model.agent.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :scrollbar="false"
                     allow-search
                     allow-clear
@@ -45,10 +42,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('model.agent.form.name')">
+                <a-form-item field="name" :label="$t('model.agent.label.name')">
                   <a-input
                     v-model="searchFormData.name"
-                    :placeholder="$t('model.agent.form.name.placeholder')"
+                    :placeholder="$t('model.agent.placeholder.name')"
                     allow-clear
                   />
                 </a-form-item>
@@ -56,23 +53,20 @@
               <a-col :span="8">
                 <a-form-item
                   field="base_url"
-                  :label="$t('model.agent.form.base_url')"
+                  :label="$t('model.agent.label.base_url')"
                 >
                   <a-input
                     v-model="searchFormData.base_url"
-                    :placeholder="$t('model.agent.form.base_url.placeholder')"
+                    :placeholder="$t('model.agent.error.required.base_url')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="models"
-                  :label="$t('model.agent.form.models')"
-                >
+                <a-form-item field="models" :label="$t('common.bind_models')">
                   <a-select
                     v-model="searchFormData.models"
-                    :placeholder="$t('model.agent.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :max-tag-count="2"
                     :scrollbar="false"
                     multiple
@@ -89,13 +83,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('model.agent.form.status')"
-                >
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('model.agent.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -103,13 +94,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="remark"
-                  :label="$t('model.agent.form.remark')"
-                >
+                <a-form-item field="remark" :label="$t('common.remark')">
                   <a-input
                     v-model="searchFormData.remark"
-                    :placeholder="$t('model.agent.form.remark.placeholder')"
+                    :placeholder="$t('placeholder.remark')"
                     allow-clear
                   />
                 </a-form-item>
@@ -124,13 +112,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('model.agent.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('model.agent.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -143,7 +131,7 @@
               type="primary"
               @click="$router.push({ name: 'ModelAgentCreate' })"
             >
-              {{ $t('model.agent.operation.create') }}
+              {{ $t('button.create') }}
             </a-button>
             <a-button
               type="primary"
@@ -310,7 +298,7 @@
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('model.agent.columns.operations.view') }}
+            {{ $t('button.view') }}
           </a-button>
           <a-button
             type="text"
@@ -322,7 +310,7 @@
               })
             "
           >
-            {{ $t('model.agent.columns.operations.update') }}
+            {{ $t('button.update') }}
           </a-button>
           <a-button
             type="text"
@@ -334,21 +322,21 @@
               })
             "
           >
-            {{ $t('model.agent.columns.operations.manageKey') }}
+            {{ $t('button.key') }}
           </a-button>
           <a-popconfirm
             :content="$t('placeholder.operation.delete')"
             @ok="modelAgentDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
-              {{ $t('model.agent.columns.operations.delete') }}
+              {{ $t('button.delete') }}
             </a-button>
           </a-popconfirm>
         </template>
       </a-table>
 
       <a-drawer
-        :title="$t('menu.model.agent.detail')"
+        :title="$t('model.agent.menu.detail')"
         unmount-on-close
         render-to-body
         :width="700"
@@ -487,14 +475,14 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('model.agent.columns.provider'),
+      title: t('common.provider'),
       dataIndex: 'provider_name',
       slotName: 'provider_name',
       align: 'center',
       width: 120,
     },
     {
-      title: t('model.agent.columns.name'),
+      title: t('model.agent.label.name'),
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
@@ -502,7 +490,7 @@
       tooltip: true,
     },
     {
-      title: t('model.agent.columns.groups'),
+      title: t('common.bind_group'),
       dataIndex: 'group_names',
       slotName: 'group_names',
       align: 'center',
@@ -524,13 +512,13 @@
       align: 'center',
     },
     {
-      title: t('model.columns.lb_strategy'),
+      title: t('common.lb_strategy'),
       dataIndex: 'lb_strategy',
       slotName: 'lb_strategy',
       align: 'center',
     },
     {
-      title: t('model.agent.columns.remark'),
+      title: t('common.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
@@ -538,21 +526,21 @@
       tooltip: true,
     },
     {
-      title: t('model.agent.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('model.agent.columns.updated_at'),
+      title: t('common.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
       align: 'center',
       width: 132,
     },
     {
-      title: t('model.agent.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -562,11 +550,11 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('model.agent.dict.status.1'),
+      label: t('dict.status.1'),
       value: 1,
     },
     {
-      label: t('model.agent.dict.status.2'),
+      label: t('dict.status.2'),
       value: 2,
     },
   ]);

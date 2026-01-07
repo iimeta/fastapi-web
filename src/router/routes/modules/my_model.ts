@@ -7,7 +7,7 @@ const MY_MODEL: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   redirect: '/my/model',
   meta: {
-    locale: 'menu.my.model',
+    locale: 'model.menu.my',
     requiresAuth: true,
     icon: 'icon-common',
     order: 20,
@@ -20,7 +20,7 @@ const MY_MODEL: AppRouteRecordRaw = {
       name: 'MyModel',
       component: () => import('@/views/model/list/my.vue'),
       meta: {
-        locale: 'menu.model',
+        locale: 'model.menu',
         requiresAuth: true,
         roles: ['user', 'reseller'],
         activeMenu: 'my_model',

@@ -6,7 +6,7 @@
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('notice.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>
-        {{ $t('menu.notice.template') }}
+        {{ $t('notice.template.menu') }}
       </a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
@@ -29,11 +29,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="name"
-                  :label="$t('notice.template.form.name')"
+                  :label="$t('notice.template.label.name')"
                 >
                   <a-input
                     v-model="searchFormData.name"
-                    :placeholder="$t('notice.template.form.name.placeholder')"
+                    :placeholder="$t('notice.template.placeholder.name')"
                     allow-clear
                   />
                 </a-form-item>
@@ -41,11 +41,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="title"
-                  :label="$t('notice.template.form.title')"
+                  :label="$t('notice.template.label.title')"
                 >
                   <a-input
                     v-model="searchFormData.title"
-                    :placeholder="$t('notice.template.form.title.placeholder')"
+                    :placeholder="$t('notice.template.placeholder.title')"
                     allow-clear
                   />
                 </a-form-item>
@@ -53,13 +53,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="content"
-                  :label="$t('notice.template.form.content')"
+                  :label="$t('notice.template.label.content')"
                 >
                   <a-input
                     v-model="searchFormData.content"
-                    :placeholder="
-                      $t('notice.template.form.content.placeholder')
-                    "
+                    :placeholder="$t('notice.template.placeholder.content')"
                     allow-clear
                   />
                 </a-form-item>
@@ -67,11 +65,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="scenes"
-                  :label="$t('notice.template.form.scenes')"
+                  :label="$t('notice.template.label.scenes')"
                 >
                   <a-select
                     v-model="searchFormData.scenes"
-                    :placeholder="$t('notice.template.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="scenesOptions"
                     :scrollbar="false"
                     allow-clear
@@ -79,13 +77,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('notice.template.form.status')"
-                >
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('notice.template.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -93,13 +88,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="remark"
-                  :label="$t('notice.template.form.remark')"
-                >
+                <a-form-item field="remark" :label="$t('common.remark')">
                   <a-input
                     v-model="searchFormData.remark"
-                    :placeholder="$t('notice.template.form.remark.placeholder')"
+                    :placeholder="$t('placeholder.remark')"
                     allow-clear
                   />
                 </a-form-item>
@@ -114,13 +106,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('notice.template.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('notice.template.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -133,7 +125,7 @@
               type="primary"
               @click="$router.push({ name: 'NoticeTemplateCreate' })"
             >
-              {{ $t('notice.template.operation.create') }}
+              {{ $t('button.create') }}
             </a-button>
             <a-button
               type="primary"
@@ -296,7 +288,7 @@
               })
             "
           >
-            {{ $t('notice.template.columns.operations.copy') }}
+            {{ $t('button.copy') }}
           </a-button>
           <a-button
             type="text"
@@ -308,21 +300,21 @@
               })
             "
           >
-            {{ $t('notice.template.columns.operations.update') }}
+            {{ $t('button.update') }}
           </a-button>
           <a-popconfirm
             :content="$t('placeholder.operation.delete')"
             @ok="noticeDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
-              {{ $t('notice.template.columns.operations.delete') }}
+              {{ $t('button.delete') }}
             </a-button>
           </a-popconfirm>
         </template>
       </a-table>
 
       <a-drawer
-        :title="$t('menu.notice.template.detail')"
+        :title="$t('notice.template.menu.detail')"
         unmount-on-close
         render-to-body
         :width="700"
@@ -428,15 +420,8 @@
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
-    // {
-    //   title: t('notice.template.columns.user_id'),
-    //   dataIndex: 'user_id',
-    //   slotName: 'user_id',
-    //   align: 'center',
-    //   width: 80,
-    // },
     {
-      title: t('notice.template.columns.name'),
+      title: t('notice.template.label.name'),
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
@@ -444,7 +429,7 @@
       tooltip: true,
     },
     {
-      title: t('notice.template.columns.scenes'),
+      title: t('notice.template.label.scenes'),
       dataIndex: 'scenes',
       slotName: 'scenes',
       align: 'center',
@@ -452,22 +437,15 @@
       tooltip: true,
     },
     {
-      title: t('notice.template.columns.title'),
+      title: t('notice.template.label.title'),
       dataIndex: 'title',
       slotName: 'title',
       align: 'center',
       ellipsis: true,
       tooltip: true,
     },
-    // {
-    //   title: t('notice.template.columns.is_public'),
-    //   dataIndex: 'is_public',
-    //   slotName: 'is_public',
-    //   align: 'center',
-    //   width: 65,
-    // },
     {
-      title: t('notice.template.columns.remark'),
+      title: t('common.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
@@ -475,21 +453,21 @@
       tooltip: true,
     },
     {
-      title: t('notice.template.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('notice.template.columns.updated_at'),
+      title: t('common.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
       align: 'center',
       width: 132,
     },
     {
-      title: t('notice.template.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -558,11 +536,11 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('model.dict.status.1'),
+      label: t('dict.status.1'),
       value: 1,
     },
     {
-      label: t('model.dict.status.2'),
+      label: t('dict.status.2'),
       value: 2,
     },
   ]);

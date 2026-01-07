@@ -7,10 +7,10 @@ const MODEL_AGENT: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   redirect: '/model/agent/list',
   meta: {
-    locale: 'menu.model.agent',
+    locale: 'model.agent.menu',
     requiresAuth: true,
     icon: 'icon-bug',
-    order: 50,
+    order: 40,
     hideChildrenInMenu: true,
     roles: ['admin'],
   },
@@ -20,7 +20,7 @@ const MODEL_AGENT: AppRouteRecordRaw = {
       name: 'ModelAgentList',
       component: () => import('@/views/model_agent/list/index.vue'),
       meta: {
-        locale: 'menu.model.agent',
+        locale: 'model.agent.menu',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'model_agent',
@@ -31,7 +31,7 @@ const MODEL_AGENT: AppRouteRecordRaw = {
       name: 'ModelAgentCreate',
       component: () => import('@/views/model_agent/create/index.vue'),
       meta: {
-        locale: 'menu.model.agent.create',
+        locale: 'model.agent.menu.create',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
@@ -43,7 +43,7 @@ const MODEL_AGENT: AppRouteRecordRaw = {
       name: 'ModelAgentUpdate',
       component: () => import('@/views/model_agent/update/index.vue'),
       meta: {
-        locale: 'menu.model.agent.update',
+        locale: 'model.agent.menu.update',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,

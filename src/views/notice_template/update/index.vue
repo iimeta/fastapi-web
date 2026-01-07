@@ -8,8 +8,8 @@
       <a-breadcrumb-item>{{
         $t(
           route.query.action
-            ? 'menu.notice.template.create'
-            : 'menu.notice.template.update'
+            ? 'notice.template.menu.create'
+            : 'notice.template.menu.update'
         )
       }}</a-breadcrumb-item>
     </a-breadcrumb>
@@ -33,7 +33,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.template.error.name.required'),
+                  message: $t('notice.template.placeholder.name'),
                 },
               ]"
             >
@@ -49,7 +49,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.template.error.scenes.required'),
+                  message: $t('notice.template.error.required.scenes'),
                 },
               ]"
             >
@@ -160,7 +160,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.template.error.title.required'),
+                  message: $t('notice.template.placeholder.title'),
                 },
               ]"
             >
@@ -176,19 +176,16 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.template.error.content.required'),
+                  message: $t('notice.template.placeholder.content'),
                 },
               ]"
             >
               <Vditor v-model="formData.content" style="flex: 1" />
             </a-form-item>
-            <a-form-item
-              field="remark"
-              :label="$t('notice.template.label.remark')"
-            >
+            <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea
                 v-model="formData.remark"
-                :placeholder="$t('notice.template.placeholder.remark')"
+                :placeholder="$t('placeholder.remark')"
               />
             </a-form-item>
             <a-space>
@@ -280,7 +277,7 @@
       try {
         if (route.query.action) {
           await submitNoticeTemplateCreate(formData.value).then(() => {
-            Message.success('新增成功');
+            Message.success(t('success.create'));
             router.push({
               name: 'NoticeTemplateList',
             });

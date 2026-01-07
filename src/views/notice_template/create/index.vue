@@ -6,7 +6,7 @@
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('notice.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{
-        $t('menu.notice.template.create')
+        $t('notice.template.menu.create')
       }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
@@ -29,7 +29,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.template.error.name.required'),
+                  message: $t('notice.template.placeholder.name'),
                 },
               ]"
             >
@@ -45,7 +45,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.template.error.scenes.required'),
+                  message: $t('notice.template.error.required.scenes'),
                 },
               ]"
             >
@@ -156,7 +156,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.template.error.title.required'),
+                  message: $t('notice.template.placeholder.title'),
                 },
               ]"
             >
@@ -172,19 +172,16 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('notice.template.error.content.required'),
+                  message: $t('notice.template.placeholder.content'),
                 },
               ]"
             >
               <Vditor v-model="formData.content" style="flex: 1" />
             </a-form-item>
-            <a-form-item
-              field="remark"
-              :label="$t('notice.template.label.remark')"
-            >
+            <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea
                 v-model="formData.remark"
-                :placeholder="$t('notice.template.placeholder.remark')"
+                :placeholder="$t('placeholder.remark')"
               />
             </a-form-item>
             <a-space>
@@ -246,7 +243,7 @@
       setLoading(true);
       try {
         await submitNoticeTemplateCreate(formData.value).then(() => {
-          Message.success('新增成功');
+          Message.success(t('success.create'));
           router.push({
             name: 'NoticeTemplateList',
           });

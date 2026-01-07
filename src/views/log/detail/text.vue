@@ -6,7 +6,7 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item label="Trace ID" :span="2">
+      <a-descriptions-item :label="$t('log.detail.trace_id')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -18,7 +18,7 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="Host" :span="2">
+      <a-descriptions-item :label="$t('log.detail.host')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -26,7 +26,7 @@
           {{ currentData.host || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="调用密钥" :span="2">
+      <a-descriptions-item :label="$t('log.detail.creator')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -38,31 +38,31 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="用户ID">
+      <a-descriptions-item :label="$t('common.user_id')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.user_id || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="应用ID">
+      <a-descriptions-item :label="$t('common.app_id')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.app_id || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="提供商">
+      <a-descriptions-item :label="$t('common.provider')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.provider_name }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="模型">
+      <a-descriptions-item :label="$t('common.model')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.model || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="模型类型">
+      <a-descriptions-item :label="$t('common.model_type')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -70,15 +70,13 @@
           $t(`dict.model_type.${currentData.model_type}`)
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="流式">
+      <a-descriptions-item :label="$t('log.detail.stream')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>{{
-          $t(`text.dict.stream.${currentData.stream || false}`)
-        }}</span>
+        <span v-else>{{ $t(`dict.${currentData.stream || false}`) }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="提问" :span="2">
+      <a-descriptions-item :label="$t('log.detail.prompt')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -86,7 +84,7 @@
           {{ currentData.prompt || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答" :span="2">
+      <a-descriptions-item :label="$t('log.detail.completion')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -94,13 +92,13 @@
           {{ currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="分组名称">
+      <a-descriptions-item :label="$t('log.detail.group_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.spend.group_name || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="分组折扣">
+      <a-descriptions-item :label="$t('log.detail.discount')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -113,7 +111,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="计费方式">
+      <a-descriptions-item :label="$t('common.billing_methods')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -125,12 +123,12 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="总花费">
+      <a-descriptions-item :label="$t('common.total.spend')">
         <template #label>
           <span>
-            总花费
+            {{ $t('common.total.spend') }}
             <a-tooltip
-              :content="$t('text.columns.tooltip.total_spend_tokens')"
+              :content="$t('log.columns.tooltip.total_spend_tokens')"
               :content-style="{
                 whiteSpace: 'nowrap',
                 maxWidth: 'none',
@@ -159,7 +157,7 @@
           <span v-else> - </span>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="连接耗时">
+      <a-descriptions-item :label="$t('log.detail.conn_time')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -178,7 +176,7 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="持续时长">
+      <a-descriptions-item :label="$t('log.detail.duration')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -197,7 +195,7 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="总耗时">
+      <a-descriptions-item :label="$t('log.detail.total_time')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -216,38 +214,38 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="结果">
+      <a-descriptions-item :label="$t('log.detail.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           <a-tag v-if="currentData.status === 1" color="green">
-            {{ $t(`text.dict.status.${currentData.status}`) }}
+            {{ $t(`log.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else-if="currentData.status === 2" color="gold">
-            {{ $t(`text.dict.status.${currentData.status}`) }}
+            {{ $t(`log.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else-if="currentData.status === 3" color="orange">
-            {{ $t(`text.dict.status.${currentData.status}`) }}
+            {{ $t(`log.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else color="red">
-            {{ $t(`text.dict.status.${currentData.status}`) }}
+            {{ $t(`log.dict.status.${currentData.status}`) }}
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="客户端IP">
+      <a-descriptions-item :label="$t('log.detail.client_ip')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.client_ip || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="请求时间">
+      <a-descriptions-item :label="$t('common.req_time')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.req_time || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="错误信息">
+      <a-descriptions-item :label="$t('log.detail.err_msg')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -263,7 +261,7 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item label="Trace ID" :span="2">
+      <a-descriptions-item :label="$t('log.detail.trace_id')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -275,7 +273,7 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="Host" :span="2">
+      <a-descriptions-item :label="$t('log.detail.host')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -283,7 +281,7 @@
           {{ currentData.host || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="调用密钥" :span="2">
+      <a-descriptions-item :label="$t('log.detail.creator')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -296,7 +294,7 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="用户ID">
+      <a-descriptions-item :label="$t('common.user_id')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
@@ -304,7 +302,7 @@
           currentData.is_smart_match ? '-' : currentData.user_id || '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="应用ID">
+      <a-descriptions-item :label="$t('common.app_id')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
@@ -312,13 +310,13 @@
           currentData.is_smart_match ? '-' : currentData.app_id || '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="提供商">
+      <a-descriptions-item :label="$t('common.provider')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.provider_name }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="模型类型">
+      <a-descriptions-item :label="$t('common.model_type')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -326,53 +324,47 @@
           $t(`dict.model_type.${currentData.model_type}`)
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="请求模型名称">
+      <a-descriptions-item :label="$t('log.detail.req_model_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.model_name || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="请求模型">
+      <a-descriptions-item :label="$t('log.detail.req_model')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.model || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="真实模型名称">
+      <a-descriptions-item :label="$t('log.detail.real_model_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.real_model_name }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="真实模型">
+      <a-descriptions-item :label="$t('log.detail.real_model')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.real_model }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="流式">
+      <a-descriptions-item :label="$t('log.detail.stream')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ $t(`text.dict.stream.${currentData.stream || false}`) }}
+          {{ $t(`dict.${currentData.stream || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="启用后备">
+      <a-descriptions-item :label="$t('log.detail.enable_fallback')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{
-            $t(
-              `text.dict.is_enable_fallback.${
-                currentData.is_enable_fallback || false
-              }`
-            )
-          }}
+          {{ $t(`dict.${currentData.is_enable_fallback || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="后备代理">
+      <a-descriptions-item :label="$t('log.detail.fallback_model_agent')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
@@ -380,7 +372,7 @@
           {{ currentData?.fallback_config?.model_agent_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="后备模型">
+      <a-descriptions-item :label="$t('log.detail.fallback_model')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
@@ -388,51 +380,43 @@
           {{ currentData?.fallback_config?.model || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="启用转发">
+      <a-descriptions-item :label="$t('log.detail.enable_forward')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{
-          $t(
-            `text.dict.is_enable_forward.${
-              currentData.is_enable_forward || false
-            }`
-          )
+          $t(`dict.${currentData.is_enable_forward || false}`)
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="转发规则">
+      <a-descriptions-item :label="$t('log.detail.forward_rule')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{
           currentData.is_enable_forward
             ? $t(
-                `text.dict.forward_rule.${
+                `dict.forward_rule.${
                   currentData.forward_config.forward_rule || '1'
                 }`
               )
             : '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="启用代理">
+      <a-descriptions-item :label="$t('log.detail.enable_model_agent')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{
-          $t(
-            `text.dict.is_enable_model_agent.${
-              currentData.is_enable_model_agent || false
-            }`
-          )
+          $t(`dict.${currentData.is_enable_model_agent || false}`)
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="代理名称">
+      <a-descriptions-item :label="$t('log.detail.model_agent_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData?.model_agent?.name || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="密钥" :span="2">
+      <a-descriptions-item :label="$t('common.key')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -461,7 +445,7 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="提问" :span="2">
+      <a-descriptions-item :label="$t('log.detail.prompt')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -469,7 +453,7 @@
           {{ currentData.prompt || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="回答" :span="2">
+      <a-descriptions-item :label="$t('log.detail.completion')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -477,13 +461,13 @@
           {{ currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="分组名称">
+      <a-descriptions-item :label="$t('log.detail.group_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.spend.group_name || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="分组折扣">
+      <a-descriptions-item :label="$t('log.detail.discount')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -496,7 +480,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="计费方式">
+      <a-descriptions-item :label="$t('common.billing_methods')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -508,12 +492,12 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="总花费">
+      <a-descriptions-item :label="$t('common.total.spend')">
         <template #label>
           <span>
-            总花费
+            {{ $t('common.total.spend') }}
             <a-tooltip
-              :content="$t('text.columns.tooltip.total_spend_tokens')"
+              :content="$t('log.columns.tooltip.total_spend_tokens')"
               :content-style="{
                 whiteSpace: 'nowrap',
                 maxWidth: 'none',
@@ -542,7 +526,7 @@
           <span v-else> - </span>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="连接耗时">
+      <a-descriptions-item :label="$t('log.detail.conn_time')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -561,7 +545,7 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="持续时长">
+      <a-descriptions-item :label="$t('log.detail.duration')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -580,7 +564,7 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="总耗时">
+      <a-descriptions-item :label="$t('log.detail.total_time')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -599,7 +583,7 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="内耗">
+      <a-descriptions-item :label="$t('log.detail.internal_time')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -618,56 +602,56 @@
           >
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="结果">
+      <a-descriptions-item :label="$t('log.detail.status')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           <a-tag v-if="currentData.status === 1" color="green">
-            {{ $t(`text.dict.status.${currentData.status}`) }}
+            {{ $t(`log.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else-if="currentData.status === 2" color="gold">
-            {{ $t(`text.dict.status.${currentData.status}`) }}
+            {{ $t(`log.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else-if="currentData.status === 3" color="orange">
-            {{ $t(`text.dict.status.${currentData.status}`) }}
+            {{ $t(`log.dict.status.${currentData.status}`) }}
           </a-tag>
           <a-tag v-else color="red">
-            {{ $t(`text.dict.status.${currentData.status}`) }}
+            {{ $t(`log.dict.status.${currentData.status}`) }}
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item label="本地IP">
+      <a-descriptions-item :label="$t('log.detail.local_ip')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.local_ip || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="客户端IP">
+      <a-descriptions-item :label="$t('log.detail.client_ip')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.client_ip || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="远程IP">
+      <a-descriptions-item :label="$t('log.detail.remote_ip')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.remote_ip || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="请求时间">
+      <a-descriptions-item :label="$t('common.req_time')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.req_time || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="创建时间">
+      <a-descriptions-item :label="$t('common.created_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.created_at || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item label="错误信息">
+      <a-descriptions-item :label="$t('log.detail.err_msg')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -685,7 +669,7 @@
     >
       <a-descriptions-item>
         <a-tabs type="card">
-          <a-tab-pane key="1" title="提问上下文">
+          <a-tab-pane key="1" :title="$t('log.detail.messages')">
             <a-skeleton v-if="loading" :animation="true">
               <a-skeleton-line :rows="3" />
             </a-skeleton>
@@ -715,7 +699,7 @@
     >
       <a-descriptions-item>
         <a-tabs type="card">
-          <a-tab-pane key="1" title="模型代理">
+          <a-tab-pane key="1" :title="$t('common.model_agents')">
             <a-skeleton v-if="loading" :animation="true">
               <a-skeleton-line :rows="3" />
             </a-skeleton>

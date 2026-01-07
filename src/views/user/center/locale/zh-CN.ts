@@ -1,5 +1,5 @@
 export default {
-  'menu.user.center': '个人中心',
+  'user.menu.center': '个人中心',
 
   'userCenter.label.userId': '用户ID',
   'userCenter.label.name': '昵\u3000称',
@@ -17,7 +17,8 @@ export default {
 
   'userCenter.basicInfo.form.error.required.username': '请输入用户名',
   'userCenter.basicInfo.form.error.required.name': '请输入昵称',
-  'userCenter.basicInfo.form.error.match.name': '长度为 2 到 30 位，可以包含中文、字母、数字、下划线，短横线',
+  'userCenter.basicInfo.form.error.match.name':
+    '长度为 2 到 30 位，可以包含中文、字母、数字、下划线，短横线',
 
   'userCenter.basicInfo.form.save': '保存',
   'userCenter.basicInfo.form.save.success': '保存成功',
@@ -35,51 +36,74 @@ export default {
   'userCenter.securitySettings.updatePwd.form.label.newPassword': '新密码',
   'userCenter.securitySettings.updatePwd.form.label.rePassword': '确认新密码',
 
-  'userCenter.securitySettings.updatePwd.form.placeholder.oldPassword':    '请输入登录密码',
-  'userCenter.securitySettings.updatePwd.form.placeholder.newPassword':    '长度至少6位，同时包含字母、数字和符号',
-  'userCenter.securitySettings.updatePwd.form.placeholder.rePassword':    '请再次输入新密码',
+  'userCenter.securitySettings.updatePwd.form.placeholder.oldPassword':
+    '请输入登录密码',
+  'userCenter.securitySettings.updatePwd.form.placeholder.newPassword':
+    '长度至少6位，同时包含字母、数字和符号',
+  'userCenter.securitySettings.updatePwd.form.placeholder.rePassword':
+    '请再次输入新密码',
 
-  'userCenter.securitySettings.updatePwd.form.error.required.oldPassword': '请输入登录密码',
-  'userCenter.securitySettings.updatePwd.form.error.required.newPassword': '请输入新密码',
-  'userCenter.securitySettings.updatePwd.form.error.match.newPassword': '长度至少6位，同时包含字母、数字和符号',
-  'userCenter.securitySettings.updatePwd.form.error.validator.newPassword': '新密码不能与登录密码相同',
-  'userCenter.securitySettings.updatePwd.form.error.required.rePassword': '请再次输入新密码',
-  'userCenter.securitySettings.updatePwd.form.error.validator.rePassword': '两次输入的密码不一致',
+  'userCenter.securitySettings.updatePwd.form.error.required.oldPassword':
+    '请输入登录密码',
+  'userCenter.securitySettings.updatePwd.form.error.required.newPassword':
+    '请输入新密码',
+  'userCenter.securitySettings.updatePwd.form.error.match.newPassword':
+    '长度至少6位，同时包含字母、数字和符号',
+  'userCenter.securitySettings.updatePwd.form.error.validator.newPassword':
+    '新密码不能与登录密码相同',
+  'userCenter.securitySettings.updatePwd.form.error.required.rePassword':
+    '请再次输入新密码',
+  'userCenter.securitySettings.updatePwd.form.error.validator.rePassword':
+    '两次输入的密码不一致',
 
   // update-phone
   'userCenter.securitySettings.phone.label': '安全手机',
-  'userCenter.securitySettings.phone.tip': '用于接收消息、验证身份，绑定后可支持手机验证码登录',
+  'userCenter.securitySettings.phone.tip':
+    '用于接收消息、验证身份，绑定后可支持手机验证码登录',
   'userCenter.securitySettings.phone.content': '未绑定',
 
   'userCenter.securitySettings.updatePhone.modal.title': '修改手机号',
   'userCenter.securitySettings.updatePhone.form.label.newPhone': '新手机号',
   'userCenter.securitySettings.updatePhone.form.label.captcha': '验证码',
-  'userCenter.securitySettings.updatePhone.form.label.currentPassword': '登录密码',
+  'userCenter.securitySettings.updatePhone.form.label.currentPassword':
+    '登录密码',
 
-  'userCenter.securitySettings.updatePhone.form.placeholder.newPhone': '请输入新手机号',
-  'userCenter.securitySettings.updatePhone.form.placeholder.currentPassword': '请输入登录密码',
+  'userCenter.securitySettings.updatePhone.form.placeholder.newPhone':
+    '请输入新手机号',
+  'userCenter.securitySettings.updatePhone.form.placeholder.currentPassword':
+    '请输入登录密码',
 
-  'userCenter.securitySettings.updatePhone.form.error.required.newPhone': '请输入新手机号',
-  'userCenter.securitySettings.updatePhone.form.error.match.newPhone': '请输入正确的手机号',
+  'userCenter.securitySettings.updatePhone.form.error.required.newPhone':
+    '请输入新手机号',
+  'userCenter.securitySettings.updatePhone.form.error.match.newPhone':
+    '请输入正确的手机号',
 
-  'userCenter.securitySettings.updatePhone.form.error.required.currentPassword': '请输入登录密码',
+  'userCenter.securitySettings.updatePhone.form.error.required.currentPassword':
+    '请输入登录密码',
 
   // update-email
   'userCenter.securitySettings.email.label': '安全邮箱',
-  'userCenter.securitySettings.email.tip': '用于接收消息、验证身份，绑定后可支持邮箱登录',
+  'userCenter.securitySettings.email.tip':
+    '用于接收消息、验证身份，绑定后可支持邮箱登录',
   'userCenter.securitySettings.email.content': '未绑定',
 
   'userCenter.securitySettings.updateEmail.modal.title': '修改邮箱',
   'userCenter.securitySettings.updateEmail.form.label.email': '新邮箱',
   'userCenter.securitySettings.updateEmail.form.label.captcha': '验证码',
-  'userCenter.securitySettings.updateEmail.form.label.currentPassword': '登录密码',
+  'userCenter.securitySettings.updateEmail.form.label.currentPassword':
+    '登录密码',
 
-  'userCenter.securitySettings.updateEmail.form.placeholder.email': '请输入新邮箱',
-  'userCenter.securitySettings.updateEmail.form.placeholder.currentPassword': '请输入登录密码',
+  'userCenter.securitySettings.updateEmail.form.placeholder.email':
+    '请输入新邮箱',
+  'userCenter.securitySettings.updateEmail.form.placeholder.currentPassword':
+    '请输入登录密码',
 
-  'userCenter.securitySettings.updateEmail.form.error.required.email': '请输入新邮箱',
-  'userCenter.securitySettings.updateEmail.form.error.match.email': '请输入正确的邮箱',
-  'userCenter.securitySettings.updateEmail.form.error.required.currentPassword': '请输入登录密码',
+  'userCenter.securitySettings.updateEmail.form.error.required.email':
+    '请输入新邮箱',
+  'userCenter.securitySettings.updateEmail.form.error.match.email':
+    '请输入正确的邮箱',
+  'userCenter.securitySettings.updateEmail.form.error.required.currentPassword':
+    '请输入登录密码',
 
   'userCenter.securitySettings.content.hasBeenSet': '已设置',
   'userCenter.securitySettings.button.update': '修改',

@@ -25,19 +25,22 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="title" :label="$t('notice.form.title')">
+                <a-form-item field="title" :label="$t('notice.label.title')">
                   <a-input
                     v-model="searchFormData.title"
-                    :placeholder="$t('notice.form.title.placeholder')"
+                    :placeholder="$t('notice.placeholder.title')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="content" :label="$t('notice.form.content')">
+                <a-form-item
+                  field="content"
+                  :label="$t('notice.label.content')"
+                >
                   <a-input
                     v-model="searchFormData.content"
-                    :placeholder="$t('notice.form.content.placeholder')"
+                    :placeholder="$t('notice.placeholder.content')"
                     allow-clear
                   />
                 </a-form-item>
@@ -45,11 +48,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="category"
-                  :label="$t('notice.form.category')"
+                  :label="$t('notice.label.category')"
                 >
                   <a-select
                     v-model="searchFormData.category"
-                    :placeholder="$t('notice.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="publicOptions"
                     :scrollbar="false"
                     allow-clear
@@ -57,19 +60,19 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="remark" :label="$t('notice.form.remark')">
+                <a-form-item field="remark" :label="$t('common.remark')">
                   <a-input
                     v-model="searchFormData.remark"
-                    :placeholder="$t('notice.form.remark.placeholder')"
+                    :placeholder="$t('placeholder.remark')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('notice.form.status')">
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('notice.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -79,11 +82,14 @@
               <a-col :span="8">
                 <a-form-item
                   field="publish_time"
-                  :label="$t('notice.form.publish_time')"
+                  :label="$t('common.publish_time')"
                 >
                   <a-range-picker
                     v-model="searchFormData.publish_time"
-                    :placeholder="['开始时间', '结束时间']"
+                    :placeholder="[
+                      $t('common.start_time'),
+                      $t('common.end_time'),
+                    ]"
                     :time-picker-props="{
                       defaultValue: ['00:00:00', '23:59:59'],
                     }"
@@ -101,13 +107,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('notice.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('notice.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -120,7 +126,7 @@
               type="primary"
               @click="$router.push({ name: 'NoticeCreate' })"
             >
-              {{ $t('notice.operation.create') }}
+              {{ $t('button.create') }}
             </a-button>
             <a-button
               type="primary"
@@ -133,7 +139,7 @@
                 })
               "
             >
-              发送通知
+              {{ $t('notice.button.send') }}
             </a-button>
             <a-button
               type="primary"
@@ -256,7 +262,7 @@
               })
             "
           >
-            {{ $t('notice.columns.operations.copy') }}
+            {{ $t('button.copy') }}
           </a-button>
           <a-button
             type="text"
@@ -269,21 +275,21 @@
               })
             "
           >
-            {{ $t('notice.columns.operations.update') }}
+            {{ $t('button.update') }}
           </a-button>
           <a-popconfirm
             :content="$t('placeholder.operation.delete')"
             @ok="noticeDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
-              {{ $t('notice.columns.operations.delete') }}
+              {{ $t('button.delete') }}
             </a-button>
           </a-popconfirm>
         </template>
       </a-table>
 
       <a-drawer
-        :title="$t('menu.notice.detail')"
+        :title="$t('notice.menu.detail')"
         unmount-on-close
         render-to-body
         :width="700"
@@ -385,15 +391,8 @@
   ]);
 
   const columns = computed<TableColumnData[]>(() => [
-    // {
-    //   title: t('notice.columns.publisher'),
-    //   dataIndex: 'publisher',
-    //   slotName: 'publisher',
-    //   align: 'center',
-    //   width: 80,
-    // },
     {
-      title: t('notice.columns.title'),
+      title: t('notice.label.title'),
       dataIndex: 'title',
       slotName: 'title',
       align: 'center',
@@ -401,27 +400,21 @@
       tooltip: true,
     },
     {
-      title: t('notice.columns.category'),
+      title: t('notice.label.category'),
       dataIndex: 'category',
       slotName: 'category',
       align: 'center',
     },
     {
-      title: t('notice.columns.scope'),
+      title: t('notice.label.scope'),
       dataIndex: 'scope',
       slotName: 'scope',
       align: 'center',
       ellipsis: true,
       tooltip: true,
     },
-    // {
-    //   title: t('notice.columns.priority'),
-    //   dataIndex: 'priority',
-    //   slotName: 'priority',
-    //   align: 'center',
-    // },
     {
-      title: t('notice.columns.remark'),
+      title: t('common.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
@@ -429,21 +422,21 @@
       tooltip: true,
     },
     {
-      title: t('notice.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('notice.columns.publish_time'),
+      title: t('common.publish_time'),
       dataIndex: 'publish_time',
       slotName: 'publish_time',
       align: 'center',
       width: 170,
     },
     {
-      title: t('notice.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -460,14 +453,6 @@
       label: t('notice.dict.status.2'),
       value: 2,
     },
-    // {
-    //   label: t('notice.dict.status.3'),
-    //   value: 3,
-    // },
-    // {
-    //   label: t('notice.dict.status.4'),
-    //   value: 4,
-    // },
   ]);
 
   const publicOptions = computed<SelectOptionData[]>(() => [
@@ -640,7 +625,9 @@
       });
       switch (params.action) {
         case 'notice':
-          alertContent = `是否确定所选的${ids.value.length}条数据再次发送通知?`;
+          alertContent = t('notice.placeholder.batch.notice', {
+            count: ids.value.length,
+          });
           break;
         case 'delete':
           alertContent = t('placeholder.batch.operation.delete', {

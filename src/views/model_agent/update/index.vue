@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-bug />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.model.agent') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.model.agent.update') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('model.agent.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('model.agent.menu.update') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -26,17 +26,17 @@
             </a-divider>
             <a-form-item
               field="provider_id"
-              :label="$t('model.agent.label.provider')"
+              :label="$t('common.provider')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.agent.error.provider.required'),
+                  message: $t('placeholder.provider'),
                 },
               ]"
             >
               <a-select
                 v-model="formData.provider_id"
-                :placeholder="$t('model.agent.placeholder.provider')"
+                :placeholder="$t('placeholder.provider')"
                 :scrollbar="false"
                 allow-search
                 @change="getKeyPlaceholder"
@@ -55,11 +55,11 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('model.agent.error.name.required'),
+                  message: $t('model.agent.placeholder.name'),
                 },
                 {
                   match: /^.{1,100}$/,
-                  message: $t('model.agent.error.name.pattern'),
+                  message: $t('model.agent.error.pattern.name'),
                 },
               ]"
             >
@@ -70,17 +70,17 @@
             </a-form-item>
             <a-form-item
               field="base_url"
-              :label="$t('model.agent.label.baseUrl')"
+              :label="$t('model.agent.label.base_url')"
               :rules="[
                 {
                   required: true,
-                  message: $t('model.agent.error.baseUrl.required'),
+                  message: $t('model.agent.error.required.base_url'),
                 },
               ]"
             >
               <a-input
                 v-model="formData.base_url"
-                :placeholder="$t('model.agent.placeholder.baseUrl')"
+                :placeholder="$t('model.agent.placeholder.base_url')"
               />
             </a-form-item>
             <a-form-item field="path" :label="$t('model.agent.label.path')">
@@ -98,10 +98,10 @@
                 :max="999"
               />
             </a-form-item>
-            <a-form-item field="remark" :label="$t('model.agent.label.remark')">
+            <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea
                 v-model="formData.remark"
-                :placeholder="$t('model.agent.placeholder.remark')"
+                :placeholder="$t('placeholder.remark')"
               />
             </a-form-item>
 
@@ -109,7 +109,7 @@
               {{ $t('common.title.advanced') }}
             </a-divider>
 
-            <a-form-item field="groups" :label="$t('model.agent.label.groups')">
+            <a-form-item field="groups" :label="$t('common.bind_group')">
               <a-select
                 v-model="formData.groups"
                 :placeholder="$t('model.agent.placeholder.groups')"
@@ -129,7 +129,7 @@
             </a-form-item>
             <a-form-item
               field="models"
-              :label="$t('model.agent.label.models')"
+              :label="$t('common.bind_models')"
               :rules="[
                 {
                   required: false,
@@ -150,7 +150,7 @@
             </a-form-item>
             <a-form-item
               field="is_enable_model_replace"
-              :label="$t('model.agent.label.is_enable_model_replace')"
+              :label="$t('model.agent.label.replace_models')"
             >
               <a-switch
                 v-model="formData.is_enable_model_replace"
@@ -166,7 +166,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('model.agent.error.replace_models.required'),
+                  message: $t('model.agent.error.required.replace_models'),
                 },
               ]"
             >
@@ -219,7 +219,7 @@
                 </a-radio>
               </a-space>
             </a-form-item>
-            <a-form-item field="key" :label="$t('model.agent.label.key')">
+            <a-form-item field="key" :label="$t('common.key')">
               <a-textarea
                 v-model="formData.key"
                 :placeholder="keyPlaceholder"

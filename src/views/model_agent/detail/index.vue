@@ -13,7 +13,7 @@
           {{ currentData.provider_name }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('model.agent.detail.label.name')">
+      <a-descriptions-item :label="$t('model.agent.label.name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -21,10 +21,7 @@
           {{ currentData.name }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('model.agent.detail.label.baseUrl')"
-        :span="2"
-      >
+      <a-descriptions-item :label="$t('model.agent.label.base_url')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -32,10 +29,7 @@
           {{ currentData.base_url }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('model.agent.detail.label.path')"
-        :span="2"
-      >
+      <a-descriptions-item :label="$t('model.agent.label.path')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -43,10 +37,7 @@
           {{ currentData.path || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('model.agent.detail.label.groups')"
-        :span="2"
-      >
+      <a-descriptions-item :label="$t('common.bind_group')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -54,10 +45,7 @@
           {{ currentData?.group_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('model.agent.detail.label.models')"
-        :span="2"
-      >
+      <a-descriptions-item :label="$t('common.bind_models')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -65,7 +53,7 @@
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('model.agent.detail.label.weight')">
+      <a-descriptions-item :label="$t('common.weight')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -83,9 +71,7 @@
           {{ currentData?.fallback_model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('model.agent.detail.label.is_never_disable')"
-      >
+      <a-descriptions-item :label="$t('model.agent.label.is_never_disable')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -93,7 +79,7 @@
           {{ $t(`dict.${currentData?.is_never_disable || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('model.agent.detail.label.lb_strategy')">
+      <a-descriptions-item :label="$t('model.agent.label.lb_strategy')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -101,10 +87,7 @@
           {{ $t(`dict.lb_strategy.${currentData.lb_strategy || 1}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('model.agent.detail.label.key')"
-        :span="2"
-      >
+      <a-descriptions-item :label="$t('common.key')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

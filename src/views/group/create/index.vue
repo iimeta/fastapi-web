@@ -137,14 +137,14 @@
 
             <a-form-item
               field="is_enable_model_agent"
-              :label="$t('group.label.is_enable_model_agent')"
+              :label="$t('common.enable_model_agent')"
             >
               <a-switch v-model="formData.is_enable_model_agent" />
             </a-form-item>
             <a-form-item
               v-if="formData.is_enable_model_agent"
               field="lb_strategy"
-              :label="$t('model.label.lb_strategy')"
+              :label="$t('common.lb_strategy')"
               :rules="[
                 {
                   required: true,
@@ -171,13 +171,13 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('group.placeholder.model_agents'),
+                  message: $t('placeholder.model_agents'),
                 },
               ]"
             >
               <a-select
                 v-model="formData.model_agents"
-                :placeholder="$t('group.placeholder.model_agents')"
+                :placeholder="$t('placeholder.model_agents')"
                 :max-tag-count="3"
                 :scrollbar="false"
                 multiple
