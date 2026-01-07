@@ -61,9 +61,7 @@
           {{ currentData.weight || 0 }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('model.agent.detail.label.fallback_models')"
-      >
+      <a-descriptions-item :label="$t('model.agent.detail.fallback_models')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-calendar />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.task') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.task.video') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('task.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('task.menu.video') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -25,10 +25,10 @@
           >
             <a-row :gutter="16">
               <a-col v-permission="['user']" :span="8">
-                <a-form-item field="app_id" :label="$t('task.form.app_id')">
+                <a-form-item field="app_id" :label="$t('common.app')">
                   <a-select
                     v-model="formModel.app_id"
-                    :placeholder="$t('task.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     allow-search
                     allow-clear
                   >
@@ -45,7 +45,7 @@
                 <a-form-item field="user_id" :label="$t('task.form.user_id')">
                   <a-input-number
                     v-model="formModel.user_id"
-                    :placeholder="$t('task.form.user_id.placeholder')"
+                    :placeholder="$t('placeholder.user_id')"
                     :min="1"
                     allow-clear
                   />
@@ -55,16 +55,19 @@
                 <a-form-item field="trace_id" :label="$t('task.form.trace_id')">
                   <a-input
                     v-model="formModel.trace_id"
-                    :placeholder="$t('task.form.trace_id.placeholder')"
+                    :placeholder="$t('placeholder.trace_id')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="video_id" :label="$t('task.form.video_id')">
+                <a-form-item
+                  field="video_id"
+                  :label="$t('task.detail.video_id')"
+                >
                   <a-input
                     v-model="formModel.video_id"
-                    :placeholder="$t('task.form.video_id.placeholder')"
+                    :placeholder="$t('task.form.placeholder.video_id')"
                     allow-clear
                   />
                 </a-form-item>
@@ -72,21 +75,21 @@
               <a-col :span="8">
                 <a-form-item
                   field="video_url"
-                  :label="$t('task.form.video_url')"
+                  :label="$t('task.detail.video_url')"
                 >
                   <a-input
                     v-model="formModel.video_url"
-                    :placeholder="$t('task.form.video_url.placeholder')"
+                    :placeholder="$t('task.form.placeholder.video_url')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('task.form.status')">
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('task.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -95,7 +98,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="created_at"
-                  :label="$t('task.form.created_at')"
+                  :label="$t('common.created_at')"
                 >
                   <a-range-picker
                     v-model="formModel.created_at"
@@ -120,13 +123,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('task.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('task.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -245,13 +248,13 @@
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('task.columns.operations.view') }}
+            {{ $t('button.detail') }}
           </a-button>
         </template>
       </a-table>
 
       <a-drawer
-        :title="$t('menu.task.video.detail')"
+        :title="$t('task.menu.video.detail')"
         unmount-on-close
         render-to-body
         :width="700"
@@ -364,8 +367,8 @@
     {
       title:
         userRole === 'reseller' || userRole === 'admin'
-          ? t('task.columns.user_id')
-          : t('task.columns.app_id'),
+          ? t('common.user_id')
+          : t('common.app_id'),
       dataIndex:
         userRole === 'reseller' || userRole === 'admin' ? 'user_id' : 'app_id',
       slotName:
@@ -374,13 +377,13 @@
       width: 75,
     },
     {
-      title: t('task.columns.model'),
+      title: t('common.model'),
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
     },
     {
-      title: t('task.columns.video_id'),
+      title: t('task.detail.video_id'),
       dataIndex: 'video_id',
       slotName: 'video_id',
       align: 'center',
@@ -388,19 +391,19 @@
       tooltip: true,
     },
     {
-      title: t('task.columns.width_height'),
+      title: t('task.detail.width_height'),
       dataIndex: 'width_height',
       slotName: 'width_height',
       align: 'center',
     },
     {
-      title: t('task.columns.seconds'),
+      title: t('task.detail.seconds'),
       dataIndex: 'seconds',
       slotName: 'seconds',
       align: 'center',
     },
     {
-      title: t('task.columns.video_url'),
+      title: t('task.detail.video_url'),
       dataIndex: 'video_url',
       slotName: 'video_url',
       align: 'center',
@@ -408,20 +411,20 @@
       tooltip: true,
     },
     {
-      title: t('task.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
     },
     {
-      title: t('task.columns.created_at'),
+      title: t('common.created_at'),
       dataIndex: 'created_at',
       slotName: 'created_at',
       align: 'center',
       width: 132,
     },
     {
-      title: t('task.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',

@@ -6,7 +6,7 @@ const TASK: AppRouteRecordRaw = {
   name: 'task',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.task',
+    locale: 'task.menu',
     requiresAuth: true,
     icon: 'icon-calendar',
     order: 125,
@@ -17,7 +17,7 @@ const TASK: AppRouteRecordRaw = {
       name: 'TaskVideoList',
       component: () => import('@/views/task/list/video.vue'),
       meta: {
-        locale: 'menu.task.video',
+        locale: 'task.menu.video',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'TaskVideoList',
@@ -28,7 +28,7 @@ const TASK: AppRouteRecordRaw = {
       name: 'TaskFileList',
       component: () => import('@/views/task/list/file.vue'),
       meta: {
-        locale: 'menu.task.file',
+        locale: 'task.menu.file',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'TaskFileList',
@@ -39,7 +39,7 @@ const TASK: AppRouteRecordRaw = {
       name: 'TaskBatchList',
       component: () => import('@/views/task/list/batch.vue'),
       meta: {
-        locale: 'menu.task.batch',
+        locale: 'task.menu.batch',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'TaskBatchList',

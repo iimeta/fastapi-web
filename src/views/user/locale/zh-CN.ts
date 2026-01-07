@@ -37,7 +37,7 @@ export default {
   'user.detail.login_domain': '登录域名',
   // form
   'user.form.name': '姓名/邮箱',
-  'user.form.name.placeholder': '请输入姓名/邮箱',
+  'user.form.placeholder.name': '请输入姓名/邮箱',
   'user.form.quota': '额度低于',
   'user.form.title.del': '删除用户',
 };

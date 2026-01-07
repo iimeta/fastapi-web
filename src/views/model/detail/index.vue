@@ -262,9 +262,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('model.detail.label.decision_model_name')"
-      >
+      <a-descriptions-item :label="$t('model.detail.decision_model_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -280,7 +278,7 @@
           {{ currentData?.forward_config?.keywords?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('model.detail.label.target_model_names')">
+      <a-descriptions-item :label="$t('model.detail.target_model_names')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

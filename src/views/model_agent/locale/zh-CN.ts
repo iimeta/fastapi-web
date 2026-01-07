@@ -22,5 +22,5 @@ export default {
   'model.agent.label.is_agents_only': '代理专用',
   'model.agent.label.is_never_disable_key': '密钥永不禁用',
   // detail
-  'model.agent.detail.label.fallback_models': '后备模型',
+  'model.agent.detail.fallback_models': '后备模型',
 };

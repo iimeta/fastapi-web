@@ -45,7 +45,7 @@
                 <a-form-item field="model" :label="$t('common.model')">
                   <a-input
                     v-model="searchFormData.model"
-                    :placeholder="$t('model.form.model.placeholder')"
+                    :placeholder="$t('model.form.placeholder.model')"
                     allow-clear
                   />
                 </a-form-item>

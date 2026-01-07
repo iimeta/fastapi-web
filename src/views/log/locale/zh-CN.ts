@@ -15,7 +15,6 @@ export default {
   'log.menu.general': '通用日志',
   'log.menu.general.detail': '通用日志详情',
   // detail
-  'log.detail.trace_id': 'Trace ID',
   'log.detail.host': 'Host',
   'log.detail.creator': '调用密钥',
   'log.detail.group_name': '分组名称',
@@ -53,12 +52,10 @@ export default {
   // form
   'log.form.app_id': '应用',
   'log.form.trace_id': 'TraceID',
-  'log.form.user.trace_id': 'Trace ID',
-  'log.form.trace_id.placeholder': '请输入Trace ID',
   'log.form.user_id': 'UserID',
   'log.form.model_agents': '代理',
   'log.form.total_time': '耗时大于',
-  'log.form.total_time.placeholder': '请输入总耗时',
+  'log.form.placeholder.total_time': '请输入总耗时',
   'log.form.status': '结果',
   'log.form.title.text_export': '导出文本日志',
   'log.form.title.text_del': '删除文本日志',

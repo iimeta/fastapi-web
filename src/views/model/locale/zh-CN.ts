@@ -26,8 +26,7 @@ export default {
   'model.label.is_enable_preset_config': '预设配置',
   'model.label.preset_config.is_support_system_role': '支持system角色',
   'model.label.preset_config.system_role_prompt': '预设提示词',
-  'model.placeholder.preset_config.system_role_prompt':
-    '预设system角色的提示词',
+  'model.placeholder.preset_config.system_role_prompt': '预设system角色的提示词',
   'model.label.preset_config.max_tokens.range': 'max_tokens范围',
   'model.placeholder.preset_config.min_tokens': 'max_tokens最小值',
   'model.placeholder.preset_config.max_tokens': 'max_tokens最大值',
@@ -43,8 +42,7 @@ export default {
   'model.placeholder.decision_model': '请选择判定模型',
   'model.label.keywords': '关键字',
   'model.placeholder.keywords': '多个关键字用丨隔开',
-  'model.error.required.keywords_and_target_model':
-    '请输入关键字和选择目标模型',
+  'model.error.required.keywords_and_target_model': '请输入关键字和选择目标模型',
   'model.label.content_length': '内容长度',
   'model.placeholder.content_length': '请输入内容长度, 全部上下文内容长度 > N',
   'model.error.required.content_length': '请输入内容长度',
@@ -57,10 +55,8 @@ export default {
   'model.form.title.init_model': '同步模型数据',
   'model.label.url': '模型接口',
   'model.error.required.url': '请输入模型接口',
-  'model.placeholder.url':
-    'Fast API 模型接口, 如: https://api.fastapi.ai/v1/models',
-  'model.placeholder.key':
-    'Fast API 应用密钥, 如: sk-FastAPI1DKp0fzcD0Bf0sOJV1',
+  'model.placeholder.url': 'Fast API 模型接口, 如: https://api.fastapi.ai/v1/models',
+  'model.placeholder.key': 'Fast API 应用密钥, 如: sk-FastAPI1DKp0fzcD0Bf0sOJV1',
   'model.label.is_config_model_agent': '配置代理',
   'model.label.is_cover_price': '覆盖价格',
   'model.label.billing_rule': '计费规则',
@@ -82,8 +78,7 @@ export default {
   'model.error.required.text': '请输入服务层、输入、输出和思考价格',
   'model.error.required.text_cache': '请输入服务层和缓存价格',
   'model.label.text': '文本价格',
-  'model.error.required.tiered_text':
-    '请输入模式、大于、小于等于、输入、输出和思考价格',
+  'model.error.required.tiered_text': '请输入模式、大于、小于等于、输入、输出和思考价格',
   'model.placeholder.tiered_mode': '模式',
   'model.placeholder.tiered_gt': '大于',
   'model.placeholder.tiered_lte': '小于等于',
@@ -91,8 +86,7 @@ export default {
   'model.placeholder.tiered_output_ratio': '输出价格',
   'model.placeholder.tiered_reasoning_ratio': '思考价格',
   'model.label.text_cache': '缓存价格',
-  'model.error.required.tiered_text_cache':
-    '请输入模式、大于、小于等于、读取和写入价格',
+  'model.error.required.tiered_text_cache': '请输入模式、大于、小于等于、读取和写入价格',
   'model.placeholder.tiered_cache_read_ratio': '读取价格',
   'model.placeholder.tiered_cache_write_ratio': '写入价格',
   'model.label.image_generation': '生成价格',
@@ -145,11 +139,11 @@ export default {
   'model.label.midjourney.path': '路径',
   'model.label.midjourney.once_ratio': '价格',
   // detail
-  'model.detail.label.decision_model_name': '智能匹配-判定模型',
-  'model.detail.label.target_model_names': '按关键字-目标模型',
+  'model.detail.decision_model_name': '智能匹配-判定模型',
+  'model.detail.target_model_names': '按关键字-目标模型',
   // form
-  'model.form.name.placeholder': '请输入模型名称',
-  'model.form.model.placeholder': '请输入模型',
+  'model.form.placeholder.name': '请输入模型名称',
+  'model.form.placeholder.model': '请输入模型',
   'model.form.title.model_agent': '全部代理',
   'model.form.title.forward': '全部转发',
   'model.form.title.fallback': '全部后备',

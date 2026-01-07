@@ -5,10 +5,7 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item
-        :label="$t('task.file.detail.label.trace_id')"
-        :span="2"
-      >
+      <a-descriptions-item :label="$t('common.trace_id')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -22,7 +19,7 @@
       </a-descriptions-item>
       <a-descriptions-item
         v-if="currentData.batch_trace_id"
-        :label="$t('task.file.detail.label.batch_trace_id')"
+        :label="$t('task.detail.batch_trace_id')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -36,10 +33,7 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('task.file.detail.label.creator')"
-        :span="2"
-      >
+      <a-descriptions-item :label="$t('task.detail.creator')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -67,7 +61,7 @@
           {{ currentData.user_id }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('task.file.detail.label.model')">
+      <a-descriptions-item :label="$t('common.model')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -75,7 +69,7 @@
           {{ currentData.model }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('task.file.detail.label.purpose')">
+      <a-descriptions-item :label="$t('task.detail.purpose')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -83,10 +77,7 @@
           {{ currentData.purpose || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('task.file.detail.label.file_id')"
-        :span="2"
-      >
+      <a-descriptions-item :label="$t('task.detail.file_id')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -98,7 +89,7 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('task.file.detail.label.file_name')">
+      <a-descriptions-item :label="$t('task.detail.file_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -106,7 +97,7 @@
           {{ currentData.file_name || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('task.file.detail.label.bytes')">
+      <a-descriptions-item :label="$t('task.detail.bytes')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -116,7 +107,7 @@
       </a-descriptions-item>
       <a-descriptions-item
         v-if="currentData.file_url"
-        :label="$t('task.file.detail.label.file_url')"
+        :label="$t('task.detail.file_url')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -130,10 +121,7 @@
           />
         </span>
       </a-descriptions-item>
-      <a-descriptions-item
-        :label="$t('task.file.detail.label.error')"
-        :span="2"
-      >
+      <a-descriptions-item :label="$t('task.detail.error')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -143,7 +131,7 @@
       </a-descriptions-item>
       <a-descriptions-item
         v-if="currentData.file_path"
-        :label="$t('task.file.detail.label.file_path')"
+        :label="$t('task.detail.file_path')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -172,7 +160,7 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('task.file.detail.label.expires_at')">
+      <a-descriptions-item :label="$t('task.detail.expires_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

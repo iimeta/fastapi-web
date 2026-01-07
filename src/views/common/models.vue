@@ -47,7 +47,7 @@
                 >
                   <a-input
                     v-model="searchFormData.name"
-                    :placeholder="$t('model.form.name.placeholder')"
+                    :placeholder="$t('model.form.placeholder.name')"
                     allow-clear
                   />
                 </a-form-item>
@@ -60,7 +60,7 @@
                 >
                   <a-input
                     v-model="searchFormData.model"
-                    :placeholder="$t('model.form.model.placeholder')"
+                    :placeholder="$t('model.form.placeholder.model')"
                     allow-clear
                   />
                 </a-form-item>

@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-calendar />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.task') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.task.batch') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('task.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('task.menu.batch') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -25,10 +25,10 @@
           >
             <a-row :gutter="16">
               <a-col v-permission="['user']" :span="8">
-                <a-form-item field="app_id" :label="$t('task.form.app_id')">
+                <a-form-item field="app_id" :label="$t('common.app')">
                   <a-select
                     v-model="formModel.app_id"
-                    :placeholder="$t('task.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     allow-search
                     allow-clear
                   >
@@ -45,7 +45,7 @@
                 <a-form-item field="user_id" :label="$t('task.form.user_id')">
                   <a-input-number
                     v-model="formModel.user_id"
-                    :placeholder="$t('task.form.user_id.placeholder')"
+                    :placeholder="$t('placeholder.user_id')"
                     :min="1"
                     allow-clear
                   />
@@ -55,35 +55,38 @@
                 <a-form-item field="trace_id" :label="$t('task.form.trace_id')">
                   <a-input
                     v-model="formModel.trace_id"
-                    :placeholder="$t('task.form.trace_id.placeholder')"
+                    :placeholder="$t('placeholder.trace_id')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="batch_id" :label="$t('task.form.batch_id')">
+                <a-form-item
+                  field="batch_id"
+                  :label="$t('task.detail.batch_id')"
+                >
                   <a-input
                     v-model="formModel.batch_id"
-                    :placeholder="$t('task.form.batch_id.placeholder')"
+                    :placeholder="$t('task.form.placeholder.batch_id')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="file_id" :label="$t('task.form.file_id')">
+                <a-form-item field="file_id" :label="$t('task.detail.file_id')">
                   <a-input
                     v-model="formModel.file_id"
-                    :placeholder="$t('task.form.file_id.placeholder')"
+                    :placeholder="$t('task.form.placeholder.file_id')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('task.form.status')">
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('task.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :scrollbar="false"
                     allow-clear
                   />
@@ -92,7 +95,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="created_at"
-                  :label="$t('task.form.created_at')"
+                  :label="$t('common.created_at')"
                 >
                   <a-range-picker
                     v-model="formModel.created_at"
@@ -117,13 +120,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('task.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('task.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -244,13 +247,13 @@
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('task.columns.operations.view') }}
+            {{ $t('button.detail') }}
           </a-button>
         </template>
       </a-table>
 
       <a-drawer
-        :title="$t('menu.task.batch.detail')"
+        :title="$t('task.menu.batch.detail')"
         unmount-on-close
         render-to-body
         :width="700"
@@ -363,8 +366,8 @@
     {
       title:
         userRole === 'reseller' || userRole === 'admin'
-          ? t('task.columns.user_id')
-          : t('task.columns.app_id'),
+          ? t('common.user_id')
+          : t('common.app_id'),
       dataIndex:
         userRole === 'reseller' || userRole === 'admin' ? 'user_id' : 'app_id',
       slotName:
@@ -373,13 +376,13 @@
       width: 75,
     },
     {
-      title: t('task.columns.model'),
+      title: t('common.model'),
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
     },
     {
-      title: t('task.columns.batch_id'),
+      title: t('task.detail.batch_id'),
       dataIndex: 'batch_id',
       slotName: 'batch_id',
       align: 'center',
@@ -387,7 +390,7 @@
       tooltip: true,
     },
     {
-      title: t('task.columns.input_file_id'),
+      title: t('task.detail.input_file_id'),
       dataIndex: 'input_file_id',
       slotName: 'input_file_id',
       align: 'center',
@@ -395,7 +398,7 @@
       tooltip: true,
     },
     {
-      title: t('task.columns.output_file_id'),
+      title: t('task.detail.output_file_id'),
       dataIndex: 'output_file_id',
       slotName: 'output_file_id',
       align: 'center',
@@ -403,20 +406,20 @@
       tooltip: true,
     },
     {
-      title: t('task.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
     },
     {
-      title: t('task.columns.created_at'),
+      title: t('common.created_at'),
       dataIndex: 'created_at',
       slotName: 'created_at',
       align: 'center',
       width: 132,
     },
     {
-      title: t('task.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',

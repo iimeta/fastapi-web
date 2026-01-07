@@ -82,6 +82,7 @@ export default {
   'common.public': '公开',
   'common.lb_strategy': '负载策略',
   'common.enable_model_agent': '启用代理',
+  'common.trace_id': 'Trace ID',
   // unit
   'unit.millisecond': '毫秒',
   'unit.second': '秒',
@@ -180,6 +181,7 @@ export default {
     '是否确定全部删除查询结果的{count}条数据?',
   'placeholder.discount': '请输入折扣',
   'placeholder.expires_at': '请设置过期时间',
+  'placeholder.trace_id': '请输入Trace ID',
   'placeholder.rps': '每秒钟请求数, 为空或者0则不限制',
   'placeholder.rpm': '每分钟请求数, 为空或者0则不限制',
   'placeholder.rpd': '每天的请求数, 为空或者0则不限制',

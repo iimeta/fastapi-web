@@ -43,13 +43,10 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['reseller']" :span="8">
-                <a-form-item
-                  field="trace_id"
-                  :label="$t('log.form.user.trace_id')"
-                >
+                <a-form-item field="trace_id" :label="$t('common.trace_id')">
                   <a-input
                     v-model="searchFormData.trace_id"
-                    :placeholder="$t('log.form.trace_id.placeholder')"
+                    :placeholder="$t('placeholder.trace_id')"
                     allow-clear
                   />
                 </a-form-item>
@@ -75,13 +72,10 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['user']" :span="8">
-                <a-form-item
-                  field="trace_id"
-                  :label="$t('log.form.user.trace_id')"
-                >
+                <a-form-item field="trace_id" :label="$t('common.trace_id')">
                   <a-input
                     v-model="searchFormData.trace_id"
-                    :placeholder="$t('log.form.trace_id.placeholder')"
+                    :placeholder="$t('placeholder.trace_id')"
                     allow-clear
                   />
                 </a-form-item>
@@ -93,7 +87,7 @@
                 >
                   <a-input-number
                     v-model="searchFormData.total_time"
-                    :placeholder="$t('log.form.total_time.placeholder')"
+                    :placeholder="$t('log.form.placeholder.total_time')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -158,7 +152,7 @@
                 >
                   <a-input
                     v-model="searchFormData.trace_id"
-                    :placeholder="$t('log.form.trace_id.placeholder')"
+                    :placeholder="$t('placeholder.trace_id')"
                     allow-clear
                   />
                 </a-form-item>
@@ -207,7 +201,7 @@
                 >
                   <a-input-number
                     v-model="searchFormData.total_time"
-                    :placeholder="$t('log.form.total_time.placeholder')"
+                    :placeholder="$t('log.form.placeholder.total_time')"
                     :precision="0"
                     :min="1"
                     allow-clear
@@ -758,16 +752,16 @@
           >
             <a-space size="large">
               <a-checkbox v-model="textDelFormData.status" :value="1">
-                {{$t('log.dict.status.1')}}
+                {{ $t('log.dict.status.1') }}
               </a-checkbox>
               <a-checkbox v-model="textDelFormData.status" :value="2">
-                {{$t('log.dict.status.2')}}
+                {{ $t('log.dict.status.2') }}
               </a-checkbox>
               <a-checkbox v-model="textDelFormData.status" :value="3">
-                {{$t('log.dict.status.3')}}
+                {{ $t('log.dict.status.3') }}
               </a-checkbox>
               <a-checkbox v-model="textDelFormData.status" :value="-1">
-                {{$t('log.dict.status.-1')}}
+                {{ $t('log.dict.status.-1') }}
               </a-checkbox>
             </a-space>
           </a-form-item>
