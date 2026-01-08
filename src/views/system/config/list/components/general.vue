@@ -84,7 +84,7 @@
         <a-form-item
           v-if="configFormData.action === 'user_login_register'"
           field="user_login_register.account_login"
-          :label="$t('sys.config.label.user_login_register.account_login')"
+          :label="$t('sys.config.label.account_login')"
           :rules="[
             {
               required: true,
@@ -98,7 +98,7 @@
         <a-form-item
           v-if="configFormData.action === 'user_login_register'"
           field="user_login_register.email_login"
-          :label="$t('sys.config.label.user_login_register.email_login')"
+          :label="$t('sys.config.label.email_login')"
           :rules="[
             {
               required: true,
@@ -110,7 +110,7 @@
         <a-form-item
           v-if="configFormData.action === 'user_login_register'"
           field="user_login_register.email_register"
-          :label="$t('sys.config.label.user_login_register.email_register')"
+          :label="$t('sys.config.label.email_register')"
           :rules="[
             {
               required: true,
@@ -124,7 +124,7 @@
         <a-form-item
           v-if="configFormData.action === 'user_login_register'"
           field="user_login_register.email_retrieve"
-          :label="$t('sys.config.label.user_login_register.email_retrieve')"
+          :label="$t('sys.config.label.email_retrieve')"
           :rules="[
             {
               required: true,
@@ -138,25 +138,21 @@
         <a-form-item
           v-if="configFormData.action === 'user_login_register'"
           field="user_login_register.session_expire"
-          :label="$t('sys.config.label.user_login_register.session_expire')"
+          :label="$t('sys.config.label.session_expire')"
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.user_login_register.session_expire.required'
-              ),
+              message: $t('sys.config.placeholder.session_expire'),
             },
           ]"
         >
           <a-input-number
             v-model="configFormData.user_login_register.session_expire"
-            :placeholder="
-              $t('sys.config.placeholder.user_login_register.session_expire')
-            "
+            :placeholder="$t('sys.config.placeholder.session_expire')"
             :min="10"
             allow-clear
           >
-            <template #append> 秒 </template>
+            <template #append> {{ $t('unit.second') }} </template>
           </a-input-number>
         </a-form-item>
         <a-form-item
@@ -164,13 +160,11 @@
           v-show="configFormData.action === 'user_shield_error'"
           :key="index"
           :field="`user_shield_error.errors[${index}]`"
-          :label="
-            `${index + 1}. ` + $t('sys.config.label.user_shield_error.errors')
-          "
+          :label="`${index + 1}. ` + $t('sys.config.label.errors')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.user_shield_error.errors.required'),
+              message: $t('sys.config.error.required.errors'),
             },
           ]"
           :label-col-style="{
@@ -179,7 +173,7 @@
         >
           <a-input
             v-model="configFormData.user_shield_error.errors[index]"
-            :placeholder="$t('sys.config.placeholder.user_shield_error.errors')"
+            :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
             style="width: 84%; margin-right: 5px"
           />
@@ -202,7 +196,7 @@
         <a-form-item
           v-if="configFormData.action === 'reseller_login_register'"
           field="reseller_login_register.account_login"
-          :label="$t('sys.config.label.reseller_login_register.account_login')"
+          :label="$t('sys.config.label.account_login')"
           :rules="[
             {
               required: true,
@@ -216,7 +210,7 @@
         <a-form-item
           v-if="configFormData.action === 'reseller_login_register'"
           field="reseller_login_register.email_login"
-          :label="$t('sys.config.label.reseller_login_register.email_login')"
+          :label="$t('sys.config.label.email_login')"
           :rules="[
             {
               required: true,
@@ -230,7 +224,7 @@
         <a-form-item
           v-if="configFormData.action === 'reseller_login_register'"
           field="reseller_login_register.email_register"
-          :label="$t('sys.config.label.reseller_login_register.email_register')"
+          :label="$t('sys.config.label.email_register')"
           :rules="[
             {
               required: true,
@@ -244,7 +238,7 @@
         <a-form-item
           v-if="configFormData.action === 'reseller_login_register'"
           field="reseller_login_register.email_retrieve"
-          :label="$t('sys.config.label.reseller_login_register.email_retrieve')"
+          :label="$t('sys.config.label.email_retrieve')"
           :rules="[
             {
               required: true,
@@ -258,27 +252,21 @@
         <a-form-item
           v-if="configFormData.action === 'reseller_login_register'"
           field="reseller_login_register.session_expire"
-          :label="$t('sys.config.label.reseller_login_register.session_expire')"
+          :label="$t('sys.config.label.session_expire')"
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.reseller_login_register.session_expire.required'
-              ),
+              message: $t('sys.config.placeholder.session_expire'),
             },
           ]"
         >
           <a-input-number
             v-model="configFormData.reseller_login_register.session_expire"
-            :placeholder="
-              $t(
-                'sys.config.placeholder.reseller_login_register.session_expire'
-              )
-            "
+            :placeholder="$t('sys.config.placeholder.session_expire')"
             :min="10"
             allow-clear
           >
-            <template #append> 秒 </template>
+            <template #append> {{ $t('unit.second') }} </template>
           </a-input-number>
         </a-form-item>
         <a-form-item
@@ -286,16 +274,11 @@
           v-show="configFormData.action === 'reseller_shield_error'"
           :key="index"
           :field="`reseller_shield_error.errors[${index}]`"
-          :label="
-            `${index + 1}. ` +
-            $t('sys.config.label.reseller_shield_error.errors')
-          "
+          :label="`${index + 1}. ` + $t('sys.config.label.errors')"
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.reseller_shield_error.errors.required'
-              ),
+              message: $t('sys.config.error.required.errors'),
             },
           ]"
           :label-col-style="{
@@ -304,9 +287,7 @@
         >
           <a-input
             v-model="configFormData.reseller_shield_error.errors[index]"
-            :placeholder="
-              $t('sys.config.placeholder.reseller_shield_error.errors')
-            "
+            :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
             style="width: 84%; margin-right: 5px"
           />
@@ -329,7 +310,7 @@
         <a-form-item
           v-if="configFormData.action === 'admin_login'"
           field="admin_login.account_login"
-          :label="$t('sys.config.label.admin_login.account_login')"
+          :label="$t('sys.config.label.account_login')"
           :rules="[
             {
               required: true,
@@ -341,7 +322,7 @@
         <a-form-item
           v-if="configFormData.action === 'admin_login'"
           field="admin_login.email_login"
-          :label="$t('sys.config.label.admin_login.email_login')"
+          :label="$t('sys.config.label.email_login')"
           :rules="[
             {
               required: true,
@@ -353,7 +334,7 @@
         <a-form-item
           v-if="configFormData.action === 'admin_login'"
           field="admin_login.email_retrieve"
-          :label="$t('sys.config.label.admin_login.email_retrieve')"
+          :label="$t('sys.config.label.email_retrieve')"
           :rules="[
             {
               required: true,
@@ -365,25 +346,21 @@
         <a-form-item
           v-if="configFormData.action === 'admin_login'"
           field="admin_login.session_expire"
-          :label="$t('sys.config.label.admin_login.session_expire')"
+          :label="$t('sys.config.label.session_expire')"
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.admin_login.session_expire.required'
-              ),
+              message: $t('sys.config.placeholder.session_expire'),
             },
           ]"
         >
           <a-input-number
             v-model="configFormData.admin_login.session_expire"
-            :placeholder="
-              $t('sys.config.placeholder.admin_login.session_expire')
-            "
+            :placeholder="$t('sys.config.placeholder.session_expire')"
             :min="10"
             allow-clear
           >
-            <template #append> 秒 </template>
+            <template #append> {{ $t('unit.second') }} </template>
           </a-input-number>
         </a-form-item>
         <a-form-item
@@ -407,7 +384,7 @@
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.quota.threshold.required'),
+              message: $t('sys.config.placeholder.quota.threshold'),
             },
           ]"
         >
@@ -443,7 +420,7 @@
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.quota.expired_threshold.required'),
+              message: $t('sys.config.placeholder.quota.expired_threshold'),
             },
           ]"
         >
@@ -503,9 +480,7 @@
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.quota.expired_clear_defer.required'
-              ),
+              message: $t('sys.config.placeholder.quota.expired_clear_defer'),
             },
           ]"
         >
@@ -581,7 +556,7 @@
     Modal.warning({
       title: t('modal.warning.title'),
       titleAlign: 'center',
-      content: `是否确定重置${t(
+      content: `${t('sys.config.placeholder.are_you_sure_reset')}${t(
         `sys.config.item.title.${sysConfigItem.action}`
       )}?`,
       hideCancel: false,
@@ -679,14 +654,14 @@
       {
         action: 'user_login_register',
         title: t('sys.config.item.title.user_login_register'),
-        desc: '配置登录页上的登录方式、用户注册、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示, 关闭用户注册时, 通过邮箱登录也无法自动注册',
+        desc: t('sys.config.item.desc.user_login_register'),
         config: true,
         reset: true,
       },
       {
         action: 'user_shield_error',
         title: t('sys.config.item.title.user_shield_error'),
-        desc: '用户查看调用日志错误时, 包含有配置错误内容时则屏蔽显示, 为空则屏蔽所有错误显示',
+        desc: t('sys.config.item.desc.user_shield_error'),
         open: configFormData.value.user_shield_error.open,
         config: true,
         reset: true,
@@ -694,14 +669,14 @@
       {
         action: 'reseller_login_register',
         title: t('sys.config.item.title.reseller_login_register'),
-        desc: '配置登录页上的登录方式、代理商注册、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示, 关闭代理商注册时, 通过邮箱登录也无法自动注册',
+        desc: t('sys.config.item.desc.reseller_login_register'),
         config: true,
         reset: true,
       },
       {
         action: 'reseller_shield_error',
         title: t('sys.config.item.title.reseller_shield_error'),
-        desc: '代理商查看调用日志错误时, 包含有配置错误内容时则屏蔽显示, 为空则屏蔽所有错误显示',
+        desc: t('sys.config.item.desc.reseller_shield_error'),
         open: configFormData.value.reseller_shield_error.open,
         config: true,
         reset: true,
@@ -709,14 +684,14 @@
       {
         action: 'admin_login',
         title: t('sys.config.item.title.admin_login'),
-        desc: '配置登录页上的登录方式、找回密码以及会话过期时长, 对应的开关可控制登录页上对应功能的显示',
+        desc: t('sys.config.item.desc.admin_login'),
         config: true,
         reset: true,
       },
       {
         action: 'quota',
         title: t('sys.config.item.title.quota'),
-        desc: '配置额度预警参数默认值和各类开关, 用户如若有配置额度预警和预警阈值等, 将以用户的配置优先, 额度过期清零开关默认关闭, 可按需选择是否开启',
+        desc: t('sys.config.item.desc.quota'),
         config: true,
         reset: true,
       },

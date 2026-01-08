@@ -501,10 +501,14 @@
                 value="1"
                 :default-checked="true"
               >
-                充值
+                {{ $t('finance.dict.deal_type.1') }}
               </a-radio>
-              <a-radio v-model="formData.quota_type" value="2"> 扣除 </a-radio>
-              <a-radio v-model="formData.quota_type" value="3"> 赠送 </a-radio>
+              <a-radio v-model="formData.quota_type" value="2">
+                {{ $t('finance.dict.deal_type.2') }}
+              </a-radio>
+              <a-radio v-model="formData.quota_type" value="3">
+                {{ $t('finance.dict.deal_type.3') }}
+              </a-radio>
             </a-space>
           </a-form-item>
           <a-form-item

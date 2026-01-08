@@ -27,7 +27,7 @@ export default {
   'group.placeholder.content_length': '请输入内容长度, 全部上下文内容长度 > N',
   'group.error.required.content_length': '请输入内容长度',
   // detail
-  'group.detail.label.is_default': '默认分组',
+  'group.detail.is_default': '默认分组',
   // desc
   'group.desc': '说明: 分组名称加粗的为默认分组, 默认排在列表首位, 当应用或密钥不绑定分组时, 调用模型将按分组列表顺序依次查找, 推荐将应用或密钥绑定分组使用',
 };

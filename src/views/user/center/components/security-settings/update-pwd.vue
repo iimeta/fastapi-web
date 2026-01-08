@@ -2,31 +2,28 @@
   <a-list-item-meta>
     <template #avatar>
       <a-typography-paragraph>
-        {{ $t('userCenter.securitySettings.password.label') }}
+        {{ $t('user.center.label.password') }}
       </a-typography-paragraph>
     </template>
     <template #description>
       <div class="tip">
-        {{ $t('userCenter.securitySettings.password.tip') }}
+        {{ $t('user.center.tip.password') }}
       </div>
       <div class="content">
         <a-typography-paragraph>
-          {{ $t('userCenter.securitySettings.content.hasBeenSet') }}
+          {{ $t('user.center.content.has_been_set') }}
         </a-typography-paragraph>
       </div>
       <div class="operation">
-        <a-link
-          :title="$t('userCenter.securitySettings.button.update')"
-          @click="toUpdate"
-        >
-          {{ $t('userCenter.securitySettings.button.update') }}
+        <a-link :title="$t('button.update')" @click="toUpdate">
+          {{ $t('button.update') }}
         </a-link>
       </div>
     </template>
   </a-list-item-meta>
 
   <a-modal
-    :title="$t('userCenter.securitySettings.updatePwd.modal.title')"
+    :title="$t('user.center.title.update_pwd')"
     :visible="visible"
     :mask-closable="false"
     :esc-to-close="false"
@@ -35,52 +32,34 @@
   >
     <a-form ref="formRef" :model="form" :rules="rules" size="large">
       <a-form-item
-        :label="
-          $t('userCenter.securitySettings.updatePwd.form.label.oldPassword')
-        "
+        :label="$t('user.center.label.password')"
         field="oldPassword"
       >
         <a-input-password
           v-model="form.oldPassword"
-          :placeholder="
-            $t(
-              'userCenter.securitySettings.updatePwd.form.placeholder.oldPassword'
-            )
-          "
+          :placeholder="$t('user.center.form.placeholder.current_password')"
           :max-length="32"
           allow-clear
         />
       </a-form-item>
       <a-form-item
-        :label="
-          $t('userCenter.securitySettings.updatePwd.form.label.newPassword')
-        "
+        :label="$t('user.center.form.label.new_password')"
         field="newPassword"
       >
         <a-input-password
           v-model="form.newPassword"
-          :placeholder="
-            $t(
-              'userCenter.securitySettings.updatePwd.form.placeholder.newPassword'
-            )
-          "
+          :placeholder="$t('user.center.form.placeholder.new_password')"
           :max-length="32"
           allow-clear
         />
       </a-form-item>
       <a-form-item
-        :label="
-          $t('userCenter.securitySettings.updatePwd.form.label.rePassword')
-        "
+        :label="$t('user.center.form.label.re_password')"
         field="rePassword"
       >
         <a-input-password
           v-model="form.rePassword"
-          :placeholder="
-            $t(
-              'userCenter.securitySettings.updatePwd.form.placeholder.rePassword'
-            )
-          "
+          :placeholder="$t('user.center.form.placeholder.re_password')"
           :max-length="32"
           allow-clear
         />
@@ -113,32 +92,22 @@
       oldPassword: [
         {
           required: true,
-          message: t(
-            'userCenter.securitySettings.updatePwd.form.error.required.oldPassword'
-          ),
+          message: t('user.center.form.placeholder.current_password'),
         },
       ],
       newPassword: [
         {
           required: true,
-          message: t(
-            'userCenter.securitySettings.updatePwd.form.error.required.newPassword'
-          ),
+          message: t('user.center.form.error.required.new_password'),
         },
         {
           match: /^(?=.*\d)(?=.*[a-z]).{6,32}$/,
-          message: t(
-            'userCenter.securitySettings.updatePwd.form.error.match.newPassword'
-          ),
+          message: t('user.center.form.placeholder.new_password'),
         },
         {
           validator: (value: string, callback: (arg?: string) => void) => {
             if (value === form.oldPassword) {
-              callback(
-                t(
-                  'userCenter.securitySettings.updatePwd.form.error.validator.newPassword'
-                )
-              );
+              callback(t('user.center.form.error.validator.new_password'));
             } else {
               callback();
             }
@@ -148,18 +117,12 @@
       rePassword: [
         {
           required: true,
-          message: t(
-            'userCenter.securitySettings.updatePwd.form.error.required.rePassword'
-          ),
+          message: t('user.center.form.placeholder.re_password'),
         },
         {
           validator: (value: string, callback: (arg?: string) => void) => {
             if (value !== form.newPassword) {
-              callback(
-                t(
-                  'userCenter.securitySettings.updatePwd.form.error.validator.rePassword'
-                )
-              );
+              callback(t('user.center.form.error.validator.re_password'));
             } else {
               callback();
             }
@@ -189,7 +152,7 @@
         }).then(() => {
           userStore.info();
           handleCancel();
-          Message.success(t('userCenter.basicInfo.form.change.success'));
+          Message.success(t('success.update'));
         });
       }
     });
@@ -200,6 +163,12 @@
    */
   const toUpdate = () => {
     visible.value = true;
+  };
+</script>
+
+<script lang="ts">
+  export default {
+    name: 'UpdatePwd',
   };
 </script>
 

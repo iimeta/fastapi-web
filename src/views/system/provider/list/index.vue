@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-settings />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.provider') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('sys.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('provider.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -25,40 +25,37 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('provider.form.name')">
+                <a-form-item field="name" :label="$t('provider.label.name')">
                   <a-input
                     v-model="searchFormData.name"
-                    :placeholder="$t('provider.form.name.placeholder')"
+                    :placeholder="$t('provider.form.placeholder.name')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="code" :label="$t('provider.form.code')">
+                <a-form-item field="code" :label="$t('provider.label.code')">
                   <a-input
                     v-model="searchFormData.code"
-                    :placeholder="$t('provider.form.code.placeholder')"
+                    :placeholder="$t('provider.form.placeholder.code')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="remark" :label="$t('provider.form.remark')">
+                <a-form-item field="remark" :label="$t('common.remark')">
                   <a-input
                     v-model="searchFormData.remark"
-                    :placeholder="$t('provider.form.remark.placeholder')"
+                    :placeholder="$t('placeholder.remark')"
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="is_public"
-                  :label="$t('provider.form.is_public')"
-                >
+                <a-form-item field="is_public" :label="$t('common.is_public')">
                   <a-select
                     v-model="searchFormData.is_public"
-                    :placeholder="$t('provider.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="publicOptions"
                     :scrollbar="false"
                     allow-clear
@@ -66,10 +63,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="status" :label="$t('provider.form.status')">
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('provider.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -79,7 +76,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="updated_at"
-                  :label="$t('provider.form.updated_at')"
+                  :label="$t('common.updated_at')"
                 >
                   <a-range-picker
                     v-model="searchFormData.updated_at"
@@ -97,13 +94,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('provider.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('provider.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -116,7 +113,7 @@
               type="primary"
               @click="$router.push({ name: 'ProviderCreate' })"
             >
-              {{ $t('provider.operation.create') }}
+              {{ $t('button.create') }}
             </a-button>
             <a-button
               type="primary"
@@ -276,14 +273,14 @@
               })
             "
           >
-            {{ $t('provider.columns.operations.update') }}
+            {{ $t('button.update') }}
           </a-button>
           <a-popconfirm
             :content="$t('placeholder.operation.delete')"
             @ok="providerDelete({ id: record.id })"
           >
             <a-button type="text" size="small">
-              {{ $t('provider.columns.operations.delete') }}
+              {{ $t('button.delete') }}
             </a-button>
           </a-popconfirm>
         </template>
@@ -384,51 +381,51 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('provider.columns.name'),
+      title: t('provider.label.name'),
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
     },
     {
-      title: t('provider.columns.code'),
+      title: t('provider.label.code'),
       dataIndex: 'code',
       slotName: 'code',
       align: 'center',
     },
     {
-      title: t('provider.columns.sort'),
+      title: t('provider.label.sort'),
       dataIndex: 'sort',
       slotName: 'sort',
       align: 'center',
     },
     {
-      title: t('provider.columns.is_public'),
+      title: t('common.public'),
       dataIndex: 'is_public',
       slotName: 'is_public',
       align: 'center',
     },
     {
-      title: t('provider.columns.remark'),
+      title: t('common.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
     },
     {
-      title: t('provider.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('provider.columns.updated_at'),
+      title: t('common.updated_at'),
       dataIndex: 'updated_at',
       slotName: 'updated_at',
       align: 'center',
       width: 132,
     },
     {
-      title: t('provider.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',

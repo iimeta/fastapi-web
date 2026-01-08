@@ -91,6 +91,7 @@ export default {
   'unit.day': '天',
   'unit.piece': '张',
   'unit.once': '次',
+  'unit.item': '条',
   // size
   'size.mini': '迷你',
   'size.small': '偏小',
@@ -173,12 +174,9 @@ export default {
   'placeholder.batch.operation.enable': '是否确定启用所选的{count}条数据?',
   'placeholder.batch.operation.disable': '是否确定禁用所选的{count}条数据?',
   'placeholder.batch.operation.delete': '是否确定删除所选的{count}条数据?',
-  'placeholder.batch.operation.all.enable':
-    '是否确定全部启用查询结果的{count}条数据?',
-  'placeholder.batch.operation.all.disable':
-    '是否确定全部禁用查询结果的{count}条数据?',
-  'placeholder.batch.operation.all.delete':
-    '是否确定全部删除查询结果的{count}条数据?',
+  'placeholder.batch.operation.all.enable': '是否确定全部启用查询结果的{count}条数据?',
+  'placeholder.batch.operation.all.disable': '是否确定全部禁用查询结果的{count}条数据?',
+  'placeholder.batch.operation.all.delete': '是否确定全部删除查询结果的{count}条数据?',
   'placeholder.discount': '请输入折扣',
   'placeholder.expires_at': '请设置过期时间',
   'placeholder.trace_id': '请输入Trace ID',
@@ -264,4 +262,5 @@ export default {
   'dict.language.zh-CN': '简体中文',
   'dict.language.zh-TW': '繁體中文',
   'dict.language.en-US': 'English',
+  'dict.language.default': '跟随系统',
 };

@@ -155,10 +155,7 @@
         @page-size-change="onPageSizeChange"
       >
         <template #name="{ record }">
-          <span
-            v-if="record.is_default"
-            :title="$t('group.detail.label.is_default')"
-          >
+          <span v-if="record.is_default" :title="$t('group.detail.is_default')">
             <b>{{ record.name }}</b>
           </span>
           <span v-else>

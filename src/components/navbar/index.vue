@@ -188,7 +188,7 @@
               <a-space @click="$router.push({ name: 'Center' })">
                 <icon-user />
                 <span>
-                  {{ $t('user.menu.center') }}
+                  {{ $t('user.center.menu') }}
                 </span>
               </a-space>
             </a-doption>

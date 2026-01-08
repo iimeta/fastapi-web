@@ -79,28 +79,28 @@
         <a-form-item
           v-if="configFormData.action === 'quota_task'"
           field="quota_task.cron"
-          :label="$t('sys.config.label.quota_task.cron')"
+          :label="$t('sys.config.label.cron')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.quota_task.cron.required'),
+              message: $t('sys.config.placeholder.cron'),
             },
           ]"
         >
           <a-input
             v-model="configFormData.quota_task.cron"
-            :placeholder="$t('sys.config.placeholder.quota_task.cron')"
+            :placeholder="$t('sys.config.placeholder.cron')"
             allow-clear
           />
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'quota_task'"
           field="quota_task.lock_minutes"
-          :label="$t('sys.config.label.quota_task.lock_minutes')"
+          :label="$t('sys.config.label.lock_minutes')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.quota_task.lock_minutes.required'),
+              message: $t('sys.config.placeholder.quota_task.lock_minutes'),
             },
           ]"
         >
@@ -117,17 +117,17 @@
         <a-form-item
           v-if="configFormData.action === 'statistics'"
           field="statistics.cron"
-          :label="$t('sys.config.label.statistics.cron')"
+          :label="$t('sys.config.label.cron')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.statistics.cron.required'),
+              message: $t('sys.config.placeholder.cron'),
             },
           ]"
         >
           <a-input
             v-model="configFormData.statistics.cron"
-            :placeholder="$t('sys.config.placeholder.statistics.cron')"
+            :placeholder="$t('sys.config.placeholder.cron')"
             allow-clear
           />
         </a-form-item>
@@ -138,7 +138,9 @@
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.statistics.limit.required'),
+              message: $t(
+                'sys.config.error.required.statistics.limit'
+              ),
             },
           ]"
         >
@@ -148,17 +150,17 @@
             :min="10"
             allow-clear
           >
-            <template #append> 条 </template>
+            <template #append> {{ $t('unit.item') }} </template>
           </a-input-number>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'statistics'"
           field="statistics.lock_minutes"
-          :label="$t('sys.config.label.statistics.lock_minutes')"
+          :label="$t('sys.config.label.lock_minutes')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.statistics.lock_minutes.required'),
+              message: $t('sys.config.placeholder.statistics.lock_minutes'),
             },
           ]"
         >
@@ -175,28 +177,28 @@
         <a-form-item
           v-if="configFormData.action === 'video_task'"
           field="video_task.cron"
-          :label="$t('sys.config.label.video_task.cron')"
+          :label="$t('sys.config.label.cron')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.video_task.cron.required'),
+              message: $t('sys.config.placeholder.cron'),
             },
           ]"
         >
           <a-input
             v-model="configFormData.video_task.cron"
-            :placeholder="$t('sys.config.placeholder.video_task.cron')"
+            :placeholder="$t('sys.config.placeholder.cron')"
             allow-clear
           />
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'video_task'"
           field="video_task.lock_minutes"
-          :label="$t('sys.config.label.video_task.lock_minutes')"
+          :label="$t('sys.config.label.lock_minutes')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.video_task.lock_minutes.required'),
+              message: $t('sys.config.placeholder.video_task.lock_minutes'),
             },
           ]"
         >
@@ -282,28 +284,28 @@
         <a-form-item
           v-if="configFormData.action === 'file_task'"
           field="file_task.cron"
-          :label="$t('sys.config.label.file_task.cron')"
+          :label="$t('sys.config.label.cron')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.file_task.cron.required'),
+              message: $t('sys.config.placeholder.cron'),
             },
           ]"
         >
           <a-input
             v-model="configFormData.file_task.cron"
-            :placeholder="$t('sys.config.placeholder.file_task.cron')"
+            :placeholder="$t('sys.config.placeholder.cron')"
             allow-clear
           />
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'file_task'"
           field="file_task.lock_minutes"
-          :label="$t('sys.config.label.file_task.lock_minutes')"
+          :label="$t('sys.config.label.lock_minutes')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.file_task.lock_minutes.required'),
+              message: $t('sys.config.placeholder.file_task.lock_minutes'),
             },
           ]"
         >
@@ -387,28 +389,28 @@
         <a-form-item
           v-if="configFormData.action === 'batch_task'"
           field="batch_task.cron"
-          :label="$t('sys.config.label.batch_task.cron')"
+          :label="$t('sys.config.label.cron')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.batch_task.cron.required'),
+              message: $t('sys.config.placeholder.cron'),
             },
           ]"
         >
           <a-input
             v-model="configFormData.batch_task.cron"
-            :placeholder="$t('sys.config.placeholder.batch_task.cron')"
+            :placeholder="$t('sys.config.placeholder.cron')"
             allow-clear
           />
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'batch_task'"
           field="batch_task.lock_minutes"
-          :label="$t('sys.config.label.batch_task.lock_minutes')"
+          :label="$t('sys.config.label.lock_minutes')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.batch_task.lock_minutes.required'),
+              message: $t('sys.config.placeholder.batch_task.lock_minutes'),
             },
           ]"
         >
@@ -425,28 +427,28 @@
         <a-form-item
           v-if="configFormData.action === 'notice'"
           field="notice.cron"
-          :label="$t('sys.config.label.notice.cron')"
+          :label="$t('sys.config.label.cron')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.notice.cron.required'),
+              message: $t('sys.config.placeholder.cron'),
             },
           ]"
         >
           <a-input
             v-model="configFormData.notice.cron"
-            :placeholder="$t('sys.config.placeholder.notice.cron')"
+            :placeholder="$t('sys.config.placeholder.cron')"
             allow-clear
           />
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'notice'"
           field="notice.lock_minutes"
-          :label="$t('sys.config.label.notice.lock_minutes')"
+          :label="$t('sys.config.label.lock_minutes')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.notice.lock_minutes.required'),
+              message: $t('sys.config.placeholder.notice.lock_minutes'),
             },
           ]"
         >
@@ -501,7 +503,7 @@
     Modal.warning({
       title: t('modal.warning.title'),
       titleAlign: 'center',
-      content: `是否确定重置${t(
+      content: `${t('sys.config.placeholder.are_you_sure_reset')}${t(
         `sys.config.item.title.${sysConfigItem.action}`
       )}?`,
       hideCancel: false,
@@ -577,7 +579,7 @@
       {
         action: 'quota_task',
         title: t('sys.config.item.title.quota_task'),
-        desc: '定时检查各类额度配置以及发送相关通知, 单次任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        desc: t('sys.config.item.desc.quota_task'),
         open: configFormData.value.quota_task.open,
         config: true,
         reset: true,
@@ -585,7 +587,7 @@
       {
         action: 'statistics',
         title: t('sys.config.item.title.statistics'),
-        desc: '仪表盘上各类数据以及账单明细的统计任务, 统计间隔时间建议控制在30分钟以内, 单次循环统计查询条数建议控制在10000以内, 单次统计任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        desc: t('sys.config.item.desc.statistics'),
         open: configFormData.value.statistics.open,
         config: true,
         reset: true,
@@ -593,7 +595,7 @@
       {
         action: 'video_task',
         title: t('sys.config.item.title.video_task'),
-        desc: '定时检查各视频任务的状态并更新, 可选择是否开启存储视频, 单次视频任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        desc: t('sys.config.item.desc.video_task'),
         open: configFormData.value.video_task.open,
         config: true,
         reset: true,
@@ -601,7 +603,7 @@
       {
         action: 'file_task',
         title: t('sys.config.item.title.file_task'),
-        desc: '定时检查各文件任务的状态并更新, 可选择是否开启存储文件, 单次文件任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        desc: t('sys.config.item.desc.file_task'),
         open: configFormData.value.file_task.open,
         config: true,
         reset: true,
@@ -609,7 +611,7 @@
       {
         action: 'batch_task',
         title: t('sys.config.item.title.batch_task'),
-        desc: '定时检查各批处理任务的状态并更新, 单次批处理任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        desc: t('sys.config.item.desc.batch_task'),
         open: configFormData.value.batch_task.open,
         config: true,
         reset: true,
@@ -617,7 +619,7 @@
       {
         action: 'notice',
         title: t('sys.config.item.title.notice'),
-        desc: '定时检查各类通知配置是否需要发送通知, 单次通知任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+        desc: t('sys.config.item.desc.notice'),
         open: configFormData.value.notice.open,
         config: true,
         reset: true,

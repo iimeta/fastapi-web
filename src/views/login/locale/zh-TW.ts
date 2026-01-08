@@ -1,9 +1,10 @@
 export default {
   'login.welcome': ' 歡迎您',
   'login.admin.welcome': ' 管理端',
-  'login.account': '帳號密碼登入',
+  'login.account': '帳密登入',
   'login.email': '信箱登入',
   'login.other': '其他登入方式',
+  'login.logout': '登出',
 
   'login.account.placeholder.username': '請輸入信箱',
   'login.admin.account.placeholder.username': '請輸入帳號/信箱',
@@ -14,7 +15,7 @@ export default {
   'login.email.placeholder.email': '請輸入信箱',
   'login.email.placeholder.captcha': '請輸入驗證碼',
   'login.captcha.get': '取得驗證碼',
-  'login.captcha.ing': '發送中...',
+  'login.captcha.ing': '傳送中...',
 
   'login.account.error.required.username': '請輸入信箱',
   'login.admin.account.error.required.username': '請輸入帳號/信箱',
@@ -33,7 +34,7 @@ export default {
   'login.success': '歡迎回來',
   'register.success': '註冊成功',
   'forget.success': '找回成功',
-  'login.logout.success': '退出成功',
+  'login.logout.success': '登出成功',
   'login.form.login': '立即登入',
   'login.form.register.title': '註冊帳號',
   'login.form.register': '立即註冊',

@@ -83,7 +83,7 @@
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.email.host.required'),
+              message: $t('sys.config.error.required.email.host'),
             },
           ]"
         >
@@ -100,7 +100,7 @@
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.email.port.required'),
+              message: $t('sys.config.error.required.email.port'),
             },
           ]"
         >
@@ -119,7 +119,7 @@
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.email.user_name.required'),
+              message: $t('sys.config.placeholder.email.user_name'),
             },
           ]"
         >
@@ -136,7 +136,7 @@
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.email.password.required'),
+              message: $t('sys.config.placeholder.email.password'),
             },
           ]"
         >
@@ -153,7 +153,7 @@
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.email.from_name.required'),
+              message: $t('sys.config.error.required.email.from_name'),
             },
           ]"
         >
@@ -170,7 +170,7 @@
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.email.interval.required'),
+              message: $t('sys.config.placeholder.email.interval'),
             },
           ]"
         >
@@ -181,7 +181,7 @@
             :min="0"
             allow-clear
           >
-            <template #append> 毫秒 </template>
+            <template #append> {{ $t('unit.millisecond') }} </template>
           </a-input-number>
         </a-form-item>
         <a-form-item
@@ -191,7 +191,7 @@
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.http.timeout.required'),
+              message: $t('sys.config.error.required.http.timeout'),
             },
           ]"
         >
@@ -202,7 +202,7 @@
             :min="0"
             allow-clear
           >
-            <template #append> 秒 </template>
+            <template #append> {{ $t('unit.second') }} </template>
           </a-input-number>
         </a-form-item>
         <a-form-item
@@ -223,7 +223,7 @@
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.core.secret_key_prefix.required'),
+              message: $t('sys.config.placeholder.core.secret_key_prefix'),
             },
           ]"
         >
@@ -240,7 +240,7 @@
           :rules="[
             {
               required: true,
-              message: $t('sys.config.error.core.error_prefix.required'),
+              message: $t('sys.config.placeholder.core.error_prefix'),
             },
           ]"
         >
@@ -305,7 +305,7 @@
     Modal.warning({
       title: t('modal.warning.title'),
       titleAlign: 'center',
-      content: `是否确定重置${t(
+      content: `${t('sys.config.placeholder.are_you_sure_reset')}${t(
         `sys.config.item.title.${sysConfigItem.action}`
       )}?`,
       hideCancel: false,
@@ -385,7 +385,7 @@
       {
         action: 'email',
         title: t('sys.config.item.title.email'),
-        desc: '配置发信邮箱信息, 用于注册、登录、发送消息等场景, 当有站点配置且同时配置发信邮箱信息时, 站点配置的优先',
+        desc: t('sys.config.item.desc.email'),
         open: configFormData.value.email.open,
         config: true,
         reset: true,
@@ -393,21 +393,21 @@
       {
         action: 'http',
         title: t('sys.config.item.title.http'),
-        desc: '配置HTTP请求超时时间和代理地址',
+        desc: t('sys.config.item.desc.http'),
         config: true,
         reset: true,
       },
       {
         action: 'core',
         title: t('sys.config.item.title.core'),
-        desc: '系统首次使用时可根据实际情况修改, 后期如若再次修改密钥前缀, 历史应用密钥将无法通过核验, 请谨慎修改',
+        desc: t('sys.config.item.desc.core'),
         config: true,
         reset: true,
       },
       {
         action: 'debug',
         title: t('sys.config.item.title.debug'),
-        desc: '调试开关打开后, 日志会打印更多详细信息, 日志级别(logger.level)需配置为: debug',
+        desc: t('sys.config.item.desc.debug'),
         open: configFormData.value.debug.open,
       },
     ];

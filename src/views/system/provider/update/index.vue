@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-settings />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.provider.update') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('sys.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('provider.menu.update') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -27,11 +27,11 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('provider.error.name.required'),
+                  message: $t('provider.placeholder.name'),
                 },
                 {
                   match: /^.{1,100}$/,
-                  message: $t('provider.error.name.pattern'),
+                  message: $t('provider.error.pattern.name'),
                 },
               ]"
             >
@@ -51,11 +51,11 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('provider.error.code.required'),
+                  message: $t('provider.placeholder.code'),
                 },
                 {
                   match: /^.{1,100}$/,
-                  message: $t('provider.error.code.pattern'),
+                  message: $t('provider.error.pattern.code'),
                 },
               ]"
             >
@@ -78,16 +78,13 @@
                 :max="999"
               />
             </a-form-item>
-            <a-form-item
-              field="is_public"
-              :label="$t('provider.label.is_public')"
-            >
+            <a-form-item field="is_public" :label="$t('common.public')">
               <a-switch v-model="formData.is_public" />
             </a-form-item>
-            <a-form-item field="remark" :label="$t('provider.label.remark')">
+            <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea
                 v-model="formData.remark"
-                :placeholder="$t('provider.placeholder.remark')"
+                :placeholder="$t('placeholder.remark')"
               />
             </a-form-item>
             <a-space>

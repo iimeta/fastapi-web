@@ -105,7 +105,7 @@
       permission: ['user', 'reseller'],
     },
     {
-      text: 'menu.sys.config',
+      text: 'sys.config.menu',
       icon: 'icon-settings',
       router: 'SysConfig',
       permission: ['admin'],

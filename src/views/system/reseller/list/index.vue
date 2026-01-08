@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-settings />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.reseller') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('sys.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('reseller.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -25,13 +25,10 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="user_id"
-                  :label="$t('reseller.form.userId')"
-                >
+                <a-form-item field="user_id" :label="$t('common.reseller_id')">
                   <a-input-number
                     v-model="searchFormData.user_id"
-                    :placeholder="$t('reseller.form.userId.placeholder')"
+                    :placeholder="$t('reseller.form.placeholder.reseller_id')"
                     :precision="0"
                     :min="1"
                     :max="9999999999999"
@@ -40,13 +37,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="7">
-                <a-form-item
-                  field="account"
-                  :label="$t('reseller.form.account')"
-                >
+                <a-form-item field="account" :label="$t('common.account')">
                   <a-input
                     v-model="searchFormData.account"
-                    :placeholder="$t('reseller.form.account.placeholder')"
+                    :placeholder="$t('reseller.error.required.account')"
                     allow-clear
                   />
                 </a-form-item>
@@ -55,7 +49,7 @@
                 <a-form-item field="name" :label="$t('reseller.form.name')">
                   <a-input
                     v-model="searchFormData.name"
-                    :placeholder="$t('reseller.form.name.placeholder')"
+                    :placeholder="$t('reseller.form.placeholder.name')"
                     allow-clear
                   />
                 </a-form-item>
@@ -64,7 +58,7 @@
                 <a-form-item field="quota" :label="$t('reseller.form.quota')">
                   <a-input-number
                     v-model="searchFormData.quota"
-                    :placeholder="$t('reseller.form.quota.placeholder')"
+                    :placeholder="$t('placeholder.quota')"
                     :min="0.000001"
                     :max="9999999999999"
                     allow-clear
@@ -76,10 +70,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="7">
-                <a-form-item field="status" :label="$t('reseller.form.status')">
+                <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
-                    :placeholder="$t('reseller.form.selectDefault')"
+                    :placeholder="$t('common.all')"
                     :options="statusOptions"
                     :scrollbar="false"
                     allow-clear
@@ -89,7 +83,7 @@
               <a-col :span="9">
                 <a-form-item
                   field="quota_expires_at"
-                  :label="$t('reseller.form.quota_expires_at')"
+                  :label="$t('common.expires_at')"
                 >
                   <a-range-picker
                     v-model="searchFormData.quota_expires_at"
@@ -107,13 +101,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('reseller.form.search') }}
+              {{ $t('button.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('reseller.form.reset') }}
+              {{ $t('button.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -126,7 +120,7 @@
               type="primary"
               @click="$router.push({ name: 'ResellerCreate' })"
             >
-              {{ $t('reseller.operation.create') }}
+              {{ $t('button.create') }}
             </a-button>
             <a-button
               type="primary"
@@ -275,7 +269,7 @@
         <template #quota_expires_at="{ rowIndex }">
           <a-date-picker
             v-model="renderData[rowIndex].quota_expires_at"
-            :placeholder="$t('reseller.columns.placeholder.quota_expires_at')"
+            :placeholder="$t('reseller.placeholder.quota_expires_at')"
             :time-picker-props="{ defaultValue: '23:59:59' }"
             :disabled-date="disabledDate"
             show-time
@@ -346,7 +340,7 @@
           >
             <a-button style="width: 150px">{{
               renderData[rowIndex].quota_expires_at ||
-              $t('reseller.columns.placeholder.quota_expires_at')
+              $t('reseller.placeholder.quota_expires_at')
             }}</a-button>
           </a-date-picker>
         </template>
@@ -377,10 +371,10 @@
               })
             "
           >
-            {{ $t('reseller.columns.operations.recharge') }}
+            {{ $t('button.recharge') }}
           </a-button>
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('reseller.columns.operations.view') }}
+            {{ $t('button.detail') }}
           </a-button>
           <a-button
             type="text"
@@ -392,7 +386,7 @@
               })
             "
           >
-            {{ $t('reseller.columns.operations.update') }}
+            {{ $t('button.update') }}
           </a-button>
           <a-button
             type="text"
@@ -406,13 +400,13 @@
               })
             "
           >
-            {{ $t('reseller.columns.operations.delete') }}
+            {{ $t('button.delete') }}
           </a-button>
         </template>
       </a-table>
 
       <a-drawer
-        :title="$t('menu.reseller.detail')"
+        :title="$t('reseller.menu.detail')"
         unmount-on-close
         render-to-body
         :width="700"
@@ -425,7 +419,7 @@
 
       <a-modal
         v-model:visible="rechargeVisible"
-        :title="$t('reseller.form.title.recharge')"
+        :title="$t('reseller.label.recharge')"
         :ok-text="$t('button.ok')"
         :width="728"
         @cancel="handleCancel"
@@ -438,7 +432,7 @@
             :rules="[
               {
                 required: true,
-                message: $t('reseller.error.recharge.required'),
+                message: $t('reseller.placeholder.recharge'),
               },
             ]"
           >
@@ -496,7 +490,7 @@
             :rules="[
               {
                 required: true,
-                message: $t('reseller.error.quota_type.required'),
+                message: $t('reseller.error.required.quota_type'),
               },
             ]"
           >
@@ -506,10 +500,14 @@
                 value="1"
                 :default-checked="true"
               >
-                充值
+                {{ $t('finance.dict.deal_type.1') }}
               </a-radio>
-              <a-radio v-model="formData.quota_type" value="2"> 扣除 </a-radio>
-              <a-radio v-model="formData.quota_type" value="3"> 赠送 </a-radio>
+              <a-radio v-model="formData.quota_type" value="2">
+                {{ $t('finance.dict.deal_type.2') }}
+              </a-radio>
+              <a-radio v-model="formData.quota_type" value="3">
+                {{ $t('finance.dict.deal_type.3') }}
+              </a-radio>
             </a-space>
           </a-form-item>
           <a-form-item
@@ -608,7 +606,7 @@
           <a-form-item
             v-if="delFormData.user_id"
             field="user_id"
-            :label="$t('reseller.form.userId')"
+            :label="$t('common.reseller_id')"
             :rules="[
               {
                 required: true,
@@ -620,7 +618,7 @@
           <a-form-item
             v-if="delFormData.name"
             field="name"
-            :label="$t('reseller.label.name')"
+            :label="$t('common.name')"
             :rules="[
               {
                 required: true,
@@ -758,14 +756,14 @@
 
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('reseller.columns.userId'),
+      title: t('common.reseller_id'),
       dataIndex: 'user_id',
       slotName: 'user_id',
       align: 'center',
       width: 90,
     },
     {
-      title: t('reseller.columns.name'),
+      title: t('common.name'),
       dataIndex: 'name',
       slotName: 'name',
       align: 'center',
@@ -773,7 +771,7 @@
       tooltip: true,
     },
     {
-      title: t('reseller.columns.account'),
+      title: t('common.account'),
       dataIndex: 'account',
       slotName: 'account',
       align: 'center',
@@ -781,7 +779,7 @@
       tooltip: true,
     },
     {
-      title: t('reseller.columns.quota'),
+      title: t('common.current_quota'),
       dataIndex: 'quota',
       slotName: 'quota',
       align: 'center',
@@ -789,7 +787,7 @@
       tooltip: true,
     },
     {
-      title: t('reseller.columns.used_quota'),
+      title: t('common.used_quota'),
       dataIndex: 'used_quota',
       slotName: 'used_quota',
       align: 'center',
@@ -797,14 +795,14 @@
       tooltip: true,
     },
     // {
-    //   title: t('reseller.columns.quota_expires_at'),
+    //   title: t('reseller.label.quota_expires_at'),
     //   dataIndex: 'quota_expires_at',
     //   slotName: 'quota_expires_at',
     //   align: 'center',
     //   width: 170,
     // },
     {
-      title: t('reseller.columns.allocated_quota'),
+      title: t('reseller.detail.allocated_quota'),
       dataIndex: 'allocated_quota',
       slotName: 'allocated_quota',
       align: 'center',
@@ -812,7 +810,7 @@
       tooltip: true,
     },
     {
-      title: t('reseller.columns.to_be_allocated_quota'),
+      title: t('reseller.detail.to_be_allocated_quota'),
       dataIndex: 'to_be_allocated_quota',
       slotName: 'to_be_allocated_quota',
       align: 'center',
@@ -820,7 +818,7 @@
       tooltip: true,
     },
     {
-      title: t('reseller.columns.remark'),
+      title: t('common.remark'),
       dataIndex: 'remark',
       slotName: 'remark',
       align: 'center',
@@ -828,14 +826,14 @@
       tooltip: true,
     },
     {
-      title: t('reseller.columns.status'),
+      title: t('common.status'),
       dataIndex: 'status',
       slotName: 'status',
       align: 'center',
       width: 65,
     },
     {
-      title: t('reseller.columns.operations'),
+      title: t('common.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
@@ -845,11 +843,11 @@
 
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('reseller.dict.status.1'),
+      label: t('dict.status.1'),
       value: 1,
     },
     {
-      label: t('reseller.dict.status.2'),
+      label: t('dict.status.2'),
       value: 2,
     },
   ]);

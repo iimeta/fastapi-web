@@ -154,9 +154,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t(
-                    'model.error.required.request_data_format'
-                  ),
+                  message: $t('model.error.required.request_data_format'),
                 },
               ]"
             >
@@ -166,10 +164,10 @@
                   value="1"
                   :default-checked="true"
                 >
-                  统一格式
+                  {{ $t('dict.data_format.1') }}
                 </a-radio>
                 <a-radio v-model="formData.request_data_format" value="2">
-                  官方格式
+                  {{ $t('dict.data_format.2') }}
                 </a-radio>
               </a-space>
             </a-form-item>
@@ -179,9 +177,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t(
-                    'model.error.required.response_data_format'
-                  ),
+                  message: $t('model.error.required.response_data_format'),
                 },
               ]"
             >
@@ -191,10 +187,10 @@
                   value="1"
                   :default-checked="true"
                 >
-                  统一格式
+                  {{ $t('dict.data_format.1') }}
                 </a-radio>
                 <a-radio v-model="formData.response_data_format" value="2">
-                  官方格式
+                  {{ $t('dict.data_format.2') }}
                 </a-radio>
               </a-space>
             </a-form-item>
@@ -522,9 +518,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t(
-                    'model.error.required.keywords_and_target_model'
-                  ),
+                  message: $t('model.error.required.keywords_and_target_model'),
                 },
               ]"
             >

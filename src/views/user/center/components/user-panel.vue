@@ -40,9 +40,7 @@
         }"
       >
         <template #label="{ label }">{{ $t(label) }} :</template>
-        <template #value="{ value }">
-          {{ value }}
-        </template>
+        <template #value="{ value }"> {{ value }} </template>
       </a-descriptions>
     </a-space>
   </a-card>
@@ -68,23 +66,23 @@
   };
   const renderData = [
     {
-      label: 'userCenter.label.userId',
+      label: 'common.user_id',
       value: userStore.user_id,
     },
     {
-      label: 'userCenter.label.account',
+      label: 'user.center.label.account',
       value: userStore.account,
     },
     {
-      label: 'userCenter.label.name',
+      label: 'user.center.label.name',
       value: userStore.name,
     },
     {
-      label: 'userCenter.label.email',
+      label: 'user.center.label.email',
       value: userStore.email,
     },
     {
-      label: 'userCenter.label.createdAt',
+      label: 'user.center.label.created_at',
       value: userStore.created_at,
     },
   ] as DescData[];
@@ -134,6 +132,12 @@
         controller.abort();
       },
     };
+  };
+</script>
+
+<script lang="ts">
+  export default {
+    name: 'UserPanel',
   };
 </script>
 

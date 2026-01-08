@@ -8,23 +8,20 @@
     size="large"
     class="form"
   >
-    <a-form-item
-      :label="$t('userCenter.basicInfo.form.label.name')"
-      field="name"
-    >
+    <a-form-item :label="$t('user.center.label.name')" field="name">
       <a-input
         v-model="form.name"
-        :placeholder="$t('userCenter.basicInfo.form.placeholder.name')"
+        :placeholder="$t('user.center.form.placeholder.name')"
         :max-length="30"
       />
     </a-form-item>
     <a-form-item>
       <a-space>
         <a-button :loading="loading" type="primary" @click="handleSave">
-          {{ $t('userCenter.basicInfo.form.save') }}
+          {{ $t('button.save') }}
         </a-button>
         <a-button @click="handleReset">
-          {{ $t('userCenter.basicInfo.form.reset') }}
+          {{ $t('button.reset') }}
         </a-button>
       </a-space>
     </a-form-item>
@@ -54,7 +51,7 @@
         name: [
           {
             required: true,
-            message: t('userCenter.basicInfo.form.error.required.name'),
+            message: t('user.center.form.placeholder.name'),
           },
         ],
       };
@@ -75,7 +72,7 @@
         })
           .then(() => {
             userStore.info();
-            Message.success(t('userCenter.basicInfo.form.save.success'));
+            Message.success(t('success.save'));
           })
           .finally(() => {
             loading.value = false;
@@ -89,6 +86,12 @@
    */
   const handleReset = () => {
     formRef.value.resetFields();
+  };
+</script>
+
+<script lang="ts">
+  export default {
+    name: 'BasicInformation',
   };
 </script>
 

@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-settings />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.site.config.create') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('sys.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('site.config.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -27,7 +27,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('site.config.error.domain.required'),
+                  message: $t('site.config.error.required.domain'),
                 },
               ]"
             >
@@ -43,7 +43,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('site.config.error.title.required'),
+                  message: $t('site.config.placeholder.title'),
                 },
               ]"
             >
@@ -59,7 +59,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('site.config.error.logo.required'),
+                  message: $t('site.config.error.required.logo'),
                 },
               ]"
             >
@@ -75,7 +75,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('site.config.error.favicon.required'),
+                  message: $t('site.config.error.required.favicon'),
                 },
               ]"
             >
@@ -528,10 +528,10 @@
                 allow-clear
               />
             </a-form-item>
-            <a-form-item field="remark" :label="$t('site.config.label.remark')">
+            <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea
                 v-model="formData.remark"
-                :placeholder="$t('site.config.placeholder.remark')"
+                :placeholder="$t('placeholder.remark')"
               />
             </a-form-item>
             <a-space>

@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-settings />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.sys.config') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('sys.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('sys.config.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-row :gutter="20" align="stretch">
       <a-col :span="24">
@@ -20,7 +20,7 @@
           <a-row justify="space-between">
             <a-col :span="24">
               <a-tabs :default-active-tab="0" type="rounded">
-                <a-tab-pane key="0" :title="$t('sys.config.tab.title.all')">
+                <a-tab-pane key="0" :title="$t('common.all')">
                   <Global />
                   <General />
                   <Task />
@@ -40,10 +40,6 @@
                 </a-tab-pane>
               </a-tabs>
             </a-col>
-            <!-- <a-input-search
-              :placeholder="$t('sys.config.searchInput.placeholder')"
-              style="width: 240px; position: absolute; top: 25px; right: 20px"
-            /> -->
           </a-row>
         </a-card>
       </a-col>

@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-settings />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.reseller.create') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('sys.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('reseller.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">
       <a-card
@@ -23,15 +23,15 @@
           >
             <a-form-item
               field="name"
-              :label="$t('reseller.label.name')"
+              :label="$t('common.name')"
               :rules="[
                 {
                   required: true,
-                  message: $t('reseller.error.name.required'),
+                  message: $t('reseller.placeholder.name'),
                 },
                 {
                   match: /^.{1,30}$/,
-                  message: $t('reseller.error.name.pattern'),
+                  message: $t('reseller.error.pattern.name'),
                 },
               ]"
             >
@@ -43,11 +43,11 @@
             </a-form-item>
             <a-form-item
               field="email"
-              :label="$t('reseller.label.email')"
+              :label="$t('common.email')"
               :rules="[
                 {
                   required: true,
-                  message: $t('reseller.error.email.required'),
+                  message: $t('reseller.placeholder.email'),
                 },
               ]"
             >
@@ -59,11 +59,11 @@
             </a-form-item>
             <a-form-item
               field="account"
-              :label="$t('reseller.label.account')"
+              :label="$t('common.account')"
               :rules="[
                 {
                   required: true,
-                  message: $t('reseller.error.account.required'),
+                  message: $t('reseller.error.required.account'),
                 },
               ]"
             >
@@ -79,11 +79,11 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('reseller.error.password.required'),
+                  message: $t('reseller.error.required.password'),
                 },
                 {
                   match: /^.{6,}$/,
-                  message: $t('reseller.error.password.pattern'),
+                  message: $t('reseller.error.pattern.password'),
                 },
               ]"
             >
@@ -95,17 +95,17 @@
             </a-form-item>
             <a-form-item
               field="quota"
-              :label="$t('reseller.label.quota')"
+              :label="$t('common.quota')"
               :rules="[
                 {
                   required: true,
-                  message: $t('reseller.error.quota.required'),
+                  message: $t('placeholder.quota'),
                 },
               ]"
             >
               <a-input-number
                 v-model="formData.quota"
-                :placeholder="$t('reseller.placeholder.quota')"
+                :placeholder="$t('placeholder.quota')"
                 :min="0.000001"
                 :max="9999999999999"
                 :parser="parsePrice"
@@ -138,7 +138,7 @@
               :rules="[
                 {
                   required: true,
-                  message: $t('reseller.error.quota_type.required'),
+                  message: $t('reseller.error.required.quota_type'),
                 },
               ]"
             >
@@ -148,10 +148,10 @@
                   value="1"
                   :default-checked="true"
                 >
-                  充值
+                  {{ $t('finance.dict.deal_type.1') }}
                 </a-radio>
                 <a-radio v-model="formData.quota_type" value="3">
-                  赠送
+                  {{ $t('finance.dict.deal_type.3') }}
                 </a-radio>
               </a-space>
             </a-form-item>
@@ -228,7 +228,7 @@
             </a-form-item>
             <a-form-item
               field="groups"
-              :label="$t('reseller.label.groups')"
+              :label="$t('common.groups')"
               style="align-items: center"
             >
               <a-select
@@ -247,10 +247,10 @@
                 />
               </a-select>
             </a-form-item>
-            <a-form-item field="remark" :label="$t('reseller.label.remark')">
+            <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea
                 v-model="formData.remark"
-                :placeholder="$t('reseller.placeholder.remark')"
+                :placeholder="$t('placeholder.remark')"
               />
             </a-form-item>
             <a-space>

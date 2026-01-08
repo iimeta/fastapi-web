@@ -11,10 +11,10 @@ export default {
   'app.placeholder.ip_blacklist': '一行一個, 可一次性添加多個多行, 支援指定IP、IP段、區間範圍\n如:\n192.168.1.100\n192.168.1.0/24\n192.168.1.100-192.168.1.200',
   'app.placeholder.quota': '請輸入可使用的額度',
   'app.placeholder.quota_expires_at': '請設定額度過期時間',
-  'app.label.is_create_key': '建立密鑰',
+  'app.label.is_create_key': '創建密鑰',
   // success
   'app.success.create': '新建成功, 密鑰已複製到剪貼簿',
   // columns
-  'app.columns.operations.create_key': '建立密鑰',
+  'app.columns.operations.create_key': '創建密鑰',
   'app.columns.operations.manage_key': '管理密鑰',
 };

@@ -1,5 +1,6 @@
 export default {
   'settings.title': 'Settings',
+  'settings.github': 'Open source projects',
   'settings.themeColor': 'Theme Color',
   'settings.content': 'Content Setting',
   'settings.search': 'Search',

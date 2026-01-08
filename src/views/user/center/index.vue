@@ -4,7 +4,7 @@
       <a-breadcrumb-item>
         <icon-user />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('user.menu.center') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('user.center.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-row style="margin-bottom: 10px">
       <a-col :span="24">
@@ -14,10 +14,10 @@
     <a-row class="wrapper">
       <a-col :span="24">
         <a-tabs default-active-key="1" type="rounded">
-          <a-tab-pane key="1" :title="$t('userCenter.tab.basicInformation')">
+          <a-tab-pane key="1" :title="$t('user.center.tab.basic_info')">
             <BasicInformation />
           </a-tab-pane>
-          <a-tab-pane key="2" :title="$t('userCenter.tab.securitySettings')">
+          <a-tab-pane key="2" :title="$t('user.center.tab.security_settings')">
             <SecuritySettings />
           </a-tab-pane>
         </a-tabs>

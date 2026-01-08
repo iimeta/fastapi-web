@@ -4,8 +4,8 @@
       <a-breadcrumb-item>
         <icon-settings />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.sys') }}</a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('menu.site.config') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('sys.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('site.config.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-card
       class="general-card"
@@ -25,13 +25,10 @@
           >
             <a-row :gutter="16">
               <a-col v-permission="['admin']" :span="8">
-                <a-form-item
-                  field="user_id"
-                  :label="$t('site.config.form.user_id')"
-                >
+                <a-form-item field="user_id" :label="$t('common.user_id')">
                   <a-input-number
                     v-model="searchFormData.user_id"
-                    :placeholder="$t('site.config.form.user_id.placeholder')"
+                    :placeholder="$t('placeholder.user_id')"
                     :precision="0"
                     :min="1"
                     :max="9999999999999"
@@ -42,11 +39,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="domain"
-                  :label="$t('site.config.form.domain')"
+                  :label="$t('site.config.label.domain')"
                 >
                   <a-input
                     v-model="searchFormData.domain"
-                    :placeholder="$t('site.config.form.domain.placeholder')"
+                    :placeholder="$t('site.config.error.required.domain')"
                     allow-clear
                   />
                 </a-form-item>
@@ -54,11 +51,11 @@
               <a-col :span="8">
                 <a-form-item
                   field="title"
-                  :label="$t('site.config.form.title')"
+                  :label="$t('site.config.label.title')"
                 >
                   <a-input
                     v-model="searchFormData.title"
-                    :placeholder="$t('site.config.form.title.placeholder')"
+                    :placeholder="$t('site.config.placeholder.title')"
                     allow-clear
                   />
                 </a-form-item>
@@ -66,22 +63,22 @@
               <a-col v-permission="['admin']" :span="8">
                 <a-form-item
                   field="register_tips"
-                  :label="$t('site.config.form.register_tips')"
+                  :label="$t('site.config.label.register_tips')"
                 >
                   <a-input
                     v-model="searchFormData.register_tips"
                     :placeholder="
-                      $t('site.config.form.register_tips.placeholder')
+                      $t('site.config.form.placeholder.register_tips')
                     "
                     allow-clear
                   />
                 </a-form-item>
               </a-col>
               <a-col v-permission="['admin']" :span="8">
-                <a-form-item field="logo" :label="$t('site.config.form.logo')">
+                <a-form-item field="logo" :label="$t('site.config.label.logo')">
                   <a-input
                     v-model="searchFormData.logo"
-                    :placeholder="$t('site.config.form.logo.placeholder')"
+                    :placeholder="$t('site.config.error.required.logo')"
                     allow-clear
                   />
                 </a-form-item>
@@ -302,7 +299,7 @@
       </a-table>
 
       <a-drawer
-        :title="$t('menu.site.config.detail')"
+        :title="$t('site.config.menu.detail')"
         unmount-on-close
         render-to-body
         :width="700"
@@ -419,7 +416,7 @@
       width: 80,
     },
     {
-      title: t('site.config.columns.domain'),
+      title: t('site.config.label.domain'),
       dataIndex: 'domain',
       slotName: 'domain',
       align: 'center',
@@ -427,7 +424,7 @@
       tooltip: true,
     },
     {
-      title: t('site.config.columns.title'),
+      title: t('site.config.label.title'),
       dataIndex: 'title',
       slotName: 'title',
       align: 'center',
@@ -435,7 +432,7 @@
       tooltip: true,
     },
     {
-      title: t('site.config.columns.register_tips'),
+      title: t('site.config.label.register_tips'),
       dataIndex: 'register_tips',
       slotName: 'register_tips',
       align: 'center',

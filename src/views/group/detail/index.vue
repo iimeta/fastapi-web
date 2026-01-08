@@ -14,7 +14,7 @@
           {{ currentData.name }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('group.detail.label.is_default')">
+      <a-descriptions-item :label="$t('group.detail.is_default')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

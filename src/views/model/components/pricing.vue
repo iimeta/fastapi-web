@@ -777,8 +777,9 @@
             value="1"
             style="width: 60px"
             @change="handleImageGenerationPricingIsDefaultChange(index)"
-            >默认</a-radio
           >
+            {{ $t('common.default') }}
+          </a-radio>
           <a-button
             type="primary"
             shape="circle"
@@ -868,8 +869,9 @@
             value="1"
             style="width: 60px"
             @change="handleVisionPricingIsDefaultChange(index)"
-            >默认</a-radio
           >
+            {{ $t('common.default') }}
+          </a-radio>
           <a-button
             type="primary"
             shape="circle"
@@ -1000,8 +1002,9 @@
             value="1"
             style="width: 60px"
             @change="handleVideoPricingIsDefaultChange(index)"
-            >默认</a-radio
           >
+            {{ $t('common.default') }}
+          </a-radio>
           <a-button
             type="primary"
             shape="circle"
@@ -1093,8 +1096,9 @@
             value="1"
             style="width: 60px"
             @change="handleSearchPricingIsDefaultChange(index)"
-            >默认</a-radio
           >
+            {{ $t('common.default') }}
+          </a-radio>
           <a-button
             type="primary"
             shape="circle"

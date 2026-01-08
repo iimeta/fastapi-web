@@ -14,6 +14,12 @@
   import UpdateEmail from './security-settings/update-email.vue';
 </script>
 
+<script lang="ts">
+  export default {
+    name: 'SecuritySettings',
+  };
+</script>
+
 <style scoped lang="less">
   :deep(.arco-list-item) {
     border-bottom: none !important;

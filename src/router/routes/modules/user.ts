@@ -55,7 +55,7 @@ const USER: AppRouteRecordRaw = {
       name: 'Center',
       component: () => import('@/views/user/center/index.vue'),
       meta: {
-        locale: 'user.menu.center',
+        locale: 'user.center.menu',
         requiresAuth: true,
         roles: ['user', 'reseller', 'admin'],
         hideInMenu: true,

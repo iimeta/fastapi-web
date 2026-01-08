@@ -2,34 +2,31 @@
   <a-list-item-meta>
     <template #avatar>
       <a-typography-paragraph>
-        {{ $t('userCenter.securitySettings.email.label') }}
+        {{ $t('user.center.label.security_email') }}
       </a-typography-paragraph>
     </template>
     <template #description>
       <div class="tip">
-        {{ $t('userCenter.securitySettings.email.tip') }}
+        {{ $t('user.center.tip.security_email') }}
       </div>
       <div class="content">
         <a-typography-paragraph v-if="userStore.email">
           {{ userStore.email }}
         </a-typography-paragraph>
         <a-typography-paragraph v-else class="tip">
-          {{ $t('userCenter.securitySettings.email.content') }}
+          {{ $t('user.center.content.security_email') }}
         </a-typography-paragraph>
       </div>
       <div class="operation">
-        <a-link
-          :title="$t('userCenter.securitySettings.button.update')"
-          @click="toUpdate"
-        >
-          {{ $t('userCenter.securitySettings.button.update') }}
+        <a-link :title="$t('button.update')" @click="toUpdate">
+          {{ $t('button.update') }}
         </a-link>
       </div>
     </template>
   </a-list-item-meta>
 
   <a-modal
-    :title="$t('userCenter.securitySettings.updateEmail.modal.title')"
+    :title="$t('user.center.title.update_email')"
     :visible="visible"
     :mask-closable="false"
     :esc-to-close="false"
@@ -37,29 +34,17 @@
     @cancel="handleCancel"
   >
     <a-form ref="formRef" :model="form" :rules="rules" size="large">
-      <a-form-item
-        :label="$t('userCenter.securitySettings.updateEmail.form.label.email')"
-        field="email"
-      >
+      <a-form-item :label="$t('user.center.form.label.email')" field="email">
         <a-input
           v-model="form.email"
-          :placeholder="
-            $t('userCenter.securitySettings.updateEmail.form.placeholder.email')
-          "
+          :placeholder="$t('user.center.form.placeholder.email')"
           allow-clear
         />
       </a-form-item>
-      <a-form-item
-        :label="
-          $t('userCenter.securitySettings.updateEmail.form.label.captcha')
-        "
-        field="code"
-      >
+      <a-form-item :label="$t('user.center.form.label.captcha')" field="code">
         <a-input
           v-model="form.code"
-          :placeholder="
-            $t('userCenter.securitySettings.form.placeholder.captcha')
-          "
+          :placeholder="$t('user.center.form.placeholder.captcha')"
           :max-length="6"
           allow-clear
           style="width: 80%"
@@ -74,21 +59,10 @@
           {{ captchaBtnName }}
         </a-button>
       </a-form-item>
-      <a-form-item
-        :label="
-          $t(
-            'userCenter.securitySettings.updateEmail.form.label.currentPassword'
-          )
-        "
-        field="password"
-      >
+      <a-form-item :label="$t('user.center.label.password')" field="password">
         <a-input-password
           v-model="form.password"
-          :placeholder="
-            $t(
-              'userCenter.securitySettings.updateEmail.form.placeholder.currentPassword'
-            )
-          "
+          :placeholder="$t('user.center.form.placeholder.current_password')"
           :max-length="32"
           allow-clear
         />
@@ -113,7 +87,7 @@
   const captchaLoading = ref(false);
   const captchaDisable = ref(false);
   const visible = ref(false);
-  const captchaBtnNameKey = ref('userCenter.securitySettings.captcha.get');
+  const captchaBtnNameKey = ref('user.center.captcha.get');
   const captchaBtnName = computed(() => t(captchaBtnNameKey.value));
 
   // 表单数据
@@ -125,32 +99,22 @@
   // 表单验证规则
   const rules = computed((): Record<string, FieldRule[]> => {
     return {
-      newEmail: [
+      email: [
         {
           required: true,
-          message: t(
-            'userCenter.securitySettings.updateEmail.form.error.required.newEmail'
-          ),
-        },
-        {
-          type: 'email',
-          message: t(
-            'userCenter.securitySettings.updateEmail.form.error.match.newEmail'
-          ),
+          message: t('user.center.form.placeholder.email'),
         },
       ],
-      captcha: [
+      code: [
         {
           required: true,
-          message: t('userCenter.securitySettings.form.error.required.captcha'),
+          message: t('user.center.form.placeholder.captcha'),
         },
       ],
-      currentPassword: [
+      password: [
         {
           required: true,
-          message: t(
-            'userCenter.securitySettings.updateEmail.form.error.required.currentPassword'
-          ),
+          message: t('user.center.form.placeholder.current_password'),
         },
       ],
     };
@@ -162,7 +126,7 @@
   const resetCaptcha = () => {
     window.clearInterval(captchaTimer.value);
     captchaTime.value = 60;
-    captchaBtnNameKey.value = 'userCenter.securitySettings.captcha.get';
+    captchaBtnNameKey.value = 'user.center.captcha.get';
     captchaDisable.value = false;
   };
 
@@ -171,10 +135,10 @@
    */
   const handleSendCaptcha = () => {
     if (captchaLoading.value) return;
-    formRef.value.validateField('newEmail', (valid: any) => {
+    formRef.value.validateField('email', (valid: any) => {
       if (!valid) {
         captchaLoading.value = true;
-        captchaBtnNameKey.value = 'userCenter.securitySettings.captcha.ing';
+        captchaBtnNameKey.value = 'user.center.captcha.ing';
         getCaptcha({
           email: form.email,
           action: 'change_email',
@@ -185,13 +149,13 @@
             captchaLoading.value = false;
             captchaDisable.value = true;
             captchaBtnNameKey.value = `${t(
-              'userCenter.securitySettings.captcha.get'
+              'user.center.captcha.get'
             )}(${(captchaTime.value -= 1)}s)`;
             captchaTimer.value = window.setInterval(() => {
               captchaTime.value -= 1;
-              captchaBtnNameKey.value = `${t(
-                'userCenter.securitySettings.captcha.get'
-              )}(${captchaTime.value}s)`;
+              captchaBtnNameKey.value = `${t('user.center.captcha.get')}(${
+                captchaTime.value
+              }s)`;
               if (captchaTime.value <= 0) {
                 resetCaptcha();
               }
@@ -227,7 +191,7 @@
         }).then(() => {
           handleCancel();
           userStore.info();
-          Message.success(t('userCenter.basicInfo.form.save.success'));
+          Message.success(t('success.save'));
         });
       }
     });
@@ -238,6 +202,12 @@
    */
   const toUpdate = () => {
     visible.value = true;
+  };
+</script>
+
+<script lang="ts">
+  export default {
+    name: 'UpdateEmail',
   };
 </script>
 

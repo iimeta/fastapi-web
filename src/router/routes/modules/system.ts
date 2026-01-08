@@ -6,7 +6,7 @@ const SYS: AppRouteRecordRaw = {
   name: 'sys',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.sys',
+    locale: 'sys.menu',
     requiresAuth: true,
     icon: 'icon-settings',
     order: 200,
@@ -18,7 +18,7 @@ const SYS: AppRouteRecordRaw = {
       name: 'ProviderList',
       component: () => import('@/views/system/provider/list/index.vue'),
       meta: {
-        locale: 'menu.provider',
+        locale: 'provider.menu',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'ProviderList',
@@ -29,7 +29,7 @@ const SYS: AppRouteRecordRaw = {
       name: 'ProviderCreate',
       component: () => import('@/views/system/provider/create/index.vue'),
       meta: {
-        locale: 'menu.provider.create',
+        locale: 'provider.menu.create',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
@@ -41,7 +41,7 @@ const SYS: AppRouteRecordRaw = {
       name: 'ProviderUpdate',
       component: () => import('@/views/system/provider/update/index.vue'),
       meta: {
-        locale: 'menu.provider.update',
+        locale: 'provider.menu.update',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
@@ -53,7 +53,7 @@ const SYS: AppRouteRecordRaw = {
       name: 'ResellerList',
       component: () => import('@/views/system/reseller/list/index.vue'),
       meta: {
-        locale: 'menu.reseller',
+        locale: 'reseller.menu',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'ResellerList',
@@ -64,7 +64,7 @@ const SYS: AppRouteRecordRaw = {
       name: 'ResellerCreate',
       component: () => import('@/views/system/reseller/create/index.vue'),
       meta: {
-        locale: 'menu.reseller.create',
+        locale: 'reseller.menu.create',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
@@ -76,7 +76,7 @@ const SYS: AppRouteRecordRaw = {
       name: 'ResellerUpdate',
       component: () => import('@/views/system/reseller/update/index.vue'),
       meta: {
-        locale: 'menu.reseller.update',
+        locale: 'reseller.menu.update',
         requiresAuth: true,
         roles: ['admin'],
         hideInMenu: true,
@@ -88,7 +88,7 @@ const SYS: AppRouteRecordRaw = {
       name: 'SiteConfig',
       component: () => import('@/views/system/site_config/list/index.vue'),
       meta: {
-        locale: 'menu.site.config',
+        locale: 'site.config.menu',
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         activeMenu: 'SiteConfig',
@@ -99,7 +99,7 @@ const SYS: AppRouteRecordRaw = {
       name: 'SiteConfigCreate',
       component: () => import('@/views/system/site_config/create/index.vue'),
       meta: {
-        locale: 'menu.site.config.create',
+        locale: 'site.config.menu.create',
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         hideInMenu: true,
@@ -111,7 +111,7 @@ const SYS: AppRouteRecordRaw = {
       name: 'SiteConfigUpdate',
       component: () => import('@/views/system/site_config/update/index.vue'),
       meta: {
-        locale: 'menu.site.config.update',
+        locale: 'site.config.menu.update',
         requiresAuth: true,
         roles: ['reseller', 'admin'],
         hideInMenu: true,
@@ -123,7 +123,7 @@ const SYS: AppRouteRecordRaw = {
       name: 'SysConfig',
       component: () => import('@/views/system/config/list/index.vue'),
       meta: {
-        locale: 'menu.sys.config',
+        locale: 'sys.config.menu',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'SysConfig',
