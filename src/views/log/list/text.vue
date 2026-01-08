@@ -1467,6 +1467,8 @@
         title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
+        okText: t('button.ok'),
+        cancelText: t('button.cancel'),
         hideCancel: false,
         onOk: () => {
           setLoading(true);

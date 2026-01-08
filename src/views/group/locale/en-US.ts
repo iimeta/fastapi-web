@@ -1,5 +1,5 @@
 export default {
-  'group.menu': 'Group Management',
+  'group.menu': 'Groups',
   'group.menu.create': 'Create Group',
   'group.menu.update': 'Edit Group',
   'group.menu.detail': 'Group Details',

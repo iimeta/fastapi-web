@@ -1,5 +1,5 @@
 export default {
-  'user.menu': 'User Management',
+  'user.menu': 'Users',
   'user.menu.create': 'Create User',
   'user.menu.update': 'Edit User',
   'user.menu.detail': 'User Details',
@@ -24,6 +24,15 @@ export default {
   'user.placeholder.quota_expires_at': 'Please set quota expiration time',
   'user.label.del.data': 'Delete Data',
   'user.label.is_send_notice': 'Send Notification',
+  'user.placeholder.are_you_sure_delete': 'Are you sure you want to delete the user',
+  'user.placeholder.and_also_delete': 'and also delete',
+  'user.placeholder.batch.operation': 'Are you sure you want to perform the operation on the selected {count} user(s)?',
+  'user.placeholder.batch.operation.deduct': 'Are you sure you want to deduct {currencySymbol}{quota} quota from the selected {count} user(s)?',
+  'user.placeholder.batch.operation.quota_type': 'Are you sure you want to {quotaType} {currencySymbol}{quota} quota to the selected {count} user(s)?',
+  'user.placeholder.batch.operation.enable': 'Are you sure you want to enable the selected {count} user(s)?',
+  'user.placeholder.batch.operation.disable': 'Are you sure you want to disable the selected {count} user(s)?',
+  'user.placeholder.batch.operation.delete': 'Are you sure you want to delete the selected {count} user(s)?',
+  'user.placeholder.batch.operation.delete_data': 'Are you sure you want to delete the selected {count} user(s) and also delete: {del_data}?',
   // detail
   'user.detail.quota_warning': 'Quota Warning',
   'user.detail.warning_threshold': 'Warning Threshold',

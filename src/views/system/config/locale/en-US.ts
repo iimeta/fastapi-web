@@ -1,6 +1,6 @@
 export default {
-  'sys.menu': 'System Management',
-  'sys.config.menu': 'Configuration Management',
+  'sys.menu': 'System',
+  'sys.config.menu': 'Configuration',
   'sys.config.tab.title.global': 'Global',
   'sys.config.tab.title.general': 'General',
   'sys.config.tab.title.task': 'Task',

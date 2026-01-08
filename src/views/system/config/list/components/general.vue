@@ -559,6 +559,8 @@
       content: `${t('sys.config.placeholder.are_you_sure_reset')}${t(
         `sys.config.item.title.${sysConfigItem.action}`
       )}?`,
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
       hideCancel: false,
       onOk: () => {
         sysConfigReset(sysConfigItem);

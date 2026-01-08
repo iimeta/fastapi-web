@@ -1,5 +1,5 @@
 export default {
-  'notice.template.menu': 'Notification Templates',
+  'notice.template.menu': 'Templates',
   'notice.template.menu.create': 'Create Notification Template',
   'notice.template.menu.update': 'Edit Notification Template',
   'notice.template.menu.detail': 'Notification Template Details',

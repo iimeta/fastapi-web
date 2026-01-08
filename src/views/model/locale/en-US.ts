@@ -1,5 +1,5 @@
 export default {
-  'model.menu': 'Model Management',
+  'model.menu': 'Model',
   'model.menu.create': 'Create Model',
   'model.menu.update': 'Edit Model',
   'model.menu.detail': 'Model Details',
@@ -151,11 +151,11 @@ export default {
   'model.columns.pricing': 'Pricing',
   // button
   'model.button.all_model_agent': 'All Agents',
-  'model.button.enable_model_agent': 'Enable Agent',
-  'model.button.close_model_agent': 'Disable Agent',
-  'model.button.all_forward': 'All Forwarding',
-  'model.button.enable_forward': 'Enable Forwarding',
-  'model.button.close_forward': 'Disable Forwarding',
+  'model.button.enable_model_agent': 'Enable Agents',
+  'model.button.close_model_agent': 'Disable Agents',
+  'model.button.all_forward': 'All Forward',
+  'model.button.enable_forward': 'Enable Forward',
+  'model.button.close_forward': 'Disable Forward',
   'model.button.all_fallback': 'All Fallback',
   'model.button.enable_fallback': 'Enable Fallback',
   'model.button.close_fallback': 'Disable Fallback',

@@ -79,7 +79,7 @@
         </a-popover>
       </li> -->
       <li>
-        <a-tooltip :content="`版本: v${config.version}`">
+        <a-tooltip :content="`${$t('common.version')}: v${config.version}`">
           <a-link
             target="_blank"
             :href="`https://github.com/iimeta/fastapi/releases/tag/v${config.version}`"

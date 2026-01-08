@@ -1,5 +1,5 @@
 export default {
-  'log.menu': 'Log Management',
+  'log.menu': 'Logs',
   'log.menu.text': 'Text Logs',
   'log.menu.text.detail': 'Text Log Details',
   'log.menu.image': 'Image Logs',

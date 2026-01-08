@@ -133,7 +133,7 @@
                 })
               "
             >
-              充值
+              {{ $t('button.recharge') }}
             </a-button>
             <a-button
               type="primary"
@@ -630,22 +630,22 @@
           <a-form-item field="data" :label="$t('reseller.label.del.data')">
             <a-space size="large">
               <a-checkbox v-model="delFormData.data" :value="1">
-                用户数据
+                {{ $t('dict.del_data.1') }}
               </a-checkbox>
               <a-checkbox v-model="delFormData.data" :value="2">
-                应用数据
+                {{ $t('dict.del_data.2') }}
               </a-checkbox>
               <a-checkbox v-model="delFormData.data" :value="3">
-                交易记录
+                {{ $t('dict.del_data.3') }}
               </a-checkbox>
               <a-checkbox v-model="delFormData.data" :value="4">
-                账单明细
+                {{ $t('dict.del_data.4') }}
               </a-checkbox>
               <a-checkbox v-model="delFormData.data" :value="5">
-                日志数据
+                {{ $t('dict.del_data.5') }}
               </a-checkbox>
               <a-checkbox v-model="delFormData.data" :value="6">
-                任务数据
+                {{ $t('dict.del_data.6') }}
               </a-checkbox>
             </a-space>
           </a-form-item>
@@ -794,13 +794,6 @@
       ellipsis: true,
       tooltip: true,
     },
-    // {
-    //   title: t('reseller.label.quota_expires_at'),
-    //   dataIndex: 'quota_expires_at',
-    //   slotName: 'quota_expires_at',
-    //   align: 'center',
-    //   width: 170,
-    // },
     {
       title: t('reseller.detail.allocated_quota'),
       dataIndex: 'allocated_quota',
@@ -961,14 +954,17 @@
   );
 
   const delDataMap = new Map();
-  delDataMap.set(1, '用户数据');
-  delDataMap.set(2, '应用数据');
-  delDataMap.set(3, '交易记录');
-  delDataMap.set(4, '账单明细');
-  delDataMap.set(5, '日志数据');
+  delDataMap.set(1, t('dict.del_data.1'));
+  delDataMap.set(2, t('dict.del_data.2'));
+  delDataMap.set(3, t('dict.del_data.3'));
+  delDataMap.set(4, t('dict.del_data.4'));
+  delDataMap.set(5, t('dict.del_data.5'));
+  delDataMap.set(6, t('dict.del_data.6'));
 
   const resellerDelete = async (params: ResellerDeleteParams) => {
-    let alertContent = `是否确定删除代理商: ${params.name}?`;
+    let alertContent = `${t('reseller.placeholder.are_you_sure_delete')}: ${
+      params.name
+    }?`;
 
     if (params.data && params.data.length > 0) {
       let delData = '';
@@ -979,13 +975,17 @@
           delData += `、${delDataMap.get(params.data[i])}`;
         }
       }
-      alertContent = `是否确定删除代理商: ${params.name} 以及同时删除: ${delData}?`;
+      alertContent = `${t('reseller.placeholder.are_you_sure_delete')}: ${
+        params.name
+      } ${t('reseller.placeholder.and_also_delete')}: ${delData}?`;
     }
 
     Modal.warning({
       title: t('modal.warning.title'),
       titleAlign: 'center',
       content: alertContent,
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
       hideCancel: false,
       onOk: () => {
         setLoading(true);
@@ -1121,7 +1121,9 @@
     if (ids.value.length === 0) {
       Message.info(t('placeholder.operation.data'));
     } else {
-      let alertContent = `是否确定操作所选的${ids.value.length}位代理商?`;
+      let alertContent = t('reseller.placeholder.batch.operation', {
+        count: ids.value.length,
+      });
       switch (params.action) {
         case 'recharge':
           if (!params.value) {
@@ -1132,24 +1134,41 @@
             formData.value.is_send_notice = true;
             rechargeVisible.value = true;
           } else if (formData.value.quota_type === '2') {
-            alertContent = `是否确定扣除所选的${ids.value.length}位代理商 ${
-              appStore.getCurrencySymbol
-            }${parseQuota(params.value)} 额度?`;
+            alertContent = t('reseller.placeholder.batch.operation.deduct', {
+              count: ids.value.length,
+              currencySymbol: appStore.getCurrencySymbol,
+              quota: parseQuota(params.value),
+            });
           } else {
-            alertContent = `是否确定给所选的${ids.value.length}位代理商${
-              formData.value.quota_type === '1' ? '充值' : '赠送'
-            } ${appStore.getCurrencySymbol}${parseQuota(params.value)} 额度?`;
+            alertContent = t(
+              'reseller.placeholder.batch.operation.quota_type',
+              {
+                count: ids.value.length,
+                quotaType:
+                  formData.value.quota_type === '1'
+                    ? t('finance.dict.deal_type.1')
+                    : t('finance.dict.deal_type.3'),
+                currencySymbol: appStore.getCurrencySymbol,
+                quota: parseQuota(params.value),
+              }
+            );
           }
           break;
         case 'status':
           if (params.value === 1) {
-            alertContent = `是否确定启用所选的${ids.value.length}位代理商?`;
+            alertContent = t('reseller.placeholder.batch.operation.enable', {
+              count: ids.value.length,
+            });
           } else {
-            alertContent = `是否确定禁用所选的${ids.value.length}位代理商?`;
+            alertContent = t('reseller.placeholder.batch.operation.disable', {
+              count: ids.value.length,
+            });
           }
           break;
         case 'delete':
-          alertContent = `是否确定删除所选的${ids.value.length}位代理商?`;
+          alertContent = t('reseller.placeholder.batch.operation.delete', {
+            count: ids.value.length,
+          });
           if (params.data && params.data.length > 0) {
             let delData = '';
             for (let i = 0; i < params.data.length; i += 1) {
@@ -1159,7 +1178,13 @@
                 delData += `、${delDataMap.get(params.data[i])}`;
               }
             }
-            alertContent = `是否确定删除所选的${ids.value.length}位代理商以及同时删除: ${delData}?`;
+            alertContent = t(
+              'reseller.placeholder.batch.operation.delete_data',
+              {
+                count: ids.value.length,
+                del_data: delData,
+              }
+            );
           }
           break;
         default:
@@ -1173,6 +1198,8 @@
         title: t('modal.warning.title'),
         titleAlign: 'center',
         content: alertContent,
+        okText: t('button.ok'),
+        cancelText: t('button.cancel'),
         hideCancel: false,
         onOk: () => {
           setLoading(true);

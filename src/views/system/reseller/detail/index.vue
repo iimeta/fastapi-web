@@ -105,7 +105,9 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else> {{ currentData.expire_warning_threshold }}天 </span>
+        <span v-else>
+          {{ currentData.expire_warning_threshold }}{{ $t('unit.day') }}
+        </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('reseller.detail.warning_notice')">
         <a-skeleton v-if="loading" :animation="true">
@@ -214,7 +216,6 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
     queryResellerDetail,
@@ -223,7 +224,6 @@
   } from '@/api/admin_reseller';
   import Quota from '@/views/common/quota.vue';
 
-  const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<ResellerDetail>({} as ResellerDetail);
   const props = defineProps({

@@ -187,9 +187,7 @@
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.required.base.short_timeout'
-              ),
+              message: $t('sys.config.error.required.base.short_timeout'),
             },
           ]"
         >
@@ -209,9 +207,7 @@
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.required.base.long_timeout'
-              ),
+              message: $t('sys.config.error.required.base.long_timeout'),
             },
           ]"
         >
@@ -263,9 +259,7 @@
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.required.log.text_reserve'
-              ),
+              message: $t('sys.config.error.required.log.text_reserve'),
             },
           ]"
         >
@@ -286,9 +280,7 @@
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.required.log.image_reserve'
-              ),
+              message: $t('sys.config.error.required.log.image_reserve'),
             },
           ]"
         >
@@ -309,9 +301,7 @@
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.required.log.audio_reserve'
-              ),
+              message: $t('sys.config.error.required.log.audio_reserve'),
             },
           ]"
         >
@@ -332,9 +322,7 @@
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.required.log.video_reserve'
-              ),
+              message: $t('sys.config.error.required.log.video_reserve'),
             },
           ]"
         >
@@ -355,9 +343,7 @@
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.required.log.file_reserve'
-              ),
+              message: $t('sys.config.error.required.log.file_reserve'),
             },
           ]"
         >
@@ -378,9 +364,7 @@
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.required.log.batch_reserve'
-              ),
+              message: $t('sys.config.error.required.log.batch_reserve'),
             },
           ]"
         >
@@ -401,9 +385,7 @@
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.required.log.general_reserve'
-              ),
+              message: $t('sys.config.error.required.log.general_reserve'),
             },
           ]"
         >
@@ -512,9 +494,7 @@
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.required.auto_enable_error'
-              ),
+              message: $t('sys.config.error.required.auto_enable_error'),
             },
           ]"
           :label-col-style="{
@@ -695,9 +675,7 @@
           :rules="[
             {
               required: true,
-              message: $t(
-                'sys.config.error.required.general_api.ip_whitelist'
-              ),
+              message: $t('sys.config.error.required.general_api.ip_whitelist'),
             },
           ]"
           :label-col-style="{
@@ -812,6 +790,8 @@
       content: `${t('sys.config.placeholder.are_you_sure')}${
         sysConfigItem.action !== 'reset_api_error' ? t('button.reset') : ''
       }${t(`sys.config.item.title.${sysConfigItem.action}`)}?`,
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
       hideCancel: false,
       onOk: () => {
         sysConfigReset(sysConfigItem);
@@ -826,6 +806,8 @@
       content: `${t('sys.config.placeholder.are_you_sure')}${t(
         `sys.config.item.title.${sysConfigItem.action}`
       )}?`,
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
       hideCancel: false,
       onOk: () => {
         sysConfigRefresh(sysConfigItem);

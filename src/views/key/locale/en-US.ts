@@ -1,5 +1,5 @@
 export default {
-  'key.menu': 'Key Management',
+  'key.menu': 'Keys',
   'key.menu.create': 'Create Key',
   'key.menu.update': 'Edit Key',
   'key.menu.detail': 'Key Details',

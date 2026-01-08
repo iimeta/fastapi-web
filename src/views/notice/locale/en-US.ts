@@ -1,6 +1,6 @@
 export default {
-  'notice.menu': 'Notification Management',
-  'notice.menu.message': 'Message Notifications',
+  'notice.menu': 'Notification',
+  'notice.menu.message': 'Messages',
   'notice.menu.create': 'Create Message Notification',
   'notice.menu.update': 'Edit Message Notification',
   'notice.menu.detail': 'Message Notification Details',
