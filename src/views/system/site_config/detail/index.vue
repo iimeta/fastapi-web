@@ -261,7 +261,6 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
     SiteConfigDetailParams,
@@ -270,7 +269,6 @@
   } from '@/api/site_config';
   import Quota from '@/views/common/quota.vue';
 
-  const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<SiteConfigDetail>({} as SiteConfigDetail);
   const props = defineProps({

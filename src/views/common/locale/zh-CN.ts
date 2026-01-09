@@ -263,7 +263,6 @@ export default {
   'dict.billing_items.search': '搜索',
   'dict.billing_items.midjourney': 'Midjourney',
   'dict.billing_items.once': '一次',
-  'dict.del_data.once': '一次',
   'dict.del_data.1': '用户数据',
   'dict.del_data.2': '应用数据',
   'dict.del_data.3': '交易记录',
