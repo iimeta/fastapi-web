@@ -10,7 +10,7 @@ export default {
   'user.center.tip.password': '登入帳號時需要輸入的密碼',
   'user.center.title.update_pwd': '修改登入密碼',
   'user.center.label.security_email': '安全信箱',
-  'user.center.tip.security_email': '用於接收訊息、驗證身份，綁定後可支援信箱登入',
+  'user.center.tip.security_email': '用於接收訊息、驗證身份，綁定後可支持信箱登入',
   'user.center.content.security_email': '未綁定',
   'user.center.title.update_email': '修改信箱',
   'user.center.content.has_been_set': '已設定',

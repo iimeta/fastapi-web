@@ -2,7 +2,10 @@
   <div class="main">
     <div id="vditor" class="content"></div>
     <div class="attribute">
-      <a-descriptions title="用户属性" :column="{ xs: 1, md: 2, lg: 3 }">
+      <a-descriptions
+        :title="$t('common.variable.user')"
+        :column="{ xs: 1, md: 2, lg: 3 }"
+      >
         <a-descriptions-item
           v-for="(item, index) of userAttribute"
           :key="index"
@@ -12,7 +15,10 @@
         </a-descriptions-item>
       </a-descriptions>
 
-      <a-descriptions title="代理商属性" :column="{ xs: 1, md: 2, lg: 3 }">
+      <a-descriptions
+        :title="$t('common.variable.reseller')"
+        :column="{ xs: 1, md: 2, lg: 3 }"
+      >
         <a-descriptions-item
           v-for="(item, index) of resellerAttribute"
           :key="index"
@@ -22,7 +28,10 @@
         </a-descriptions-item>
       </a-descriptions>
 
-      <a-descriptions title="站点属性" :column="{ xs: 1, md: 3, lg: 4 }">
+      <a-descriptions
+        :title="$t('common.variable.site')"
+        :column="{ xs: 1, md: 3, lg: 4 }"
+      >
         <a-descriptions-item
           v-for="(item, index) of siteAttribute"
           :key="index"
@@ -37,8 +46,40 @@
 
 <script setup lang="ts">
   import { ref, watch, onMounted, onUnmounted } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import Vditor from 'vditor';
   import 'vditor/dist/index.css';
+
+  const { t } = useI18n();
+
+  const getSystemLocale = () => {
+    const systemLang = navigator.language || 'zh-CN';
+
+    // 精确匹配优先
+    const exactMatch: Record<string, string> = {
+      'zh-CN': 'zh_CN',
+      'zh-TW': 'zh_TW',
+      'zh-HK': 'zh_TW',
+      'zh-MO': 'zh_TW',
+      'zh-SG': 'zh_CN',
+      'en-US': 'en_US',
+      'en-GB': 'en_US',
+      'en-CA': 'en_US',
+      'en-AU': 'en_US',
+    };
+
+    // 语言代码匹配（去掉地区后缀）
+    const langCode = systemLang.split('-')[0];
+    const languageMatch: Record<string, string> = {
+      zh: 'zh_CN',
+      en: 'en_US',
+    };
+
+    return exactMatch[systemLang] || languageMatch[langCode] || 'zh_CN';
+  };
+
+  let defaultLocale = localStorage.getItem('arco-locale') || getSystemLocale();
+  defaultLocale = defaultLocale.replace('-', '_');
 
   const props = defineProps<{
     modelValue: string;
@@ -51,11 +92,12 @@
   const options = {
     mode: 'wysiwyg' as 'wysiwyg' | 'sv' | 'ir',
     height: '60vh',
-    placeholder: '请输入内容',
+    placeholder: t('notice.placeholder.content'),
     cache: {
       enable: false,
     },
     cdn: 'https://vditor.fastapi.pro/vditor@3.11.1',
+    lang: defaultLocale as any,
     toolbar: [
       'emoji',
       'headings',
@@ -130,113 +172,113 @@
 
   const userAttribute = [
     {
-      label: '用户ID',
+      label: t('common.user_id'),
       value: '{{.user.user_id}}',
     },
     {
-      label: '姓名',
+      label: t('common.name'),
       value: '{{.user.name}}',
     },
     {
-      label: '邮箱',
+      label: t('common.email'),
       value: '{{.user.email}}',
     },
     {
-      label: '手机号',
+      label: t('common.phone'),
       value: '{{.user.phone}}',
     },
     {
-      label: '剩余额度',
+      label: t('common.current_quota'),
       value: '{{.user.quota}}',
     },
     {
-      label: '已用额度',
+      label: t('common.used_quota'),
       value: '{{.user.used_quota}}',
     },
     {
-      label: '额度过期时间',
+      label: t('user.label.quota_expires_at'),
       value: '{{.user.quota_expires_at}}',
     },
     {
-      label: '预警阈值',
+      label: t('user.detail.warning_threshold'),
       value: '{{.user.warning_threshold}}',
     },
     {
-      label: '过期预警阈值',
+      label: t('user.detail.expire_warning_threshold'),
       value: '{{.user.expire_warning_threshold}}',
     },
   ];
 
   const resellerAttribute = [
     {
-      label: '用户ID',
+      label: t('common.user_id'),
       value: '{{.reseller.user_id}}',
     },
     {
-      label: '姓名',
+      label: t('common.name'),
       value: '{{.reseller.name}}',
     },
     {
-      label: '邮箱',
+      label: t('common.email'),
       value: '{{.reseller.email}}',
     },
     {
-      label: '手机号',
+      label: t('common.phone'),
       value: '{{.reseller.phone}}',
     },
     {
-      label: '剩余额度',
+      label: t('common.current_quota'),
       value: '{{.reseller.quota}}',
     },
     {
-      label: '已用额度',
+      label: t('common.used_quota'),
       value: '{{.reseller.used_quota}}',
     },
     {
-      label: '额度过期时间',
+      label: t('reseller.label.quota_expires_at'),
       value: '{{.reseller.quota_expires_at}}',
     },
     {
-      label: '预警阈值',
+      label: t('reseller.detail.warning_threshold'),
       value: '{{.reseller.warning_threshold}}',
     },
     {
-      label: '过期预警阈值',
+      label: t('reseller.detail.expire_warning_threshold'),
       value: '{{.reseller.expire_warning_threshold}}',
     },
   ];
 
   const siteAttribute = [
     {
-      label: '域名',
+      label: t('site.config.label.domain'),
       value: '{{.site.domain}}',
     },
     {
-      label: '标题',
+      label: t('site.config.label.title'),
       value: '{{.site.title}}',
     },
     {
-      label: 'Logo',
+      label: t('site.config.label.logo'),
       value: '{{.site.logo}}',
     },
     {
-      label: '版权信息',
+      label: t('site.config.label.copyright'),
       value: '{{.site.copyright}}',
     },
     {
-      label: '跳转URL',
+      label: t('site.config.label.jump_url'),
       value: '{{.site.jump_url}}',
     },
     {
-      label: 'ICP备案',
+      label: t('site.config.label.icp_beian'),
       value: '{{.site.icp_beian}}',
     },
     {
-      label: '公安备案',
+      label: t('site.config.label.ga_beian'),
       value: '{{.site.ga_beian}}',
     },
     {
-      label: '注册欢迎语',
+      label: t('site.config.label.register_welcome'),
       value: '{{.site.register_welcome}}',
     },
   ];

@@ -29,7 +29,7 @@ export default {
   'task.detail.input_file_id': '輸入檔案ID',
   'task.detail.output_file_id': '輸出檔案ID',
   'task.detail.error_file_id': '錯誤檔案ID',
-  'task.detail.response_data': '回應資料',
+  'task.detail.response_data': '回應數據',
   'task.detail.in_progress_at': '進行時間',
   'task.detail.finalizing_at': '定稿時間',
   'task.detail.cancelled_at': '取消時間',

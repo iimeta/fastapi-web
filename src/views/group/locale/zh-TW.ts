@@ -27,7 +27,7 @@ export default {
   'group.placeholder.content_length': '請輸入內容長度, 全部上下文內容長度 > N',
   'group.error.required.content_length': '請輸入內容長度',
   // detail
-  'group.detail.is_default': '預設分組',
+  'group.detail.is_default': '默認分組',
   // desc
-  'group.desc': '說明: 分組名稱加粗的為預設分組, 預設排在列表首位, 當應用或密鑰不綁定分組時, 呼叫模型將按分組列表順序依次查找, 推薦將應用或密鑰綁定分組使用',
+  'group.desc': '說明: 分組名稱加粗的為默認分組, 默認排在列表首位, 當應用或密鑰不綁定分組時, 呼叫模型將按分組列表順序依次查找, 推薦將應用或密鑰綁定分組使用',
 };

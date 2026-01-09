@@ -27,17 +27,17 @@ export default {
 
   'login.captcha': 'Verification Code',
   'login.remember_me': 'Remember me',
-  'login.button': 'Login Now',
-  'register.button': 'Register Now',
-  'forget.button': 'Retrieve Now',
+  'login.button': 'Login',
+  'register.button': 'Register',
+  'forget.button': 'Retrieve',
 
   'login.success': 'Welcome back',
   'register.success': 'Registration successful',
   'forget.success': 'Retrieval successful',
   'login.logout.success': 'Logout successful',
-  'login.form.login': 'Login Now',
+  'login.form.login': 'Login',
   'login.form.register.title': 'Register Account',
-  'login.form.register': 'Register Now',
+  'login.form.register': 'Register',
   'login.form.forget.title': 'Retrieve Password',
   'login.form.forget': 'Retrieve Password',
 };

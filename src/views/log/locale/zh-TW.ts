@@ -47,8 +47,8 @@ export default {
   'log.detail.video_id': '影片ID',
   'log.detail.file_id': '檔案ID',
   'log.detail.batch_id': '批次處理ID',
-  'log.detail.request_data': '請求資料',
-  'log.detail.response_data': '回應資料',
+  'log.detail.request_data': '請求數據',
+  'log.detail.response_data': '回應數據',
   // form
   'log.form.app_id': '應用',
   'log.form.trace_id': 'TraceID',

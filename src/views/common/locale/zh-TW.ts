@@ -84,6 +84,9 @@ export default {
   'common.enable_model_agent': '啟用代理',
   'common.trace_id': 'Trace ID',
   'common.version': '版本',
+  'common.variable.user': '用戶屬性',
+  'common.variable.reseller': '代理商屬性',
+  'common.variable.site': '站點屬性',
   // unit
   'unit.millisecond': '毫秒',
   'unit.second': '秒',
