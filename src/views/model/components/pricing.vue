@@ -23,10 +23,10 @@
           :value="1"
           style="margin-right: 30px"
         >
-          {{ t('model.dict.billing_rule.1') }}
+          {{ $t('model.dict.billing_rule.1') }}
         </a-radio>
         <a-radio v-model="formData.billing_rule" :value="2">
-          {{ t('model.dict.billing_rule.2') }}
+          {{ $t('model.dict.billing_rule.2') }}
         </a-radio>
       </a-space>
     </a-form-item>
@@ -48,14 +48,14 @@
           style="margin-right: 12px"
           @change="handleBillingMethodsChange"
         >
-          {{ t('dict.billing_methods.1') }}
+          {{ $t('dict.billing_methods.1') }}
         </a-checkbox>
         <a-checkbox
           v-model="formData.billing_methods"
           :value="2"
           @change="handleBillingMethodsChange"
         >
-          {{ t('dict.billing_methods.2') }}
+          {{ $t('dict.billing_methods.2') }}
         </a-checkbox>
       </a-space>
     </a-form-item>
@@ -79,7 +79,7 @@
           :disabled="formData.billing_items.includes('tiered_text')"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.text') }}
+          {{ $t('dict.billing_items.text') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -89,7 +89,7 @@
           :disabled="formData.billing_items.includes('tiered_text_cache')"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.text_cache') }}
+          {{ $t('dict.billing_items.text_cache') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -98,7 +98,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.audio') }}
+          {{ $t('dict.billing_items.audio') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -107,7 +107,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.audio_cache') }}
+          {{ $t('dict.billing_items.audio_cache') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -117,7 +117,7 @@
           :disabled="formData.billing_items.includes('text')"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.tiered_text') }}
+          {{ $t('dict.billing_items.tiered_text') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -127,7 +127,7 @@
           :disabled="formData.billing_items.includes('text_cache')"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.tiered_text_cache') }}
+          {{ $t('dict.billing_items.tiered_text_cache') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -136,7 +136,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.image') }}
+          {{ $t('dict.billing_items.image') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -145,7 +145,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.image_generation') }}
+          {{ $t('dict.billing_items.image_generation') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -154,7 +154,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.image_cache') }}
+          {{ $t('dict.billing_items.image_cache') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -163,7 +163,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.vision') }}
+          {{ $t('dict.billing_items.vision') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -172,7 +172,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.video') }}
+          {{ $t('dict.billing_items.video') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -181,7 +181,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.video_generation') }}
+          {{ $t('dict.billing_items.video_generation') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -190,7 +190,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.video_cache') }}
+          {{ $t('dict.billing_items.video_cache') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -199,7 +199,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.search') }}
+          {{ $t('dict.billing_items.search') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
@@ -208,7 +208,7 @@
           class="billing-items"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.midjourney') }}
+          {{ $t('dict.billing_items.midjourney') }}
         </a-checkbox>
         <a-checkbox
           v-if="formData.billing_methods.includes(2)"
@@ -220,7 +220,7 @@
           }"
           @change="handleBillingItemsChange"
         >
-          {{ t('dict.billing_items.once') }}
+          {{ $t('dict.billing_items.once') }}
         </a-checkbox>
       </a-space>
     </a-form-item>

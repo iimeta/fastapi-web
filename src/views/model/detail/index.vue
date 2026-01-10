@@ -84,7 +84,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.data_format.${currentData.request_data_format || 1}`) }}
+          {{ $t(`dict.data_format.${currentData.request_data_format || 1}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('model.label.response_data_format')">
@@ -92,7 +92,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.data_format.${currentData.response_data_format || 1}`) }}
+          {{ $t(`dict.data_format.${currentData.response_data_format || 1}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('common.group')" :span="2">
@@ -116,7 +116,9 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.enable.${currentData.is_enable_preset_config || false}`) }}
+          {{
+            $t(`dict.enable.${currentData.is_enable_preset_config || false}`)
+          }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item
@@ -127,7 +129,7 @@
         </a-skeleton>
         <span v-else>
           {{
-            t(
+            $t(
               `model.dict.is_support_system_role.${
                 currentData?.preset_config?.is_support_system_role || false
               }`
@@ -143,7 +145,7 @@
         </a-skeleton>
         <span v-else>
           {{
-            t(
+            $t(
               `model.dict.is_support_system_role.${
                 currentData?.preset_config?.is_support_stream || false
               }`
@@ -187,7 +189,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.enable.${currentData.is_enable_model_agent || false}`) }}
+          {{ $t(`dict.enable.${currentData.is_enable_model_agent || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('common.lb_strategy')">
@@ -211,7 +213,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.enable.${currentData.is_enable_forward || false}`) }}
+          {{ $t(`dict.enable.${currentData.is_enable_forward || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('model.label.forward_rule')">
@@ -293,7 +295,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ t(`dict.enable.${currentData.is_enable_fallback || false}`) }}
+          {{ $t(`dict.enable.${currentData.is_enable_fallback || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('model.label.fallback_model_agent')">
@@ -358,7 +360,6 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { Pricing } from '@/api/common';
   import {
@@ -368,7 +369,6 @@
   } from '@/api/model';
   import PricingDetail from '../components/pricing_detail.vue';
 
-  const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<ModelDetail>({} as ModelDetail);
   const props = defineProps({
