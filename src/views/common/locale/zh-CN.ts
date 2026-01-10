@@ -173,6 +173,7 @@ export default {
   'placeholder.remark': '请输入备注',
   'placeholder.search.data': '请查询要操作的数据',
   'placeholder.operation.data': '请选择要操作的数据',
+  'placeholder.operation.search_data': '请选择或查询要操作的数据',
   'placeholder.operation.delete': '你确定要删除吗?',
   'placeholder.batch.operation': '是否确定操作所选的{count}条数据?',
   'placeholder.batch.operation.enable': '是否确定启用所选的{count}条数据?',

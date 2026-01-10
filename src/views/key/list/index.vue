@@ -802,7 +802,7 @@
    */
   const handleBatch = (params: KeyBatchOperate) => {
     if (allMultiple.value && ids.value.length === 0) {
-      Message.info('请选择或查询要操作的数据');
+      Message.info('placeholder.operation.search_data');
     } else {
       let alertContent = t('placeholder.batch.operation', {
         count: ids.value.length,

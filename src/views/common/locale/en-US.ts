@@ -173,6 +173,7 @@ export default {
   'placeholder.remark': 'Please enter Remark',
   'placeholder.search.data': 'Please search for data to operate',
   'placeholder.operation.data': 'Please select data to operate',
+  'placeholder.operation.search_data': 'Please select or search for the data to operate on',
   'placeholder.operation.delete': 'Are you sure you want to delete?',
   'placeholder.batch.operation': 'Are you sure you want to operate the selected {count} records?',
   'placeholder.batch.operation.enable': 'Are you sure you want to enable the selected {count} records?',
