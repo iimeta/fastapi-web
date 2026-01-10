@@ -87,6 +87,12 @@ export default {
   'common.variable.user': '用户属性',
   'common.variable.reseller': '代理商属性',
   'common.variable.site': '站点属性',
+  'common.tab.reload': '重新加载',
+  'common.tab.close.current': '关闭当前标签页',
+  'common.tab.close.left': '关闭左侧标签页',
+  'common.tab.close.right': '关闭右侧标签页',
+  'common.tab.close.others': '关闭其它标签页',
+  'common.tab.close.all': '关闭全部标签页',
   // unit
   'unit.millisecond': '毫秒',
   'unit.second': '秒',

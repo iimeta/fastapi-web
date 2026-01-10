@@ -20,7 +20,7 @@ const KEY: AppRouteRecordRaw = {
       name: 'ModelKeyList',
       component: () => import('@/views/key/list/index.vue'),
       meta: {
-        locale: 'key.model.menu',
+        locale: 'key.menu',
         requiresAuth: true,
         roles: ['admin'],
         activeMenu: 'key',
