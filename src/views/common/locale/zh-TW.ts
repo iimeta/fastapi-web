@@ -87,6 +87,12 @@ export default {
   'common.variable.user': '用戶屬性',
   'common.variable.reseller': '代理商屬性',
   'common.variable.site': '站點屬性',
+  'common.tab.reload': '重新載入',
+  'common.tab.close.current': '關閉目前標籤頁',
+  'common.tab.close.left': '關閉左側標籤頁',
+  'common.tab.close.right': '關閉右側標籤頁',
+  'common.tab.close.others': '關閉其它標籤頁',
+  'common.tab.close.all': '關閉全部標籤頁',
   // unit
   'unit.millisecond': '毫秒',
   'unit.second': '秒',

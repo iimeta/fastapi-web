@@ -87,6 +87,12 @@ export default {
   'common.variable.user': 'User Attribute',
   'common.variable.reseller': 'Reseller Attribute',
   'common.variable.site': 'Site Attribute',
+  'common.tab.reload': 'Reload',
+  'common.tab.close.current': 'Close Current Tab',
+  'common.tab.close.left': 'Close Tabs to the Left',
+  'common.tab.close.right': 'Close Tabs to the Right',
+  'common.tab.close.others': 'Close Other Tabs',
+  'common.tab.close.all': 'Close All Tabs',
   // unit
   'unit.millisecond': 'ms',
   'unit.second': 'second',
