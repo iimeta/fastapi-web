@@ -432,7 +432,7 @@
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
-            {{ $t('button.view') }}
+            {{ $t('button.detail') }}
           </a-button>
           <a-button
             type="text"
