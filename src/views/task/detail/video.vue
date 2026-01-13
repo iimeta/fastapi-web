@@ -134,8 +134,11 @@
           >
             {{ $t(`task.dict.status.${currentData.status}`) }}
           </a-tag>
-          <a-tag v-else-if="currentData.status === 'failed'" color="red">
-            {{ $t(`task.dict.status.${currentData.status}`) }}
+          <a-tag
+            v-else-if="currentData.status === 'failed' || !currentData.status"
+            color="red"
+          >
+            {{ $t(`task.dict.status.${currentData.status || 'failed'}`) }}
           </a-tag>
           <a-tag v-else color="gray">
             {{ $t(`task.dict.status.${currentData.status}`) }}

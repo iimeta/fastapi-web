@@ -239,8 +239,11 @@
           <a-tag v-else-if="record.status === 'in_progress'" color="orange">
             {{ $t(`task.dict.status.${record.status}`) }}
           </a-tag>
-          <a-tag v-else-if="record.status === 'failed'" color="red">
-            {{ $t(`task.dict.status.${record.status}`) }}
+          <a-tag
+            v-else-if="record.status === 'failed' || !record.status"
+            color="red"
+          >
+            {{ $t(`task.dict.status.${record.status || 'failed'}`) }}
           </a-tag>
           <a-tag v-else color="gray">
             {{ $t(`task.dict.status.${record.status}`) }}

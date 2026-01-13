@@ -49,6 +49,7 @@ export default {
   'task.dict.status.expired': '已过期',
   'task.dict.status.deleted': '已删除',
   'task.dict.status.uploaded': '已上传',
+  'task.dict.status.processing': '处理中',
   'task.dict.status.processed': '已处理',
   'task.dict.status.error': '已失败',
   'task.dict.status.validating': '验证中',

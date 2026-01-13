@@ -225,11 +225,17 @@
           <a-tag v-if="record.status === 'processed'" color="green">
             {{ $t(`task.dict.status.${record.status}`) }}
           </a-tag>
+          <a-tag v-else-if="record.status === 'processing'" color="arcoblue">
+            {{ $t(`task.dict.status.${record.status}`) }}
+          </a-tag>
           <a-tag v-else-if="record.status === 'uploaded'" color="uploaded">
             {{ $t(`task.dict.status.${record.status}`) }}
           </a-tag>
-          <a-tag v-else-if="record.status === 'error'" color="red">
-            {{ $t(`task.dict.status.${record.status}`) }}
+          <a-tag
+            v-else-if="record.status === 'error' || !record.status"
+            color="red"
+          >
+            {{ $t(`task.dict.status.${record.status || 'failed'}`) }}
           </a-tag>
           <a-tag v-else color="gray">
             {{ $t(`task.dict.status.${record.status}`) }}
@@ -426,6 +432,10 @@
     {
       label: t('task.dict.status.uploaded'),
       value: 'uploaded',
+    },
+    {
+      label: t('task.dict.status.processing'),
+      value: 'processing',
     },
     {
       label: t('task.dict.status.processed'),
