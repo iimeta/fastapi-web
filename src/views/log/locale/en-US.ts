@@ -16,6 +16,7 @@ export default {
   'log.menu.general.detail': 'General Log Details',
   // detail
   'log.detail.host': 'Host',
+  'log.detail.path': 'Path',
   'log.detail.creator': 'Calling Key',
   'log.detail.group_name': 'Group Name',
   'log.detail.discount': 'Group Discount',

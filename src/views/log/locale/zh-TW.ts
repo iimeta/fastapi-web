@@ -16,6 +16,7 @@ export default {
   'log.menu.general.detail': '通用日誌詳情',
   // detail
   'log.detail.host': 'Host',
+  'log.detail.path': '請求路徑',
   'log.detail.creator': '呼叫密鑰',
   'log.detail.group_name': '分組名稱',
   'log.detail.discount': '分組折扣',

@@ -124,6 +124,7 @@ export interface FileDetail {
   file_url: string;
   status: string;
   expires_at: string;
+  response_data: any;
   error: any;
   file_path: string;
   batch_trace_id: string;
@@ -198,7 +199,7 @@ export interface BatchDetail {
   cancelling_at: string;
   cancelled_at: string;
   failed_at: string;
-  response_data: string;
+  response_data: any;
   error: any;
   creator: string;
   created_at: string;

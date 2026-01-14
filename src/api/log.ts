@@ -46,6 +46,8 @@ export interface DetailParams {
 export interface TextDetail {
   id: string;
   host: string;
+  method: string;
+  path: string;
   trace_id: string;
   user_id: any;
   app_id: any;
@@ -163,6 +165,8 @@ export interface ImageDetail {
   id: string;
   trace_id: string;
   host: string;
+  method: string;
+  path: string;
   user_id: any;
   app_id: any;
   provider_id: string;
@@ -254,6 +258,8 @@ export interface AudioDetail {
   id: string;
   trace_id: string;
   host: string;
+  method: string;
+  path: string;
   user_id: any;
   app_id: any;
   provider_id: string;
@@ -342,6 +348,8 @@ export interface VideoDetail {
   id: string;
   trace_id: string;
   host: string;
+  method: string;
+  path: string;
   user_id: any;
   app_id: any;
   provider_id: string;
@@ -432,6 +440,8 @@ export interface FileDetail {
   id: string;
   trace_id: string;
   host: string;
+  method: string;
+  path: string;
   user_id: any;
   app_id: any;
   provider_id: string;
@@ -522,6 +532,8 @@ export interface BatchDetail {
   id: string;
   trace_id: string;
   host: string;
+  method: string;
+  path: string;
   user_id: any;
   app_id: any;
   provider_id: string;
@@ -615,6 +627,8 @@ export interface GeneralDetail {
   id: string;
   trace_id: string;
   host: string;
+  method: string;
+  path: string;
   user_id: any;
   app_id: any;
   provider_id: string;

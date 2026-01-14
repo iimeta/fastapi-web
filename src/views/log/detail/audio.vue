@@ -26,6 +26,15 @@
           {{ currentData.host || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.path')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.method || '-' }}
+          {{ currentData.path || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('log.detail.creator')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -235,6 +244,15 @@
         </a-skeleton>
         <span v-else>
           {{ currentData.host || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.path')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.method || '-' }}
+          {{ currentData.path || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('log.detail.creator')" :span="2">

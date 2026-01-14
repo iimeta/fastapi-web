@@ -384,6 +384,8 @@
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('task.detail.video_id'),

@@ -121,6 +121,14 @@
           />
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('task.detail.response_data')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else style="max-height: 220px; display: block; overflow: auto">
+          {{ currentData.response_data || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('task.detail.error')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
