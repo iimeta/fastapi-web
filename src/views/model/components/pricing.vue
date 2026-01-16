@@ -1225,6 +1225,7 @@
   import { FormInstance } from '@arco-design/web-vue';
   import { useAppStore } from '@/store';
   import { parsePrice } from '@/utils/common';
+  import { queryProviderList } from '@/api/provider';
   import {
     Pricing,
     TextPricing,
@@ -1242,10 +1243,24 @@
   const props = defineProps<{
     modelValue: Pricing;
     modelType: string;
+    providerId: string;
   }>();
 
   const formRef = ref<FormInstance>();
   const formData = ref(props.modelValue);
+  const providerMap = new Map();
+
+  const getProviderList = async () => {
+    try {
+      const { data } = await queryProviderList();
+      for (let i = 0; i < data.items.length; i += 1) {
+        providerMap.set(data.items[i].id, data.items[i]);
+      }
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getProviderList();
 
   const billingItems = [
     {
@@ -1502,6 +1517,8 @@
   };
 
   const initImageGenerationPricing = () => {
+    const provider = providerMap.get(props.providerId);
+
     const qualities = [
       'high',
       'high',
@@ -1515,8 +1532,67 @@
     ];
     const widths = [1024, 1024, 1536, 1024, 1024, 1536, 1024, 1024, 1536];
     const heights = [1024, 1536, 1024, 1024, 1536, 1024, 1024, 1536, 1024];
-    for (let i = 0; i < qualities.length; i += 1) {
-      handleImageGenerationPricingAdd(qualities[i], widths[i], heights[i]);
+
+    const googleQualities = [
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+    ];
+    const googleWidths = [
+      1024, 848, 1264, 896, 1200, 928, 1152, 768, 1376, 1584, 2048, 1696, 2528,
+      1792, 2400, 1856, 2304, 1536, 2752, 3168, 4096, 3392, 5056, 3584, 4800,
+      3712, 4608, 3072, 5504, 6336,
+    ];
+    const googleHeights = [
+      1024, 1264, 848, 1200, 896, 1152, 928, 1376, 768, 672, 2048, 2528, 1696,
+      2400, 1792, 2304, 1856, 2752, 1536, 1344, 4096, 5056, 3392, 4800, 3584,
+      4608, 3712, 5504, 3072, 2688,
+    ];
+
+    if (
+      provider &&
+      (provider.code === 'Google' ||
+        provider.name === 'Google' ||
+        provider.code === 'GCPGemini')
+    ) {
+      for (let i = 0; i < googleQualities.length; i += 1) {
+        handleImageGenerationPricingAdd(
+          googleQualities[i],
+          googleWidths[i],
+          googleHeights[i]
+        );
+      }
+    } else {
+      for (let i = 0; i < qualities.length; i += 1) {
+        handleImageGenerationPricingAdd(qualities[i], widths[i], heights[i]);
+      }
     }
   };
 

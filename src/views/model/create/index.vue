@@ -146,6 +146,7 @@
               ref="pricingRef"
               v-model="formData.pricing"
               :model-type="formData.type"
+              :provider-id="formData.provider_id"
             />
 
             <a-form-item
@@ -670,14 +671,10 @@
   const router = useRouter();
 
   const providers = ref<ProviderList[]>([]);
-  const providerMap = new Map();
   const getProviderList = async () => {
     try {
       const { data } = await queryProviderList();
       providers.value = data.items;
-      for (let i = 0; i < providers.value.length; i += 1) {
-        providerMap.set(providers.value[i].id, providers.value[i]);
-      }
     } catch (err) {
       // you can report use errorHandler or other
     }

@@ -146,6 +146,7 @@
               ref="pricingRef"
               v-model="formData.pricing"
               :model-type="formData.type"
+              :provider-id="formData.provider_id"
             />
 
             <a-form-item
