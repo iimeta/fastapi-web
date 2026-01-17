@@ -173,7 +173,10 @@
   const sysConfig = ref<SysConfigDetail>({
     user_login_register: { email_register: true },
   } as SysConfigDetail);
-  querySysConfig().then((res) => {
+  querySysConfig({
+    domain: window.location.hostname,
+    path: window.location.pathname,
+  }).then((res) => {
     sysConfig.value = res.data;
   });
 </script>

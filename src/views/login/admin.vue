@@ -1,5 +1,9 @@
 <template>
-  <div class="root" :style="{ backgroundImage: `url(${appStore.getBgImg})` }">
+  <div
+    v-if="!isLoading"
+    class="root"
+    :style="{ backgroundImage: `url(${appStore.getBgImg})` }"
+  >
     <div class="logo">
       <img alt="logo" :src="appStore.getLogo" />
       <div class="logo-text">{{ appStore.getTitle }}</div>
@@ -69,7 +73,8 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
   import { useUserStore, useAppStore } from '@/store';
   import { querySysConfig, SysConfigDetail } from '@/api/sys_config';
   import Footer from '@/components/footer/index.vue';
@@ -80,8 +85,11 @@
   useUserStore().logout();
 
   const appStore = useAppStore();
+  const route = useRoute();
+  const router = useRouter();
 
   const isForget = ref(false);
+  const isLoading = ref(true);
 
   const toggleLogin = () => {
     isForget.value = false;
@@ -94,8 +102,31 @@
   const sysConfig = ref<SysConfigDetail>({
     admin_login: {},
   } as SysConfigDetail);
-  querySysConfig().then((res) => {
-    sysConfig.value = res.data;
+
+  onMounted(() => {
+    querySysConfig({
+      domain: window.location.hostname,
+      path: window.location.pathname,
+    })
+      .then((res) => {
+        sysConfig.value = res.data;
+
+        const currentPath = route.params.adminPath as string;
+
+        if (
+          !sysConfig.value.admin_login.path ||
+          currentPath !== sysConfig.value.admin_login.path
+        ) {
+          router.push({ name: 'notFound' });
+          return;
+        }
+
+        localStorage.setItem('adminPath', currentPath);
+        isLoading.value = false;
+      })
+      .catch(() => {
+        router.push({ name: 'notFound' });
+      });
   });
 </script>
 

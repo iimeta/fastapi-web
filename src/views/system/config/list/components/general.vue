@@ -364,6 +364,29 @@
           </a-input-number>
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'admin_login'"
+          field="admin_login.path"
+          :label="$t('sys.config.label.path')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.path'),
+            },
+            {
+              match: /^[a-zA-Z0-9\-_]+$/,
+              message: $t('sys.config.error.pattern.path'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.admin_login.path"
+            :placeholder="$t('sys.config.placeholder.path')"
+            allow-clear
+          >
+            <template #prepend> / </template>
+          </a-input>
+        </a-form-item>
+        <a-form-item
           v-if="configFormData.action === 'quota'"
           field="quota.warning"
           :label="$t('sys.config.label.quota.warning')"

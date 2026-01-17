@@ -104,6 +104,7 @@ export interface AdminLogin {
   email_login: boolean;
   email_retrieve: boolean;
   session_expire: number;
+  path: string;
 }
 
 export interface AutoDisabledError {
@@ -290,6 +291,11 @@ export function submitSysConfigRefresh(data: SysConfigRefresh) {
   return axios.post('/api/v1/sys/config/refresh', data);
 }
 
-export function querySysConfig() {
-  return axios.get<SysConfigDetail>('/api/v1/open/sys/config');
+export interface SysConfigParams {
+  domain?: string;
+  path?: string;
+}
+
+export function querySysConfig(params: SysConfigParams) {
+  return axios.post<SysConfigDetail>('/api/v1/open/sys/config', params);
 }

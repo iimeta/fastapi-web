@@ -16,14 +16,6 @@ const router = createRouter({
       redirect: 'login',
     },
     {
-      path: '/reseller',
-      name: 'reseller',
-      component: () => import('@/views/login/reseller.vue'),
-      meta: {
-        requiresAuth: false,
-      },
-    },
-    {
       path: '/login',
       name: 'login',
       component: () => import('@/views/login/index.vue'),
@@ -32,15 +24,23 @@ const router = createRouter({
       },
     },
     {
-      path: '/admin',
-      name: 'admin',
-      component: () => import('@/views/login/admin.vue'),
+      path: '/reseller',
+      name: 'reseller',
+      component: () => import('@/views/login/reseller.vue'),
       meta: {
         requiresAuth: false,
       },
     },
     ...appRoutes,
     REDIRECT_MAIN,
+    {
+      path: '/:adminPath',
+      name: 'admin',
+      component: () => import('@/views/login/admin.vue'),
+      meta: {
+        requiresAuth: false,
+      },
+    },
     NOT_FOUND_ROUTE,
   ],
   scrollBehavior() {

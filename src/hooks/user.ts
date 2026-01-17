@@ -27,6 +27,10 @@ export default function useUser() {
 
     router.push({
       name: routeName,
+      params: {
+        adminPath:
+          routeName === 'admin' ? localStorage.getItem('adminPath') : '',
+      },
       query: {
         ...router.currentRoute.value.query,
         redirect: currentRoute.name as string,
