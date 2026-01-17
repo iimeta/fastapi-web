@@ -38,7 +38,7 @@ export default {
   'sys.config.item.title.reseller_shield_error': '代理商遮蔽錯誤',
   'sys.config.item.desc.reseller_shield_error': '代理商檢視呼叫日誌錯誤時, 包含有配置錯誤內容時則遮蔽顯示, 為空則遮蔽所有錯誤顯示',
   'sys.config.item.title.admin_login': '管理員登入',
-  'sys.config.item.desc.admin_login': '配置登入頁上的登入方式、找回密碼以及會話過期時長, 對應的開關可控制登入頁上對應功能的顯示',
+  'sys.config.item.desc.admin_login': '配置登入頁上的登入方式、找回密碼以及會話過期時長, 對應的開關可控制登入頁上對應功能的顯示, 支援自訂登入入口',
   'sys.config.item.title.quota': '額度配置',
   'sys.config.item.desc.quota': '配置額度預警參數默認值和各類開關, 用戶如若有配置額度預警和預警閾值等, 將以用戶的配置優先, 額度過期清零開關默認關閉, 可按需選擇是否開啟',
   'sys.config.item.title.auto_disabled_error': '自動禁用錯誤',

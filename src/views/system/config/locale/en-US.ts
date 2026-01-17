@@ -38,7 +38,7 @@ export default {
   'sys.config.item.title.reseller_shield_error': 'Reseller Error Shielding',
   'sys.config.item.desc.reseller_shield_error': 'When resellers view call log errors, if the error contains configured content, it will be hidden. Empty configuration hides all errors.',
   'sys.config.item.title.admin_login': 'Admin Login',
-  'sys.config.item.desc.admin_login': 'Configure login methods, password retrieval, and session expiration on the admin login page. Corresponding switches control feature visibility.',
+  'sys.config.item.desc.admin_login': 'Configure login methods, password retrieval, and session expiration on the admin login page. Corresponding switches control feature visibility. Supports custom login entry.',
   'sys.config.item.title.quota': 'Quota Configuration',
   'sys.config.item.desc.quota': 'Configure default quota warning parameters and various switches. User-specific quota warning settings take precedence. Quota expiration clearing is off by default; enable as needed.',
   'sys.config.item.title.auto_disabled_error': 'Auto Disable Error',
