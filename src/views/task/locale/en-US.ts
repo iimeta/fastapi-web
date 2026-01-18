@@ -49,6 +49,7 @@ export default {
   'task.dict.status.expired': 'Expired',
   'task.dict.status.deleted': 'Deleted',
   'task.dict.status.uploaded': 'Uploaded',
+  'task.dict.status.processing': 'Processing',
   'task.dict.status.processed': 'Processed',
   'task.dict.status.error': 'Error',
   'task.dict.status.validating': 'Validating',
