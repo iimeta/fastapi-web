@@ -1,5 +1,11 @@
 <template>
-  <div class="root" :style="{ backgroundImage: `url(${appStore.getBgImg})` }">
+  <div
+    class="root"
+    :style="{
+      backgroundImage: `url(${appStore.getBgImg})`,
+      backgroundSize: '100% 100%',
+    }"
+  >
     <div class="logo">
       <img alt="logo" :src="appStore.getLogo" />
       <div class="logo-text">{{ appStore.getTitle }}</div>
@@ -179,7 +185,7 @@
       }
       .login-card {
         display: flex;
-        background: #fff;
+        background: rgba(255, 255, 255, 0.3);
         border-radius: 8px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         box-sizing: border-box;
@@ -189,8 +195,13 @@
         flex-direction: column;
         margin-bottom: 53px;
         padding: 48px 43px 32px;
+        backdrop-filter: blur(8px) brightness(1.05);
+        -webkit-backdrop-filter: blur(8px) brightness(1.05);
         .title {
-          color: #020814;
+          background: var(--vp-home-hero-name-background);
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: var(--vp-home-hero-name-color);
           font-size: 24px;
           font-weight: 500;
           letter-spacing: 0.003em;
