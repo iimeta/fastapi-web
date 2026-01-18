@@ -238,7 +238,7 @@ const useAppStore = defineStore('app', {
           logo: res.data.logo || '/logo.png',
           favicon: res.data.favicon || '/favicon.ico',
           avatar: res.data.avatar || '/avatar.png',
-          bg_img: res.data.bg_img || '/bgimg.png',
+          bg_img: res.data.bg_img || '/bgimg.jpg',
           copyright: res.data.copyright,
           jump_url: res.data.jump_url,
           keywords: res.data.keywords,
