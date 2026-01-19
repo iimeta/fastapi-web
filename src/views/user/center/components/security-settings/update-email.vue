@@ -144,6 +144,7 @@
           action: 'change_email',
           channel: userStore.role,
           domain: window.location.hostname,
+          path: window.location.pathname,
         })
           .then((res) => {
             captchaLoading.value = false;

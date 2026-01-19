@@ -112,6 +112,7 @@
           action: 'login',
           channel: 'user',
           domain: window.location.hostname,
+          path: window.location.pathname,
         })
           .then(() => {
             captchaLoading.value = false;
@@ -161,6 +162,7 @@
           channel: 'user',
           method: 'code',
           domain: window.location.hostname,
+          path: window.location.pathname,
         })
         .then(() => {
           window.localStorage.setItem('userRole', 'user');

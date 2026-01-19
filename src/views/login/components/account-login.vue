@@ -98,6 +98,7 @@
           channel: 'user',
           method: 'account',
           domain: window.location.hostname,
+          path: window.location.pathname,
         })
         .then(() => {
           window.localStorage.setItem('userRole', 'user');

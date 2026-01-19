@@ -7,6 +7,7 @@ export interface CaptchaData {
   action: string;
   channel: string;
   domain?: string;
+  path?: string;
 }
 
 export function getCaptcha(data: CaptchaData) {
@@ -21,6 +22,7 @@ export interface LoginData {
   channel: string;
   method: string;
   domain?: string;
+  path?: string;
 }
 
 export interface LoginRes {
@@ -49,6 +51,7 @@ export interface RegisterData {
   channel: string;
   code: string;
   domain?: string;
+  path?: string;
 }
 
 export function register(data: RegisterData) {
@@ -62,6 +65,7 @@ export interface ForgetData {
   channel: string;
   code: string;
   domain?: string;
+  path?: string;
 }
 
 export function forget(data: ForgetData) {

@@ -107,6 +107,7 @@
           action: 'register',
           channel: 'user',
           domain: window.location.hostname,
+          path: window.location.pathname,
         })
           .then(() => {
             captchaLoading.value = false;
@@ -155,6 +156,7 @@
         channel: 'user',
         code: values.captcha,
         domain: window.location.hostname,
+        path: window.location.pathname,
       })
         .then(() => {
           Message.success(t('register.success'));
