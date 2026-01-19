@@ -14,6 +14,8 @@ export default {
   'log.menu.batch.detail': 'Batch Log Details',
   'log.menu.general': 'General Logs',
   'log.menu.general.detail': 'General Log Details',
+  'log.placeholder.batch.operation.delete.time': 'Are you sure you want to delete data from request time: {start_time} to {end_time}?',
+  'log.placeholder.batch.operation.delete.time.user_id': 'Are you sure you want to delete data for user ID: {user_id} from request time: {start_time} to {end_time}?',
   // detail
   'log.detail.host': 'Host',
   'log.detail.path': 'Path',

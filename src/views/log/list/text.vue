@@ -1455,9 +1455,19 @@
           break;
         case 'time':
           if (params.user_id) {
-            alertContent = `是否确定删除用户ID: ${params.user_id} 请求时间: ${params.value[0]} 至 ${params.value[1]} 的数据?`;
+            alertContent = t(
+              'log.placeholder.batch.operation.delete.time.user_id',
+              {
+                user_id: params.user_id,
+                start_time: params.value[0],
+                end_time: params.value[1],
+              }
+            );
           } else {
-            alertContent = `是否确定删除请求时间: ${params.value[0]} 至 ${params.value[1]} 的数据?`;
+            alertContent = t('log.placeholder.batch.operation.delete.time', {
+              start_time: params.value[0],
+              end_time: params.value[1],
+            });
           }
           break;
         default:

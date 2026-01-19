@@ -14,6 +14,8 @@ export default {
   'log.menu.batch.detail': '批次處理日誌詳情',
   'log.menu.general': '通用日誌',
   'log.menu.general.detail': '通用日誌詳情',
+  'log.placeholder.batch.operation.delete.time': '是否確定刪除請求時間: {start_time} 至 {end_time} 的數據?',
+  'log.placeholder.batch.operation.delete.time.user_id': '是否確定刪除用戶ID: {user_id} 請求時間: {start_time} 至 {end_time} 的數據?',
   // detail
   'log.detail.host': 'Host',
   'log.detail.path': '請求路徑',

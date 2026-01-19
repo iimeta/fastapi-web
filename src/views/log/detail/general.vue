@@ -79,6 +79,12 @@
           $t(`dict.model_type.${currentData.model_type}`)
         }}</span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.stream')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ $t(`dict.${currentData.stream || false}`) }}</span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('log.detail.request_data')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -359,6 +365,14 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.real_model }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.stream')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.${currentData.stream || false}`) }}
+        </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('log.detail.enable_fallback')">
         <a-skeleton v-if="loading" :animation="true">

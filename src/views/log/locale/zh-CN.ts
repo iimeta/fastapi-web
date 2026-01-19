@@ -14,6 +14,8 @@ export default {
   'log.menu.batch.detail': '批处理日志详情',
   'log.menu.general': '通用日志',
   'log.menu.general.detail': '通用日志详情',
+  'log.placeholder.batch.operation.delete.time': '是否确定删除请求时间: {start_time} 至 {end_time} 的数据?',
+  'log.placeholder.batch.operation.delete.time.user_id': '是否确定删除用户ID: {user_id} 请求时间: {start_time} 至 {end_time} 的数据?',
   // detail
   'log.detail.host': 'Host',
   'log.detail.path': '请求路径',

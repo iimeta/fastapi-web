@@ -1223,40 +1223,79 @@
       switch (params.action) {
         case 'agent':
           if (params.value === true) {
-            alertContent = `是否确定启用所选${ids.value.length}条数据的模型代理?`;
+            alertContent = t('model.placeholder.batch.operation.agent.enable', {
+              count: ids.value.length,
+            });
           } else if (params.value === false) {
-            alertContent = `是否确定关闭所选${ids.value.length}条数据的模型代理?`;
+            alertContent = t(
+              'model.placeholder.batch.operation.agent.disable',
+              {
+                count: ids.value.length,
+              }
+            );
           } else if (params.value === 'all') {
             if (!params.model_agents) {
               agentFormVisible.value = true;
             } else {
-              alertContent = `是否确定将所选${ids.value.length}条数据的模型代理启用并使用所选的模型代理?`;
+              alertContent = t('model.placeholder.batch.operation.agent.all', {
+                count: ids.value.length,
+              });
             }
           }
           break;
         case 'forward':
           if (params.value === true) {
-            alertContent = `是否确定启用所选${ids.value.length}条数据的模型转发?`;
+            alertContent = t(
+              'model.placeholder.batch.operation.forward.enable',
+              {
+                count: ids.value.length,
+              }
+            );
           } else if (params.value === false) {
-            alertContent = `是否确定关闭所选${ids.value.length}条数据的模型转发?`;
+            alertContent = t(
+              'model.placeholder.batch.operation.forward.disable',
+              {
+                count: ids.value.length,
+              }
+            );
           } else if (params.value === 'all') {
             if (!params.target_model) {
               forwardFormVisible.value = true;
             } else {
-              alertContent = `是否确定将所选${ids.value.length}条数据的模型转发启用并全部转发到所选模型?`;
+              alertContent = t(
+                'model.placeholder.batch.operation.forward.all',
+                {
+                  count: ids.value.length,
+                }
+              );
             }
           }
           break;
         case 'fallback':
           if (params.value === true) {
-            alertContent = `是否确定启用所选${ids.value.length}条数据的后备模型?`;
+            alertContent = t(
+              'model.placeholder.batch.operation.fallback.enable',
+              {
+                count: ids.value.length,
+              }
+            );
           } else if (params.value === false) {
-            alertContent = `是否确定关闭所选${ids.value.length}条数据的后备模型?`;
+            alertContent = t(
+              'model.placeholder.batch.operation.fallback.disable',
+              {
+                count: ids.value.length,
+              }
+            );
           } else if (params.value === 'all') {
             if (!params.fallback_config) {
               fallbackFormVisible.value = true;
             } else {
-              alertContent = `是否确定将所选${ids.value.length}条数据的后备配置启用并全部后备到所选配置?`;
+              alertContent = t(
+                'model.placeholder.batch.operation.fallback.all',
+                {
+                  count: ids.value.length,
+                }
+              );
             }
           }
           break;
