@@ -108,7 +108,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ $t(`dict.is_public.${currentData.is_public || false}`) }}
+          {{ $t(`dict.public.${currentData.is_public || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('model.label.is_enable_preset_config')">
