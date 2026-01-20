@@ -57,15 +57,15 @@
       permission: ['user'],
     },
     {
-      text: 'key.menu',
-      icon: 'icon-safe',
-      router: 'ModelKeyList',
-      permission: ['admin'],
-    },
-    {
       text: 'model.agent.menu',
       icon: 'icon-bug',
       router: 'ModelAgentList',
+      permission: ['admin'],
+    },
+    {
+      text: 'key.menu',
+      icon: 'icon-safe',
+      router: 'ModelKeyList',
       permission: ['admin'],
     },
     {
@@ -105,27 +105,27 @@
       permission: ['user', 'reseller'],
     },
     {
-      text: 'sys.config.menu',
-      icon: 'icon-settings',
-      router: 'SysConfig',
+      text: 'provider.menu',
+      icon: 'icon-idcard',
+      router: 'ProviderList',
       permission: ['admin'],
     },
     {
-      text: 'log.menu.text',
+      text: 'task.menu',
+      icon: 'icon-calendar',
+      router: 'TaskVideoList',
+      permission: ['admin'],
+    },
+    {
+      text: 'log.menu',
       icon: 'icon-message',
       router: 'LogTextList',
       permission: ['admin'],
     },
     {
-      text: 'log.menu.image',
-      icon: 'icon-image',
-      router: 'LogImageList',
-      permission: ['admin'],
-    },
-    {
-      text: 'log.menu.audio',
-      icon: 'icon-file-audio',
-      router: 'LogAudioList',
+      text: 'sys.config.menu',
+      icon: 'icon-settings',
+      router: 'SysConfig',
       permission: ['admin'],
     },
   ];
