@@ -1515,6 +1515,7 @@
   const formData = ref<AppKeyConfig>({} as AppKeyConfig);
   const batchFormData = ref<AppKeyBatchOperate>({
     billing_methods: [1],
+    quota_expires_rule: '1',
   } as AppKeyBatchOperate);
 
   const handleQuotaQuickChange = (quota: number) => {
@@ -1719,18 +1720,27 @@
       });
       switch (params.action) {
         case 'create':
-          batchFormData.value = { billing_methods: [1] } as AppKeyBatchOperate;
+          batchFormData.value = {
+            billing_methods: [1],
+            quota_expires_rule: '1',
+          } as AppKeyBatchOperate;
           batchFormData.value.action = params.action;
           batchFormData.value.n = 1;
           batchVisible.value = true;
           return;
         case 'update':
-          batchFormData.value = { billing_methods: [1] } as AppKeyBatchOperate;
+          batchFormData.value = {
+            billing_methods: [1],
+            quota_expires_rule: '1',
+          } as AppKeyBatchOperate;
           batchFormData.value.action = params.action;
           batchVisible.value = true;
           return;
         case 'all-update':
-          batchFormData.value = { billing_methods: [1] } as AppKeyBatchOperate;
+          batchFormData.value = {
+            billing_methods: [1],
+            quota_expires_rule: '1',
+          } as AppKeyBatchOperate;
           batchFormData.value.action = params.action;
           batchVisible.value = true;
           return;
