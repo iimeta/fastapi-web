@@ -46,7 +46,7 @@ const useAppStore = defineStore('app', {
     getCopyright(state: AppState): string | undefined {
       return (
         state.config.copyright ||
-        'Copyright © 2023-2025 IIM. All Rights Reserved.'
+        'Copyright © 2023-2026 IIM. All Rights Reserved.'
       );
     },
     getJumpUrl(state: AppState): string | undefined {
