@@ -23,4 +23,6 @@ export default {
   'model.agent.label.is_never_disable_key': 'Keys Never Disable',
   // detail
   'model.agent.detail.fallback_models': 'Fallback Models',
+  // button
+  'model.agent.button.quick_fill': 'Quick Fill',
 };

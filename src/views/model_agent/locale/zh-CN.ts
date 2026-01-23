@@ -23,4 +23,6 @@ export default {
   'model.agent.label.is_never_disable_key': '密钥永不禁用',
   // detail
   'model.agent.detail.fallback_models': '后备模型',
+  // button
+  'model.agent.button.quick_fill': '快速填入',
 };

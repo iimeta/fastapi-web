@@ -147,6 +147,9 @@
                 :scrollbar="false"
                 tree-checked-strategy="child"
               />
+              <a-button @click="handleQuickFill">
+                {{ $t('model.agent.button.quick_fill') }}
+              </a-button>
             </a-form-item>
             <a-form-item
               field="is_enable_model_replace"
@@ -273,6 +276,7 @@
     ModelAgentUpdate,
     queryModelAgentDetail,
     ModelAgentDetailParams,
+    quickFillModel,
   } from '@/api/model_agent';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryGroupList, GroupList } from '@/api/group';
@@ -433,6 +437,18 @@
     if (formData.value.replace_models.length > 1) {
       formData.value.replace_models.splice(index, 1);
       formData.value.target_models.splice(index, 1);
+    }
+  };
+
+  const handleQuickFill = async () => {
+    const { data } = await quickFillModel({
+      base_url: formData.value.base_url,
+      key: formData.value.key,
+    });
+    if (data.models) {
+      formData.value.models = [
+        ...new Set([...formData.value.models, ...data.models]),
+      ];
     }
   };
 </script>

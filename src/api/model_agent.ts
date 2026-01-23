@@ -158,3 +158,16 @@ export interface ModelAgentBatchOperate {
 export function submitModelAgentBatchOperate(data: ModelAgentBatchOperate) {
   return axios.post('/api/v1/model/agent/batch/operate', data);
 }
+
+export interface QuickFillModelParams {
+  base_url: string;
+  key: string;
+}
+
+export interface QuickFillModelRes {
+  models: string[];
+}
+
+export function quickFillModel(data: QuickFillModelParams) {
+  return axios.post('/api/v1/model/agent/quick/fill/model', data);
+}
