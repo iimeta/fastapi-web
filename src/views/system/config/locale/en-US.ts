@@ -41,6 +41,8 @@ export default {
   'sys.config.item.desc.admin_login': 'Configure login methods, password retrieval, and session expiration on the admin login page. Corresponding switches control feature visibility. Supports custom login entry.',
   'sys.config.item.title.quota': 'Quota Configuration',
   'sys.config.item.desc.quota': 'Configure default quota warning parameters and various switches. User-specific quota warning settings take precedence. Quota expiration clearing is off by default; enable as needed.',
+  'sys.config.item.title.test': 'Test Configuration',
+  'sys.config.item.desc.test': 'Configure related parameters for API calls when testing models',
   'sys.config.item.title.auto_disabled_error': 'Auto Disable Error',
   'sys.config.item.desc.auto_disabled_error': 'When a call error occurs, if the error contains configured content, keys or model agents will be auto-disabled. Empty configuration means no auto-disable (except when error count limit is reached).',
   'sys.config.item.title.auto_enable_error': 'Auto Enable Error',
@@ -186,4 +188,12 @@ export default {
   'sys.config.error.required.service_unavailable.ip_whitelist': 'Please enter IP whitelist',
   'sys.config.placeholder.general_api.ip_whitelist': 'Only IPs in the whitelist can call the General API.',
   'sys.config.error.required.general_api.ip_whitelist': 'Please enter IP whitelist',
+  'sys.config.placeholder.test.request_data': 'Request Data',
+  'sys.config.error.required.tests': 'Please enter provider, model, model type, and request data',
+  // dict
+  'sys.config.dict.text_records.prompt': 'Prompt',
+  'sys.config.dict.text_records.completion': 'Completion',
+  'sys.config.dict.text_records.messages': 'Context',
+  'sys.config.dict.text_records.image': 'Image Data',
+  'sys.config.dict.text_records.audio': 'Audio Data',
 };

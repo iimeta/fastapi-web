@@ -41,6 +41,8 @@ export default {
   'sys.config.item.desc.admin_login': '配置登入頁上的登入方式、找回密碼以及會話過期時長, 對應的開關可控制登入頁上對應功能的顯示, 支援自訂登入入口',
   'sys.config.item.title.quota': '額度配置',
   'sys.config.item.desc.quota': '配置額度預警參數默認值和各類開關, 用戶如若有配置額度預警和預警閾值等, 將以用戶的配置優先, 額度過期清零開關默認關閉, 可按需選擇是否開啟',
+  'sys.config.item.title.test': '測試配置',
+  'sys.config.item.desc.test': '配置模型測試時, 呼叫API介面的相關參數',
   'sys.config.item.title.auto_disabled_error': '自動禁用錯誤',
   'sys.config.item.desc.auto_disabled_error': '呼叫報錯時, 包含有配置錯誤內容時則自動會禁用密鑰或模型代理等, 為空則不會自動禁用(達到錯誤次數上限除外)',
   'sys.config.item.title.auto_enable_error': '自動啟用錯誤',
@@ -186,4 +188,12 @@ export default {
   'sys.config.error.required.service_unavailable.ip_whitelist': '請輸入IP白名單',
   'sys.config.placeholder.general_api.ip_whitelist': '配置IP白名單後, 僅IP白名單內的可呼叫通用API介面',
   'sys.config.error.required.general_api.ip_whitelist': '請輸入IP白名單',
+  'sys.config.placeholder.test.request_data': '請求資料',
+  'sys.config.error.required.tests': '請輸入供應商、模型、模型類型和請求資料',
+  // dict
+  'sys.config.dict.text_records.prompt': '提問',
+  'sys.config.dict.text_records.completion': '回答',
+  'sys.config.dict.text_records.messages': '上下文',
+  'sys.config.dict.text_records.image': '影像資料',
+  'sys.config.dict.text_records.audio': '音訊資料',
 };
