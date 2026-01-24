@@ -194,6 +194,17 @@ export interface GeneralApi {
   ip_whitelist: string[];
 }
 
+export interface TestItem {
+  provider: string;
+  model: string;
+  model_type: any;
+  request_data: string;
+}
+
+export interface Test {
+  tests: TestItem[];
+}
+
 export interface Debug {
   open: boolean;
 }
@@ -224,6 +235,7 @@ export interface SysConfigDetail {
   batch_task: BatchTask;
   service_unavailable: ServiceUnavailable;
   general_api: GeneralApi;
+  test: Test;
   debug: Debug;
   created_at: string;
   updated_at: string;
@@ -259,6 +271,7 @@ export interface SysConfigUpdate {
   batch_task: BatchTask;
   service_unavailable: ServiceUnavailable;
   general_api: GeneralApi;
+  test: Test;
   debug: Debug;
 }
 

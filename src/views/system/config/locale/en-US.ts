@@ -145,7 +145,6 @@ export default {
   'sys.config.label.path': 'Login Entry',
   'sys.config.placeholder.path': 'Please enter login entry',
   'sys.config.error.pattern.path': 'Login entry format is incorrect. Please re-enter',
-  'sys.config.label.errors': 'Error Content',
   'sys.config.placeholder.errors': 'Error content is case-sensitive and includes spaces.',
   'sys.config.error.required.errors': 'Please enter error content',
   'sys.config.label.auto_enable_error': 'Enable Error',

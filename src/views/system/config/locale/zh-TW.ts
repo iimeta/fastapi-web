@@ -145,7 +145,6 @@ export default {
   'sys.config.label.path': '登入入口',
   'sys.config.placeholder.path': '請輸入登入入口',
   'sys.config.error.pattern.path': '登入入口格式不正確, 請重新輸入',
-  'sys.config.label.errors': '錯誤內容',
   'sys.config.placeholder.errors': '錯誤內容區分大小寫以及內容包含空格',
   'sys.config.error.required.errors': '請輸入錯誤內容',
   'sys.config.label.auto_enable_error': '啟用錯誤',

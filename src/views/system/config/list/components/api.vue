@@ -230,25 +230,25 @@
               v-model="configFormData.log.text_records"
               value="prompt"
             >
-              提问
+              {{ $t('sys.config.dict.text_records.prompt') }}
             </a-checkbox>
             <a-checkbox
               v-model="configFormData.log.text_records"
               value="completion"
             >
-              回答
+              {{ $t('sys.config.dict.text_records.completion') }}
             </a-checkbox>
             <a-checkbox
               v-model="configFormData.log.text_records"
               value="messages"
             >
-              上下文
+              {{ $t('sys.config.dict.text_records.messages') }}
             </a-checkbox>
             <a-checkbox v-model="configFormData.log.text_records" value="image">
-              图像数据
+              {{ $t('sys.config.dict.text_records.image') }}
             </a-checkbox>
             <a-checkbox v-model="configFormData.log.text_records" value="audio">
-              音频数据
+              {{ $t('sys.config.dict.text_records.audio') }}
             </a-checkbox>
           </a-space>
         </a-form-item>
@@ -447,7 +447,7 @@
           v-show="configFormData.action === 'auto_disabled_error'"
           :key="index"
           :field="`auto_disabled_error.errors[${index}]`"
-          :label="`${index + 1}. ` + $t('sys.config.label.errors')"
+          :label="`${index + 1}. `"
           :rules="[
             {
               required: true,
@@ -462,7 +462,7 @@
             v-model="configFormData.auto_disabled_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
-            style="width: 84%; margin-right: 5px"
+            style="width: 86%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -527,7 +527,7 @@
             v-model="
               configFormData.auto_enable_error.enable_errors[index].error
             "
-            :placeholder="$t('sys.config.label.errors')"
+            :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
             style="width: 42%; margin-right: 5px"
           />
@@ -552,7 +552,7 @@
           v-show="configFormData.action === 'not_retry_error'"
           :key="index"
           :field="`not_retry_error.errors[${index}]`"
-          :label="`${index + 1}. ` + $t('sys.config.label.errors')"
+          :label="`${index + 1}. `"
           :rules="[
             {
               required: true,
@@ -567,7 +567,7 @@
             v-model="configFormData.not_retry_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
-            style="width: 84%; margin-right: 5px"
+            style="width: 86%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -590,7 +590,7 @@
           v-show="configFormData.action === 'not_shield_error'"
           :key="index"
           :field="`not_shield_error.errors[${index}]`"
-          :label="`${index + 1}. ` + $t('sys.config.label.errors')"
+          :label="`${index + 1}. `"
           :rules="[
             {
               required: true,
@@ -605,7 +605,7 @@
             v-model="configFormData.not_shield_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
-            style="width: 84%; margin-right: 5px"
+            style="width: 86%; margin-right: 5px"
           />
           <a-button
             type="primary"

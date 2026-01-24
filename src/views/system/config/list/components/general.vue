@@ -68,8 +68,10 @@
       v-model:visible="configVisible"
       :title="$t(configTitle)"
       :width="
-        configFormData.action === 'user_shield_error' ||
-        configFormData.action === 'reseller_shield_error'
+        configFormData.action === 'test'
+          ? 888
+          : configFormData.action === 'user_shield_error' ||
+            configFormData.action === 'reseller_shield_error'
           ? 728
           : 528
       "
@@ -160,7 +162,7 @@
           v-show="configFormData.action === 'user_shield_error'"
           :key="index"
           :field="`user_shield_error.errors[${index}]`"
-          :label="`${index + 1}. ` + $t('sys.config.label.errors')"
+          :label="`${index + 1}. `"
           :rules="[
             {
               required: true,
@@ -175,7 +177,7 @@
             v-model="configFormData.user_shield_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
-            style="width: 84%; margin-right: 5px"
+            style="width: 86%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -274,7 +276,7 @@
           v-show="configFormData.action === 'reseller_shield_error'"
           :key="index"
           :field="`reseller_shield_error.errors[${index}]`"
-          :label="`${index + 1}. ` + $t('sys.config.label.errors')"
+          :label="`${index + 1}. `"
           :rules="[
             {
               required: true,
@@ -289,7 +291,7 @@
             v-model="configFormData.reseller_shield_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
-            style="width: 84%; margin-right: 5px"
+            style="width: 86%; margin-right: 5px"
           />
           <a-button
             type="primary"
@@ -519,6 +521,92 @@
             <template #append> {{ $t('unit.minute') }} </template>
           </a-input-number>
         </a-form-item>
+        <a-form-item
+          v-for="(item, index) of configFormData.test.tests"
+          v-show="configFormData.action === 'test'"
+          :key="index"
+          :field="
+            `test.tests[${index}].provider` &&
+            `test.tests[${index}].model` &&
+            `test.tests[${index}].model_type` &&
+            `test.tests[${index}].request_data`
+          "
+          :label="`${index + 1}. `"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.required.tests'),
+            },
+          ]"
+          :label-col-style="{
+            padding: '0 16px 2px 0',
+          }"
+        >
+          <a-select
+            v-model="configFormData.test.tests[index].provider"
+            :placeholder="$t('common.provider')"
+            :scrollbar="false"
+            allow-search
+            style="width: 15%; margin-right: 5px"
+          >
+            <a-option
+              v-for="provider in providers"
+              :key="provider.id"
+              :value="provider.code"
+              :label="provider.name"
+            />
+          </a-select>
+          <a-input
+            v-model="configFormData.test.tests[index].model"
+            :placeholder="$t('common.model')"
+            allow-clear
+            style="width: 25%; margin-right: 5px"
+          />
+          <a-select
+            v-model="configFormData.test.tests[index].model_type"
+            :placeholder="$t('common.model_type')"
+            :scrollbar="false"
+            allow-search
+            style="max-width: 15%; margin-right: 5px"
+          >
+            <a-option :value="1">{{ $t('dict.model_type.1') }}</a-option>
+            <a-option :value="2">{{ $t('dict.model_type.2') }}</a-option>
+            <a-option :value="3">{{ $t('dict.model_type.3') }}</a-option>
+            <a-option :value="4">{{ $t('dict.model_type.4') }}</a-option>
+            <a-option :value="5">{{ $t('dict.model_type.5') }}</a-option>
+            <a-option :value="6">{{ $t('dict.model_type.6') }}</a-option>
+            <a-option :value="7">{{ $t('dict.model_type.7') }}</a-option>
+            <a-option :value="8">{{ $t('dict.model_type.8') }}</a-option>
+            <a-option :value="100">{{ $t('dict.model_type.100') }}</a-option>
+            <a-option :value="101">{{ $t('dict.model_type.101') }}</a-option>
+            <a-option :value="102">{{ $t('dict.model_type.102') }}</a-option>
+            <a-option :value="103">{{ $t('dict.model_type.103') }}</a-option>
+            <a-option :value="10000">
+              {{ $t('dict.model_type.10000') }}
+            </a-option>
+          </a-select>
+          <a-input
+            v-model="configFormData.test.tests[index].request_data"
+            :placeholder="$t('sys.config.placeholder.test.request_data')"
+            allow-clear
+            style="max-width: 32%; margin-right: 5px"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            style="margin: 0 10px 0 10px"
+            @click="handleTestAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleTestDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -530,6 +618,7 @@
   import { FormInstance, Message, Modal } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
   import { useAppStore } from '@/store';
+  import { queryProviderList, ProviderList } from '@/api/provider';
   import {
     SysConfigItem,
     querySysConfigDetail,
@@ -543,6 +632,17 @@
   const { t } = useI18n();
   const appStore = useAppStore();
 
+  const providers = ref<ProviderList[]>([]);
+  const getProviderList = async () => {
+    try {
+      const { data } = await queryProviderList();
+      providers.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getProviderList();
+
   const configVisible = ref(false);
   const configTitle = ref('');
   const configForm = ref<FormInstance>();
@@ -553,6 +653,7 @@
     reseller_shield_error: {},
     admin_login: {},
     quota: {},
+    test: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
@@ -568,6 +669,13 @@
       configFormData.value.reseller_shield_error.errors.length === 0
     ) {
       handleResellerShieldErrorAdd();
+    }
+
+    if (
+      sysConfigItem.action === 'test' &&
+      configFormData.value.test.tests.length === 0
+    ) {
+      handleTestAdd();
     }
 
     configTitle.value = t(`sys.config.item.title.${sysConfigItem.action}`);
@@ -635,6 +743,24 @@
         configFormData.value.reseller_shield_error.errors.length - 1
       );
     }
+
+    if (
+      configFormData.value.test.tests.length > 0 &&
+      (!configFormData.value.test.tests[
+        configFormData.value.test.tests.length - 1
+      ].provider ||
+        !configFormData.value.test.tests[
+          configFormData.value.test.tests.length - 1
+        ].model ||
+        !configFormData.value.test.tests[
+          configFormData.value.test.tests.length - 1
+        ].model_type ||
+        !configFormData.value.test.tests[
+          configFormData.value.test.tests.length - 1
+        ].request_data)
+    ) {
+      handleTestDel(configFormData.value.test.tests.length - 1);
+    }
   };
 
   const sysConfigReset = async (sysConfigItem: SysConfigItem) => {
@@ -674,7 +800,7 @@
     configFormData.value.reseller_shield_error = data.reseller_shield_error;
     configFormData.value.admin_login = data.admin_login;
     configFormData.value.quota = data.quota;
-    configFormData.value.quota.threshold = data.quota.threshold;
+    configFormData.value.test = data.test;
     sysConfigItems.value = [
       {
         action: 'user_login_register',
@@ -720,6 +846,13 @@
         config: true,
         reset: true,
       },
+      {
+        action: 'test',
+        title: t('sys.config.item.title.test'),
+        desc: t('sys.config.item.desc.test'),
+        config: true,
+        reset: true,
+      },
     ];
   };
   getSysConfigDetail();
@@ -738,6 +871,19 @@
 
   const handleResellerShieldErrorDel = (index: number) => {
     configFormData.value.reseller_shield_error.errors.splice(index, 1);
+  };
+
+  const handleTestAdd = () => {
+    configFormData.value.test.tests.push({
+      provider: '',
+      model: '',
+      model_type: ref(),
+      request_data: '',
+    });
+  };
+
+  const handleTestDel = (index: number) => {
+    configFormData.value.test.tests.splice(index, 1);
   };
 </script>
 
