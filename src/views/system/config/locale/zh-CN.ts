@@ -188,6 +188,7 @@ export default {
   'sys.config.error.required.service_unavailable.ip_whitelist': '请输入IP白名单',
   'sys.config.placeholder.general_api.ip_whitelist': '配置IP白名单后, 仅IP白名单内的可调用通用API接口',
   'sys.config.error.required.general_api.ip_whitelist': '请输入IP白名单',
+  'sys.config.placeholder.test.model': '模型, 全部模型输入: all',
   'sys.config.placeholder.test.request_data': '请求数据',
   'sys.config.error.required.tests': '请输入提供商、模型、模型类型和请求数据',
   // dict

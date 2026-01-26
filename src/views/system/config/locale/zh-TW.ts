@@ -188,12 +188,13 @@ export default {
   'sys.config.error.required.service_unavailable.ip_whitelist': '請輸入IP白名單',
   'sys.config.placeholder.general_api.ip_whitelist': '配置IP白名單後, 僅IP白名單內的可呼叫通用API介面',
   'sys.config.error.required.general_api.ip_whitelist': '請輸入IP白名單',
-  'sys.config.placeholder.test.request_data': '請求資料',
-  'sys.config.error.required.tests': '請輸入供應商、模型、模型類型和請求資料',
+  'sys.config.placeholder.test.model': '模型, 全部模型輸入: all',
+  'sys.config.placeholder.test.request_data': '請求數據',
+  'sys.config.error.required.tests': '請輸入供應商、模型、模型類型和請求數據',
   // dict
   'sys.config.dict.text_records.prompt': '提問',
   'sys.config.dict.text_records.completion': '回答',
   'sys.config.dict.text_records.messages': '上下文',
-  'sys.config.dict.text_records.image': '影像資料',
-  'sys.config.dict.text_records.audio': '音訊資料',
+  'sys.config.dict.text_records.image': '影像數據',
+  'sys.config.dict.text_records.audio': '音訊數據',
 };

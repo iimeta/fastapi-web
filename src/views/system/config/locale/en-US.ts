@@ -188,6 +188,7 @@ export default {
   'sys.config.error.required.service_unavailable.ip_whitelist': 'Please enter IP whitelist',
   'sys.config.placeholder.general_api.ip_whitelist': 'Only IPs in the whitelist can call the General API.',
   'sys.config.error.required.general_api.ip_whitelist': 'Please enter IP whitelist',
+  'sys.config.placeholder.test.model': 'Model, enter "all" for all models',
   'sys.config.placeholder.test.request_data': 'Request Data',
   'sys.config.error.required.tests': 'Please enter provider, model, model type, and request data',
   // dict

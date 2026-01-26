@@ -558,7 +558,7 @@
           </a-select>
           <a-input
             v-model="configFormData.test.tests[index].model"
-            :placeholder="$t('common.model')"
+            :placeholder="$t('sys.config.placeholder.test.model')"
             allow-clear
             style="width: 25%; margin-right: 5px"
           />
