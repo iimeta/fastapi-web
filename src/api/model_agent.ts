@@ -13,6 +13,7 @@ export interface ModelAgentBaseInfo {
 }
 
 export interface ModelAgentAdvanced {
+  billing_methods: number[];
   groups: string[];
   models: string[];
   is_enable_model_replace: boolean;
@@ -39,6 +40,7 @@ export interface ModelAgentPage {
   base_url: string;
   path: string;
   weight: number;
+  billing_methods: number[];
   models: string[];
   model_names: string[];
   status: number;
@@ -105,6 +107,7 @@ export interface ModelAgentDetail {
   base_url: string;
   path: string;
   weight: number;
+  billing_methods: number[];
   groups: string[];
   group_names: string[];
   models: string[];

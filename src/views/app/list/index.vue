@@ -377,15 +377,9 @@
             ]"
           >
             <a-space size="large">
-              <a-checkbox
-                v-model="formData.billing_methods"
-                :value="1"
-                disabled
-              >
-              </a-checkbox>
-              <span style="margin-left: -15px">
+              <a-checkbox v-model="formData.billing_methods" :value="1">
                 {{ $t('app.key.dict.billing_methods.1') }}
-              </span>
+              </a-checkbox>
               <a-checkbox v-model="formData.billing_methods" :value="2">
                 {{ $t('app.key.dict.billing_methods.2') }}
               </a-checkbox>

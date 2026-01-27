@@ -53,6 +53,14 @@
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.billing_methods')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.billing_methods.${currentData.billing_methods || 1}`) }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('common.weight')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

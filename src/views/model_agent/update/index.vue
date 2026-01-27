@@ -109,6 +109,25 @@
               {{ $t('common.title.advanced') }}
             </a-divider>
 
+            <a-form-item
+              field="billing_methods"
+              :label="$t('common.billing_methods')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('placeholder.billing_methods'),
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-checkbox v-model="formData.billing_methods" :value="1">
+                  {{ $t('dict.billing_methods.1') }}
+                </a-checkbox>
+                <a-checkbox v-model="formData.billing_methods" :value="2">
+                  {{ $t('dict.billing_methods.2') }}
+                </a-checkbox>
+              </a-space>
+            </a-form-item>
             <a-form-item field="groups" :label="$t('common.bind_group')">
               <a-select
                 v-model="formData.groups"
@@ -354,6 +373,7 @@
     weight: ref(20),
     remark: '',
     status: 1,
+    billing_methods: [1, 2],
     groups: [],
     models: [],
     is_enable_model_replace: false,
@@ -400,6 +420,7 @@
       formData.value.weight = data.weight;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
+      formData.value.billing_methods = data.billing_methods;
       formData.value.groups = data.groups;
       formData.value.models = data.models;
       formData.value.is_enable_model_replace = data.is_enable_model_replace;
