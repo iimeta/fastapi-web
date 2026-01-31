@@ -315,14 +315,6 @@
           <a-button type="text" size="small" @click="testsHandle(record.id)">
             {{ $t('button.test') }}
           </a-button>
-          <a-popconfirm
-            :content="$t('placeholder.operation.delete')"
-            @ok="modelAgentDelete({ id: record.id })"
-          >
-            <a-button type="text" size="small">
-              {{ $t('button.delete') }}
-            </a-button>
-          </a-popconfirm>
         </template>
       </a-table>
 
@@ -382,8 +374,6 @@
     queryModelAgentPage,
     ModelAgentPage,
     ModelAgentPageParams,
-    submitModelAgentDelete,
-    ModelAgentDeleteParams,
     ModelAgentChangeStatus,
     submitModelAgentChangeStatus,
     ModelAgentBatchOperate,
@@ -536,7 +526,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 262,
+      width: 200,
     },
   ]);
 
@@ -683,19 +673,6 @@
   };
   getModelList();
 
-  const modelAgentDelete = async (params: ModelAgentDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitModelAgentDelete(params);
-      Message.success(t('success.delete'));
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const modelAgentChangeStatus = async (params: ModelAgentChangeStatus) => {
     setLoading(true);
     try {
@@ -840,8 +817,5 @@
         color: rgb(var(--gray-8));
       }
     }
-  }
-  .arco-btn-size-small {
-    padding: 0 8px;
   }
 </style>

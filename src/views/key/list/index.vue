@@ -360,14 +360,6 @@
           >
             {{ $t('button.update') }}
           </a-button>
-          <a-popconfirm
-            :content="$t('placeholder.operation.delete')"
-            @ok="keyDelete({ id: record.id })"
-          >
-            <a-button type="text" size="small">
-              {{ $t('button.delete') }}
-            </a-button>
-          </a-popconfirm>
         </template>
       </a-table>
 
@@ -420,8 +412,6 @@
     queryKeyPage,
     KeyPage,
     KeyPageParams,
-    submitKeyDelete,
-    KeyDeleteParams,
     KeyChangeStatus,
     submitKeyChangeStatus,
     KeyBatchOperate,
@@ -576,7 +566,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 170,
+      width: 120,
     },
   ]);
 
@@ -761,19 +751,6 @@
   };
   getModelAgentList();
 
-  const keyDelete = async (params: KeyDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitKeyDelete(params);
-      Message.success(t('success.delete'));
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const keyChangeStatus = async (params: KeyChangeStatus) => {
     setLoading(true);
     try {
@@ -947,9 +924,7 @@
       }
     }
   }
-  .arco-btn-size-small {
-    padding: 0 8px;
-  }
+
   .copy-btn {
     color: gray;
     cursor: pointer;

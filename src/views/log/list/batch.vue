@@ -1060,9 +1060,7 @@
       }
     }
   }
-  .arco-btn-size-small {
-    padding: 0 8px;
-  }
+
   :deep(.arco-tabs-content) {
     padding-top: 5px;
     padding-left: 15px;

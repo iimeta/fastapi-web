@@ -402,14 +402,6 @@
           <a-button type="text" size="small" @click="updateKey(record)">
             {{ $t('button.update') }}
           </a-button>
-          <a-popconfirm
-            :content="$t('placeholder.operation.delete')"
-            @ok="keyDelete({ id: record.id })"
-          >
-            <a-button type="text" size="small">
-              {{ $t('button.delete') }}
-            </a-button>
-          </a-popconfirm>
         </template>
       </a-table>
 
@@ -1111,8 +1103,6 @@
     queryAppKeyPage,
     AppKeyPage,
     AppKeyPageParams,
-    submitAppKeyDelete,
-    AppKeyDeleteParams,
     AppKeyChangeStatus,
     submitAppKeyChangeStatus,
     queryAppKeyDetail,
@@ -1290,7 +1280,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 170,
+      width: 120,
     },
   ]);
 
@@ -1480,19 +1470,6 @@
     }
   };
   getGroupList();
-
-  const keyDelete = async (params: AppKeyDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitAppKeyDelete(params);
-      Message.success(t('success.delete'));
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const keyChangeStatus = async (params: AppKeyChangeStatus) => {
     setLoading(true);
@@ -1937,9 +1914,7 @@
       }
     }
   }
-  .arco-btn-size-small {
-    padding: 0 8px;
-  }
+
   .copy-btn {
     color: gray;
     cursor: pointer;

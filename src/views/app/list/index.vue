@@ -326,14 +326,6 @@
           >
             {{ $t('app.columns.operations.manage_key') }}
           </a-button>
-          <a-popconfirm
-            :content="$t('placeholder.operation.delete')"
-            @ok="appDelete({ id: record.id })"
-          >
-            <a-button type="text" size="small">
-              {{ $t('button.delete') }}
-            </a-button>
-          </a-popconfirm>
         </template>
       </a-table>
 
@@ -634,8 +626,6 @@
     queryAppPage,
     AppPage,
     AppPageParams,
-    submitAppDelete,
-    AppDeleteParams,
     AppChangeStatus,
     submitAppChangeStatus,
     AppBatchOperate,
@@ -796,7 +786,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 320,
+      width: 260,
     },
   ]);
 
@@ -955,19 +945,6 @@
     }
   };
   getGroupList();
-
-  const appDelete = async (params: AppDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitAppDelete(params);
-      Message.success(t('success.delete'));
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const appChangeStatus = async (params: AppChangeStatus) => {
     setLoading(true);
@@ -1156,9 +1133,6 @@
         color: rgb(var(--gray-8));
       }
     }
-  }
-  .arco-btn-size-small {
-    padding: 0 8px;
   }
 
   :deep(.arco-radio-button-content) {

@@ -499,9 +499,7 @@
       }
     }
   }
-  .arco-btn-size-small {
-    padding: 0 8px;
-  }
+
   .copy-btn {
     color: gray;
     cursor: pointer;

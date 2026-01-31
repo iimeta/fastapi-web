@@ -417,14 +417,6 @@
           >
             {{ $t('button.update') }}
           </a-button>
-          <a-popconfirm
-            :content="$t('placeholder.operation.delete')"
-            @ok="groupDelete({ id: record.id })"
-          >
-            <a-button type="text" size="small">
-              {{ $t('button.delete') }}
-            </a-button>
-          </a-popconfirm>
         </template>
       </a-table>
 
@@ -470,8 +462,6 @@
     queryGroupPage,
     GroupPage,
     GroupPageParams,
-    submitGroupDelete,
-    GroupDeleteParams,
     GroupChangePublic,
     submitGroupChangePublic,
     GroupChangeExpire,
@@ -636,7 +626,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 170,
+      width: 120,
     },
   ]);
 
@@ -782,19 +772,6 @@
     }
   };
   getModelAgentList();
-
-  const groupDelete = async (params: GroupDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitGroupDelete(params);
-      Message.success(t('success.delete'));
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const groupChangePublic = async (params: GroupChangePublic) => {
     setLoading(true);
@@ -960,9 +937,7 @@
       }
     }
   }
-  .arco-btn-size-small {
-    padding: 0 8px;
-  }
+
   .copy-btn {
     color: gray;
     cursor: pointer;

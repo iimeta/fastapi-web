@@ -446,14 +446,6 @@
           >
             {{ $t('button.update') }}
           </a-button>
-          <a-popconfirm
-            :content="$t('placeholder.operation.delete')"
-            @ok="modelDelete({ id: record.id })"
-          >
-            <a-button type="text" size="small">
-              {{ $t('button.delete') }}
-            </a-button>
-          </a-popconfirm>
         </template>
       </a-table>
 
@@ -710,8 +702,6 @@
     queryModelPage,
     ModelPage,
     ModelPageParams,
-    submitModelDelete,
-    ModelDeleteParams,
     ModelChangeStatus,
     submitModelChangeStatus,
     ModelBatchOperate,
@@ -853,7 +843,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 170,
+      width: 120,
     },
   ]);
 
@@ -1070,12 +1060,6 @@
     groups.value = data.items;
   };
   getGroupList();
-
-  const modelDelete = async (params: ModelDeleteParams) => {
-    await submitModelDelete(params);
-    Message.success(t('success.delete'));
-    search();
-  };
 
   const modelChangeStatus = async (params: ModelChangeStatus) => {
     await submitModelChangeStatus(params);
@@ -1426,8 +1410,5 @@
         color: rgb(var(--gray-8));
       }
     }
-  }
-  .arco-btn-size-small {
-    padding: 0 8px;
   }
 </style>

@@ -302,14 +302,6 @@
           >
             {{ $t('button.update') }}
           </a-button>
-          <a-popconfirm
-            :content="$t('placeholder.operation.delete')"
-            @ok="noticeDelete({ id: record.id })"
-          >
-            <a-button type="text" size="small">
-              {{ $t('button.delete') }}
-            </a-button>
-          </a-popconfirm>
         </template>
       </a-table>
 
@@ -337,8 +329,6 @@
     queryNoticeTemplatePage,
     NoticeTemplatePage,
     NoticeTemplatePageParams,
-    submitNoticeTemplateDelete,
-    NoticeTemplateDeleteParams,
     NoticeTemplateChangePublic,
     submitNoticeTemplateChangePublic,
     NoticeTemplateChangeStatus,
@@ -471,7 +461,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 220,
+      width: 160,
     },
   ]);
 
@@ -660,19 +650,6 @@
     { deep: true, immediate: true }
   );
 
-  const noticeDelete = async (params: NoticeTemplateDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitNoticeTemplateDelete(params);
-      Message.success(t('success.delete'));
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const changePublic = async (params: NoticeTemplateChangePublic) => {
     setLoading(true);
     try {
@@ -814,8 +791,5 @@
         color: rgb(var(--gray-8));
       }
     }
-  }
-  .arco-btn-size-small {
-    padding: 0 8px;
   }
 </style>

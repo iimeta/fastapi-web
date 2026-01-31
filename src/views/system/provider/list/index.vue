@@ -275,14 +275,6 @@
           >
             {{ $t('button.update') }}
           </a-button>
-          <a-popconfirm
-            :content="$t('placeholder.operation.delete')"
-            @ok="providerDelete({ id: record.id })"
-          >
-            <a-button type="text" size="small">
-              {{ $t('button.delete') }}
-            </a-button>
-          </a-popconfirm>
         </template>
       </a-table>
     </a-card>
@@ -298,8 +290,6 @@
     queryProviderPage,
     ProviderPage,
     ProviderPageParams,
-    submitProviderDelete,
-    ProviderDeleteParams,
     ProviderChangePublic,
     submitProviderChangePublic,
     ProviderChangeStatus,
@@ -429,7 +419,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 130,
+      width: 75,
     },
   ]);
 
@@ -562,19 +552,6 @@
     { deep: true, immediate: true }
   );
 
-  const providerDelete = async (params: ProviderDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitProviderDelete(params);
-      Message.success(t('success.delete'));
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const providerChangePublic = async (params: ProviderChangePublic) => {
     setLoading(true);
     try {
@@ -705,8 +682,5 @@
         color: rgb(var(--gray-8));
       }
     }
-  }
-  .arco-btn-size-small {
-    padding: 0 8px;
   }
 </style>

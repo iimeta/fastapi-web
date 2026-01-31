@@ -820,7 +820,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 220,
+      width: 200,
     },
   ]);
 
@@ -1267,9 +1267,6 @@
         color: rgb(var(--gray-8));
       }
     }
-  }
-  .arco-btn-size-small {
-    padding: 0 8px;
   }
 
   :deep(.arco-radio-button-content) {

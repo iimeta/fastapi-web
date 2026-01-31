@@ -287,14 +287,6 @@
           >
             {{ $t('button.update') }}
           </a-button>
-          <a-popconfirm
-            :content="$t('placeholder.operation.delete')"
-            @ok="siteDelete({ id: record.id })"
-          >
-            <a-button type="text" size="small">
-              {{ $t('button.delete') }}
-            </a-button>
-          </a-popconfirm>
         </template>
       </a-table>
 
@@ -322,8 +314,6 @@
     querySiteConfigPage,
     SiteConfigPage,
     SiteConfigPageParams,
-    submitSiteConfigDelete,
-    SiteConfigDeleteParams,
     SiteConfigChangeStatus,
     submitSiteConfigChangeStatus,
     SiteConfigBatchOperate,
@@ -466,7 +456,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 170,
+      width: 120,
     },
   ]);
 
@@ -593,19 +583,6 @@
     },
     { deep: true, immediate: true }
   );
-
-  const siteDelete = async (params: SiteConfigDeleteParams) => {
-    setLoading(true);
-    try {
-      await submitSiteConfigDelete(params);
-      Message.success(t('success.delete'));
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const siteChangeStatus = async (params: SiteConfigChangeStatus) => {
     setLoading(true);
@@ -735,8 +712,5 @@
         color: rgb(var(--gray-8));
       }
     }
-  }
-  .arco-btn-size-small {
-    padding: 0 8px;
   }
 </style>
