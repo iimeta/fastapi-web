@@ -262,18 +262,6 @@
           </span>
           <span v-else>{{ '-' }}</span>
         </template>
-        <template #fallback_model_names="{ record }">
-          <span v-if="record.fallback_model_names">
-            <a-button
-              type="text"
-              size="small"
-              @click="fallbackModelsHandle(record.id)"
-            >
-              {{ $t('button.view') }}
-            </a-button>
-          </span>
-          <span v-else>{{ '-' }}</span>
-        </template>
         <template #weight="{ record }">
           {{ record.weight || 0 }}
         </template>
@@ -324,6 +312,9 @@
           >
             {{ $t('button.key') }}
           </a-button>
+          <a-button type="text" size="small" @click="testsHandle(record.id)">
+            {{ $t('button.test') }}
+          </a-button>
           <a-popconfirm
             :content="$t('placeholder.operation.delete')"
             @ok="modelAgentDelete({ id: record.id })"
@@ -363,10 +354,10 @@
         <Models :id="recordId" :action="action" />
       </a-modal>
 
-      <!-- 后备模型 -->
+      <!-- 测试模型 -->
       <a-modal
-        v-model:visible="fallbackModelsVisible"
-        title="后备模型"
+        v-model:visible="testsVisible"
+        :title="$t('model.agent.title.test_models')"
         :modal-style="{
           padding: '25px 15px 20px 15px',
         }"
@@ -376,7 +367,7 @@
         width="1080px"
         :ok-text="$t('button.close')"
       >
-        <Models :id="recordId" :action="action" />
+        <Tests :id="recordId" :action="action" />
       </a-modal>
     </a-card>
   </div>
@@ -410,6 +401,7 @@
   import { queryModelList, ModelList } from '@/api/model';
   import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
+  import Tests from '../components/tests.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -544,7 +536,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 216,
+      width: 262,
     },
   ]);
 
@@ -790,7 +782,7 @@
   };
 
   const modelsVisible = ref(false);
-  const fallbackModelsVisible = ref(false);
+  const testsVisible = ref(false);
   const action = ref();
 
   const modelsHandle = (id: string) => {
@@ -799,10 +791,10 @@
     action.value = 'agent';
   };
 
-  const fallbackModelsHandle = (id: string) => {
-    fallbackModelsVisible.value = true;
+  const testsHandle = (id: string) => {
+    testsVisible.value = true;
     recordId.value = id;
-    action.value = 'fallback';
+    action.value = 'agent';
   };
 </script>
 

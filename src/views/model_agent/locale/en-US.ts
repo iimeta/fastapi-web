@@ -21,6 +21,7 @@ export default {
   'model.agent.label.lb_strategy': 'Key Load Balancing Strategy',
   'model.agent.label.is_agents_only': 'Agent Only',
   'model.agent.label.is_never_disable_key': 'Keys Never Disable',
+  'model.agent.title.test_models': 'Test Models',
   // detail
   'model.agent.detail.fallback_models': 'Fallback Models',
   // button

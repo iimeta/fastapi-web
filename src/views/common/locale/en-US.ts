@@ -141,6 +141,7 @@ export default {
   'button.sync': 'Sync',
   'button.copy': 'Copy',
   'button.recharge': 'Recharge',
+  'button.test': 'Test',
   'button.all.enable': 'Enable All',
   'button.all.disable': 'Disable All',
   'button.all.update': 'Update All',

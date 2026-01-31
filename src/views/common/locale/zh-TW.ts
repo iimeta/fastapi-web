@@ -141,6 +141,7 @@ export default {
   'button.sync': '同步',
   'button.copy': '複製',
   'button.recharge': '充值',
+  'button.test': '測試',
   'button.all.enable': '全部啟用',
   'button.all.disable': '全部禁用',
   'button.all.update': '全部修改',
