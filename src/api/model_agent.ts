@@ -187,5 +187,5 @@ export interface TestModelRes {
 }
 
 export function testModel(data: TestModelParams) {
-  return axios.post('/api/v1/model/agent/test', data);
+  return axios.post('/api/v1/model/agent/test/model', data);
 }
