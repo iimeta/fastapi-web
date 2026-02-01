@@ -135,7 +135,7 @@
           </a-button>
           <a-link
             :href="getDetailUrl(record.trace_id)"
-            :disabled="record.trace_id === ''"
+            :disabled="!record.trace_id || record.trace_id === ''"
             target="_blank"
           >
             {{ $t('button.detail') }}
