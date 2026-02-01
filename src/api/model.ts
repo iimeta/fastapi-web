@@ -237,6 +237,10 @@ export interface ModelPermissions {
   type: number;
   status: number;
   remark: string;
+  testing: boolean;
+  trace_id: string;
+  result: number;
+  total_time: number;
 }
 
 export interface ModelPermissionsRes {

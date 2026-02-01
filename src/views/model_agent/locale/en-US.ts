@@ -24,6 +24,8 @@ export default {
   'model.agent.title.test_models': 'Test Models',
   // detail
   'model.agent.detail.fallback_models': 'Fallback Models',
+  // columns
+  'model.agent.columns.result_total_time': 'Result / Time',
   // button
   'model.agent.button.quick_fill': 'Quick Fill',
 };

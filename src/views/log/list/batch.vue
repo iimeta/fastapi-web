@@ -561,6 +561,7 @@
   import { computed, ref, h, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { Tooltip, Message } from '@arco-design/web-vue';
+  import { useRoute } from 'vue-router';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
   import { queryBatchPage, BatchPage, BatchPageParams } from '@/api/log';
@@ -588,6 +589,7 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
+  const route = useRoute();
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -825,6 +827,8 @@
       }
     );
   }
+
+  searchFormData.value.trace_id = route.query.trace_id;
 
   const fetchData = async (
     params: BatchPageParams = {

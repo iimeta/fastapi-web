@@ -174,3 +174,18 @@ export interface QuickFillModelRes {
 export function quickFillModel(data: QuickFillModelParams) {
   return axios.post('/api/v1/model/agent/quick/fill/model', data);
 }
+
+export interface TestModelParams {
+  model_agent_id: string;
+  model_id: string;
+}
+
+export interface TestModelRes {
+  trace_id: string;
+  result: number;
+  total_time: number;
+}
+
+export function testModel(data: TestModelParams) {
+  return axios.post('/api/v1/model/agent/test', data);
+}

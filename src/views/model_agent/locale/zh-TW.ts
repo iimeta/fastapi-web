@@ -24,6 +24,8 @@ export default {
   'model.agent.title.test_models': '測試模型',
   // detail
   'model.agent.detail.fallback_models': '後備模型',
+  // columns
+  'model.agent.columns.result_total_time': '結果 / 耗時',
   // button
   'model.agent.button.quick_fill': '快速填入',
 };

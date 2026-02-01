@@ -576,6 +576,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { Tooltip } from '@arco-design/web-vue';
+  import { useRoute } from 'vue-router';
   import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
@@ -590,6 +591,7 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
+  const route = useRoute();
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -827,6 +829,8 @@
       }
     );
   }
+
+  searchFormData.value.trace_id = route.query.trace_id;
 
   const fetchData = async (
     params: AudioPageParams = {

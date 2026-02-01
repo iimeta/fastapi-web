@@ -94,6 +94,53 @@
         }"
         :scrollbar="false"
       >
+        <template #result_total_time="{ record }">
+          <a-spin v-if="record.testing" />
+          <span v-else>
+            <span v-if="record.result">
+              <a-tag v-if="record.result === 1" color="green">
+                {{ $t(`log.dict.status.${record.result}`) }}
+              </a-tag>
+              <a-tag v-else color="red">
+                {{ $t(`log.dict.status.${record.result}`) }}
+              </a-tag>
+            </span>
+            <span v-else> - </span>
+            /
+            <span v-if="record.total_time">
+              <a-tag v-if="record.total_time > 120000" color="red">
+                {{ record.total_time }} ms
+              </a-tag>
+              <a-tag v-else-if="record.total_time > 90000" color="orange">
+                {{ record.total_time }} ms
+              </a-tag>
+              <a-tag v-else-if="record.total_time > 60000" color="gold">
+                {{ record.total_time }} ms
+              </a-tag>
+              <a-tag v-else color="green"
+                >{{ record.total_time || '-' }} ms</a-tag
+              >
+            </span>
+            <span v-else> - </span>
+          </span>
+        </template>
+        <template #operations="{ record }">
+          <a-button
+            type="text"
+            size="small"
+            :disabled="record.testing"
+            @click="testsHandle(record)"
+          >
+            {{ $t('button.test') }}
+          </a-button>
+          <a-link
+            :href="getDetailUrl(record.trace_id)"
+            :disabled="record.trace_id === ''"
+            target="_blank"
+          >
+            {{ $t('button.detail') }}
+          </a-link>
+        </template>
       </a-table>
     </a-card>
   </div>
@@ -103,11 +150,13 @@
   import { computed, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import { useRouter } from 'vue-router';
   import {
     queryModelPermissions,
     ModelPermissions,
     ModelPermissionsParams,
   } from '@/api/model';
+  import { testModel } from '@/api/model_agent';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import { queryProviderList, ProviderList } from '@/api/provider';
@@ -117,6 +166,7 @@
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
+  const router = useRouter();
 
   const props = defineProps({
     id: {
@@ -167,6 +217,19 @@
       align: 'center',
       ellipsis: true,
       tooltip: true,
+    },
+    {
+      title: t('model.agent.columns.result_total_time'),
+      dataIndex: 'result_total_time',
+      slotName: 'result_total_time',
+      align: 'center',
+    },
+    {
+      title: t('common.operations'),
+      dataIndex: 'operations',
+      slotName: 'operations',
+      align: 'center',
+      width: 120,
     },
   ]);
 
@@ -219,6 +282,27 @@
     }
   };
   getProviderList();
+
+  const testsHandle = async (record: ModelPermissions) => {
+    record.testing = true;
+    record.trace_id = '';
+    const { data } = await testModel({
+      model_agent_id: props.id,
+      model_id: record.id,
+    });
+    record.trace_id = data.trace_id;
+    record.result = data.result;
+    record.total_time = data.total_time;
+    record.testing = false;
+  };
+
+  const getDetailUrl = (id: string) => {
+    const route = router.resolve({
+      name: 'LogTextList',
+      query: { trace_id: id },
+    });
+    return route.href;
+  };
 </script>
 
 <script lang="ts">
