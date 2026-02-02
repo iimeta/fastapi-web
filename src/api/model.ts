@@ -239,7 +239,7 @@ export interface ModelPermissions {
   remark: string;
   testing: boolean;
   trace_id: string;
-  result: number;
+  result: boolean;
   total_time: number;
 }
 

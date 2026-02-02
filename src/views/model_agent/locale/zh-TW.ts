@@ -22,10 +22,20 @@ export default {
   'model.agent.label.is_agents_only': '代理專用',
   'model.agent.label.is_never_disable_key': '密鑰永不禁用',
   'model.agent.title.test_models': '測試模型',
+  'model.agent.label.test_models.test_method': '測試方式',
+  'model.agent.label.test_models.base_url': 'Fast API地址',
+  'model.agent.placeholder.test_models.base_url': '如: https://api.abc.com/v1',
+  'model.agent.error.required.test_models.base_url': '請輸入Fast API地址',
+  'model.agent.label.test_models.key': '應用密鑰',
+  'model.agent.placeholder.test_models.key': '請輸入應用密鑰',
   // detail
   'model.agent.detail.fallback_models': '後備模型',
   // columns
   'model.agent.columns.result_total_time': '結果 / 耗時',
   // button
   'model.agent.button.quick_fill': '快速填入',
+  // dict
+  'model.agent.dict.test_method.1': 'Fast API',
+  'model.agent.dict.test_method.2': '代理直連',
+  'model.agent.dict.test_method.3': '自訂',
 };

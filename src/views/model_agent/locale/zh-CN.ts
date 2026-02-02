@@ -22,10 +22,20 @@ export default {
   'model.agent.label.is_agents_only': '代理专用',
   'model.agent.label.is_never_disable_key': '密钥永不禁用',
   'model.agent.title.test_models': '测试模型',
+  'model.agent.label.test_models.test_method': '测试方式',
+  'model.agent.label.test_models.base_url': 'Fast API地址',
+  'model.agent.placeholder.test_models.base_url': '如: https://api.abc.com/v1',
+  'model.agent.error.required.test_models.base_url': '请输入Fast API地址',
+  'model.agent.label.test_models.key': '应用密钥',
+  'model.agent.placeholder.test_models.key': '请输入应用密钥',
   // detail
   'model.agent.detail.fallback_models': '后备模型',
   // columns
   'model.agent.columns.result_total_time': '结果 / 耗时',
   // button
   'model.agent.button.quick_fill': '快速填入',
+  // dict
+  'model.agent.dict.test_method.1': 'Fast API',
+  'model.agent.dict.test_method.2': '代理直连',
+  'model.agent.dict.test_method.3': '自定义',
 };

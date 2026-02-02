@@ -212,6 +212,8 @@ export default {
   'dict.enable.false': 'Disabled',
   'dict.open.true': 'Open',
   'dict.open.false': 'Closed',
+  'dict.success.true': 'Success',
+  'dict.success.false': 'Failure',
   'dict.model_type.1': 'Text to Text',
   'dict.model_type.2': 'Text to Image',
   'dict.model_type.3': 'Image to Text',

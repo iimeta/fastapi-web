@@ -22,10 +22,20 @@ export default {
   'model.agent.label.is_agents_only': 'Agent Only',
   'model.agent.label.is_never_disable_key': 'Keys Never Disable',
   'model.agent.title.test_models': 'Test Models',
+  'model.agent.label.test_models.test_method': 'Test Method',
+  'model.agent.label.test_models.base_url': 'Fast API URL',
+  'model.agent.placeholder.test_models.base_url': 'E.g., https://api.abc.com/v1',
+  'model.agent.error.required.test_models.base_url': 'Please enter Fast API URL',
+  'model.agent.label.test_models.key': 'Application Key',
+  'model.agent.placeholder.test_models.key': 'Please enter application key',
   // detail
   'model.agent.detail.fallback_models': 'Fallback Models',
   // columns
   'model.agent.columns.result_total_time': 'Result / Time',
   // button
   'model.agent.button.quick_fill': 'Quick Fill',
+  // dict
+  'model.agent.dict.test_method.1': 'Fast API',
+  'model.agent.dict.test_method.2': 'Direct Agent',
+  'model.agent.dict.test_method.3': 'Custom',
 };

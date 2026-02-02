@@ -81,6 +81,77 @@
         </a-col>
       </a-row>
       <a-divider style="margin-top: 0" />
+      <a-form
+        ref="testModelFormRef"
+        :model="testModelParams"
+        :label-col-props="{ span: 4 }"
+        :wrapper-col-props="{ span: 18 }"
+        label-align="left"
+      >
+        <a-row :gutter="16">
+          <a-col :span="11">
+            <a-form-item
+              field="test_method"
+              :label="$t('model.agent.label.test_models.test_method')"
+              :wrapper-col-props="{ span: 15 }"
+            >
+              <a-space size="large">
+                <a-radio v-model="testModelParams.test_method" :value="1">
+                  {{ $t('model.agent.dict.test_method.1') }}
+                </a-radio>
+                <a-radio v-model="testModelParams.test_method" :value="2">
+                  {{ $t('model.agent.dict.test_method.2') }}
+                </a-radio>
+                <a-radio v-model="testModelParams.test_method" :value="3">
+                  {{ $t('model.agent.dict.test_method.3') }}
+                </a-radio>
+              </a-space>
+            </a-form-item>
+          </a-col>
+          <a-col v-if="testModelParams.test_method === 3" :span="13">
+            <a-form-item
+              field="base_url"
+              :label="$t('model.agent.label.test_models.base_url')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'model.agent.error.required.test_models.base_url'
+                  ),
+                },
+              ]"
+              :label-col-props="{ span: 5 }"
+              :wrapper-col-props="{ span: 19 }"
+            >
+              <a-input
+                v-model="testModelParams.base_url"
+                :placeholder="
+                  $t('model.agent.placeholder.test_models.base_url')
+                "
+              />
+            </a-form-item>
+          </a-col>
+          <a-col v-if="testModelParams.test_method !== 2" :span="13">
+            <a-form-item
+              field="key"
+              :label="$t('model.agent.label.test_models.key')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('model.agent.placeholder.test_models.key'),
+                },
+              ]"
+              :label-col-props="{ span: 4 }"
+              :wrapper-col-props="{ span: 20 }"
+            >
+              <a-input
+                v-model="testModelParams.key"
+                :placeholder="$t('model.agent.placeholder.test_models.key')"
+              />
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </a-form>
       <a-table
         row-key="id"
         :loading="loading"
@@ -97,12 +168,12 @@
         <template #result_total_time="{ record }">
           <a-spin v-if="record.testing" />
           <span v-else>
-            <span v-if="record.result">
-              <a-tag v-if="record.result === 1" color="green">
-                {{ $t(`log.dict.status.${record.result}`) }}
+            <span v-if="record.result != undefined">
+              <a-tag v-if="record.result" color="green">
+                {{ $t(`dict.success.${record.result}`) }}
               </a-tag>
               <a-tag v-else color="red">
-                {{ $t(`log.dict.status.${record.result}`) }}
+                {{ $t(`dict.success.${record.result}`) }}
               </a-tag>
             </span>
             <span v-else> - </span>
@@ -134,7 +205,8 @@
             {{ $t('button.test') }}
           </a-button>
           <a-link
-            :href="getDetailUrl(record.trace_id)"
+            v-if="testModelParams.test_method !== 2"
+            :href="getDetailUrl(record)"
             :disabled="!record.trace_id || record.trace_id === ''"
             target="_blank"
           >
@@ -151,12 +223,13 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { useRouter } from 'vue-router';
+  import { FormInstance } from '@arco-design/web-vue';
   import {
     queryModelPermissions,
     ModelPermissions,
     ModelPermissionsParams,
   } from '@/api/model';
-  import { testModel } from '@/api/model_agent';
+  import { testModel, TestModelParams } from '@/api/model_agent';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import { queryProviderList, ProviderList } from '@/api/provider';
@@ -194,6 +267,11 @@
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
+  const testModelFormRef = ref<FormInstance>();
+  const testModelParams = ref<TestModelParams>({
+    model_agent_id: props.id,
+    test_method: 1,
+  } as TestModelParams);
 
   const columns = computed<TableColumnData[]>(() => [
     {
@@ -284,22 +362,32 @@
   getProviderList();
 
   const testsHandle = async (record: ModelPermissions) => {
-    record.testing = true;
-    record.trace_id = '';
-    const { data } = await testModel({
-      model_agent_id: props.id,
-      model_id: record.id,
-    });
-    record.trace_id = data.trace_id;
-    record.result = data.result;
-    record.total_time = data.total_time;
-    record.testing = false;
+    const res = await testModelFormRef.value?.validate();
+    if (!res) {
+      record.testing = true;
+      record.trace_id = '';
+      testModelParams.value.model_id = record.id;
+
+      const { data } = await testModel(testModelParams.value);
+      record.trace_id = data.trace_id;
+      record.result = data.result;
+      record.total_time = data.total_time;
+      record.testing = false;
+    }
   };
 
-  const getDetailUrl = (id: string) => {
+  const getDetailUrl = (record: ModelPermissions) => {
+    const routeMap = new Map<number, string>([
+      [2, 'LogImageList'],
+      [5, 'LogAudioList'],
+      [6, 'LogAudioList'],
+      [8, 'LogVideoList'],
+      [10000, 'LogGeneralList'],
+    ]);
+
     const route = router.resolve({
-      name: 'LogTextList',
-      query: { trace_id: id },
+      name: routeMap.get(record.type) || 'LogTextList',
+      query: { trace_id: record.id },
     });
     return route.href;
   };

@@ -178,6 +178,9 @@ export function quickFillModel(data: QuickFillModelParams) {
 export interface TestModelParams {
   model_agent_id: string;
   model_id: string;
+  test_method: number;
+  base_url: string;
+  key: string;
 }
 
 export interface TestModelRes {

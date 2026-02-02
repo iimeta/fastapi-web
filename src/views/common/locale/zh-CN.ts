@@ -212,6 +212,8 @@ export default {
   'dict.enable.false': '禁用',
   'dict.open.true': '开启',
   'dict.open.false': '关闭',
+  'dict.success.true': '成功',
+  'dict.success.false': '失败',
   'dict.model_type.1': '文生文',
   'dict.model_type.2': '文生图',
   'dict.model_type.3': '图生文',
