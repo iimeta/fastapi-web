@@ -356,8 +356,9 @@
         unmount-on-close
         hide-cancel
         simple
-        width="1080px"
+        width="1288px"
         :ok-text="$t('button.close')"
+        :footer="false"
       >
         <Tests :id="recordId" :action="action" />
       </a-modal>

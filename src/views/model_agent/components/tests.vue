@@ -17,7 +17,7 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item
                   field="provider_id"
                   :label="$t('common.provider')"
@@ -39,11 +39,12 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item
                   field="name"
-                  :label="$t('common.model_name')"
-                  :label-col-props="{ span: 6 }"
+                  :label="$t('model.agent.label.model_name')"
+                  :label-col-props="{ span: 4 }"
+                  :wrapper-col-props="{ span: 20 }"
                 >
                   <a-input
                     v-model="searchFormData.name"
@@ -52,15 +53,33 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item
                   field="model"
                   :label="$t('common.model')"
-                  :label-col-props="{ span: 6 }"
+                  :label-col-props="{ span: 4 }"
+                  :wrapper-col-props="{ span: 20 }"
                 >
                   <a-input
                     v-model="searchFormData.model"
                     :placeholder="$t('model.form.placeholder.model')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
+                <a-form-item
+                  field="type"
+                  :label="$t('common.type')"
+                  :label-col-props="{ span: 4 }"
+                  :wrapper-col-props="{ span: 20 }"
+                >
+                  <a-select
+                    v-model="searchFormData.type"
+                    :placeholder="$t('common.all')"
+                    :options="typeOptions"
+                    :scrollbar="false"
+                    allow-search
                     allow-clear
                   />
                 </a-form-item>
@@ -89,26 +108,27 @@
         label-align="left"
       >
         <a-row :gutter="16">
-          <a-col :span="11">
+          <a-col :span="8">
             <a-form-item
               field="test_method"
               :label="$t('model.agent.label.test_models.test_method')"
-              :wrapper-col-props="{ span: 15 }"
+              :label-col-props="{ span: 5 }"
+              :wrapper-col-props="{ span: 18 }"
             >
-              <a-space size="large">
-                <a-radio v-model="testModelParams.test_method" :value="1">
+              <a-radio-group v-model="testModelParams.test_method">
+                <a-radio :value="1">
                   {{ $t('model.agent.dict.test_method.1') }}
                 </a-radio>
-                <a-radio v-model="testModelParams.test_method" :value="2">
+                <a-radio :value="2">
                   {{ $t('model.agent.dict.test_method.2') }}
                 </a-radio>
-                <a-radio v-model="testModelParams.test_method" :value="3">
+                <a-radio :value="3">
                   {{ $t('model.agent.dict.test_method.3') }}
                 </a-radio>
-              </a-space>
+              </a-radio-group>
             </a-form-item>
           </a-col>
-          <a-col v-if="testModelParams.test_method === 3" :span="13">
+          <a-col v-if="testModelParams.test_method === 3" :span="7">
             <a-form-item
               field="base_url"
               :label="$t('model.agent.label.test_models.base_url')"
@@ -120,8 +140,8 @@
                   ),
                 },
               ]"
-              :label-col-props="{ span: 5 }"
-              :wrapper-col-props="{ span: 19 }"
+              :label-col-props="{ span: 8 }"
+              :wrapper-col-props="{ span: 16 }"
             >
               <a-input
                 v-model="testModelParams.base_url"
@@ -131,7 +151,10 @@
               />
             </a-form-item>
           </a-col>
-          <a-col v-if="testModelParams.test_method !== 2" :span="13">
+          <a-col
+            v-if="testModelParams.test_method !== 2"
+            :span="testModelParams.test_method === 1 ? 14 : 7"
+          >
             <a-form-item
               field="key"
               :label="$t('model.agent.label.test_models.key')"
@@ -141,8 +164,12 @@
                   message: $t('model.agent.placeholder.test_models.key'),
                 },
               ]"
-              :label-col-props="{ span: 4 }"
-              :wrapper-col-props="{ span: 20 }"
+              :label-col-props="{
+                span: testModelParams.test_method !== 3 ? 3 : 7,
+              }"
+              :wrapper-col-props="{
+                span: testModelParams.test_method !== 3 ? 21 : 17,
+              }"
             >
               <a-input
                 v-model="testModelParams.key"
@@ -150,9 +177,22 @@
               />
             </a-form-item>
           </a-col>
+          <a-col
+            :span="testModelParams.test_method !== 2 ? 2 : 16"
+            style="text-align: right"
+          >
+            <a-button
+              type="primary"
+              :disabled="allMultiple"
+              @click="handleBatch"
+            >
+              {{ $t('button.batch.test') }}
+            </a-button>
+          </a-col>
         </a-row>
       </a-form>
       <a-table
+        ref="tableRef"
         row-key="id"
         :loading="loading"
         :pagination="false"
@@ -161,13 +201,15 @@
         :bordered="false"
         :size="size"
         :scroll="{
-          y: '380px',
+          y: '480px',
         }"
         :scrollbar="false"
+        :row-selection="rowSelection"
+        @selection-change="handleSelectionChange"
       >
         <template #result_total_time="{ record }">
           <a-spin v-if="record.testing" />
-          <span v-else>
+          <span v-else :title="record.error" @click="handleCopy(record.error)">
             <span v-if="record.result != undefined">
               <a-tag v-if="record.result" color="green">
                 {{ $t(`dict.success.${record.result}`) }}
@@ -200,7 +242,7 @@
             type="text"
             size="small"
             :disabled="record.testing"
-            @click="testsHandle(record)"
+            @click="testHandle(record)"
           >
             {{ $t('button.test') }}
           </a-button>
@@ -219,19 +261,24 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, watch } from 'vue';
+  import { computed, ref, watch, reactive } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { useRouter } from 'vue-router';
-  import { FormInstance } from '@arco-design/web-vue';
+  import { FormInstance, Message } from '@arco-design/web-vue';
   import {
     queryModelPermissions,
     ModelPermissions,
     ModelPermissionsParams,
   } from '@/api/model';
   import { testModel, TestModelParams } from '@/api/model_agent';
-  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import type {
+    TableColumnData,
+    TableRowSelection,
+  } from '@arco-design/web-vue/es/table/interface';
+  import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import cloneDeep from 'lodash/cloneDeep';
+  import { useClipboard } from '@vueuse/core';
   import { queryProviderList, ProviderList } from '@/api/provider';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -240,6 +287,12 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const router = useRouter();
+
+  const rowSelection = reactive({
+    type: 'checkbox',
+    showCheckedAll: true,
+    onlyCurrent: false,
+  } as TableRowSelection);
 
   const props = defineProps({
     id: {
@@ -267,6 +320,10 @@
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
+  const ids = ref<Array<string>>([]);
+  const multiple = ref(true);
+  const allMultiple = ref(true);
+  const tableRef = ref();
   const testModelFormRef = ref<FormInstance>();
   const testModelParams = ref<TestModelParams>({
     model_agent_id: props.id,
@@ -311,6 +368,61 @@
     },
   ]);
 
+  const typeOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('dict.model_type.1'),
+      value: 1,
+    },
+    {
+      label: t('dict.model_type.2'),
+      value: 2,
+    },
+    {
+      label: t('dict.model_type.3'),
+      value: 3,
+    },
+    {
+      label: t('dict.model_type.4'),
+      value: 4,
+    },
+    {
+      label: t('dict.model_type.5'),
+      value: 5,
+    },
+    {
+      label: t('dict.model_type.6'),
+      value: 6,
+    },
+    {
+      label: t('dict.model_type.7'),
+      value: 7,
+    },
+    {
+      label: t('dict.model_type.8'),
+      value: 8,
+    },
+    {
+      label: t('dict.model_type.100'),
+      value: 100,
+    },
+    {
+      label: t('dict.model_type.101'),
+      value: 101,
+    },
+    {
+      label: t('dict.model_type.102'),
+      value: 102,
+    },
+    {
+      label: t('dict.model_type.103'),
+      value: 103,
+    },
+    {
+      label: t('dict.model_type.10000'),
+      value: 10000,
+    },
+  ]);
+
   const fetchData = async (
     params: ModelPermissionsParams = { id: props.id, action: props.action }
   ) => {
@@ -318,10 +430,16 @@
     try {
       const { data } = await queryModelPermissions(params);
       renderData.value = data.items;
+      if (data.items.length > 0) {
+        allMultiple.value = false;
+      } else {
+        allMultiple.value = true;
+      }
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
       setLoading(false);
+      tableRef.value.selectAll(false);
     }
   };
   fetchData();
@@ -361,7 +479,7 @@
   };
   getProviderList();
 
-  const testsHandle = async (record: ModelPermissions) => {
+  const testHandle = async (record: ModelPermissions) => {
     const res = await testModelFormRef.value?.validate();
     if (!res) {
       record.testing = true;
@@ -373,9 +491,17 @@
         record.trace_id = data.trace_id;
         record.result = data.result;
         record.total_time = data.total_time;
+        record.error = data.error;
+        if (data.error) {
+          Message.error({
+            content: data.error,
+            duration: 5 * 1000,
+          });
+        }
       } catch (err) {
         record.result = false;
         record.total_time = Date.now() - startTime;
+        record.error = err;
       } finally {
         record.testing = false;
       }
@@ -397,11 +523,56 @@
     });
     return route.href;
   };
+
+  /**
+   * 已选择的数据行发生改变时触发
+   *
+   * @param rowKeys ID 列表
+   */
+  const handleSelectionChange = (rowKeys: Array<any>) => {
+    ids.value = rowKeys;
+    multiple.value = !rowKeys.length;
+  };
+
+  /**
+   * 批量操作
+   */
+  const handleBatch = () => {
+    if (ids.value.length > 0) {
+      for (let i = 0; i < ids.value.length; i += 1) {
+        for (let j = 0; j < renderData.value.length; j += 1) {
+          if (ids.value[i] === renderData.value[j].id) {
+            testHandle(renderData.value[j]);
+          }
+        }
+      }
+    } else {
+      for (let i = 0; i < renderData.value.length; i += 1) {
+        testHandle(renderData.value[i]);
+      }
+    }
+  };
+
+  /**
+   * 复制内容
+   *
+   * @param content 内容
+   */
+  const { copy, copied } = useClipboard();
+  const handleCopy = async (content: string) => {
+    copy(content);
+  };
+
+  watch(copied, () => {
+    if (copied.value) {
+      Message.success(t('success.copy'));
+    }
+  });
 </script>
 
 <script lang="ts">
   export default {
-    name: 'Models',
+    name: 'Tests',
   };
 </script>
 
@@ -420,32 +591,6 @@
     &:last-child {
       .arco-table-td-content {
         margin: 3px 0;
-      }
-    }
-  }
-  .action-icon {
-    margin-left: 12px;
-    cursor: pointer;
-  }
-  .active {
-    color: #0960bd;
-    background-color: #e3f4fc;
-  }
-  .setting {
-    display: flex;
-    align-items: center;
-    width: 200px;
-    .title {
-      margin-left: 12px;
-      cursor: pointer;
-    }
-  }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
       }
     }
   }

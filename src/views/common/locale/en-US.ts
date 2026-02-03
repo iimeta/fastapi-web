@@ -146,6 +146,7 @@ export default {
   'button.all.disable': 'Disable All',
   'button.all.update': 'Update All',
   'button.all.delete': 'Delete All',
+  'button.batch.test': 'Batch Test',
   // modal
   'modal.warning.title': 'Warning',
   'modal.warning.title.warm': 'Friendly Reminder',

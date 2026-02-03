@@ -241,6 +241,7 @@ export interface ModelPermissions {
   trace_id: string;
   result: boolean;
   total_time: number;
+  error: any;
 }
 
 export interface ModelPermissionsRes {

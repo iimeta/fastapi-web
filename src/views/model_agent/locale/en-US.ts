@@ -22,6 +22,7 @@ export default {
   'model.agent.label.is_agents_only': 'Agent Only',
   'model.agent.label.is_never_disable_key': 'Keys Never Disable',
   'model.agent.title.test_models': 'Test Models',
+  'model.agent.label.model_name': 'Name',
   'model.agent.label.test_models.test_method': 'Test Method',
   'model.agent.label.test_models.base_url': 'Fast API URL',
   'model.agent.placeholder.test_models.base_url': 'E.g., https://api.abc.com/v1',

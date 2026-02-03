@@ -185,8 +185,9 @@ export interface TestModelParams {
 
 export interface TestModelRes {
   trace_id: string;
-  result: number;
+  result: boolean;
   total_time: number;
+  error: any;
 }
 
 export function testModel(data: TestModelParams) {

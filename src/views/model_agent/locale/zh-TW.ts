@@ -22,6 +22,7 @@ export default {
   'model.agent.label.is_agents_only': '代理專用',
   'model.agent.label.is_never_disable_key': '密鑰永不禁用',
   'model.agent.title.test_models': '測試模型',
+  'model.agent.label.model_name': '名稱',
   'model.agent.label.test_models.test_method': '測試方式',
   'model.agent.label.test_models.base_url': 'Fast API地址',
   'model.agent.placeholder.test_models.base_url': '如: https://api.abc.com/v1',
