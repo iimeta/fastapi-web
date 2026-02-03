@@ -367,12 +367,18 @@
       record.testing = true;
       record.trace_id = '';
       testModelParams.value.model_id = record.id;
-
-      const { data } = await testModel(testModelParams.value);
-      record.trace_id = data.trace_id;
-      record.result = data.result;
-      record.total_time = data.total_time;
-      record.testing = false;
+      const startTime = Date.now();
+      try {
+        const { data } = await testModel(testModelParams.value);
+        record.trace_id = data.trace_id;
+        record.result = data.result;
+        record.total_time = data.total_time;
+      } catch (err) {
+        record.result = false;
+        record.total_time = Date.now() - startTime;
+      } finally {
+        record.testing = false;
+      }
     }
   };
 
@@ -387,7 +393,7 @@
 
     const route = router.resolve({
       name: routeMap.get(record.type) || 'LogTextList',
-      query: { trace_id: record.id },
+      query: { trace_id: record.trace_id },
     });
     return route.href;
   };
