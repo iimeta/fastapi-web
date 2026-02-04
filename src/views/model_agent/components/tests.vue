@@ -222,17 +222,15 @@
             /
             <span v-if="record.total_time">
               <a-tag v-if="record.total_time > 120000" color="red">
-                {{ record.total_time }} ms
+                {{ record.total_time }}
               </a-tag>
               <a-tag v-else-if="record.total_time > 90000" color="orange">
-                {{ record.total_time }} ms
+                {{ record.total_time }}
               </a-tag>
               <a-tag v-else-if="record.total_time > 60000" color="gold">
-                {{ record.total_time }} ms
+                {{ record.total_time }}
               </a-tag>
-              <a-tag v-else color="green"
-                >{{ record.total_time || '-' }} ms</a-tag
-              >
+              <a-tag v-else color="green">{{ record.total_time || '-' }}</a-tag>
             </span>
             <span v-else> - </span>
           </span>
@@ -560,7 +558,9 @@
    */
   const { copy, copied } = useClipboard();
   const handleCopy = async (content: string) => {
-    copy(content);
+    if (content) {
+      copy(content);
+    }
   };
 
   watch(copied, () => {

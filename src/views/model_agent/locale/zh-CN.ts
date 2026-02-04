@@ -32,7 +32,7 @@ export default {
   // detail
   'model.agent.detail.fallback_models': '后备模型',
   // columns
-  'model.agent.columns.result_total_time': '结果 / 耗时',
+  'model.agent.columns.result_total_time': '\u3000\u3000结果 / 耗时(ms)',
   // button
   'model.agent.button.quick_fill': '快速填入',
   // dict

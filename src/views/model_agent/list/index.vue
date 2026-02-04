@@ -359,6 +359,7 @@
         width="1288px"
         :ok-text="$t('button.close')"
         :footer="false"
+        hide-title
       >
         <Tests :id="recordId" :action="action" />
       </a-modal>
