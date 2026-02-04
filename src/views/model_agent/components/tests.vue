@@ -207,6 +207,9 @@
         :row-selection="rowSelection"
         @selection-change="handleSelectionChange"
       >
+        <template #type="{ record }">
+          {{ $t(`dict.model_type.${record.type}`) }}
+        </template>
         <template #result_total_time="{ record }">
           <a-spin v-if="record.testing" />
           <span v-else :title="record.error" @click="handleCopy(record.error)">
@@ -347,6 +350,14 @@
       title: t('common.model'),
       dataIndex: 'model',
       slotName: 'model',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
+      title: t('common.model_type'),
+      dataIndex: 'type',
+      slotName: 'type',
       align: 'center',
       ellipsis: true,
       tooltip: true,
