@@ -148,6 +148,7 @@
                 :placeholder="
                   $t('model.agent.placeholder.test_models.base_url')
                 "
+                allow-clear
               />
             </a-form-item>
           </a-col>
@@ -174,6 +175,7 @@
               <a-input
                 v-model="testModelParams.key"
                 :placeholder="$t('model.agent.placeholder.test_models.key')"
+                allow-clear
               />
             </a-form-item>
           </a-col>
@@ -210,7 +212,7 @@
         <template #type="{ record }">
           {{ $t(`dict.model_type.${record.type}`) }}
         </template>
-        <template #result_total_time="{ record }">
+        <template #result="{ record }">
           <a-spin v-if="record.testing" />
           <span v-else :title="record.error" @click="handleCopy(record.error)">
             <span v-if="record.result != undefined">
@@ -222,15 +224,22 @@
               </a-tag>
             </span>
             <span v-else> - </span>
-            /
+          </span>
+        </template>
+        <template #total_time="{ record }">
+          <a-spin v-if="record.testing" />
+          <span v-else :title="record.error" @click="handleCopy(record.error)">
             <span v-if="record.total_time">
-              <a-tag v-if="record.total_time > 120000" color="red">
+              <a-tag v-if="record.total_time > 60000" color="red">
                 {{ record.total_time }}
               </a-tag>
-              <a-tag v-else-if="record.total_time > 90000" color="orange">
+              <a-tag v-else-if="record.total_time > 30000" color="orangered">
                 {{ record.total_time }}
               </a-tag>
-              <a-tag v-else-if="record.total_time > 60000" color="gold">
+              <a-tag v-else-if="record.total_time > 10000" color="orange">
+                {{ record.total_time }}
+              </a-tag>
+              <a-tag v-else-if="record.total_time > 5000" color="gold">
                 {{ record.total_time }}
               </a-tag>
               <a-tag v-else color="green">{{ record.total_time || '-' }}</a-tag>
@@ -363,10 +372,148 @@
       tooltip: true,
     },
     {
-      title: t('model.agent.columns.result_total_time'),
-      dataIndex: 'result_total_time',
-      slotName: 'result_total_time',
+      title: t('common.result'),
+      dataIndex: 'result',
+      slotName: 'result',
       align: 'center',
+      width: 80,
+      filterable: {
+        filters: [
+          {
+            text: t('dict.success.true'),
+            value: 'true',
+          },
+          {
+            text: t('dict.success.false'),
+            value: 'false',
+          },
+        ],
+        filter: (value, record) => {
+          const boolValue = value[0] === 'true';
+          return record.result === boolValue;
+        },
+      },
+    },
+    {
+      title: t('model.agent.columns.total_time'),
+      dataIndex: 'total_time',
+      slotName: 'total_time',
+      align: 'center',
+      width: 110,
+      filterable: {
+        filters: [
+          {
+            text: '< 500',
+            value: '<500',
+          },
+          {
+            text: '> 500',
+            value: '>500',
+          },
+          {
+            text: '< 1000',
+            value: '<1000',
+          },
+          {
+            text: '> 1000',
+            value: '>1000',
+          },
+          {
+            text: '< 2000',
+            value: '<2000',
+          },
+          {
+            text: '> 2000',
+            value: '>2000',
+          },
+          {
+            text: '< 3000',
+            value: '<3000',
+          },
+          {
+            text: '> 3000',
+            value: '>3000',
+          },
+          {
+            text: '< 5000',
+            value: '<5000',
+          },
+          {
+            text: '> 5000',
+            value: '>5000',
+          },
+          {
+            text: '< 10000',
+            value: '<10000',
+          },
+          {
+            text: '> 10000',
+            value: '>10000',
+          },
+          {
+            text: '< 30000',
+            value: '<30000',
+          },
+          {
+            text: '> 30000',
+            value: '>30000',
+          },
+          {
+            text: '< 60000',
+            value: '<60000',
+          },
+          {
+            text: '> 60000',
+            value: '>60000',
+          },
+          {
+            text: '0-500',
+            value: '0-500',
+          },
+          {
+            text: '501-1000',
+            value: '501-1000',
+          },
+          {
+            text: '1001-3000',
+            value: '1001-3000',
+          },
+          {
+            text: '3001-5000',
+            value: '3001-5000',
+          },
+          {
+            text: '5001-10000',
+            value: '5001-10000',
+          },
+          {
+            text: '10001-30000',
+            value: '10001-30000',
+          },
+          {
+            text: '30001-60000',
+            value: '30001-60000',
+          },
+        ],
+        filter: (value, record) => {
+          if (value[0].startsWith('<')) {
+            const numValue = parseFloat(value[0].substring(1));
+            return record.total_time < numValue;
+          }
+
+          if (value[0].startsWith('>')) {
+            const numValue = parseFloat(value[0].substring(1));
+            return record.total_time > numValue;
+          }
+
+          if (value[0].includes('-')) {
+            const [min, max] = value[0].split('-').map(Number);
+            return record.total_time >= min && record.total_time <= max;
+          }
+
+          return record.total_time > parseFloat(value[0]);
+        },
+      },
     },
     {
       title: t('common.operations'),

@@ -32,11 +32,11 @@ export default {
   // detail
   'model.agent.detail.fallback_models': '後備模型',
   // columns
-  'model.agent.columns.result_total_time': '\u3000\u3000結果 / 耗時(ms)',
+  'model.agent.columns.total_time': '耗時(ms)',
   // button
   'model.agent.button.quick_fill': '快速填入',
   // dict
   'model.agent.dict.test_method.1': 'Fast API',
-  'model.agent.dict.test_method.2': '代理直連',
+  'model.agent.dict.test_method.2': '直連代理',
   'model.agent.dict.test_method.3': '自訂',
 };

@@ -32,7 +32,7 @@ export default {
   // detail
   'model.agent.detail.fallback_models': 'Fallback Models',
   // columns
-  'model.agent.columns.result_total_time': 'Result / Time(ms)',
+  'model.agent.columns.total_time': 'Time(ms)',
   // button
   'model.agent.button.quick_fill': 'Quick Fill',
   // dict
