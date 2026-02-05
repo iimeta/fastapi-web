@@ -34,6 +34,7 @@ export default {
   'model.label.model_forward': 'Model Forwarding',
   'model.label.forward_rule': 'Forwarding Rule',
   'model.placeholder.forward_rule': 'Please select forwarding rule',
+  'model.label.forward_mode': 'Forward Mode',
   'model.label.match_rule': 'Matching Rule',
   'model.error.required.match_rule': 'Please select matching rule',
   'model.label.target_model': 'Target Model',

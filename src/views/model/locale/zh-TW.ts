@@ -34,6 +34,7 @@ export default {
   'model.label.model_forward': '模型轉發',
   'model.label.forward_rule': '轉發規則',
   'model.placeholder.forward_rule': '請選擇轉發規則',
+  'model.label.forward_mode': '轉發模式',
   'model.label.match_rule': '匹配規則',
   'model.error.required.match_rule': '請選擇匹配規則',
   'model.label.target_model': '目標模型',

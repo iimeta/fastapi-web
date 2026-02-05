@@ -23,6 +23,7 @@ export interface PresetConfig {
 
 export interface ForwardConfig {
   forward_rule: string;
+  forward_mode: number;
   match_rule: string[];
   target_model: string;
   target_model_name?: string;
@@ -201,7 +202,9 @@ export interface ModelBatchOperate {
   value?: any;
   lb_strategy?: string;
   model_agents?: string[];
+  forward_mode?: number;
   target_model?: string;
+  target_models?: string[];
   fallback_config?: FallbackConfig;
 }
 

@@ -14,6 +14,7 @@ export default {
   'group.label.is_enable_forward': '模型转发',
   'group.label.forward_rule': '转发规则',
   'group.placeholder.forward_rule': '请选择转发规则',
+  'group.label.forward_mode': '转发模式',
   'group.label.match_rule': '匹配规则',
   'group.error.required.match_rule': '请选择匹配规则',
   'group.label.target_model': '目标模型',

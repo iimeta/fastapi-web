@@ -278,6 +278,35 @@
             <a-form-item
               v-if="
                 formData.is_enable_forward &&
+                formData.forward_config.forward_rule === '1'
+              "
+              field="forward_config.forward_mode"
+              :label="$t('group.label.forward_mode')"
+              :rules="[
+                {
+                  required: true,
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.forward_config.forward_mode"
+                  :value="1"
+                  default-checked="true"
+                >
+                  {{ $t('dict.forward_mode.1') }}
+                </a-radio>
+                <a-radio
+                  v-model="formData.forward_config.forward_mode"
+                  :value="2"
+                >
+                  {{ $t('dict.forward_mode.2') }}
+                </a-radio>
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_forward &&
                 formData.forward_config.forward_rule === '3'
               "
               field="forward_config.content_length"
@@ -354,7 +383,8 @@
             <a-form-item
               v-if="
                 formData.is_enable_forward &&
-                (formData.forward_config.forward_rule === '1' ||
+                ((formData.forward_config.forward_rule === '1' &&
+                  formData.forward_config.forward_mode === 1) ||
                   formData.forward_config.forward_rule === '3' ||
                   formData.forward_config.forward_rule === '4')
               "
@@ -372,6 +402,38 @@
                 :placeholder="$t('group.placeholder.target_model')"
                 :scrollbar="false"
                 allow-search
+              >
+                <a-option
+                  v-for="item in models"
+                  :key="item.id"
+                  :value="item.id"
+                  :label="item.name"
+                />
+              </a-select>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_forward &&
+                formData.forward_config.forward_rule === '1' &&
+                formData.forward_config.forward_mode === 2
+              "
+              field="forward_config.target_models"
+              :label="$t('group.label.target_model')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('group.placeholder.target_model'),
+                },
+              ]"
+            >
+              <a-select
+                v-model="formData.forward_config.target_models"
+                :placeholder="$t('group.placeholder.target_model')"
+                :max-tag-count="5"
+                :scrollbar="false"
+                multiple
+                allow-search
+                allow-clear
               >
                 <a-option
                   v-for="item in models"
@@ -658,6 +720,7 @@
     is_enable_forward: false,
     forward_config: {
       forward_rule: '1',
+      forward_mode: 1,
       match_rule: ['2'],
       target_model: '',
       decision_model: '',

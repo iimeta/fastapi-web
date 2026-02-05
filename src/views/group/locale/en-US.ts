@@ -14,6 +14,7 @@ export default {
   'group.label.is_enable_forward': 'Model Forwarding',
   'group.label.forward_rule': 'Forwarding Rule',
   'group.placeholder.forward_rule': 'Please select a forwarding rule',
+  'group.label.forward_mode': 'Forward Mode',
   'group.label.match_rule': 'Matching Rule',
   'group.error.required.match_rule': 'Please select a matching rule',
   'group.label.target_model': 'Target Model',

@@ -582,6 +582,29 @@
       >
         <a-form ref="forwardForm" :model="forwardFormData">
           <a-form-item
+            field="forward_mode"
+            :label="$t('model.label.forward_mode')"
+            :rules="[
+              {
+                required: true,
+              },
+            ]"
+          >
+            <a-space size="large">
+              <a-radio
+                v-model="forwardFormData.forward_mode"
+                :value="1"
+                default-checked="true"
+              >
+                {{ $t('dict.forward_mode.1') }}
+              </a-radio>
+              <a-radio v-model="forwardFormData.forward_mode" :value="2">
+                {{ $t('dict.forward_mode.2') }}
+              </a-radio>
+            </a-space>
+          </a-form-item>
+          <a-form-item
+            v-if="forwardFormData.forward_mode === 1"
             field="target_model"
             :label="$t('model.label.target_model')"
             :rules="[
@@ -596,6 +619,34 @@
               :placeholder="$t('model.placeholder.target_model')"
               :scrollbar="false"
               allow-search
+            >
+              <a-option
+                v-for="item in models"
+                :key="item.id"
+                :value="item.id"
+                :label="item.name"
+              />
+            </a-select>
+          </a-form-item>
+          <a-form-item
+            v-if="forwardFormData.forward_mode === 2"
+            field="target_models"
+            :label="$t('model.label.target_model')"
+            :rules="[
+              {
+                required: true,
+                message: $t('model.placeholder.target_model'),
+              },
+            ]"
+          >
+            <a-select
+              v-model="forwardFormData.target_models"
+              :placeholder="$t('model.placeholder.target_model')"
+              :max-tag-count="3"
+              :scrollbar="false"
+              multiple
+              allow-search
+              allow-clear
             >
               <a-option
                 v-for="item in models"
@@ -1137,7 +1188,9 @@
 
   const forwardForm = ref<FormInstance>();
   const forwardFormVisible = ref(false);
-  const forwardFormData = ref<ModelBatchOperate>({} as ModelBatchOperate);
+  const forwardFormData = ref<ModelBatchOperate>({
+    forward_mode: 1,
+  } as ModelBatchOperate);
 
   const forwardHandleBeforeOk = async (done: any) => {
     const res = await forwardForm.value?.validate();

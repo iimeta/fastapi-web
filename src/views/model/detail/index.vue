@@ -232,6 +232,22 @@
           }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('model.label.forward_mode')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData?.forward_config?.forward_mode
+              ? $t(
+                  `dict.forward_mode.${
+                    currentData?.forward_config?.forward_mode || 1
+                  }`
+                )
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('model.label.content_length')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -244,11 +260,19 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
-          {{ currentData?.forward_config?.target_model_name || '-' }}
+        <span v-else style="max-height: 110px; display: block; overflow: auto">
+          {{
+            currentData?.forward_config?.forward_rule &&
+            String(currentData?.forward_config?.forward_rule) === '1'
+              ? currentData?.forward_config?.forward_mode &&
+                currentData?.forward_config?.forward_mode === 1
+                ? currentData?.forward_config?.target_model_name
+                : currentData?.forward_config?.target_model_names?.join('\n')
+              : '-'
+          }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('model.label.match_rule')">
+      <a-descriptions-item :label="$t('model.label.match_rule')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -277,7 +301,12 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else style="max-height: 110px; display: block; overflow: auto">
-          {{ currentData?.forward_config?.keywords?.join('\n') || '-' }}
+          {{
+            currentData?.forward_config?.forward_rule &&
+            String(currentData?.forward_config?.forward_rule) === '2'
+              ? currentData?.forward_config?.keywords?.join('\n')
+              : '-'
+          }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('model.detail.target_model_names')">
@@ -286,7 +315,10 @@
         </a-skeleton>
         <span v-else style="max-height: 110px; display: block; overflow: auto">
           {{
-            currentData?.forward_config?.target_model_names?.join('\n') || '-'
+            currentData?.forward_config?.forward_rule &&
+            String(currentData?.forward_config?.forward_rule) === '2'
+              ? currentData?.forward_config?.target_model_names?.join('\n')
+              : '-'
           }}
         </span>
       </a-descriptions-item>

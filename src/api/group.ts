@@ -3,6 +3,7 @@ import qs from 'query-string';
 
 export interface ForwardConfig {
   forward_rule: string;
+  forward_mode: number;
   match_rule: string[];
   target_model: string;
   target_model_name?: string;

@@ -250,6 +250,8 @@ export default {
   'dict.forward_rule.2': '按关键字',
   'dict.forward_rule.3': '内容长度',
   'dict.forward_rule.4': '已用额度',
+  'dict.forward_mode.1': '固定',
+  'dict.forward_mode.2': '轮询',
   'dict.match_rule.1': '智能匹配',
   'dict.match_rule.2': '正则匹配',
   'dict.match_rule.1,2': '智能匹配, 正则匹配',
