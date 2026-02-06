@@ -250,6 +250,8 @@ export default {
   'dict.forward_rule.2': 'By Keyword',
   'dict.forward_rule.3': 'Content Length',
   'dict.forward_rule.4': 'Used Quota',
+  'dict.forward_mode.1': 'Fixed',
+  'dict.forward_mode.2': 'Round Robin',
   'dict.match_rule.1': 'Smart Match',
   'dict.match_rule.2': 'Regex Match',
   'dict.match_rule.1,2': 'Smart Match, Regex Match',
