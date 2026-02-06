@@ -621,7 +621,7 @@
               allow-search
             >
               <a-option
-                v-for="item in models"
+                v-for="item in forwardModels"
                 :key="item.id"
                 :value="item.id"
                 :label="item.name"
@@ -649,7 +649,7 @@
               allow-clear
             >
               <a-option
-                v-for="item in models"
+                v-for="item in forwardModels"
                 :key="item.id"
                 :value="item.id"
                 :label="item.name"
@@ -713,7 +713,7 @@
               allow-clear
             >
               <a-option
-                v-for="item in models"
+                v-for="item in fallbackModels"
                 :key="item.id"
                 :value="item.id"
                 :label="item.name"
@@ -1081,6 +1081,8 @@
   getProviderList();
 
   const models = ref<ModelList[]>([]);
+  const forwardModels = ref<ModelList[]>([]);
+  const fallbackModels = ref<ModelList[]>([]);
 
   const getModelList = async () => {
     try {
@@ -1297,6 +1299,9 @@
             );
           } else if (params.value === 'all') {
             if (!params.target_model) {
+              forwardModels.value = models.value.filter(
+                (item) => !ids.value.includes(item.id)
+              );
               forwardFormVisible.value = true;
             } else {
               alertContent = t(
@@ -1325,6 +1330,9 @@
             );
           } else if (params.value === 'all') {
             if (!params.fallback_config) {
+              fallbackModels.value = models.value.filter(
+                (item) => !ids.value.includes(item.id)
+              );
               fallbackFormVisible.value = true;
             } else {
               alertContent = t(

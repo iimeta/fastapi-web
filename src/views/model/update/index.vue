@@ -733,7 +733,7 @@
   const getModelList = async () => {
     try {
       const { data } = await queryModelList();
-      models.value = data.items;
+      models.value = data.items.filter((item) => item.id !== route.query.id);
     } catch (err) {
       // you can report use errorHandler or other
     }
