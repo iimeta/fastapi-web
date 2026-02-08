@@ -379,6 +379,8 @@
               ? parseQuota(record.spend.text?.input_tokens)
               : parseQuota(record.spend.tiered_text?.input_tokens)
               ? parseQuota(record.spend.tiered_text?.input_tokens)
+              : parseQuota(record.spend.once?.input_tokens)
+              ? parseQuota(record.spend.once?.input_tokens)
               : record.status === 1
               ? 0
               : '-'
@@ -390,6 +392,8 @@
               ? parseQuota(record.spend.text?.output_tokens)
               : parseQuota(record.spend.tiered_text?.output_tokens)
               ? parseQuota(record.spend.tiered_text?.output_tokens)
+              : parseQuota(record.spend.once?.output_tokens)
+              ? parseQuota(record.spend.once?.output_tokens)
               : record.status === 1
               ? 0
               : '-'
