@@ -374,7 +374,12 @@
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
         <template #images="{ record }">
-          <a-button type="text" size="small" @click="viewImage(record.id)">
+          <a-button
+            type="text"
+            size="small"
+            :disabled="!record.images"
+            @click="viewImage(record.id)"
+          >
             {{ $t('button.view') }}
           </a-button>
           <a-image-preview-group
