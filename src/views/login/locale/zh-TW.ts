@@ -40,4 +40,10 @@ export default {
   'login.form.register': '立即註冊',
   'login.form.forget.title': '找回密碼',
   'login.form.forget': '找回密碼',
+
+  'login.agreement': '我已閱讀並同意',
+  'login.user_agreement': '用戶協議',
+  'login.privacy_policy': '隱私政策',
+  'login.and': '和',
+  'login.error.agreement': '請閱讀並同意用戶協議和隱私政策'
 };

@@ -40,4 +40,10 @@ export default {
   'login.form.register': 'Register',
   'login.form.forget.title': 'Retrieve Password',
   'login.form.forget': 'Retrieve Password',
+
+  'login.agreement': 'I have read and agree to the ',
+  'login.user_agreement': 'User Agreement',
+  'login.privacy_policy': 'Privacy Policy',
+  'login.and': 'and',
+  'login.error.agreement': 'Please read and agree to the User Agreement and Privacy Policy',
 };

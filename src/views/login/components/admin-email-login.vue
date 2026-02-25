@@ -32,6 +32,11 @@
         {{ captchaBtnName }}
       </a-button>
     </a-form-item>
+    <div class="forget-password">
+      <span class="action-link" @click="$emit('toggleForget')">{{
+        $t('login.form.forget')
+      }}</span>
+    </div>
     <a-button class="btn" :loading="loading" type="primary" html-type="submit"
       >{{ $t('login.button') }}
     </a-button>
@@ -54,6 +59,9 @@
   const loading = ref(false);
   const captchaLoading = ref(false);
   const captchaDisable = ref(false);
+
+  defineEmits(['toggleForget']);
+
   const captchaTime = ref(60);
   const captchaTimer = ref();
   const captchaBtnNameKey = ref('login.captcha.get');
@@ -231,8 +239,21 @@
       font-weight: 500;
       height: 40px;
       line-height: 22px;
-      margin: 36px 0 12px;
+      margin: 21px 0 11px;
       width: 100%;
+    }
+
+    .forget-password {
+      display: flex;
+      justify-content: flex-end;
+      .action-link {
+        color: rgb(var(--primary-6));
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .action-link:hover {
+        color: rgb(var(--primary-5));
+      }
     }
   }
   .login-email-title {

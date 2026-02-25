@@ -46,12 +46,21 @@
     <a-button class="btn" :loading="loading" type="primary" html-type="submit"
       >{{ $t('login.button') }}
     </a-button>
+    <div class="agreement">
+      <a-checkbox v-model="isAgreed">
+        {{ $t('login.agreement') }}
+      </a-checkbox>
+      <a-link href="#" target="_blank">{{ $t('login.user_agreement') }}</a-link>
+      {{ $t('login.and') }}
+      <a-link href="#" target="_blank">{{ $t('login.privacy_policy') }}</a-link>
+    </div>
   </a-form>
 </template>
 
 <script lang="ts" setup>
   import { ref, toRefs, reactive, computed, getCurrentInstance } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { useStorage } from '@vueuse/core';
   import { useRouter } from 'vue-router';
   import { ValidatedError, Message } from '@arco-design/web-vue';
   import { useUserStore, useAppStore } from '@/store';
@@ -64,6 +73,7 @@
   const userStore = useUserStore();
   const appStore = useAppStore();
   const loading = ref(false);
+  const isAgreed = useStorage('login-agreement', false);
   const captchaLoading = ref(false);
   const captchaDisable = ref(false);
   const captchaTime = ref(60);
@@ -152,6 +162,10 @@
     values: Record<string, any>;
   }) => {
     if (loading.value) return;
+    if (!isAgreed.value) {
+      Message.warning(t('login.error.agreement'));
+      return;
+    }
     if (!errors) {
       loading.value = true;
       userStore
@@ -243,8 +257,20 @@
       font-weight: 500;
       height: 40px;
       line-height: 22px;
-      margin: 20px 0 12px;
+      margin: 21px 0 11px;
       width: 100%;
+    }
+
+    .agreement {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      .arco-checkbox {
+        padding-left: 0;
+      }
+      a:hover {
+        color: rgb(var(--primary-5));
+      }
     }
   }
   .login-email-title {

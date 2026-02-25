@@ -26,10 +26,21 @@
       <a-checkbox :model-value="loginConfig.rememberMe" @change="setRememberMe">
         {{ $t('login.remember_me') }}
       </a-checkbox>
+      <span class="tabs-extra-link" @click="$emit('toggleForget')">{{
+        $t('login.form.forget')
+      }}</span>
     </div>
     <a-button class="btn" :loading="loading" type="primary" html-type="submit"
       >{{ $t('login.button') }}
     </a-button>
+    <div class="agreement">
+      <a-checkbox v-model="isAgreed">
+        {{ $t('login.agreement') }}
+      </a-checkbox>
+      <a-link href="#" target="_blank">{{ $t('login.user_agreement') }}</a-link>
+      {{ $t('login.and') }}
+      <a-link href="#" target="_blank">{{ $t('login.privacy_policy') }}</a-link>
+    </div>
   </a-form>
 </template>
 
@@ -45,6 +56,10 @@
   const router = useRouter();
   const userStore = useUserStore();
   const loading = ref(false);
+  const isAgreed = useStorage('login-agreement', false);
+
+  defineEmits(['toggleForget']);
+
   const loginConfig = useStorage('login-config', {
     rememberMe: true,
     username: '',
@@ -87,6 +102,10 @@
     values: Record<string, any>;
   }) => {
     if (loading.value) return;
+    if (!isAgreed.value) {
+      Message.warning(t('login.error.agreement'));
+      return;
+    }
     if (!errors) {
       loading.value = true;
       userStore
@@ -114,7 +133,9 @@
           loginConfig.value.username = rememberMe ? username : '';
           Message.success(t('login.success'));
         })
-        .catch(() => {})
+        .catch(() => {
+          // ignore
+        })
         .finally(() => {
           loading.value = false;
         });
@@ -170,6 +191,15 @@
       }
     }
 
+    .tabs-extra-link {
+      cursor: pointer;
+      color: rgb(var(--primary-6));
+      font-size: 14px;
+      &:hover {
+        color: rgb(var(--primary-5));
+      }
+    }
+
     .btn {
       border-radius: 4px;
       box-shadow: 0 0 0 1px #05f, 0 2px 1px rgba(0, 0, 0, 0.15);
@@ -177,8 +207,20 @@
       font-weight: 500;
       height: 40px;
       line-height: 22px;
-      margin: 20px 0 12px;
+      margin: 21px 0 11px;
       width: 100%;
+    }
+
+    .agreement {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      .arco-checkbox {
+        padding-left: 0;
+      }
+      a:hover {
+        color: rgb(var(--primary-5));
+      }
     }
   }
 </style>

@@ -17,32 +17,21 @@
         <div class="title">
           {{ appStore.getTitle + $t('login.admin.welcome') }}
         </div>
-        <Forget v-if="isForget" />
+        <Forget v-if="isForget" @toggleLogin="toggleLogin" />
         <a-tabs v-else class="account-tab">
           <a-tab-pane
             v-if="sysConfig.admin_login.account_login"
             :title="$t('login.account')"
           >
-            <AccountLogin />
+            <AccountLogin @toggleForget="toggleForget" />
           </a-tab-pane>
           <a-tab-pane
             v-if="sysConfig.admin_login.email_login"
             :title="$t('login.email')"
           >
-            <EmailLogin />
+            <EmailLogin @toggleForget="toggleForget" />
           </a-tab-pane>
         </a-tabs>
-        <div class="actions-end">
-          <a-link
-            v-if="sysConfig.admin_login.email_retrieve && !isForget"
-            @click="toggleForget"
-          >
-            {{ $t('login.form.forget') }}
-          </a-link>
-          <a-link v-if="isForget" @click="toggleLogin">
-            {{ $t('login.form.login') }}
-          </a-link>
-        </div>
       </div>
     </div>
     <div class="footer">

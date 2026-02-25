@@ -33,13 +33,18 @@
         {{ captchaBtnName }}
       </a-button>
     </a-form-item>
-    <a-form-item field="password" hide-label>
+    <a-form-item field="password" hide-label style="margin-bottom: 12px">
       <a-input-password
         v-model="form.password"
         :placeholder="$t('login.account.placeholder.password')"
         allow-clear
       />
     </a-form-item>
+    <div class="forget-actions">
+      <span class="action-link" @click="$emit('toggleLogin')">{{
+        $t('login.form.login')
+      }}</span>
+    </div>
     <a-button class="btn" :loading="loading" type="primary" html-type="submit"
       >{{ $t('forget.button') }}
     </a-button>
@@ -58,6 +63,9 @@
   const router = useRouter();
   const loading = ref(false);
   const captchaLoading = ref(false);
+
+  defineEmits(['toggleLogin']);
+
   const captchaDisable = ref(false);
   const captchaTime = ref(60);
   const captchaTimer = ref();
@@ -220,8 +228,21 @@
       font-weight: 500;
       height: 40px;
       line-height: 22px;
-      margin: 20px 0 12px;
+      margin: 12px 0 11px;
       width: 100%;
+    }
+
+    .forget-actions {
+      display: flex;
+      justify-content: flex-end;
+      .action-link {
+        color: rgb(var(--primary-6));
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .action-link:hover {
+        color: rgb(var(--primary-5));
+      }
     }
   }
   .sub-title {

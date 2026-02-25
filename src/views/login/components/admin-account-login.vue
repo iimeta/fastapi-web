@@ -22,6 +22,11 @@
         allow-clear
       />
     </a-form-item>
+    <div class="forget-password">
+      <span class="action-link" @click="$emit('toggleForget')">{{
+        $t('login.form.forget')
+      }}</span>
+    </div>
     <a-button class="btn" :loading="loading" type="primary" html-type="submit"
       >{{ $t('login.button') }}
     </a-button>
@@ -39,6 +44,8 @@
   const router = useRouter();
   const userStore = useUserStore();
   const loading = ref(false);
+
+  defineEmits(['toggleForget']);
 
   const data = reactive({
     form: {
@@ -141,8 +148,21 @@
       font-weight: 500;
       height: 40px;
       line-height: 22px;
-      margin: 36px 0 12px;
+      margin: 21px 0 11px;
       width: 100%;
+    }
+
+    .forget-password {
+      display: flex;
+      justify-content: flex-end;
+      .action-link {
+        color: rgb(var(--primary-6));
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .action-link:hover {
+        color: rgb(var(--primary-5));
+      }
     }
   }
 </style>

@@ -14,14 +14,23 @@
       <div class="left-banner"></div>
       <div class="login-card">
         <div class="title"> {{ appStore.getTitle + $t('login.welcome') }} </div>
-        <Register v-if="isRegister" />
-        <Forget v-else-if="isForget" />
+        <Register v-if="isRegister" @toggleLogin="toggleLogin" />
+        <Forget v-else-if="isForget" @toggleLogin="toggleLogin" />
         <a-tabs v-else class="account-tab">
+          <template #extra>
+            <span
+              class="tabs-extra-link"
+              v-if="sysConfig.reseller_login_register.email_register"
+              @click="toggleRegister"
+            >
+              {{ $t('login.form.register') }}
+            </span>
+          </template>
           <a-tab-pane
             v-if="sysConfig.reseller_login_register.account_login"
             :title="$t('login.account')"
           >
-            <AccountLogin />
+            <AccountLogin @toggleForget="toggleForget" />
           </a-tab-pane>
           <a-tab-pane
             v-if="sysConfig.reseller_login_register.email_login"
@@ -30,32 +39,6 @@
             <EmailLogin />
           </a-tab-pane>
         </a-tabs>
-        <div
-          :class="
-            sysConfig.reseller_login_register.email_register &&
-            sysConfig.reseller_login_register.email_retrieve
-              ? 'actions'
-              : 'actions-end'
-          "
-        >
-          <a-link
-            v-if="sysConfig.reseller_login_register.email_retrieve && !isForget"
-            @click="toggleForget"
-          >
-            {{ $t('login.form.forget') }}
-          </a-link>
-          <a-link
-            v-if="
-              sysConfig.reseller_login_register.email_register && !isRegister
-            "
-            @click="toggleRegister"
-          >
-            {{ $t('login.form.register') }}
-          </a-link>
-          <a-link v-if="isRegister || isForget" @click="toggleLogin">
-            {{ $t('login.form.login') }}
-          </a-link>
-        </div>
       </div>
     </div>
     <div class="footer">
@@ -197,6 +180,9 @@
         padding: 48px 43px 32px;
         backdrop-filter: blur(8px) brightness(1.05);
         -webkit-backdrop-filter: blur(8px) brightness(1.05);
+        :deep(.arco-link:hover) {
+          background-color: transparent;
+        }
         .title {
           background: var(--vp-home-hero-name-background);
           -webkit-background-clip: text;
@@ -229,6 +215,14 @@
           }
           :deep(.arco-tabs-tab) {
             margin: 0 30px 0 6px;
+          }
+          .tabs-extra-link {
+            cursor: pointer;
+            color: rgb(var(--primary-6));
+            font-size: 14px;
+            &:hover {
+              color: rgb(var(--primary-5));
+            }
           }
         }
       }
