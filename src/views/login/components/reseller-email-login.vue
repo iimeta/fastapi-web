@@ -50,9 +50,13 @@
       <a-checkbox v-model="isAgreed">
         {{ $t('login.agreement') }}
       </a-checkbox>
-      <a-link href="#" target="_blank">{{ $t('login.user_agreement') }}</a-link>
+      <a-link href="/user-agreement" target="_blank">
+        {{ $t('login.user_agreement') }}
+      </a-link>
       {{ $t('login.and') }}
-      <a-link href="#" target="_blank">{{ $t('login.privacy_policy') }}</a-link>
+      <a-link href="/privacy-policy" target="_blank">
+        {{ $t('login.privacy_policy') }}
+      </a-link>
     </div>
   </a-form>
 </template>

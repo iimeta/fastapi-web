@@ -31,6 +31,22 @@ const router = createRouter({
         requiresAuth: false,
       },
     },
+    {
+      path: '/user-agreement',
+      name: 'UserAgreement',
+      component: () => import('@/views/login/components/user-agreement.vue'),
+      meta: {
+        requiresAuth: false,
+      },
+    },
+    {
+      path: '/privacy-policy',
+      name: 'PrivacyPolicy',
+      component: () => import('@/views/login/components/privacy-policy.vue'),
+      meta: {
+        requiresAuth: false,
+      },
+    },
     ...appRoutes,
     REDIRECT_MAIN,
     {

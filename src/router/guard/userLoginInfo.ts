@@ -32,7 +32,9 @@ export default function setupUserLoginInfoGuard(router: Router) {
       if (
         to.name === 'reseller' ||
         to.name === 'login' ||
-        to.name === 'admin'
+        to.name === 'admin' ||
+        to.name === 'UserAgreement' ||
+        to.name === 'PrivacyPolicy'
       ) {
         next();
         return;

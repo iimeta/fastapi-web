@@ -16,6 +16,8 @@ export default {
   'notice.template.dict.scenes.register': 'Registration',
   'notice.template.dict.scenes.login': 'Login',
   'notice.template.dict.scenes.forget_password': 'Retrieve Password',
+  'notice.template.dict.scenes.user_agreement': 'User Agreement',
+  'notice.template.dict.scenes.privacy_policy': 'Privacy Policy',
   'notice.template.dict.scenes.change_password': 'Change Password',
   'notice.template.dict.scenes.change_email': 'Change Email',
   'notice.template.dict.scenes.quota_recharge': 'Quota Recharge',

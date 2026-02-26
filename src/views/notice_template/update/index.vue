@@ -84,6 +84,20 @@
                 </a-checkbox>
                 <a-checkbox
                   v-model="formData.scenes"
+                  value="user_agreement"
+                  class="scenes"
+                >
+                  {{ $t('notice.template.dict.scenes.user_agreement') }}
+                </a-checkbox>
+                <a-checkbox
+                  v-model="formData.scenes"
+                  value="privacy_policy"
+                  class="scenes"
+                >
+                  {{ $t('notice.template.dict.scenes.privacy_policy') }}
+                </a-checkbox>
+                <a-checkbox
+                  v-model="formData.scenes"
                   value="change_password"
                   class="scenes"
                 >

@@ -52,11 +52,11 @@
       <a-checkbox v-model="isAgreed">
         {{ $t('login.agreement') }}
       </a-checkbox>
-      <a-link href="#" target="_blank" style="margin-top: 1px">
+      <a-link href="/user-agreement" target="_blank" style="margin-top: 1px">
         {{ $t('login.user_agreement') }}
       </a-link>
       {{ $t('login.and') }}
-      <a-link href="#" target="_blank" style="margin-top: 1px">
+      <a-link href="/privacy-policy" target="_blank" style="margin-top: 1px">
         {{ $t('login.privacy_policy') }}
       </a-link>
     </div>

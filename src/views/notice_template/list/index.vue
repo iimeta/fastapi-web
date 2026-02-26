@@ -483,6 +483,14 @@
       value: 'forget_password',
     },
     {
+      label: t('notice.template.dict.scenes.user_agreement'),
+      value: 'user_agreement',
+    },
+    {
+      label: t('notice.template.dict.scenes.privacy_policy'),
+      value: 'privacy_policy',
+    },
+    {
       label: t('notice.template.dict.scenes.change_password'),
       value: 'change_password',
     },

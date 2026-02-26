@@ -16,6 +16,8 @@ export default {
   'notice.template.dict.scenes.register': '註冊',
   'notice.template.dict.scenes.login': '登入',
   'notice.template.dict.scenes.forget_password': '找回密碼',
+  'notice.template.dict.scenes.user_agreement': '用戶協議',
+  'notice.template.dict.scenes.privacy_policy': '隱私政策',
   'notice.template.dict.scenes.change_password': '修改密碼',
   'notice.template.dict.scenes.change_email': '修改信箱',
   'notice.template.dict.scenes.quota_recharge': '充值額度',
