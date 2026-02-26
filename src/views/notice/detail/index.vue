@@ -116,7 +116,6 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
     NoticeDetailParams,
@@ -124,7 +123,6 @@
     NoticeDetail,
   } from '@/api/notice';
 
-  const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<NoticeDetail>({} as NoticeDetail);
   const props = defineProps({
