@@ -5,12 +5,20 @@
       bordered
       :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
     >
-      <a-descriptions-item :label="$t('common.key')" :span="2">
+      <a-descriptions-item :label="$t('common.app_key')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           {{ currentData.key }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.key_name')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.name || currentData.key.substr(-5) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('common.app_id')">

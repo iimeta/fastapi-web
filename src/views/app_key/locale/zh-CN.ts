@@ -14,6 +14,8 @@ export default {
   'app.key.detail.quota_expires_rule': '过期规则',
   'app.key.detail.quota_expires_minutes': '过期时长',
   // form
+  'app.key.form.key': '密钥/名称',
+  'app.key.form.placeholder.key': '请输入应用密钥/名称',
   'app.key.form.title.key_config': '密钥配置',
   'app.key.form.title.batch.create': '新建密钥',
   'app.key.form.title.batch.update': '修改密钥',

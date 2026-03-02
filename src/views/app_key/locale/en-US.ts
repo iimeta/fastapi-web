@@ -14,6 +14,8 @@ export default {
   'app.key.detail.quota_expires_rule': 'Expiration Rule',
   'app.key.detail.quota_expires_minutes': 'Expiration Duration',
   // form
+  'app.key.form.key': 'Key/Name',
+  'app.key.form.placeholder.key': 'Please enter application key/name',
   'app.key.form.title.key_config': 'Key Configuration',
   'app.key.form.title.batch.create': 'Create Keys',
   'app.key.form.title.batch.update': 'Edit Keys',

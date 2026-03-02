@@ -12,6 +12,7 @@ export function submitAppKeyCreate(data: AppKeyCreate) {
 export interface AppKeyConfig {
   id: string;
   app_id: number;
+  name: string;
   key: string;
   billing_methods: number[];
   models: string[];
@@ -36,8 +37,7 @@ export interface AppKeyPage {
   type: number;
   user_id: any;
   app_id: any;
-  provider_id: string;
-  provider_name: string;
+  name: string;
   key: string;
   billing_methods: number[];
   quota: number;
@@ -88,8 +88,7 @@ export interface AppKeyDetail {
   type: number;
   user_id: number;
   app_id: number;
-  provider_id: string;
-  provider_name: string;
+  name: string;
   key: string;
   billing_methods: number[];
   quota: number;
@@ -139,6 +138,7 @@ export function submitAppKeyChangeStatus(data: AppKeyChangeStatus) {
 export interface AppKeyQueryParams {
   user_id?: number;
   app_id?: number;
+  name?: string;
   key?: string;
   models?: string[];
   quota?: number;
@@ -154,6 +154,7 @@ export interface AppKeyBatchOperate {
   id?: string;
   user_id?: number;
   app_id?: number;
+  name?: string;
   key?: string;
   n?: number;
   billing_methods?: number[];

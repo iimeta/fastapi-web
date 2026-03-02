@@ -351,11 +351,17 @@
         @before-ok="handleBeforeOk"
       >
         <a-form ref="formRef" :model="formData" :label-col-props="{ span: 4 }">
-          <a-form-item field="key" :label="$t('common.key')">
+          <a-form-item field="key" :label="$t('common.app_key')">
             <a-input
               v-model="formData.key"
-              :placeholder="$t('common.key')"
+              :placeholder="$t('common.app_key')"
               readonly
+            />
+          </a-form-item>
+          <a-form-item field="name" :label="$t('common.key_name')">
+            <a-input
+              v-model="formData.name"
+              :placeholder="$t('placeholder.key_name')"
             />
           </a-form-item>
           <a-form-item

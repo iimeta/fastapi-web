@@ -66,10 +66,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="key" :label="$t('common.app_key')">
+                <a-form-item field="key" :label="$t('app.key.form.key')">
                   <a-input
                     v-model="searchFormData.key"
-                    :placeholder="$t('placeholder.app_key')"
+                    :placeholder="$t('app.key.form.placeholder.key')"
                     allow-clear
                   />
                 </a-form-item>
@@ -354,6 +354,9 @@
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
       >
+        <template #name="{ record }">
+          {{ record.name || record.key.substr(-5) }}
+        </template>
         <template #key="{ record }">
           {{ record.key.substr(0, 10) + record.key.substr(-10) }}
           <icon-copy class="copy-btn" @click="handleCopy(record.id)" />
@@ -427,11 +430,17 @@
         @before-ok="handleBeforeOk"
       >
         <a-form ref="formRef" :model="formData" :label-col-props="{ span: 4 }">
-          <a-form-item field="key" :label="$t('common.key')">
+          <a-form-item field="key" :label="$t('common.app_key')">
             <a-input
               v-model="formData.key"
-              :placeholder="$t('common.key')"
+              :placeholder="$t('common.app_key')"
               readonly
+            />
+          </a-form-item>
+          <a-form-item field="name" :label="$t('common.key_name')">
+            <a-input
+              v-model="formData.name"
+              :placeholder="$t('placeholder.key_name')"
             />
           </a-form-item>
           <a-form-item
@@ -772,6 +781,16 @@
                 :label="item.name"
               />
             </a-select>
+          </a-form-item>
+          <a-form-item
+            v-if="batchFormData.action === 'create'"
+            field="name"
+            :label="$t('common.key_name')"
+          >
+            <a-input
+              v-model="batchFormData.name"
+              :placeholder="$t('placeholder.key_name')"
+            />
           </a-form-item>
           <a-form-item
             v-if="batchFormData.action === 'create'"
@@ -1214,7 +1233,15 @@
       width: 80,
     },
     {
-      title: t('common.key'),
+      title: t('common.key_name'),
+      dataIndex: 'name',
+      slotName: 'name',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
+      title: t('common.app_key'),
       dataIndex: 'key',
       slotName: 'key',
       align: 'center',
@@ -1502,6 +1529,7 @@
 
   interface AppKeyConfigView {
     id: string;
+    name: string;
     key: string;
     billing_methods: number[];
     models: string[];
@@ -1521,6 +1549,7 @@
     setLoading(true);
     try {
       formData.value.id = params.id;
+      formData.value.name = params.name;
       formData.value.key = params.key;
       formData.value.billing_methods = params.billing_methods || [1];
       formData.value.models = params.models;
