@@ -1272,14 +1272,6 @@
       tooltip: true,
     },
     {
-      title: t('common.expires_at'),
-      dataIndex: 'quota_expires_at',
-      slotName: 'quota_expires_at',
-      align: 'center',
-      ellipsis: true,
-      tooltip: true,
-    },
-    {
       title: t('common.models'),
       dataIndex: 'models',
       slotName: 'models',
