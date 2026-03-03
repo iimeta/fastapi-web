@@ -35,6 +35,9 @@ export interface GroupAdvanced {
   model_agents: string[];
   is_limit_quota: boolean;
   quota: any;
+  is_cycle_reset_quota: boolean;
+  reset_quota: any;
+  cycle_period: any;
   is_enable_forward: boolean;
   forward_config: ForwardConfig;
 }
@@ -109,10 +112,14 @@ export interface GroupDetail {
   model_agent_names: string[];
   is_limit_quota: boolean;
   quota: number;
+  is_cycle_reset_quota: boolean;
+  reset_quota: number;
+  cycle_period: number;
   is_enable_forward: boolean;
   forward_config: ForwardConfig;
   created_at: string;
   updated_at: string;
+  reset_at: string;
 }
 
 export function queryGroupDetail(params: GroupDetailParams) {

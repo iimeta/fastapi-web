@@ -8,6 +8,9 @@ export interface AppCreate {
   is_limit_quota: boolean;
   quota: any;
   quota_expires_at: string;
+  is_cycle_reset_quota: boolean;
+  reset_quota: any;
+  cycle_period: any;
   is_bind_group: boolean;
   group: string;
   ip_whitelist: string;
@@ -94,6 +97,9 @@ export interface AppDetail {
   quota: number;
   used_quota: number;
   quota_expires_at: string;
+  is_cycle_reset_quota: boolean;
+  reset_quota: number;
+  cycle_period: number;
   is_bind_group: boolean;
   group: string;
   group_name: string;
@@ -103,6 +109,7 @@ export interface AppDetail {
   remark: string;
   created_at: string;
   updated_at: string;
+  reset_at: string;
 }
 
 export function queryAppDetail(params: AppDetailParams) {
@@ -126,6 +133,9 @@ export interface AppUpdateAdvanced {
   is_limit_quota: boolean;
   quota: any;
   quota_expires_at: string;
+  is_cycle_reset_quota: boolean;
+  reset_quota: any;
+  cycle_period: any;
   is_bind_group: boolean;
   group: string;
   ip_whitelist: string;

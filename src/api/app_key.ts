@@ -21,6 +21,9 @@ export interface AppKeyConfig {
   quota_expires_rule: string;
   quota_expires_at: string;
   quota_expires_minutes: any;
+  is_cycle_reset_quota: boolean;
+  reset_quota: any;
+  cycle_period: any;
   is_bind_group: boolean;
   group: string;
   ip_whitelist: string;
@@ -91,19 +94,17 @@ export interface AppKeyDetail {
   name: string;
   key: string;
   billing_methods: number[];
+  models: string[];
+  model_names: string[];
+  is_limit_quota: boolean;
   quota: number;
   used_quota: number;
   quota_expires_rule: number;
   quota_expires_at: string;
   quota_expires_minutes: number;
-  weight: number;
-  models: string[];
-  model_names: string[];
-  model_agents: string[];
-  model_agent_names: string[];
-  is_limit_quota: boolean;
-  is_agents_only: boolean;
-  is_never_disable: boolean;
+  is_cycle_reset_quota: boolean;
+  reset_quota: number;
+  cycle_period: number;
   is_bind_group: boolean;
   group: string;
   group_name: string;
@@ -111,10 +112,9 @@ export interface AppKeyDetail {
   ip_blacklist: string[];
   status: number;
   remark: string;
-  is_auto_disabled: boolean;
-  auto_disabled_reason: string;
   created_at: string;
   updated_at: string;
+  reset_at: string;
 }
 
 export function queryAppKeyDetail(params: AppKeyDetailParams) {
@@ -164,6 +164,9 @@ export interface AppKeyBatchOperate {
   quota_expires_rule?: string;
   quota_expires_at?: any;
   quota_expires_minutes?: any;
+  is_cycle_reset_quota?: boolean;
+  reset_quota?: any;
+  cycle_period?: any;
   is_bind_group?: boolean;
   group?: string;
   ip_whitelist?: string;

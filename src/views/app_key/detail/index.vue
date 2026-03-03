@@ -67,6 +67,45 @@
           <Quota :model-value="currentData.used_quota" />
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.cycle_reset')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.${currentData?.is_cycle_reset_quota || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.reset_quota')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <Quota
+            v-if="currentData.is_cycle_reset_quota"
+            :model-value="currentData.reset_quota"
+          />
+          <span v-else>-</span>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.cycle_period')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <span v-if="currentData.is_cycle_reset_quota">
+            {{ currentData.cycle_period || '-' }} {{ $t('unit.day') }}
+          </span>
+          <span v-else>-</span>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.reset_at')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.reset_at || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('common.billing_methods')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

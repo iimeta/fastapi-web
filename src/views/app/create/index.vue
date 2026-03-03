@@ -190,6 +190,127 @@
                 ]"
               />
             </a-form-item>
+            <a-form-item
+              v-if="formData.is_limit_quota"
+              field="is_cycle_reset_quota"
+              :label="$t('common.cycle_reset')"
+            >
+              <a-switch v-model="formData.is_cycle_reset_quota" />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_cycle_reset_quota && formData.is_limit_quota"
+              field="reset_quota"
+              :label="$t('common.reset_quota')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('placeholder.reset_quota'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.reset_quota"
+                :placeholder="$t('placeholder.reset_quota')"
+                :min="0.000001"
+                :max="9999999999999"
+                :parser="parsePrice"
+                allow-clear
+              >
+                <template #prefix> {{ appStore.getCurrencySymbol }} </template>
+              </a-input-number>
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_cycle_reset_quota && formData.is_limit_quota"
+            >
+              <a-radio-group
+                type="button"
+                @change="handleResetQuotaQuickChange"
+              >
+                <a-radio :value="5"> <Quota :model-value="5" /> </a-radio>
+                <a-radio :value="10"> <Quota :model-value="10" /> </a-radio>
+                <a-radio :value="20"> <Quota :model-value="20" /> </a-radio>
+                <a-radio :value="50"> <Quota :model-value="50" /> </a-radio>
+                <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
+                <a-radio :value="200"> <Quota :model-value="200" /> </a-radio>
+                <a-radio :value="300"> <Quota :model-value="300" /> </a-radio>
+                <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
+                <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
+                <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
+                <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
+                <a-radio :value="10000" style="padding: 0 2px">
+                  <Quota :model-value="10000" />
+                </a-radio>
+              </a-radio-group>
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_cycle_reset_quota && formData.is_limit_quota"
+              field="cycle_period"
+              :label="$t('common.cycle_period')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('placeholder.cycle_period'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.cycle_period"
+                :placeholder="$t('placeholder.cycle_period')"
+                :precision="0"
+                :min="1"
+                allow-clear
+              >
+                <template #append> {{ $t('unit.day') }}</template>
+              </a-input-number>
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_cycle_reset_quota && formData.is_limit_quota"
+            >
+              <a-radio-group
+                type="button"
+                @change="handleCyclePeriodQuickChange"
+              >
+                <a-radio :value="1">
+                  1<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="2">
+                  2<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="3">
+                  3<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="5">
+                  5<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="7">
+                  7<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="10">
+                  10<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="15">
+                  15<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="20">
+                  20<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="30">
+                  30<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="60">
+                  60<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="90">
+                  90<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="180">
+                  180 <span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="365">
+                  365 <span style="margin-left: 1px">{{ $t('unit.day') }}</span>
+                </a-radio>
+              </a-radio-group>
+            </a-form-item>
             <a-form-item field="is_bind_group" :label="$t('common.bind_group')">
               <a-switch v-model="formData.is_bind_group" />
             </a-form-item>
@@ -333,6 +454,9 @@
     is_limit_quota: false,
     quota: ref(),
     quota_expires_at: '',
+    is_cycle_reset_quota: false,
+    reset_quota: ref(),
+    cycle_period: ref(),
     is_bind_group: false,
     group: '',
     ip_whitelist: '',
@@ -366,6 +490,14 @@
 
   const handleQuotaQuickChange = (quota: number) => {
     formData.value.quota = quota;
+  };
+
+  const handleResetQuotaQuickChange = (quota: number) => {
+    formData.value.reset_quota = quota;
+  };
+
+  const handleCyclePeriodQuickChange = (day: number) => {
+    formData.value.cycle_period = day;
   };
 </script>
 
@@ -440,5 +572,9 @@
 
   :deep(.arco-radio-button-content) {
     padding: 0 8px;
+  }
+
+  .day {
+    margin-left: 3px;
   }
 </style>
