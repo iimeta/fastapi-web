@@ -184,6 +184,12 @@ export interface BatchTask {
   lock_minutes: number;
 }
 
+export interface ResetTask {
+  open: boolean;
+  cron: string;
+  lock_minutes: number;
+}
+
 export interface ServiceUnavailable {
   open: boolean;
   ip_whitelist: string[];
@@ -233,6 +239,7 @@ export interface SysConfigDetail {
   video_task: VideoTask;
   file_task: FileTask;
   batch_task: BatchTask;
+  reset_task: ResetTask;
   service_unavailable: ServiceUnavailable;
   general_api: GeneralApi;
   test: Test;
@@ -269,6 +276,7 @@ export interface SysConfigUpdate {
   video_task: VideoTask;
   file_task: FileTask;
   batch_task: BatchTask;
+  reset_task: ResetTask;
   service_unavailable: ServiceUnavailable;
   general_api: GeneralApi;
   test: Test;

@@ -423,6 +423,44 @@
           </a-input-number>
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'reset_task'"
+          field="reset_task.cron"
+          :label="$t('sys.config.label.cron')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.cron'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.reset_task.cron"
+            :placeholder="$t('sys.config.placeholder.cron')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'reset_task'"
+          field="reset_task.lock_minutes"
+          :label="$t('sys.config.label.lock_minutes')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.reset_task.lock_minutes'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.reset_task.lock_minutes"
+            :placeholder="$t('sys.config.placeholder.reset_task.lock_minutes')"
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.minute') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
           v-if="configFormData.action === 'notice'"
           field="notice.cron"
           :label="$t('sys.config.label.cron')"
@@ -574,6 +612,7 @@
     configFormData.value.video_task = data.video_task;
     configFormData.value.file_task = data.file_task;
     configFormData.value.batch_task = data.batch_task;
+    configFormData.value.reset_task = data.reset_task;
     configFormData.value.notice = data.notice;
     sysConfigItems.value = [
       {
@@ -613,6 +652,14 @@
         title: t('sys.config.item.title.batch_task'),
         desc: t('sys.config.item.desc.batch_task'),
         open: configFormData.value.batch_task.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'reset_task',
+        title: t('sys.config.item.title.reset_task'),
+        desc: t('sys.config.item.desc.reset_task'),
+        open: configFormData.value.reset_task.open,
         config: true,
         reset: true,
       },
