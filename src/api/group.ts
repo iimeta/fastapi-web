@@ -38,6 +38,7 @@ export interface GroupAdvanced {
   is_cycle_reset_quota: boolean;
   reset_quota: any;
   cycle_period: any;
+  period_unit: string;
   is_enable_forward: boolean;
   forward_config: ForwardConfig;
 }
@@ -115,6 +116,7 @@ export interface GroupDetail {
   is_cycle_reset_quota: boolean;
   reset_quota: number;
   cycle_period: number;
+  period_unit: string;
   is_enable_forward: boolean;
   forward_config: ForwardConfig;
   created_at: string;

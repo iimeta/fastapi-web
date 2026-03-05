@@ -318,11 +318,62 @@
                 :min="1"
                 allow-clear
               >
-                <template #append> {{ $t('unit.day') }}</template>
+                <template #append>
+                  <a-radio-group v-model="formData.period_unit" type="button">
+                    <a-radio value="hour"> {{ $t('unit.hour') }} </a-radio>
+                    <a-radio value="day"> {{ $t('unit.day') }} </a-radio>
+                  </a-radio-group>
+                </template>
               </a-input-number>
             </a-form-item>
             <a-form-item
-              v-if="formData.is_cycle_reset_quota && formData.is_limit_quota"
+              v-if="
+                formData.is_cycle_reset_quota &&
+                formData.is_limit_quota &&
+                formData.period_unit === 'hour'
+              "
+            >
+              <a-radio-group
+                type="button"
+                @change="handleCyclePeriodQuickChange"
+              >
+                <a-radio :value="1">
+                  1<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="5">
+                  5<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="8">
+                  8<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="12">
+                  12<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="24">
+                  24<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="72">
+                  72<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="120">
+                  120<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="168">
+                  168<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="720">
+                  720<span style="margin-left: 10px">{{
+                    $t('unit.hour')
+                  }}</span>
+                </a-radio>
+              </a-radio-group>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_cycle_reset_quota &&
+                formData.is_limit_quota &&
+                formData.period_unit === 'day'
+              "
             >
               <a-radio-group
                 type="button"
@@ -843,6 +894,7 @@
     is_cycle_reset_quota: false,
     reset_quota: ref(),
     cycle_period: ref(),
+    period_unit: 'day',
     is_enable_forward: false,
     forward_config: {
       forward_rule: '1',
@@ -921,8 +973,8 @@
     formData.value.reset_quota = quota;
   };
 
-  const handleCyclePeriodQuickChange = (day: number) => {
-    formData.value.cycle_period = day;
+  const handleCyclePeriodQuickChange = (cyclePeriod: number) => {
+    formData.value.cycle_period = cyclePeriod;
   };
 </script>
 
@@ -997,6 +1049,10 @@
 
   :deep(.arco-radio-button-content) {
     padding: 0 9px;
+  }
+
+  .hour {
+    margin-left: 8px;
   }
 
   .day {

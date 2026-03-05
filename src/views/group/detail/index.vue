@@ -137,7 +137,8 @@
         </a-skeleton>
         <span v-else>
           <span v-if="currentData.is_cycle_reset_quota">
-            {{ currentData.cycle_period || '-' }} {{ $t('unit.day') }}
+            {{ currentData.cycle_period }}
+            {{ $t(`unit.${currentData.period_unit}`) }}
           </span>
           <span v-else>-</span>
         </span>
