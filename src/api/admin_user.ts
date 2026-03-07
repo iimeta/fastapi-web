@@ -9,6 +9,10 @@ export interface UserCreate {
   quota: any;
   quota_type: any;
   quota_expires_at: string;
+  is_cycle_reset_quota: boolean;
+  reset_quota: any;
+  cycle_period: any;
+  period_unit: string;
   groups: string[];
   remark: string;
 }
@@ -89,6 +93,12 @@ export interface UserDetail {
   quota: number;
   used_quota: number;
   quota_expires_at: string;
+  is_cycle_reset_quota: boolean;
+  reset_quota: number;
+  cycle_period: number;
+  period_unit: string;
+  reset_at: string;
+  next_reset_at: string;
   groups: string[];
   group_names: string[];
   quota_warning: boolean;
@@ -124,6 +134,10 @@ export interface UserUpdate {
   account: string;
   password: string;
   quota_expires_at: string;
+  is_cycle_reset_quota: boolean;
+  reset_quota: any;
+  cycle_period: any;
+  period_unit: string;
   groups: string[];
   remark: string;
   status: number;

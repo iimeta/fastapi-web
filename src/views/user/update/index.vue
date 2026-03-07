@@ -161,6 +161,170 @@
               />
             </a-form-item>
             <a-form-item
+              field="is_cycle_reset_quota"
+              :label="$t('common.cycle_reset')"
+            >
+              <a-switch v-model="formData.is_cycle_reset_quota" />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_cycle_reset_quota"
+              field="reset_quota"
+              :label="$t('common.reset_quota')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('placeholder.reset_quota'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.reset_quota"
+                :placeholder="$t('placeholder.reset_quota')"
+                :min="0.000001"
+                :max="9999999999999"
+                :parser="parsePrice"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item v-if="formData.is_cycle_reset_quota">
+              <a-radio-group
+                type="button"
+                @change="handleResetQuotaQuickChange"
+              >
+                <a-radio :value="5"> <Quota :model-value="5" /> </a-radio>
+                <a-radio :value="10"> <Quota :model-value="10" /> </a-radio>
+                <a-radio :value="20"> <Quota :model-value="20" /> </a-radio>
+                <a-radio :value="50"> <Quota :model-value="50" /> </a-radio>
+                <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
+                <a-radio :value="200"> <Quota :model-value="200" /> </a-radio>
+                <a-radio :value="300"> <Quota :model-value="300" /> </a-radio>
+                <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
+                <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
+                <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
+                <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
+                <a-radio :value="10000" style="padding: 0 2px">
+                  <Quota :model-value="10000" />
+                </a-radio>
+              </a-radio-group>
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_cycle_reset_quota"
+              field="cycle_period"
+              :label="$t('common.cycle_period')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('placeholder.cycle_period'),
+                },
+              ]"
+            >
+              <a-input-number
+                v-model="formData.cycle_period"
+                :placeholder="$t('placeholder.cycle_period')"
+                :precision="0"
+                :min="1"
+                allow-clear
+              >
+                <template #append>
+                  <a-radio-group v-model="formData.period_unit" type="button">
+                    <a-radio value="hour"> {{ $t('unit.hour') }} </a-radio>
+                    <a-radio value="day"> {{ $t('unit.day') }} </a-radio>
+                  </a-radio-group>
+                </template>
+              </a-input-number>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_cycle_reset_quota && formData.period_unit === 'hour'
+              "
+            >
+              <a-radio-group
+                type="button"
+                @change="handleCyclePeriodQuickChange"
+              >
+                <a-radio :value="1">
+                  1<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="3">
+                  3<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="5">
+                  5<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="8">
+                  8<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="12">
+                  12<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="24">
+                  24<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="72">
+                  72<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="120">
+                  120<span style="margin-left: 5px">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="168">
+                  168<span style="margin-left: 5px">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="720">
+                  720<span style="margin-left: 6px">{{ $t('unit.hour') }}</span>
+                </a-radio>
+              </a-radio-group>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_cycle_reset_quota && formData.period_unit === 'day'
+              "
+            >
+              <a-radio-group
+                type="button"
+                @change="handleCyclePeriodQuickChange"
+              >
+                <a-radio :value="1">
+                  1<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="2">
+                  2<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="3">
+                  3<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="5">
+                  5<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="7">
+                  7<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="10">
+                  10<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="15">
+                  15<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="20">
+                  20<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="30">
+                  30<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="60">
+                  60<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="90">
+                  90<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="180">
+                  180 <span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="365">
+                  365 <span style="margin-left: 1px">{{ $t('unit.day') }}</span>
+                </a-radio>
+              </a-radio-group>
+            </a-form-item>
+            <a-form-item
               field="groups"
               :label="$t('common.groups')"
               style="align-items: center"
@@ -218,7 +382,7 @@
   import dayjs from 'dayjs';
   import { FormInstance, Message } from '@arco-design/web-vue';
   import { useRouter, useRoute } from 'vue-router';
-  import { disabledDate } from '@/utils/common';
+  import { disabledDate, parsePrice } from '@/utils/common';
   import {
     submitUserUpdate,
     UserUpdate,
@@ -226,6 +390,7 @@
     queryUserDetail,
   } from '@/api/admin_user';
   import { queryGroupList, GroupList } from '@/api/group';
+  import Quota from '@/views/common/quota.vue';
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(false);
@@ -252,6 +417,10 @@
     account: '',
     password: '',
     quota_expires_at: '',
+    is_cycle_reset_quota: false,
+    reset_quota: ref(),
+    cycle_period: ref(),
+    period_unit: 'day',
     groups: [],
     remark: '',
     status: 1,
@@ -268,6 +437,10 @@
       formData.value.email = data.email;
       formData.value.account = data.account;
       formData.value.quota_expires_at = data.quota_expires_at;
+      formData.value.is_cycle_reset_quota = data.is_cycle_reset_quota;
+      formData.value.reset_quota = data.reset_quota;
+      formData.value.cycle_period = data.cycle_period;
+      formData.value.period_unit = data.period_unit || 'day';
       formData.value.groups = data.groups;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
@@ -296,6 +469,14 @@
         setLoading(false);
       }
     }
+  };
+
+  const handleResetQuotaQuickChange = (quota: number) => {
+    formData.value.reset_quota = quota;
+  };
+
+  const handleCyclePeriodQuickChange = (cyclePeriod: number) => {
+    formData.value.cycle_period = cyclePeriod;
   };
 </script>
 
@@ -352,5 +533,17 @@
       flex: 1;
       margin: 20px 30px;
     }
+  }
+
+  :deep(.arco-radio-button-content) {
+    padding: 0 8px;
+  }
+
+  .hour {
+    margin-left: 3px;
+  }
+
+  .day {
+    margin-left: 3px;
   }
 </style>

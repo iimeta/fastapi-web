@@ -77,6 +77,60 @@
           {{ currentData.quota_expires_at || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.cycle_reset')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.${currentData?.is_cycle_reset_quota || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.reset_quota')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <Quota
+            v-if="currentData.is_cycle_reset_quota"
+            :model-value="currentData.reset_quota"
+          />
+          <span v-else>-</span>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.cycle_period')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <span v-if="currentData.is_cycle_reset_quota">
+            {{ currentData.cycle_period }}
+            {{ $t(`unit.${currentData.period_unit}`) }}
+          </span>
+          <span v-else>-</span>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.reset_at')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <span v-if="currentData.is_cycle_reset_quota">
+            {{ currentData.reset_at || '-' }}
+          </span>
+          <span v-else>-</span>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.next_reset_at')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <span v-if="currentData.is_cycle_reset_quota">
+            {{ currentData.next_reset_at || '-' }}
+          </span>
+          <span v-else>-</span>
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('reseller.detail.quota_warning')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
