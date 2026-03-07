@@ -100,7 +100,21 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.reset_at || '-' }}
+          <span v-if="currentData.is_cycle_reset_quota">
+            {{ currentData.reset_at || '-' }}
+          </span>
+          <span v-else>-</span>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.next_reset_at')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <span v-if="currentData.is_cycle_reset_quota">
+            {{ currentData.next_reset_at || '-' }}
+          </span>
+          <span v-else>-</span>
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('common.models')" :span="2">

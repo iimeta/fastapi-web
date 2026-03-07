@@ -35,6 +35,7 @@ export default {
   'common.created_at': 'Created At',
   'common.updated_at': 'Updated At',
   'common.reset_at': 'Reset At',
+  'common.next_reset_at': 'Next Reset At',
   'common.req_time': 'Request Time',
   'common.start_time': 'Start Time',
   'common.end_time': 'End Time',

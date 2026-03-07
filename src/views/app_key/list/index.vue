@@ -1840,34 +1840,28 @@
   }
 
   const updateKey = async (params: AppKeyConfigView) => {
-    setLoading(true);
-    try {
-      formData.value.id = params.id;
-      formData.value.name = params.name;
-      formData.value.key = params.key;
-      formData.value.billing_methods = params.billing_methods || [1];
-      formData.value.models = params.models;
-      formData.value.is_limit_quota = params.is_limit_quota;
-      formData.value.quota = params.quota;
-      formData.value.quota_expires_rule =
-        String(params.quota_expires_rule) || '1';
-      formData.value.quota_expires_at = params.quota_expires_at;
-      formData.value.quota_expires_minutes = params.quota_expires_minutes;
-      formData.value.is_cycle_reset_quota = params.is_cycle_reset_quota;
-      formData.value.reset_quota = params.reset_quota;
-      formData.value.cycle_period = params.cycle_period;
-      formData.value.period_unit = params.period_unit || 'day';
-      formData.value.is_bind_group = params.is_bind_group;
-      formData.value.group = params.group;
-      formData.value.ip_whitelist = params.ip_whitelist?.join('\n') || '';
-      formData.value.ip_blacklist = params.ip_blacklist?.join('\n') || '';
-      formData.value.remark = params.remark;
-      visible.value = true;
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
+    formData.value.id = params.id;
+    formData.value.name = params.name;
+    formData.value.key = params.key;
+    formData.value.billing_methods = params.billing_methods || [1];
+    formData.value.models = params.models;
+    formData.value.is_limit_quota = params.is_limit_quota;
+    formData.value.quota = params.quota;
+    formData.value.quota_expires_rule = params.quota_expires_rule
+      ? String(params.quota_expires_rule)
+      : '1';
+    formData.value.quota_expires_at = params.quota_expires_at;
+    formData.value.quota_expires_minutes = params.quota_expires_minutes;
+    formData.value.is_cycle_reset_quota = params.is_cycle_reset_quota;
+    formData.value.reset_quota = params.reset_quota;
+    formData.value.cycle_period = params.cycle_period;
+    formData.value.period_unit = params.period_unit || 'day';
+    formData.value.is_bind_group = params.is_bind_group;
+    formData.value.group = params.group;
+    formData.value.ip_whitelist = params.ip_whitelist?.join('\n') || '';
+    formData.value.ip_blacklist = params.ip_blacklist?.join('\n') || '';
+    formData.value.remark = params.remark;
+    visible.value = true;
   };
 
   const handleBeforeOk = async (done: any) => {

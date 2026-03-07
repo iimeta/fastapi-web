@@ -117,11 +117,12 @@ export interface GroupDetail {
   reset_quota: number;
   cycle_period: number;
   period_unit: string;
+  reset_at: string;
+  next_reset_at: string;
   is_enable_forward: boolean;
   forward_config: ForwardConfig;
   created_at: string;
   updated_at: string;
-  reset_at: string;
 }
 
 export function queryGroupDetail(params: GroupDetailParams) {

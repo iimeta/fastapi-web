@@ -102,6 +102,8 @@ export interface AppDetail {
   reset_quota: number;
   cycle_period: number;
   period_unit: string;
+  reset_at: string;
+  next_reset_at: string;
   is_bind_group: boolean;
   group: string;
   group_name: string;
@@ -111,7 +113,6 @@ export interface AppDetail {
   remark: string;
   created_at: string;
   updated_at: string;
-  reset_at: string;
 }
 
 export function queryAppDetail(params: AppDetailParams) {

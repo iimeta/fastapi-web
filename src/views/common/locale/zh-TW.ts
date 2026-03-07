@@ -35,6 +35,7 @@ export default {
   'common.created_at': '創建時間',
   'common.updated_at': '更新時間',
   'common.reset_at': '重置時間',
+  'common.next_reset_at': '下次重置時間',
   'common.req_time': '請求時間',
   'common.start_time': '開始時間',
   'common.end_time': '結束時間',
