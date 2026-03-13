@@ -17,7 +17,7 @@
             <img
               v-if="fileList.length"
               :src="fileList[0].url"
-              style="background-color: #ffffff"
+              class="user-panel-avatar-image"
             />
           </a-avatar>
         </template>
@@ -27,17 +27,8 @@
         :column="2"
         align="right"
         layout="inline-horizontal"
-        :label-style="{
-          width: '140px',
-          fontWeight: 'normal',
-          color: 'rgb(var(--gray-8))',
-          whiteSpace: 'pre',
-        }"
-        :value-style="{
-          width: '200px',
-          paddingLeft: '8px',
-          textAlign: 'left',
-        }"
+        :label-style="descriptionLabelStyle"
+        :value-style="descriptionValueStyle"
       >
         <template #label="{ label }">{{ $t(label) }} :</template>
         <template #value="{ value }"> {{ value }} </template>
@@ -63,6 +54,17 @@
     uid: '-2',
     name: 'avatar.png',
     url: userStore.avatar || appStore.getAvatar,
+  };
+  const descriptionLabelStyle = {
+    width: '140px',
+    fontWeight: 'normal',
+    color: 'rgb(var(--gray-8))',
+    whiteSpace: 'pre',
+  };
+  const descriptionValueStyle = {
+    width: '200px',
+    paddingLeft: '8px',
+    textAlign: 'left',
   };
   const renderData = [
     {
@@ -142,6 +144,10 @@
 </script>
 
 <style scoped lang="less">
+  .user-panel-avatar-image {
+    background-color: var(--color-bg-2);
+  }
+
   .arco-card {
     padding: 16px 0;
     border-radius: 6px;

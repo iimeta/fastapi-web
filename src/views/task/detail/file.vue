@@ -1,9 +1,9 @@
 <template>
-  <div style="margin: 10px 0 30px 10px">
+  <div class="task-detail-container">
     <a-descriptions
       :column="2"
       bordered
-      :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
+      :value-style="descriptionValueStyle"
     >
       <a-descriptions-item :label="$t('common.trace_id')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
@@ -125,7 +125,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 220px; display: block; overflow: auto">
+        <span v-else class="task-detail-scroll-220">
           {{ currentData.response_data || '-' }}
         </span>
       </a-descriptions-item>
@@ -133,7 +133,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span v-else class="task-detail-scroll-110">
           {{ currentData.error || '-' }}
         </span>
       </a-descriptions-item>
@@ -221,6 +221,10 @@
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
+  const descriptionValueStyle = {
+    width: '350px',
+    padding: '5px 8px 5px 20px',
+  };
   const currentData = ref<FileDetail>({} as FileDetail);
   const { copy, copied } = useClipboard();
 
@@ -285,11 +289,5 @@
 </script>
 
 <style scoped lang="less">
-  .copy-btn {
-    color: gray;
-    cursor: pointer;
-  }
-  .copy-btn:hover {
-    color: rgb(var(--arcoblue-6));
-  }
+  @import '../style/task-detail-shared.less';
 </style>

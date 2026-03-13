@@ -21,8 +21,12 @@
 </script>
 
 <style scoped lang="less">
+  // Keep local: security settings uses a custom arco-list layout for its three-column content.
   :deep(.arco-list-item) {
-    border-bottom: none !important;
+    &:not(:last-child) {
+      border-bottom: none;
+    }
+
     .arco-typography {
       margin-bottom: 20px;
     }
@@ -35,6 +39,7 @@
     }
   }
 
+  // Keep local: this flex layout and divider styling are specific to the security settings list.
   :deep(.arco-list-item-meta-content) {
     flex: 1;
     border-bottom: 1px solid var(--color-neutral-3);

@@ -10,10 +10,8 @@
     <a-card
       class="general-card"
       :bordered="false"
-      :header-style="{ padding: '20px' }"
-      :body-style="{
-        padding: '25px 20px 20px 20px',
-      }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
     >
       <a-row>
         <a-col :flex="1">
@@ -87,15 +85,18 @@
                 >
                   <a-range-picker
                     v-model="searchFormData.quota_expires_at"
-                    style="width: 100%"
+                    class="list-full-width"
                   />
                 </a-form-item>
               </a-col>
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 84px" direction="vertical" />
-        <a-col :flex="'86px'" style="text-align: right">
+        <a-divider
+          class="list-search-divider"
+          direction="vertical"
+        />
+        <a-col :flex="'86px'" class="list-search-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
@@ -112,8 +113,8 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-divider style="margin-top: 0; margin-bottom: 16px" />
-      <a-row style="margin-bottom: 16px">
+      <a-divider class="list-toolbar-divider" />
+      <a-row class="list-toolbar-row">
         <a-col :span="12">
           <a-space>
             <a-button
@@ -179,15 +180,7 @@
             </a-button>
           </a-space>
         </a-col>
-        <a-col
-          :span="12"
-          style="
-            display: flex;
-            height: 32px;
-            align-items: center;
-            justify-content: end;
-          "
-        >
+        <a-col :span="12" class="list-table-actions">
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -222,7 +215,7 @@
                     :key="item.dataIndex"
                     class="setting"
                   >
-                    <div style="margin-right: 4px; cursor: move">
+                    <div class="list-drag-handle">
                       <icon-drag-arrow />
                     </div>
                     <div>
@@ -338,7 +331,7 @@
               })
             "
           >
-            <a-button style="width: 150px">{{
+            <a-button class="reseller-list-expire-button">{{
               renderData[rowIndex].quota_expires_at ||
               $t('reseller.placeholder.quota_expires_at')
             }}</a-button>
@@ -447,7 +440,7 @@
               <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             </a-input-number>
           </a-form-item>
-          <a-form-item style="margin-bottom: 8px">
+          <a-form-item class="reseller-list-quick-form-item">
             <a-radio-group
               v-model="quotaQuick"
               type="button"
@@ -462,12 +455,12 @@
               <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
               <a-radio :value="200"> <Quota :model-value="200" /> </a-radio>
               <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
-              <a-radio :value="1000" style="padding: 0 3px 0 2px">
+              <a-radio :value="1000" class="reseller-list-quick-radio-1000">
                 <Quota :model-value="1000" />
               </a-radio>
             </a-radio-group>
           </a-form-item>
-          <a-form-item style="margin-bottom: 10px">
+          <a-form-item class="reseller-list-quick-form-item reseller-list-quick-form-item--spaced">
             <a-radio-group
               v-model="quotaQuick"
               type="button"
@@ -479,7 +472,7 @@
               <a-radio :value="10000"> <Quota :model-value="10000" /> </a-radio>
               <a-radio :value="20000"> <Quota :model-value="20000" /> </a-radio>
               <a-radio :value="50000"> <Quota :model-value="50000" /> </a-radio>
-              <a-radio :value="100000" style="padding-right: 1px">
+              <a-radio :value="100000" class="reseller-list-quick-radio-100000">
                 <Quota :model-value="100000" />
               </a-radio>
             </a-radio-group>
@@ -520,7 +513,7 @@
               :time-picker-props="{ defaultValue: '23:59:59' }"
               :disabled-date="disabledDate"
               position="tl"
-              style="width: 100%"
+              class="list-full-width"
               show-time
               :shortcuts="[
                 {
@@ -696,6 +689,12 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const appStore = useAppStore();
+  const cardHeaderStyle = {
+    padding: '20px',
+  };
+  const cardBodyStyle = {
+    padding: '25px 20px 20px 20px',
+  };
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -1249,43 +1248,29 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
+  // 公共骨架已由 page-list.less 全局提供
+
+  .reseller-list-expire-button {
+    width: 150px;
   }
-  :deep(.arco-table-th) {
-    &:last-child {
-      .arco-table-th-item-title {
-        margin-left: 16px;
-      }
-    }
-  }
-  .action-icon {
-    margin-left: 12px;
-    cursor: pointer;
-  }
-  .active {
-    color: #0960bd;
-    background-color: #e3f4fc;
-  }
-  .setting {
-    display: flex;
-    align-items: center;
-    width: 200px;
-    .title {
-      margin-left: 12px;
-      cursor: pointer;
-    }
-  }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
+
+  .reseller-list-quick-form-item {
+    margin-bottom: 8px;
+
+    &--spaced {
+      margin-bottom: 10px;
     }
   }
 
+  .reseller-list-quick-radio-1000 {
+    padding: 0 3px 0 2px;
+  }
+
+  .reseller-list-quick-radio-100000 {
+    padding-right: 1px;
+  }
+
+  // Keep local: quick filter labels in this page need 11px radio button padding.
   :deep(.arco-radio-button-content) {
     padding: 0 11px;
   }

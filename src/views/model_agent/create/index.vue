@@ -7,10 +7,10 @@
       <a-breadcrumb-item>{{ $t('model.agent.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('model.agent.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-spin :loading="loading" style="width: 100%">
+    <a-spin :loading="loading" class="model-agent-form-full-width">
       <a-card
         class="general-card"
-        :body-style="{ padding: '0 20px 20px 20px' }"
+        :body-style="cardBodyStyle"
         :bordered="false"
       >
         <div class="wrapper">
@@ -187,17 +187,17 @@
               <a-input
                 v-model="formData.replace_models[index]"
                 :placeholder="$t('model.agent.placeholder.replace_models')"
-                style="width: 43%; margin-right: 5px"
+                class="model-agent-form-replace-input"
               />
               <a-input
                 v-model="formData.target_models[index]"
                 :placeholder="$t('model.agent.placeholder.target_models')"
-                style="width: 43%; margin-right: 4px"
+                class="model-agent-form-target-input"
               />
               <a-button
                 type="primary"
                 shape="circle"
-                style="margin: 0 10px 0 10px"
+                class="model-agent-form-add-btn"
                 @click="handleModelReplaceAdd"
               >
                 <icon-plus />
@@ -292,6 +292,9 @@
   import { queryModelTree, Tree } from '@/api/model';
 
   const { loading, setLoading } = useLoading(false);
+  const cardBodyStyle = {
+    padding: '0 20px 20px 20px',
+  };
 
   const router = useRouter();
   const { t } = useI18n();
@@ -434,65 +437,8 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
+  @import '../style/model-agent-form-shared.less';
 
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
-
-  .general-card {
-    &:first-child {
-      padding-top: 20px;
-    }
-  }
-
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--color-bg-2);
-    :deep(.arco-form) {
-      .arco-form-item {
-        width: 888px;
-        &:first-child {
-          margin-top: 20px;
-        }
-      }
-    }
-  }
-
-  .form {
-    align-items: center;
-  }
-
-  .arco-divider-horizontal.arco-divider-with-text {
-    margin: 20px 0 30px 0;
-  }
-
-  .arco-divider-horizontal {
-    min-width: 97%;
-    max-width: 97%;
-    margin-bottom: 30px;
-    &:first-child {
-      margin-top: 20px;
-      margin-bottom: 40px;
-    }
-  }
-
-  .submit-btn {
-    width: 300px;
-    display: flex;
-    button {
-      flex: 1;
-      margin: 20px 30px;
-    }
-  }
+  // 公共骨架已由 page-form.less 全局提供
+  // 表单共享样式已由 model-agent-form-shared.less 提供
 </style>

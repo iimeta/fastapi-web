@@ -3,10 +3,8 @@
     <a-card
       class="general-card"
       :bordered="false"
-      :header-style="{ padding: '20px' }"
-      :body-style="{
-        padding: '0px',
-      }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
     >
       <a-row>
         <a-col :flex="1">
@@ -68,8 +66,8 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 32px" direction="vertical" />
-        <a-col :flex="'86px'" style="text-align: right">
+        <a-divider class="common-models-search-divider" direction="vertical" />
+        <a-col :flex="'86px'" class="common-models-search-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
@@ -80,7 +78,7 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-divider style="margin-top: 0" />
+      <a-divider class="common-models-toolbar-divider" />
       <a-table
         row-key="id"
         :loading="loading"
@@ -117,6 +115,12 @@
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
+  const cardHeaderStyle = {
+    padding: '20px',
+  };
+  const cardBodyStyle = {
+    padding: '0px',
+  };
 
   const props = defineProps({
     id: {
@@ -228,47 +232,27 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
+  // 公共骨架与共享列表 Arco 覆写已由 page-list.less 全局提供
+
+  .common-models-search-divider {
+    height: 32px;
   }
-  :deep(.arco-table-th) {
-    &:last-child {
-      .arco-table-th-item-title {
-        margin-left: 16px;
-      }
+
+  .common-models-search-actions {
+    text-align: right;
+  }
+
+  .common-models-toolbar-divider {
+    margin-top: 0;
+  }
+
+  // Keep local: medium 尺寸会统一 7px，这里分别指定表头和内容行的 padding
+  :deep(.arco-table.arco-table-size-medium) {
+    .arco-table-th .arco-table-cell {
+      padding: 7px 16px;
     }
-  }
-  :deep(.arco-table-td) {
-    &:last-child {
-      .arco-table-td-content {
-        margin: 3px 0;
-      }
-    }
-  }
-  .action-icon {
-    margin-left: 12px;
-    cursor: pointer;
-  }
-  .active {
-    color: #0960bd;
-    background-color: #e3f4fc;
-  }
-  .setting {
-    display: flex;
-    align-items: center;
-    width: 200px;
-    .title {
-      margin-left: 12px;
-      cursor: pointer;
-    }
-  }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
+    .arco-table-td .arco-table-cell {
+      padding: 10px 16px;
     }
   }
 </style>

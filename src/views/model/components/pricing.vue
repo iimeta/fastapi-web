@@ -15,13 +15,13 @@
           message: $t('model.error.required.billing_rule'),
         },
       ]"
-      style="margin-bottom: 12px"
+      class="pricing-form-item--compact"
     >
       <a-space size="large">
         <a-radio
           v-model="formData.billing_rule"
           :value="1"
-          style="margin-right: 30px"
+          class="pricing-radio--spaced"
         >
           {{ $t('model.dict.billing_rule.1') }}
         </a-radio>
@@ -39,13 +39,13 @@
           message: $t('placeholder.billing_methods'),
         },
       ]"
-      style="margin-bottom: 20px"
+      class="pricing-form-item--medium"
     >
       <a-space size="large">
         <a-checkbox
           v-model="formData.billing_methods"
           :value="1"
-          style="margin-right: 12px"
+          class="pricing-checkbox--spaced"
           @change="handleBillingMethodsChange"
         >
           {{ $t('dict.billing_methods.1') }}
@@ -68,7 +68,7 @@
           message: $t('model.error.required.billing_items'),
         },
       ]"
-      style="width: 1088px; margin-bottom: 0"
+      class="pricing-form-item--wide"
     >
       <a-space size="small" wrap>
         <a-checkbox
@@ -229,7 +229,7 @@
       v-model:activeKey="activeKey"
       position="right"
       type="line"
-      style="width: 1088px"
+      class="pricing-tabs"
     >
       <!-- 文本 -->
       <a-tab-pane
@@ -258,7 +258,7 @@
             v-model="formData.text[index].service_tier"
             :placeholder="$t('model.label.service_tier')"
             :options="serviceTierOptions"
-            style="width: 102px; margin-right: 5px"
+            class="pricing-select--compact pricing-field--spaced"
           />
           <a-input-number
             v-model="formData.text[index].input_ratio"
@@ -267,7 +267,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 188px; margin-right: 5px"
+            class="pricing-input--compact pricing-field--spaced"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
@@ -279,7 +279,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 188px; margin-right: 5px"
+            class="pricing-input--compact pricing-field--spaced"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
@@ -291,7 +291,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 188px"
+            class="pricing-input--compact"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
@@ -299,7 +299,7 @@
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="pricing-action-btn"
             @click="handleTextPricingAdd()"
           >
             <icon-plus />
@@ -339,7 +339,7 @@
             v-model="formData.text_cache[index].service_tier"
             :placeholder="$t('model.label.service_tier')"
             :options="serviceTierOptions"
-            style="width: 215px; margin-right: 5px"
+            class="pricing-select--medium pricing-field--spaced"
           />
           <a-input-number
             v-model="formData.text_cache[index].read_ratio"
@@ -348,7 +348,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 461px"
+            class="pricing-input--wide"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
@@ -356,7 +356,7 @@
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="pricing-action-btn"
             @click="handleTextCachePricingAdd()"
           >
             <icon-plus />
@@ -487,7 +487,7 @@
             v-model="formData.tiered_text[index].mode"
             :placeholder="$t('model.placeholder.tiered_mode')"
             :options="modeOptions"
-            style="width: 95px; margin-right: 5px"
+            class="pricing-select--mode pricing-field--spaced"
           />
           <a-input-number
             v-model="formData.tiered_text[index].gt"
@@ -497,7 +497,7 @@
             :max="999999"
             :step="1"
             hide-button
-            style="width: 70px; margin-right: 4px"
+            class="pricing-input-number--tiny pricing-field--spaced-sm"
           >
           </a-input-number>
           -
@@ -509,7 +509,7 @@
             :max="999999"
             :step="1"
             hide-button
-            style="width: 126px; margin-left: 4px; margin-right: 5px"
+            class="pricing-input-number--small pricing-field--offset-both"
           >
             <template #append> / k </template>
           </a-input-number>
@@ -520,7 +520,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             hide-button
-            style="width: 102px; margin-right: 5px"
+            class="pricing-select--compact pricing-field--spaced"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
           </a-input-number>
@@ -531,7 +531,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             hide-button
-            style="width: 102px; margin-right: 5px"
+            class="pricing-select--compact pricing-field--spaced"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
           </a-input-number>
@@ -542,7 +542,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             hide-button
-            style="width: 152px"
+            class="pricing-input-number--medium"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
@@ -550,7 +550,7 @@
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="pricing-action-btn"
             @click="handleTieredTextPricingAdd()"
           >
             <icon-plus />
@@ -593,7 +593,7 @@
             v-model="formData.tiered_text_cache[index].mode"
             :placeholder="$t('model.placeholder.tiered_mode')"
             :options="modeOptions"
-            style="width: 95px; margin-right: 5px"
+            class="pricing-select--mode pricing-field--spaced"
           />
           <a-input-number
             v-model="formData.tiered_text_cache[index].gt"
@@ -602,7 +602,7 @@
             :min="0"
             :max="999999"
             :step="1"
-            style="width: 87px; margin-right: 5px"
+            class="pricing-input-number--smallish pricing-field--spaced"
           >
           </a-input-number>
           -
@@ -613,7 +613,7 @@
             :min="0"
             :max="999999"
             :step="1"
-            style="width: 138px; margin-left: 5px; margin-right: 5px"
+            class="pricing-input-number--medium-lg pricing-field--offset"
           >
             <template #append> / k </template>
           </a-input-number>
@@ -624,7 +624,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 165px; margin-right: 5px"
+            class="pricing-input-number--cache pricing-field--spaced"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
@@ -636,7 +636,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 165px"
+            class="pricing-input-number--cache"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / M </template>
@@ -644,7 +644,7 @@
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="pricing-action-btn"
             @click="handleTieredTextCachePricingAdd()"
           >
             <icon-plus />
@@ -739,7 +739,7 @@
           <a-input
             v-model="formData.image_generation[index].quality"
             :placeholder="$t('model.placeholder.image_generation.quality')"
-            style="width: 135px; margin-right: 5px"
+            class="pricing-input--image-quality pricing-field--spaced"
           />
           <a-input-number
             v-model="formData.image_generation[index].width"
@@ -748,7 +748,7 @@
             :min="1"
             :max="999999"
             :step="1"
-            style="width: 135px; margin-right: 5px"
+            class="pricing-input--image-quality pricing-field--spaced"
           />
           ×
           <a-input-number
@@ -758,7 +758,7 @@
             :min="1"
             :max="999999"
             :step="1"
-            style="width: 135px; margin-left: 5px; margin-right: 5px"
+            class="pricing-input--image-size pricing-field--offset"
           />
           <a-input-number
             v-model="formData.image_generation[index].once_ratio"
@@ -767,7 +767,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 188px; margin-right: 5px"
+            class="pricing-input--compact pricing-field--spaced"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / {{ $t('unit.piece') }} </template>
@@ -775,7 +775,7 @@
           <a-radio
             v-model="formData.image_generation[index].is_default"
             value="1"
-            style="width: 60px"
+            class="pricing-radio--default"
             @change="handleImageGenerationPricingIsDefaultChange(index)"
           >
             {{ $t('common.default') }}
@@ -783,7 +783,7 @@
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 2px"
+            class="pricing-action-btn--compact"
             @click="handleImageGenerationPricingAdd()"
           >
             <icon-plus />
@@ -850,7 +850,7 @@
           <a-input
             v-model="formData.vision[index].mode"
             :placeholder="$t('model.placeholder.vision.mode')"
-            style="width: 310px; margin-right: 5px"
+            class="pricing-input--vision-mode pricing-field--spaced"
           />
           <a-input-number
             v-model="formData.vision[index].once_ratio"
@@ -859,7 +859,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 309px; margin-right: 5px"
+            class="pricing-input--vision-price pricing-field--spaced"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / {{ $t('unit.piece') }} </template>
@@ -867,7 +867,7 @@
           <a-radio
             v-model="formData.vision[index].is_default"
             value="1"
-            style="width: 60px"
+            class="pricing-radio--default"
             @change="handleVisionPricingIsDefaultChange(index)"
           >
             {{ $t('common.default') }}
@@ -875,7 +875,7 @@
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 2px"
+            class="pricing-action-btn--compact"
             @click="handleVisionPricingAdd('')"
           >
             <icon-plus />
@@ -973,7 +973,7 @@
             :min="1"
             :max="999999"
             :step="1"
-            style="width: 188px; margin-right: 5px"
+            class="pricing-input--compact pricing-field--spaced"
           />
           ×
           <a-input-number
@@ -983,7 +983,7 @@
             :min="1"
             :max="999999"
             :step="1"
-            style="width: 188px; margin-left: 5px; margin-right: 5px"
+            class="pricing-input--video-size pricing-field--offset"
           />
           <a-input-number
             v-model="formData.video_generation[index].once_ratio"
@@ -992,7 +992,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 222px; margin-right: 5px"
+            class="pricing-input--video-price pricing-field--spaced"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> {{ $t('unit.second') }} </template>
@@ -1000,7 +1000,7 @@
           <a-radio
             v-model="formData.video_generation[index].is_default"
             value="1"
-            style="width: 60px"
+            class="pricing-radio--default"
             @change="handleVideoPricingIsDefaultChange(index)"
           >
             {{ $t('common.default') }}
@@ -1008,7 +1008,7 @@
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 2px"
+            class="pricing-action-btn--compact"
             @click="handleVideoPricingAdd()"
           >
             <icon-plus />
@@ -1077,7 +1077,7 @@
           <a-input
             v-model="formData.search[index].context_size"
             :placeholder="$t('model.placeholder.search.context_size')"
-            style="width: 310px; margin-right: 5px"
+            class="pricing-input--vision-mode pricing-field--spaced"
           />
           <a-input-number
             v-model="formData.search[index].once_ratio"
@@ -1086,7 +1086,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 309px; margin-right: 5px"
+            class="pricing-input--vision-price pricing-field--spaced"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / {{ $t('unit.once') }} </template>
@@ -1094,7 +1094,7 @@
           <a-radio
             v-model="formData.search[index].is_default"
             value="1"
-            style="width: 60px"
+            class="pricing-radio--default"
             @change="handleSearchPricingIsDefaultChange(index)"
           >
             {{ $t('common.default') }}
@@ -1102,7 +1102,7 @@
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 2px"
+            class="pricing-action-btn--compact"
             @click="handleSearchPricingAdd()"
           >
             <icon-plus />
@@ -1143,17 +1143,17 @@
           <a-input
             v-model="formData.midjourney[index].name"
             :placeholder="$t('model.placeholder.midjourney.name')"
-            style="width: 155px; margin-right: 5px"
+            class="pricing-input--midjourney-name pricing-field--spaced"
           />
           <a-input
             v-model="formData.midjourney[index].action"
             :placeholder="$t('model.placeholder.midjourney.action')"
-            style="width: 155px; margin-right: 5px"
+            class="pricing-input--midjourney-name pricing-field--spaced"
           />
           <a-input
             v-model="formData.midjourney[index].path"
             :placeholder="$t('model.placeholder.midjourney.path')"
-            style="width: 168px; margin-right: 5px"
+            class="pricing-input--midjourney-path pricing-field--spaced"
           />
           <a-input-number
             v-model="formData.midjourney[index].once_ratio"
@@ -1162,7 +1162,7 @@
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            style="width: 188px"
+            class="pricing-input--compact"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
             <template #append> / {{ $t('unit.once') }} </template>
@@ -1170,7 +1170,7 @@
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="pricing-action-btn"
             @click="handleMidjourneyPricingAdd()"
           >
             <icon-plus />
@@ -1978,6 +1978,142 @@
     width: 115px;
   }
 
+  .pricing-form-item--compact {
+    margin-bottom: 12px;
+  }
+
+  .pricing-form-item--medium {
+    margin-bottom: 20px;
+  }
+
+  .pricing-form-item--wide {
+    width: 1088px;
+    margin-bottom: 0;
+  }
+
+  .pricing-tabs {
+    width: 1088px;
+  }
+
+  .pricing-radio--spaced {
+    margin-right: 30px;
+  }
+
+  .pricing-checkbox--spaced {
+    margin-right: 12px;
+  }
+
+  .pricing-radio--default {
+    width: 60px;
+  }
+
+  :deep(.pricing-field--spaced) {
+    margin-right: 5px;
+  }
+
+  .pricing-field--spaced-sm {
+    margin-right: 4px;
+  }
+
+  .pricing-field--offset {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .pricing-field--offset-both {
+    margin-left: 4px;
+    margin-right: 5px;
+  }
+
+  .pricing-action-btn {
+    margin: 0 10px;
+  }
+
+  .pricing-action-btn--compact {
+    margin: 0 10px 0 2px;
+  }
+
+  :deep(.pricing-input--narrow) {
+    width: 240px;
+  }
+
+  :deep(.pricing-input--compact) {
+    width: 188px;
+  }
+
+  .pricing-input--wide {
+    width: 461px;
+  }
+
+  .pricing-input--image-quality {
+    width: 135px;
+  }
+
+  .pricing-input--image-size {
+    width: 135px;
+  }
+
+  .pricing-input--vision-mode {
+    width: 310px;
+  }
+
+  .pricing-input--vision-price {
+    width: 309px;
+  }
+
+  .pricing-input--video-size {
+    width: 188px;
+  }
+
+  .pricing-input--video-price {
+    width: 222px;
+  }
+
+  :deep(.pricing-input--midjourney-name) {
+    width: 155px;
+  }
+
+  :deep(.pricing-input--midjourney-path) {
+    width: 168px;
+  }
+
+  :deep(.pricing-select--compact) {
+    width: 102px;
+  }
+
+  :deep(.pricing-select--medium) {
+    width: 215px;
+  }
+
+  :deep(.pricing-select--mode) {
+    width: 95px;
+  }
+
+  .pricing-input-number--tiny {
+    width: 70px;
+  }
+
+  .pricing-input-number--small {
+    width: 126px;
+  }
+
+  .pricing-input-number--smallish {
+    width: 87px;
+  }
+
+  .pricing-input-number--medium {
+    width: 152px;
+  }
+
+  .pricing-input-number--medium-lg {
+    width: 138px;
+  }
+
+  .pricing-input-number--cache {
+    width: 165px;
+  }
+
+  // Keep local: this top margin aligns the vertical tabs inside the pricing layout.
   :deep(.arco-tabs-nav-vertical) {
     margin-top: 20px;
   }

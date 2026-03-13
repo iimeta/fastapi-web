@@ -10,10 +10,8 @@
     <a-card
       class="general-card"
       :bordered="false"
-      :header-style="{ padding: '20px' }"
-      :body-style="{
-        padding: '25px 20px 20px 20px',
-      }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
     >
       <a-row>
         <a-col :flex="1">
@@ -116,8 +114,8 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 84px" direction="vertical" />
-        <a-col :flex="'86px'" style="text-align: right">
+        <a-divider class="task-video-list-search-divider" direction="vertical" />
+        <a-col :flex="'86px'" class="task-video-list-search-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
@@ -136,18 +134,10 @@
       </a-row>
       <a-divider
         v-permission="['reseller', 'admin']"
-        style="margin-top: 0; margin-bottom: 16px"
+        class="task-video-list-toolbar-divider"
       />
-      <a-row style="margin-bottom: 16px">
-        <a-col
-          :span="24"
-          style="
-            display: flex;
-            height: 32px;
-            align-items: center;
-            justify-content: end;
-          "
-        >
+      <a-row class="task-video-list-toolbar-row">
+        <a-col :span="24" class="task-video-list-table-actions">
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -182,7 +172,7 @@
                     :key="item.dataIndex"
                     class="setting"
                   >
-                    <div style="margin-right: 4px; cursor: move">
+                    <div class="task-video-list-drag-handle">
                       <icon-drag-arrow />
                     </div>
                     <div>
@@ -314,6 +304,12 @@
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
+  const cardHeaderStyle = {
+    padding: '20px',
+  };
+  const cardBodyStyle = {
+    padding: '25px 20px 20px 20px',
+  };
   const renderData = ref<VideoPage[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
@@ -620,47 +616,36 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
-  :deep(.arco-table-th) {
-    &:last-child {
-      .arco-table-th-item-title {
-        margin-left: 16px;
-      }
-    }
-  }
-  .action-icon {
-    margin-left: 12px;
-    cursor: pointer;
-  }
-  .active {
-    color: #0960bd;
-    background-color: #e3f4fc;
-  }
-  .setting {
-    display: flex;
-    align-items: center;
-    width: 200px;
-    .title {
-      margin-left: 12px;
-      cursor: pointer;
-    }
-  }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
+  @import '../style/task-list-shared.less';
+
+  // 公共骨架已由 page-list.less 全局提供
+
+  .task-video-list-search-divider {
+    height: 84px;
   }
 
-  .copy-btn {
-    cursor: pointer;
+  .task-video-list-search-actions {
+    text-align: right;
   }
-  .copy-btn:hover {
-    color: rgb(var(--arcoblue-6));
+
+  .task-video-list-toolbar-divider {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+
+  .task-video-list-toolbar-row {
+    margin-bottom: 16px;
+  }
+
+  .task-video-list-table-actions {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    justify-content: end;
+  }
+
+  .task-video-list-drag-handle {
+    margin-right: 4px;
+    cursor: move;
   }
 </style>

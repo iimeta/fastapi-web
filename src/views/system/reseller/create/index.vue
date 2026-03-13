@@ -7,10 +7,10 @@
       <a-breadcrumb-item>{{ $t('sys.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('reseller.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-spin :loading="loading" style="width: 100%">
+    <a-spin :loading="loading" class="reseller-form-full-width">
       <a-card
         class="general-card"
-        :body-style="{ padding: '0 20px 20px 20px' }"
+        :body-style="cardBodyStyle"
         :bordered="false"
       >
         <div class="wrapper">
@@ -127,7 +127,10 @@
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
                 <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
                 <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
-                <a-radio :value="10000" style="padding: 0 2px">
+                <a-radio
+                  :value="10000"
+                  class="reseller-form-quota-radio--compact"
+                >
                   <Quota :model-value="10000" />
                 </a-radio>
               </a-radio-group>
@@ -164,7 +167,7 @@
                 :placeholder="$t('reseller.placeholder.quota_expires_at')"
                 :time-picker-props="{ defaultValue: '23:59:59' }"
                 :disabled-date="disabledDate"
-                style="width: 100%"
+                class="reseller-form-date-picker-full-width"
                 show-time
                 :shortcuts="[
                   {
@@ -270,7 +273,10 @@
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
                 <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
                 <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
-                <a-radio :value="10000" style="padding: 0 2px">
+                <a-radio
+                  :value="10000"
+                  class="reseller-form-quota-radio--compact"
+                >
                   <Quota :model-value="10000" />
                 </a-radio>
               </a-radio-group>
@@ -332,13 +338,20 @@
                   72<span class="hour">{{ $t('unit.hour') }}</span>
                 </a-radio>
                 <a-radio :value="120">
-                  120<span style="margin-left: 5px">{{ $t('unit.hour') }}</span>
+                  120<span class="reseller-form-hour-label--wide">{{
+                    $t('unit.hour')
+                  }}</span>
                 </a-radio>
                 <a-radio :value="168">
-                  168<span style="margin-left: 5px">{{ $t('unit.hour') }}</span>
+                  168<span class="reseller-form-hour-label--wide">{{
+                    $t('unit.hour')
+                  }}</span>
                 </a-radio>
                 <a-radio :value="720">
-                  720<span style="margin-left: 6px">{{ $t('unit.hour') }}</span>
+                  720<span
+                    class="reseller-form-hour-label--extra-wide"
+                    >{{ $t('unit.hour') }}</span
+                  >
                 </a-radio>
               </a-radio-group>
             </a-form-item>
@@ -388,14 +401,17 @@
                   180 <span class="day">{{ $t('unit.day') }}</span>
                 </a-radio>
                 <a-radio :value="365">
-                  365 <span style="margin-left: 1px">{{ $t('unit.day') }}</span>
+                  365
+                  <span class="reseller-form-day-label--narrow">{{
+                    $t('unit.day')
+                  }}</span>
                 </a-radio>
               </a-radio-group>
             </a-form-item>
             <a-form-item
               field="groups"
               :label="$t('common.groups')"
-              style="align-items: center"
+              class="reseller-form-groups-form-item"
             >
               <a-select
                 v-model="formData.groups"
@@ -458,6 +474,7 @@
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(false);
+  const cardBodyStyle = { padding: '0 20px 20px 20px' };
   const router = useRouter();
   const appStore = useAppStore();
 
@@ -528,63 +545,8 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
+  @import '../style/reseller-form-shared.less';
 
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
-
-  .general-card {
-    &:first-child {
-      padding-top: 61px;
-    }
-  }
-
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--color-bg-2);
-    :deep(.arco-form) {
-      .arco-form-item {
-        width: 888px;
-        &:first-child {
-          margin-top: 20px;
-        }
-      }
-    }
-  }
-
-  .form {
-    align-items: center;
-  }
-
-  .submit-btn {
-    width: 300px;
-    display: flex;
-    button {
-      flex: 1;
-      margin: 20px 30px;
-    }
-  }
-
-  :deep(.arco-radio-button-content) {
-    padding: 0 8px;
-  }
-
-  .hour {
-    margin-left: 3px;
-  }
-
-  .day {
-    margin-left: 3px;
-  }
+  // 公共骨架与通用 Arco 覆写已由 page-form.less / arco-overrides.less 全局提供
+  // 表单共享样式已由 reseller-form-shared.less 提供
 </style>

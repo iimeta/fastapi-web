@@ -19,10 +19,10 @@
     <a-form-item field="captcha" hide-label>
       <a-input
         v-model="form.captcha"
+        class="register-captcha-input"
         :placeholder="$t('login.email.placeholder.captcha')"
         :max-length="6"
         allow-clear
-        style="flex: 1 1"
       />
       <a-button
         class="captcha-btn"
@@ -33,7 +33,7 @@
         {{ captchaBtnName }}
       </a-button>
     </a-form-item>
-    <a-form-item field="password" hide-label style="margin-bottom: 12px">
+    <a-form-item field="password" hide-label class="register-password-item">
       <a-input-password
         v-model="form.password"
         :placeholder="$t('login.account.placeholder.password')"
@@ -52,11 +52,11 @@
       <a-checkbox v-model="isAgreed">
         {{ $t('login.agreement') }}
       </a-checkbox>
-      <a-link href="/user-agreement" target="_blank" style="margin-top: 1px">
+      <a-link href="/user-agreement" target="_blank" class="register-agreement-link">
         {{ $t('login.user_agreement') }}
       </a-link>
       {{ $t('login.and') }}
-      <a-link href="/privacy-policy" target="_blank" style="margin-top: 1px">
+      <a-link href="/privacy-policy" target="_blank" class="register-agreement-link">
         {{ $t('login.privacy_policy') }}
       </a-link>
     </div>
@@ -204,21 +204,21 @@
 </script>
 
 <style lang="less" scoped>
+  @import '../style/login-form-shared.less';
+
   .login-form {
-    box-sizing: border-box;
-    padding: 0 5px;
     margin-top: 24px;
-    .arco-input-wrapper,
-    :deep(.arco-select-view-single) {
-      background-color: var(--color-bg-white);
-      border: 1px solid var(--color-border-3);
-      height: 40px;
-      border-radius: 4px;
-      font-size: 13px;
+
+    .register-captcha-input {
+      flex: 1 1;
     }
-    .arco-input-wrapper.arco-input-error {
-      background-color: var(--color-danger-light-1);
-      border-color: var(--color-danger-light-4);
+
+    .register-password-item {
+      margin-bottom: 12px;
+    }
+
+    .register-agreement-link {
+      margin-top: 1px;
     }
 
     .captcha-btn {

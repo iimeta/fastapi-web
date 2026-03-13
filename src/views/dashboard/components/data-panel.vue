@@ -50,9 +50,8 @@
       </a-space>
     </a-grid-item>
     <a-grid-item
-      class="panel-col"
+      class="panel-col data-panel-col--no-border-right"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
-      style="border-right: none"
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
@@ -88,9 +87,8 @@
     </a-grid-item>
     <a-grid-item
       v-permission="['reseller', 'admin']"
-      class="panel-col"
+      class="panel-col data-panel-col--no-border-right"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
-      style="border-right: none"
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
@@ -105,9 +103,8 @@
       </a-space>
     </a-grid-item>
     <a-grid-item
-      class="panel-col"
+      class="panel-col data-panel-col--left-border"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
-      style="border-right: none; border-left: 1px solid rgb(var(--gray-2))"
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
@@ -123,9 +120,8 @@
     </a-grid-item>
     <a-grid-item
       v-permission="['admin']"
-      class="panel-col"
+      class="panel-col data-panel-col--left-border"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
-      style="border-right: none; border-left: 1px solid rgb(var(--gray-2))"
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
@@ -141,9 +137,8 @@
     </a-grid-item>
     <a-grid-item
       v-permission="['reseller']"
-      class="panel-col"
+      class="panel-col data-panel-col--left-border"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
-      style="border-right: none; border-left: 1px solid rgb(var(--gray-2))"
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
@@ -173,9 +168,8 @@
       </a-space>
     </a-grid-item>
     <a-grid-item
-      class="panel-col"
+      class="panel-col data-panel-col--no-border-right"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
-      style="border-right: none"
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
@@ -186,9 +180,8 @@
       </a-space>
     </a-grid-item>
     <a-grid-item
-      class="panel-col"
+      class="panel-col data-panel-col--left-border"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
-      style="border-right: none; border-left: 1px solid rgb(var(--gray-2))"
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
@@ -199,9 +192,8 @@
       </a-space>
     </a-grid-item>
     <a-grid-item
-      class="panel-col"
+      class="panel-col data-panel-col--left-border"
       :span="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6, xxl: 6 }"
-      style="border-right: none; border-left: 1px solid rgb(var(--gray-2))"
     >
       <a-space>
         <a-avatar :size="54" class="col-avatar">
@@ -322,7 +314,7 @@
 
 <script lang="ts">
   export default {
-    name: 'DataPanel', // If you want the include property of keep-alive to take effect, you must name the component
+    name: 'DataPanel',
   };
 </script>
 
@@ -331,26 +323,41 @@
     margin-bottom: 0;
     padding: 8px 20px 0 20px;
   }
+
   .panel-col {
     padding-left: 12px;
     height: 50px;
     border-right: 1px solid rgb(var(--gray-2));
   }
+
+  .data-panel-col--no-border-right {
+    border-right: none;
+  }
+
+  .data-panel-col--left-border {
+    border-right: none;
+    border-left: 1px solid rgb(var(--gray-2));
+  }
+
   .col-avatar {
     margin-right: 5px;
     background-color: var(--color-fill-2);
   }
+
   .up-icon {
     color: rgb(var(--red-6));
   }
+
   .unit {
     margin-left: 8px;
     color: rgb(var(--gray-8));
     font-size: 12px;
   }
+
   :deep(.panel-border) {
     margin: 4px 0 0 0;
   }
+
   .arco-statistic {
     display: inline-block;
     color: var(--color-text-2);

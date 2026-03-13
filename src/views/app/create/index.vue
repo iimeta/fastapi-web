@@ -7,10 +7,10 @@
       <a-breadcrumb-item>{{ $t('app.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('app.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-spin :loading="loading" style="width: 100%">
+    <a-spin :loading="loading" class="app-form-spin">
       <a-card
         class="general-card"
-        :body-style="{ padding: '0 20px 20px 20px' }"
+        :body-style="cardBodyStyle"
         :bordered="false"
       >
         <div class="wrapper">
@@ -113,7 +113,7 @@
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
                 <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
                 <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
-                <a-radio :value="10000" style="padding: 0 2px">
+                <a-radio :value="10000" class="app-form-radio-compact">
                   <Quota :model-value="10000" />
                 </a-radio>
               </a-radio-group>
@@ -128,7 +128,7 @@
                 :placeholder="$t('app.placeholder.quota_expires_at')"
                 :time-picker-props="{ defaultValue: '23:59:59' }"
                 :disabled-date="disabledDate"
-                style="width: 100%"
+                class="app-form-full-width"
                 show-time
                 :shortcuts="[
                   {
@@ -237,7 +237,7 @@
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
                 <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
                 <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
-                <a-radio :value="10000" style="padding: 0 2px">
+                <a-radio :value="10000" class="app-form-radio-compact">
                   <Quota :model-value="10000" />
                 </a-radio>
               </a-radio-group>
@@ -301,13 +301,22 @@
                   72<span class="hour">{{ $t('unit.hour') }}</span>
                 </a-radio>
                 <a-radio :value="120">
-                  120<span style="margin-left: 5px">{{ $t('unit.hour') }}</span>
+                  120<span
+                    class="app-form-hour-label app-form-hour-label--wide"
+                    >{{ $t('unit.hour') }}</span
+                  >
                 </a-radio>
                 <a-radio :value="168">
-                  168<span style="margin-left: 5px">{{ $t('unit.hour') }}</span>
+                  168<span
+                    class="app-form-hour-label app-form-hour-label--wide"
+                    >{{ $t('unit.hour') }}</span
+                  >
                 </a-radio>
                 <a-radio :value="720">
-                  720<span style="margin-left: 6px">{{ $t('unit.hour') }}</span>
+                  720<span
+                    class="app-form-hour-label app-form-hour-label--extra-wide"
+                    >{{ $t('unit.hour') }}</span
+                  >
                 </a-radio>
               </a-radio-group>
             </a-form-item>
@@ -359,7 +368,11 @@
                   180 <span class="day">{{ $t('unit.day') }}</span>
                 </a-radio>
                 <a-radio :value="365">
-                  365 <span style="margin-left: 1px">{{ $t('unit.day') }}</span>
+                  365
+                  <span
+                    class="app-form-day-label app-form-day-label--compact"
+                    >{{ $t('unit.day') }}</span
+                  >
                 </a-radio>
               </a-radio-group>
             </a-form-item>
@@ -475,6 +488,9 @@
   const router = useRouter();
   const userStore = useUserStore();
   const appStore = useAppStore();
+  const cardBodyStyle = {
+    padding: '0 20px 20px 20px',
+  };
 
   const treeData = ref<Tree[]>([]);
   const getModelTree = async () => {
@@ -561,77 +577,8 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
+  @import '../style/app-form-shared.less';
 
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
-
-  .general-card {
-    &:first-child {
-      padding-top: 61px;
-    }
-  }
-
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--color-bg-2);
-    :deep(.arco-form) {
-      .arco-form-item {
-        width: 888px;
-        &:first-child {
-          margin-top: 20px;
-        }
-      }
-    }
-  }
-
-  .form {
-    align-items: center;
-  }
-
-  .arco-divider-horizontal.arco-divider-with-text {
-    margin: 20px 0 30px 0;
-  }
-
-  .arco-divider-horizontal {
-    min-width: 97%;
-    max-width: 97%;
-    margin-bottom: 30px;
-    &:first-child {
-      margin-top: 20px;
-      margin-bottom: 40px;
-    }
-  }
-
-  .submit-btn {
-    width: 300px;
-    display: flex;
-    button {
-      flex: 1;
-      margin: 20px 30px;
-    }
-  }
-
-  :deep(.arco-radio-button-content) {
-    padding: 0 8px;
-  }
-
-  .hour {
-    margin-left: 3px;
-  }
-
-  .day {
-    margin-left: 3px;
-  }
+  // 公共骨架与通用 Arco 覆写已由 page-form.less / arco-overrides.less 全局提供
+  // 表单共享样式已由 app-form-shared.less 提供
 </style>

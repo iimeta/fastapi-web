@@ -3,10 +3,8 @@
     <a-card
       class="general-card"
       :bordered="false"
-      :header-style="{ padding: '20px' }"
-      :body-style="{
-        padding: '0px',
-      }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
     >
       <a-row>
         <a-col :flex="1">
@@ -87,8 +85,8 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 32px" direction="vertical" />
-        <a-col :flex="'86px'" style="text-align: right">
+        <a-divider class="tests-toolbar-divider" direction="vertical" />
+        <a-col :flex="'86px'" class="tests-toolbar-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
@@ -99,7 +97,7 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-divider style="margin-top: 0" />
+      <a-divider class="tests-content-divider" />
       <a-form
         ref="testModelFormRef"
         :model="testModelParams"
@@ -181,7 +179,7 @@
           </a-col>
           <a-col
             :span="testModelParams.test_method !== 2 ? 2 : 16"
-            style="text-align: right"
+            class="tests-batch-action"
           >
             <a-button
               type="primary"
@@ -290,6 +288,14 @@
   import cloneDeep from 'lodash/cloneDeep';
   import { useClipboard } from '@vueuse/core';
   import { queryProviderList, ProviderList } from '@/api/provider';
+
+  const cardHeaderStyle = {
+    padding: '20px',
+  };
+
+  const cardBodyStyle = {
+    padding: '0px',
+  };
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -735,21 +741,18 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
+  // 公共骨架与共享列表 Arco 覆写已由 page-list.less 全局提供
+
+  .tests-toolbar-divider {
+    height: 32px;
   }
-  :deep(.arco-table-th) {
-    &:last-child {
-      .arco-table-th-item-title {
-        margin-left: 16px;
-      }
-    }
+
+  .tests-toolbar-actions,
+  .tests-batch-action {
+    text-align: right;
   }
-  :deep(.arco-table-td) {
-    &:last-child {
-      .arco-table-td-content {
-        margin: 3px 0;
-      }
-    }
+
+  .tests-content-divider {
+    margin-top: 0;
   }
 </style>

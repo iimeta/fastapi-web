@@ -7,10 +7,10 @@
       <a-breadcrumb-item>{{ $t('group.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('group.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-spin :loading="loading" style="width: 100%">
+    <a-spin :loading="loading" class="group-form-full-width">
       <a-card
         class="general-card"
-        :body-style="{ padding: '0 20px 20px 20px' }"
+        :body-style="cardBodyStyle"
         :bordered="false"
       >
         <div class="wrapper">
@@ -238,7 +238,10 @@
                 <a-radio :value="500000">
                   <Quota :model-value="500000" />
                 </a-radio>
-                <a-radio :value="1000000" style="padding: 0 1px">
+                <a-radio
+                  :value="1000000"
+                  class="group-form-quota-radio--compact"
+                >
                   <Quota :model-value="1000000" />
                 </a-radio>
               </a-radio-group>
@@ -295,7 +298,10 @@
                 <a-radio :value="500000">
                   <Quota :model-value="500000" />
                 </a-radio>
-                <a-radio :value="1000000" style="padding: 0 1px">
+                <a-radio
+                  :value="1000000"
+                  class="group-form-quota-radio--compact"
+                >
                   <Quota :model-value="1000000" />
                 </a-radio>
               </a-radio-group>
@@ -362,9 +368,10 @@
                   168<span class="hour">{{ $t('unit.hour') }}</span>
                 </a-radio>
                 <a-radio :value="720">
-                  720<span style="margin-left: 10px">{{
-                    $t('unit.hour')
-                  }}</span>
+                  720<span
+                    class="group-form-hour-label group-form-hour-label--wide"
+                    >{{ $t('unit.hour') }}</span
+                  >
                 </a-radio>
               </a-radio-group>
             </a-form-item>
@@ -410,10 +417,18 @@
                   90<span class="day">{{ $t('unit.day') }}</span>
                 </a-radio>
                 <a-radio :value="180">
-                  180 <span style="margin-left: 6px">{{ $t('unit.day') }}</span>
+                  180
+                  <span
+                    class="group-form-day-label group-form-day-label--wide"
+                    >{{ $t('unit.day') }}</span
+                  >
                 </a-radio>
                 <a-radio :value="365">
-                  365 <span style="margin-left: 6px">{{ $t('unit.day') }}</span>
+                  365
+                  <span
+                    class="group-form-day-label group-form-day-label--wide"
+                    >{{ $t('unit.day') }}</span
+                  >
                 </a-radio>
               </a-radio-group>
             </a-form-item>
@@ -549,7 +564,10 @@
                 <a-radio :value="500000">
                   <Quota :model-value="500000" />
                 </a-radio>
-                <a-radio :value="1000000" style="padding: 0 1px">
+                <a-radio
+                  :value="1000000"
+                  class="group-form-quota-radio--compact"
+                >
                   <Quota :model-value="1000000" />
                 </a-radio>
               </a-radio-group>
@@ -698,13 +716,13 @@
               <a-input
                 v-model="formData.forward_config.keywords[index]"
                 :placeholder="$t('group.placeholder.keywords')"
-                style="width: 46%; margin-right: 5px"
+                class="group-form-keyword-input"
               />
               <a-select
                 v-model="formData.forward_config.target_models[index]"
                 :placeholder="$t('group.placeholder.target_model')"
                 :scrollbar="false"
-                style="width: 40%; margin-right: 4px"
+                class="group-form-keyword-model-select"
                 allow-search
               >
                 <a-option
@@ -717,7 +735,7 @@
               <a-button
                 type="primary"
                 shape="circle"
-                style="margin: 0 10px 0 10px"
+                class="group-form-keyword-add-btn"
                 @click="handleKeywordsAdd"
               >
                 <icon-plus />
@@ -737,7 +755,7 @@
                 :time-picker-props="{ defaultValue: '23:59:59' }"
                 :disabled-date="disabledDate"
                 allow-clear
-                style="width: 100%"
+                class="group-form-date-picker"
                 show-time
                 :shortcuts="[
                   {
@@ -839,6 +857,9 @@
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(false);
+  const cardBodyStyle = {
+    padding: '0 20px 20px 20px',
+  };
 
   const router = useRouter();
   const appStore = useAppStore();
@@ -985,77 +1006,8 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
+  @import '../style/group-form-shared.less';
 
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
-
-  .general-card {
-    &:first-child {
-      padding-top: 20px;
-    }
-  }
-
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--color-bg-2);
-    :deep(.arco-form) {
-      .arco-form-item {
-        width: 888px;
-        &:first-child {
-          margin-top: 20px;
-        }
-      }
-    }
-  }
-
-  .form {
-    align-items: center;
-  }
-
-  .arco-divider-horizontal.arco-divider-with-text {
-    margin: 20px 0 30px 0;
-  }
-
-  .arco-divider-horizontal {
-    min-width: 97%;
-    max-width: 97%;
-    margin-bottom: 30px;
-    &:first-child {
-      margin-top: 20px;
-      margin-bottom: 40px;
-    }
-  }
-
-  .submit-btn {
-    width: 300px;
-    display: flex;
-    button {
-      flex: 1;
-      margin: 20px 30px;
-    }
-  }
-
-  :deep(.arco-radio-button-content) {
-    padding: 0 9px;
-  }
-
-  .hour {
-    margin-left: 8px;
-  }
-
-  .day {
-    margin-left: 5px;
-  }
+  // 公共骨架已由 page-form.less 全局提供
+  // 表单共享样式已由 group-form-shared.less 提供
 </style>

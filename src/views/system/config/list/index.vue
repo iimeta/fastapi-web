@@ -12,10 +12,8 @@
         <a-card
           class="general-card"
           :bordered="false"
-          :header-style="{ padding: '20px' }"
-          :body-style="{
-            padding: '25px 20px 20px 14px',
-          }"
+          :header-style="cardHeaderStyle"
+          :body-style="cardBodyStyle"
         >
           <a-row justify="space-between">
             <a-col :span="24">
@@ -52,6 +50,13 @@
   import General from './components/general.vue';
   import Task from './components/task.vue';
   import API from './components/api.vue';
+
+  const cardHeaderStyle = {
+    padding: '20px',
+  };
+  const cardBodyStyle = {
+    padding: '25px 20px 20px 14px',
+  };
 </script>
 
 <script lang="ts">
@@ -61,8 +66,9 @@
 </script>
 
 <style scoped lang="less">
+  // 公共骨架(.container padding / .container-breadcrumb)已由 page-list.less 全局提供
+
   .container {
-    padding: 0 10px 20px 10px;
     :deep(.arco-list-content) {
       overflow-x: hidden;
     }
@@ -100,15 +106,6 @@
         &:last-child {
           flex: 1;
         }
-      }
-    }
-  }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
       }
     }
   }

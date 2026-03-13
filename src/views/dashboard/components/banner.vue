@@ -1,7 +1,7 @@
 <template>
   <a-col class="banner">
     <a-col :span="16">
-      <a-typography-title :heading="5" style="margin-top: 0">
+      <a-typography-title :heading="5" class="dashboard-banner-title">
         {{ $t('dashboard.welcome') }} {{ userInfo.name }}
       </a-typography-title>
     </a-col>
@@ -23,7 +23,7 @@
 
 <script lang="ts">
   export default {
-    name: 'Banner', // If you want the include property of keep-alive to take effect, you must name the component
+    name: 'Banner',
   };
 </script>
 
@@ -33,6 +33,10 @@
     padding: 15px 20px 0 20px;
     background-color: var(--color-bg-2);
     border-radius: 4px 4px 0 0;
+  }
+
+  .dashboard-banner-title {
+    margin-top: 0;
   }
 
   :deep(.arco-icon-home) {

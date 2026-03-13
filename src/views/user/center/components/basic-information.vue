@@ -3,7 +3,7 @@
     ref="formRef"
     :model="form"
     :rules="rules"
-    :label-col-props="{ span: 8 }"
+    :label-col-props="{ span: 4 }"
     :wrapper-col-props="{ span: 16 }"
     size="large"
     class="form"

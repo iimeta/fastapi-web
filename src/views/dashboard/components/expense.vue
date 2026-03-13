@@ -2,11 +2,8 @@
   <a-card
     class="general-card"
     :title="$t('dashboard.expense')"
-    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
-    :body-style="{
-      padding:
-        userStore.role === 'user' ? '0 20px 9px 20px' : '0 20px 15px 20px',
-    }"
+    :header-style="cardHeaderStyle"
+    :body-style="cardBodyStyle"
     :bordered="false"
   >
     <template #extra>
@@ -21,7 +18,7 @@
       <div>
         <div class="arco-statistic">
           <div class="arco-statistic-content">
-            <div class="arco-statistic-value" style="font-size: 30px">
+            <div class="arco-statistic-value dashboard-expense-value">
               <Quota :model-value="expense.quota" :n="4" />
             </div>
           </div>
@@ -154,6 +151,11 @@
   const userStore = useUserStore();
   const appStore = useAppStore();
 
+  const cardHeaderStyle = { padding: '10px 20px 0 20px', height: '36px' };
+  const cardBodyStyle = {
+    padding: userStore.role === 'user' ? '0 20px 9px 20px' : '0 20px 15px 20px',
+  };
+
   const expense = ref<Expense>({} as Expense);
   const quotaWarningVisible = ref(false);
   const quotaWarningForm = ref<FormInstance>();
@@ -214,6 +216,10 @@
 </script>
 
 <style lang="less" scoped>
+  .dashboard-expense-value {
+    font-size: 30px;
+  }
+
   .quota-box {
     background: #f7f8fa;
     padding: 6px 0;

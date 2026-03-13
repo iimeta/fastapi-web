@@ -2,10 +2,8 @@
   <a-card
     class="general-card"
     :title="$t('dashboard.quick.operation')"
-    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
-    :body-style="{
-      padding: userStore.role === 'admin' ? '11px 20px' : '2px 20px',
-    }"
+    :header-style="cardHeaderStyle"
+    :body-style="cardBodyStyle"
     :bordered="false"
   >
     <a-row :gutter="8">
@@ -36,6 +34,11 @@
   import { useUserStore } from '@/store';
 
   const userStore = useUserStore();
+
+  const cardHeaderStyle = { padding: '10px 20px 0 20px', height: '36px' };
+  const cardBodyStyle = {
+    padding: userStore.role === 'admin' ? '11px 20px' : '2px 20px',
+  };
 
   const links = [
     {
@@ -133,7 +136,7 @@
 
 <script lang="ts">
   export default {
-    name: 'QuickOperation', // If you want the include property of keep-alive to take effect, you must name the component
+    name: 'QuickOperation',
   };
 </script>
 

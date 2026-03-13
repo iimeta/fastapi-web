@@ -2,8 +2,8 @@
   <a-card
     class="general-card"
     :title="appStore.getAnnouncementTitle"
-    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
-    :body-style="{ padding: '10px 20px 7px 20px' }"
+    :header-style="cardHeaderStyle"
+    :body-style="cardBodyStyle"
     :bordered="false"
   >
     <template #extra>
@@ -21,7 +21,9 @@
         :key="idx"
         class="item"
       >
-        <a-tag color="blue" size="small">{{ $t('dashboard.tag.notice') }}</a-tag>
+        <a-tag color="blue" size="small">{{
+          $t('dashboard.tag.notice')
+        }}</a-tag>
         <span class="item-content">
           <a-link :href="announcement.jump_url" target="_blank">
             {{ announcement.content }}
@@ -36,11 +38,14 @@
   import { useAppStore } from '@/store';
 
   const appStore = useAppStore();
+
+  const cardHeaderStyle = { padding: '10px 20px 0 20px', height: '36px' };
+  const cardBodyStyle = { padding: '10px 20px 7px 20px' };
 </script>
 
 <script lang="ts">
   export default {
-    name: 'Announcement', // If you want the include property of keep-alive to take effect, you must name the component
+    name: 'Announcement',
   };
 </script>
 

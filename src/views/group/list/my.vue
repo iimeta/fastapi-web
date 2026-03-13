@@ -9,10 +9,8 @@
     <a-card
       class="general-card"
       :bordered="false"
-      :header-style="{ padding: '20px' }"
-      :body-style="{
-        padding: '25px 20px 20px 20px',
-      }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
     >
       <a-row>
         <a-col :flex="1">
@@ -64,8 +62,8 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 32px" direction="vertical" />
-        <a-col :flex="'86px'" style="text-align: right">
+        <a-divider class="group-my-list-search-divider" direction="vertical" />
+        <a-col :flex="'86px'" class="group-my-list-search-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
@@ -82,13 +80,10 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-divider style="margin-top: 0" />
-      <a-row style="margin-bottom: 16px">
+      <a-divider class="group-my-list-toolbar-divider" />
+      <a-row class="group-my-list-toolbar-row">
         <a-col :span="22"> {{ $t('group.desc') }} </a-col>
-        <a-col
-          :span="2"
-          style="display: flex; align-items: center; justify-content: end"
-        >
+        <a-col :span="2" class="group-my-list-table-actions">
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -123,7 +118,7 @@
                     :key="item.dataIndex"
                     class="setting"
                   >
-                    <div style="margin-right: 4px; cursor: move">
+                    <div class="group-my-list-drag-handle">
                       <icon-drag-arrow />
                     </div>
                     <div>
@@ -190,9 +185,7 @@
       <a-modal
         v-model:visible="modelsVisible"
         :title="$t('common.models')"
-        :modal-style="{
-          padding: '25px 15px 20px 15px',
-        }"
+        :modal-style="modelsModalStyle"
         unmount-on-close
         hide-cancel
         simple
@@ -222,6 +215,15 @@
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
+  const cardHeaderStyle = {
+    padding: '20px',
+  };
+  const cardBodyStyle = {
+    padding: '25px 20px 20px 20px',
+  };
+  const modelsModalStyle = {
+    padding: '25px 15px 20px 15px',
+  };
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -463,47 +465,40 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
+  // 公共骨架已由 page-list.less 全局提供
+
+  .group-my-list-search-divider {
+    height: 32px;
   }
-  :deep(.arco-table-th) {
-    &:last-child {
-      .arco-table-th-item-title {
-        margin-left: 16px;
-      }
-    }
+
+  .group-my-list-search-actions {
+    text-align: right;
   }
-  .action-icon {
-    margin-left: 12px;
-    cursor: pointer;
+
+  .group-my-list-toolbar-divider {
+    margin-top: 0;
   }
-  .active {
-    color: #0960bd;
-    background-color: #e3f4fc;
+
+  .group-my-list-toolbar-row {
+    margin-bottom: 16px;
   }
-  .setting {
+
+  .group-my-list-table-actions {
     display: flex;
     align-items: center;
-    width: 200px;
-    .title {
-      margin-left: 12px;
-      cursor: pointer;
-    }
+    justify-content: end;
   }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
+
+  .group-my-list-drag-handle {
+    margin-right: 4px;
+    cursor: move;
   }
 
   .copy-btn {
     color: gray;
     cursor: pointer;
   }
+
   .copy-btn:hover {
     color: rgb(var(--arcoblue-6));
   }

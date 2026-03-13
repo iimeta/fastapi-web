@@ -6,7 +6,7 @@
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('user.center.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-row style="margin-bottom: 10px">
+    <a-row class="user-center-panel-row">
       <a-col :span="24">
         <UserPanel />
       </a-col>
@@ -39,18 +39,14 @@
 </script>
 
 <style scoped lang="less">
+  @import (reference) '../../../assets/style/tokens.less';
+
   .container {
-    padding: 0 10px 20px 10px;
+    padding: @page-padding;
   }
 
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
+  .user-center-panel-row {
+    margin-bottom: 10px;
   }
 
   .wrapper {

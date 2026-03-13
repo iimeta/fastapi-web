@@ -5,7 +5,7 @@
     :data="totalSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <!-- 文本 -->
     <template #text="{ record }">
@@ -109,7 +109,7 @@
     :data="textSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #service_tier="{ record }">
       {{ $t(`model.dict.service_tier.${record.pricing.service_tier}`) }}
@@ -144,7 +144,7 @@
     :data="textCacheSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #service_tier="{ record }">
       {{ $t(`model.dict.service_tier.${record.pricing.service_tier}`) }}
@@ -167,7 +167,7 @@
     :data="audioSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #input_tokens="{ record }">
       {{ parseQuota(record.input_tokens) || '0' }}
@@ -198,7 +198,7 @@
     :data="audioCacheSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #read_tokens="{ record }">
       {{ parseQuota(record.read_tokens) || '0' }}
@@ -218,7 +218,7 @@
     :data="tieredTextSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #mode="{ record }">
       {{ $t(`model.dict.mode.${record.pricing.mode}`) }}
@@ -259,7 +259,7 @@
     :data="tieredTextCacheSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #mode="{ record }">
       {{ $t(`model.dict.mode.${record.pricing.mode}`) }}
@@ -291,7 +291,7 @@
     :data="imageSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #input_tokens="{ record }">
       {{ parseQuota(record.input_tokens) || '0' }}
@@ -320,7 +320,7 @@
     :data="imageGenerationSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #quality="{ record }">
       {{ record.pricing.quality || '-' }}
@@ -345,7 +345,7 @@
     :data="imageCacheSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #read_tokens="{ record }">
       {{ parseQuota(record.read_tokens) || '0' }}
@@ -365,7 +365,7 @@
     :data="visionSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #mode="{ record }">
       {{ record.pricing.mode }}
@@ -386,7 +386,7 @@
     :data="videoSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #input_tokens="{ record }">
       {{ parseQuota(record.input_tokens) || '0' }}
@@ -415,7 +415,7 @@
     :data="videoGenerationSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #width="{ record }">
       {{ record.pricing.width }} × {{ record.pricing.height }}
@@ -438,7 +438,7 @@
     :data="videoCacheSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #read_tokens="{ record }">
       {{ parseQuota(record.read_tokens) || '0' }}
@@ -458,7 +458,7 @@
     :data="searchSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #context_size="{ record }">
       {{ record.pricing.context_size }}
@@ -478,7 +478,7 @@
     :data="midjourneySpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #name="{ record }">
       {{ record.pricing.name }}
@@ -504,7 +504,7 @@
     :data="onceSpend"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="spend-detail-table-spacing"
   >
     <template #input_tokens="{ record }">
       {{ parseQuota(record.input_tokens) || '0' }}
@@ -551,12 +551,14 @@
 
   const spend = ref(props.modelValue);
 
+  const tableHeaderCellStyle = { background: 'var(--color-bg-2)' };
+
   // 总花费
   const totalSpend = ref<Spend[]>([]);
   const totalSpendColumns = ref<TableColumnData[]>([
     {
       title: t('common.total.spend'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
     },
   ]);
 
@@ -565,7 +567,7 @@
   const textSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.text'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.service_tier'),
@@ -632,7 +634,7 @@
   const textCacheSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.text_cache'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.service_tier'),
@@ -671,7 +673,7 @@
   const audioSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.audio'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t(
@@ -725,7 +727,7 @@
   const audioCacheSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.audio_cache'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('log.columns.spend.read_tokens'),
@@ -757,7 +759,7 @@
   const tieredTextSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.tiered_text'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.mode'),
@@ -831,7 +833,7 @@
   const tieredTextCacheSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.tiered_text_cache'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.mode'),
@@ -891,7 +893,7 @@
   const imageSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.image'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('log.columns.spend.input_tokens'),
@@ -937,7 +939,7 @@
   const imageGenerationSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.image_generation'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.image.generation.quality'),
@@ -983,7 +985,7 @@
   const imageCacheSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.image_cache'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('log.columns.spend.read_tokens'),
@@ -1015,7 +1017,7 @@
   const visionSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.vision'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.mode'),
@@ -1047,7 +1049,7 @@
   const videoSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.video'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t(
@@ -1101,7 +1103,7 @@
   const videoGenerationSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.video_generation'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.video_generation.width_height'),
@@ -1140,7 +1142,7 @@
   const videoCacheSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.video_cache'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('log.columns.spend.read_tokens'),
@@ -1172,7 +1174,7 @@
   const searchSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.search'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.search.context_size'),
@@ -1204,7 +1206,7 @@
   const midjourneySpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.midjourney'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.midjourney.name'),
@@ -1250,7 +1252,7 @@
   const onceSpendColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.once'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('log.columns.spend.input_tokens'),
@@ -1543,4 +1545,8 @@
   };
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped>
+  .spend-detail-table-spacing {
+    margin-bottom: 15px;
+  }
+</style>

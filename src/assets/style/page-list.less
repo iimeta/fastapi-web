@@ -1,0 +1,93 @@
+@import './tokens.less';
+@import (reference) './breakpoint.less';
+
+.container {
+  padding: @page-padding;
+}
+
+.arco-table-th {
+  &:last-child {
+    .arco-table-th-item-title {
+      margin-left: 16px;
+    }
+  }
+}
+
+.action-icon {
+  margin-left: 12px;
+  cursor: pointer;
+}
+
+.active {
+  color: @active-text-color;
+  background-color: @active-bg-color;
+}
+
+.setting {
+  display: flex;
+  align-items: center;
+  width: 200px;
+
+  .title {
+    margin-left: 12px;
+    cursor: pointer;
+  }
+}
+
+.container-breadcrumb {
+  margin: @breadcrumb-margin;
+}
+
+@media (max-width: @screen-md) {
+  .container {
+    .arco-table-container {
+      overflow-x: auto;
+    }
+  }
+
+  .setting {
+    width: auto;
+  }
+}
+
+.list-search-divider {
+  height: 84px;
+}
+
+.list-search-actions {
+  text-align: right;
+}
+
+.list-toolbar-divider.arco-divider-horizontal {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.list-toolbar-row {
+  margin-bottom: 16px;
+}
+
+.list-table-actions {
+  display: flex;
+  height: 32px;
+  align-items: center;
+  justify-content: end;
+}
+
+.list-drag-handle {
+  margin-right: 4px;
+  cursor: move;
+}
+
+.list-full-width {
+  width: 100%;
+}
+
+.copy-btn {
+  color: gray;
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(var(--arcoblue-6));
+  }
+}

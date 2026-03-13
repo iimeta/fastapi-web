@@ -1,3 +1,8 @@
+@import './tokens.less';
+@import './page-form.less';
+@import './page-list.less';
+@import './arco-overrides.less';
+
 * {
   box-sizing: border-box;
 }
@@ -65,7 +70,7 @@ body {
     display: flex;
     align-items: center;
     text-align: right;
-    color: #1d2129;
+    color: @text-primary-color;
     font-weight: bold;
   }
   .tooltip-item-icon {
@@ -92,6 +97,12 @@ body {
 
 .split-line {
   border-color: rgb(var(--gray-2));
+}
+
+.detail-scroll-500 {
+  display: block;
+  max-height: 500px;
+  overflow: auto;
 }
 
 .arco-table-cell {
@@ -122,24 +133,27 @@ body {
   padding: 20px;
 }
 
-:root {
-  --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(
-    120deg,
-    #bd34fe 30%,
-    #41d1ff
-  );
-  --vp-home-hero-image-background-image: linear-gradient(
-    -45deg,
-    #bd34fe 50%,
-    #47caff 50%
-  );
-}
-
 .currency-symbol {
   padding-right: 2px;
 }
 
 .arco-btn-size-small {
   padding: 0 6px;
+}
+
+.detail-container {
+  margin: 10px 0 30px 10px;
+}
+
+.detail-textarea {
+  display: block;
+  overflow: auto;
+
+  &--compact {
+    max-height: 110px;
+  }
+
+  &--tall {
+    max-height: 220px;
+  }
 }

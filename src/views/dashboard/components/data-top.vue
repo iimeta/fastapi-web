@@ -1,9 +1,9 @@
 <template>
-  <a-spin :loading="loading" style="width: 100%">
+  <a-spin :loading="loading" class="dashboard-data-top-spin">
     <a-card
       class="general-card"
-      :header-style="{ padding: '15px 20px 8px 20px' }"
-      :body-style="{ padding: '10px 20px 21px 20px' }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
       :bordered="false"
     >
       <template #title>
@@ -149,6 +149,9 @@
   const { loading, setLoading } = useLoading();
   const userRole = localStorage.getItem('userRole');
 
+  const cardHeaderStyle = { padding: '15px 20px 8px 20px' };
+  const cardBodyStyle = { padding: '10px 20px 21px 20px' };
+
   const dateRange = ref(15);
 
   let day = 15;
@@ -191,20 +194,26 @@
 
 <script lang="ts">
   export default {
-    name: 'DataTop', // If you want the include property of keep-alive to take effect, you must name the component
+    name: 'DataTop',
   };
 </script>
 
 <style scoped lang="less">
+  .dashboard-data-top-spin {
+    width: 100%;
+  }
+
   .general-card {
     height: 582px;
   }
+
   :deep(.arco-table-tr) {
     height: 42px;
     .arco-typography {
       margin-bottom: 0;
     }
   }
+
   .increases-cell {
     display: flex;
     align-items: center;
@@ -212,6 +221,7 @@
       margin-right: 4px;
     }
   }
+
   .arco-card {
     position: relative;
     background: var(--color-bg-2);

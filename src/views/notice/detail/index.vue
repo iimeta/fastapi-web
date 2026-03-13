@@ -1,15 +1,15 @@
 <template>
-  <div style="margin: 10px 0 30px 10px">
+  <div class="detail-container">
     <a-descriptions
       :column="2"
       bordered
-      :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
+      :value-style="descriptionValueStyle"
     >
       <a-descriptions-item :label="$t('notice.label.title')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span v-else class="detail-textarea detail-textarea--compact">
           {{ currentData.title }}
         </span>
       </a-descriptions-item>
@@ -19,7 +19,7 @@
         </a-skeleton>
         <span
           v-else
-          style="max-height: 500px; display: block; overflow: auto"
+          class="detail-scroll-500"
           v-html="currentData.content"
         >
         </span>
@@ -44,7 +44,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 200px; display: block; overflow: auto">
+        <span v-else class="detail-scroll-200">
           {{
             currentData.scope === 1 || currentData.scope === 2
               ? $t('common.all')
@@ -58,7 +58,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 200px; display: block; overflow: auto">
+        <span v-else class="detail-scroll-200">
           {{
             currentData.scope === 1 || currentData.scope === 3
               ? $t('common.all')
@@ -72,7 +72,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span v-else class="detail-textarea detail-textarea--compact">
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
@@ -125,6 +125,10 @@
 
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<NoticeDetail>({} as NoticeDetail);
+  const descriptionValueStyle = {
+    width: '350px',
+    padding: '5px 8px 5px 20px',
+  };
   const props = defineProps({
     id: {
       type: String,
@@ -154,4 +158,11 @@
   };
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+  // 公共骨架已由 global.less 全局提供
+  .detail-scroll-200 {
+    display: block;
+    max-height: 200px;
+    overflow: auto;
+  }
+</style>

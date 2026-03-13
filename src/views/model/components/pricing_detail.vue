@@ -6,7 +6,7 @@
     :data="textPricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #service_tier="{ record }">
       {{ $t(`model.dict.service_tier.${record.service_tier}`) }}
@@ -29,7 +29,7 @@
     :data="textCachePricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #service_tier="{ record }">
       {{ $t(`model.dict.service_tier.${record.service_tier}`) }}
@@ -46,7 +46,7 @@
     :data="audioPricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #input_ratio="{ record }">
       <Quota :model-value="record.input_ratio" /> / M
@@ -70,7 +70,7 @@
     :data="audioCachePricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #read_ratio="{ record }">
       <Quota :model-value="record.read_ratio" /> / M
@@ -84,7 +84,7 @@
     :data="tieredTextPricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #mode="{ record }">
       {{ $t(`model.dict.mode.${record.mode}`) }}
@@ -108,7 +108,7 @@
     :data="tieredTextCachePricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #mode="{ record }">
       {{ $t(`model.dict.mode.${record.mode}`) }}
@@ -129,7 +129,7 @@
     :data="imagePricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #input_ratio="{ record }">
       <Quota :model-value="record.input_ratio" /> / M
@@ -149,7 +149,7 @@
     :data="imageGenerationPricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #width="{ record }">
       {{ record.width }} × {{ record.height }}
@@ -172,7 +172,7 @@
     :data="imageCachePricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #read_ratio="{ record }">
       <Quota :model-value="record.read_ratio" /> / M
@@ -186,7 +186,7 @@
     :data="visionPricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #once_ratio="{ record }">
       <Quota :model-value="record.once_ratio" /> / {{ $t('unit.piece') }}
@@ -203,7 +203,7 @@
     :data="videoPricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #input_ratio="{ record }">
       <Quota :model-value="record.input_ratio" /> / M
@@ -223,7 +223,7 @@
     :data="videoGenerationPricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #width="{ record }">
       {{ record.width }} × {{ record.height }}
@@ -246,7 +246,7 @@
     :data="videoCachePricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #read_ratio="{ record }">
       <Quota :model-value="record.read_ratio" /> / M
@@ -260,7 +260,7 @@
     :data="searchPricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #once_ratio="{ record }">
       <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
@@ -277,7 +277,7 @@
     :data="midjourneyPricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #once_ratio="{ record }">
       <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
@@ -291,7 +291,7 @@
     :data="oncePricing"
     :pagination="false"
     :bordered="false"
-    style="margin-bottom: 15px"
+    class="pricing-detail-table-spacing"
   >
     <template #once_ratio="{ record }">
       <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
@@ -328,12 +328,14 @@
 
   const pricing = ref(props.modelValue);
 
+  const tableHeaderCellStyle = { background: 'var(--color-bg-2)' };
+
   // 文本
   const textPricing = ref<TextPricing[]>([]);
   const textPricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.text'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.service_tier'),
@@ -372,7 +374,7 @@
   const textCachePricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.text_cache'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.service_tier'),
@@ -397,7 +399,7 @@
   const audioPricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.audio'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.input_ratio'),
@@ -422,7 +424,7 @@
   const audioCachePricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.audio_cache'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.read_ratio'),
@@ -440,7 +442,7 @@
   const tieredTextPricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.tiered_text'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.mode'),
@@ -486,7 +488,7 @@
   const tieredTextCachePricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.tiered_text_cache'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.mode'),
@@ -525,7 +527,7 @@
   const imagePricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.image'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.input_ratio'),
@@ -550,7 +552,7 @@
   const imageGenerationPricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.image_generation'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.image.generation.quality'),
@@ -589,7 +591,7 @@
   const imageCachePricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.image_cache'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.read_ratio'),
@@ -607,7 +609,7 @@
   const visionPricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.vision'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.mode'),
@@ -639,7 +641,7 @@
   const videoPricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.video'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.input_ratio'),
@@ -664,7 +666,7 @@
   const videoGenerationPricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.video_generation'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.video_generation.width_height'),
@@ -696,7 +698,7 @@
   const videoCachePricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.video_cache'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.read_ratio'),
@@ -714,7 +716,7 @@
   const searchPricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.search'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.search.context_size'),
@@ -746,7 +748,7 @@
   const midjourneyPricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.midjourney'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.midjourney.name'),
@@ -785,7 +787,7 @@
   const oncePricingColumns = ref<TableColumnData[]>([
     {
       title: t('dict.billing_items.once'),
-      headerCellStyle: { background: '#ffffff' },
+      headerCellStyle: tableHeaderCellStyle,
       children: [
         {
           title: t('model.label.once_ratio'),
@@ -956,4 +958,9 @@
   };
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped>
+  .pricing-detail-table-spacing {
+    margin-bottom: 15px;
+  }
+</style>
+

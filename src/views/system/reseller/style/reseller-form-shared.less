@@ -1,0 +1,47 @@
+.hour {
+  margin-left: 3px;
+}
+
+.day {
+  margin-left: 3px;
+}
+
+.general-card {
+  &:first-child {
+    padding-top: 61px;
+  }
+}
+
+.reseller-form-full-width,
+:deep(.reseller-form-date-picker-full-width) {
+  width: 100%;
+}
+
+.reseller-form-quota-radio--compact {
+  padding: 0 2px;
+}
+
+.reseller-form-hour-label {
+  &--wide {
+    margin-left: 5px;
+  }
+
+  &--extra-wide {
+    margin-left: 6px;
+  }
+}
+
+.reseller-form-day-label {
+  &--narrow {
+    margin-left: 1px;
+  }
+}
+
+.reseller-form-groups-form-item {
+  align-items: center;
+}
+
+// Keep local in shared: reseller form radio buttons need tighter 8px padding
+:deep(.arco-radio-button-content) {
+  padding: 0 8px;
+}

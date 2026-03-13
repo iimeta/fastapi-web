@@ -9,10 +9,8 @@
     <a-card
       class="general-card"
       :bordered="false"
-      :header-style="{ padding: '20px' }"
-      :body-style="{
-        padding: '25px 20px 20px 20px',
-      }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
     >
       <a-row>
         <a-col :flex="1">
@@ -103,15 +101,15 @@
                 >
                   <a-range-picker
                     v-model="searchFormData.quota_expires_at"
-                    style="width: 100%"
+                    class="list-full-width"
                   />
                 </a-form-item>
               </a-col>
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 84px" direction="vertical" />
-        <a-col :flex="'86px'" style="text-align: right">
+        <a-divider class="list-search-divider" direction="vertical" />
+        <a-col :flex="'86px'" class="list-search-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
@@ -128,8 +126,8 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-divider style="margin-top: 0; margin-bottom: 16px" />
-      <a-row style="margin-bottom: 16px">
+      <a-divider class="list-toolbar-divider" />
+      <a-row class="list-toolbar-row">
         <a-col :span="12">
           <a-space>
             <a-button
@@ -181,15 +179,7 @@
             </a-button>
           </a-space>
         </a-col>
-        <a-col
-          :span="12"
-          style="
-            display: flex;
-            height: 32px;
-            align-items: center;
-            justify-content: end;
-          "
-        >
+        <a-col :span="12" class="list-table-actions">
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -224,7 +214,7 @@
                     :key="item.dataIndex"
                     class="setting"
                   >
-                    <div style="margin-right: 4px; cursor: move">
+                    <div class="list-drag-handle">
                       <icon-drag-arrow />
                     </div>
                     <div>
@@ -346,7 +336,7 @@
         :width="726"
         :title="$t('app.key.form.title.key_config')"
         :ok-text="$t('button.save')"
-        :body-style="{ height: '520px' }"
+        :body-style="keyConfigModalBodyStyle"
         @cancel="handleCancel"
         @before-ok="handleBeforeOk"
       >
@@ -381,7 +371,7 @@
                 disabled
               >
               </a-checkbox>
-              <span style="margin-left: -15px">
+              <span class="app-list-billing-method-label">
                 {{ $t('app.key.dict.billing_methods.1') }}
               </span>
               <a-checkbox v-model="formData.billing_methods" :value="2">
@@ -470,7 +460,7 @@
               :placeholder="$t('app.placeholder.quota_expires_at')"
               :time-picker-props="{ defaultValue: '23:59:59' }"
               :disabled-date="disabledDate"
-              style="width: 100%"
+              class="list-full-width"
               show-time
               :shortcuts="[
                 {
@@ -643,13 +633,20 @@
                 12<span class="hour">{{ $t('unit.hour') }}</span>
               </a-radio>
               <a-radio :value="24">
-                24<span style="margin-left: 3px">{{ $t('unit.hour') }}</span>
+                24<span class="app-list-hour-label app-list-hour-label--wide">{{
+                  $t('unit.hour')
+                }}</span>
               </a-radio>
               <a-radio :value="72">
-                72<span style="margin-left: 3px">{{ $t('unit.hour') }}</span>
+                72<span class="app-list-hour-label app-list-hour-label--wide">{{
+                  $t('unit.hour')
+                }}</span>
               </a-radio>
               <a-radio :value="168">
-                168<span style="margin-left: 4px">{{ $t('unit.hour') }}</span>
+                168<span
+                  class="app-list-hour-label app-list-hour-label--extra-wide"
+                  >{{ $t('unit.hour') }}</span
+                >
               </a-radio>
             </a-radio-group>
           </a-form-item>
@@ -689,7 +686,10 @@
                 60 <span class="day">{{ $t('unit.day') }}</span>
               </a-radio>
               <a-radio :value="90">
-                90 <span style="margin-left: 2px">{{ $t('unit.day') }}</span>
+                90
+                <span class="app-list-day-label app-list-day-label--compact">{{
+                  $t('unit.day')
+                }}</span>
               </a-radio>
             </a-radio-group>
           </a-form-item>
@@ -749,9 +749,7 @@
       <a-modal
         v-model:visible="modelsVisible"
         :title="$t('common.models')"
-        :modal-style="{
-          padding: '25px 15px 20px 15px',
-        }"
+        :modal-style="modelsModalStyle"
         unmount-on-close
         hide-cancel
         simple
@@ -808,6 +806,18 @@
   const { loading, setLoading } = useLoading(true);
   const appStore = useAppStore();
   const userRole = localStorage.getItem('userRole');
+  const cardHeaderStyle = {
+    padding: '20px',
+  };
+  const cardBodyStyle = {
+    padding: '25px 20px 20px 20px',
+  };
+  const keyConfigModalBodyStyle = {
+    height: '520px',
+  };
+  const modelsModalStyle = {
+    padding: '25px 15px 20px 15px',
+  };
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -1259,40 +1269,25 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
+  // 公共骨架已由 page-list.less 全局提供
+
+  .app-list-billing-method-label {
+    margin-left: -15px;
   }
-  :deep(.arco-table-th) {
-    &:last-child {
-      .arco-table-th-item-title {
-        margin-left: 16px;
-      }
+
+  .app-list-hour-label {
+    &--wide {
+      margin-left: 3px;
+    }
+
+    &--extra-wide {
+      margin-left: 4px;
     }
   }
-  .action-icon {
-    margin-left: 12px;
-    cursor: pointer;
-  }
-  .active {
-    color: #0960bd;
-    background-color: #e3f4fc;
-  }
-  .setting {
-    display: flex;
-    align-items: center;
-    width: 200px;
-    .title {
-      margin-left: 12px;
-      cursor: pointer;
-    }
-  }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
+
+  .app-list-day-label {
+    &--compact {
+      margin-left: 2px;
     }
   }
 

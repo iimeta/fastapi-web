@@ -9,10 +9,8 @@
     <a-card
       class="general-card"
       :bordered="false"
-      :header-style="{ padding: '20px' }"
-      :body-style="{
-        padding: '25px 20px 20px 20px',
-      }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
     >
       <a-row>
         <a-col :flex="1">
@@ -103,8 +101,8 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 84px" direction="vertical" />
-        <a-col :flex="'86px'" style="text-align: right">
+        <a-divider class="list-search-divider" direction="vertical" />
+        <a-col :flex="'86px'" class="list-search-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
@@ -121,8 +119,8 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-divider style="margin-top: 0; margin-bottom: 16px" />
-      <a-row style="margin-bottom: 16px">
+      <a-divider class="list-toolbar-divider" />
+      <a-row class="list-toolbar-row">
         <a-col :span="12">
           <a-space>
             <a-button
@@ -320,15 +318,7 @@
             </a-button>
           </a-space>
         </a-col>
-        <a-col
-          :span="12"
-          style="
-            display: flex;
-            height: 32px;
-            align-items: center;
-            justify-content: end;
-          "
-        >
+        <a-col :span="12" class="list-table-actions">
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -363,7 +353,7 @@
                     :key="item.dataIndex"
                     class="setting"
                   >
-                    <div style="margin-right: 4px; cursor: move">
+                    <div class="list-drag-handle">
                       <icon-drag-arrow />
                     </div>
                     <div>
@@ -727,10 +717,8 @@
       <a-modal
         v-model:visible="pricingVisible"
         :width="888"
-        :body-style="{ maxHeight: '520px' }"
-        :modal-style="{
-          padding: '25px 20px 20px 20px',
-        }"
+        :body-style="pricingModalBodyStyle"
+        :modal-style="pricingModalStyle"
         hide-title
         hide-cancel
         simple
@@ -781,6 +769,18 @@
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
+  const cardHeaderStyle = {
+    padding: '20px',
+  };
+  const cardBodyStyle = {
+    padding: '25px 20px 20px 20px',
+  };
+  const pricingModalBodyStyle = {
+    maxHeight: '520px',
+  };
+  const pricingModalStyle = {
+    padding: '25px 20px 20px 20px',
+  };
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -846,6 +846,8 @@
       slotName: 'provider_name',
       align: 'center',
       width: 120,
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('common.model'),
@@ -1436,40 +1438,5 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
-  :deep(.arco-table-th) {
-    &:last-child {
-      .arco-table-th-item-title {
-        margin-left: 16px;
-      }
-    }
-  }
-  .action-icon {
-    margin-left: 12px;
-    cursor: pointer;
-  }
-  .active {
-    color: #0960bd;
-    background-color: #e3f4fc;
-  }
-  .setting {
-    display: flex;
-    align-items: center;
-    width: 200px;
-    .title {
-      margin-left: 12px;
-      cursor: pointer;
-    }
-  }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
+  // 公共骨架已由 page-list.less 全局提供
 </style>

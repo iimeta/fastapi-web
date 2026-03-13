@@ -1,15 +1,15 @@
 <template>
-  <div style="margin: 10px 0 30px 10px">
+  <div class="detail-container">
     <a-descriptions
       :column="2"
       bordered
-      :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
+      :value-style="descriptionValueStyle"
     >
       <a-descriptions-item :label="$t('notice.template.label.name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span v-else class="detail-scroll-110">
           {{ currentData.name }}
         </span>
       </a-descriptions-item>
@@ -25,7 +25,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span v-else class="detail-scroll-110">
           {{ currentData.title }}
         </span>
       </a-descriptions-item>
@@ -38,7 +38,7 @@
         </a-skeleton>
         <span
           v-else
-          style="max-height: 500px; display: block; overflow: auto"
+          class="detail-scroll-500"
           v-html="currentData.content"
         >
         </span>
@@ -47,7 +47,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span v-else class="detail-scroll-110">
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
@@ -94,6 +94,10 @@
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<NoticeTemplateDetail>({} as NoticeTemplateDetail);
+  const descriptionValueStyle = {
+    width: '350px',
+    padding: '5px 8px 5px 20px',
+  };
   const props = defineProps({
     id: {
       type: String,
@@ -126,4 +130,11 @@
   };
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+  // 公共骨架已由 global.less 全局提供
+  .detail-scroll-110 {
+    display: block;
+    max-height: 110px;
+    overflow: auto;
+  }
+</style>

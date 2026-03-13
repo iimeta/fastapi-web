@@ -2,8 +2,8 @@
   <a-card
     class="general-card"
     :title="appStore.getDocumentTitle"
-    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
-    :body-style="{ padding: '10px 20px 10px 20px' }"
+    :header-style="cardHeaderStyle"
+    :body-style="cardBodyStyle"
     :bordered="false"
   >
     <template #extra>
@@ -33,11 +33,14 @@
   import { useAppStore } from '@/store';
 
   const appStore = useAppStore();
+
+  const cardHeaderStyle = { padding: '10px 20px 0 20px', height: '36px' };
+  const cardBodyStyle = { padding: '10px 20px 10px 20px' };
 </script>
 
 <script lang="ts">
   export default {
-    name: 'Docs', // If you want the include property of keep-alive to take effect, you must name the component
+    name: 'Docs',
   };
 </script>
 

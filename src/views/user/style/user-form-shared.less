@@ -1,0 +1,47 @@
+.hour {
+  margin-left: 3px;
+}
+
+.day {
+  margin-left: 3px;
+}
+
+.general-card {
+  &:first-child {
+    padding-top: 61px;
+  }
+}
+
+.user-form-full-width,
+:deep(.user-form-date-picker) {
+  width: 100%;
+}
+
+.user-form-groups-form-item {
+  align-items: center;
+}
+
+.user-form-quota-radio--compact {
+  padding: 0 2px;
+}
+
+.user-form-hour-label {
+  &--wide {
+    margin-left: 5px;
+  }
+
+  &--extra-wide {
+    margin-left: 6px;
+  }
+}
+
+.user-form-day-label {
+  &--compact {
+    margin-left: 1px;
+  }
+}
+
+// Keep local in shared: user form radio buttons need tighter 8px padding
+:deep(.arco-radio-button-content) {
+  padding: 0 8px;
+}

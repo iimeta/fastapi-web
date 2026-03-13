@@ -1,10 +1,6 @@
 <template>
-  <div style="margin: 10px 0 30px 10px">
-    <a-descriptions
-      :column="2"
-      bordered
-      :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
-    >
+  <div class="finance-bill-detail-container">
+    <a-descriptions :column="2" bordered :value-style="descriptionValueStyle">
       <a-descriptions-item :label="$t('finance.label.bill.stat_date')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -39,7 +35,7 @@
       </a-descriptions-item>
     </a-descriptions>
     <a-table
-      style="margin-top: 15px"
+      class="finance-bill-detail-table"
       :data="currentData.model_stats"
       :pagination="false"
       :bordered="false"
@@ -90,6 +86,10 @@
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
+  const descriptionValueStyle = {
+    width: '350px',
+    padding: '5px 8px 5px 20px',
+  };
   const currentData = ref<StatisticsUser>({} as StatisticsUser);
   const props = defineProps({
     id: {
@@ -118,4 +118,12 @@
   };
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+  .finance-bill-detail-container {
+    margin: 10px 0 30px 10px;
+  }
+
+  .finance-bill-detail-table {
+    margin-top: 15px;
+  }
+</style>

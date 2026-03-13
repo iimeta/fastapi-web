@@ -2,8 +2,8 @@
   <a-card
     class="general-card"
     :title="appStore.getCarousel1Title"
-    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
-    :body-style="{ padding: '10px 20px 15px 20px' }"
+    :header-style="cardHeaderStyle"
+    :body-style="cardBodyStyle"
     :bordered="false"
   >
     <a-carousel
@@ -25,9 +25,8 @@
       >
         <a-link :href="carousel.jump_url" target="_blank">
           <img
-            class="sponsor"
+            class="sponsor dashboard-sponsor-image"
             :src="carousel.image_url"
-            style="background-color: #ffffff"
           />
         </a-link>
       </a-carousel-item>
@@ -40,16 +39,23 @@
 
   const appStore = useAppStore();
   const userRole = localStorage.getItem('userRole');
+
+  const cardHeaderStyle = { padding: '10px 20px 0 20px', height: '36px' };
+  const cardBodyStyle = { padding: '10px 20px 15px 20px' };
 </script>
 
 <script lang="ts">
   export default {
-    name: 'Sponsor', // If you want the include property of keep-alive to take effect, you must name the component
+    name: 'Sponsor',
   };
 </script>
 
 <style lang="less" scoped>
   .sponsor {
     width: 238px;
+  }
+
+  .dashboard-sponsor-image {
+    background-color: var(--color-bg-2);
   }
 </style>

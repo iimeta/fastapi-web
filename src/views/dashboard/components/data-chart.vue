@@ -1,11 +1,9 @@
 <template>
-  <a-spin :loading="loading" style="width: 100%">
+  <a-spin :loading="loading" class="dashboard-data-chart-spin">
     <a-card
       class="general-card"
-      :header-style="{ padding: '15px 20px 8px 20px' }"
-      :body-style="{
-        padding: '10px 20px',
-      }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
       :title="$t('dashboard.call_data')"
       :bordered="false"
     >
@@ -84,6 +82,11 @@
   }
 
   const userRole = localStorage.getItem('userRole');
+
+  const cardHeaderStyle = { padding: '15px 20px 8px 20px' };
+  const cardBodyStyle = {
+    padding: '10px 20px',
+  };
 
   const { loading, setLoading } = useLoading(true);
   const dateRange = ref(15);
@@ -322,8 +325,12 @@
 
 <script lang="ts">
   export default {
-    name: 'DataChart', // If you want the include property of keep-alive to take effect, you must name the component
+    name: 'DataChart',
   };
 </script>
 
-<style scoped lang="less"></style>
+<style lang="less" scoped>
+  .dashboard-data-chart-spin {
+    width: 100%;
+  }
+</style>

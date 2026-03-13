@@ -1,0 +1,249 @@
+@import (reference) '../../../assets/style/breakpoint.less';
+@import (reference) '../../../assets/style/tokens.less';
+
+.root {
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+
+  a {
+    color: @link-color;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: @link-hover-color;
+  }
+
+  .container {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    height: calc(100vh - 100px);
+    justify-content: center;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 1200px;
+    min-height: 650px;
+
+    .left-banner {
+      flex: 1 1;
+      height: 100%;
+      max-height: 700px;
+      position: relative;
+
+      img {
+        height: 100%;
+        left: 0;
+        max-height: 350px;
+        max-width: 500px;
+        object-fit: contain;
+        position: absolute;
+        top: 4.5%;
+        width: 100%;
+      }
+    }
+
+    .login-card {
+      display: flex;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      box-sizing: border-box;
+      min-height: 500px;
+      position: relative;
+      width: 450px;
+      flex-direction: column;
+      margin-bottom: 53px;
+      padding: 48px 43px 32px;
+      backdrop-filter: blur(8px) brightness(1.05);
+      -webkit-backdrop-filter: blur(8px) brightness(1.05);
+
+      // Keep local in shared: only login cards should remove Arco link hover background
+      :deep(.arco-link:hover) {
+        background-color: transparent;
+      }
+
+      .title {
+        background: -webkit-linear-gradient(
+          120deg,
+          @brand-gradient-start 30%,
+          @brand-gradient-end
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: 0.003em;
+        line-height: 32px;
+        padding: 0 5px;
+      }
+    }
+  }
+
+  .footer {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.logo {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+
+  &-text {
+    font-size: 24px;
+  }
+
+  > img {
+    width: 32px;
+    height: 32px;
+    margin-right: 8px;
+  }
+
+  .logo-text {
+    background: -webkit-linear-gradient(
+      120deg,
+      @brand-gradient-start 30%,
+      @brand-gradient-end
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 1.5%;
+  width: 100%;
+}
+
+.beian {
+  position: absolute;
+  right: 0;
+  bottom: 0.2%;
+  width: 100%;
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+
+  .login-beian-image {
+    border: 0;
+  }
+}
+
+.account-tab {
+  margin-top: 36px;
+
+  :deep(.arco-tabs-nav::before) {
+    display: none;
+  }
+
+  :deep(.arco-tabs-tab-title) {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    display: inline-block;
+    padding: 1px 0;
+    position: relative;
+  }
+
+  :deep(.arco-tabs-tab-title:hover) {
+    color: rgb(var(--primary-6));
+  }
+
+  :deep(.arco-tabs-tab-title:before) {
+    display: none;
+  }
+
+  :deep(.arco-tabs-tab) {
+    margin: 0 30px 0 6px;
+  }
+
+  .tabs-extra-link {
+    cursor: pointer;
+    color: rgb(var(--primary-6));
+    font-size: 14px;
+    &:hover {
+      color: rgb(var(--primary-5));
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+
+  .arco-checkbox {
+    padding-left: 0;
+  }
+}
+
+.actions-end {
+  display: flex;
+  justify-content: flex-end;
+
+  .arco-checkbox {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: @screen-md) {
+  .container {
+    flex-direction: column;
+    height: auto;
+    min-height: auto;
+    padding: 0 16px;
+
+    .left-banner {
+      display: none;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: @login-card-width;
+      min-height: auto;
+      margin: 20px auto;
+      padding: 32px 24px 24px;
+    }
+  }
+}
+
+@media (max-width: @screen-xs) {
+  .container {
+    .login-card {
+      padding: 24px 16px 16px;
+      margin: 16px auto;
+    }
+  }
+
+  .logo {
+    top: 10px;
+    left: 10px;
+
+    &-text {
+      font-size: 18px;
+    }
+
+    > img {
+      width: 24px;
+      height: 24px;
+      margin-right: 6px;
+    }
+  }
+}
+
+:deep(.arco-tabs-content) {
+  padding-top: 16px;
+}

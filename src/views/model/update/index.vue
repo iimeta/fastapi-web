@@ -7,10 +7,10 @@
       <a-breadcrumb-item>{{ $t('model.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('model.menu.update') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-spin :loading="loading" style="width: 100%">
+    <a-spin :loading="loading" class="model-form-full-width">
       <a-card
         class="general-card"
-        :body-style="{ padding: '0 20px 20px 20px' }"
+        :body-style="cardBodyStyle"
         :bordered="false"
       >
         <div class="wrapper">
@@ -39,7 +39,7 @@
                 :placeholder="$t('placeholder.provider')"
                 :scrollbar="false"
                 allow-search
-                style="width: 762px"
+                class="model-form-wide-input"
               >
                 <a-option
                   v-for="item in providers"
@@ -96,7 +96,7 @@
                 :placeholder="$t('model.placeholder.type')"
                 :scrollbar="false"
                 allow-search
-                style="width: 762px"
+                class="model-form-wide-input"
               >
                 <a-option value="1">{{ $t('dict.model_type.1') }}</a-option>
                 <a-option value="2">{{ $t('dict.model_type.2') }}</a-option>
@@ -213,7 +213,7 @@
                 multiple
                 allow-search
                 allow-clear
-                style="width: 762px"
+                class="model-form-wide-input"
               >
                 <a-option
                   v-for="item in groups"
@@ -263,7 +263,7 @@
               <a-input-number
                 v-model="formData.preset_config.min_tokens"
                 :placeholder="$t('model.placeholder.preset_config.min_tokens')"
-                style="width: 378px; margin-right: 5px"
+                class="model-form-preset-range-input"
                 :precision="0"
                 :min="0"
                 :max="2097152"
@@ -271,7 +271,7 @@
               <a-input-number
                 v-model="formData.preset_config.max_tokens"
                 :placeholder="$t('model.placeholder.preset_config.max_tokens')"
-                style="width: 379px"
+                class="model-form-preset-range-select"
                 :precision="0"
                 :min="0"
                 :max="2097152"
@@ -332,7 +332,7 @@
                 multiple
                 allow-search
                 allow-clear
-                style="width: 762px"
+                class="model-form-wide-input"
               >
                 <a-option
                   v-for="item in modelAgents"
@@ -366,7 +366,7 @@
                 v-model="formData.forward_config.forward_rule"
                 :placeholder="$t('model.placeholder.forward_rule')"
                 :scrollbar="false"
-                style="width: 762px"
+                class="model-form-wide-input"
                 @change="handleForwardRuleChange"
               >
                 <a-option value="1">{{ $t('dict.forward_rule.1') }}</a-option>
@@ -447,7 +447,7 @@
                 :placeholder="$t('model.placeholder.target_model')"
                 :scrollbar="false"
                 allow-search
-                style="width: 762px"
+                class="model-form-wide-input"
               >
                 <a-option
                   v-for="item in models"
@@ -480,7 +480,7 @@
                 multiple
                 allow-search
                 allow-clear
-                style="width: 762px"
+                class="model-form-wide-input"
               >
                 <a-option
                   v-for="item in models"
@@ -540,7 +540,7 @@
                 :placeholder="$t('model.placeholder.decision_model')"
                 :scrollbar="false"
                 allow-search
-                style="width: 762px"
+                class="model-form-wide-input"
               >
                 <a-option
                   v-for="item in models"
@@ -572,13 +572,13 @@
               <a-input
                 v-model="formData.forward_config.keywords[index]"
                 :placeholder="$t('model.placeholder.keywords')"
-                style="width: 373px; margin-right: 5px"
+                class="model-form-keyword-input"
               />
               <a-select
                 v-model="formData.forward_config.target_models[index]"
                 :placeholder="$t('model.placeholder.target_model')"
                 :scrollbar="false"
-                style="width: 300px"
+                class="model-form-keyword-select"
                 allow-search
               >
                 <a-option
@@ -591,7 +591,7 @@
               <a-button
                 type="primary"
                 shape="circle"
-                style="margin: 0 10px 0 10px"
+                class="model-form-keyword-add-btn"
                 @click="handleKeywordsAdd"
               >
                 <icon-plus />
@@ -630,7 +630,7 @@
                 :scrollbar="false"
                 allow-search
                 allow-clear
-                style="width: 762px"
+                class="model-form-wide-input"
               >
                 <a-option
                   v-for="item in modelAgents"
@@ -660,7 +660,7 @@
                 :scrollbar="false"
                 allow-search
                 allow-clear
-                style="width: 762px"
+                class="model-form-wide-input"
               >
                 <a-option
                   v-for="item in models"
@@ -714,6 +714,7 @@
   import Pricing from '../components/pricing.vue';
 
   const { loading, setLoading } = useLoading(true);
+  const cardBodyStyle = { padding: '0 20px 20px 20px' };
   const { t } = useI18n();
   const route = useRoute();
   const router = useRouter();
@@ -1035,69 +1036,9 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
+  @import (reference) '../../../assets/style/tokens.less';
+  @import '../style/model-form-shared.less';
 
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
-
-  .general-card {
-    &:first-child {
-      padding-top: 20px;
-    }
-  }
-
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--color-bg-2);
-    :deep(.arco-form) {
-      .arco-form-item {
-        width: 1088px;
-        &:first-child {
-          margin-top: 20px;
-        }
-      }
-    }
-  }
-
-  .form {
-    align-items: center;
-  }
-
-  .arco-divider-horizontal.arco-divider-with-text {
-    margin: 20px 0 30px 0;
-  }
-
-  .arco-divider-horizontal {
-    min-width: 97%;
-    max-width: 97%;
-    margin-bottom: 30px;
-    &:first-child {
-      margin-top: 20px;
-      margin-bottom: 40px;
-    }
-  }
-
-  .submit-btn {
-    width: 300px;
-    display: flex;
-    button {
-      flex: 1;
-      margin: 20px 30px;
-    }
-  }
-
-  .input {
-    width: 762px;
-  }
+  // 公共骨架已由 page-form.less 全局提供
+  // 表单共享样式已由 model-form-shared.less 提供
 </style>

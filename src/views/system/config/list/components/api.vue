@@ -1,5 +1,5 @@
 <template>
-  <div class="list-wrap" style="margin-top: 10px">
+  <div class="list-wrap config-list-wrap">
     <a-row class="list-row" :gutter="24">
       <a-col
         v-for="item in sysConfigItems"
@@ -16,10 +16,8 @@
           <a-card
             :title="item.title"
             :bordered="false"
-            :header-style="{ padding: '16px' }"
-            :body-style="{
-              padding: '0px 16px',
-            }"
+            :header-style="configCardHeaderStyle"
+            :body-style="configCardBodyStyle"
           >
             <template #extra>
               <a-switch
@@ -81,10 +79,7 @@
           ? 647
           : 728
       "
-      :body-style="{
-        padding: '20px 20px 0 20px',
-        maxHeight: '520px',
-      }"
+      :body-style="configModalBodyStyle"
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
@@ -454,20 +449,18 @@
               message: $t('sys.config.error.required.errors'),
             },
           ]"
-          :label-col-style="{
-            padding: '0 16px 2px 0',
-          }"
+          :label-col-style="fieldLabelColStyle"
         >
           <a-input
             v-model="configFormData.auto_disabled_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
-            style="width: 86%; margin-right: 5px"
+            class="field-input field-input-wide"
           />
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="field-action-button"
             @click="handleAutoDisabledErrorAdd()"
           >
             <icon-plus />
@@ -497,9 +490,7 @@
               message: $t('sys.config.error.required.auto_enable_error'),
             },
           ]"
-          :label-col-style="{
-            padding: '0 16px 2px 0',
-          }"
+          :label-col-style="fieldLabelColStyle"
         >
           <a-input
             v-model="configFormData.auto_enable_error.enable_errors[index].cron"
@@ -507,7 +498,7 @@
               $t('sys.config.placeholder.auto_enable_error.enable_errors.cron')
             "
             allow-clear
-            style="width: 20%; margin-right: 5px"
+            class="field-input field-input-cron"
           />
           <a-input-number
             v-model="
@@ -519,7 +510,7 @@
               )
             "
             allow-clear
-            style="width: 22%; margin-right: 5px"
+            class="field-input field-input-enable-time"
           >
             <template #append> {{ $t('unit.second') }} </template>
           </a-input-number>
@@ -529,12 +520,12 @@
             "
             :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
-            style="width: 42%; margin-right: 5px"
+            class="field-input field-input-error"
           />
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="field-action-button"
             @click="handleAutoEnableErrorAdd()"
           >
             <icon-plus />
@@ -559,20 +550,18 @@
               message: $t('sys.config.error.required.errors'),
             },
           ]"
-          :label-col-style="{
-            padding: '0 16px 2px 0',
-          }"
+          :label-col-style="fieldLabelColStyle"
         >
           <a-input
             v-model="configFormData.not_retry_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
-            style="width: 86%; margin-right: 5px"
+            class="field-input field-input-wide"
           />
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="field-action-button"
             @click="handleNotRetryErrorAdd()"
           >
             <icon-plus />
@@ -597,20 +586,18 @@
               message: $t('sys.config.error.required.errors'),
             },
           ]"
-          :label-col-style="{
-            padding: '0 16px 2px 0',
-          }"
+          :label-col-style="fieldLabelColStyle"
         >
           <a-input
             v-model="configFormData.not_shield_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
-            style="width: 86%; margin-right: 5px"
+            class="field-input field-input-wide"
           />
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="field-action-button"
             @click="handleNotShieldErrorAdd()"
           >
             <icon-plus />
@@ -638,9 +625,7 @@
               ),
             },
           ]"
-          :label-col-style="{
-            padding: '0 16px 2px 0',
-          }"
+          :label-col-style="fieldLabelColStyle"
         >
           <a-input
             v-model="configFormData.service_unavailable.ip_whitelist[index]"
@@ -648,12 +633,12 @@
               $t('sys.config.placeholder.service_unavailable.ip_whitelist')
             "
             allow-clear
-            style="width: 84%; margin-right: 5px"
+            class="field-input field-input-ip"
           />
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="field-action-button"
             @click="handleServiceUnavailableAdd()"
           >
             <icon-plus />
@@ -678,20 +663,18 @@
               message: $t('sys.config.error.required.general_api.ip_whitelist'),
             },
           ]"
-          :label-col-style="{
-            padding: '0 16px 2px 0',
-          }"
+          :label-col-style="fieldLabelColStyle"
         >
           <a-input
             v-model="configFormData.general_api.ip_whitelist[index]"
             :placeholder="$t('sys.config.placeholder.general_api.ip_whitelist')"
             allow-clear
-            style="width: 84%; margin-right: 5px"
+            class="field-input field-input-ip"
           />
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="field-action-button"
             @click="handleGeneralApiAdd()"
           >
             <icon-plus />
@@ -726,6 +709,20 @@
 
   const { setLoading } = useLoading(true);
   const { t } = useI18n();
+
+  const configCardHeaderStyle = {
+    padding: '16px',
+  };
+  const configCardBodyStyle = {
+    padding: '0px 16px',
+  };
+  const configModalBodyStyle = {
+    padding: '20px 20px 0 20px',
+    maxHeight: '520px',
+  };
+  const fieldLabelColStyle = {
+    padding: '0 16px 2px 0',
+  };
 
   const configVisible = ref(false);
   const configTitle = ref('');
@@ -1100,58 +1097,37 @@
 </script>
 
 <style scoped lang="less">
-  .card-wrap {
-    height: 100%;
-    transition: all 0.3s;
-    border: 1px solid var(--color-neutral-3);
-    border-radius: 5px;
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
-    }
-    :deep(.arco-card) {
-      height: 100%;
-      border-radius: 5px;
-      .arco-card-body {
-        height: 130px;
-        .arco-card-meta {
-          height: 100%;
-          display: flex;
-          flex-flow: column;
-          .arco-card-meta-content {
-            flex: 1;
-            .arco-card-meta-description {
-              color: rgb(var(--gray-6));
-              line-height: 18px;
-              font-size: 12px;
-              .arco-descriptions-item-label-inline {
-                font-weight: normal;
-                font-size: 13px;
-                color: rgb(var(--gray-8));
-              }
-            }
-          }
-        }
-      }
-      .arco-card-meta-footer:last-child {
-        margin-top: 2px;
-        margin-bottom: 12px;
-      }
-    }
-    :deep(.arco-card-meta-title) {
-      display: flex;
-      align-items: center;
-      line-height: 28px;
-    }
-    :deep(.arco-card-header) {
-      border: none;
-    }
-    :deep(.arco-skeleton-line) {
-      &:last-child {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
-      }
-    }
+  @import '../style/config-card-shared.less';
+
+  .config-list-wrap {
+    margin-top: 10px;
+  }
+
+  .field-input {
+    margin-right: 5px;
+  }
+
+  .field-input-wide {
+    width: 86%;
+  }
+
+  .field-input-cron {
+    width: 20%;
+  }
+
+  .field-input-enable-time {
+    width: 22%;
+  }
+
+  .field-input-error {
+    width: 42%;
+  }
+
+  .field-input-ip {
+    width: 84%;
+  }
+
+  .field-action-button {
+    margin: 0 10px 0 10px;
   }
 </style>

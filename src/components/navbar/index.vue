@@ -180,7 +180,7 @@
             <img
               alt="avatar"
               :src="avatar || appStore.getAvatar"
-              style="background-color: #ffffff"
+              style="background-color: var(--color-bg-2)"
             />
           </a-avatar>
           <template #content>
@@ -273,16 +273,22 @@
 </script>
 
 <style scoped lang="less">
+  @import '@/assets/style/tokens.less';
+
   .logo {
     width: 32px;
     height: 32px;
   }
 
   .logo-text {
-    background: var(--vp-home-hero-name-background);
+    background: -webkit-linear-gradient(
+      120deg,
+      @brand-gradient-start 30%,
+      @brand-gradient-end
+    );
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: var(--vp-home-hero-name-color);
+    -webkit-text-fill-color: transparent;
   }
 
   .navbar {
@@ -332,14 +338,6 @@
     }
     .trigger-btn {
       margin-left: 14px;
-    }
-  }
-</style>
-
-<style lang="less">
-  .message-popover {
-    .arco-popover-content {
-      margin-top: 0;
     }
   }
 </style>

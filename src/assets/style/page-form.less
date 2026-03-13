@@ -1,0 +1,63 @@
+@import './tokens.less';
+@import (reference) './breakpoint.less';
+
+.container {
+  padding: @page-padding;
+}
+
+.container-breadcrumb {
+  margin: @breadcrumb-margin;
+}
+
+.general-card {
+  &:first-child {
+    padding-top: @form-card-padding-top;
+  }
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-bg-2);
+
+  .arco-form {
+    .arco-form-item {
+      width: @form-item-width;
+
+      &:first-child {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
+.form {
+  align-items: center;
+}
+
+.submit-btn {
+  width: @submit-area-width;
+  display: flex;
+
+  button {
+    flex: 1;
+    margin: @submit-btn-margin;
+  }
+}
+
+@media (max-width: @screen-md) {
+  .wrapper {
+    .arco-form {
+      .arco-form-item {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+
+  .submit-btn {
+    width: 100%;
+    max-width: @submit-area-width;
+  }
+}

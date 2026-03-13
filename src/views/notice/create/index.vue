@@ -7,10 +7,10 @@
       <a-breadcrumb-item>{{ $t('notice.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('notice.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-spin :loading="loading" style="width: 100%">
+    <a-spin :loading="loading" class="notice-form-full-width">
       <a-card
         class="general-card"
-        :body-style="{ padding: '0 20px 20px 20px' }"
+        :body-style="cardBodyStyle"
         :bordered="false"
       >
         <div class="wrapper">
@@ -184,7 +184,7 @@
                 },
               ]"
             >
-              <Vditor v-model="formData.content" style="flex: 1" />
+              <Vditor v-model="formData.content" class="notice-form-editor" />
             </a-form-item>
             <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea
@@ -237,6 +237,9 @@
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(false);
+  const cardBodyStyle = {
+    padding: '0 20px 20px 20px',
+  };
 
   const router = useRouter();
   const formRef = ref<FormInstance>();
@@ -341,51 +344,8 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
+  @import '../style/notice-form-shared.less';
 
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
-
-  .general-card {
-    &:first-child {
-      padding-top: 61px;
-    }
-  }
-
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--color-bg-2);
-    :deep(.arco-form) {
-      .arco-form-item {
-        width: 100%;
-        &:first-child {
-          margin-top: 20px;
-        }
-      }
-    }
-  }
-
-  .form {
-    align-items: center;
-  }
-
-  .submit-btn {
-    width: 300px;
-    display: flex;
-    button {
-      flex: 1;
-      margin: 20px 30px;
-    }
-  }
+  // 公共骨架已由 page-form.less 全局提供
+  // 表单共享样式已由 notice-form-shared.less 提供
 </style>

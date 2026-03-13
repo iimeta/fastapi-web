@@ -6,7 +6,7 @@
         <DataPanel />
         <DataChart />
       </div>
-      <a-grid :cols="24" :col-gap="10" :row-gap="10" style="margin-top: 10px">
+      <a-grid :cols="24" :col-gap="10" :row-gap="10" class="dashboard-grid-gap">
         <a-grid-item
           :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
         >
@@ -78,7 +78,7 @@
 
 <script lang="ts">
   export default {
-    name: 'Dashboard', // If you want the include property of keep-alive to take effect, you must name the component
+    name: 'Dashboard',
   };
 </script>
 
@@ -104,10 +104,16 @@
     border-radius: 4px;
     overflow: auto;
   }
+
+  .dashboard-grid-gap {
+    margin-top: 10px;
+  }
+
   :deep(.panel-border) {
     margin-bottom: 0;
     border-bottom: 1px solid rgb(var(--gray-2));
   }
+
   .moduler-wrap {
     border-radius: 4px;
     background-color: var(--color-bg-2);
@@ -152,13 +158,11 @@
     }
   }
 
-  // responsive
   .mobile {
     .container {
       display: block;
     }
     .right-side {
-      // display: none;
       width: 100%;
       margin-left: 0;
       margin-top: 16px;

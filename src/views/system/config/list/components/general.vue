@@ -1,5 +1,5 @@
 <template>
-  <div class="list-wrap" style="margin-top: 10px">
+  <div class="list-wrap config-list-wrap">
     <a-row class="list-row" :gutter="24">
       <a-col
         v-for="item in sysConfigItems"
@@ -16,10 +16,8 @@
           <a-card
             :title="item.title"
             :bordered="false"
-            :header-style="{ padding: '16px' }"
-            :body-style="{
-              padding: '0px 16px',
-            }"
+            :header-style="configCardHeaderStyle"
+            :body-style="configCardBodyStyle"
           >
             <template #extra>
               <a-switch
@@ -75,10 +73,7 @@
           ? 728
           : 528
       "
-      :body-style="{
-        padding: '20px 20px 0 20px',
-        maxHeight: '520px',
-      }"
+      :body-style="configModalBodyStyle"
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
     >
@@ -169,20 +164,18 @@
               message: $t('sys.config.error.required.errors'),
             },
           ]"
-          :label-col-style="{
-            padding: '0 16px 2px 0',
-          }"
+          :label-col-style="fieldLabelColStyle"
         >
           <a-input
             v-model="configFormData.user_shield_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
-            style="width: 86%; margin-right: 5px"
+            class="field-input field-input-wide"
           />
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="field-action-button"
             @click="handleUserShieldErrorAdd()"
           >
             <icon-plus />
@@ -283,20 +276,18 @@
               message: $t('sys.config.error.required.errors'),
             },
           ]"
-          :label-col-style="{
-            padding: '0 16px 2px 0',
-          }"
+          :label-col-style="fieldLabelColStyle"
         >
           <a-input
             v-model="configFormData.reseller_shield_error.errors[index]"
             :placeholder="$t('sys.config.placeholder.errors')"
             allow-clear
-            style="width: 86%; margin-right: 5px"
+            class="field-input field-input-wide"
           />
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="field-action-button"
             @click="handleResellerShieldErrorAdd()"
           >
             <icon-plus />
@@ -538,16 +529,14 @@
               message: $t('sys.config.error.required.tests'),
             },
           ]"
-          :label-col-style="{
-            padding: '0 16px 2px 0',
-          }"
+          :label-col-style="fieldLabelColStyle"
         >
           <a-select
             v-model="configFormData.test.tests[index].provider"
             :placeholder="$t('common.provider')"
             :scrollbar="false"
             allow-search
-            style="width: 15%; margin-right: 5px"
+            class="field-input field-select-provider"
           >
             <a-option
               v-for="provider in providers"
@@ -560,14 +549,14 @@
             v-model="configFormData.test.tests[index].model"
             :placeholder="$t('sys.config.placeholder.test.model')"
             allow-clear
-            style="width: 25%; margin-right: 5px"
+            class="field-input field-input-model"
           />
           <a-select
             v-model="configFormData.test.tests[index].model_type"
             :placeholder="$t('common.model_type')"
             :scrollbar="false"
             allow-search
-            style="max-width: 15%; margin-right: 5px"
+            class="field-input field-select-model-type"
           >
             <a-option :value="1">{{ $t('dict.model_type.1') }}</a-option>
             <a-option :value="2">{{ $t('dict.model_type.2') }}</a-option>
@@ -589,12 +578,12 @@
             v-model="configFormData.test.tests[index].request_data"
             :placeholder="$t('sys.config.placeholder.test.request_data')"
             allow-clear
-            style="max-width: 32%; margin-right: 5px"
+            class="field-input field-input-request-data"
           />
           <a-button
             type="primary"
             shape="circle"
-            style="margin: 0 10px 0 10px"
+            class="field-action-button"
             @click="handleTestAdd()"
           >
             <icon-plus />
@@ -631,6 +620,20 @@
   const { setLoading } = useLoading(true);
   const { t } = useI18n();
   const appStore = useAppStore();
+
+  const configCardHeaderStyle = {
+    padding: '16px',
+  };
+  const configCardBodyStyle = {
+    padding: '0px 16px',
+  };
+  const configModalBodyStyle = {
+    padding: '20px 20px 0 20px',
+    maxHeight: '520px',
+  };
+  const fieldLabelColStyle = {
+    padding: '0 16px 2px 0',
+  };
 
   const providers = ref<ProviderList[]>([]);
   const getProviderList = async () => {
@@ -894,58 +897,37 @@
 </script>
 
 <style scoped lang="less">
-  .card-wrap {
-    height: 100%;
-    transition: all 0.3s;
-    border: 1px solid var(--color-neutral-3);
-    border-radius: 5px;
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
-    }
-    :deep(.arco-card) {
-      height: 100%;
-      border-radius: 5px;
-      .arco-card-body {
-        height: 130px;
-        .arco-card-meta {
-          height: 100%;
-          display: flex;
-          flex-flow: column;
-          .arco-card-meta-content {
-            flex: 1;
-            .arco-card-meta-description {
-              color: rgb(var(--gray-6));
-              line-height: 18px;
-              font-size: 12px;
-              .arco-descriptions-item-label-inline {
-                font-weight: normal;
-                font-size: 13px;
-                color: rgb(var(--gray-8));
-              }
-            }
-          }
-        }
-      }
-      .arco-card-meta-footer:last-child {
-        margin-top: 2px;
-        margin-bottom: 12px;
-      }
-    }
-    :deep(.arco-card-meta-title) {
-      display: flex;
-      align-items: center;
-      line-height: 28px;
-    }
-    :deep(.arco-card-header) {
-      border: none;
-    }
-    :deep(.arco-skeleton-line) {
-      &:last-child {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 20px;
-      }
-    }
+  @import '../style/config-card-shared.less';
+
+  .config-list-wrap {
+    margin-top: 10px;
+  }
+
+  :deep(.field-input) {
+    margin-right: 5px;
+  }
+
+  :deep(.field-input-wide) {
+    width: 86%;
+  }
+
+  :deep(.field-select-provider) {
+    width: 15%;
+  }
+
+  :deep(.field-input-model) {
+    width: 25%;
+  }
+
+  :deep(.field-select-model-type) {
+    max-width: 15%;
+  }
+
+  :deep(.field-input-request-data) {
+    max-width: 32%;
+  }
+
+  .field-action-button {
+    margin: 0 10px 0 10px;
   }
 </style>

@@ -47,7 +47,7 @@
           :placeholder="$t('user.center.form.placeholder.captcha')"
           :max-length="6"
           allow-clear
-          style="width: 80%"
+          class="update-email-captcha-input"
         />
         <a-button
           :loading="captchaLoading"
@@ -215,5 +215,9 @@
 <style scoped lang="less">
   .captcha-btn {
     margin-left: 5px;
+  }
+
+  .update-email-captcha-input {
+    width: 80%;
   }
 </style>

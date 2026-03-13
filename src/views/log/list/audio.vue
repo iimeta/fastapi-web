@@ -10,10 +10,8 @@
     <a-card
       class="general-card"
       :bordered="false"
-      :header-style="{ padding: '20px' }"
-      :body-style="{
-        padding: '25px 20px 20px 20px',
-      }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
     >
       <a-row>
         <a-col :flex="1">
@@ -282,8 +280,8 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 84px" direction="vertical" />
-        <a-col :flex="'86px'" style="text-align: right">
+        <a-divider class="log-list-search-divider" direction="vertical" />
+        <a-col :flex="'86px'" class="log-list-search-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
@@ -300,12 +298,9 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-divider style="margin-top: 0" />
-      <a-row style="margin-bottom: 16px">
-        <a-col
-          :span="24"
-          style="display: flex; align-items: center; justify-content: end"
-        >
+      <a-divider class="log-list-toolbar-divider" />
+      <a-row class="log-list-toolbar-row">
+        <a-col :span="24" class="log-list-table-actions">
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -340,7 +335,7 @@
                     :key="item.dataIndex"
                     class="setting"
                   >
-                    <div style="margin-right: 4px; cursor: move">
+                    <div class="log-list-drag-handle">
                       <icon-drag-arrow />
                     </div>
                     <div>
@@ -544,10 +539,8 @@
       <a-modal
         v-model:visible="spendVisible"
         :width="1068"
-        :body-style="{ maxHeight: '520px' }"
-        :modal-style="{
-          padding: '25px 20px 20px 20px',
-        }"
+        :body-style="spendModalBodyStyle"
+        :modal-style="spendModalStyle"
         hide-title
         hide-cancel
         unmount-on-close
@@ -592,6 +585,18 @@
   const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
   const route = useRoute();
+  const cardHeaderStyle = {
+    padding: '20px',
+  };
+  const cardBodyStyle = {
+    padding: '25px 20px 20px 20px',
+  };
+  const spendModalBodyStyle = {
+    maxHeight: '520px',
+  };
+  const spendModalStyle = {
+    padding: '25px 20px 20px 20px',
+  };
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -1014,53 +1019,8 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
-  :deep(.arco-table-th) {
-    &:last-child {
-      .arco-table-th-item-title {
-        margin-left: 16px;
-      }
-    }
-  }
-  .action-icon {
-    margin-left: 12px;
-    cursor: pointer;
-  }
-  .active {
-    color: #0960bd;
-    background-color: #e3f4fc;
-  }
-  .setting {
-    display: flex;
-    align-items: center;
-    width: 200px;
-    .title {
-      margin-left: 12px;
-      cursor: pointer;
-    }
-  }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
+  @import '../style/log-list-shared.less';
 
-  :deep(.arco-tabs-content) {
-    padding-top: 5px;
-    padding-left: 15px;
-  }
-  .spend {
-    color: rgb(var(--gray-10));
-    padding: 0;
-  }
-  .spend:hover {
-    color: rgb(var(--link-6));
-    cursor: pointer;
-  }
+  // 公共骨架已由 page-list.less 全局提供
+  // 列表共享样式已由 log-list-shared.less 提供
 </style>

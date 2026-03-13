@@ -2,15 +2,15 @@
   <a-card
     class="general-card"
     :title="appStore.getCarousel2Title"
-    :header-style="{ padding: '10px 20px 0 20px', height: '36px' }"
-    :body-style="{ padding: '10px 20px 15px 20px' }"
+    :header-style="cardHeaderStyle"
+    :body-style="cardBodyStyle"
     :bordered="false"
   >
     <a-carousel
+      class="dashboard-author-carousel"
       indicator-type="slider"
       show-arrow="hover"
       auto-play
-      style="height: 252px"
     >
       <a-carousel-item
         v-for="(carousel, idx) in appStore.getCarousels2"
@@ -18,9 +18,8 @@
       >
         <a-link :href="carousel.jump_url" target="_blank">
           <img
-            class="author"
+            class="author dashboard-author-image"
             :src="carousel.image_url"
-            style="background-color: #ffffff"
           />
         </a-link>
       </a-carousel-item>
@@ -32,16 +31,27 @@
   import { useAppStore } from '@/store';
 
   const appStore = useAppStore();
+
+  const cardHeaderStyle = { padding: '10px 20px 0 20px', height: '36px' };
+  const cardBodyStyle = { padding: '10px 20px 15px 20px' };
 </script>
 
 <script lang="ts">
   export default {
-    name: 'Author', // If you want the include property of keep-alive to take effect, you must name the component
+    name: 'Author',
   };
 </script>
 
 <style lang="less" scoped>
   .author {
     width: 238px;
+  }
+
+  .dashboard-author-carousel {
+    height: 252px;
+  }
+
+  .dashboard-author-image {
+    background-color: var(--color-bg-2);
   }
 </style>

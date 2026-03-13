@@ -1,10 +1,10 @@
 <template>
-  <div style="margin: 10px 0 30px 10px">
+  <div class="log-detail-container">
     <a-descriptions
       v-permission="['user', 'reseller']"
       :column="2"
       bordered
-      :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
+      :value-style="descriptionValueStyle"
     >
       <a-descriptions-item :label="$t('common.trace_id')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
@@ -83,7 +83,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 220px; display: block; overflow: auto">
+        <span v-else class="log-detail-textarea">
           {{ currentData.input || '-' }}
         </span>
       </a-descriptions-item>
@@ -91,7 +91,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 220px; display: block; overflow: auto">
+        <span v-else class="log-detail-textarea">
           {{ currentData.text || '-' }}
         </span>
       </a-descriptions-item>
@@ -137,7 +137,7 @@
                 maxWidth: 'none',
               }"
             >
-              <icon-question-circle style="color: var(--color-text-3)" />
+              <icon-question-circle class="log-detail-question-icon" />
             </a-tooltip>
           </span>
         </template>
@@ -214,7 +214,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 220px; display: block; overflow: auto">
+        <span v-else class="log-detail-textarea">
           {{ currentData.err_msg || '-' }}
         </span>
       </a-descriptions-item>
@@ -224,7 +224,7 @@
       v-permission="['admin']"
       :column="2"
       bordered
-      :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
+      :value-style="descriptionValueStyle"
     >
       <a-descriptions-item :label="$t('common.trace_id')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
@@ -415,7 +415,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 220px; display: block; overflow: auto">
+        <span v-else class="log-detail-textarea">
           {{ currentData.input || '-' }}
         </span>
       </a-descriptions-item>
@@ -423,7 +423,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 220px; display: block; overflow: auto">
+        <span v-else class="log-detail-textarea">
           {{ currentData.text || '-' }}
         </span>
       </a-descriptions-item>
@@ -469,7 +469,7 @@
                 maxWidth: 'none',
               }"
             >
-              <icon-question-circle style="color: var(--color-text-3)" />
+              <icon-question-circle class="log-detail-question-icon" />
             </a-tooltip>
           </span>
         </template>
@@ -583,7 +583,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 220px; display: block; overflow: auto">
+        <span v-else class="log-detail-textarea">
           {{ currentData.err_msg || '-' }}
         </span>
       </a-descriptions-item>
@@ -592,7 +592,7 @@
       v-permission="['admin']"
       layout="inline-vertical"
       :column="2"
-      style="margin-top: 10px; position: relative"
+      class="log-detail-tabs-descriptions"
     >
       <a-descriptions-item>
         <a-tabs type="card">
@@ -617,10 +617,8 @@
     <a-modal
       v-model:visible="spendVisible"
       :width="1068"
-      :body-style="{ maxHeight: '520px' }"
-      :modal-style="{
-        padding: '25px 20px 20px 20px',
-      }"
+      :body-style="modalBodyStyle"
+      :modal-style="modalStyle"
       hide-title
       hide-cancel
       unmount-on-close
@@ -654,6 +652,16 @@
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<AudioDetail>({} as AudioDetail);
   const { copy, copied } = useClipboard();
+  const descriptionValueStyle = {
+    width: '350px',
+    padding: '5px 8px 5px 20px',
+  };
+  const modalBodyStyle = {
+    maxHeight: '520px',
+  };
+  const modalStyle = {
+    padding: '25px 20px 20px 20px',
+  };
 
   const props = defineProps({
     id: {
@@ -715,19 +723,7 @@
 </script>
 
 <style scoped lang="less">
-  .copy-btn {
-    color: gray;
-    cursor: pointer;
-  }
-  .copy-btn:hover {
-    color: rgb(var(--arcoblue-6));
-  }
-  .spend {
-    color: rgb(var(--link-6));
-    padding: 0;
-  }
-  .spend:hover {
-    color: rgb(var(--link-6));
-    cursor: pointer;
-  }
+  @import '../style/log-detail-shared.less';
+
+  // 详情共享样式已由 log-detail-shared.less 提供
 </style>

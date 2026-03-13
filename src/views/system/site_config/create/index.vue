@@ -7,10 +7,10 @@
       <a-breadcrumb-item>{{ $t('sys.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('site.config.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-spin :loading="loading" style="width: 100%">
+    <a-spin :loading="loading" class="site-config-form-full-width">
       <a-card
         class="general-card"
-        :body-style="{ padding: '0 20px 20px 20px' }"
+        :body-style="cardBodyStyle"
         :bordered="false"
       >
         <div class="wrapper">
@@ -198,7 +198,10 @@
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
                 <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
                 <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
-                <a-radio :value="10000" style="padding: 0 2px">
+                <a-radio
+                  :value="10000"
+                  class="site-config-form-quota-radio--compact"
+                >
                   <Quota :model-value="10000" />
                 </a-radio>
               </a-radio-group>
@@ -344,17 +347,17 @@
                 :placeholder="
                   $t('site.config.placeholder.carousels1.image_url')
                 "
-                style="width: 43%; margin-right: 5px"
+                class="site-config-form-pair-input"
               />
               <a-input
                 v-model="formData.carousels1[index].jump_url"
                 :placeholder="$t('site.config.placeholder.carousels1.jump_url')"
-                style="width: 43%; margin-right: 4px"
+                class="site-config-form-pair-target"
               />
               <a-button
                 type="primary"
                 shape="circle"
-                style="margin: 0 10px 0 10px"
+                class="site-config-form-pair-add-btn"
                 @click="handleCarousels1Add()"
               >
                 <icon-plus />
@@ -387,17 +390,17 @@
                 :placeholder="
                   $t('site.config.placeholder.carousels2.image_url')
                 "
-                style="width: 43%; margin-right: 5px"
+                class="site-config-form-pair-input"
               />
               <a-input
                 v-model="formData.carousels2[index].jump_url"
                 :placeholder="$t('site.config.placeholder.carousels2.jump_url')"
-                style="width: 43%; margin-right: 4px"
+                class="site-config-form-pair-target"
               />
               <a-button
                 type="primary"
                 shape="circle"
-                style="margin: 0 10px 0 10px"
+                class="site-config-form-pair-add-btn"
                 @click="handleCarousels2Add()"
               >
                 <icon-plus />
@@ -442,19 +445,19 @@
                 :placeholder="
                   $t('site.config.placeholder.announcements.content')
                 "
-                style="width: 43%; margin-right: 5px"
+                class="site-config-form-pair-input"
               />
               <a-input
                 v-model="formData.announcements[index].jump_url"
                 :placeholder="
                   $t('site.config.placeholder.announcements.jump_url')
                 "
-                style="width: 43%; margin-right: 4px"
+                class="site-config-form-pair-target"
               />
               <a-button
                 type="primary"
                 shape="circle"
-                style="margin: 0 10px 0 10px"
+                class="site-config-form-pair-add-btn"
                 @click="handleAnnouncementsAdd()"
               >
                 <icon-plus />
@@ -495,17 +498,17 @@
               <a-input
                 v-model="formData.documents[index].title"
                 :placeholder="$t('site.config.placeholder.documents.title')"
-                style="width: 43%; margin-right: 5px"
+                class="site-config-form-pair-input"
               />
               <a-input
                 v-model="formData.documents[index].jump_url"
                 :placeholder="$t('site.config.placeholder.documents.jump_url')"
-                style="width: 43%; margin-right: 4px"
+                class="site-config-form-pair-target"
               />
               <a-button
                 type="primary"
                 shape="circle"
-                style="margin: 0 10px 0 10px"
+                class="site-config-form-pair-add-btn"
                 @click="handleDocumentsAdd()"
               >
                 <icon-plus />
@@ -620,6 +623,7 @@
   });
 
   const { loading, setLoading } = useLoading(false);
+  const cardBodyStyle = { padding: '0 20px 20px 20px' };
   const submitForm = async () => {
     const res = await formRef.value?.validate();
     if (!res) {
@@ -768,55 +772,8 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
+  @import '../style/site-config-form-shared.less';
 
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
-
-  .general-card {
-    &:first-child {
-      padding-top: 61px;
-    }
-  }
-
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--color-bg-2);
-    :deep(.arco-form) {
-      .arco-form-item {
-        width: 888px;
-        &:first-child {
-          margin-top: 20px;
-        }
-      }
-    }
-  }
-
-  .form {
-    align-items: center;
-  }
-
-  .submit-btn {
-    width: 300px;
-    display: flex;
-    button {
-      flex: 1;
-      margin: 20px 30px;
-    }
-  }
-
-  :deep(.arco-radio-button-content) {
-    padding: 0 8px;
-  }
+  // 公共骨架与通用 Arco 覆写已由 page-form.less / arco-overrides.less 全局提供
+  // 表单共享样式已由 site-config-form-shared.less 提供
 </style>

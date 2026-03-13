@@ -7,10 +7,10 @@
       <a-breadcrumb-item>{{ $t('key.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('key.menu.update') }}</a-breadcrumb-item>
     </a-breadcrumb>
-    <a-spin :loading="loading" style="width: 100%">
+    <a-spin :loading="loading" class="key-form-full-width">
       <a-card
         class="general-card"
-        :body-style="{ padding: '0 20px 20px 20px' }"
+        :body-style="cardBodyStyle"
         :bordered="false"
       >
         <div class="wrapper">
@@ -173,6 +173,9 @@
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
 
   const { loading, setLoading } = useLoading(false);
+  const cardBodyStyle = {
+    padding: '0 20px 20px 20px',
+  };
 
   const router = useRouter();
   const route = useRoute();
@@ -301,65 +304,8 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
-  }
+  @import '../style/key-form-shared.less';
 
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
-  }
-
-  .general-card {
-    &:first-child {
-      padding-top: 20px;
-    }
-  }
-
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--color-bg-2);
-    :deep(.arco-form) {
-      .arco-form-item {
-        width: 888px;
-        &:first-child {
-          margin-top: 20px;
-        }
-      }
-    }
-  }
-
-  .form {
-    align-items: center;
-  }
-
-  .arco-divider-horizontal.arco-divider-with-text {
-    margin: 20px 0 30px 0;
-  }
-
-  .arco-divider-horizontal {
-    min-width: 97%;
-    max-width: 97%;
-    margin-bottom: 30px;
-    &:first-child {
-      margin-top: 20px;
-      margin-bottom: 40px;
-    }
-  }
-
-  .submit-btn {
-    width: 300px;
-    display: flex;
-    button {
-      flex: 1;
-      margin: 20px 30px;
-    }
-  }
+  // 公共骨架已由 page-form.less 全局提供
+  // 表单共享样式已由 key-form-shared.less 提供
 </style>

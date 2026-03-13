@@ -9,10 +9,8 @@
     <a-card
       class="general-card"
       :bordered="false"
-      :header-style="{ padding: '20px' }"
-      :body-style="{
-        padding: '25px 20px 20px 20px',
-      }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
     >
       <a-row>
         <a-col :flex="1">
@@ -103,8 +101,8 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 84px" direction="vertical" />
-        <a-col :flex="'86px'" style="text-align: right">
+        <a-divider class="model-my-list-search-divider" direction="vertical" />
+        <a-col :flex="'86px'" class="model-my-list-search-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
@@ -121,12 +119,9 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-divider style="margin-top: 0" />
-      <a-row style="margin-bottom: 16px">
-        <a-col
-          :span="24"
-          style="display: flex; align-items: center; justify-content: end"
-        >
+      <a-divider class="model-my-list-toolbar-divider" />
+      <a-row class="model-my-list-toolbar-row">
+        <a-col :span="24" class="model-my-list-table-actions">
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -161,7 +156,7 @@
                     :key="item.dataIndex"
                     class="setting"
                   >
-                    <div style="margin-right: 4px; cursor: move">
+                    <div class="model-my-list-drag-handle">
                       <icon-drag-arrow />
                     </div>
                     <div>
@@ -225,10 +220,8 @@
       <a-modal
         v-model:visible="pricingVisible"
         :width="888"
-        :body-style="{ maxHeight: '520px' }"
-        :modal-style="{
-          padding: '25px 20px 20px 20px',
-        }"
+        :body-style="pricingModalBodyStyle"
+        :modal-style="pricingModalStyle"
         hide-title
         hide-cancel
         simple
@@ -260,6 +253,18 @@
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
+  const cardHeaderStyle = {
+    padding: '20px',
+  };
+  const cardBodyStyle = {
+    padding: '25px 20px 20px 20px',
+  };
+  const pricingModalBodyStyle = {
+    maxHeight: '520px',
+  };
+  const pricingModalStyle = {
+    padding: '25px 20px 20px 20px',
+  };
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -325,6 +330,8 @@
       slotName: 'provider_name',
       align: 'center',
       width: 120,
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('common.model'),
@@ -592,47 +599,32 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
+  // 公共骨架与共享列表 Arco 覆写已由 page-list.less 全局提供
+
+  .model-my-list-search-divider {
+    height: 84px;
   }
-  :deep(.arco-table-th) {
-    &:last-child {
-      .arco-table-th-item-title {
-        margin-left: 16px;
-      }
-    }
+
+  .model-my-list-search-actions {
+    text-align: right;
   }
-  :deep(.arco-table-td) {
-    &:last-child {
-      .arco-table-td-content {
-        margin: 3px 0;
-      }
-    }
+
+  .model-my-list-toolbar-divider {
+    margin-top: 0;
   }
-  .action-icon {
-    margin-left: 12px;
-    cursor: pointer;
+
+  .model-my-list-toolbar-row {
+    margin-bottom: 16px;
   }
-  .active {
-    color: #0960bd;
-    background-color: #e3f4fc;
-  }
-  .setting {
+
+  .model-my-list-table-actions {
     display: flex;
     align-items: center;
-    width: 200px;
-    .title {
-      margin-left: 12px;
-      cursor: pointer;
-    }
+    justify-content: end;
   }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
-    }
+
+  .model-my-list-drag-handle {
+    margin-right: 4px;
+    cursor: move;
   }
 </style>

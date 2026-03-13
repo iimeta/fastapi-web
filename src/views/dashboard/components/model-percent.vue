@@ -1,11 +1,9 @@
 <template>
-  <a-spin :loading="loading" style="width: 100%">
+  <a-spin :loading="loading" class="dashboard-model-percent-spin">
     <a-card
       class="general-card"
-      :header-style="{ padding: '15px 20px 8px 20px' }"
-      :body-style="{
-        padding: '20px',
-      }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
       :bordered="false"
     >
       <template #title>
@@ -43,6 +41,8 @@
   import { ModelPercentRes, queryModelPercent } from '@/api/dashboard';
 
   const { loading, setLoading } = useLoading(true);
+  const cardHeaderStyle = { padding: '15px 20px 8px 20px' };
+  const cardBodyStyle = { padding: '20px' };
   const dateRange = ref(15);
 
   const statisticsData = ref<ModelPercentRes>({
@@ -113,11 +113,15 @@
 
 <script lang="ts">
   export default {
-    name: 'ModelPercent', // If you want the include property of keep-alive to take effect, you must name the component
+    name: 'ModelPercent',
   };
 </script>
 
 <style scoped lang="less">
+  .dashboard-model-percent-spin {
+    width: 100%;
+  }
+
   .arco-card {
     position: relative;
     background: var(--color-bg-2);

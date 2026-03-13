@@ -9,10 +9,8 @@
     <a-card
       class="general-card"
       :bordered="false"
-      :header-style="{ padding: '20px' }"
-      :body-style="{
-        padding: '25px 20px 20px 20px',
-      }"
+      :header-style="cardHeaderStyle"
+      :body-style="cardBodyStyle"
     >
       <a-row>
         <a-col :flex="1">
@@ -35,7 +33,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col v-permission="['reseller', 'admin']" :span="8">
+              <a-col v-permission="['reseller', 'admin']" :span="7">
                 <a-form-item field="app_id" :label="$t('common.app_id')">
                   <a-input-number
                     v-model="searchFormData.app_id"
@@ -47,8 +45,12 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col v-permission="['user']" :span="8">
-                <a-form-item field="app_id" :label="$t('common.app')">
+              <a-col v-permission="['user']" :span="7">
+                <a-form-item
+                  field="app_id"
+                  :label="$t('common.app')"
+                  :label-col-props="{ span: 6 }"
+                >
                   <a-select
                     v-model="searchFormData.app_id"
                     :placeholder="$t('common.all')"
@@ -65,7 +67,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="9">
                 <a-form-item field="key" :label="$t('app.key.form.key')">
                   <a-input
                     v-model="searchFormData.key"
@@ -94,8 +96,12 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item field="quota" :label="$t('common.quota_lt')">
+              <a-col :span="userRole === 'user' ? 7 : 8">
+                <a-form-item
+                  field="quota"
+                  :label="$t('common.quota_lt')"
+                  :label-col-props="{ span: userRole === 'user' ? 6 : 5 }"
+                >
                   <a-input-number
                     v-model="searchFormData.quota"
                     :placeholder="$t('placeholder.quota')"
@@ -109,7 +115,7 @@
                   </a-input-number>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="userRole === 'user' ? 9 : 7">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
@@ -120,22 +126,22 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="userRole === 'user' ? 8 : 9">
                 <a-form-item
                   field="quota_expires_at"
                   :label="$t('common.expires_at')"
                 >
                   <a-range-picker
                     v-model="searchFormData.quota_expires_at"
-                    style="width: 100%"
+                    class="list-full-width"
                   />
                 </a-form-item>
               </a-col>
             </a-row>
           </a-form>
         </a-col>
-        <a-divider style="height: 84px" direction="vertical" />
-        <a-col :flex="'86px'" style="text-align: right">
+        <a-divider class="list-search-divider" direction="vertical" />
+        <a-col :flex="'86px'" class="list-search-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
               <template #icon>
@@ -152,8 +158,8 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-divider style="margin-top: 0; margin-bottom: 16px" />
-      <a-row style="margin-bottom: 16px">
+      <a-divider class="list-toolbar-divider" />
+      <a-row class="list-toolbar-row">
         <a-col :span="12">
           <a-space>
             <a-button
@@ -279,15 +285,7 @@
             </a-button>
           </a-space>
         </a-col>
-        <a-col
-          :span="12"
-          style="
-            display: flex;
-            height: 32px;
-            align-items: center;
-            justify-content: end;
-          "
-        >
+        <a-col :span="12" class="list-table-actions">
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -322,7 +320,7 @@
                     :key="item.dataIndex"
                     class="setting"
                   >
-                    <div style="margin-right: 4px; cursor: move">
+                    <div class="list-drag-handle">
                       <icon-drag-arrow />
                     </div>
                     <div>
@@ -425,7 +423,7 @@
         :width="726"
         :title="$t('app.key.form.title.key_config')"
         :ok-text="$t('button.save')"
-        :body-style="{ height: '520px' }"
+        :body-style="keyConfigModalBodyStyle"
         @cancel="handleCancel"
         @before-ok="handleBeforeOk"
       >
@@ -460,7 +458,7 @@
                 disabled
               >
               </a-checkbox>
-              <span style="margin-left: -15px">
+              <span class="app-key-list-billing-method-label">
                 {{ $t('app.key.dict.billing_methods.1') }}
               </span>
               <a-checkbox v-model="formData.billing_methods" :value="2">
@@ -549,7 +547,7 @@
               :placeholder="$t('app.placeholder.quota_expires_at')"
               :time-picker-props="{ defaultValue: '23:59:59' }"
               :disabled-date="disabledDate"
-              style="width: 100%"
+              class="list-full-width"
               show-time
               :shortcuts="[
                 {
@@ -722,13 +720,22 @@
                 12<span class="hour">{{ $t('unit.hour') }}</span>
               </a-radio>
               <a-radio :value="24">
-                24<span style="margin-left: 3px">{{ $t('unit.hour') }}</span>
+                24<span
+                  class="app-key-list-hour-label app-key-list-hour-label--wide"
+                  >{{ $t('unit.hour') }}</span
+                >
               </a-radio>
               <a-radio :value="72">
-                72<span style="margin-left: 3px">{{ $t('unit.hour') }}</span>
+                72<span
+                  class="app-key-list-hour-label app-key-list-hour-label--wide"
+                  >{{ $t('unit.hour') }}</span
+                >
               </a-radio>
               <a-radio :value="168">
-                168<span style="margin-left: 4px">{{ $t('unit.hour') }}</span>
+                168<span
+                  class="app-key-list-hour-label app-key-list-hour-label--extra-wide"
+                  >{{ $t('unit.hour') }}</span
+                >
               </a-radio>
             </a-radio-group>
           </a-form-item>
@@ -768,7 +775,11 @@
                 60 <span class="day">{{ $t('unit.day') }}</span>
               </a-radio>
               <a-radio :value="90">
-                90 <span style="margin-left: 2px">{{ $t('unit.day') }}</span>
+                90
+                <span
+                  class="app-key-list-day-label app-key-list-day-label--compact"
+                  >{{ $t('unit.day') }}</span
+                >
               </a-radio>
             </a-radio-group>
           </a-form-item>
@@ -828,9 +839,7 @@
       <a-modal
         v-model:visible="modelsVisible"
         :title="$t('common.models')"
-        :modal-style="{
-          padding: '25px 15px 20px 15px',
-        }"
+        :modal-style="modelsModalStyle"
         unmount-on-close
         hide-cancel
         simple
@@ -849,7 +858,7 @@
             ? $t('app.key.form.title.batch.create')
             : $t('app.key.form.title.batch.update')
         "
-        :body-style="{ height: '520px' }"
+        :body-style="keyConfigModalBodyStyle"
         @cancel="handleBatchCancel"
         @before-ok="handleBatchBeforeOk"
       >
@@ -972,7 +981,7 @@
                 disabled
               >
               </a-checkbox>
-              <span style="margin-left: -15px">
+              <span class="app-key-list-billing-method-label">
                 {{ $t('app.key.dict.billing_methods.1') }}
               </span>
               <a-checkbox v-model="batchFormData.billing_methods" :value="2">
@@ -1062,7 +1071,7 @@
               :placeholder="$t('app.placeholder.quota_expires_at')"
               :time-picker-props="{ defaultValue: '23:59:59' }"
               :disabled-date="disabledDate"
-              style="width: 100%"
+              class="list-full-width"
               show-time
               :shortcuts="[
                 {
@@ -1245,13 +1254,22 @@
                 12<span class="hour">{{ $t('unit.hour') }}</span>
               </a-radio>
               <a-radio :value="24">
-                24<span style="margin-left: 3px">{{ $t('unit.hour') }}</span>
+                24<span
+                  class="app-key-list-hour-label app-key-list-hour-label--wide"
+                  >{{ $t('unit.hour') }}</span
+                >
               </a-radio>
               <a-radio :value="72">
-                72<span style="margin-left: 3px">{{ $t('unit.hour') }}</span>
+                72<span
+                  class="app-key-list-hour-label app-key-list-hour-label--wide"
+                  >{{ $t('unit.hour') }}</span
+                >
               </a-radio>
               <a-radio :value="168">
-                168<span style="margin-left: 4px">{{ $t('unit.hour') }}</span>
+                168<span
+                  class="app-key-list-hour-label app-key-list-hour-label--extra-wide"
+                  >{{ $t('unit.hour') }}</span
+                >
               </a-radio>
             </a-radio-group>
           </a-form-item>
@@ -1291,7 +1309,11 @@
                 60 <span class="day">{{ $t('unit.day') }}</span>
               </a-radio>
               <a-radio :value="90">
-                90 <span style="margin-left: 2px">{{ $t('unit.day') }}</span>
+                90
+                <span
+                  class="app-key-list-day-label app-key-list-day-label--compact"
+                  >{{ $t('unit.day') }}</span
+                >
               </a-radio>
             </a-radio-group>
           </a-form-item>
@@ -1453,6 +1475,18 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const userRole = localStorage.getItem('userRole');
+  const cardHeaderStyle = {
+    padding: '20px',
+  };
+  const cardBodyStyle = {
+    padding: '25px 20px 20px 20px',
+  };
+  const keyConfigModalBodyStyle = {
+    height: '520px',
+  };
+  const modelsModalStyle = {
+    padding: '25px 15px 20px 15px',
+  };
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -2212,49 +2246,26 @@
 </script>
 
 <style scoped lang="less">
-  .container {
-    padding: 0 10px 20px 10px;
+  // 公共骨架已由 page-list.less 全局提供
+
+  .app-key-list-billing-method-label {
+    margin-left: -15px;
   }
-  :deep(.arco-table-th) {
-    &:last-child {
-      .arco-table-th-item-title {
-        margin-left: 16px;
-      }
+
+  .app-key-list-hour-label {
+    &--wide {
+      margin-left: 3px;
     }
-  }
-  .action-icon {
-    margin-left: 12px;
-    cursor: pointer;
-  }
-  .active {
-    color: #0960bd;
-    background-color: #e3f4fc;
-  }
-  .setting {
-    display: flex;
-    align-items: center;
-    width: 200px;
-    .title {
-      margin-left: 12px;
-      cursor: pointer;
-    }
-  }
-  .container-breadcrumb {
-    margin: 6px 0;
-    :deep(.arco-breadcrumb-item) {
-      color: rgb(var(--gray-6));
-      &:last-child {
-        color: rgb(var(--gray-8));
-      }
+
+    &--extra-wide {
+      margin-left: 4px;
     }
   }
 
-  .copy-btn {
-    color: gray;
-    cursor: pointer;
-  }
-  .copy-btn:hover {
-    color: rgb(var(--arcoblue-6));
+  .app-key-list-day-label {
+    &--compact {
+      margin-left: 2px;
+    }
   }
 
   :deep(.arco-radio-button-content) {

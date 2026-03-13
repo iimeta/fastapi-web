@@ -124,22 +124,10 @@
 </script>
 
 <style lang="less" scoped>
+  @import '../style/login-form-shared.less';
+
   .login-form {
-    box-sizing: border-box;
-    padding: 0 5px;
     margin-top: 16px;
-    .arco-input-wrapper,
-    :deep(.arco-select-view-single) {
-      background-color: var(--color-bg-white);
-      border: 1px solid var(--color-border-3);
-      height: 40px;
-      border-radius: 4px;
-      font-size: 13px;
-    }
-    .arco-input-wrapper.arco-input-error {
-      background-color: var(--color-danger-light-1);
-      border-color: var(--color-danger-light-4);
-    }
 
     .btn {
       border-radius: 4px;
@@ -148,7 +136,7 @@
       font-weight: 500;
       height: 40px;
       line-height: 22px;
-      margin: 21px 0 11px;
+      margin: 20px 0 12px;
       width: 100%;
     }
 

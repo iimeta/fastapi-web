@@ -1,10 +1,6 @@
 <template>
-  <div style="margin: 10px 0 30px 10px">
-    <a-descriptions
-      :column="2"
-      bordered
-      :value-style="{ width: '350px', padding: '5px 8px 5px 20px' }"
-    >
+  <div class="detail-container">
+    <a-descriptions :column="2" bordered :value-style="descriptionValueStyle">
       <a-descriptions-item :label="$t('common.key')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -54,7 +50,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 220px; display: block; overflow: auto">
+        <span v-else class="detail-textarea detail-textarea--tall">
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
@@ -62,7 +58,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 220px; display: block; overflow: auto">
+        <span v-else class="detail-textarea detail-textarea--tall">
           {{ currentData?.model_agent_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
@@ -94,7 +90,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span v-else class="detail-textarea detail-textarea--compact">
           {{ currentData.auto_disabled_reason || '-' }}
         </span>
       </a-descriptions-item>
@@ -102,7 +98,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span v-else class="detail-textarea detail-textarea--compact">
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
@@ -136,6 +132,10 @@
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<KeyDetail>({} as KeyDetail);
+  const descriptionValueStyle = {
+    width: '350px',
+    padding: '5px 8px 5px 20px',
+  };
   const props = defineProps({
     id: {
       type: String,
@@ -163,4 +163,6 @@
   };
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+  // 公共骨架已由 global.less 全局提供
+</style>

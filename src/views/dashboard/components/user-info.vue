@@ -1,13 +1,8 @@
 <template>
   <a-card
     class="general-card"
-    :header-style="{ padding: '20px 20px 0 20px' }"
-    :body-style="{
-      padding:
-        userStore.role === 'user'
-          ? '12px 20px 10px 20px'
-          : '15px 20px 12px 20px',
-    }"
+    :header-style="cardHeaderStyle"
+    :body-style="cardBodyStyle"
     :bordered="false"
   >
     <div class="header" @click="$router.push({ name: 'Center' })">
@@ -17,8 +12,8 @@
             <icon-camera />
           </template>
           <img
+            class="dashboard-user-info-avatar"
             :src="userStore.avatar || appStore.getAvatar"
-            style="background-color: #ffffff"
           />
         </a-avatar>
         <div class="user-info">
@@ -27,9 +22,8 @@
           </div>
           <div
             v-if="userStore.role === 'reseller'"
-            class="user-id"
+            class="user-id dashboard-user-info-reseller-id"
             :title="$t('common.reseller')"
-            style="color: rgb(var(--orange-6))"
           >
             ID: {{ userStore.user_id }}
           </div>
@@ -45,6 +39,12 @@
 
   const userStore = useUserStore();
   const appStore = useAppStore();
+
+  const cardHeaderStyle = { padding: '20px 20px 0 20px' };
+  const cardBodyStyle = {
+    padding:
+      userStore.role === 'user' ? '12px 20px 10px 20px' : '15px 20px 12px 20px',
+  };
 </script>
 
 <script lang="ts">
@@ -89,5 +89,13 @@
     width: 165px;
     font-size: 14px;
     text-align: center;
+  }
+
+  .dashboard-user-info-avatar {
+    background-color: var(--color-bg-2);
+  }
+
+  .dashboard-user-info-reseller-id {
+    color: rgb(var(--orange-6));
   }
 </style>

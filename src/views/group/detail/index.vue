@@ -1,10 +1,10 @@
 <template>
-  <div style="margin: 10px 0 30px 10px">
+  <div class="detail-container">
     <a-descriptions
       :column="2"
       bordered
       :label-style="{ padding: '5px 8px 5px 15px' }"
-      :value-style="{ width: '350px', padding: '5px 8px 5px 15px' }"
+      :value-style="descriptionValueStyle"
     >
       <a-descriptions-item :label="$t('group.label.name')">
         <a-skeleton v-if="loading" :animation="true">
@@ -42,7 +42,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 220px; display: block; overflow: auto">
+        <span v-else class="detail-textarea detail-textarea--tall">
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
@@ -85,7 +85,10 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span
+          v-else
+          class="detail-textarea detail-textarea--compact"
+        >
           {{ currentData?.model_agent_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
@@ -229,7 +232,10 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span
+          v-else
+          class="detail-textarea detail-textarea--compact"
+        >
           {{
             currentData?.forward_config?.forward_rule &&
             String(currentData?.forward_config?.forward_rule) === '1'
@@ -269,7 +275,10 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span
+          v-else
+          class="detail-textarea detail-textarea--compact"
+        >
           {{
             currentData?.forward_config?.forward_rule &&
             String(currentData?.forward_config?.forward_rule) === '2'
@@ -282,7 +291,10 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span
+          v-else
+          class="detail-textarea detail-textarea--compact"
+        >
           {{
             currentData?.forward_config?.forward_rule &&
             String(currentData?.forward_config?.forward_rule) === '2'
@@ -295,7 +307,10 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else style="max-height: 110px; display: block; overflow: auto">
+        <span
+          v-else
+          class="detail-textarea detail-textarea--compact"
+        >
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
@@ -352,6 +367,10 @@
 
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<GroupDetail>({} as GroupDetail);
+  const descriptionValueStyle = {
+    width: '350px',
+    padding: '5px 8px 5px 15px',
+  };
   const props = defineProps({
     id: {
       type: String,
@@ -381,4 +400,6 @@
   };
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+  // 公共骨架已由 global.less 全局提供
+</style>
