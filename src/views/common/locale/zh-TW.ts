@@ -255,6 +255,8 @@ export default {
   'dict.notice.false': '未發送',
   'dict.quota_expires_rule.1': '固定',
   'dict.quota_expires_rule.2': '時長',
+  'dict.reset_mode.natural': '自然週期',
+  'dict.reset_mode.relative': '相對週期',
   'dict.forward_rule.1': '全部轉發',
   'dict.forward_rule.2': '按關鍵字',
   'dict.forward_rule.3': '內容長度',

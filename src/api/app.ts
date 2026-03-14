@@ -12,6 +12,7 @@ export interface AppCreate {
   reset_quota: any;
   cycle_period: any;
   period_unit: string;
+  reset_mode: string;
   is_bind_group: boolean;
   group: string;
   ip_whitelist: string;
@@ -102,6 +103,7 @@ export interface AppDetail {
   reset_quota: number;
   cycle_period: number;
   period_unit: string;
+  reset_mode: string;
   reset_at: string;
   next_reset_at: string;
   is_bind_group: boolean;
@@ -140,6 +142,7 @@ export interface AppUpdateAdvanced {
   reset_quota: any;
   cycle_period: any;
   period_unit: string;
+  reset_mode: string;
   is_bind_group: boolean;
   group: string;
   ip_whitelist: string;

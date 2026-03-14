@@ -85,10 +85,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span
-          v-else
-          class="detail-textarea detail-textarea--compact"
-        >
+        <span v-else class="detail-textarea detail-textarea--compact">
           {{ currentData?.model_agent_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
@@ -142,6 +139,7 @@
           <span v-if="currentData.is_cycle_reset_quota">
             {{ currentData.cycle_period }}
             {{ $t(`unit.${currentData.period_unit}`) }}
+            {{ $t(`dict.reset_mode.${currentData.reset_mode}`) }}
           </span>
           <span v-else>-</span>
         </span>
@@ -232,10 +230,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span
-          v-else
-          class="detail-textarea detail-textarea--compact"
-        >
+        <span v-else class="detail-textarea detail-textarea--compact">
           {{
             currentData?.forward_config?.forward_rule &&
             String(currentData?.forward_config?.forward_rule) === '1'
@@ -275,10 +270,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span
-          v-else
-          class="detail-textarea detail-textarea--compact"
-        >
+        <span v-else class="detail-textarea detail-textarea--compact">
           {{
             currentData?.forward_config?.forward_rule &&
             String(currentData?.forward_config?.forward_rule) === '2'
@@ -291,10 +283,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span
-          v-else
-          class="detail-textarea detail-textarea--compact"
-        >
+        <span v-else class="detail-textarea detail-textarea--compact">
           {{
             currentData?.forward_config?.forward_rule &&
             String(currentData?.forward_config?.forward_rule) === '2'
@@ -307,10 +296,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span
-          v-else
-          class="detail-textarea detail-textarea--compact"
-        >
+        <span v-else class="detail-textarea detail-textarea--compact">
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>

@@ -255,6 +255,8 @@ export default {
   'dict.notice.false': 'Not Sent',
   'dict.quota_expires_rule.1': 'Fixed',
   'dict.quota_expires_rule.2': 'Duration',
+  'dict.reset_mode.natural': 'Natural Cycle',
+  'dict.reset_mode.relative': 'Relative Cycle',
   'dict.forward_rule.1': 'Forward All',
   'dict.forward_rule.2': 'By Keyword',
   'dict.forward_rule.3': 'Content Length',

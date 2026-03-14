@@ -606,6 +606,14 @@
                   <a-radio value="hour"> {{ $t('unit.hour') }} </a-radio>
                   <a-radio value="day"> {{ $t('unit.day') }} </a-radio>
                 </a-radio-group>
+                <a-radio-group v-model="formData.reset_mode" type="button">
+                  <a-radio value="natural">
+                    {{ $t('dict.reset_mode.natural') }}
+                  </a-radio>
+                  <a-radio value="relative">
+                    {{ $t('dict.reset_mode.relative') }}
+                  </a-radio>
+                </a-radio-group>
               </template>
             </a-input-number>
           </a-form-item>
@@ -1125,6 +1133,7 @@
   const formData = ref<AppKeyConfig>({
     billing_methods: [1],
     period_unit: 'day',
+    reset_mode: 'natural',
   } as AppKeyConfig);
 
   const handleQuotaQuickChange = (quota: number) => {

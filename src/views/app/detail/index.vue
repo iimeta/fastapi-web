@@ -87,6 +87,7 @@
           <span v-if="currentData.is_cycle_reset_quota">
             {{ currentData.cycle_period }}
             {{ $t(`unit.${currentData.period_unit}`) }}
+            {{ $t(`dict.reset_mode.${currentData.reset_mode}`) }}
           </span>
           <span v-else>-</span>
         </span>

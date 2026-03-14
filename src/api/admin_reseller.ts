@@ -13,6 +13,7 @@ export interface ResellerCreate {
   reset_quota: any;
   cycle_period: any;
   period_unit: string;
+  reset_mode: string;
   groups: string[];
   remark: string;
 }
@@ -99,6 +100,7 @@ export interface ResellerDetail {
   reset_quota: number;
   cycle_period: number;
   period_unit: string;
+  reset_mode: string;
   reset_at: string;
   next_reset_at: string;
   groups: string[];
@@ -139,6 +141,7 @@ export interface ResellerUpdate {
   reset_quota: any;
   cycle_period: any;
   period_unit: string;
+  reset_mode: string;
   groups: string[];
   remark: string;
   status: number;

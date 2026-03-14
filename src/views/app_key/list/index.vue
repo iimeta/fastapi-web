@@ -693,6 +693,14 @@
                   <a-radio value="hour"> {{ $t('unit.hour') }} </a-radio>
                   <a-radio value="day"> {{ $t('unit.day') }} </a-radio>
                 </a-radio-group>
+                <a-radio-group v-model="formData.reset_mode" type="button">
+                  <a-radio value="natural">
+                    {{ $t('dict.reset_mode.natural') }}
+                  </a-radio>
+                  <a-radio value="relative">
+                    {{ $t('dict.reset_mode.relative') }}
+                  </a-radio>
+                </a-radio-group>
               </template>
             </a-input-number>
           </a-form-item>
@@ -1226,6 +1234,14 @@
                 >
                   <a-radio value="hour"> {{ $t('unit.hour') }} </a-radio>
                   <a-radio value="day"> {{ $t('unit.day') }} </a-radio>
+                </a-radio-group>
+                <a-radio-group v-model="batchFormData.reset_mode" type="button">
+                  <a-radio value="natural">
+                    {{ $t('dict.reset_mode.natural') }}
+                  </a-radio>
+                  <a-radio value="relative">
+                    {{ $t('dict.reset_mode.relative') }}
+                  </a-radio>
                 </a-radio-group>
               </template>
             </a-input-number>
@@ -1844,6 +1860,7 @@
     billing_methods: [1],
     quota_expires_rule: '1',
     period_unit: 'day',
+    reset_mode: 'natural',
   } as AppKeyBatchOperate);
 
   const handleQuotaQuickChange = (quota: number) => {
@@ -1866,6 +1883,7 @@
     reset_quota: number;
     cycle_period: number;
     period_unit: string;
+    reset_mode: string;
     is_bind_group: boolean;
     group: string;
     ip_whitelist: string[];
@@ -1890,6 +1908,7 @@
     formData.value.reset_quota = params.reset_quota;
     formData.value.cycle_period = params.cycle_period;
     formData.value.period_unit = params.period_unit || 'day';
+    formData.value.reset_mode = params.reset_mode || 'natural';
     formData.value.is_bind_group = params.is_bind_group;
     formData.value.group = params.group;
     formData.value.ip_whitelist = params.ip_whitelist?.join('\n') || '';
@@ -2056,6 +2075,7 @@
             billing_methods: [1],
             quota_expires_rule: '1',
             period_unit: 'day',
+            reset_mode: 'natural',
           } as AppKeyBatchOperate;
           batchFormData.value.action = params.action;
           batchFormData.value.n = 1;
@@ -2066,6 +2086,7 @@
             billing_methods: [1],
             quota_expires_rule: '1',
             period_unit: 'day',
+            reset_mode: 'natural',
           } as AppKeyBatchOperate;
           batchFormData.value.action = params.action;
           batchVisible.value = true;
@@ -2075,6 +2096,7 @@
             billing_methods: [1],
             quota_expires_rule: '1',
             period_unit: 'day',
+            reset_mode: 'natural',
           } as AppKeyBatchOperate;
           batchFormData.value.action = params.action;
           batchVisible.value = true;

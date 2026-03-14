@@ -1,10 +1,6 @@
 <template>
   <div class="detail-container">
-    <a-descriptions
-      :column="2"
-      bordered
-      :value-style="descriptionValueStyle"
-    >
+    <a-descriptions :column="2" bordered :value-style="descriptionValueStyle">
       <a-descriptions-item :label="$t('common.user_id')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -97,6 +93,7 @@
           <span v-if="currentData.is_cycle_reset_quota">
             {{ currentData.cycle_period }}
             {{ $t(`unit.${currentData.period_unit}`) }}
+            {{ $t(`dict.reset_mode.${currentData.reset_mode}`) }}
           </span>
           <span v-else>-</span>
         </span>

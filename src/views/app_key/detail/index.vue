@@ -91,6 +91,7 @@
           <span v-if="currentData.is_cycle_reset_quota">
             {{ currentData.cycle_period }}
             {{ $t(`unit.${currentData.period_unit}`) }}
+            {{ $t(`dict.reset_mode.${currentData.reset_mode}`) }}
           </span>
           <span v-else>-</span>
         </span>
@@ -169,10 +170,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span
-          v-else
-          class="detail-textarea detail-textarea--tall"
-        >
+        <span v-else class="detail-textarea detail-textarea--tall">
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
@@ -196,10 +194,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span
-          v-else
-          class="detail-textarea detail-textarea--compact"
-        >
+        <span v-else class="detail-textarea detail-textarea--compact">
           {{ currentData?.ip_whitelist?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
@@ -207,10 +202,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span
-          v-else
-          class="detail-textarea detail-textarea--compact"
-        >
+        <span v-else class="detail-textarea detail-textarea--compact">
           {{ currentData?.ip_blacklist?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
@@ -218,10 +210,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span
-          v-else
-          class="detail-textarea detail-textarea--compact"
-        >
+        <span v-else class="detail-textarea detail-textarea--compact">
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>

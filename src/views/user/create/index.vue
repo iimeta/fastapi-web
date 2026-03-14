@@ -127,10 +127,7 @@
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
                 <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
                 <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
-                <a-radio
-                  :value="10000"
-                  class="user-form-quota-radio--compact"
-                >
+                <a-radio :value="10000" class="user-form-quota-radio--compact">
                   <Quota :model-value="10000" />
                 </a-radio>
               </a-radio-group>
@@ -273,10 +270,7 @@
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
                 <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
                 <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
-                <a-radio
-                  :value="10000"
-                  class="user-form-quota-radio--compact"
-                >
+                <a-radio :value="10000" class="user-form-quota-radio--compact">
                   <Quota :model-value="10000" />
                 </a-radio>
               </a-radio-group>
@@ -303,6 +297,14 @@
                   <a-radio-group v-model="formData.period_unit" type="button">
                     <a-radio value="hour"> {{ $t('unit.hour') }} </a-radio>
                     <a-radio value="day"> {{ $t('unit.day') }} </a-radio>
+                  </a-radio-group>
+                  <a-radio-group v-model="formData.reset_mode" type="button">
+                    <a-radio value="natural">
+                      {{ $t('dict.reset_mode.natural') }}
+                    </a-radio>
+                    <a-radio value="relative">
+                      {{ $t('dict.reset_mode.relative') }}
+                    </a-radio>
                   </a-radio-group>
                 </template>
               </a-input-number>
@@ -515,6 +517,7 @@
     reset_quota: ref(),
     cycle_period: ref(),
     period_unit: 'day',
+    reset_mode: 'natural',
     groups: [],
     remark: '',
   });
