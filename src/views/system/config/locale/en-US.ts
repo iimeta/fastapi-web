@@ -24,7 +24,7 @@ export default {
   'sys.config.item.title.batch_task': 'Batch Task',
   'sys.config.item.desc.batch_task': 'Scheduled check and update of batch task statuses. Configure single task timeout as needed. Recommended not less than 10 minutes.',
   'sys.config.item.title.reset_task': 'Reset Task',
-  'sys.config.item.desc.reset_task': 'Regularly check the cycle reset status of group quotas, application and application key quotas. Current quotas will be automatically reset when the reset period is reached. Single task timeout can be configured according to the actual situation. It is recommended not to be less than 10 minutes.',
+  'sys.config.item.desc.reset_task': 'Regularly check the cycle reset status of user, reseller, group, application, and application key quotas. When the reset time is reached, the current quota will be automatically reset and the used quota will be cleared. Single task timeout can be configured according to the actual situation. It is recommended not to be less than 10 minutes.',
   'sys.config.item.title.notice': 'Notice Task',
   'sys.config.item.desc.notice': 'Scheduled check of notification configurations to determine if notifications need to be sent. Configure single task timeout as needed. Recommended not less than 10 minutes.',
   'sys.config.item.title.base': 'Base Configuration',

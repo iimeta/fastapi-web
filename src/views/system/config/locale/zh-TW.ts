@@ -24,7 +24,7 @@ export default {
   'sys.config.item.title.batch_task': '批次處理任務',
   'sys.config.item.desc.batch_task': '定時檢查各批次處理任務的狀態並更新, 單次批次處理任務超時時間可根據實際情況配置, 建議不要低於10分鐘',
   'sys.config.item.title.reset_task': '重置任務',
-  'sys.config.item.desc.reset_task': '定時檢查分組額度, 應用和應用密鑰額度的循環重置狀態, 當前額度到重置週期後將自動被重置, 單次重置任務超時時間可根據實際情況配置, 建議不要低於10分鐘',
+  'sys.config.item.desc.reset_task': '定時檢查用戶、代理商、分組、應用和應用密鑰額度的循環重置狀態, 到重置時間時將自動重置當前額度並清空已用額度, 單次重置任務超時時間可根據實際情況配置, 建議不要低於10分鐘',
   'sys.config.item.title.notice': '通知任務',
   'sys.config.item.desc.notice': '定時檢查各類通知配置是否需要傳送通知, 單次通知任務超時時間可根據實際情況配置, 建議不要低於10分鐘',
   'sys.config.item.title.base': '基礎配置',

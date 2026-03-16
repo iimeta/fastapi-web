@@ -24,7 +24,7 @@ export default {
   'sys.config.item.title.batch_task': '批处理任务',
   'sys.config.item.desc.batch_task': '定时检查各批处理任务的状态并更新, 单次批处理任务超时时间可根据实际情况配置, 建议不要低于10分钟',
   'sys.config.item.title.reset_task': '重置任务',
-  'sys.config.item.desc.reset_task': '定时检查分组额度, 应用和应用密钥额度的循环重置状态, 当前额度到重置周期后将自动被重置, 单次重置任务超时时间可根据实际情况配置, 建议不要低于10分钟',
+  'sys.config.item.desc.reset_task': '定时检查用户、代理商、分组、应用和应用密钥额度的循环重置状态, 到重置时间时将自动重置当前额度并清空已用额度, 单次重置任务超时时间可根据实际情况配置, 建议不要低于10分钟',
   'sys.config.item.title.notice': '通知任务',
   'sys.config.item.desc.notice': '定时检查各类通知配置是否需要发送通知, 单次通知任务超时时间可根据实际情况配置, 建议不要低于10分钟',
   'sys.config.item.title.base': '基础配置',
