@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'query-string';
-import { Pricing } from './common';
+import { Pricing, TimeRule } from './common';
 
 export interface ModelInit {
   url: string;
@@ -51,6 +51,7 @@ export interface Model {
   base_url: string;
   path: string;
   remark: string;
+  time_rules?: TimeRule[];
   pricing: Pricing;
   request_data_format: string;
   response_data_format: string;
@@ -79,6 +80,7 @@ export interface ModelPage {
   name: string;
   model: string;
   type: number;
+  time_rules?: TimeRule[];
   pricing: Pricing;
   groups: string[];
   group_names: string[];
@@ -152,6 +154,7 @@ export interface ModelDetail {
   type: number;
   base_url: string;
   path: string;
+  time_rules?: TimeRule[];
   pricing: Pricing;
   groups: string[];
   group_names: string[];

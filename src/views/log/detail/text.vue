@@ -101,6 +101,35 @@
           {{ currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.billing_methods')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.spend.billing_methods
+              ? $t(`dict.billing_methods.${currentData.spend.billing_methods}`)
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.model_discount')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.spend.model_time_rule
+              ? currentData.spend.model_time_rule.name +
+                ' ' +
+                Number(
+                  (currentData.spend.model_time_rule.discount * 100).toFixed(2)
+                ) +
+                '%'
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('log.detail.group_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -124,36 +153,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('log.detail.model_discount')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData.spend.model_time_rule
-              ? currentData.spend.model_time_rule.name +
-                ' ' +
-                Number(
-                  (currentData.spend.model_time_rule.discount * 100).toFixed(2)
-                ) +
-                '%'
-              : '-'
-          }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('common.billing_methods')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData.spend.billing_methods
-              ? $t(`dict.billing_methods.${currentData.spend.billing_methods}`)
-              : '-'
-          }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('common.total.spend')">
+      <a-descriptions-item :label="$t('common.total.spend')" :span="2">
         <template #label>
           <span>
             {{ $t('common.total.spend') }}
@@ -500,6 +500,35 @@
           {{ currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.billing_methods')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.spend.billing_methods
+              ? $t(`dict.billing_methods.${currentData.spend.billing_methods}`)
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.model_discount')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.spend.model_time_rule
+              ? currentData.spend.model_time_rule.name +
+                ' ' +
+                Number(
+                  (currentData.spend.model_time_rule.discount * 100).toFixed(2)
+                ) +
+                '%'
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('log.detail.group_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -523,36 +552,7 @@
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('log.detail.model_discount')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData.spend.model_time_rule
-              ? currentData.spend.model_time_rule.name +
-                ' ' +
-                Number(
-                  (currentData.spend.model_time_rule.discount * 100).toFixed(2)
-                ) +
-                '%'
-              : '-'
-          }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('common.billing_methods')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{
-            currentData.spend.billing_methods
-              ? $t(`dict.billing_methods.${currentData.spend.billing_methods}`)
-              : '-'
-          }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('common.total.spend')">
+      <a-descriptions-item :label="$t('common.total.spend')" :span="2">
         <template #label>
           <span>
             {{ $t('common.total.spend') }}

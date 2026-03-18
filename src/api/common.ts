@@ -86,7 +86,6 @@ export interface OncePricing {
 }
 
 export interface Pricing {
-  time_rules?: TimeRule[];
   billing_rule: any;
   billing_methods: number[];
   billing_items: string[];

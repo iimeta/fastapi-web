@@ -392,7 +392,7 @@
           <a-button
             type="text"
             size="small"
-            @click="viewPricing(record.pricing, record.type)"
+            @click="viewPricing(record.pricing, record.type, record.time_rules)"
           >
             {{ $t('button.view') }}
           </a-button>
@@ -724,7 +724,11 @@
         simple
         :ok-text="$t('button.close')"
       >
-        <PricingDetail v-model="pricing" :model-type="modelType" />
+        <PricingDetail
+          v-model="pricing"
+          :model-type="modelType"
+          :time-rules="timeRules"
+        />
       </a-modal>
     </a-card>
   </div>
@@ -1413,10 +1417,12 @@
   const pricingVisible = ref(false);
   const pricing = ref<Pricing>({ billing_items: [] } as unknown as Pricing);
   const modelType = ref(0);
-  const viewPricing = (p: Pricing, t: number) => {
+  const timeRules = ref<any[]>([]);
+  const viewPricing = (p: Pricing, t: number, tr?: any[]) => {
     pricingVisible.value = true;
     pricing.value = p;
     modelType.value = t;
+    timeRules.value = tr || [];
   };
 
   const detailVisible = ref(false);

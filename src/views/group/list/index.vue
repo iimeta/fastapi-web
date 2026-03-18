@@ -452,8 +452,7 @@
       <!-- 时段规则 -->
       <a-modal
         v-model:visible="timeRulesVisible"
-        :title="$t('common.discount')"
-        unmount-on-close
+        hide-title
         hide-cancel
         simple
         width="888px"
@@ -465,13 +464,13 @@
           :pagination="false"
           :bordered="false"
         >
+          <template #discount="{ record }"> {{ record.discount }}% </template>
           <template #time_range="{ record }">
             {{ formatMs(record.start_time) }}~{{ formatMs(record.end_time) }}
           </template>
           <template #days="{ record }">
             {{ formatDays(record) }}
           </template>
-          <template #discount="{ record }"> {{ record.discount }}% </template>
           <template #priority_title>
             {{ $t('time_rule.label.priority') }}
             <a-tooltip :content="$t('time_rule.placeholder.priority')">
@@ -952,6 +951,12 @@
           width: 150,
         },
         {
+          title: t('common.discount'),
+          slotName: 'discount',
+          align: 'center',
+          width: 150,
+        },
+        {
           title: t('time_rule.label.time_range'),
           slotName: 'time_range',
           align: 'center',
@@ -961,20 +966,14 @@
           title: t('time_rule.label.days'),
           slotName: 'days',
           align: 'center',
-          width: 200,
+          width: 150,
         },
         {
           title: t('time_rule.label.priority'),
           dataIndex: 'priority',
           titleSlotName: 'priority_title',
           align: 'center',
-          width: 80,
-        },
-        {
-          title: t('common.discount'),
-          slotName: 'discount',
-          align: 'center',
-          width: 80,
+          width: 150,
         },
       ],
     },
@@ -997,7 +996,10 @@
     const totalMinutes = Math.floor(ms / 60000);
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
-    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(
+      2,
+      '0'
+    )}`;
   };
 
   const formatDays = (rule: any) => {

@@ -185,7 +185,6 @@
     time_rules: rules.value,
   }));
 
-  // 暴露 validate 方法供父组件调用
   defineExpose({
     validate: () => formRef.value?.validate(),
   });
@@ -274,7 +273,6 @@
     return days.length > 0 && !allMonthValues.every((v) => days.includes(v));
   }
 
-  // 周选择：构造传给 group 的 value（含哨兵）
   function weekGroupValue(rule: TimeRule): number[] {
     const days = rule.days || [];
     if (allWeekValues.every((v) => days.includes(v))) {
@@ -283,7 +281,6 @@
     return [...days];
   }
 
-  // 周选择：group change 处理
   function onWeekGroupChange(rule: TimeRule, val: number[]) {
     const hadSentinel =
       (rule.days || []).length > 0 &&
@@ -292,19 +289,15 @@
     const realValues = val.filter((v) => v !== ALL_SENTINEL);
 
     if (hasSentinel && !hadSentinel) {
-      // 刚勾选"全选"
       rule.days = [...allWeekValues];
     } else if (!hasSentinel && hadSentinel) {
-      // 取消勾选"全选"
       rule.days = [];
     } else {
-      // 单独勾选/取消某一天
       rule.days = realValues;
     }
     emitUpdate();
   }
 
-  // 月选择：构造传给 group 的 value（含哨兵）
   function monthGroupValue(rule: TimeRule): number[] {
     const days = rule.days || [];
     if (allMonthValues.every((v) => days.includes(v))) {
@@ -313,7 +306,6 @@
     return [...days];
   }
 
-  // 月选择：group change 处理
   function onMonthGroupChange(rule: TimeRule, val: number[]) {
     const hadSentinel =
       (rule.days || []).length > 0 &&
@@ -513,7 +505,6 @@
       border-color: rgb(var(--primary-6));
 
       &::after {
-        // 把对勾变成横线
         width: 8px;
         height: 2px;
         border: none;

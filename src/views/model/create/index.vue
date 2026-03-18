@@ -142,10 +142,7 @@
             </a-divider>
 
             <!-- 时段规则 -->
-            <TimeRules
-              ref="timeRulesRef"
-              v-model="formData.pricing.time_rules"
-            />
+            <TimeRules ref="timeRulesRef" v-model="formData.time_rules" />
 
             <!-- 定价 -->
             <Pricing
@@ -732,7 +729,7 @@
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import { queryGroupList, GroupList } from '@/api/group';
-  import TimeRules from '@/views/common/time-rules.vue';
+  import TimeRules from '@/views/common/time_rules.vue';
   import Pricing from '../components/pricing.vue';
 
   const { loading, setLoading } = useLoading(false);
@@ -802,8 +799,8 @@
       max_tokens: ref(),
       is_support_stream: true,
     },
+    time_rules: [],
     pricing: {
-      time_rules: [],
       billing_rule: 1,
       billing_methods: [1],
       billing_items: [],

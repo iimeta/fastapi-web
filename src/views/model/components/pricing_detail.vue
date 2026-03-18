@@ -1,9 +1,9 @@
 <template>
   <!-- 时段规则 -->
   <a-table
-    v-if="pricing.time_rules && pricing.time_rules.length"
+    v-if="timeRules && timeRules.length"
     :columns="timeRulesColumns"
-    :data="pricing.time_rules"
+    :data="timeRules"
     :pagination="false"
     :bordered="false"
     class="pricing-detail-table-spacing"
@@ -348,9 +348,11 @@
   const props = defineProps<{
     modelValue: Pricing;
     modelType: number;
+    timeRules?: any[];
   }>();
 
   const pricing = ref(props.modelValue);
+  const timeRules = ref(props.timeRules || []);
 
   const tableHeaderCellStyle = { background: 'var(--color-bg-2)' };
 
@@ -368,6 +370,13 @@
           width: 150,
         },
         {
+          title: t('common.discount'),
+          dataIndex: 'discount',
+          slotName: 'discount',
+          align: 'center',
+          width: 150,
+        },
+        {
           title: t('time_rule.label.time_range'),
           dataIndex: 'time_range',
           slotName: 'time_range',
@@ -379,7 +388,7 @@
           dataIndex: 'days',
           slotName: 'days',
           align: 'center',
-          width: 200,
+          width: 150,
         },
         {
           title: t('time_rule.label.priority'),
@@ -387,14 +396,7 @@
           slotName: 'priority',
           titleSlotName: 'priority_title',
           align: 'center',
-          width: 80,
-        },
-        {
-          title: t('common.discount'),
-          dataIndex: 'discount',
-          slotName: 'discount',
-          align: 'center',
-          width: 80,
+          width: 150,
         },
       ],
     },
@@ -1019,6 +1021,14 @@
       handlePricing();
     },
     { deep: true, immediate: true }
+  );
+
+  watch(
+    () => props.timeRules,
+    (val) => {
+      timeRules.value = val || [];
+    },
+    { deep: true }
   );
 
   function formatMs(ms: number): string {

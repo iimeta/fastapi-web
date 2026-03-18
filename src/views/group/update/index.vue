@@ -875,7 +875,7 @@
   } from '@/api/group';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
-  import TimeRules from '@/views/common/time-rules.vue';
+  import TimeRules from '@/views/common/time_rules.vue';
   import Quota from '@/views/common/quota.vue';
 
   const { t } = useI18n();
