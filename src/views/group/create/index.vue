@@ -24,6 +24,10 @@
             <a-divider orientation="left">
               {{ $t('common.title.base_info') }}
             </a-divider>
+
+            <!-- 时段规则 -->
+            <TimeRules ref="timeRulesRef" v-model="formData.time_rules" />
+
             <a-form-item
               field="name"
               :label="$t('group.label.name')"
@@ -39,26 +43,6 @@
                 :placeholder="$t('group.placeholder.name')"
                 allow-clear
               />
-            </a-form-item>
-            <a-form-item
-              field="discount"
-              :label="$t('common.discount')"
-              :rules="[
-                {
-                  required: true,
-                  message: $t('placeholder.discount'),
-                },
-              ]"
-            >
-              <a-input-number
-                v-model="formData.discount"
-                :placeholder="$t('placeholder.discount')"
-                :min="0.01"
-                :max="9999999999999"
-                allow-clear
-              >
-                <template #append> % </template>
-              </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="!formData.is_default"
@@ -861,6 +845,7 @@
   import { submitGroupCreate, GroupCreate } from '@/api/group';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
+  import TimeRules from '@/views/common/time-rules.vue';
   import Quota from '@/views/common/quota.vue';
 
   const { t } = useI18n();
@@ -908,7 +893,7 @@
   const formRef = ref<FormInstance>();
   const formData = ref<GroupCreate>({
     name: '',
-    discount: ref(),
+    time_rules: [],
     models: [],
     is_default: false,
     is_public: true,
@@ -939,9 +924,12 @@
     },
   });
 
+  const timeRulesRef = ref();
+
   const submitForm = async () => {
     const res = await formRef.value?.validate();
-    if (!res) {
+    const timeRulesRes = await timeRulesRef.value?.validate();
+    if (!res && !timeRulesRes) {
       setLoading(true);
       try {
         await submitGroupCreate(formData.value).then(() => {

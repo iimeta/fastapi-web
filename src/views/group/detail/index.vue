@@ -26,9 +26,28 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
-          {{ Number((currentData.discount * 100).toFixed(2)) }}%
-        </span>
+        <div v-else>
+          <span
+            v-if="currentData.time_rules && currentData.time_rules.length === 1"
+          >
+            {{ currentData.time_rules[0].discount }}%
+          </span>
+          <span
+            v-else-if="
+              currentData.time_rules && currentData.time_rules.length > 1
+            "
+          >
+            {{ getDiscountRange(currentData.time_rules) }}
+            <a-button
+              type="text"
+              size="small"
+              @click="viewTimeRules(currentData.time_rules || [])"
+            >
+              {{ $t('button.view') }}
+            </a-button>
+          </span>
+          <span v-else>-</span>
+        </div>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('common.used_quota')">
         <a-skeleton v-if="loading" :animation="true">
@@ -338,12 +357,46 @@
         </span>
       </a-descriptions-item>
     </a-descriptions>
+
+    <!-- 时段规则 -->
+    <a-modal
+      v-model:visible="timeRulesVisible"
+      :title="$t('common.discount')"
+      unmount-on-close
+      hide-cancel
+      simple
+      width="888px"
+      :ok-text="$t('button.close')"
+    >
+      <a-table
+        :columns="timeRulesColumns"
+        :data="timeRulesData"
+        :pagination="false"
+        :bordered="false"
+      >
+        <template #time_range="{ record }">
+          {{ formatMs(record.start_time) }}~{{ formatMs(record.end_time) }}
+        </template>
+        <template #days="{ record }">
+          {{ formatDays(record) }}
+        </template>
+        <template #discount="{ record }"> {{ record.discount }}% </template>
+        <template #priority_title>
+          {{ $t('time_rule.label.priority') }}
+          <a-tooltip :content="$t('time_rule.placeholder.priority')">
+            <icon-question-circle class="priority-tooltip" />
+          </a-tooltip>
+        </template>
+      </a-table>
+    </a-modal>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
+  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import {
     queryGroupDetail,
     GroupDetailParams,
@@ -351,6 +404,7 @@
   } from '@/api/group';
   import Quota from '@/views/common/quota.vue';
 
+  const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<GroupDetail>({} as GroupDetail);
   const descriptionValueStyle = {
@@ -378,6 +432,85 @@
     }
   };
   getGroupDetail();
+
+  const timeRulesVisible = ref(false);
+  const timeRulesData = ref<any[]>([]);
+  const tableHeaderCellStyle = { background: 'var(--color-bg-2)' };
+
+  const timeRulesColumns = computed<TableColumnData[]>(() => [
+    {
+      title: t('time_rule.label.rule'),
+      headerCellStyle: tableHeaderCellStyle,
+      children: [
+        {
+          title: t('time_rule.label.name'),
+          dataIndex: 'name',
+          align: 'center',
+          width: 150,
+        },
+        {
+          title: t('time_rule.label.time_range'),
+          slotName: 'time_range',
+          align: 'center',
+          width: 150,
+        },
+        {
+          title: t('time_rule.label.days'),
+          slotName: 'days',
+          align: 'center',
+          width: 200,
+        },
+        {
+          title: t('time_rule.label.priority'),
+          dataIndex: 'priority',
+          titleSlotName: 'priority_title',
+          align: 'center',
+          width: 80,
+        },
+        {
+          title: t('common.discount'),
+          slotName: 'discount',
+          align: 'center',
+          width: 80,
+        },
+      ],
+    },
+  ]);
+
+  const getDiscountRange = (rules: any[]) => {
+    const discounts = rules.map((r: any) => r.discount);
+    const min = Math.min(...discounts);
+    const max = Math.max(...discounts);
+    return `${min}%~${max}%`;
+  };
+
+  const viewTimeRules = (rules: any[]) => {
+    timeRulesData.value = rules;
+    timeRulesVisible.value = true;
+  };
+
+  function formatMs(ms: number): string {
+    if (!ms) return '00:00';
+    const totalMinutes = Math.floor(ms / 60000);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(
+      2,
+      '0'
+    )}`;
+  }
+
+  function formatDays(rule: any): string {
+    if (!rule.days || rule.days.length === 0) return t('common.all');
+    if (rule.day_mode === 'month') {
+      return rule.days
+        .map((d: number) => d + t('time_rule.label.day_suffix'))
+        .join('、');
+    }
+    return rule.days
+      .map((d: number) => t(`time_rule.dict.week.${d}`))
+      .join('、');
+  }
 </script>
 
 <script lang="ts">
@@ -388,4 +521,9 @@
 
 <style scoped lang="less">
   // 公共骨架已由 global.less 全局提供
+
+  .priority-tooltip {
+    cursor: pointer;
+    color: var(--color-text-3);
+  }
 </style>

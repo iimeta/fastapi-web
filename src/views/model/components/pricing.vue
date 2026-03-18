@@ -1972,6 +1972,10 @@
 <style scoped lang="less">
   .form {
     align-items: center;
+
+    :deep(.arco-form-item:first-child) {
+      margin-top: 0;
+    }
   }
 
   .billing-items {

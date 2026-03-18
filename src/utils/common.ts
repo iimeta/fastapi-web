@@ -14,6 +14,12 @@ export function parseQuota(quota: any, n?: number) {
   });
 }
 
+export function parseDiscount(discount: string) {
+  // 使用正则匹配最多2位小数
+  const match = discount.match(/^(-?\d*)(\.\d{0,2})?/);
+  return match ? match[0] : discount;
+}
+
 export function parsePrice(price: string) {
   // 使用正则匹配最多6位小数
   const match = price.match(/^(-?\d*)(\.\d{0,6})?/);

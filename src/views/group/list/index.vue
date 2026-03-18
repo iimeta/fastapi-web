@@ -253,8 +253,21 @@
             {{ record.name }}
           </span>
         </template>
-        <template #discount="{ record }">
-          {{ Number((record.discount * 100).toFixed(2)) }}%
+        <template #time_rules="{ record }">
+          <span v-if="record.time_rules && record.time_rules.length === 1">
+            {{ record.time_rules[0].discount }}%
+          </span>
+          <span v-else-if="record.time_rules && record.time_rules.length > 1">
+            {{ getDiscountRange(record.time_rules) }}
+            <a-button
+              type="text"
+              size="small"
+              @click="viewTimeRules(record.time_rules)"
+            >
+              {{ $t('button.view') }}
+            </a-button>
+          </span>
+          <span v-else>-</span>
         </template>
         <template #model_names="{ record }">
           <span v-if="record.model_names">
@@ -435,6 +448,38 @@
       >
         <Models :id="recordId" :action="action" />
       </a-modal>
+
+      <!-- 时段规则 -->
+      <a-modal
+        v-model:visible="timeRulesVisible"
+        :title="$t('common.discount')"
+        unmount-on-close
+        hide-cancel
+        simple
+        width="888px"
+        :ok-text="$t('button.close')"
+      >
+        <a-table
+          :columns="timeRulesColumns"
+          :data="timeRulesData"
+          :pagination="false"
+          :bordered="false"
+        >
+          <template #time_range="{ record }">
+            {{ formatMs(record.start_time) }}~{{ formatMs(record.end_time) }}
+          </template>
+          <template #days="{ record }">
+            {{ formatDays(record) }}
+          </template>
+          <template #discount="{ record }"> {{ record.discount }}% </template>
+          <template #priority_title>
+            {{ $t('time_rule.label.priority') }}
+            <a-tooltip :content="$t('time_rule.placeholder.priority')">
+              <icon-question-circle class="priority-tooltip" />
+            </a-tooltip>
+          </template>
+        </a-table>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -556,8 +601,8 @@
     },
     {
       title: t('common.discount'),
-      dataIndex: 'discount',
-      slotName: 'discount',
+      dataIndex: 'time_rules',
+      slotName: 'time_rules',
       align: 'center',
     },
     {
@@ -889,6 +934,83 @@
     recordId.value = id;
     action.value = 'group';
   };
+
+  const timeRulesVisible = ref(false);
+  const timeRulesData = ref<any[]>([]);
+
+  const tableHeaderCellStyle = { background: 'var(--color-bg-2)' };
+
+  const timeRulesColumns = computed<TableColumnData[]>(() => [
+    {
+      title: t('time_rule.label.rule'),
+      headerCellStyle: tableHeaderCellStyle,
+      children: [
+        {
+          title: t('time_rule.label.name'),
+          dataIndex: 'name',
+          align: 'center',
+          width: 150,
+        },
+        {
+          title: t('time_rule.label.time_range'),
+          slotName: 'time_range',
+          align: 'center',
+          width: 150,
+        },
+        {
+          title: t('time_rule.label.days'),
+          slotName: 'days',
+          align: 'center',
+          width: 200,
+        },
+        {
+          title: t('time_rule.label.priority'),
+          dataIndex: 'priority',
+          titleSlotName: 'priority_title',
+          align: 'center',
+          width: 80,
+        },
+        {
+          title: t('common.discount'),
+          slotName: 'discount',
+          align: 'center',
+          width: 80,
+        },
+      ],
+    },
+  ]);
+
+  const getDiscountRange = (rules: any[]) => {
+    const discounts = rules.map((r: any) => r.discount);
+    const min = Math.min(...discounts);
+    const max = Math.max(...discounts);
+    return `${min}%~${max}%`;
+  };
+
+  const viewTimeRules = (rules: any[]) => {
+    timeRulesData.value = rules;
+    timeRulesVisible.value = true;
+  };
+
+  const formatMs = (ms: number) => {
+    if (ms === undefined || ms === null) return '';
+    const totalMinutes = Math.floor(ms / 60000);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+  };
+
+  const formatDays = (rule: any) => {
+    if (!rule.days || rule.days.length === 0) return t('common.all');
+    if (rule.day_mode === 'month') {
+      return rule.days
+        .map((d: number) => d + t('time_rule.label.day_suffix'))
+        .join('、');
+    }
+    return rule.days
+      .map((d: number) => t(`time_rule.dict.week.${d}`))
+      .join('、');
+  };
 </script>
 
 <script lang="ts">
@@ -902,5 +1024,14 @@
 
   .group-list-expire-button {
     width: 150px;
+  }
+
+  .time-rule-tag {
+    margin: 2px;
+  }
+
+  .priority-tooltip {
+    cursor: pointer;
+    color: var(--color-text-3);
   }
 </style>

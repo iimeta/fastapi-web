@@ -141,6 +141,12 @@
               {{ $t('common.title.advanced') }}
             </a-divider>
 
+            <!-- 时段规则 -->
+            <TimeRules
+              ref="timeRulesRef"
+              v-model="formData.pricing.time_rules"
+            />
+
             <!-- 定价 -->
             <Pricing
               ref="pricingRef"
@@ -711,6 +717,7 @@
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import { queryGroupList, GroupList } from '@/api/group';
+  import TimeRules from '@/views/common/time-rules.vue';
   import Pricing from '../components/pricing.vue';
 
   const { loading, setLoading } = useLoading(true);
@@ -782,6 +789,7 @@
       is_support_stream: true,
     },
     pricing: {
+      time_rules: [],
       billing_rule: 1,
       billing_methods: [1],
       billing_items: [],
@@ -844,12 +852,19 @@
     },
   });
 
+  // 时段规则
+  const timeRulesRef = ref();
   // 定价
   const pricingRef = ref();
 
   const submitForm = async () => {
     const res = await formRef.value?.validate();
     if (!res) {
+      // 时段规则
+      const timeRulesRes = await timeRulesRef.value?.validate();
+      if (timeRulesRes) {
+        return;
+      }
       // 定价
       const pricingRes = await pricingRef.value?.validate();
       if (pricingRes) {

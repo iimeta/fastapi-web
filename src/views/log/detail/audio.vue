@@ -101,14 +101,35 @@
         </a-skeleton>
         <span v-else>{{ currentData.spend.group_name || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('log.detail.discount')">
+      <a-descriptions-item :label="$t('log.detail.group_discount')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           {{
-            currentData.spend.group_discount > 0
-              ? Number((currentData.spend.group_discount * 100).toFixed(2)) +
+            currentData.spend.group_time_rule
+              ? currentData.spend.group_time_rule.name +
+                ' ' +
+                Number(
+                  (currentData.spend.group_time_rule.discount * 100).toFixed(2)
+                ) +
+                '%'
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.model_discount')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.spend.model_time_rule
+              ? currentData.spend.model_time_rule.name +
+                ' ' +
+                Number(
+                  (currentData.spend.model_time_rule.discount * 100).toFixed(2)
+                ) +
                 '%'
               : '-'
           }}
@@ -433,14 +454,35 @@
         </a-skeleton>
         <span v-else>{{ currentData.spend.group_name || '-' }}</span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('log.detail.discount')">
+      <a-descriptions-item :label="$t('log.detail.group_discount')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           {{
-            currentData.spend.group_discount > 0
-              ? Number((currentData.spend.group_discount * 100).toFixed(2)) +
+            currentData.spend.group_time_rule
+              ? currentData.spend.group_time_rule.name +
+                ' ' +
+                Number(
+                  (currentData.spend.group_time_rule.discount * 100).toFixed(2)
+                ) +
+                '%'
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.model_discount')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.spend.model_time_rule
+              ? currentData.spend.model_time_rule.name +
+                ' ' +
+                Number(
+                  (currentData.spend.model_time_rule.discount * 100).toFixed(2)
+                ) +
                 '%'
               : '-'
           }}

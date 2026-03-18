@@ -1,3 +1,14 @@
+export interface TimeRule {
+  time_type: string;
+  name: string;
+  start_time: any;
+  end_time: any;
+  discount: any;
+  days?: number[];
+  day_mode?: string;
+  priority: any;
+}
+
 export interface TextPricing {
   service_tier?: string;
   input_ratio: any;
@@ -75,6 +86,7 @@ export interface OncePricing {
 }
 
 export interface Pricing {
+  time_rules?: TimeRule[];
   billing_rule: any;
   billing_methods: number[];
   billing_items: string[];
@@ -188,6 +200,7 @@ export interface Spend {
   once: OnceSpend;
   group_id: string;
   group_name: string;
-  group_discount: number;
+  model_time_rule?: TimeRule;
+  group_time_rule?: TimeRule;
   total_spend_tokens: number;
 }

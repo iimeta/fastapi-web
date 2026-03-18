@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'query-string';
+import type { TimeRule } from './common';
 
 export interface ForwardConfig {
   forward_rule: string;
@@ -18,8 +19,8 @@ export interface ForwardConfig {
 
 export interface GroupBaseInfo {
   id?: string;
+  time_rules?: TimeRule[];
   name: string;
-  discount: any;
   models: string[];
   is_default: boolean;
   is_public: boolean;
@@ -52,8 +53,8 @@ export function submitGroupCreate(data: GroupCreate) {
 
 export interface GroupPage {
   id: string;
+  time_rules?: TimeRule[];
   name: string;
-  discount: number;
   used_quota: number;
   models: string[];
   model_agents: string[];
@@ -97,8 +98,8 @@ export interface GroupDetailParams {
 
 export interface GroupDetail {
   id: string;
+  time_rules?: TimeRule[];
   name: string;
-  discount: number;
   models: string[];
   model_names: string[];
   is_default: boolean;

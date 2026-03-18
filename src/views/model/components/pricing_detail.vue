@@ -1,4 +1,28 @@
 <template>
+  <!-- 时段规则 -->
+  <a-table
+    v-if="pricing.time_rules && pricing.time_rules.length"
+    :columns="timeRulesColumns"
+    :data="pricing.time_rules"
+    :pagination="false"
+    :bordered="false"
+    class="pricing-detail-table-spacing"
+  >
+    <template #time_range="{ record }">
+      {{ `${formatMs(record.start_time)}~${formatMs(record.end_time)}` }}
+    </template>
+    <template #days="{ record }">
+      {{ formatDays(record) }}
+    </template>
+    <template #discount="{ record }"> {{ record.discount }}% </template>
+    <template #priority_title>
+      {{ $t('time_rule.label.priority') }}
+      <a-tooltip :content="$t('time_rule.placeholder.priority')">
+        <icon-question-circle class="priority-tooltip" />
+      </a-tooltip>
+    </template>
+  </a-table>
+
   <!-- 文本 -->
   <a-table
     v-if="pricing.billing_items.includes('text')"
@@ -329,6 +353,52 @@
   const pricing = ref(props.modelValue);
 
   const tableHeaderCellStyle = { background: 'var(--color-bg-2)' };
+
+  // 时段规则
+  const timeRulesColumns = ref<TableColumnData[]>([
+    {
+      title: t('time_rule.label.rule'),
+      headerCellStyle: tableHeaderCellStyle,
+      children: [
+        {
+          title: t('time_rule.label.name'),
+          dataIndex: 'name',
+          slotName: 'name',
+          align: 'center',
+          width: 150,
+        },
+        {
+          title: t('time_rule.label.time_range'),
+          dataIndex: 'time_range',
+          slotName: 'time_range',
+          align: 'center',
+          width: 150,
+        },
+        {
+          title: t('time_rule.label.days'),
+          dataIndex: 'days',
+          slotName: 'days',
+          align: 'center',
+          width: 200,
+        },
+        {
+          title: t('time_rule.label.priority'),
+          dataIndex: 'priority',
+          slotName: 'priority',
+          titleSlotName: 'priority_title',
+          align: 'center',
+          width: 80,
+        },
+        {
+          title: t('common.discount'),
+          dataIndex: 'discount',
+          slotName: 'discount',
+          align: 'center',
+          width: 80,
+        },
+      ],
+    },
+  ]);
 
   // 文本
   const textPricing = ref<TextPricing[]>([]);
@@ -950,6 +1020,31 @@
     },
     { deep: true, immediate: true }
   );
+
+  function formatMs(ms: number): string {
+    if (!ms) {
+      return '00:00';
+    }
+    const totalMinutes = Math.floor(ms / 60000);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(
+      2,
+      '0'
+    )}`;
+  }
+
+  function formatDays(rule: any): string {
+    if (!rule.days || rule.days.length === 0) return t('common.all');
+    if (rule.day_mode === 'month') {
+      return rule.days
+        .map((d: number) => d + t('time_rule.label.day_suffix'))
+        .join('、');
+    }
+    return rule.days
+      .map((d: number) => t(`time_rule.dict.week.${d}`))
+      .join('、');
+  }
 </script>
 
 <script lang="ts">
@@ -962,5 +1057,9 @@
   .pricing-detail-table-spacing {
     margin-bottom: 15px;
   }
-</style>
 
+  .priority-tooltip {
+    cursor: pointer;
+    color: var(--color-text-3);
+  }
+</style>

@@ -87,13 +87,22 @@
       <Quota :model-value="record.once.spend_tokens" />
     </template>
 
+    <!-- 模型折扣 -->
+    <template #model_time_rule="{ record }">
+      <template v-if="record.model_time_rule">
+        {{ record.model_time_rule.name }}
+        {{ Number((record.model_time_rule.discount * 100).toFixed(2)) }}%
+      </template>
+      <template v-else>-</template>
+    </template>
+
     <!-- 分组折扣 -->
-    <template #group_discount="{ record }">
-      {{
-        record.group_discount > 0
-          ? Number((record.group_discount * 100).toFixed(2)) + '%'
-          : '-'
-      }}
+    <template #group_time_rule="{ record }">
+      <template v-if="record.group_time_rule">
+        {{ record.group_time_rule.name }}
+        {{ Number((record.group_time_rule.discount * 100).toFixed(2)) }}%
+      </template>
+      <template v-else>-</template>
     </template>
 
     <!-- 总花费 -->
@@ -1510,13 +1519,24 @@
       });
     }
 
+    // 模型折扣
+    if (spend.value.model_time_rule) {
+      totalSpendColumns.value[0].children.push({
+        title: t('log.columns.spend.model_time_rule'),
+        dataIndex: 'model_time_rule',
+        slotName: 'model_time_rule',
+        align: 'center',
+        width: 120,
+      });
+    }
+
     // 分组折扣
     totalSpendColumns.value[0].children.push({
-      title: t('log.columns.spend.group_discount'),
-      dataIndex: 'group_discount',
-      slotName: 'group_discount',
+      title: t('log.columns.spend.group_time_rule'),
+      dataIndex: 'group_time_rule',
+      slotName: 'group_time_rule',
       align: 'center',
-      width: 100,
+      width: 120,
     });
 
     // 总花费
