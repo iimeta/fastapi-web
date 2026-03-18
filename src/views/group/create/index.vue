@@ -206,18 +206,23 @@
             </a-form-item>
             <a-form-item v-if="formData.is_limit_quota">
               <a-radio-group type="button" @change="handleQuotaQuickChange">
-                <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
-                <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
+                <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
                 <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
                 <a-radio :value="10000">
                   <Quota :model-value="10000" />
+                </a-radio>
+                <a-radio :value="20000">
+                  <Quota :model-value="20000" />
                 </a-radio>
                 <a-radio :value="50000"
                   ><Quota :model-value="50000" />
                 </a-radio>
                 <a-radio :value="100000">
                   <Quota :model-value="100000" />
+                </a-radio>
+                <a-radio :value="200000">
+                  <Quota :model-value="200000" />
                 </a-radio>
                 <a-radio :value="500000">
                   <Quota :model-value="500000" />
@@ -266,18 +271,23 @@
                 type="button"
                 @change="handleResetQuotaQuickChange"
               >
-                <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
-                <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
+                <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
                 <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
                 <a-radio :value="10000">
                   <Quota :model-value="10000" />
+                </a-radio>
+                <a-radio :value="20000">
+                  <Quota :model-value="20000" />
                 </a-radio>
                 <a-radio :value="50000"
                   ><Quota :model-value="50000" />
                 </a-radio>
                 <a-radio :value="100000">
                   <Quota :model-value="100000" />
+                </a-radio>
+                <a-radio :value="200000">
+                  <Quota :model-value="200000" />
                 </a-radio>
                 <a-radio :value="500000">
                   <Quota :model-value="500000" />
@@ -338,6 +348,9 @@
                 <a-radio :value="1">
                   1<span class="hour">{{ $t('unit.hour') }}</span>
                 </a-radio>
+                <a-radio :value="3">
+                  3<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
                 <a-radio :value="5">
                   5<span class="hour">{{ $t('unit.hour') }}</span>
                 </a-radio>
@@ -349,6 +362,9 @@
                 </a-radio>
                 <a-radio :value="24">
                   24<span class="hour">{{ $t('unit.hour') }}</span>
+                </a-radio>
+                <a-radio :value="48">
+                  48<span class="hour">{{ $t('unit.hour') }}</span>
                 </a-radio>
                 <a-radio :value="72">
                   72<span class="hour">{{ $t('unit.hour') }}</span>
@@ -399,8 +415,14 @@
                 <a-radio :value="15">
                   15<span class="day">{{ $t('unit.day') }}</span>
                 </a-radio>
+                <a-radio :value="20">
+                  20<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
                 <a-radio :value="30">
                   30<span class="day">{{ $t('unit.day') }}</span>
+                </a-radio>
+                <a-radio :value="31">
+                  31<span class="day">{{ $t('unit.day') }}</span>
                 </a-radio>
                 <a-radio :value="60">
                   60<span class="day">{{ $t('unit.day') }}</span>
@@ -409,15 +431,13 @@
                   90<span class="day">{{ $t('unit.day') }}</span>
                 </a-radio>
                 <a-radio :value="180">
-                  180
-                  <span
+                  180<span
                     class="group-form-day-label group-form-day-label--wide"
                     >{{ $t('unit.day') }}</span
                   >
                 </a-radio>
                 <a-radio :value="365">
-                  365
-                  <span
+                  365<span
                     class="group-form-day-label group-form-day-label--wide"
                     >{{ $t('unit.day') }}</span
                   >
@@ -540,18 +560,23 @@
               "
             >
               <a-radio-group type="button" @change="handleUsedQuotaQuickChange">
-                <a-radio :value="100"> <Quota :model-value="100" /> </a-radio>
-                <a-radio :value="500"> <Quota :model-value="500" /> </a-radio>
                 <a-radio :value="1000"> <Quota :model-value="1000" /> </a-radio>
+                <a-radio :value="2000"> <Quota :model-value="2000" /> </a-radio>
                 <a-radio :value="5000"> <Quota :model-value="5000" /> </a-radio>
                 <a-radio :value="10000">
                   <Quota :model-value="10000" />
+                </a-radio>
+                <a-radio :value="20000">
+                  <Quota :model-value="20000" />
                 </a-radio>
                 <a-radio :value="50000"
                   ><Quota :model-value="50000" />
                 </a-radio>
                 <a-radio :value="100000">
                   <Quota :model-value="100000" />
+                </a-radio>
+                <a-radio :value="200000">
+                  <Quota :model-value="200000" />
                 </a-radio>
                 <a-radio :value="500000">
                   <Quota :model-value="500000" />

@@ -341,8 +341,8 @@
       {
         time_type: '',
         name: '',
-        start_time: ref(),
-        end_time: ref(),
+        start_time: 0,
+        end_time: 86399999,
         discount: ref(),
         days: [],
         day_mode: '',
