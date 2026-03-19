@@ -1531,13 +1531,15 @@
     }
 
     // 分组折扣
-    totalSpendColumns.value[0].children.push({
-      title: t('log.columns.spend.group_time_rule'),
-      dataIndex: 'group_time_rule',
-      slotName: 'group_time_rule',
-      align: 'center',
-      width: 120,
-    });
+    if (spend.value.group_time_rule) {
+      totalSpendColumns.value[0].children.push({
+        title: t('log.columns.spend.group_time_rule'),
+        dataIndex: 'group_time_rule',
+        slotName: 'group_time_rule',
+        align: 'center',
+        width: 120,
+      });
+    }
 
     // 总花费
     totalSpendColumns.value[0].children.push({
