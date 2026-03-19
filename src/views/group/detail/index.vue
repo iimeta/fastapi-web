@@ -361,8 +361,7 @@
     <!-- 时段规则 -->
     <a-modal
       v-model:visible="timeRulesVisible"
-      :title="$t('common.discount')"
-      unmount-on-close
+      hide-title
       hide-cancel
       simple
       width="888px"
