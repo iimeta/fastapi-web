@@ -99,11 +99,11 @@ const useAppStore = defineStore('app', {
         state.config.carousels2 || [
           {
             image_url: 'https://fastapi.ai/Author.png',
-            jump_url: 'https://github.com/iimeta/fastapi',
+            jump_url: 'https://www.fastapi.ai/guide/why.html#交流群',
           },
           {
             image_url: 'https://fastapi.ai/AuthorQQ.png',
-            jump_url: 'https://github.com/iimeta/fastapi',
+            jump_url: 'https://www.fastapi.ai/guide/why.html#交流群',
           },
         ]
       );
@@ -116,23 +116,23 @@ const useAppStore = defineStore('app', {
         state.config.announcement_more_url ||
         (state.config.announcement_title && state.config.domain
           ? undefined
-          : 'https://github.com/iimeta/fastapi/releases')
+          : 'https://www.fastapi.ai/releases/')
       );
     },
     getAnnouncements(state: AppState): Announcement[] | undefined {
       return (
         state.config.announcements || [
           {
-            content: 'v2.1.0 版本发布啦! 啦!! 啦!!!',
-            jump_url: 'https://github.com/iimeta/fastapi/releases/tag/v2.1.0',
+            content: 'v2.2.0 版本发布\u30002026-03-20',
+            jump_url: 'https://www.fastapi.ai/releases/#v2-2-0',
           },
           {
-            content: 'v2.0.0 版本发布啦! 啦!! 啦!!!',
-            jump_url: 'https://github.com/iimeta/fastapi/releases/tag/v2.0.0',
+            content: 'v2.1.0 版本发布\u30002026-02-10',
+            jump_url: 'https://www.fastapi.ai/releases/#v2-1-0',
           },
           {
-            content: 'v1.7.0 版本发布啦! 啦!! 啦!!!',
-            jump_url: 'https://github.com/iimeta/fastapi/releases/tag/v1.7.0',
+            content: 'v2.0.0 版本发布\u30002026-01-22',
+            jump_url: 'https://www.fastapi.ai/releases/#v2-0-0',
           },
         ]
       );

@@ -82,7 +82,7 @@
         <a-tooltip :content="`${$t('common.version')}: v${config.version}`">
           <a-link
             target="_blank"
-            :href="`https://github.com/iimeta/fastapi/releases/tag/v${config.version}`"
+            :href="`https://www.fastapi.ai/releases/#v${config.version.replace(/\./g, '-')}`"
           >
             <a-button class="nav-btn" type="outline" :shape="'circle'">
               <template #icon>
