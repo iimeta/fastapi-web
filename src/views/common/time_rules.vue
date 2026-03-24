@@ -3,8 +3,11 @@
     ref="formRef"
     :model="formModel"
     class="form"
+    :class="{ 'form--two-line': hasTwoLine }"
     :label-col-props="{ span: 4 }"
-    :wrapper-col-props="{ span: 18 }"
+    :wrapper-col-props="{
+      span: props.layout !== 'two-line' && hasTwoLine ? 17 : 18,
+    }"
   >
     <template v-for="(rule, index) in rules" :key="index">
       <a-form-item
@@ -17,106 +20,141 @@
           },
         ]"
       >
-        <a-select
-          v-model="rule.time_type"
-          :placeholder="$t('time_rule.label.time_type')"
-          class="time-rules-select--type time-rules-field--spaced"
-          @change="handleTimeTypeChangeWrapper(index, $event)"
-        >
-          <a-option value="all">
-            {{ $t('time_rule.dict.time_type.all') }}
-          </a-option>
-          <a-option value="weekday">
-            {{ $t('time_rule.dict.time_type.weekday') }}
-          </a-option>
-          <a-option value="weekend">
-            {{ $t('time_rule.dict.time_type.weekend') }}
-          </a-option>
-          <a-option value="custom">
-            {{ $t('time_rule.dict.time_type.custom') }}
-          </a-option>
-        </a-select>
-        <a-input
-          v-model="rule.name"
-          :placeholder="$t('time_rule.label.name')"
-          allow-clear
-          class="time-rules-input--name time-rules-field--spaced"
-          @change="emitUpdate"
-        />
-        <a-time-picker
-          :model-value="msToTimeStr(rule.start_time)"
-          format="HH:mm"
-          class="time-rules-picker"
-          :placeholder="$t('common.start_time')"
-          @change="handleStartTimeChange(rule, $event)"
-        />
-        <span class="time-rules-separator">~</span>
-        <a-time-picker
-          :model-value="msToTimeStr(rule.end_time)"
-          :placeholder="$t('common.end_time')"
-          format="HH:mm"
-          class="time-rules-picker time-rules-field--spaced"
-          @change="handleEndTimeChange(rule, $event)"
-        />
-        <a-input-number
-          v-model="rule.discount"
-          :placeholder="$t('common.discount')"
-          :min="0.01"
-          :max="9999999999999"
-          :parser="parseDiscount"
-          hide-button
-          allow-clear
-          class="time-rules-input--discount time-rules-field--spaced"
-          @change="emitUpdate"
-        >
-          <template #append> % </template>
-        </a-input-number>
-        <a-input-number
-          v-model="rule.priority"
-          :placeholder="$t('time_rule.label.priority')"
-          :precision="0"
-          :min="1"
-          :max="99999"
-          hide-button
-          allow-clear
-          class="time-rules-input--priority"
-          @change="emitUpdate"
-        />
-        <a-select
-          v-if="rule.time_type === 'custom'"
-          v-model="rule.day_mode"
-          :placeholder="$t('time_rule.label.day_mode')"
-          class="time-rules-select--day-mode"
-          @change="
-            () => {
-              rule.days = [];
-              emitUpdate();
-            }
-          "
-        >
-          <a-option value="week">
-            {{ $t('time_rule.dict.day_mode.week') }}
-          </a-option>
-          <a-option value="month">
-            {{ $t('time_rule.dict.day_mode.month') }}
-          </a-option>
-        </a-select>
-        <a-button
-          type="primary"
-          shape="circle"
-          class="time-rules-action-btn"
-          @click="addRule"
-        >
-          <icon-plus />
-        </a-button>
-        <a-button type="secondary" shape="circle" @click="removeRule(index)">
-          <icon-minus />
-        </a-button>
+        <div class="time-rules-row">
+          <div
+            class="time-rules-content"
+            :class="{
+              'time-rules-content--two-line': isTwoLine(rule),
+            }"
+          >
+            <div class="time-rules-line">
+              <a-select
+                v-model="rule.time_type"
+                :placeholder="$t('time_rule.label.time_type')"
+                class="time-rules-select--type time-rules-field--spaced"
+                @change="handleTimeTypeChangeWrapper(index, $event)"
+              >
+                <a-option value="all">
+                  {{ $t('time_rule.dict.time_type.all') }}
+                </a-option>
+                <a-option value="weekday">
+                  {{ $t('time_rule.dict.time_type.weekday') }}
+                </a-option>
+                <a-option value="weekend">
+                  {{ $t('time_rule.dict.time_type.weekend') }}
+                </a-option>
+                <a-option value="custom">
+                  {{ $t('time_rule.dict.time_type.custom') }}
+                </a-option>
+              </a-select>
+              <a-input
+                v-model="rule.name"
+                :placeholder="$t('time_rule.label.name')"
+                allow-clear
+                class="time-rules-input--name time-rules-field--spaced"
+                @change="emitUpdate"
+              />
+              <a-time-picker
+                :model-value="msToTimeStr(rule.start_time)"
+                format="HH:mm"
+                class="time-rules-picker"
+                :placeholder="$t('common.start_time')"
+                @change="handleStartTimeChange(rule, $event)"
+              />
+              <span class="time-rules-separator">~</span>
+              <a-time-picker
+                :model-value="msToTimeStr(rule.end_time)"
+                :placeholder="$t('common.end_time')"
+                format="HH:mm"
+                :class="[
+                  'time-rules-picker',
+                  { 'time-rules-field--spaced': !isTwoLine(rule) },
+                ]"
+                @change="handleEndTimeChange(rule, $event)"
+              />
+            </div>
+            <div class="time-rules-line">
+              <a-input-number
+                v-model="rule.discount"
+                :placeholder="$t('common.discount')"
+                :min="0.01"
+                :max="9999999999999"
+                :parser="parseDiscount"
+                hide-button
+                allow-clear
+                class="time-rules-input--discount time-rules-field--spaced"
+                @change="emitUpdate"
+              >
+                <template #append> % </template>
+              </a-input-number>
+              <a-input-number
+                v-model="rule.priority"
+                :placeholder="$t('time_rule.label.priority')"
+                :precision="0"
+                :min="1"
+                :max="99999"
+                hide-button
+                allow-clear
+                class="time-rules-input--priority"
+                @change="emitUpdate"
+              />
+              <a-select
+                v-if="rule.time_type === 'custom'"
+                v-model="rule.day_mode"
+                :placeholder="$t('time_rule.label.day_mode')"
+                class="time-rules-select--day-mode"
+                @change="
+                  () => {
+                    rule.days = [];
+                    emitUpdate();
+                  }
+                "
+              >
+                <a-option value="week">
+                  {{ $t('time_rule.dict.day_mode.week') }}
+                </a-option>
+                <a-option value="month">
+                  {{ $t('time_rule.dict.day_mode.month') }}
+                </a-option>
+              </a-select>
+              <a-tree-select
+                v-if="props.layout === 'two-line'"
+                v-model="rule.models"
+                :allow-search="true"
+                :allow-clear="true"
+                :tree-checkable="true"
+                :data="props.modelTreeData"
+                :placeholder="$t('time_rule.label.models')"
+                :max-tag-count="1"
+                :scrollbar="false"
+                tree-checked-strategy="child"
+                class="time-rules-select--models"
+                @change="emitUpdate"
+              />
+            </div>
+          </div>
+          <div class="time-rules-actions">
+            <a-button type="primary" shape="circle" @click="addRule">
+              <icon-plus />
+            </a-button>
+            <a-button
+              type="secondary"
+              shape="circle"
+              :class="{
+                'time-rules-field--spaced':
+                  props.layout !== 'two-line' && isTwoLine(rule),
+              }"
+              @click="removeRule(index)"
+            >
+              <icon-minus />
+            </a-button>
+          </div>
+        </div>
       </a-form-item>
       <a-form-item v-if="showWeekDays(rule)">
         <a-checkbox-group
           :model-value="weekGroupValue(rule)"
-          @change="handleWeekGroupChange(rule, $event)"
+          @change="handleWeekGroupChange(index, rule, $event)"
         >
           <a-checkbox
             :value="ALL_SENTINEL"
@@ -144,7 +182,7 @@
       >
         <a-checkbox-group
           :model-value="monthGroupValue(rule)"
-          @change="handleMonthGroupChange(rule, $event)"
+          @change="handleMonthGroupChange(index, rule, $event)"
         >
           <a-checkbox
             :value="ALL_SENTINEL"
@@ -167,13 +205,26 @@
   import { ref, computed, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import type { TimeRule } from '@/api/common';
+  import type { Tree } from '@/api/model';
   import { parseDiscount } from '@/utils/common';
 
   const { t } = useI18n();
 
   const props = defineProps<{
     modelValue?: TimeRule[];
+    layout?: 'inline' | 'two-line';
+    modelTreeData?: Tree[];
   }>();
+
+  function isTwoLine(rule: TimeRule) {
+    return props.layout === 'two-line' || rule.time_type === 'custom';
+  }
+
+  const hasTwoLine = computed(
+    () =>
+      props.layout === 'two-line' ||
+      rules.value.some((r) => r.time_type === 'custom')
+  );
 
   const emit = defineEmits<{
     (e: 'update:modelValue', value: TimeRule[]): void;
@@ -224,6 +275,7 @@
       days: [],
       day_mode: '',
       priority: 20,
+      models: [],
     } as TimeRule);
 
   const rules = computed({
@@ -339,6 +391,7 @@
         days: [],
         day_mode: '',
         priority: ref(),
+        models: [],
       } as TimeRule,
     ];
     emit('update:modelValue', newRules);
@@ -428,18 +481,26 @@
     emitUpdate();
   }
 
+  function validateRuleField(index: number) {
+    formRef.value?.validateField(`time_rules[${index}].name`);
+  }
+
   function handleWeekGroupChange(
+    index: number,
     rule: TimeRule,
     val: (string | number | boolean)[]
   ) {
     onWeekGroupChange(rule, val as number[]);
+    validateRuleField(index);
   }
 
   function handleMonthGroupChange(
+    index: number,
     rule: TimeRule,
     val: (string | number | boolean)[]
   ) {
     onMonthGroupChange(rule, val as number[]);
+    validateRuleField(index);
   }
 </script>
 
@@ -454,6 +515,14 @@
     align-items: center;
   }
 
+  .form--two-line {
+    :deep(.arco-form-item-label-col) {
+      display: flex;
+      align-items: center;
+      align-self: stretch;
+    }
+  }
+
   :deep(.time-rules-field--spaced) {
     margin-right: 5px;
   }
@@ -462,8 +531,51 @@
     margin: 0 4px;
   }
 
-  .time-rules-action-btn {
-    margin: 0 10px;
+  .time-rules-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .time-rules-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .time-rules-content--two-line {
+    flex: 1;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+
+    .time-rules-line {
+      width: 100%;
+
+      :deep(.time-rules-select--type),
+      :deep(.time-rules-input--name),
+      :deep(.time-rules-picker),
+      :deep(.time-rules-input--discount),
+      :deep(.time-rules-input--priority),
+      :deep(.time-rules-select--day-mode),
+      :deep(.time-rules-select--models) {
+        flex: 1;
+      }
+    }
+  }
+
+  .time-rules-line {
+    display: flex;
+    align-items: center;
+  }
+
+  .time-rules-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 10px;
+    flex-shrink: 0;
   }
 
   :deep(.time-rules-select--type) {
@@ -488,6 +600,11 @@
 
   :deep(.time-rules-select--day-mode) {
     width: 95px;
+    margin-left: 5px;
+  }
+
+  :deep(.time-rules-select--models) {
+    width: 200px;
     margin-left: 5px;
   }
 

@@ -26,7 +26,7 @@
             </a-divider>
 
             <!-- 时段规则 -->
-            <TimeRules ref="timeRulesRef" v-model="formData.time_rules" />
+            <TimeRules ref="timeRulesRef" v-model="formData.time_rules" layout="two-line" :model-tree-data="treeData" />
 
             <a-form-item
               field="billing_methods"

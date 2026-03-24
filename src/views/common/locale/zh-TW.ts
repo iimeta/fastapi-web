@@ -315,6 +315,7 @@ export default {
   'time_rule.label.day_suffix': '號',
   'time_rule.error.required.all': '請填寫完整的時段規則(時段類型、時段名稱、開始時間、結束時間、折扣、優先級、適用日)',
   'time_rule.error.required.all_custom': '請填寫完整的時段規則(時段類型、時段名稱、開始時間、結束時間、折扣、優先級、模式、適用日)',
+  'time_rule.label.models': '模型，可選，預設全部',
   'time_rule.dict.week.0': '週日',
   'time_rule.dict.week.1': '週一',
   'time_rule.dict.week.2': '週二',

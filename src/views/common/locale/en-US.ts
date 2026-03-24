@@ -315,6 +315,7 @@ export default {
   'time_rule.label.day_suffix': '',
   'time_rule.error.required.all': 'Please complete all time rule fields (Period Type, Period Name, Start Time, End Time, Discount, Priority, Applicable Days)',
   'time_rule.error.required.all_custom': 'Please complete all time rule fields (Period Type, Period Name, Start Time, End Time, Discount, Priority, Mode, Applicable Days)',
+  'time_rule.label.models': 'Models, optional, default all',
   'time_rule.dict.week.0': 'Sun',
   'time_rule.dict.week.1': 'Mon',
   'time_rule.dict.week.2': 'Tue',
