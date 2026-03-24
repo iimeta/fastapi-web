@@ -6,12 +6,22 @@
       :label-style="{ padding: '5px 8px 5px 15px' }"
       :value-style="descriptionValueStyle"
     >
-      <a-descriptions-item :label="$t('group.label.name')">
+      <a-descriptions-item :label="$t('group.label.name')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           {{ currentData.name }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.billing_methods')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            $t(`dict.billing_methods.${currentData.billing_methods || [1, 2]}`)
+          }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('group.detail.is_default')">
@@ -37,8 +47,8 @@
               currentData.time_rules && currentData.time_rules.length > 1
             "
           >
-            {{ getDiscountRange(currentData.time_rules) }}
-            <a-button
+            {{ getDiscountRange(currentData.time_rules)
+            }}<a-button
               type="text"
               size="small"
               @click="viewTimeRules(currentData.time_rules || [])"

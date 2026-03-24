@@ -29,6 +29,25 @@
             <TimeRules ref="timeRulesRef" v-model="formData.time_rules" />
 
             <a-form-item
+              field="billing_methods"
+              :label="$t('common.billing_methods')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('placeholder.billing_methods'),
+                },
+              ]"
+            >
+              <a-space size="large">
+                <a-checkbox v-model="formData.billing_methods" :value="1">
+                  {{ $t('dict.billing_methods.1') }}
+                </a-checkbox>
+                <a-checkbox v-model="formData.billing_methods" :value="2">
+                  {{ $t('dict.billing_methods.2') }}
+                </a-checkbox>
+              </a-space>
+            </a-form-item>
+            <a-form-item
               field="name"
               :label="$t('group.label.name')"
               :rules="[
@@ -919,6 +938,7 @@
   const formData = ref<GroupCreate>({
     name: '',
     time_rules: [],
+    billing_methods: [1, 2],
     models: [],
     is_default: false,
     is_public: true,

@@ -20,6 +20,7 @@ export interface ForwardConfig {
 export interface GroupBaseInfo {
   id?: string;
   time_rules?: TimeRule[];
+  billing_methods: number[];
   name: string;
   models: string[];
   is_default: boolean;
@@ -99,6 +100,7 @@ export interface GroupDetailParams {
 export interface GroupDetail {
   id: string;
   time_rules?: TimeRule[];
+  billing_methods: number[];
   name: string;
   models: string[];
   model_names: string[];

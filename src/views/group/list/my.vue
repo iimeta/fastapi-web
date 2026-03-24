@@ -162,8 +162,8 @@
             {{ record.time_rules[0].discount }}%
           </span>
           <span v-else-if="record.time_rules && record.time_rules.length > 1">
-            {{ getDiscountRange(record.time_rules) }}
-            <a-button
+            {{ getDiscountRange(record.time_rules)
+            }}<a-button
               type="text"
               size="small"
               @click="viewTimeRules(record.time_rules)"
@@ -172,6 +172,9 @@
             </a-button>
           </span>
           <span v-else>-</span>
+        </template>
+        <template #billing_methods="{ record }">
+          {{ $t(`dict.billing_methods.${record.billing_methods || [1, 2]}`) }}
         </template>
         <template #model_names="{ record }">
           <span v-if="record.model_names">
@@ -341,7 +344,14 @@
       dataIndex: 'time_rules',
       slotName: 'time_rules',
       align: 'center',
-      width: 128,
+      width: 160,
+    },
+    {
+      title: t('common.billing_methods'),
+      dataIndex: 'billing_methods',
+      slotName: 'billing_methods',
+      align: 'center',
+      width: 130,
     },
     {
       title: t('common.models'),

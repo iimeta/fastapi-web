@@ -258,8 +258,8 @@
             {{ record.time_rules[0].discount }}%
           </span>
           <span v-else-if="record.time_rules && record.time_rules.length > 1">
-            {{ getDiscountRange(record.time_rules) }}
-            <a-button
+            {{ getDiscountRange(record.time_rules)
+            }}<a-button
               type="text"
               size="small"
               @click="viewTimeRules(record.time_rules)"
@@ -603,6 +603,7 @@
       dataIndex: 'time_rules',
       slotName: 'time_rules',
       align: 'center',
+      width: 160,
     },
     {
       title: t('common.models'),
