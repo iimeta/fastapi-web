@@ -255,7 +255,14 @@
         </template>
         <template #time_rules="{ record }">
           <span v-if="record.time_rules && record.time_rules.length === 1">
-            {{ record.time_rules[0].discount }}%
+            {{ record.time_rules[0].discount }}%<a-button
+              v-if="hasModelNames(record.time_rules)"
+              type="text"
+              size="small"
+              @click="viewTimeRules(record.time_rules)"
+            >
+              {{ $t('button.view') }}
+            </a-button>
           </span>
           <span v-else-if="record.time_rules && record.time_rules.length > 1">
             {{ getDiscountRange(record.time_rules)
@@ -465,6 +472,9 @@
           :bordered="false"
         >
           <template #discount="{ record }"> {{ record.discount }}% </template>
+          <template #model_names="{ record }">
+            {{ record.model_names?.join(', ') || $t('common.all') }}
+          </template>
           <template #time_range="{ record }">
             {{ formatMs(record.start_time) }}~{{ formatMs(record.end_time) }}
           </template>
@@ -949,32 +959,40 @@
           title: t('time_rule.label.name'),
           dataIndex: 'name',
           align: 'center',
-          width: 150,
+          width: 100,
         },
         {
           title: t('common.discount'),
           slotName: 'discount',
           align: 'center',
-          width: 150,
+          width: 100,
         },
         {
           title: t('time_rule.label.time_range'),
           slotName: 'time_range',
           align: 'center',
-          width: 150,
+          width: 100,
         },
         {
           title: t('time_rule.label.days'),
           slotName: 'days',
           align: 'center',
-          width: 150,
+          width: 100,
         },
         {
           title: t('time_rule.label.priority'),
           dataIndex: 'priority',
           titleSlotName: 'priority_title',
           align: 'center',
-          width: 150,
+          width: 100,
+        },
+        {
+          title: t('common.model'),
+          slotName: 'model_names',
+          align: 'center',
+          width: 100,
+          ellipsis: true,
+          tooltip: true,
         },
       ],
     },
@@ -985,6 +1003,10 @@
     const min = Math.min(...discounts);
     const max = Math.max(...discounts);
     return `${min}%~${max}%`;
+  };
+
+  const hasModelNames = (rules: any[]) => {
+    return rules.some((r: any) => r.model_names?.length);
   };
 
   const viewTimeRules = (rules: any[]) => {

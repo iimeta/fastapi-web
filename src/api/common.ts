@@ -8,6 +8,7 @@ export interface TimeRule {
   day_mode?: string;
   priority: any;
   models: string[];
+  model_names?: string[];
 }
 
 export interface TextPricing {

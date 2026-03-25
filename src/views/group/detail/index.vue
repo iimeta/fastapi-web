@@ -40,7 +40,14 @@
           <span
             v-if="currentData.time_rules && currentData.time_rules.length === 1"
           >
-            {{ currentData.time_rules[0].discount }}%
+            {{ currentData.time_rules[0].discount }}%<a-button
+              v-if="currentData.time_rules.some((r) => r.model_names?.length)"
+              type="text"
+              size="small"
+              @click="viewTimeRules(currentData.time_rules || [])"
+            >
+              {{ $t('button.view') }}
+            </a-button>
           </span>
           <span
             v-else-if="
@@ -390,6 +397,9 @@
           {{ formatDays(record) }}
         </template>
         <template #discount="{ record }"> {{ record.discount }}% </template>
+        <template #model_names="{ record }">
+          {{ record.model_names?.join(', ') || $t('common.all') }}
+        </template>
         <template #priority_title>
           {{ $t('time_rule.label.priority') }}
           <a-tooltip :content="$t('time_rule.placeholder.priority')">
@@ -455,32 +465,40 @@
           title: t('time_rule.label.name'),
           dataIndex: 'name',
           align: 'center',
-          width: 150,
+          width: 100,
         },
         {
           title: t('time_rule.label.time_range'),
           slotName: 'time_range',
           align: 'center',
-          width: 150,
+          width: 100,
         },
         {
           title: t('time_rule.label.days'),
           slotName: 'days',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('time_rule.label.priority'),
           dataIndex: 'priority',
           titleSlotName: 'priority_title',
           align: 'center',
-          width: 80,
+          width: 100,
         },
         {
           title: t('common.discount'),
           slotName: 'discount',
           align: 'center',
-          width: 80,
+          width: 100,
+        },
+        {
+          title: t('common.model'),
+          slotName: 'model_names',
+          align: 'center',
+          width: 100,
+          ellipsis: true,
+          tooltip: true,
         },
       ],
     },
