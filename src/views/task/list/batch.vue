@@ -111,7 +111,10 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider class="task-batch-list-search-divider" direction="vertical" />
+        <a-divider
+          class="task-batch-list-search-divider"
+          direction="vertical"
+        />
         <a-col :flex="'86px'" class="task-batch-list-search-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">

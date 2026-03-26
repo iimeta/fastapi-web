@@ -1,10 +1,6 @@
 <template>
   <div class="detail-container">
-    <a-descriptions
-      :column="2"
-      bordered
-      :value-style="descriptionValueStyle"
-    >
+    <a-descriptions :column="2" bordered :value-style="descriptionValueStyle">
       <a-descriptions-item :label="$t('notice.template.label.name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -36,11 +32,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span
-          v-else
-          class="detail-scroll-500"
-          v-html="currentData.content"
-        >
+        <span v-else class="detail-scroll-500" v-html="currentData.content">
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('common.remark')">

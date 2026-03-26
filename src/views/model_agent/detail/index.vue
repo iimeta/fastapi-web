@@ -1,10 +1,6 @@
 <template>
   <div class="detail-container">
-    <a-descriptions
-      :column="2"
-      bordered
-      :value-style="descriptionValueStyle"
-    >
+    <a-descriptions :column="2" bordered :value-style="descriptionValueStyle">
       <a-descriptions-item :label="$t('common.provider')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -163,7 +159,6 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
     queryModelAgentDetail,
@@ -171,7 +166,6 @@
     ModelAgentDetail,
   } from '@/api/model_agent';
 
-  const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<ModelAgentDetail>({} as ModelAgentDetail);
   const descriptionValueStyle = {

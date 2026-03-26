@@ -97,10 +97,7 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider
-          class="list-search-divider"
-          direction="vertical"
-        />
+        <a-divider class="list-search-divider" direction="vertical" />
         <a-col :flex="'86px'" class="list-search-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">

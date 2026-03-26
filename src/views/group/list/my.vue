@@ -183,13 +183,13 @@
         <template #billing_methods="{ record }">
           {{ $t(`dict.billing_methods.${record.billing_methods || [1, 2]}`) }}
         </template>
-        <template #model_names="{ record }">
-          <span v-if="record.model_names">
+        <template #models="{ record }">
+          <span v-if="record.models">
             <a-button type="text" size="small" @click="modelsHandle(record.id)">
               {{ $t('button.view') }}
             </a-button>
           </span>
-          <span v-else>{{ '-' }}</span>
+          <span v-else>-</span>
         </template>
         <template #expires_at="{ record }">
           {{ record.expires_at || '-' }}
@@ -365,8 +365,8 @@
     },
     {
       title: t('common.models'),
-      dataIndex: 'model_names',
-      slotName: 'model_names',
+      dataIndex: 'models',
+      slotName: 'models',
       align: 'center',
       width: 128,
     },

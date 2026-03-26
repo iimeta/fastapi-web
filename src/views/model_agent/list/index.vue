@@ -103,10 +103,7 @@
             </a-row>
           </a-form>
         </a-col>
-        <a-divider
-          class="list-search-divider"
-          direction="vertical"
-        />
+        <a-divider class="list-search-divider" direction="vertical" />
         <a-col :flex="'86px'" class="list-search-actions">
           <a-space direction="vertical" :size="18">
             <a-button type="primary" @click="search">
@@ -247,13 +244,13 @@
         <template #group_names="{ record }">
           {{ record?.group_names?.join(',') || '-' }}
         </template>
-        <template #model_names="{ record }">
-          <span v-if="record.model_names">
+        <template #models="{ record }">
+          <span v-if="record.models">
             <a-button type="text" size="small" @click="modelsHandle(record.id)">
               {{ $t('button.view') }}
             </a-button>
           </span>
-          <span v-else>{{ '-' }}</span>
+          <span v-else>-</span>
         </template>
         <template #weight="{ record }">
           {{ record.weight || 0 }}
@@ -481,8 +478,8 @@
     },
     {
       title: t('common.bind_models'),
-      dataIndex: 'model_names',
-      slotName: 'model_names',
+      dataIndex: 'models',
+      slotName: 'models',
       align: 'center',
       ellipsis: true,
       tooltip: true,

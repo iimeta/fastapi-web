@@ -75,7 +75,6 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import {
     queryBillDetail,
@@ -84,7 +83,6 @@
   } from '@/api/finance';
   import Quota from '@/views/common/quota.vue';
 
-  const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);
   const descriptionValueStyle = {
     width: '350px',

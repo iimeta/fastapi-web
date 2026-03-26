@@ -246,8 +246,8 @@
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
       >
-        <template #model_names="{ record }">
-          <span v-if="record.model_names">
+        <template #models="{ record }">
+          <span v-if="record.models">
             <a-button type="text" size="small" @click="modelsHandle(record.id)">
               {{ $t('button.view') }}
             </a-button>
@@ -261,8 +261,85 @@
         <template #used_quota="{ record }">
           <Quota :model-value="record.used_quota" />
         </template>
-        <template #quota_expires_at="{ record }">
-          {{ record.is_limit_quota ? record.quota_expires_at || '-' : '-' }}
+        <template #quota_expires_at="{ record, rowIndex }">
+          <a-date-picker
+            v-if="record.is_limit_quota"
+            v-model="renderData[rowIndex].quota_expires_at"
+            :placeholder="$t('app.placeholder.quota_expires_at')"
+            :time-picker-props="{ defaultValue: '23:59:59' }"
+            :disabled-date="disabledDate"
+            show-time
+            :shortcuts="[
+              {
+                label: '1',
+                value: () =>
+                  dayjs(
+                    renderData[rowIndex].quota_expires_at ||
+                      new Date().setHours(23, 59, 59, 999)
+                  ).add(1, 'day'),
+              },
+              {
+                label: '7',
+                value: () =>
+                  dayjs(
+                    renderData[rowIndex].quota_expires_at ||
+                      new Date().setHours(23, 59, 59, 999)
+                  ).add(7, 'day'),
+              },
+              {
+                label: '15',
+                value: () =>
+                  dayjs(
+                    renderData[rowIndex].quota_expires_at ||
+                      new Date().setHours(23, 59, 59, 999)
+                  ).add(15, 'day'),
+              },
+              {
+                label: '30',
+                value: () =>
+                  dayjs(
+                    renderData[rowIndex].quota_expires_at ||
+                      new Date().setHours(23, 59, 59, 999)
+                  ).add(30, 'day'),
+              },
+              {
+                label: '90',
+                value: () =>
+                  dayjs(
+                    renderData[rowIndex].quota_expires_at ||
+                      new Date().setHours(23, 59, 59, 999)
+                  ).add(90, 'day'),
+              },
+              {
+                label: '180',
+                value: () =>
+                  dayjs(
+                    renderData[rowIndex].quota_expires_at ||
+                      new Date().setHours(23, 59, 59, 999)
+                  ).add(180, 'day'),
+              },
+              {
+                label: '365',
+                value: () =>
+                  dayjs(
+                    renderData[rowIndex].quota_expires_at ||
+                      new Date().setHours(23, 59, 59, 999)
+                  ).add(365, 'day'),
+              },
+            ]"
+            @change="
+              appChangeQuotaExpire({
+                id: renderData[rowIndex].id,
+                quota_expires_at: renderData[rowIndex].quota_expires_at,
+              })
+            "
+          >
+            <a-button class="app-list-expire-button">{{
+              renderData[rowIndex].quota_expires_at ||
+              $t('app.placeholder.quota_expires_at')
+            }}</a-button>
+          </a-date-picker>
+          <span v-else>-</span>
         </template>
         <template #status="{ record }">
           <a-switch
@@ -782,6 +859,8 @@
     queryAppPage,
     AppPage,
     AppPageParams,
+    AppChangeQuotaExpire,
+    submitAppChangeQuotaExpire,
     AppChangeStatus,
     submitAppChangeStatus,
     AppBatchOperate,
@@ -912,8 +991,8 @@
     },
     {
       title: t('common.models'),
-      dataIndex: 'model_names',
-      slotName: 'model_names',
+      dataIndex: 'models',
+      slotName: 'models',
       align: 'center',
       ellipsis: true,
       tooltip: true,
@@ -1114,6 +1193,19 @@
   };
   getGroupList();
 
+  const appChangeQuotaExpire = async (params: AppChangeQuotaExpire) => {
+    setLoading(true);
+    try {
+      await submitAppChangeQuotaExpire(params);
+      Message.success(t('success.operate'));
+      search();
+    } catch (err) {
+      // you can report use errorHandler or other
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const appChangeStatus = async (params: AppChangeStatus) => {
     setLoading(true);
     try {
@@ -1282,6 +1374,10 @@
 
   .app-list-billing-method-label {
     margin-left: -15px;
+  }
+
+  .app-list-expire-button {
+    width: 150px;
   }
 
   .app-list-hour-label {

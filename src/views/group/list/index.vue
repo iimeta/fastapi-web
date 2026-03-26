@@ -276,13 +276,13 @@
           </span>
           <span v-else>-</span>
         </template>
-        <template #model_names="{ record }">
-          <span v-if="record.model_names">
+        <template #models="{ record }">
+          <span v-if="record.models">
             <a-button type="text" size="small" @click="modelsHandle(record.id)">
               {{ $t('button.view') }}
             </a-button>
           </span>
-          <span v-else>{{ '-' }}</span>
+          <span v-else>-</span>
         </template>
         <template #model_agent_names="{ record }">
           {{ record?.model_agent_names?.join(',') || '-' }}
@@ -617,8 +617,8 @@
     },
     {
       title: t('common.models'),
-      dataIndex: 'model_names',
-      slotName: 'model_names',
+      dataIndex: 'models',
+      slotName: 'models',
       align: 'center',
       ellipsis: true,
       tooltip: true,

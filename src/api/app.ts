@@ -155,6 +155,15 @@ export function submitAppUpdate(data: AppUpdate) {
   return axios.post('/api/v1/app/update', data);
 }
 
+export interface AppChangeQuotaExpire {
+  id: string;
+  quota_expires_at: string;
+}
+
+export function submitAppChangeQuotaExpire(data: AppChangeQuotaExpire) {
+  return axios.post('/api/v1/app/change/quota/expire', data);
+}
+
 export interface AppChangeStatus {
   id: string;
   status: number;

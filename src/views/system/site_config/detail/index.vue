@@ -1,10 +1,6 @@
 <template>
   <div class="detail-container">
-    <a-descriptions
-      :column="1"
-      bordered
-      :value-style="descriptionValueStyle"
-    >
+    <a-descriptions :column="1" bordered :value-style="descriptionValueStyle">
       <a-descriptions-item :label="$t('site.config.label.domain')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -312,4 +308,3 @@
     overflow: auto;
   }
 </style>
-

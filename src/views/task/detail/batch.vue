@@ -1,10 +1,6 @@
 <template>
   <div class="task-detail-container">
-    <a-descriptions
-      :column="2"
-      bordered
-      :value-style="descriptionValueStyle"
-    >
+    <a-descriptions :column="2" bordered :value-style="descriptionValueStyle">
       <a-descriptions-item :label="$t('common.trace_id')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

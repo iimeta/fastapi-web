@@ -307,7 +307,7 @@
               {{ $t('button.view') }}
             </a-button>
           </span>
-          <span v-else>{{ '-' }}</span>
+          <span v-else>-</span>
         </template>
         <template #model_agent_names="{ record }">
           {{ record?.model_agent_names?.join(',') || '-' }}
