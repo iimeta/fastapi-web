@@ -216,6 +216,13 @@
           </a-input-number>
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'base'"
+          field="base.allow_request_abort"
+          :label="$t('sys.config.label.base.allow_request_abort')"
+        >
+          <a-switch v-model="configFormData.base.allow_request_abort" />
+        </a-form-item>
+        <a-form-item
           v-if="configFormData.action === 'log'"
           field="log.text_records"
           :label="$t('sys.config.label.log.text_records')"

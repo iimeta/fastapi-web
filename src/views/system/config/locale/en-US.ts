@@ -115,6 +115,7 @@ export default {
   'sys.config.label.base.long_timeout': 'Long Connection Timeout',
   'sys.config.placeholder.base.long_timeout': 'Enter long connection timeout, 0 for no timeout',
   'sys.config.error.required.base.long_timeout': 'Please enter long connection timeout',
+  'sys.config.label.base.allow_request_abort': 'Allow Request Abort',
   'sys.config.label.log.text_records': 'Text Log Content',
   'sys.config.label.log.text_reserve': 'Text Log Retention Days',
   'sys.config.placeholder.log.text_reserve': 'Enter text log retention days. Logs auto-delete if > 0.',

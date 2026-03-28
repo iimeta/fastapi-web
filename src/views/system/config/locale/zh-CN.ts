@@ -115,6 +115,7 @@ export default {
   'sys.config.label.base.long_timeout': '长连接超时时间',
   'sys.config.placeholder.base.long_timeout': '请输入长连接超时时间, 0则不超时',
   'sys.config.error.required.base.long_timeout': '请输入长连接超时时间',
+  'sys.config.label.base.allow_request_abort': '允许请求中止',
   'sys.config.label.log.text_records': '文本日志记录内容',
   'sys.config.label.log.text_reserve': '文本日志保留天数',
   'sys.config.placeholder.log.text_reserve': '请输入文本日志保留天数, 保留天数>0则会自动删除',

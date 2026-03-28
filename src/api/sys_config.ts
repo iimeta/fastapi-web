@@ -48,6 +48,7 @@ export interface Base {
   model_agent_key_err_disable: number;
   short_timeout: number;
   long_timeout: number;
+  allow_request_abort: boolean;
 }
 
 export interface Midjourney {
