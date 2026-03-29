@@ -456,6 +456,132 @@
           </a-input-number>
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'model_agent_test_task'"
+          field="model_agent_test_task.cron"
+          :label="$t('sys.config.label.cron')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.cron'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.model_agent_test_task.cron"
+            :placeholder="$t('sys.config.placeholder.cron')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_test_task'"
+          field="model_agent_test_task.lock_minutes"
+          :label="$t('sys.config.label.lock_minutes')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.placeholder.model_agent_test_task.lock_minutes'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.model_agent_test_task.lock_minutes"
+            :placeholder="
+              $t('sys.config.placeholder.model_agent_test_task.lock_minutes')
+            "
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.minute') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_test_task'"
+          field="model_agent_test_task.model_agents"
+          :label="$t('common.model_agents')"
+          :rules="[
+            {
+              required: true,
+              message: $t('placeholder.model_agents'),
+            },
+          ]"
+        >
+          <a-select
+            v-model="configFormData.model_agent_test_task.model_agents"
+            :placeholder="$t('placeholder.model_agents')"
+            :max-tag-count="3"
+            :scrollbar="false"
+            multiple
+            allow-search
+            allow-clear
+          >
+            <a-option
+              v-for="item in modelAgents"
+              :key="item.id"
+              :value="item.id"
+              :label="item.name"
+            />
+          </a-select>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_test_task'"
+          field="model_agent_test_task.models"
+          :label="$t('sys.config.label.model_agent_test_task.models')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.placeholder.model_agent_test_task.models'
+              ),
+            },
+          ]"
+        >
+          <a-select
+            v-model="configFormData.model_agent_test_task.models"
+            :placeholder="
+              $t('sys.config.placeholder.model_agent_test_task.models')
+            "
+            :max-tag-count="3"
+            :scrollbar="false"
+            multiple
+            allow-search
+            allow-clear
+          >
+            <a-option
+              v-for="item in models"
+              :key="item.id"
+              :value="item.id"
+              :label="item.name"
+            />
+          </a-select>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_test_task'"
+          field="model_agent_test_task.err_disable"
+          :label="$t('sys.config.label.model_agent_test_task.err_disable')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.placeholder.model_agent_test_task.err_disable'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.model_agent_test_task.err_disable"
+            :placeholder="
+              $t('sys.config.placeholder.model_agent_test_task.err_disable')
+            "
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.once') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
           v-if="configFormData.action === 'notice'"
           field="notice.cron"
           :label="$t('sys.config.label.cron')"
@@ -511,6 +637,8 @@
     submitSysConfigReset,
     submitSysConfigChangeStatus,
   } from '@/api/sys_config';
+  import { queryModelList, ModelList } from '@/api/model';
+  import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
 
   const { setLoading } = useLoading(true);
   const { t } = useI18n();
@@ -525,6 +653,28 @@
     padding: '20px 20px 0 20px',
     maxHeight: '520px',
   };
+
+  const models = ref<ModelList[]>([]);
+  const getModelList = async () => {
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelList();
+
+  const modelAgents = ref<ModelAgentList[]>([]);
+  const getModelAgentList = async () => {
+    try {
+      const { data } = await queryModelAgentList();
+      modelAgents.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getModelAgentList();
 
   const configVisible = ref(false);
   const configTitle = ref('');
@@ -619,6 +769,7 @@
     configFormData.value.file_task = data.file_task;
     configFormData.value.batch_task = data.batch_task;
     configFormData.value.reset_task = data.reset_task;
+    configFormData.value.model_agent_test_task = data.model_agent_test_task;
     configFormData.value.notice = data.notice;
     sysConfigItems.value = [
       {
@@ -666,6 +817,14 @@
         title: t('sys.config.item.title.reset_task'),
         desc: t('sys.config.item.desc.reset_task'),
         open: configFormData.value.reset_task.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'model_agent_test_task',
+        title: t('sys.config.item.title.model_agent_test_task'),
+        desc: t('sys.config.item.desc.model_agent_test_task'),
+        open: configFormData.value.model_agent_test_task.open,
         config: true,
         reset: true,
       },
