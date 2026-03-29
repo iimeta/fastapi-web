@@ -49,7 +49,7 @@
           {{ currentData?.model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('common.billing_methods')" :span="2">
+      <a-descriptions-item :label="$t('common.billing_methods')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -65,12 +65,22 @@
           {{ currentData.weight || 0 }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('model.agent.detail.fallback_models')">
+      <a-descriptions-item :label="$t('model.agent.label.replace_models')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else class="detail-textarea detail-textarea--tall">
-          {{ currentData?.fallback_model_names?.join('\n') || '-' }}
+        <span v-else>
+          {{ $t(`dict.${currentData?.is_enable_model_replace || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('model.agent.label.is_enable_automated_testing')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.${currentData?.is_enable_automated_testing || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('model.agent.label.is_never_disable')">
@@ -79,6 +89,38 @@
         </a-skeleton>
         <span v-else>
           {{ $t(`dict.${currentData?.is_never_disable || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('model.agent.label.is_remove_abnormal_model')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.${currentData?.is_remove_abnormal_model || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('model.agent.detail.abnormal_models')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else class="detail-textarea detail-textarea--tall">
+          {{ currentData?.abnormal_model_names?.join('\n') || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('model.agent.detail.fallback_models')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else class="detail-textarea detail-textarea--tall">
+          {{ currentData?.fallback_model_names?.join('\n') || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('model.agent.label.lb_strategy')">

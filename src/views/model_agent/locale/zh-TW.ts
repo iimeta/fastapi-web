@@ -17,7 +17,9 @@ export default {
   'model.agent.placeholder.replace_models': '請輸入替換模型',
   'model.agent.placeholder.target_models': '請輸入目標模型',
   'model.agent.error.required.replace_models': '請輸入替換模型和目標模型',
+  'model.agent.label.is_enable_automated_testing': '自動化測試',
   'model.agent.label.is_never_disable': '永不禁用',
+  'model.agent.label.is_remove_abnormal_model': '移除異常模型',
   'model.agent.label.lb_strategy': '密鑰負載策略',
   'model.agent.label.is_agents_only': '代理專用',
   'model.agent.label.is_never_disable_key': '密鑰永不禁用',
@@ -30,6 +32,7 @@ export default {
   'model.agent.label.test_models.key': '應用密鑰',
   'model.agent.placeholder.test_models.key': '請輸入應用密鑰',
   // detail
+  'model.agent.detail.abnormal_models': '異常模型',
   'model.agent.detail.fallback_models': '後備模型',
   // columns
   'model.agent.columns.total_time': '耗時(ms)',

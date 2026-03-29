@@ -211,10 +211,23 @@
               </a-button>
             </a-form-item>
             <a-form-item
+              field="is_enable_automated_testing"
+              :label="$t('model.agent.label.is_enable_automated_testing')"
+            >
+              <a-switch v-model="formData.is_enable_automated_testing" />
+            </a-form-item>
+            <a-form-item
               field="is_never_disable"
               :label="$t('model.agent.label.is_never_disable')"
             >
               <a-switch v-model="formData.is_never_disable" />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_never_disable"
+              field="is_remove_abnormal_model"
+              :label="$t('model.agent.label.is_remove_abnormal_model')"
+            >
+              <a-switch v-model="formData.is_remove_abnormal_model" />
             </a-form-item>
             <a-form-item
               field="lb_strategy"
@@ -370,7 +383,9 @@
     is_enable_model_replace: false,
     replace_models: [],
     target_models: [],
+    is_enable_automated_testing: false,
     is_never_disable: false,
+    is_remove_abnormal_model: false,
     lb_strategy: '1',
     key: '',
     is_agents_only: true,

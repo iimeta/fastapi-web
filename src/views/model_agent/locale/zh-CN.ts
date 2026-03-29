@@ -17,7 +17,9 @@ export default {
   'model.agent.placeholder.replace_models': '请输入替换模型',
   'model.agent.placeholder.target_models': '请输入目标模型',
   'model.agent.error.required.replace_models': '请输入替换模型和目标模型',
+  'model.agent.label.is_enable_automated_testing': '自动化测试',
   'model.agent.label.is_never_disable': '永不禁用',
+  'model.agent.label.is_remove_abnormal_model': '移除异常模型',
   'model.agent.label.lb_strategy': '密钥负载策略',
   'model.agent.label.is_agents_only': '代理专用',
   'model.agent.label.is_never_disable_key': '密钥永不禁用',
@@ -30,6 +32,7 @@ export default {
   'model.agent.label.test_models.key': '应用密钥',
   'model.agent.placeholder.test_models.key': '请输入应用密钥',
   // detail
+  'model.agent.detail.abnormal_models': '异常模型',
   'model.agent.detail.fallback_models': '后备模型',
   // columns
   'model.agent.columns.total_time': '耗时(ms)',

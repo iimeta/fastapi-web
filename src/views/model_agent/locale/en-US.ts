@@ -17,7 +17,9 @@ export default {
   'model.agent.placeholder.replace_models': 'Please enter replacement models',
   'model.agent.placeholder.target_models': 'Please enter target models',
   'model.agent.error.required.replace_models': 'Please enter replacement models and target models',
+  'model.agent.label.is_enable_automated_testing': 'Automated Testing',
   'model.agent.label.is_never_disable': 'Never Disable',
+  'model.agent.label.is_remove_abnormal_model': 'Remove Abnormal Models',
   'model.agent.label.lb_strategy': 'Key Load Balancing Strategy',
   'model.agent.label.is_agents_only': 'Agent Only',
   'model.agent.label.is_never_disable_key': 'Keys Never Disable',
@@ -30,6 +32,7 @@ export default {
   'model.agent.label.test_models.key': 'Application Key',
   'model.agent.placeholder.test_models.key': 'Please enter application key',
   // detail
+  'model.agent.detail.abnormal_models': 'Abnormal Models',
   'model.agent.detail.fallback_models': 'Fallback Models',
   // columns
   'model.agent.columns.total_time': 'Time(ms)',
