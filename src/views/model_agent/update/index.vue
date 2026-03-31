@@ -219,23 +219,22 @@
               </a-button>
             </a-form-item>
             <a-form-item
-              field="is_enable_automated_testing"
-              :label="$t('model.agent.label.is_enable_automated_testing')"
+              field="is_enable_health_check"
+              :label="$t('model.agent.label.is_enable_health_check')"
             >
-              <a-switch v-model="formData.is_enable_automated_testing" />
+              <a-switch v-model="formData.is_enable_health_check" />
+            </a-form-item>
+            <a-form-item
+              field="is_remove_abnormal_model"
+              :label="$t('model.agent.label.is_remove_abnormal_model')"
+            >
+              <a-switch v-model="formData.is_remove_abnormal_model" />
             </a-form-item>
             <a-form-item
               field="is_never_disable"
               :label="$t('model.agent.label.is_never_disable')"
             >
               <a-switch v-model="formData.is_never_disable" />
-            </a-form-item>
-            <a-form-item
-              v-if="formData.is_never_disable"
-              field="is_remove_abnormal_model"
-              :label="$t('model.agent.label.is_remove_abnormal_model')"
-            >
-              <a-switch v-model="formData.is_remove_abnormal_model" />
             </a-form-item>
             <a-form-item
               field="lb_strategy"
@@ -395,9 +394,9 @@
     is_enable_model_replace: false,
     replace_models: [],
     target_models: [],
-    is_enable_automated_testing: false,
-    is_never_disable: false,
+    is_enable_health_check: false,
     is_remove_abnormal_model: false,
+    is_never_disable: false,
     lb_strategy: '',
     key: '',
     is_agents_only: true,
@@ -446,10 +445,9 @@
         formData.value.replace_models = data.replace_models;
         formData.value.target_models = data.target_models;
       }
-      formData.value.is_enable_automated_testing =
-        data.is_enable_automated_testing;
-      formData.value.is_never_disable = data.is_never_disable;
+      formData.value.is_enable_health_check = data.is_enable_health_check;
       formData.value.is_remove_abnormal_model = data.is_remove_abnormal_model;
+      formData.value.is_never_disable = data.is_never_disable;
       formData.value.lb_strategy = String(data.lb_strategy);
       formData.value.key = data.key;
       getKeyPlaceholder();

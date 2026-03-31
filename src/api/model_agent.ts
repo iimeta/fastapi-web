@@ -19,9 +19,9 @@ export interface ModelAgentAdvanced {
   is_enable_model_replace: boolean;
   replace_models: string[];
   target_models: string[];
-  is_enable_automated_testing: boolean;
-  is_never_disable: boolean;
+  is_enable_health_check: boolean;
   is_remove_abnormal_model: boolean;
+  is_never_disable: boolean;
   lb_strategy: string;
   key: string;
   is_agents_only: boolean;
@@ -119,9 +119,9 @@ export interface ModelAgentDetail {
   is_enable_model_replace: boolean;
   replace_models: string[];
   target_models: string[];
-  is_enable_automated_testing: boolean;
-  is_never_disable: boolean;
+  is_enable_health_check: boolean;
   is_remove_abnormal_model: boolean;
+  is_never_disable: boolean;
   abnormal_models: string[];
   abnormal_model_names: string[];
   lb_strategy: number;

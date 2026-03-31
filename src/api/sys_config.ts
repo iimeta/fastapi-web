@@ -191,13 +191,19 @@ export interface ResetTask {
   lock_minutes: number;
 }
 
-export interface ModelAgentTestTask {
+export interface ModelAgentHealthCheckTask {
   open: boolean;
   cron: string;
   lock_minutes: number;
   model_agents: string[];
   models: string[];
-  err_disable: number;
+  disable_count: number;
+  auto_recover: boolean;
+  recover_count: number;
+  stat_period: number;
+  test_method: number;
+  base_url: string;
+  key: string;
 }
 
 export interface ServiceUnavailable {
@@ -250,7 +256,7 @@ export interface SysConfigDetail {
   file_task: FileTask;
   batch_task: BatchTask;
   reset_task: ResetTask;
-  model_agent_test_task: ModelAgentTestTask;
+  model_agent_health_check_task: ModelAgentHealthCheckTask;
   service_unavailable: ServiceUnavailable;
   general_api: GeneralApi;
   test: Test;
@@ -288,7 +294,7 @@ export interface SysConfigUpdate {
   file_task: FileTask;
   batch_task: BatchTask;
   reset_task: ResetTask;
-  model_agent_test_task: ModelAgentTestTask;
+  model_agent_health_check_task: ModelAgentHealthCheckTask;
   service_unavailable: ServiceUnavailable;
   general_api: GeneralApi;
   test: Test;

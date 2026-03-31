@@ -74,21 +74,13 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        :label="$t('model.agent.label.is_enable_automated_testing')"
+        :label="$t('model.agent.label.is_enable_health_check')"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ $t(`dict.${currentData?.is_enable_automated_testing || false}`) }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('model.agent.label.is_never_disable')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ $t(`dict.${currentData?.is_never_disable || false}`) }}
+          {{ $t(`dict.${currentData?.is_enable_health_check || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item
@@ -99,6 +91,14 @@
         </a-skeleton>
         <span v-else>
           {{ $t(`dict.${currentData?.is_remove_abnormal_model || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('model.agent.label.is_never_disable')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.${currentData?.is_never_disable || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item

@@ -456,8 +456,8 @@
           </a-input-number>
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'model_agent_test_task'"
-          field="model_agent_test_task.cron"
+          v-if="configFormData.action === 'model_agent_health_check_task'"
+          field="model_agent_health_check_task.cron"
           :label="$t('sys.config.label.cron')"
           :rules="[
             {
@@ -467,28 +467,30 @@
           ]"
         >
           <a-input
-            v-model="configFormData.model_agent_test_task.cron"
+            v-model="configFormData.model_agent_health_check_task.cron"
             :placeholder="$t('sys.config.placeholder.cron')"
             allow-clear
           />
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'model_agent_test_task'"
-          field="model_agent_test_task.lock_minutes"
+          v-if="configFormData.action === 'model_agent_health_check_task'"
+          field="model_agent_health_check_task.lock_minutes"
           :label="$t('sys.config.label.lock_minutes')"
           :rules="[
             {
               required: true,
               message: $t(
-                'sys.config.placeholder.model_agent_test_task.lock_minutes'
+                'sys.config.placeholder.model_agent_health_check_task.lock_minutes'
               ),
             },
           ]"
         >
           <a-input-number
-            v-model="configFormData.model_agent_test_task.lock_minutes"
+            v-model="configFormData.model_agent_health_check_task.lock_minutes"
             :placeholder="
-              $t('sys.config.placeholder.model_agent_test_task.lock_minutes')
+              $t(
+                'sys.config.placeholder.model_agent_health_check_task.lock_minutes'
+              )
             "
             :precision="0"
             :min="1"
@@ -498,8 +500,8 @@
           </a-input-number>
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'model_agent_test_task'"
-          field="model_agent_test_task.model_agents"
+          v-if="configFormData.action === 'model_agent_health_check_task'"
+          field="model_agent_health_check_task.model_agents"
           :label="$t('common.model_agents')"
           :rules="[
             {
@@ -509,7 +511,7 @@
           ]"
         >
           <a-select
-            v-model="configFormData.model_agent_test_task.model_agents"
+            v-model="configFormData.model_agent_health_check_task.model_agents"
             :placeholder="$t('placeholder.model_agents')"
             :max-tag-count="3"
             :scrollbar="false"
@@ -526,22 +528,22 @@
           </a-select>
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'model_agent_test_task'"
-          field="model_agent_test_task.models"
-          :label="$t('sys.config.label.model_agent_test_task.models')"
+          v-if="configFormData.action === 'model_agent_health_check_task'"
+          field="model_agent_health_check_task.models"
+          :label="$t('sys.config.label.model_agent_health_check_task.models')"
           :rules="[
             {
               required: true,
               message: $t(
-                'sys.config.placeholder.model_agent_test_task.models'
+                'sys.config.placeholder.model_agent_health_check_task.models'
               ),
             },
           ]"
         >
           <a-select
-            v-model="configFormData.model_agent_test_task.models"
+            v-model="configFormData.model_agent_health_check_task.models"
             :placeholder="
-              $t('sys.config.placeholder.model_agent_test_task.models')
+              $t('sys.config.placeholder.model_agent_health_check_task.models')
             "
             :max-tag-count="3"
             :scrollbar="false"
@@ -558,28 +560,168 @@
           </a-select>
         </a-form-item>
         <a-form-item
-          v-if="configFormData.action === 'model_agent_test_task'"
-          field="model_agent_test_task.err_disable"
-          :label="$t('sys.config.label.model_agent_test_task.err_disable')"
+          v-if="configFormData.action === 'model_agent_health_check_task'"
+          field="model_agent_health_check_task.disable_count"
+          :label="
+            $t('sys.config.label.model_agent_health_check_task.disable_count')
+          "
           :rules="[
             {
               required: true,
               message: $t(
-                'sys.config.placeholder.model_agent_test_task.err_disable'
+                'sys.config.placeholder.model_agent_health_check_task.disable_count'
               ),
             },
           ]"
         >
           <a-input-number
-            v-model="configFormData.model_agent_test_task.err_disable"
+            v-model="configFormData.model_agent_health_check_task.disable_count"
             :placeholder="
-              $t('sys.config.placeholder.model_agent_test_task.err_disable')
+              $t(
+                'sys.config.placeholder.model_agent_health_check_task.disable_count'
+              )
             "
             :min="1"
             allow-clear
           >
             <template #append> {{ $t('unit.once') }} </template>
           </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_health_check_task'"
+          field="model_agent_health_check_task.auto_recover"
+          :label="
+            $t('sys.config.label.model_agent_health_check_task.auto_recover')
+          "
+        >
+          <a-switch
+            v-model="configFormData.model_agent_health_check_task.auto_recover"
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'model_agent_health_check_task' &&
+            configFormData.model_agent_health_check_task.auto_recover
+          "
+          field="model_agent_health_check_task.recover_count"
+          :label="
+            $t('sys.config.label.model_agent_health_check_task.recover_count')
+          "
+          :rules="[
+            {
+              required:
+                configFormData.model_agent_health_check_task.auto_recover,
+              message: $t(
+                'sys.config.placeholder.model_agent_health_check_task.recover_count'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.model_agent_health_check_task.recover_count"
+            :placeholder="
+              $t(
+                'sys.config.placeholder.model_agent_health_check_task.recover_count'
+              )
+            "
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.once') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_health_check_task'"
+          field="model_agent_health_check_task.stat_period"
+          :label="
+            $t('sys.config.label.model_agent_health_check_task.stat_period')
+          "
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.placeholder.model_agent_health_check_task.stat_period'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.model_agent_health_check_task.stat_period"
+            :placeholder="
+              $t(
+                'sys.config.placeholder.model_agent_health_check_task.stat_period'
+              )
+            "
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.minute') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_health_check_task'"
+          field="model_agent_health_check_task.test_method"
+          :label="$t('model.agent.label.test_models.test_method')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-radio-group
+            v-model="configFormData.model_agent_health_check_task.test_method"
+          >
+            <a-radio :value="1">
+              {{ $t('model.agent.dict.test_method.1') }}
+            </a-radio>
+            <a-radio :value="2">
+              {{ $t('model.agent.dict.test_method.2') }}
+            </a-radio>
+            <a-radio :value="3">
+              {{ $t('model.agent.dict.test_method.3') }}
+            </a-radio>
+          </a-radio-group>
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'model_agent_health_check_task' &&
+            configFormData.model_agent_health_check_task.test_method === 3
+          "
+          field="model_agent_health_check_task.base_url"
+          :label="$t('model.agent.label.test_models.base_url')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.agent.error.required.test_models.base_url'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.model_agent_health_check_task.base_url"
+            :placeholder="$t('model.agent.placeholder.test_models.base_url')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'model_agent_health_check_task' &&
+            configFormData.model_agent_health_check_task.test_method !== 2
+          "
+          field="model_agent_health_check_task.key"
+          :label="$t('model.agent.label.test_models.key')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.agent.placeholder.test_models.key'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.model_agent_health_check_task.key"
+            :placeholder="$t('model.agent.placeholder.test_models.key')"
+            allow-clear
+          />
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'notice'"
@@ -769,7 +911,8 @@
     configFormData.value.file_task = data.file_task;
     configFormData.value.batch_task = data.batch_task;
     configFormData.value.reset_task = data.reset_task;
-    configFormData.value.model_agent_test_task = data.model_agent_test_task;
+    configFormData.value.model_agent_health_check_task =
+      data.model_agent_health_check_task;
     configFormData.value.notice = data.notice;
     sysConfigItems.value = [
       {
@@ -821,10 +964,10 @@
         reset: true,
       },
       {
-        action: 'model_agent_test_task',
-        title: t('sys.config.item.title.model_agent_test_task'),
-        desc: t('sys.config.item.desc.model_agent_test_task'),
-        open: configFormData.value.model_agent_test_task.open,
+        action: 'model_agent_health_check_task',
+        title: t('sys.config.item.title.model_agent_health_check_task'),
+        desc: t('sys.config.item.desc.model_agent_health_check_task'),
+        open: configFormData.value.model_agent_health_check_task.open,
         config: true,
         reset: true,
       },
