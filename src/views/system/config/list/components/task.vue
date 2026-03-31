@@ -589,6 +589,38 @@
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'model_agent_health_check_task'"
+          field="model_agent_health_check_task.remove_model_count"
+          :label="
+            $t(
+              'sys.config.label.model_agent_health_check_task.remove_model_count'
+            )
+          "
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.placeholder.model_agent_health_check_task.remove_model_count'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="
+              configFormData.model_agent_health_check_task.remove_model_count
+            "
+            :placeholder="
+              $t(
+                'sys.config.placeholder.model_agent_health_check_task.remove_model_count'
+              )
+            "
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.once') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_health_check_task'"
           field="model_agent_health_check_task.auto_recover"
           :label="
             $t('sys.config.label.model_agent_health_check_task.auto_recover')
@@ -622,6 +654,41 @@
             :placeholder="
               $t(
                 'sys.config.placeholder.model_agent_health_check_task.recover_count'
+              )
+            "
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.once') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'model_agent_health_check_task' &&
+            configFormData.model_agent_health_check_task.auto_recover
+          "
+          field="model_agent_health_check_task.recover_model_count"
+          :label="
+            $t(
+              'sys.config.label.model_agent_health_check_task.recover_model_count'
+            )
+          "
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.placeholder.model_agent_health_check_task.recover_model_count'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="
+              configFormData.model_agent_health_check_task.recover_model_count
+            "
+            :placeholder="
+              $t(
+                'sys.config.placeholder.model_agent_health_check_task.recover_model_count'
               )
             "
             :min="1"

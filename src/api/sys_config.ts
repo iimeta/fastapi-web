@@ -200,6 +200,8 @@ export interface ModelAgentHealthCheckTask {
   disable_count: number;
   auto_recover: boolean;
   recover_count: number;
+  remove_model_count: number;
+  recover_model_count: number;
   stat_period: number;
   test_method: number;
   base_url: string;

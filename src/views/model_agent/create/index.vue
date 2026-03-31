@@ -217,6 +217,7 @@
               <a-switch v-model="formData.is_enable_health_check" />
             </a-form-item>
             <a-form-item
+              v-if="formData.is_enable_health_check"
               field="is_remove_abnormal_model"
               :label="$t('model.agent.label.is_remove_abnormal_model')"
             >
@@ -383,7 +384,7 @@
     replace_models: [],
     target_models: [],
     is_enable_health_check: false,
-    is_remove_abnormal_model: false,
+    is_remove_abnormal_model: true,
     is_never_disable: false,
     lb_strategy: '1',
     key: '',
