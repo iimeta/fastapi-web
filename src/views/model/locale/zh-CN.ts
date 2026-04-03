@@ -101,7 +101,7 @@ export default {
   'model.placeholder.vision.once_ratio': '请输入价格',
   'model.error.required.vision': '请输入识图模式和价格',
   'model.label.video_generation': '生成价格',
-  'model.error.required.video_generation': '请输入宽度、高度和价格',
+  'model.error.required.video_generation': '请输入模式、宽度、高度和价格',
   'model.placeholder.video_generation.width': '宽度',
   'model.placeholder.video_generation.height': '高度',
   'model.placeholder.video_generation.once_ratio': '请输入价格',
@@ -131,6 +131,7 @@ export default {
   'model.label.image.generation.width_height': '宽度 × 高度',
   'model.label.image.generation.once_ratio': '价格',
   'model.label.vision.once_ratio': '价格',
+  'model.label.video_generation.mode': '模式',
   'model.label.video_generation.width_height': '宽度 × 高度',
   'model.label.video_generation.once_ratio': '价格',
   'model.label.search.context_size': '上下文大小',
@@ -181,4 +182,6 @@ export default {
   'model.dict.mode.all': '全部',
   'model.dict.mode.thinking': '思考',
   'model.dict.mode.non_thinking': '非思考',
+  'model.dict.mode.no_video_input': '不含视频',
+  'model.dict.mode.has_video_input': '包含视频',
 };

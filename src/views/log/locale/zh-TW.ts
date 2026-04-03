@@ -96,6 +96,7 @@ export default {
   'log.columns.spend.audio.output_tokens': '輸出分鐘數',
   'log.columns.spend.tiered.input_tokens': '輸入Token數',
   'log.columns.spend.image.generation.n': '張數',
+  'log.columns.spend.video_generation.mode': '模式',
   'log.columns.spend.video_generation.seconds': '秒數',
   'log.columns.spend.once_ratio': '價格',
   'log.columns.spend.model_time_rule': '模型折扣',

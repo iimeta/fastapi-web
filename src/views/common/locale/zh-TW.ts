@@ -231,7 +231,7 @@ export default {
   'dict.model_type.5': '文生語音',
   'dict.model_type.6': '語音生文',
   'dict.model_type.7': '文本向量化',
-  'dict.model_type.8': '文生視頻',
+  'dict.model_type.8': '視頻生成',
   'dict.model_type.100': '多模態',
   'dict.model_type.101': '多模態實時',
   'dict.model_type.102': '多模態語音',

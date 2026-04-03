@@ -101,7 +101,7 @@ export default {
   'model.placeholder.vision.once_ratio': 'Please enter price',
   'model.error.required.vision': 'Please enter vision mode and price',
   'model.label.video_generation': 'Generation Price',
-  'model.error.required.video_generation': 'Please enter width, height, and price',
+  'model.error.required.video_generation': 'Please enter mode, width, height, and price',
   'model.placeholder.video_generation.width': 'Width',
   'model.placeholder.video_generation.height': 'Height',
   'model.placeholder.video_generation.once_ratio': 'Please enter price',
@@ -131,6 +131,7 @@ export default {
   'model.label.image.generation.width_height': 'Width × Height',
   'model.label.image.generation.once_ratio': 'Price',
   'model.label.vision.once_ratio': 'Price',
+  'model.label.video_generation.mode': 'Mode',
   'model.label.video_generation.width_height': 'Width × Height',
   'model.label.video_generation.once_ratio': 'Price',
   'model.label.search.context_size': 'Context Size',
@@ -181,4 +182,6 @@ export default {
   'model.dict.mode.all': 'All',
   'model.dict.mode.thinking': 'Thinking',
   'model.dict.mode.non_thinking': 'Non-Thinking',
+  'model.dict.mode.no_video_input': 'Text to Video',
+  'model.dict.mode.has_video_input': 'Image to Video',
 };

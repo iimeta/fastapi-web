@@ -52,6 +52,7 @@ export interface TextDetail {
   user_id: any;
   app_id: any;
   provider_id: string;
+  provider_code: string;
   provider_name: string;
   model_id: string;
   model_name: string;
@@ -170,6 +171,7 @@ export interface ImageDetail {
   user_id: any;
   app_id: any;
   provider_id: string;
+  provider_code: string;
   provider_name: string;
   model_id: string;
   model_name: string;
@@ -263,6 +265,7 @@ export interface AudioDetail {
   user_id: any;
   app_id: any;
   provider_id: string;
+  provider_code: string;
   provider_name: string;
   model_id: string;
   model_name: string;
@@ -353,6 +356,7 @@ export interface VideoDetail {
   user_id: any;
   app_id: any;
   provider_id: string;
+  provider_code: string;
   provider_name: string;
   model_id: string;
   model_name: string;
@@ -445,6 +449,7 @@ export interface FileDetail {
   user_id: any;
   app_id: any;
   provider_id: string;
+  provider_code: string;
   provider_name: string;
   model_id: string;
   model_name: string;
@@ -537,6 +542,7 @@ export interface BatchDetail {
   user_id: any;
   app_id: any;
   provider_id: string;
+  provider_code: string;
   provider_name: string;
   model_id: string;
   model_name: string;
@@ -632,6 +638,7 @@ export interface GeneralDetail {
   user_id: any;
   app_id: any;
   provider_id: string;
+  provider_code: string;
   provider_name: string;
   model_id: string;
   model_name: string;

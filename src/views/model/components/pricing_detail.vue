@@ -249,11 +249,23 @@
     :bordered="false"
     class="pricing-detail-table-spacing"
   >
+    <template #video_mode="{ record }">
+      {{ $t(`model.dict.mode.${record.mode || 'no_video_input'}`) }}
+    </template>
     <template #width="{ record }">
       {{ record.width }} × {{ record.height }}
     </template>
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" /> {{ $t('unit.second') }}
+      <Quota :model-value="record.once_ratio" />
+      <template
+        v-if="
+          props.providerCode === 'VolcEngine' ||
+          props.providerName === '火山引擎'
+        "
+      >
+        / M
+      </template>
+      <template v-else> / {{ $t('unit.second') }} </template>
     </template>
     <template #is_default="{ record }">
       {{ record.is_default ? $t('dict.true') : '-' }}
@@ -349,6 +361,8 @@
     modelValue: Pricing;
     modelType: number;
     timeRules?: any[];
+    providerCode?: string;
+    providerName?: string;
   }>();
 
   const pricing = ref(props.modelValue);
@@ -740,6 +754,13 @@
       title: t('dict.billing_items.video_generation'),
       headerCellStyle: tableHeaderCellStyle,
       children: [
+        {
+          title: t('model.label.video_generation.mode'),
+          dataIndex: 'mode',
+          slotName: 'video_mode',
+          align: 'center',
+          width: 150,
+        },
         {
           title: t('model.label.video_generation.width_height'),
           dataIndex: 'width',

@@ -390,6 +390,8 @@
       v-model="pricing"
       :model-type="modelType"
       :time-rules="timeRules"
+      :provider-code="currentData.provider_code"
+      :provider-name="currentData.provider_name"
     />
   </div>
 </template>

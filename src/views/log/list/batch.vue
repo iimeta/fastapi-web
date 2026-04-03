@@ -388,7 +388,12 @@
             class="spend"
             @click="
               record.status === 1 || record.status === 2
-                ? spendHandle(record.spend, record.model_type)
+                ? spendHandle(
+                    record.spend,
+                    record.model_type,
+                    record.provider_code,
+                    record.provider_name
+                  )
                 : undefined
             "
           >
@@ -544,7 +549,12 @@
         simple
         :ok-text="$t('button.close')"
       >
-        <SpendDetail v-model="spend" :model-type="modelType" />
+        <SpendDetail
+          v-model="spend"
+          :model-type="modelType"
+          :provider-code="providerCode"
+          :provider-name="providerName"
+        />
       </a-modal>
     </a-card>
   </div>
@@ -1002,11 +1012,15 @@
   const spendVisible = ref(false);
   const spend = ref();
   const modelType = ref();
+  const providerName = ref('');
+  const providerCode = ref('');
 
-  const spendHandle = async (s: Spend, t: number) => {
+  const spendHandle = async (s: Spend, t: number, pc?: string, pn?: string) => {
     spendVisible.value = true;
     spend.value = s;
     modelType.value = t;
+    providerCode.value = pc || '';
+    providerName.value = pn || '';
   };
 
   /**

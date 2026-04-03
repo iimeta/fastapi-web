@@ -96,6 +96,7 @@ export default {
   'log.columns.spend.audio.output_tokens': 'Output Minutes',
   'log.columns.spend.tiered.input_tokens': 'Input Tokens',
   'log.columns.spend.image.generation.n': 'Images',
+  'log.columns.spend.video_generation.mode': 'Mode',
   'log.columns.spend.video_generation.seconds': 'Seconds',
   'log.columns.spend.once_ratio': 'Price',
   'log.columns.spend.model_time_rule': 'Model Discount',

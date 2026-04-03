@@ -170,7 +170,12 @@
           class="spend"
           @click="
             currentData.status === 1 || currentData.status === 2
-              ? spendHandle(currentData.spend, currentData.model_type)
+              ? spendHandle(
+                  currentData.spend,
+                  currentData.model_type,
+                  currentData.provider_code,
+                  currentData.provider_name
+                )
               : undefined
           "
         >
@@ -523,7 +528,12 @@
           class="spend"
           @click="
             currentData.status === 1 || currentData.status === 2
-              ? spendHandle(currentData.spend, currentData.model_type)
+              ? spendHandle(
+                  currentData.spend,
+                  currentData.model_type,
+                  currentData.provider_code,
+                  currentData.provider_name
+                )
               : undefined
           "
         >
@@ -667,7 +677,12 @@
       simple
       :ok-text="$t('button.close')"
     >
-      <SpendDetail v-model="spend" :model-type="modelType" />
+      <SpendDetail
+        v-model="spend"
+        :model-type="modelType"
+        :provider-code="providerCode"
+        :provider-name="providerName"
+      />
     </a-modal>
   </div>
 </template>
@@ -751,11 +766,15 @@
   const spendVisible = ref(false);
   const spend = ref();
   const modelType = ref();
+  const providerName = ref('');
+  const providerCode = ref('');
 
-  const spendHandle = async (s: Spend, t: number) => {
+  const spendHandle = async (s: Spend, t: number, pc?: string, pn?: string) => {
     spendVisible.value = true;
     spend.value = s;
     modelType.value = t;
+    providerCode.value = pc || '';
+    providerName.value = pn || '';
   };
 </script>
 

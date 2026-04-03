@@ -231,7 +231,7 @@ export default {
   'dict.model_type.5': 'Text to Speech',
   'dict.model_type.6': 'Speech to Text',
   'dict.model_type.7': 'Text Vectorization',
-  'dict.model_type.8': 'Text to Video',
+  'dict.model_type.8': 'Video Generation',
   'dict.model_type.100': 'Multimodal',
   'dict.model_type.101': 'Multimodal Realtime',
   'dict.model_type.102': 'Multimodal Speech',

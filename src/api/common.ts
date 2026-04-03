@@ -64,6 +64,7 @@ export interface VideoPricing {
 }
 
 export interface VideoGenerationPricing {
+  mode: any;
   width: any;
   height: any;
   once_ratio: any;

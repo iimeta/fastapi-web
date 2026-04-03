@@ -426,6 +426,9 @@
     :bordered="false"
     class="spend-detail-table-spacing"
   >
+    <template #mode="{ record }">
+      {{ $t(`model.dict.mode.${record.pricing.mode || 'no_video_input'}`) }}
+    </template>
     <template #width="{ record }">
       {{ record.pricing.width }} × {{ record.pricing.height }}
     </template>
@@ -433,7 +436,16 @@
       {{ record.seconds || '-' }}
     </template>
     <template #once_ratio="{ record }">
-      <Quota :model-value="record.pricing.once_ratio" /> {{ $t('unit.second') }}
+      <Quota :model-value="record.pricing.once_ratio" />
+      <template
+        v-if="
+          props.providerCode === 'VolcEngine' ||
+          props.providerName === '火山引擎'
+        "
+      >
+        / M
+      </template>
+      <template v-else> / {{ $t('unit.second') }} </template>
     </template>
     <template #spend_tokens="{ record }">
       <Quota :model-value="record.spend_tokens" />
@@ -556,6 +568,8 @@
   const props = defineProps<{
     modelValue: Spend;
     modelType: number;
+    providerCode?: string;
+    providerName?: string;
   }>();
 
   const spend = ref(props.modelValue);
@@ -1114,6 +1128,13 @@
       title: t('dict.billing_items.video_generation'),
       headerCellStyle: tableHeaderCellStyle,
       children: [
+        {
+          title: t('log.columns.spend.video_generation.mode'),
+          dataIndex: 'mode',
+          slotName: 'mode',
+          align: 'center',
+          width: 100,
+        },
         {
           title: t('model.label.video_generation.width_height'),
           dataIndex: 'width',

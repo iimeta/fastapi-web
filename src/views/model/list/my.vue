@@ -193,7 +193,14 @@
           <a-button
             type="text"
             size="small"
-            @click="viewPricing(record.pricing, record.type, record.time_rules)"
+            @click="
+              viewPricing(
+                record.pricing,
+                record.type,
+                record.time_rules,
+                record.provider_name
+              )
+            "
           >
             {{ $t('button.view') }}
           </a-button>
@@ -231,6 +238,8 @@
           v-model="pricing"
           :model-type="modelType"
           :time-rules="timeRules"
+          :provider-code="providerCode"
+          :provider-name="providerName"
         />
       </a-modal>
     </a-card>
@@ -590,11 +599,22 @@
   const pricing = ref<Pricing>({ billing_items: [] } as unknown as Pricing);
   const modelType = ref(0);
   const timeRules = ref<any[]>([]);
-  const viewPricing = (p: Pricing, t: number, tr?: any[]) => {
+  const providerCode = ref('');
+  const providerName = ref('');
+
+  const viewPricing = (
+    p: Pricing,
+    t: number,
+    tr?: any[],
+    pc?: string,
+    pn?: string
+  ) => {
     pricingVisible.value = true;
     pricing.value = p;
     modelType.value = t;
     timeRules.value = tr || [];
+    providerCode.value = pc || '';
+    providerName.value = pn || '';
   };
 </script>
 

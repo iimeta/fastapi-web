@@ -954,6 +954,7 @@
           v-for="(_, index) of formData.video_generation.length"
           :key="index"
           :field="
+            `video_generation[${index}].mode` &&
             `video_generation[${index}].width` &&
             `video_generation[${index}].height` &&
             `video_generation[${index}].once_ratio`
@@ -966,6 +967,12 @@
             },
           ]"
         >
+          <a-select
+            v-model="formData.video_generation[index].mode"
+            :placeholder="$t('model.label.video_generation.mode')"
+            :options="videoModeOptions"
+            class="pricing-select--video-mode pricing-field--spaced"
+          />
           <a-input-number
             v-model="formData.video_generation[index].width"
             :placeholder="$t('model.placeholder.video_generation.width')"
@@ -973,7 +980,7 @@
             :min="1"
             :max="999999"
             :step="1"
-            class="pricing-input--compact pricing-field--spaced"
+            class="pricing-input--video-size pricing-field--spaced"
           />
           ×
           <a-input-number
@@ -995,7 +1002,16 @@
             class="pricing-input--video-price pricing-field--spaced"
           >
             <template #prefix> {{ appStore.getCurrencySymbol }} </template>
-            <template #append> {{ $t('unit.second') }} </template>
+            <template
+              v-if="
+                provider &&
+                (provider.code === 'VolcEngine' || provider.name === '火山引擎')
+              "
+              #append
+            >
+              / M
+            </template>
+            <template v-else #append> {{ $t('unit.second') }} </template>
           </a-input-number>
           <a-radio
             v-model="formData.video_generation[index].is_default"
@@ -1225,7 +1241,7 @@
   import { FormInstance } from '@arco-design/web-vue';
   import { useAppStore } from '@/store';
   import { parsePrice } from '@/utils/common';
-  import { queryProviderList } from '@/api/provider';
+  import { ProviderList, queryProviderList } from '@/api/provider';
   import {
     Pricing,
     TextPricing,
@@ -1249,6 +1265,7 @@
   const formRef = ref<FormInstance>();
   const formData = ref(props.modelValue);
   const providerMap = new Map();
+  const provider = ref<ProviderList>();
 
   const getProviderList = async () => {
     try {
@@ -1360,6 +1377,17 @@
     {
       label: t('model.dict.mode.non_thinking'),
       value: 'non_thinking',
+    },
+  ];
+
+  const videoModeOptions = [
+    {
+      label: t('model.dict.mode.no_video_input'),
+      value: 'no_video_input',
+    },
+    {
+      label: t('model.dict.mode.has_video_input'),
+      value: 'has_video_input',
     },
   ];
 
@@ -1517,8 +1545,6 @@
   };
 
   const initImageGenerationPricing = () => {
-    const provider = providerMap.get(props.providerId);
-
     const qualities = [
       'high',
       'high',
@@ -1577,10 +1603,10 @@
     ];
 
     if (
-      provider &&
-      (provider.code === 'Google' ||
-        provider.name === 'Google' ||
-        provider.code === 'GCPGemini')
+      provider.value &&
+      (provider.value.code === 'Google' ||
+        provider.value.name === 'Google' ||
+        provider.value.code === 'GCPGemini')
     ) {
       for (let i = 0; i < googleQualities.length; i += 1) {
         handleImageGenerationPricingAdd(
@@ -1631,8 +1657,9 @@
     }
   };
 
-  const handleVideoPricingAdd = (w?: number, h?: number) => {
+  const handleVideoPricingAdd = (m?: string, w?: number, h?: number) => {
     const videoGenerationPricing: VideoGenerationPricing = {
+      mode: m,
       width: w,
       height: h,
       once_ratio: ref(),
@@ -1661,10 +1688,57 @@
   };
 
   const initVideoPricing = () => {
-    const widths = [720, 1280, 1024, 1792];
-    const heights = [1280, 720, 1792, 1024];
+    let modes = [
+      'no_video_input',
+      'no_video_input',
+      'no_video_input',
+      'no_video_input',
+    ];
+    let widths = [720, 1280, 1024, 1792];
+    let heights = [1280, 720, 1792, 1024];
+
+    if (
+      provider.value &&
+      (provider.value.code === 'VolcEngine' ||
+        provider.value.name === '火山引擎')
+    ) {
+      modes = [
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+      ];
+      widths = [
+        864, 752, 640, 560, 496, 992, 1280, 1112, 960, 834, 720, 1470, 864, 752,
+        640, 560, 496, 992, 1280, 1112, 960, 834, 720, 1470,
+      ];
+      heights = [
+        496, 560, 640, 752, 864, 432, 720, 834, 960, 1112, 1280, 630, 496, 560,
+        640, 752, 864, 432, 720, 834, 960, 1112, 1280, 630,
+      ];
+    }
     for (let i = 0; i < widths.length; i += 1) {
-      handleVideoPricingAdd(widths[i], heights[i]);
+      handleVideoPricingAdd(modes[i], widths[i], heights[i]);
     }
   };
 
@@ -1780,6 +1854,8 @@
   };
 
   const handleBillingItemsChange = () => {
+    provider.value = providerMap.get(props.providerId);
+
     if (formData.value.billing_items.includes('text')) {
       if (!formData.value.text) {
         formData.value.text = [];
@@ -2065,12 +2141,16 @@
     width: 309px;
   }
 
+  :deep(.pricing-select--video-mode) {
+    width: 118px;
+  }
+
   .pricing-input--video-size {
-    width: 188px;
+    width: 118px;
   }
 
   .pricing-input--video-price {
-    width: 222px;
+    width: 239px;
   }
 
   :deep(.pricing-input--midjourney-name) {
