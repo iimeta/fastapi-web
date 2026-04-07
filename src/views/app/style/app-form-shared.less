@@ -54,7 +54,55 @@
   }
 }
 
-// Keep local in shared: app form radio buttons need tighter 8px padding
+:deep(.arco-select-option-content) {
+  display: block;
+  width: 100%;
+}
+
+.app-form-group-option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  &--selected {
+    padding-right: 8px;
+  }
+
+  &--content {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+  }
+
+  &--name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &--remark {
+    margin-top: 1px;
+    padding-bottom: 5px;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--color-text-3);
+    font-size: 12px;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &--discount {
+    margin-left: auto;
+    min-width: 48px;
+    color: inherit;
+    font-size: 14px;
+    text-align: right;
+  }
+}
+
 :deep(.arco-radio-button-content) {
   padding: 0 8px;
 }

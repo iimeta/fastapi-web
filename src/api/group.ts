@@ -184,7 +184,9 @@ export function submitGroupBatchOperate(data: GroupBatchOperate) {
 
 export interface GroupList {
   id: string;
+  time_rules: TimeRule[];
   name: string;
+  remark: string;
 }
 
 export interface GroupListRes {

@@ -799,12 +799,41 @@
               allow-search
               allow-clear
             >
+              <template #label>
+                <div
+                  v-if="selectedGroup"
+                  class="app-form-group-option app-form-group-option--selected"
+                >
+                  <div class="app-form-group-option--content">
+                    <span class="app-form-group-option--name">
+                      {{ selectedGroup.name }}
+                    </span>
+                  </div>
+                  <span class="app-form-group-option--discount">
+                    {{ getGroupDiscountText(selectedGroup) }}
+                  </span>
+                </div>
+              </template>
               <a-option
                 v-for="item in groups"
                 :key="item.id"
                 :value="item.id"
                 :label="item.name"
-              />
+              >
+                <div class="app-form-group-option">
+                  <div class="app-form-group-option--content">
+                    <span class="app-form-group-option--name">{{
+                      item.name
+                    }}</span>
+                    <span class="app-form-group-option--remark">{{
+                      item.remark
+                    }}</span>
+                  </div>
+                  <span class="app-form-group-option--discount">
+                    {{ getGroupDiscountText(item) }}
+                  </span>
+                </div>
+              </a-option>
             </a-select>
           </a-form-item>
           <a-form-item field="ip_whitelist" :label="$t('common.ip_whitelist')">
@@ -1183,6 +1212,27 @@
   getModelTree();
 
   const groups = ref<GroupList[]>([]);
+  const selectedGroup = computed(() =>
+    groups.value.find((item) => item.id === formData.value.group)
+  );
+
+  const getDiscountRange = (rules: any[]) => {
+    const discounts = rules.map((r: any) => r.discount);
+    const min = Math.min(...discounts);
+    const max = Math.max(...discounts);
+    return `${min}%~${max}%`;
+  };
+
+  const getGroupDiscountText = (group: GroupList) => {
+    if (!group.time_rules?.length) {
+      return '';
+    }
+    if (group.time_rules.length === 1) {
+      return `${group.time_rules[0].discount}%`;
+    }
+    return getDiscountRange(group.time_rules);
+  };
+
   const getGroupList = async () => {
     try {
       const { data } = await queryGroupList();
@@ -1370,6 +1420,7 @@
 </script>
 
 <style scoped lang="less">
+  @import '../style/app-form-shared.less';
   // 公共骨架已由 page-list.less 全局提供
 
   .app-list-billing-method-label {
