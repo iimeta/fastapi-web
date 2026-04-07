@@ -540,24 +540,19 @@
             },
           ]"
         >
-          <a-select
+          <a-tree-select
             v-model="configFormData.model_agent_health_check_task.models"
             :placeholder="
               $t('sys.config.placeholder.model_agent_health_check_task.models')
             "
+            :allow-search="true"
+            :allow-clear="true"
+            :tree-checkable="true"
+            :data="treeData"
             :max-tag-count="3"
             :scrollbar="false"
-            multiple
-            allow-search
-            allow-clear
-          >
-            <a-option
-              v-for="item in models"
-              :key="item.id"
-              :value="item.id"
-              :label="item.name"
-            />
-          </a-select>
+            tree-checked-strategy="child"
+          />
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'model_agent_health_check_task'"
@@ -846,7 +841,7 @@
     submitSysConfigReset,
     submitSysConfigChangeStatus,
   } from '@/api/sys_config';
-  import { queryModelList, ModelList } from '@/api/model';
+  import { queryModelTree, Tree } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
 
   const { setLoading } = useLoading(true);
@@ -863,16 +858,16 @@
     maxHeight: '520px',
   };
 
-  const models = ref<ModelList[]>([]);
-  const getModelList = async () => {
+  const treeData = ref<Tree[]>([]);
+  const getModelTree = async () => {
     try {
-      const { data } = await queryModelList();
-      models.value = data.items;
+      const { data } = await queryModelTree();
+      treeData.value = data.items;
     } catch (err) {
       // you can report use errorHandler or other
     }
   };
-  getModelList();
+  getModelTree();
 
   const modelAgents = ref<ModelAgentList[]>([]);
   const getModelAgentList = async () => {
