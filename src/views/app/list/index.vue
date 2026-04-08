@@ -1047,8 +1047,7 @@
       dataIndex: 'quota_expires_at',
       slotName: 'quota_expires_at',
       align: 'center',
-      ellipsis: true,
-      tooltip: true,
+      width: 170,
     },
     {
       title: t('common.status'),

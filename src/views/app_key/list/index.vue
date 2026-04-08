@@ -355,9 +355,39 @@
         <template #name="{ record }">
           {{ record.name || record.key.substr(-5) }}
         </template>
-        <template #key="{ record }">
-          {{ record.key.substr(0, 10) + record.key.substr(-10) }}
-          <icon-copy class="copy-btn" @click="handleCopy(record.id)" />
+        <template #group_name="{ record }">
+          <span v-if="record.group_name">
+            {{ record.group_name }}
+            <span
+              v-if="
+                record.group_time_rules && record.group_time_rules.length === 1
+              "
+            >
+              {{ record.group_time_rules[0].discount }}%<a-button
+                v-if="hasModelNames(record.group_time_rules)"
+                type="text"
+                size="small"
+                @click="viewTimeRules(record.group_time_rules)"
+              >
+                {{ $t('button.view') }}
+              </a-button>
+            </span>
+            <span
+              v-else-if="
+                record.group_time_rules && record.group_time_rules.length > 1
+              "
+            >
+              {{ getDiscountRange(record.group_time_rules)
+              }}<a-button
+                type="text"
+                size="small"
+                @click="viewTimeRules(record.group_time_rules)"
+              >
+                {{ $t('button.view') }}
+              </a-button>
+            </span>
+          </span>
+          <span v-else>{{ $t(`common.no_limit`) }}</span>
         </template>
         <template #quota="{ record }">
           <Quota v-if="record.is_limit_quota" :model-value="record.quota" />
@@ -399,6 +429,9 @@
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
             {{ $t('button.detail') }}
+          </a-button>
+          <a-button type="text" size="small" @click="handleCopy(record.id)">
+            {{ $t('button.copy') }}
           </a-button>
           <a-button type="text" size="small" @click="updateKey(record)">
             {{ $t('button.update') }}
@@ -884,6 +917,39 @@
         :ok-text="$t('button.close')"
       >
         <Models :id="recordId" :action="action" />
+      </a-modal>
+
+      <a-modal
+        v-model:visible="timeRulesVisible"
+        hide-title
+        hide-cancel
+        simple
+        width="888px"
+        :ok-text="$t('button.close')"
+      >
+        <a-table
+          :columns="timeRulesColumns"
+          :data="timeRulesData"
+          :pagination="false"
+          :bordered="false"
+        >
+          <template #discount="{ record }"> {{ record.discount }}% </template>
+          <template #model_names="{ record }">
+            {{ record.model_names?.join(', ') || $t('common.all') }}
+          </template>
+          <template #time_range="{ record }">
+            {{ formatMs(record.start_time) }}~{{ formatMs(record.end_time) }}
+          </template>
+          <template #days="{ record }">
+            {{ formatDays(record) }}
+          </template>
+          <template #priority_title>
+            {{ $t('time_rule.label.priority') }}
+            <a-tooltip :content="$t('time_rule.placeholder.priority')">
+              <icon-question-circle class="priority-tooltip" />
+            </a-tooltip>
+          </template>
+        </a-table>
       </a-modal>
 
       <!-- 批量操作 -->
@@ -1536,6 +1602,7 @@
   import { useAppStore } from '@/store';
   import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
   import { queryGroupList, GroupList } from '@/api/group';
+  import type { TimeRule } from '@/api/common';
   import { useClipboard } from '@vueuse/core';
   import Models from '@/views/common/models.vue';
   import Quota from '@/views/common/quota.vue';
@@ -1646,9 +1713,9 @@
       tooltip: true,
     },
     {
-      title: t('common.app_key'),
-      dataIndex: 'key',
-      slotName: 'key',
+      title: t('common.groups'),
+      dataIndex: 'group_name',
+      slotName: 'group_name',
       align: 'center',
       width: 220,
     },
@@ -1704,7 +1771,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 120,
+      width: 160,
     },
   ]);
 
@@ -1898,6 +1965,91 @@
     const min = Math.min(...discounts);
     const max = Math.max(...discounts);
     return `${min}%~${max}%`;
+  };
+
+  const tableHeaderCellStyle = { background: 'var(--color-bg-2)' };
+
+  const timeRulesColumns = computed<TableColumnData[]>(() => [
+    {
+      title: t('time_rule.label.rule'),
+      headerCellStyle: tableHeaderCellStyle,
+      children: [
+        {
+          title: t('time_rule.label.name'),
+          dataIndex: 'name',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('common.discount'),
+          slotName: 'discount',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('time_rule.label.time_range'),
+          slotName: 'time_range',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('time_rule.label.days'),
+          slotName: 'days',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('time_rule.label.priority'),
+          dataIndex: 'priority',
+          titleSlotName: 'priority_title',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('common.model'),
+          slotName: 'model_names',
+          align: 'center',
+          width: 100,
+          ellipsis: true,
+          tooltip: true,
+        },
+      ],
+    },
+  ]);
+
+  const hasModelNames = (rules: TimeRule[]) => {
+    return rules.some((r) => r.model_names?.length);
+  };
+
+  const formatMs = (ms: number) => {
+    if (ms === undefined || ms === null) return '';
+    const totalMinutes = Math.floor(ms / 60000);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(
+      2,
+      '0'
+    )}`;
+  };
+
+  const formatDays = (rule: TimeRule) => {
+    if (!rule.days || rule.days.length === 0) return t('common.all');
+    if (rule.day_mode === 'month') {
+      return rule.days
+        .map((d: number) => `${d}${t('time_rule.label.day_suffix')}`)
+        .join(', ');
+    }
+    return rule.days
+      .map((d: number) => t(`time_rule.dict.week.${d}`))
+      .join(', ');
+  };
+
+  const timeRulesVisible = ref(false);
+  const timeRulesData = ref<TimeRule[]>([]);
+
+  const viewTimeRules = (rules: TimeRule[]) => {
+    timeRulesData.value = rules;
+    timeRulesVisible.value = true;
   };
 
   const getGroupDiscountText = (group: GroupList) => {
@@ -2248,7 +2400,7 @@
 
   watch(copied, () => {
     if (copied.value) {
-      Message.success(t('success.copy'));
+      Message.success(t('app.key.success.copy'));
     }
   });
 
@@ -2384,5 +2536,10 @@
 
   .day {
     margin-left: 3px;
+  }
+
+  .priority-tooltip {
+    cursor: pointer;
+    color: var(--color-text-3);
   }
 </style>

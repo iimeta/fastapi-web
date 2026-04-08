@@ -1,5 +1,6 @@
 import axios from 'axios';
 import qs from 'query-string';
+import type { TimeRule } from './common';
 
 export interface AppKeyCreate {
   app_id: any;
@@ -48,7 +49,8 @@ export interface AppKeyPage {
   quota: number;
   models: string[];
   model_names: string[];
-  model_agents: string[];
+  group_name: string;
+  group_time_rules: TimeRule[];
   ip_whitelist: string[];
   ip_blacklist: string[];
   status: number;
@@ -114,6 +116,7 @@ export interface AppKeyDetail {
   is_bind_group: boolean;
   group: string;
   group_name: string;
+  group_time_rules: TimeRule[];
   ip_whitelist: string[];
   ip_blacklist: string[];
   status: number;

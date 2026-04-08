@@ -10,6 +10,7 @@ export default {
   'app.key.placeholder.quota_expires_minutes': 'The expiration time is generated when this key is first used.',
   // success
   'app.key.success.save': 'Saved successfully. The key has been copied to the clipboard.',
+  'app.key.success.copy': 'The key has been copied to the clipboard.',
   // detail
   'app.key.detail.quota_expires_rule': 'Expiration Rule',
   'app.key.detail.quota_expires_minutes': 'Expiration Duration',

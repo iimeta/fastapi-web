@@ -10,6 +10,7 @@ export default {
   'app.key.placeholder.quota_expires_minutes': '在首次使用此密钥时生成过期时间',
   // success
   'app.key.success.save': '保存成功, 密钥已复制到剪贴板',
+  'app.key.success.copy': '密钥已复制到剪贴板',
   // detail
   'app.key.detail.quota_expires_rule': '过期规则',
   'app.key.detail.quota_expires_minutes': '过期时长',
