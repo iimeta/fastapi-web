@@ -10,7 +10,7 @@
       :style="{ background: providerGradient }"
     />
 
-    <!-- 头部: Logo + 模型名称 + 状态 -->
+    <!-- 头部: Logo + 模型名称 + 类型 -->
     <div class="model-square-card__head">
       <div class="model-square-card__provider">
         <svg
@@ -30,57 +30,43 @@
           {{ initial }}
         </span>
         <div class="model-square-card__name-wrap">
-          <span
+          <div
             class="model-square-card__name"
             :title="record.name || record.model"
+            @click.stop="doCopyName"
           >
-            {{ record.name || record.model }}
-          </span>
-          <span
+            <span class="model-square-card__name-text">{{
+              record.name || record.model
+            }}</span>
+            <icon-copy class="model-square-card__cp" />
+          </div>
+          <div
             class="model-square-card__model-sub"
             :title="record.model"
             @click.stop="doCopy"
           >
-            {{ record.model }}
-            <icon-copy class="model-square-card__model-cp" />
+            <span class="model-square-card__model-text">{{
+              record.model
+            }}</span>
+            <icon-copy class="model-square-card__cp" />
+          </div>
+        </div>
+      </div>
+      <div class="model-square-card__head-tags">
+        <span class="model-square-card__tag" :style="typeTagStyle">
+          {{ $t(`dict.model_type.${record.type}`) }}
+        </span>
+        <div class="model-square-card__head-tags-bill">
+          <span
+            v-for="bm in billingMethods"
+            :key="bm"
+            class="model-square-card__tag"
+            :style="billingTagStyle(bm)"
+          >
+            {{ $t(`dict.billing_methods.${bm}`) }}
           </span>
         </div>
       </div>
-      <div
-        class="model-square-card__status"
-        :class="{
-          'model-square-card__status--on': record.status === 1,
-          'model-square-card__status--off': record.status === 2,
-        }"
-      >
-        <i />
-        <span>{{ $t(`dict.status.${record.status}`) }}</span>
-      </div>
-    </div>
-
-    <!-- 标签行 -->
-    <div class="model-square-card__tags">
-      <span class="model-square-card__tag model-square-card__tag--type">
-        {{ $t(`dict.model_type.${record.type}`) }}
-      </span>
-      <span class="model-square-card__tag model-square-card__tag--bill">
-        {{ billingLabel }}
-      </span>
-      <template v-if="record.group_names && record.group_names.length > 0">
-        <span
-          v-for="(g, i) in record.group_names.slice(0, 2)"
-          :key="i"
-          class="model-square-card__tag model-square-card__tag--group"
-        >
-          {{ g }}
-        </span>
-        <span
-          v-if="record.group_names.length > 2"
-          class="model-square-card__tag model-square-card__tag--group"
-        >
-          +{{ record.group_names.length - 2 }}
-        </span>
-      </template>
     </div>
 
     <!-- 备注 -->
@@ -99,6 +85,15 @@
       <div class="model-square-card__time-rules-hd">
         <icon-clock-circle :size="12" />
         <span>{{ $t('time_rule.label.rule') }}</span>
+        <a-button
+          v-if="record.time_rules.length > 2"
+          type="text"
+          size="mini"
+          class="model-square-card__section-more"
+          @click.stop="$emit('clickCard', record)"
+        >
+          {{ $t('model.square.card.pricing.more') }}
+        </a-button>
       </div>
       <div class="model-square-card__time-rules-list">
         <div
@@ -116,12 +111,6 @@
             {{ fmtMs(tr.start_time) }}~{{ fmtMs(tr.end_time) }}
           </span>
         </div>
-        <span
-          v-if="record.time_rules.length > 2"
-          class="model-square-card__time-rule-more"
-        >
-          +{{ record.time_rules.length - 2 }}
-        </span>
       </div>
     </div>
 
@@ -135,7 +124,8 @@
           v-if="items.length > 0"
           type="text"
           size="mini"
-          @click.stop="$emit('viewPricing', record)"
+          class="model-square-card__section-more"
+          @click.stop="$emit('clickCard', record)"
         >
           {{ $t('model.square.card.pricing.more') }}
         </a-button>
@@ -182,7 +172,6 @@
     showRemark: boolean;
   }>();
   defineEmits<{
-    (e: 'viewPricing', r: ModelPage): void;
     (e: 'clickCard', r: ModelPage): void;
   }>();
 
@@ -291,9 +280,47 @@
   });
 
   /* ---- 计费 ---- */
-  const billingLabel = computed(() =>
-    t(`dict.billing_methods.${props.record.pricing?.billing_methods || 1}`)
+  const billingMethods = computed(
+    () => props.record.pricing?.billing_methods || [1]
   );
+
+  const billingColorMap: Record<number, string> = {
+    1: '6, 182, 212', // 按Tokens - 青
+    2: '245, 158, 11', // 按次 - 琥珀
+  };
+
+  const billingTagStyle = (bm: number) => {
+    const rgb = billingColorMap[bm] || '107, 114, 128';
+    return {
+      color: `rgb(${rgb})`,
+      background: `rgba(${rgb}, 0.08)`,
+    };
+  };
+
+  /* ---- 类型颜色 ---- */
+  const typeColorMap: Record<number, string> = {
+    1: '22, 93, 255', // 文生文 - 蓝
+    2: '168, 85, 247', // 文生图 - 紫
+    3: '14, 165, 233', // 图生文 - 天蓝
+    4: '236, 72, 153', // 图生图 - 粉
+    5: '245, 158, 11', // 文生语音 - 琥珀
+    6: '34, 197, 94', // 语音生文 - 绿
+    7: '6, 182, 212', // 向量化 - 青
+    8: '239, 68, 68', // 视频生成 - 红
+    100: '99, 102, 241', // 多模态 - 靛蓝
+    101: '79, 70, 229', // 多模态实时 - 深靛蓝
+    102: '217, 119, 87', // 多模态语音 - 珊瑚
+    103: '20, 184, 166', // 多模态向量化 - 蓝绿
+    10000: '107, 114, 128', // 通用 - 灰蓝
+  };
+
+  const typeTagStyle = computed(() => {
+    const rgb = typeColorMap[props.record.type] || '99, 102, 241';
+    return {
+      color: `rgb(${rgb})`,
+      background: `rgba(${rgb}, 0.08)`,
+    };
+  });
 
   const items = computed(() => props.record.pricing?.billing_items || []);
 
@@ -316,8 +343,11 @@
     const arr: PreviewItem[] = [];
     const il = t('model.square.card.pricing.input');
     const ol = t('model.square.card.pricing.output');
+    const rl = t('model.square.card.pricing.read');
+    const wl = t('model.square.card.pricing.write');
     const has = (k: string) => bi.includes(k);
 
+    // 文本: 输入 $x/M, 输出 $x/M
     if (has('text') && p.text?.length) {
       const r = p.text[0];
       arr.push({
@@ -326,33 +356,61 @@
         value: `${il} ${fmt(r.input_ratio)}/M\n${ol} ${fmt(r.output_ratio)}/M`,
       });
     }
+    // 文本缓存: 读取 $x/M
+    if (has('text_cache') && p.text_cache?.length) {
+      const r = p.text_cache[0];
+      arr.push({
+        key: 'text_cache',
+        label: t('dict.billing_items.text_cache'),
+        value: `${rl} ${fmt(r.read_ratio)}/M`,
+      });
+    }
+    // 阶梯文本: 输入 0k-200k $x/M, 输出 0k-200k $x/M
     if (has('tiered_text') && p.tiered_text?.length) {
       const r = p.tiered_text[0];
+      const range = `${r.gt || 0}k-${r.lte || 0}k`;
       arr.push({
         key: 'tiered',
         label: t('dict.billing_items.tiered_text'),
-        value: `${r.gt || 0}k-${r.lte || 0}k\n${fmt(r.input_ratio)}/M+`,
+        value: `${il} ${range} ${fmt(r.input_ratio)}/M\n${ol} ${range} ${fmt(
+          r.output_ratio
+        )}/M`,
       });
     }
+    // 阶梯文本缓存: 读取 0k-200k $x/M, 写入 0k-200k $x/M
+    if (has('tiered_text_cache') && p.tiered_text_cache?.length) {
+      const r = p.tiered_text_cache[0];
+      const range = `${r.gt || 0}k-${r.lte || 0}k`;
+      const lines = [`${rl} ${range} ${fmt(r.read_ratio)}/M`];
+      if (r.write_ratio) {
+        lines.push(`${wl} ${range} ${fmt(r.write_ratio)}/M`);
+      }
+      arr.push({
+        key: 'tiered_cache',
+        label: t('dict.billing_items.tiered_text_cache'),
+        value: lines.join('\n'),
+      });
+    }
+    // 图像生成: 宽x高 价格/张
     if (has('image_generation') && p.image_generation?.length) {
       const d =
         p.image_generation.find((x) => x.is_default) || p.image_generation[0];
       arr.push({
         key: 'imgGen',
         label: t('dict.billing_items.image_generation'),
-        value: `${d.width}x${d.height}\n${fmt(d.once_ratio)}/${t(
-          'unit.piece'
-        )}`,
+        value: `${d.width}x${d.height} ${fmt(d.once_ratio)}/${t('unit.piece')}`,
       });
     }
+    // 识图: 模式 价格/张
     if (has('vision') && p.vision?.length) {
       const d = p.vision.find((x) => x.is_default) || p.vision[0];
       arr.push({
         key: 'vision',
         label: t('dict.billing_items.vision'),
-        value: `${d.mode || '-'}\n${fmt(d.once_ratio)}/${t('unit.once')}`,
+        value: `${d.mode || '-'} ${fmt(d.once_ratio)}/${t('unit.piece')}`,
       });
     }
+    // 音频: 输入价格/M, 输出价格/M
     if (has('audio') && p.audio) {
       arr.push({
         key: 'audio',
@@ -362,17 +420,27 @@
         )}/M`,
       });
     }
+    // 音频缓存: 读取 $x/M
+    if (has('audio_cache') && p.audio_cache) {
+      arr.push({
+        key: 'audio_cache',
+        label: t('dict.billing_items.audio_cache'),
+        value: `${rl} ${fmt(p.audio_cache.read_ratio)}/M`,
+      });
+    }
+    // 视频生成: 宽x高 价格/秒
     if (has('video_generation') && p.video_generation?.length) {
       const d =
         p.video_generation.find((x) => x.is_default) || p.video_generation[0];
       arr.push({
         key: 'vidGen',
         label: t('dict.billing_items.video_generation'),
-        value: `${d.width}x${d.height}\n${fmt(d.once_ratio)}/${t(
+        value: `${d.width}x${d.height} ${fmt(d.once_ratio)}/${t(
           'unit.second'
         )}`,
       });
     }
+    // 视频: 输入价格/M, 输出价格/M
     if (has('video') && p.video) {
       arr.push({
         key: 'video',
@@ -382,6 +450,15 @@
         )}/M`,
       });
     }
+    // 视频缓存: 读取 $x/M
+    if (has('video_cache') && p.video_cache) {
+      arr.push({
+        key: 'video_cache',
+        label: t('dict.billing_items.video_cache'),
+        value: `${rl} ${fmt(p.video_cache.read_ratio)}/M`,
+      });
+    }
+    // 搜索: 价格/次
     if (has('search') && p.search?.length) {
       const d = p.search.find((x) => x.is_default) || p.search[0];
       arr.push({
@@ -390,6 +467,7 @@
         value: `${fmt(d.once_ratio)}/${t('unit.once')}`,
       });
     }
+    // Midjourney: 价格/次
     if (has('midjourney') && p.midjourney?.length) {
       arr.push({
         key: 'mj',
@@ -397,6 +475,7 @@
         value: `${fmt(p.midjourney[0].once_ratio)}/${t('unit.once')}`,
       });
     }
+    // 一次: 价格/次
     if (has('once') && p.once) {
       arr.push({
         key: 'once',
@@ -404,6 +483,7 @@
         value: `${fmt(p.once.once_ratio)}/${t('unit.once')}`,
       });
     }
+    // 图像: 输入价格/M, 输出价格/M
     if (has('image') && p.image) {
       arr.push({
         key: 'image',
@@ -411,6 +491,14 @@
         value: `${il} ${fmt(p.image.input_ratio)}/M\n${ol} ${fmt(
           p.image.output_ratio
         )}/M`,
+      });
+    }
+    // 图像缓存: 读取 $x/M
+    if (has('image_cache') && p.image_cache) {
+      arr.push({
+        key: 'image_cache',
+        label: t('dict.billing_items.image_cache'),
+        value: `${rl} ${fmt(p.image_cache.read_ratio)}/M`,
       });
     }
     return arr;
@@ -431,6 +519,15 @@
   const doCopy = async () => {
     try {
       await copy(props.record.model);
+      Message.success(t('model.square.card.copied'));
+    } catch {
+      Message.error('Copy failed');
+    }
+  };
+
+  const doCopyName = async () => {
+    try {
+      await copy(props.record.name || props.record.model);
       Message.success(t('model.square.card.copied'));
     } catch {
       Message.error('Copy failed');
@@ -510,9 +607,25 @@
   }
 
   .model-square-card__name {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: color 0.2s;
+    min-width: 0;
+
+    &:hover {
+      color: rgb(var(--primary-6));
+      .model-square-card__cp {
+        opacity: 1;
+      }
+    }
+  }
+
+  .model-square-card__name-text {
     font-size: 15px;
     font-weight: 700;
-    color: var(--color-text-1);
+    color: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -520,75 +633,49 @@
   }
 
   .model-square-card__model-sub {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 4px;
     font-size: 12px;
-    color: var(--color-text-3);
+    color: var(--color-text-2);
     font-family: Consolas, 'Liberation Mono', Menlo, monospace;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     cursor: pointer;
     transition: color 0.2s;
+    min-width: 0;
 
     &:hover {
       color: rgb(var(--primary-6));
+      .model-square-card__cp {
+        opacity: 1;
+      }
     }
   }
 
-  .model-square-card__model-cp {
+  .model-square-card__model-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .model-square-card__cp {
     flex-shrink: 0;
     font-size: 12px;
-    color: var(--color-text-4);
+    color: var(--color-text-3);
     opacity: 0;
     transition: opacity 0.15s;
   }
 
-  .model-square-card__model-sub:hover .model-square-card__model-cp {
-    opacity: 1;
-  }
-
-  .model-square-card__status {
+  .model-square-card__head-tags {
     flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 10px;
-
-    & > i {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      display: block;
-    }
-
-    &--on {
-      color: rgb(var(--green-6));
-      background: rgba(var(--green-6), 0.08);
-
-      & > i {
-        background: rgb(var(--green-6));
-      }
-    }
-
-    &--off {
-      color: rgb(var(--red-6));
-      background: rgba(var(--red-6), 0.08);
-
-      & > i {
-        background: rgb(var(--red-6));
-      }
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
   }
 
-  .model-square-card__tags {
+  .model-square-card__head-tags-bill {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    padding: 10px 18px 0;
+    gap: 4px;
   }
 
   .model-square-card__tag {
@@ -596,21 +683,7 @@
     line-height: 1;
     padding: 3px 8px;
     border-radius: 3px;
-
-    &--type {
-      color: rgb(var(--primary-6));
-      background: rgba(var(--primary-6), 0.08);
-    }
-
-    &--bill {
-      color: var(--color-text-3);
-      background: var(--color-fill-2);
-    }
-
-    &--group {
-      color: var(--color-text-3);
-      background: var(--color-fill-1);
-    }
+    white-space: nowrap;
   }
 
   .model-square-card__remark {
@@ -632,8 +705,8 @@
   /* 时段规则 */
 
   .model-square-card__time-rules {
-    margin: 10px 14px 0;
-    padding: 8px 10px;
+    margin: 8px 14px 0;
+    padding: 6px 10px;
     background: rgba(var(--orangered-1), 0.4);
     border: 1px solid rgba(var(--orangered-3), 0.3);
     border-radius: 8px;
@@ -643,10 +716,14 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     font-size: 11px;
     font-weight: 600;
     color: rgb(var(--orangered-6));
+
+    .model-square-card__section-more {
+      margin-left: auto;
+    }
   }
 
   .model-square-card__time-rules-list {
@@ -678,33 +755,36 @@
   }
 
   .model-square-card__time-rule-range {
-    color: var(--color-text-3);
+    color: var(--color-text-2);
     font-family: Consolas, 'Liberation Mono', Menlo, monospace;
-    font-size: 10px;
+    font-size: 11px;
   }
 
-  .model-square-card__time-rule-more {
+  .model-square-card__section-more {
     font-size: 11px;
-    color: var(--color-text-4);
+    color: rgb(var(--primary-6));
+    padding: 0 4px;
+    height: auto;
+    line-height: 1;
   }
 
   .model-square-card__pricing {
-    margin: 12px 14px 14px;
-    padding: 10px;
+    margin: 10px 14px 12px;
+    padding: 8px 10px;
     background: linear-gradient(180deg, #f8fbff, #fff);
     border: 1px solid var(--color-border-1);
-    border-radius: 12px;
+    border-radius: 10px;
   }
 
   .model-square-card__pricing-hd {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .model-square-card__pricing-title {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     color: var(--color-text-1);
     letter-spacing: 0.02em;
@@ -713,35 +793,37 @@
   .model-square-card__pricing-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
+    gap: 6px;
   }
 
   .model-square-card__pricing-card {
-    min-height: 56px;
-    padding: 8px;
+    padding: 6px 8px;
     background: var(--color-bg-2);
     border: 1px solid var(--color-border-1);
-    border-radius: 8px;
+    border-radius: 6px;
   }
 
   .model-square-card__pricing-card-name {
-    margin-bottom: 4px;
-    font-size: 12px;
+    margin-bottom: 2px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--color-text-1);
     line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .model-square-card__pricing-card-val {
-    font-size: 11px;
-    color: var(--color-text-3);
-    line-height: 1.45;
+    font-size: 10px;
+    color: var(--color-text-2);
+    line-height: 1.4;
     white-space: pre-line;
     word-break: break-word;
   }
 
   .model-square-card__pricing-nil {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--color-text-4);
   }
 </style>

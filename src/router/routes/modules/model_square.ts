@@ -9,7 +9,7 @@ const MODEL_SQUARE: AppRouteRecordRaw = {
   meta: {
     locale: 'model.square.menu',
     requiresAuth: true,
-    icon: 'icon-apps',
+    icon: 'icon-common',
     order: 21,
     hideChildrenInMenu: true,
     roles: ['user', 'reseller'],
