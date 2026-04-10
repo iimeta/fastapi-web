@@ -204,6 +204,7 @@ export default {
   'sys.config.placeholder.model_agent_health_check_task.recover_model_count': 'Please enter the model recover count',
   'sys.config.label.model_agent_health_check_task.stat_period': 'Stat Period',
   'sys.config.placeholder.model_agent_health_check_task.stat_period': 'Please enter the stat period',
+  'sys.config.label.model_agent_health_check_task.smart_check': 'Smart Check',
   'sys.config.placeholder.service_unavailable.ip_whitelist': 'IPs in the whitelist are exempt from service suspension and can request normally to verify service readiness.',
   'sys.config.error.required.service_unavailable.ip_whitelist': 'Please enter IP whitelist',
   'sys.config.placeholder.general_api.ip_whitelist': 'Only IPs in the whitelist can call the General API.',

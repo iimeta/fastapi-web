@@ -203,6 +203,7 @@ export interface ModelAgentHealthCheckTask {
   remove_model_count: number;
   recover_model_count: number;
   stat_period: number;
+  smart_check: boolean;
   test_method: number;
   base_url: string;
   key: string;

@@ -204,6 +204,7 @@ export default {
   'sys.config.placeholder.model_agent_health_check_task.recover_model_count': '請輸入模型恢復次數',
   'sys.config.label.model_agent_health_check_task.stat_period': '統計週期',
   'sys.config.placeholder.model_agent_health_check_task.stat_period': '請輸入統計週期',
+  'sys.config.label.model_agent_health_check_task.smart_check': '智能檢查',
   'sys.config.placeholder.service_unavailable.ip_whitelist': '白名單內的IP不受暫停服務限制, 可正常請求, 提前檢查服務是否達到預期',
   'sys.config.error.required.service_unavailable.ip_whitelist': '請輸入IP白名單',
   'sys.config.placeholder.general_api.ip_whitelist': '配置IP白名單後, 僅IP白名單內的可呼叫通用API介面',

@@ -723,6 +723,17 @@
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'model_agent_health_check_task'"
+          field="model_agent_health_check_task.smart_check"
+          :label="
+            $t('sys.config.label.model_agent_health_check_task.smart_check')
+          "
+        >
+          <a-switch
+            v-model="configFormData.model_agent_health_check_task.smart_check"
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_health_check_task'"
           field="model_agent_health_check_task.test_method"
           :label="$t('model.agent.label.test_models.test_method')"
           :rules="[
