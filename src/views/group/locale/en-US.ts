@@ -31,4 +31,8 @@ export default {
   'group.detail.is_default': 'Default Group',
   // desc
   'group.desc': 'Description: Bold group names indicate the default group, which appears first in the list. When applications or keys are not bound to a group, the system searches for a model in the order of the group list. It is recommended to bind applications or keys to a group for use.',
+  // Group Square
+  'group.square.menu': 'Group Square',
+  'group.square.search.placeholder': 'Search groups...',
+  'group.square.total': '{total} groups in total',
 };

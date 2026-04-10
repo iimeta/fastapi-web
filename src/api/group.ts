@@ -55,7 +55,9 @@ export function submitGroupCreate(data: GroupCreate) {
 export interface GroupPage {
   id: string;
   time_rules?: TimeRule[];
+  billing_methods?: number[];
   name: string;
+  is_default?: boolean;
   used_quota: number;
   models: string[];
   model_agents: string[];

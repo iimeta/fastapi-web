@@ -31,4 +31,8 @@ export default {
   'group.detail.is_default': '默認分組',
   // desc
   'group.desc': '說明: 分組名稱加粗的為默認分組, 默認排在列表首位, 當應用或密鑰不綁定分組時, 呼叫模型將按分組列表順序依次查找, 推薦將應用或密鑰綁定分組使用',
+  // 分組廣場
+  'group.square.menu': '分組廣場',
+  'group.square.search.placeholder': '搜尋分組...',
+  'group.square.total': '共 {total} 個分組',
 };
