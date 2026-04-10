@@ -118,6 +118,9 @@
     <div class="model-square-card__pricing">
       <div class="model-square-card__pricing-hd">
         <span class="model-square-card__pricing-title">
+          <span class="model-square-card__pricing-icon">{{
+            app.getCurrencySymbol || '$'
+          }}</span>
           {{ $t('model.columns.pricing') }}
         </span>
         <a-button
@@ -324,9 +327,11 @@
 
   const items = computed(() => props.record.pricing?.billing_items || []);
 
+  const sym = computed(() => app.getCurrencySymbol || '$');
   const fmt = (v: any) => {
-    if (!v && v !== 0) return '-';
-    return `${app.getCurrencySymbol}${parseQuota(v)}`;
+    if (v > 0) return `${sym.value}\u2009${parseQuota(v)}`;
+    if (v < 0) return `-${sym.value}\u2009${parseQuota(-v)}`;
+    return `${sym.value}\u20090.00`;
   };
 
   interface PreviewItem {
@@ -347,43 +352,45 @@
     const wl = t('model.square.card.pricing.write');
     const has = (k: string) => bi.includes(k);
 
-    // 文本: 输入 $x/M, 输出 $x/M
+    // 文本: 输入 $x / M, 输出 $x / M
     if (has('text') && p.text?.length) {
       const r = p.text[0];
       arr.push({
         key: 'text',
         label: t('dict.billing_items.text'),
-        value: `${il} ${fmt(r.input_ratio)}/M\n${ol} ${fmt(r.output_ratio)}/M`,
+        value: `${il} ${fmt(r.input_ratio)} / M\n${ol} ${fmt(
+          r.output_ratio
+        )} / M`,
       });
     }
-    // 文本缓存: 读取 $x/M
+    // 文本缓存: 读取 $x / M
     if (has('text_cache') && p.text_cache?.length) {
       const r = p.text_cache[0];
       arr.push({
         key: 'text_cache',
         label: t('dict.billing_items.text_cache'),
-        value: `${rl} ${fmt(r.read_ratio)}/M`,
+        value: `${rl} ${fmt(r.read_ratio)} / M`,
       });
     }
-    // 阶梯文本: 输入 0k-200k $x/M, 输出 0k-200k $x/M
+    // 阶梯文本: 输入 0k-200k $x / M, 输出 0k-200k $x / M
     if (has('tiered_text') && p.tiered_text?.length) {
       const r = p.tiered_text[0];
       const range = `${r.gt || 0}k-${r.lte || 0}k`;
       arr.push({
         key: 'tiered',
         label: t('dict.billing_items.tiered_text'),
-        value: `${il} ${range} ${fmt(r.input_ratio)}/M\n${ol} ${range} ${fmt(
+        value: `${il} ${range} ${fmt(r.input_ratio)} / M\n${ol} ${range} ${fmt(
           r.output_ratio
-        )}/M`,
+        )} / M`,
       });
     }
-    // 阶梯文本缓存: 读取 0k-200k $x/M, 写入 0k-200k $x/M
+    // 阶梯文本缓存: 读取 0k-200k $x / M, 写入 0k-200k $x / M
     if (has('tiered_text_cache') && p.tiered_text_cache?.length) {
       const r = p.tiered_text_cache[0];
       const range = `${r.gt || 0}k-${r.lte || 0}k`;
-      const lines = [`${rl} ${range} ${fmt(r.read_ratio)}/M`];
+      const lines = [`${rl} ${range} ${fmt(r.read_ratio)} / M`];
       if (r.write_ratio) {
-        lines.push(`${wl} ${range} ${fmt(r.write_ratio)}/M`);
+        lines.push(`${wl} ${range} ${fmt(r.write_ratio)} / M`);
       }
       arr.push({
         key: 'tiered_cache',
@@ -391,114 +398,120 @@
         value: lines.join('\n'),
       });
     }
-    // 图像生成: 宽x高 价格/张
+    // 图像生成: 宽x高 价格 / 张
     if (has('image_generation') && p.image_generation?.length) {
       const d =
         p.image_generation.find((x) => x.is_default) || p.image_generation[0];
       arr.push({
         key: 'imgGen',
         label: t('dict.billing_items.image_generation'),
-        value: `${d.width}x${d.height} ${fmt(d.once_ratio)}/${t('unit.piece')}`,
+        value: `${d.width}x${d.height} ${fmt(d.once_ratio)} / ${t(
+          'unit.piece'
+        )}`,
       });
     }
-    // 识图: 模式 价格/张
+    // 识图: 模式 价格 / 张
     if (has('vision') && p.vision?.length) {
       const d = p.vision.find((x) => x.is_default) || p.vision[0];
       arr.push({
         key: 'vision',
         label: t('dict.billing_items.vision'),
-        value: `${d.mode || '-'} ${fmt(d.once_ratio)}/${t('unit.piece')}`,
+        value: `${d.mode || '-'} ${fmt(d.once_ratio)} / ${t('unit.piece')}`,
       });
     }
-    // 音频: 输入价格/M, 输出价格/M
+    // 音频: 输入价格 / M, 输出价格 / M 或 / min
     if (has('audio') && p.audio) {
+      const audioOutUnit =
+        props.record.type === 5 || props.record.type === 6 ? 'min' : 'M';
       arr.push({
         key: 'audio',
         label: t('dict.billing_items.audio'),
-        value: `${il} ${fmt(p.audio.input_ratio)}/M\n${ol} ${fmt(
+        value: `${il} ${fmt(p.audio.input_ratio)} / M\n${ol} ${fmt(
           p.audio.output_ratio
-        )}/M`,
+        )} / ${audioOutUnit}`,
       });
     }
-    // 音频缓存: 读取 $x/M
+    // 音频缓存: 读取 $x / M
     if (has('audio_cache') && p.audio_cache) {
       arr.push({
         key: 'audio_cache',
         label: t('dict.billing_items.audio_cache'),
-        value: `${rl} ${fmt(p.audio_cache.read_ratio)}/M`,
+        value: `${rl} ${fmt(p.audio_cache.read_ratio)} / M`,
       });
     }
-    // 视频生成: 宽x高 价格/秒
+    // 视频生成: 宽x高 价格 / 秒 或 / M
     if (has('video_generation') && p.video_generation?.length) {
       const d =
         p.video_generation.find((x) => x.is_default) || p.video_generation[0];
+      const pc = (props.record.provider_code || '').toLowerCase();
+      const pn = props.record.provider_name || '';
+      const vidUnit =
+        pc === 'volcengine' || pn === '火山引擎' ? 'M' : t('unit.second');
       arr.push({
         key: 'vidGen',
         label: t('dict.billing_items.video_generation'),
-        value: `${d.width}x${d.height} ${fmt(d.once_ratio)}/${t(
-          'unit.second'
-        )}`,
+        value: `${d.width}x${d.height} ${fmt(d.once_ratio)} / ${vidUnit}`,
       });
     }
-    // 视频: 输入价格/M, 输出价格/M
+    // 视频: 输入价格 / M, 输出价格 / M
     if (has('video') && p.video) {
       arr.push({
         key: 'video',
         label: t('dict.billing_items.video'),
-        value: `${il} ${fmt(p.video.input_ratio)}/M\n${ol} ${fmt(
+        value: `${il} ${fmt(p.video.input_ratio)} / M\n${ol} ${fmt(
           p.video.output_ratio
-        )}/M`,
+        )} / M`,
       });
     }
-    // 视频缓存: 读取 $x/M
+    // 视频缓存: 读取 $x / M
     if (has('video_cache') && p.video_cache) {
       arr.push({
         key: 'video_cache',
         label: t('dict.billing_items.video_cache'),
-        value: `${rl} ${fmt(p.video_cache.read_ratio)}/M`,
+        value: `${rl} ${fmt(p.video_cache.read_ratio)} / M`,
       });
     }
-    // 搜索: 价格/次
+    // 搜索: 价格 / 次
     if (has('search') && p.search?.length) {
       const d = p.search.find((x) => x.is_default) || p.search[0];
       arr.push({
         key: 'search',
         label: t('dict.billing_items.search'),
-        value: `${fmt(d.once_ratio)}/${t('unit.once')}`,
+        value: `${fmt(d.once_ratio)} / ${t('unit.once')}`,
       });
     }
-    // Midjourney: 价格/次
+    // Midjourney: 价格 / 次
     if (has('midjourney') && p.midjourney?.length) {
       arr.push({
         key: 'mj',
         label: t('dict.billing_items.midjourney'),
-        value: `${fmt(p.midjourney[0].once_ratio)}/${t('unit.once')}`,
+        value: `${fmt(p.midjourney[0].once_ratio)} / ${t('unit.once')}`,
       });
     }
-    // 一次: 价格/次
+    // 一次: 价格 / 次
     if (has('once') && p.once) {
       arr.push({
         key: 'once',
         label: t('dict.billing_items.once'),
-        value: `${fmt(p.once.once_ratio)}/${t('unit.once')}`,
+        value: `${fmt(p.once.once_ratio)} / ${t('unit.once')}`,
       });
     }
-    // 图像: 输入价格/M, 输出价格/M
+    // 图像: 输入价格 / M, 输出价格 / M
     if (has('image') && p.image) {
       arr.push({
         key: 'image',
         label: t('dict.billing_items.image'),
-        value: `${il} ${fmt(p.image.input_ratio)}/M\n${ol} ${fmt(
+        value: `${il} ${fmt(p.image.input_ratio)} / M\n${ol} ${fmt(
           p.image.output_ratio
-        )}/M`,
+        )} / M`,
       });
     }
-    // 图像缓存: 读取 $x/M
+    // 图像缓存: 读取 $x / M
     if (has('image_cache') && p.image_cache) {
       arr.push({
         key: 'image_cache',
         label: t('dict.billing_items.image_cache'),
-        value: `${rl} ${fmt(p.image_cache.read_ratio)}/M`,
+        value: `${rl} ${fmt(p.image_cache.read_ratio)} / M`,
       });
     }
     return arr;
@@ -707,8 +720,8 @@
   .model-square-card__time-rules {
     margin: 8px 14px 0;
     padding: 6px 10px;
-    background: rgba(var(--orangered-1), 0.4);
-    border: 1px solid rgba(var(--orangered-3), 0.3);
+    background: rgba(var(--purple-1), 0.4);
+    border: 1px solid rgba(var(--purple-3), 0.3);
     border-radius: 8px;
   }
 
@@ -719,7 +732,7 @@
     margin-bottom: 4px;
     font-size: 11px;
     font-weight: 600;
-    color: rgb(var(--orangered-6));
+    color: rgb(var(--purple-6));
 
     .model-square-card__section-more {
       margin-left: auto;
@@ -750,7 +763,7 @@
   }
 
   .model-square-card__time-rule-discount {
-    color: rgb(var(--orangered-6));
+    color: rgb(var(--purple-6));
     font-weight: 600;
   }
 
@@ -784,10 +797,21 @@
   }
 
   .model-square-card__pricing-title {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     font-size: 11px;
     font-weight: 700;
     color: var(--color-text-1);
     letter-spacing: 0.02em;
+  }
+
+  .model-square-card__pricing-icon {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    color: rgb(var(--gold-6));
   }
 
   .model-square-card__pricing-grid {

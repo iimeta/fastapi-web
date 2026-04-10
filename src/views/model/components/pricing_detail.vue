@@ -1,5 +1,5 @@
 <template>
-  <!-- 时段规则 -->
+  <!-- 时段规则 (仅在 onlyTimeRules 模式下显示, 或者 timeRules 有数据且非 onlyTimeRules 模式时也显示) -->
   <a-table
     v-if="timeRules && timeRules.length"
     :columns="timeRulesColumns"
@@ -23,320 +23,326 @@
     </template>
   </a-table>
 
-  <!-- 文本 -->
-  <a-table
-    v-if="pricing.billing_items.includes('text')"
-    :columns="textPricingColumns"
-    :data="textPricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #service_tier="{ record }">
-      {{ $t(`model.dict.service_tier.${record.service_tier}`) }}
-    </template>
-    <template #input_ratio="{ record }">
-      <Quota :model-value="record.input_ratio" /> / M
-    </template>
-    <template #output_ratio="{ record }">
-      <Quota :model-value="record.output_ratio" /> / M
-    </template>
-    <template #reasoning_ratio="{ record }">
-      <Quota :model-value="record.reasoning_ratio" /> / M
-    </template>
-  </a-table>
-
-  <!-- 文本缓存 -->
-  <a-table
-    v-if="pricing.billing_items.includes('text_cache')"
-    :columns="textCachePricingColumns"
-    :data="textCachePricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #service_tier="{ record }">
-      {{ $t(`model.dict.service_tier.${record.service_tier}`) }}
-    </template>
-    <template #read_ratio="{ record }">
-      <Quota :model-value="record.read_ratio" /> / M
-    </template>
-  </a-table>
-
-  <!-- 音频 -->
-  <a-table
-    v-if="pricing.billing_items.includes('audio')"
-    :columns="audioPricingColumns"
-    :data="audioPricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #input_ratio="{ record }">
-      <Quota :model-value="record.input_ratio" /> / M
-    </template>
-    <template #output_ratio="{ record }">
-      <Quota :model-value="record.output_ratio" />
-      {{ modelType === 5 || modelType === 6 ? '/ min' : '/ M' }}
-    </template>
-    <template #read_ratio="{ record }">
-      <Quota :model-value="record.read_ratio" /> / M
-    </template>
-  </a-table>
-
-  <!-- 音频缓存 -->
-  <a-table
-    v-if="
-      pricing.billing_items.includes('audio_cache') &&
-      !pricing.billing_items.includes('audio')
-    "
-    :columns="audioCachePricingColumns"
-    :data="audioCachePricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #read_ratio="{ record }">
-      <Quota :model-value="record.read_ratio" /> / M
-    </template>
-  </a-table>
-
-  <!-- 阶梯文本 -->
-  <a-table
-    v-if="pricing.billing_items.includes('tiered_text')"
-    :columns="tieredTextPricingColumns"
-    :data="tieredTextPricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #mode="{ record }">
-      {{ $t(`model.dict.mode.${record.mode}`) }}
-    </template>
-    <template #gt="{ record }"> {{ record.gt }}k - {{ record.lte }}k </template>
-    <template #input_ratio="{ record }">
-      <Quota :model-value="record.input_ratio" /> / M
-    </template>
-    <template #output_ratio="{ record }">
-      <Quota :model-value="record.output_ratio" /> / M
-    </template>
-    <template #reasoning_ratio="{ record }">
-      <Quota :model-value="record.reasoning_ratio" /> / M
-    </template>
-  </a-table>
-
-  <!-- 阶梯文本缓存 -->
-  <a-table
-    v-if="pricing.billing_items.includes('tiered_text_cache')"
-    :columns="tieredTextCachePricingColumns"
-    :data="tieredTextCachePricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #mode="{ record }">
-      {{ $t(`model.dict.mode.${record.mode}`) }}
-    </template>
-    <template #gt="{ record }"> {{ record.gt }}k - {{ record.lte }}k </template>
-    <template #read_ratio="{ record }">
-      <Quota :model-value="record.read_ratio" /> / M
-    </template>
-    <template #write_ratio="{ record }">
-      <Quota :model-value="record.write_ratio" /> / M
-    </template>
-  </a-table>
-
-  <!-- 图像 -->
-  <a-table
-    v-if="pricing.billing_items.includes('image')"
-    :columns="imagePricingColumns"
-    :data="imagePricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #input_ratio="{ record }">
-      <Quota :model-value="record.input_ratio" /> / M
-    </template>
-    <template #output_ratio="{ record }">
-      <Quota :model-value="record.output_ratio" /> / M
-    </template>
-    <template #read_ratio="{ record }">
-      <Quota :model-value="record.read_ratio" /> / M
-    </template>
-  </a-table>
-
-  <!-- 图像生成 -->
-  <a-table
-    v-if="pricing.billing_items.includes('image_generation')"
-    :columns="imageGenerationPricingColumns"
-    :data="imageGenerationPricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #width="{ record }">
-      {{ record.width }} × {{ record.height }}
-    </template>
-    <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" /> / {{ $t('unit.piece') }}
-    </template>
-    <template #is_default="{ record }">
-      {{ record.is_default ? $t('dict.true') : '-' }}
-    </template>
-  </a-table>
-
-  <!-- 图像缓存 -->
-  <a-table
-    v-if="
-      pricing.billing_items.includes('image_cache') &&
-      !pricing.billing_items.includes('image')
-    "
-    :columns="imageCachePricingColumns"
-    :data="imageCachePricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #read_ratio="{ record }">
-      <Quota :model-value="record.read_ratio" /> / M
-    </template>
-  </a-table>
-
-  <!-- 识图 -->
-  <a-table
-    v-if="pricing.billing_items.includes('vision')"
-    :columns="visionPricingColumns"
-    :data="visionPricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" /> / {{ $t('unit.piece') }}
-    </template>
-    <template #is_default="{ record }">
-      {{ record.is_default ? $t('dict.true') : '-' }}
-    </template>
-  </a-table>
-
-  <!-- 视频 -->
-  <a-table
-    v-if="pricing.billing_items.includes('video')"
-    :columns="videoPricingColumns"
-    :data="videoPricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #input_ratio="{ record }">
-      <Quota :model-value="record.input_ratio" /> / M
-    </template>
-    <template #output_ratio="{ record }">
-      <Quota :model-value="record.output_ratio" /> / M
-    </template>
-    <template #read_ratio="{ record }">
-      <Quota :model-value="record.read_ratio" /> / M
-    </template>
-  </a-table>
-
-  <!-- 视频生成 -->
-  <a-table
-    v-if="pricing.billing_items.includes('video_generation')"
-    :columns="videoGenerationPricingColumns"
-    :data="videoGenerationPricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #video_mode="{ record }">
-      {{ $t(`model.dict.mode.${record.mode || 'no_video_input'}`) }}
-    </template>
-    <template #width="{ record }">
-      {{ record.width }} × {{ record.height }}
-    </template>
-    <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" />
-      <template
-        v-if="
-          props.providerCode === 'VolcEngine' ||
-          props.providerName === '火山引擎'
-        "
-      >
-        / M
+  <!-- 以下部分仅在非 onlyTimeRules 模式下渲染 -->
+  <template v-if="!onlyTimeRules">
+    <a-table
+      v-if="pricing.billing_items.includes('text')"
+      :columns="textPricingColumns"
+      :data="textPricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #service_tier="{ record }">
+        {{ $t(`model.dict.service_tier.${record.service_tier}`) }}
       </template>
-      <template v-else> / {{ $t('unit.second') }} </template>
-    </template>
-    <template #is_default="{ record }">
-      {{ record.is_default ? $t('dict.true') : '-' }}
-    </template>
-  </a-table>
+      <template #input_ratio="{ record }">
+        <Quota :model-value="record.input_ratio" /> / M
+      </template>
+      <template #output_ratio="{ record }">
+        <Quota :model-value="record.output_ratio" /> / M
+      </template>
+      <template #reasoning_ratio="{ record }">
+        <Quota :model-value="record.reasoning_ratio" /> / M
+      </template>
+    </a-table>
 
-  <!-- 视频缓存 -->
-  <a-table
-    v-if="
-      pricing.billing_items.includes('video_cache') &&
-      !pricing.billing_items.includes('video')
-    "
-    :columns="videoCachePricingColumns"
-    :data="videoCachePricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #read_ratio="{ record }">
-      <Quota :model-value="record.read_ratio" /> / M
-    </template>
-  </a-table>
+    <!-- 文本缓存 -->
+    <a-table
+      v-if="pricing.billing_items.includes('text_cache')"
+      :columns="textCachePricingColumns"
+      :data="textCachePricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #service_tier="{ record }">
+        {{ $t(`model.dict.service_tier.${record.service_tier}`) }}
+      </template>
+      <template #read_ratio="{ record }">
+        <Quota :model-value="record.read_ratio" /> / M
+      </template>
+    </a-table>
 
-  <!-- 搜索 -->
-  <a-table
-    v-if="pricing.billing_items.includes('search')"
-    :columns="searchPricingColumns"
-    :data="searchPricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
-    </template>
-    <template #is_default="{ record }">
-      {{ record.is_default ? $t('dict.true') : '-' }}
-    </template>
-  </a-table>
+    <!-- 音频 -->
+    <a-table
+      v-if="pricing.billing_items.includes('audio')"
+      :columns="audioPricingColumns"
+      :data="audioPricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #input_ratio="{ record }">
+        <Quota :model-value="record.input_ratio" /> / M
+      </template>
+      <template #output_ratio="{ record }">
+        <Quota :model-value="record.output_ratio" />
+        {{ modelType === 5 || modelType === 6 ? '/ min' : '/ M' }}
+      </template>
+      <template #read_ratio="{ record }">
+        <Quota :model-value="record.read_ratio" /> / M
+      </template>
+    </a-table>
 
-  <!-- Midjourney -->
-  <a-table
-    v-if="pricing.billing_items.includes('midjourney')"
-    :columns="midjourneyPricingColumns"
-    :data="midjourneyPricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
-    </template>
-  </a-table>
+    <!-- 音频缓存 -->
+    <a-table
+      v-if="
+        pricing.billing_items.includes('audio_cache') &&
+        !pricing.billing_items.includes('audio')
+      "
+      :columns="audioCachePricingColumns"
+      :data="audioCachePricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #read_ratio="{ record }">
+        <Quota :model-value="record.read_ratio" /> / M
+      </template>
+    </a-table>
 
-  <!-- 一次 -->
-  <a-table
-    v-if="pricing.billing_items.includes('once')"
-    :columns="oncePricingColumns"
-    :data="oncePricing"
-    :pagination="false"
-    :bordered="false"
-    class="pricing-detail-table-spacing"
-  >
-    <template #once_ratio="{ record }">
-      <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
-    </template>
-  </a-table>
+    <!-- 阶梯文本 -->
+    <a-table
+      v-if="pricing.billing_items.includes('tiered_text')"
+      :columns="tieredTextPricingColumns"
+      :data="tieredTextPricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #mode="{ record }">
+        {{ $t(`model.dict.mode.${record.mode}`) }}
+      </template>
+      <template #gt="{ record }">
+        {{ record.gt }}k - {{ record.lte }}k
+      </template>
+      <template #input_ratio="{ record }">
+        <Quota :model-value="record.input_ratio" /> / M
+      </template>
+      <template #output_ratio="{ record }">
+        <Quota :model-value="record.output_ratio" /> / M
+      </template>
+      <template #reasoning_ratio="{ record }">
+        <Quota :model-value="record.reasoning_ratio" /> / M
+      </template>
+    </a-table>
+
+    <!-- 阶梯文本缓存 -->
+    <a-table
+      v-if="pricing.billing_items.includes('tiered_text_cache')"
+      :columns="tieredTextCachePricingColumns"
+      :data="tieredTextCachePricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #mode="{ record }">
+        {{ $t(`model.dict.mode.${record.mode}`) }}
+      </template>
+      <template #gt="{ record }">
+        {{ record.gt }}k - {{ record.lte }}k
+      </template>
+      <template #read_ratio="{ record }">
+        <Quota :model-value="record.read_ratio" /> / M
+      </template>
+      <template #write_ratio="{ record }">
+        <Quota :model-value="record.write_ratio" /> / M
+      </template>
+    </a-table>
+
+    <!-- 图像 -->
+    <a-table
+      v-if="pricing.billing_items.includes('image')"
+      :columns="imagePricingColumns"
+      :data="imagePricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #input_ratio="{ record }">
+        <Quota :model-value="record.input_ratio" /> / M
+      </template>
+      <template #output_ratio="{ record }">
+        <Quota :model-value="record.output_ratio" /> / M
+      </template>
+      <template #read_ratio="{ record }">
+        <Quota :model-value="record.read_ratio" /> / M
+      </template>
+    </a-table>
+
+    <!-- 图像生成 -->
+    <a-table
+      v-if="pricing.billing_items.includes('image_generation')"
+      :columns="imageGenerationPricingColumns"
+      :data="imageGenerationPricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #width="{ record }">
+        {{ record.width }} × {{ record.height }}
+      </template>
+      <template #once_ratio="{ record }">
+        <Quota :model-value="record.once_ratio" /> / {{ $t('unit.piece') }}
+      </template>
+      <template #is_default="{ record }">
+        {{ record.is_default ? $t('dict.true') : '-' }}
+      </template>
+    </a-table>
+
+    <!-- 图像缓存 -->
+    <a-table
+      v-if="
+        pricing.billing_items.includes('image_cache') &&
+        !pricing.billing_items.includes('image')
+      "
+      :columns="imageCachePricingColumns"
+      :data="imageCachePricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #read_ratio="{ record }">
+        <Quota :model-value="record.read_ratio" /> / M
+      </template>
+    </a-table>
+
+    <!-- 识图 -->
+    <a-table
+      v-if="pricing.billing_items.includes('vision')"
+      :columns="visionPricingColumns"
+      :data="visionPricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #once_ratio="{ record }">
+        <Quota :model-value="record.once_ratio" /> / {{ $t('unit.piece') }}
+      </template>
+      <template #is_default="{ record }">
+        {{ record.is_default ? $t('dict.true') : '-' }}
+      </template>
+    </a-table>
+
+    <!-- 视频 -->
+    <a-table
+      v-if="pricing.billing_items.includes('video')"
+      :columns="videoPricingColumns"
+      :data="videoPricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #input_ratio="{ record }">
+        <Quota :model-value="record.input_ratio" /> / M
+      </template>
+      <template #output_ratio="{ record }">
+        <Quota :model-value="record.output_ratio" /> / M
+      </template>
+      <template #read_ratio="{ record }">
+        <Quota :model-value="record.read_ratio" /> / M
+      </template>
+    </a-table>
+
+    <!-- 视频生成 -->
+    <a-table
+      v-if="pricing.billing_items.includes('video_generation')"
+      :columns="videoGenerationPricingColumns"
+      :data="videoGenerationPricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #video_mode="{ record }">
+        {{ $t(`model.dict.mode.${record.mode || 'no_video_input'}`) }}
+      </template>
+      <template #width="{ record }">
+        {{ record.width }} × {{ record.height }}
+      </template>
+      <template #once_ratio="{ record }">
+        <Quota :model-value="record.once_ratio" />
+        <template
+          v-if="
+            props.providerCode === 'VolcEngine' ||
+            props.providerName === '火山引擎'
+          "
+        >
+          / M
+        </template>
+        <template v-else> / {{ $t('unit.second') }} </template>
+      </template>
+      <template #is_default="{ record }">
+        {{ record.is_default ? $t('dict.true') : '-' }}
+      </template>
+    </a-table>
+
+    <!-- 视频缓存 -->
+    <a-table
+      v-if="
+        pricing.billing_items.includes('video_cache') &&
+        !pricing.billing_items.includes('video')
+      "
+      :columns="videoCachePricingColumns"
+      :data="videoCachePricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #read_ratio="{ record }">
+        <Quota :model-value="record.read_ratio" /> / M
+      </template>
+    </a-table>
+
+    <!-- 搜索 -->
+    <a-table
+      v-if="pricing.billing_items.includes('search')"
+      :columns="searchPricingColumns"
+      :data="searchPricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #once_ratio="{ record }">
+        <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
+      </template>
+      <template #is_default="{ record }">
+        {{ record.is_default ? $t('dict.true') : '-' }}
+      </template>
+    </a-table>
+
+    <!-- Midjourney -->
+    <a-table
+      v-if="pricing.billing_items.includes('midjourney')"
+      :columns="midjourneyPricingColumns"
+      :data="midjourneyPricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #once_ratio="{ record }">
+        <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
+      </template>
+    </a-table>
+
+    <!-- 一次 -->
+    <a-table
+      v-if="pricing.billing_items.includes('once')"
+      :columns="oncePricingColumns"
+      :data="oncePricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #once_ratio="{ record }">
+        <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
+      </template>
+    </a-table>
+  </template>
 </template>
 
 <script lang="ts" setup>
-  import { ref, watch } from 'vue';
+  import { ref, watch, computed } from 'vue';
   import { useI18n } from 'vue-i18n';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import {
@@ -363,7 +369,10 @@
     timeRules?: any[];
     providerCode?: string;
     providerName?: string;
+    onlyTimeRules?: boolean;
   }>();
+
+  const onlyTimeRules = computed(() => !!props.onlyTimeRules);
 
   const pricing = ref(props.modelValue);
   const timeRules = ref(props.timeRules || []);
@@ -371,50 +380,81 @@
   const tableHeaderCellStyle = { background: 'var(--color-bg-2)' };
 
   // 时段规则
-  const timeRulesColumns = ref<TableColumnData[]>([
-    {
-      title: t('time_rule.label.rule'),
-      headerCellStyle: tableHeaderCellStyle,
-      children: [
-        {
-          title: t('time_rule.label.name'),
-          dataIndex: 'name',
-          slotName: 'name',
-          align: 'center',
-          width: 150,
-        },
-        {
-          title: t('common.discount'),
-          dataIndex: 'discount',
-          slotName: 'discount',
-          align: 'center',
-          width: 150,
-        },
-        {
-          title: t('time_rule.label.time_range'),
-          dataIndex: 'time_range',
-          slotName: 'time_range',
-          align: 'center',
-          width: 150,
-        },
-        {
-          title: t('time_rule.label.days'),
-          dataIndex: 'days',
-          slotName: 'days',
-          align: 'center',
-          width: 150,
-        },
-        {
-          title: t('time_rule.label.priority'),
-          dataIndex: 'priority',
-          slotName: 'priority',
-          titleSlotName: 'priority_title',
-          align: 'center',
-          width: 150,
-        },
-      ],
-    },
-  ]);
+  const timeRulesColumns = computed<TableColumnData[]>(() =>
+    onlyTimeRules.value
+      ? [
+          {
+            title: t('time_rule.label.name'),
+            dataIndex: 'name',
+            slotName: 'name',
+            align: 'center',
+          },
+          {
+            title: t('common.discount'),
+            dataIndex: 'discount',
+            slotName: 'discount',
+            align: 'center',
+          },
+          {
+            title: t('time_rule.label.time_range'),
+            dataIndex: 'time_range',
+            slotName: 'time_range',
+            align: 'center',
+          },
+          {
+            title: t('time_rule.label.days'),
+            dataIndex: 'days',
+            slotName: 'days',
+            align: 'center',
+          },
+          {
+            title: t('time_rule.label.priority'),
+            dataIndex: 'priority',
+            slotName: 'priority',
+            titleSlotName: 'priority_title',
+            align: 'center',
+          },
+        ]
+      : [
+          {
+            title: t('time_rule.label.rule'),
+            headerCellStyle: tableHeaderCellStyle,
+            children: [
+              {
+                title: t('time_rule.label.name'),
+                dataIndex: 'name',
+                slotName: 'name',
+                align: 'center',
+              },
+              {
+                title: t('common.discount'),
+                dataIndex: 'discount',
+                slotName: 'discount',
+                align: 'center',
+              },
+              {
+                title: t('time_rule.label.time_range'),
+                dataIndex: 'time_range',
+                slotName: 'time_range',
+                align: 'center',
+              },
+              {
+                title: t('time_rule.label.days'),
+                dataIndex: 'days',
+                slotName: 'days',
+                align: 'center',
+              },
+              {
+                title: t('time_rule.label.priority'),
+                dataIndex: 'priority',
+                slotName: 'priority',
+                titleSlotName: 'priority_title',
+                align: 'center',
+              },
+            ],
+          },
+        ]
+  );
 
   // 文本
   const textPricing = ref<TextPricing[]>([]);
@@ -1086,7 +1126,7 @@
 
 <style lang="less" scoped>
   .pricing-detail-table-spacing {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 
   .priority-tooltip {

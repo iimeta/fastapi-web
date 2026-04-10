@@ -7,7 +7,7 @@
         <div class="model-square-search-wrap">
           <icon-search class="model-square-search-icon" :size="18" />
           <a-input
-            v-model="form.model"
+            v-model="form.search_value"
             class="model-square-search-input"
             :placeholder="$t('model.square.search.placeholder')"
             allow-clear
@@ -29,7 +29,7 @@
       <!-- 供应商 -->
       <div class="model-square-filter-row">
         <span class="model-square-filter-label">
-          {{ $t('model.square.filter.provider') }}
+          {{ $t('common.provider') }}
         </span>
         <div class="model-square-filter-body">
           <span
@@ -37,7 +37,7 @@
             :class="{ 'model-square-pill-on': !form.provider_id }"
             @click="pick('provider_id', '')"
           >
-            {{ $t('model.square.filter.all') }}
+            {{ $t('common.all') }}
           </span>
           <span
             v-for="p in providers"
@@ -56,7 +56,7 @@
       <!-- 模型类型 -->
       <div class="model-square-filter-row">
         <span class="model-square-filter-label">
-          {{ $t('model.square.filter.model_type') }}
+          {{ $t('common.model_type') }}
         </span>
         <div class="model-square-filter-body">
           <span
@@ -64,7 +64,7 @@
             :class="{ 'model-square-pill-on': !form.type }"
             @click="pickType(undefined)"
           >
-            {{ $t('model.square.filter.all') }}
+            {{ $t('common.all') }}
           </span>
           <span
             v-for="o in typeOpts"
@@ -83,7 +83,7 @@
       <!-- 所属分组 -->
       <div class="model-square-filter-row">
         <span class="model-square-filter-label">
-          {{ $t('model.square.filter.group') }}
+          {{ $t('model.label.groups') }}
         </span>
         <div class="model-square-filter-body">
           <span
@@ -91,7 +91,7 @@
             :class="{ 'model-square-pill-on': !form.group }"
             @click="pick('group', '')"
           >
-            {{ $t('model.square.filter.all') }}
+            {{ $t('common.all') }}
           </span>
           <span
             v-for="g in groups"
@@ -110,7 +110,7 @@
       <!-- 计费方式 -->
       <div class="model-square-filter-row model-square-filter-row--last">
         <span class="model-square-filter-label">
-          {{ $t('model.square.filter.billing') }}
+          {{ $t('common.billing_methods') }}
         </span>
         <div class="model-square-filter-body">
           <span
@@ -118,7 +118,7 @@
             :class="{ 'model-square-pill-on': !form.billing_method }"
             @click="pickBilling(undefined)"
           >
-            {{ $t('model.square.filter.all') }}
+            {{ $t('common.all') }}
           </span>
           <span
             v-for="o in billingOpts"
@@ -152,7 +152,7 @@
     <!-- 卡片区 -->
     <a-spin :loading="loading" class="model-square-body">
       <!-- 骨架 -->
-      <template v-if="loading && list.length === 0">
+      <template v-if="loading && (!list || list.length === 0)">
         <a-row :gutter="24">
           <a-col
             v-for="i in 8"
@@ -172,17 +172,9 @@
 
       <!-- 空 -->
       <a-empty
-        v-else-if="!loading && list.length === 0"
+        v-else-if="!loading && (!list || list.length === 0)"
         style="padding: 80px 0"
-      >
-        <template #description>
-          {{
-            hasFilter
-              ? $t('model.square.empty.search')
-              : $t('model.square.empty')
-          }}
-        </template>
-      </a-empty>
+      />
 
       <!-- 网格 -->
       <template v-else>
@@ -216,7 +208,7 @@
         :total="pagination.total"
         show-total
         show-page-size
-        :page-size-options="[20, 40, 60, 100]"
+        :page-size-options="basePage.pageSizeOptions"
         @change="onPage"
         @page-size-change="onSize"
       />
@@ -225,10 +217,10 @@
     <!-- 模型详情弹窗 -->
     <a-modal
       v-model:visible="detailVis"
-      :width="920"
+      :width="960"
       :body-style="{
         padding: '0',
-        maxHeight: '80vh',
+        maxHeight: '82vh',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
@@ -241,7 +233,7 @@
       <div v-if="detailRecord" class="tech-detail">
         <!-- 顶部渐变头 -->
         <div class="tech-header" :style="{ '--brand': detailBrandColor }">
-          <div class="tech-header-glow" />
+          <div class="tech-header-grid" />
           <div class="tech-header-content">
             <div class="tech-avatar" :style="{ '--brand': detailBrandColor }">
               <svg
@@ -290,10 +282,14 @@
               </div>
             </div>
           </div>
+          <p v-if="detailRecord.remark" class="tech-remark-row">{{
+            detailRecord.remark
+          }}</p>
           <div
             v-if="detailRecord.group_names && detailRecord.group_names.length"
             class="tech-groups-row"
           >
+            <icon-user-group class="tech-groups-icon" />
             <span
               v-for="g in detailRecord.group_names"
               :key="g"
@@ -304,25 +300,37 @@
           </div>
         </div>
 
-        <!-- 内容区 -->
+        <!-- 内容区（可滚动） -->
         <div class="tech-body">
-          <!-- 备注卡片 -->
-          <div v-if="detailRecord.remark" class="tech-card tech-remark-card">
+          <!-- 时段规则卡片 -->
+          <div
+            v-if="detailRecord.time_rules && detailRecord.time_rules.length > 0"
+            class="tech-card tech-time-rule-card"
+          >
             <div class="tech-card-title">
               <span class="tech-card-icon">
-                <icon-file />
+                <icon-clock-circle />
               </span>
-              {{ $t('model.label.remark') }}
+              {{ $t('time_rule.label.rule') }}
             </div>
-            <p class="tech-remark-text">{{ detailRecord.remark }}</p>
+            <div class="tech-pricing-content">
+              <PricingDetail
+                v-model="detailRecord.pricing"
+                :model-type="detailRecord.type"
+                :time-rules="detailRecord.time_rules || []"
+                :provider-code="detailRecord.provider_code || ''"
+                :provider-name="detailRecord.provider_name || ''"
+                only-time-rules
+              />
+            </div>
           </div>
 
           <!-- 定价区域 -->
           <div class="tech-card tech-pricing-card">
             <div class="tech-card-title">
-              <span class="tech-card-icon">
-                <icon-thunderbolt />
-              </span>
+              <span class="tech-card-icon tech-card-icon--currency">{{
+                appStore.getCurrencySymbol || '$'
+              }}</span>
               {{ $t('model.columns.pricing') }}
             </div>
             <div class="tech-pricing-content">
@@ -330,7 +338,7 @@
                 v-if="detailRecord.pricing"
                 v-model="detailRecord.pricing"
                 :model-type="detailRecord.type"
-                :time-rules="detailRecord.time_rules || []"
+                :time-rules="[]"
                 :provider-code="detailRecord.provider_code || ''"
                 :provider-name="detailRecord.provider_name || ''"
               />
@@ -353,6 +361,7 @@
   import { Message } from '@arco-design/web-vue';
   import { useClipboard } from '@vueuse/core';
   import useLoading from '@/hooks/loading';
+  import { useAppStore } from '@/store';
   import { queryModelPage, ModelPage, ModelPageParams } from '@/api/model';
   import { Pagination } from '@/types/global';
   import { queryProviderList, ProviderList } from '@/api/provider';
@@ -364,29 +373,18 @@
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const { copy } = useClipboard();
+  const appStore = useAppStore();
 
   /* ---- 搜索表单 ---- */
   const initForm = () => ({
     provider_id: '',
-    model: '',
     type: undefined as number | undefined,
     billing_method: undefined as number | undefined,
     group: '',
     status: undefined as number | undefined,
-    remark: '',
+    search_value: '',
   });
   const form = reactive(initForm());
-
-  const hasFilter = computed(
-    () =>
-      !!(
-        form.provider_id ||
-        form.model ||
-        form.type ||
-        form.billing_method ||
-        form.group
-      )
-  );
 
   /* ---- 选项 ---- */
   const typeOpts = computed(() => [
@@ -415,9 +413,10 @@
   const hasAnyRemark = computed(() => list.value.some((m) => !!m.remark));
   const basePage: Pagination = {
     current: 1,
-    pageSize: 20,
+    pageSize: 60,
     showTotal: true,
     showPageSize: true,
+    pageSizeOptions: [20, 60, 100, 500, 1000],
   };
   const pagination = reactive({
     ...basePage,
@@ -757,7 +756,7 @@
   .model-square-filter-row {
     display: flex;
     align-items: flex-start;
-    padding: 14px 0;
+    padding: 12px 0;
 
     & + & {
       border-top: 1px solid var(--color-fill-2);
@@ -854,41 +853,56 @@
   }
 
   /* ===== 详情弹窗（科技感卡片） ===== */
-  :deep(.tech-modal) {
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06),
-      0 24px 64px rgba(0, 0, 0, 0.25);
-
-    .arco-modal-footer {
-      border-top: 1px solid var(--color-border-1);
-    }
-  }
+  // tech-modal 样式移至全局 style 块（modal teleport 到 body，scoped 不生效）
 
   .tech-detail {
     display: flex;
     flex-direction: column;
     height: 100%;
+    max-height: 82vh;
   }
 
   /* --- 头部渐变区域 --- */
   .tech-header {
     position: relative;
-    padding: 28px 32px 20px;
-    background: var(--color-bg-2);
+    padding: 22px 28px 16px;
     border-bottom: 1px solid var(--color-border-1);
     overflow: hidden;
+    flex-shrink: 0;
+    background: linear-gradient(
+      110deg,
+      color-mix(in srgb, var(--brand) 12%, var(--color-bg-2)),
+      var(--color-bg-2) 40%,
+      var(--color-bg-2) 60%,
+      color-mix(in srgb, var(--brand) 6%, var(--color-bg-2))
+    );
+    background-size: 200% 100%;
+    animation: tech-bg-flow 5s ease-in-out infinite alternate;
   }
 
-  .tech-header-glow {
+  @keyframes tech-bg-flow {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .tech-header-grid {
     position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 180px;
-    height: 180px;
-    background: radial-gradient(circle, var(--brand) 0%, transparent 70%);
-    opacity: 0.08;
+    inset: 0;
+    background-image: linear-gradient(var(--brand) 1px, transparent 1px),
+      linear-gradient(90deg, var(--brand) 1px, transparent 1px);
+    background-size: 28px 28px;
+    opacity: 0.03;
     pointer-events: none;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, transparent 80%);
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      transparent 80%
+    );
   }
 
   .tech-header-content {
@@ -906,9 +920,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-bg-1);
+    background: var(--color-bg-2);
     border: 1px solid var(--color-border-1);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.06),
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 10%, transparent),
       0 2px 8px rgba(0, 0, 0, 0.06);
     overflow: hidden;
   }
@@ -1023,9 +1037,15 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     margin-top: 10px;
     padding-left: 76px;
+  }
+
+  .tech-groups-icon {
+    font-size: 13px;
+    color: rgb(var(--primary-6));
+    flex-shrink: 0;
   }
 
   .tech-tag {
@@ -1043,49 +1063,69 @@
     }
 
     &--group {
-      color: rgb(var(--green-6));
-      background: rgba(var(--green-6), 0.08);
-      border-color: rgba(var(--green-6), 0.15);
+      color: rgb(var(--primary-6));
+      background: rgba(var(--primary-6), 0.06);
+      border-color: rgba(var(--primary-6), 0.12);
     }
   }
 
-  /* --- 内容区 --- */
+  /* --- 内容区（可滚动） --- */
   .tech-body {
-    padding: 10px;
+    padding: 8px;
     background: var(--color-fill-1);
     overflow-y: auto;
     flex: 1;
     min-height: 0;
 
     > * + * {
-      margin-top: 16px;
+      margin-top: 8px;
     }
+  }
+
+  /* --- 备注（header 内） --- */
+  .tech-remark-row {
+    margin: 8px 0 0;
+    padding: 0 0 0 76px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-text-2);
+    word-break: break-word;
   }
 
   .tech-card {
     background: var(--color-bg-2);
     border: 1px solid var(--color-border-1);
-    border-radius: 12px;
+    border-radius: 10px;
     transition: box-shadow 0.2s;
   }
 
-  .tech-pricing-card {
+  .tech-time-rule-card {
     .tech-card-icon {
-      background: rgba(var(--cyan-6), 0.08);
-      color: rgb(var(--cyan-6));
+      background: rgba(var(--purple-6), 0.08);
+      color: rgb(var(--purple-6));
+    }
+  }
+
+  .tech-pricing-card {
+    .tech-card-icon--currency {
+      background: rgba(var(--gold-6), 0.08);
+      color: rgb(var(--gold-6));
+      font-weight: 700;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', Consolas, monospace;
     }
   }
 
   .tech-pricing-content {
-    padding: 12px 20px 16px;
+    padding: 8px 12px 10px;
   }
 
   .tech-card-title {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 14px 20px 0;
-    font-size: 14px;
+    padding: 10px 14px 0;
+    font-size: 13px;
     font-weight: 600;
     color: var(--color-text-1);
   }
@@ -1094,34 +1134,81 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
     background: rgba(var(--primary-6), 0.08);
     color: rgb(var(--primary-6));
-    font-size: 14px;
+    font-size: 12px;
   }
 
-  /* --- 备注卡片 --- */
-  .tech-remark-card {
-    .tech-card-icon {
-      background: rgba(var(--orange-6), 0.08);
-      color: rgb(var(--orange-6));
+  /* --- 定价表格美化 --- */
+  :deep(.tech-pricing-content .pricing-detail-table-spacing) {
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--color-border-1);
+
+    .arco-table {
+      border-radius: 8px;
+    }
+
+    .arco-table-container {
+      border: none;
+    }
+
+    .arco-table-th {
+      background: var(--color-fill-1);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-2);
+      padding: 5px 8px;
+      border-bottom: 1px solid var(--color-border-1);
+      line-height: 1.4;
+    }
+
+    // 分组标题行（如 "文本"、"时段规则"）
+    .arco-table-th[colspan] {
+      background: var(--color-bg-2);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-1);
+      padding: 5px 10px;
+      border-bottom: 1px solid var(--color-fill-2);
+    }
+
+    .arco-table-td {
+      font-size: 12px;
+      padding: 5px 8px;
+      border-bottom: 1px solid var(--color-fill-2);
+      color: var(--color-text-1);
+      line-height: 1.4;
+    }
+
+    .arco-table-tr:last-child .arco-table-td {
+      border-bottom: none;
+    }
+
+    .arco-table-tr:hover .arco-table-td {
+      background: var(--color-fill-1);
     }
   }
 
-  .tech-remark-text {
-    margin: 0;
-    padding: 12px 20px 16px;
-    font-size: 13px;
-    color: var(--color-text-2);
-    line-height: 1.7;
-  }
-
-  :deep(.tech-pricing-content .pricing-detail-table-spacing) {
-    margin-bottom: 16px;
-  }
   :deep(.tech-pricing-content .pricing-detail-table-spacing:last-child) {
     margin-bottom: 0;
+  }
+</style>
+
+<style lang="less">
+  .tech-modal {
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 24px 64px rgba(0, 0, 0, 0.25);
+
+    .arco-modal-footer {
+      border-top: 1px solid var(--color-border-1);
+      text-align: center;
+    }
   }
 </style>
