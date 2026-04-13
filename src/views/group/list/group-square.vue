@@ -305,7 +305,9 @@
 
           <!-- 模型权限卡片 -->
           <div
-            v-if="detailRecord.models && detailRecord.models.length"
+            v-if="
+              detailRecord && detailRecord.models && detailRecord.models.length
+            "
             class="tech-card tech-models-card"
           >
             <div class="tech-card-title">
@@ -320,7 +322,7 @@
                 type="text"
                 size="small"
                 class="tech-card-view-btn"
-                @click="modelsHandle(detailRecord.id)"
+                @click="modelsHandle(detailRecord?.id || '')"
               >
                 {{ $t('button.view') }}
               </a-button>
