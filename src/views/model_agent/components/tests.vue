@@ -341,9 +341,37 @@
   const allMultiple = ref(true);
   const tableRef = ref();
   const testModelFormRef = ref<FormInstance>();
+  const CACHE_KEY = 'model_agent_test_params';
+
+  const loadCachedParams = (): Partial<TestModelParams> => {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+    } catch (e) {
+      // ignore
+    }
+    return {};
+  };
+
+  const saveCachedParams = () => {
+    const params = testModelParams.value;
+    if (params.test_method === 1 || params.test_method === 3) {
+      const cache: Record<string, any> = { key: params.key };
+      if (params.test_method === 3) {
+        cache.base_url = params.base_url;
+      }
+      localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+    }
+  };
+
+  const cachedParams = loadCachedParams();
   const testModelParams = ref<TestModelParams>({
     model_agent_id: props.id,
     test_method: 1,
+    key: cachedParams.key || '',
+    base_url: cachedParams.base_url || '',
   } as TestModelParams);
 
   const columns = computed<TableColumnData[]>(() => [
@@ -644,6 +672,7 @@
   const testHandle = async (record: ModelPermissions) => {
     const res = await testModelFormRef.value?.validate();
     if (!res) {
+      saveCachedParams();
       record.testing = true;
       record.trace_id = '';
       testModelParams.value.model_id = record.id;
