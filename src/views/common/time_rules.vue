@@ -271,7 +271,7 @@
       name: t('time_rule.dict.time_type.all'),
       start_time: 0,
       end_time: 86399999,
-      discount: 100,
+      discount: props.layout === 'two-line' ? ref() : 100,
       days: [],
       day_mode: '',
       priority: 20,
