@@ -75,6 +75,8 @@ export default {
   'common.ipd': 'IPD',
   'common.call': 'Calls',
   'common.total.call': 'Total Calls',
+  'common.abnormal': 'Abnormal',
+  'common.abnormal_rate': 'Abnormal Rate',
   'common.current_quota': 'Current Quota',
   'common.used_quota': 'Used Quota',
   'common.allocated_quota': 'Allocated Quota',

@@ -75,6 +75,8 @@ export default {
   'common.ipd': 'IPD',
   'common.call': '調用數',
   'common.total.call': '總調用數',
+  'common.abnormal': '異常數',
+  'common.abnormal_rate': '異常率',
   'common.current_quota': '當前額度',
   'common.used_quota': '已用額度',
   'common.allocated_quota': '已分配額度',

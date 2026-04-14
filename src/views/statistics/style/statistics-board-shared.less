@@ -1,0 +1,35 @@
+.data-board {
+  padding: 12px 10px;
+  background: var(--color-fill-2);
+  min-height: calc(100vh - 60px);
+}
+
+.board-section {
+  margin-top: 12px;
+}
+
+// Keep local in shared: chart-card/chart-title/chart-header are child component
+// classes used by all statistics chart components; scoped :deep is required.
+:deep(.chart-card) {
+  background: var(--color-bg-2);
+  border-radius: 4px;
+  padding: 16px 20px;
+}
+
+:deep(.chart-title) {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-1);
+  margin-bottom: 12px;
+}
+
+:deep(.chart-header) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+:deep(.arco-form-item){
+  margin-bottom: 12px;
+}

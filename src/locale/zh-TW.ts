@@ -22,6 +22,8 @@ import localeSysConfig from '@/views/system/config/locale/zh-TW';
 import localeGroup from '@/views/group/locale/zh-TW';
 import localeNotice from '@/views/notice/locale/zh-TW';
 import localeNoticeTemplate from '@/views/notice_template/locale/zh-TW';
+import localeDataBoard from '@/views/statistics/locale/zh-TW';
+import localeMonitor from '@/views/monitor/locale/zh-TW';
 
 import localeSettings from './zh-TW/settings';
 
@@ -47,4 +49,6 @@ export default {
   ...localeGroup,
   ...localeNotice,
   ...localeNoticeTemplate,
+  ...localeDataBoard,
+  ...localeMonitor,
 };

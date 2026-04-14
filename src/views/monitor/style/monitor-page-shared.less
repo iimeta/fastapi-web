@@ -1,0 +1,138 @@
+.monitor-page {
+  padding: 12px 10px;
+  background: var(--color-fill-2);
+  min-height: calc(100vh - 60px);
+}
+
+.monitor-control {
+  padding: 12px 16px 0px 16px;
+  background: var(--color-bg-2);
+  border-radius: 4px;
+}
+
+.monitor-section {
+  margin-top: 12px;
+}
+
+.dim-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-1);
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+
+.monitor-global {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--color-bg-2);
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.global-item {
+  flex: 1;
+  min-width: 120px;
+  background: var(--color-fill-1);
+  border-radius: 4px;
+  padding: 14px 20px;
+  text-align: center;
+}
+
+.global-val {
+  font-size: 32px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.global-label {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--color-text-3);
+}
+
+.monitor-select {
+  width: 360px;
+}
+
+// global-item color variants
+.global-item--rps {
+  border-left: 3px solid #3469ff;
+}
+
+.global-val--rps {
+  color: #3469ff;
+}
+
+.global-item--tps {
+  border-left: 3px solid #0fc6c2;
+}
+
+.global-val--tps {
+  color: #0fc6c2;
+}
+
+.global-item--rpm {
+  border-left: 3px solid #7b61ff;
+}
+
+.global-val--rpm {
+  color: #7b61ff;
+}
+
+.global-item--tpm {
+  border-left: 3px solid #ff7d00;
+}
+
+.global-val--tpm {
+  color: #ff7d00;
+}
+
+.global-item--active-video {
+  border-left: 3px solid #00b2ff;
+}
+
+.global-val--active-video {
+  color: #00b2ff;
+}
+
+.global-item--queued-video {
+  border-left: 3px solid #faad14;
+}
+
+.global-val--queued-video {
+  color: #faad14;
+}
+
+.global-item--active-batch {
+  border-left: 3px solid #eb2f96;
+}
+
+.global-val--active-batch {
+  color: #eb2f96;
+}
+
+.global-item--queued-batch {
+  border-left: 3px solid #722ed1;
+}
+
+.global-val--queued-batch {
+  color: #722ed1;
+}
+
+// Keep local in shared: chart-card/chart-title are child component classes
+// used by MonitorChart; scoped :deep is required.
+:deep(.chart-card) {
+  background: var(--color-bg-2);
+  border-radius: 4px;
+  padding: 14px 16px;
+}
+
+:deep(.chart-title) {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-1);
+  margin-bottom: 8px;
+}

@@ -43,3 +43,7 @@
     renderChart.value = true;
   });
 </script>
+
+<script lang="ts">
+  export default { name: 'Chart' };
+</script>

@@ -43,3 +43,11 @@ export function formatBytes(bytes: any, decimals?: number) {
 
   return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
+
+export function fmtTokens(v: number): string {
+  const n = v || 0;
+  if (n >= 1e6) return `${(n / 1e6).toFixed(2)}M`;
+  if (n >= 1e4) return `${(n / 1e4).toFixed(2)}w`;
+  if (n >= 100) return n.toFixed(2);
+  return n.toFixed(6);
+}
