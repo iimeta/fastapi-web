@@ -174,6 +174,7 @@ export default {
   // error
   'error.export': 'Export failed, please contact administrator',
   // placeholder
+  'placeholder.reseller_id': 'Please enter Reseller ID',
   'placeholder.user_id': 'Please enter User ID',
   'placeholder.app_id': 'Please enter App ID',
   'placeholder.app_name': 'Please enter App Name',

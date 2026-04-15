@@ -174,6 +174,7 @@ export default {
   // error
   'error.export': '导出失败, 请联系管理员',
   // placeholder
+  'placeholder.reseller_id': '请输入代理商ID',
   'placeholder.user_id': '请输入用户ID',
   'placeholder.app_id': '请输入应用ID',
   'placeholder.app_name': '请输入应用名称',

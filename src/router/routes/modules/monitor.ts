@@ -10,7 +10,7 @@ const MONITOR: AppRouteRecordRaw = {
     locale: 'monitor.menu',
     requiresAuth: true,
     icon: 'icon-computer',
-    order: 16,
+    order: 88,
     hideChildrenInMenu: true,
   },
   children: [

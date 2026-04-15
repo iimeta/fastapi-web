@@ -10,54 +10,92 @@
           size="medium"
         >
           <a-row :gutter="16">
-            <a-col v-if="userStore.role === 'admin'" :span="6">
-              <a-form-item :label="$t('common.reseller_id')">
+            <a-col v-if="userStore.role === 'admin'" :span="8">
+              <a-form-item :label="$t('common.reseller')">
                 <a-input-number
                   v-model="formData.rid"
+                  :placeholder="$t('placeholder.reseller_id')"
                   class="filter-bar-full-width"
                   allow-clear
                   hide-button
                 />
               </a-form-item>
             </a-col>
-            <a-col v-if="userStore.role !== 'user'" :span="6">
+            <a-col v-if="userStore.role !== 'user'" :span="8">
               <a-form-item :label="$t('common.user_id')">
                 <a-input-number
                   v-model="formData.user_id"
+                  :placeholder="$t('placeholder.user_id')"
                   class="filter-bar-full-width"
                   allow-clear
                   hide-button
                 />
               </a-form-item>
             </a-col>
-            <a-col :span="6">
+            <a-col v-if="userStore.role === 'user'" :span="6">
+              <a-form-item field="app_id" :label="$t('log.form.app_id')">
+                <a-select
+                  v-model="formData.app_id"
+                  :placeholder="$t('common.all')"
+                  :scrollbar="false"
+                  class="filter-bar-full-width"
+                  allow-search
+                  allow-clear
+                >
+                  <a-option
+                    v-for="item in appOptions"
+                    :key="item.app_id"
+                    :value="item.app_id"
+                    :label="item.name"
+                  />
+                </a-select>
+              </a-form-item>
+            </a-col>
+            <a-col v-if="userStore.role !== 'user'" :span="8">
               <a-form-item :label="$t('common.app_id')">
                 <a-input-number
                   v-model="formData.app_id"
+                  :placeholder="$t('placeholder.app_id')"
                   class="filter-bar-full-width"
                   allow-clear
                   hide-button
                 />
               </a-form-item>
             </a-col>
-            <a-col :span="6">
-              <a-form-item :label="$t('common.app_key')">
+            <a-col
+              v-if="userStore.role !== 'admin'"
+              :span="userStore.role === 'user' ? 6 : 8"
+            >
+              <a-form-item field="key" :label="$t('common.key')">
                 <a-input
                   v-model="formData.app_key"
+                  :placeholder="$t('placeholder.app_key')"
                   class="filter-bar-full-width"
                   allow-clear
                 />
               </a-form-item>
             </a-col>
-            <a-col :span="6">
+            <a-col v-if="userStore.role === 'admin'" :span="8">
+              <a-form-item :label="$t('common.key')">
+                <a-input
+                  v-model="formData.key"
+                  :placeholder="$t('placeholder.key')"
+                  class="filter-bar-full-width"
+                  allow-clear
+                />
+              </a-form-item>
+            </a-col>
+            <a-col :span="userStore.role === 'user' ? 6 : 8">
               <a-form-item :label="$t('common.model')">
                 <a-select
                   v-model="formData.models"
+                  :placeholder="$t('common.all')"
+                  :scrollbar="false"
+                  :max-tag-count="1"
                   class="filter-bar-full-width"
                   multiple
                   allow-clear
                   allow-search
-                  :max-tag-count="1"
                 >
                   <a-option
                     v-for="m in modelOptions"
@@ -68,10 +106,12 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :span="6">
+            <a-col :span="userStore.role === 'user' ? 6 : 8">
               <a-form-item :label="$t('common.provider')">
                 <a-select
                   v-model="formData.provider"
+                  :placeholder="$t('common.all')"
+                  :scrollbar="false"
                   class="filter-bar-full-width"
                   allow-clear
                   allow-search
@@ -88,14 +128,21 @@
           </a-row>
         </a-form>
       </a-col>
-      <a-divider class="filter-bar-divider" direction="vertical" />
+      <a-divider
+        :class="
+          userStore.role !== 'user'
+            ? 'filter-bar-divider'
+            : 'filter-bar-divider-user'
+        "
+        direction="vertical"
+      />
       <a-col :flex="'86px'" class="filter-bar-actions">
         <a-space direction="vertical" :size="12">
           <a-button type="primary" @click="handleSearch">
             <template #icon><icon-search /></template>
             {{ $t('button.search') }}
           </a-button>
-          <a-button @click="handleReset">
+          <a-button v-if="userStore.role !== 'user'" @click="handleReset">
             <template #icon><icon-refresh /></template>
             {{ $t('button.reset') }}
           </a-button>
@@ -108,6 +155,7 @@
 <script lang="ts" setup>
   import { ref, reactive, onMounted } from 'vue';
   import { useUserStore } from '@/store';
+  import { queryAppList, AppList } from '@/api/app';
   import { queryModelList, ModelList } from '@/api/model';
   import { queryProviderList, ProviderList } from '@/api/provider';
 
@@ -119,10 +167,12 @@
     user_id: undefined as number | undefined,
     app_id: undefined as number | undefined,
     app_key: '' as string,
+    key: '' as string,
     models: [] as string[],
     provider: '' as string,
   });
 
+  const appOptions = ref<AppList[]>([]);
   const modelOptions = ref<ModelList[]>([]);
   const providerOptions = ref<ProviderList[]>([]);
 
@@ -153,19 +203,28 @@
 
   onMounted(async () => {
     emit('filterChange', getParams());
+
+    if (userStore.role === 'user') {
+      try {
+        const { data } = await queryAppList();
+        appOptions.value = data.items;
+      } catch (err) {
+        // you can report use errorHandler or other
+      }
+    }
+
     try {
       const { data } = await queryModelList();
       modelOptions.value = data.items || [];
     } catch {
-      /* empty */
+      // you can report use errorHandler or other
     }
-    if (userStore.role === 'admin') {
-      try {
-        const { data } = await queryProviderList();
-        providerOptions.value = data.items || [];
-      } catch {
-        /* empty */
-      }
+
+    try {
+      const { data } = await queryProviderList();
+      providerOptions.value = data.items || [];
+    } catch {
+      // you can report use errorHandler or other
     }
   });
 </script>

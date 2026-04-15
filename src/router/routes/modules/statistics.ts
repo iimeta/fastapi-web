@@ -10,7 +10,7 @@ const STATISTICS: AppRouteRecordRaw = {
     locale: 'statistics.databoard.menu',
     requiresAuth: true,
     icon: 'icon-bar-chart',
-    order: 15,
+    order: 86,
     hideChildrenInMenu: true,
   },
   children: [

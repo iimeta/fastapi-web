@@ -174,6 +174,7 @@ export default {
   // error
   'error.export': '導出失敗, 請聯繫管理員',
   // placeholder
+  'placeholder.reseller_id': '請輸入代理商ID',
   'placeholder.user_id': '請輸入用戶ID',
   'placeholder.app_id': '請輸入應用ID',
   'placeholder.app_name': '請輸入應用名稱',
