@@ -33,39 +33,44 @@
       // 菜单分组配置
       const menuGroups = [
         {
-          title: '数据概览',
+          title: '',
           icon: 'icon-dashboard',
-          routes: ['dashboard', 'statistics', 'monitor'],
+          routes: ['dashboard'],
         },
         {
-          title: '模型管理',
+          title: '核心资产',
           icon: 'icon-common',
-          routes: ['model', 'model_square', 'my_model', 'model_agent'],
+          routes: ['model', 'model_agent', 'key', 'group'],
         },
         {
-          title: '团队协作',
+          title: '资源市场',
           icon: 'icon-user-group',
-          routes: ['group', 'group_square', 'my_group'],
+          routes: ['model_square', 'group_square'],
         },
         {
-          title: '应用与密钥',
+          title: '数据运营',
+          icon: 'icon-dashboard',
+          routes: ['statistics', 'monitor'],
+        },
+        {
+          title: '应用接入',
           icon: 'icon-apps',
-          routes: ['app', 'app_key', 'key'],
+          routes: ['app', 'app_key'],
         },
         {
-          title: '用户管理',
-          icon: 'icon-user',
-          routes: ['user'],
-        },
-        {
-          title: '财务与日志',
+          title: '财务中心',
           icon: 'icon-wechatpay',
-          routes: ['finance', 'task', 'log'],
+          routes: ['bill', 'deal'],
         },
         {
-          title: '系统设置',
+          title: '任务与日志',
+          icon: 'icon-wechatpay',
+          routes: ['task', 'log'],
+        },
+        {
+          title: '系统配置',
           icon: 'icon-settings',
-          routes: ['notice', 'sys'],
+          routes: ['user', 'notice', 'sys'],
         },
       ];
 

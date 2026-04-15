@@ -1,15 +1,18 @@
 import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
-const FINANCE: AppRouteRecordRaw = {
+const FINANCE_BILL: AppRouteRecordRaw = {
   path: '/finance',
-  name: 'finance',
+  name: 'bill',
   component: DEFAULT_LAYOUT,
+  redirect: '/finance/bill',
   meta: {
-    locale: 'finance.menu',
+    locale: 'finance.menu.bill',
     requiresAuth: true,
-    icon: 'icon-wechatpay',
-    order: 120,
+    icon: 'icon-list',
+    order: 116,
+    hideChildrenInMenu: true,
+    roles: ['user', 'reseller', 'admin'],
   },
   children: [
     {
@@ -23,18 +26,7 @@ const FINANCE: AppRouteRecordRaw = {
         activeMenu: 'BillList',
       },
     },
-    {
-      path: 'deal',
-      name: 'DealRecordList',
-      component: () => import('@/views/finance/list/deal_record.vue'),
-      meta: {
-        locale: 'finance.menu.deal_record',
-        requiresAuth: true,
-        roles: ['user', 'reseller', 'admin'],
-        activeMenu: 'DealRecordList',
-      },
-    },
   ],
 };
 
-export default FINANCE;
+export default FINANCE_BILL;

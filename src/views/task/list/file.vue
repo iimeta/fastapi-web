@@ -129,10 +129,7 @@
           </a-space>
         </a-col>
       </a-row>
-      <a-divider
-        v-permission="['reseller', 'admin']"
-        class="task-file-list-toolbar-divider"
-      />
+      <a-divider class="task-file-list-toolbar-divider" />
       <a-row class="task-file-list-toolbar-row">
         <a-col :span="24" class="task-file-list-table-actions">
           <a-tooltip :content="$t('action.refresh')">
