@@ -9,7 +9,7 @@ const GROUP: AppRouteRecordRaw = {
   meta: {
     locale: 'group.menu',
     requiresAuth: true,
-    icon: 'lucide-users',
+    icon: 'lucide-combine',
     order: 70,
     hideChildrenInMenu: true,
     roles: ['admin'],

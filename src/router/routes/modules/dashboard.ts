@@ -9,7 +9,7 @@ const DASHBOARD: AppRouteRecordRaw = {
   meta: {
     locale: 'dashboard.menu',
     requiresAuth: true,
-    icon: 'lucide-gauge',
+    icon: 'lucide-layout-dashboard',
     order: 10,
     hideChildrenInMenu: true,
   },

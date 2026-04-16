@@ -306,6 +306,11 @@
         transition: color 0.25s ease;
       }
 
+      .arco-menu-icon {
+        margin-top: 1px;
+        margin-right: 8px;
+      }
+
       .arco-menu-icon-suffix {
         margin-right: 12px;
       }

@@ -2,9 +2,8 @@ import type { App } from 'vue';
 import IconApps from '~icons/lucide/layout-grid';
 import IconKey from '~icons/lucide/key';
 import IconKeyRound from '~icons/lucide/key-round';
-import IconGauge from '~icons/lucide/gauge';
-import IconReceipt from '~icons/lucide/receipt-text';
-import IconBanknote from '~icons/lucide/banknote';
+import IconLayoutDashboard from '~icons/lucide/layout-dashboard';
+import IconReceipt from '~icons/lucide/receipt';
 import IconUsers from '~icons/lucide/users';
 import IconFileText from '~icons/lucide/file-text';
 import IconBox from '~icons/lucide/box';
@@ -15,19 +14,19 @@ import IconBoxes from '~icons/lucide/boxes';
 import IconBell from '~icons/lucide/bell';
 import IconChartBar from '~icons/lucide/chart-column-increasing';
 import IconSettings from '~icons/lucide/settings';
-import IconListChecks from '~icons/lucide/list-checks';
+import IconCalendarCheck from '~icons/lucide/calendar-check';
 import IconUser from '~icons/lucide/user';
-import IconMonitor from '~icons/lucide/monitor';
+import IconMonitorCloud from '~icons/lucide/monitor-cloud';
 import IconCommand from '~icons/lucide/command';
 import IconCircleDollarSign from '~icons/lucide/circle-dollar-sign';
+import IconCombine from '~icons/lucide/combine';
 
 const menuIcons: Record<string, any> = {
   'lucide-layout-grid': IconApps,
   'lucide-key': IconKey,
   'lucide-key-round': IconKeyRound,
-  'lucide-gauge': IconGauge,
+  'lucide-layout-dashboard': IconLayoutDashboard,
   'lucide-receipt-text': IconReceipt,
-  'lucide-banknote': IconBanknote,
   'lucide-users': IconUsers,
   'lucide-file-text': IconFileText,
   'lucide-box': IconBox,
@@ -38,11 +37,12 @@ const menuIcons: Record<string, any> = {
   'lucide-bell': IconBell,
   'lucide-chart-column-increasing': IconChartBar,
   'lucide-settings': IconSettings,
-  'lucide-list-checks': IconListChecks,
+  'lucide-calendar-check': IconCalendarCheck,
   'lucide-user': IconUser,
-  'lucide-monitor': IconMonitor,
+  'lucide-monitor-cloud': IconMonitorCloud,
   'lucide-command': IconCommand,
   'lucide-circle-dollar-sign': IconCircleDollarSign,
+  'lucide-combine': IconCombine,
 };
 
 export function registerMenuIcons(app: App) {
