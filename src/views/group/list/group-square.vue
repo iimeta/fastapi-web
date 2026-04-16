@@ -440,22 +440,10 @@
   fetchData();
 
   const search = () => {
-    const params: any = {
+    fetchData({
       ...basePage,
-    };
-    if (form.search_value) {
-      params.name = form.search_value;
-    }
-    if (form.provider_id) {
-      params.provider_id = form.provider_id;
-    }
-    if (form.type) {
-      params.type = form.type;
-    }
-    if (form.billing_method) {
-      params.billing_method = form.billing_method;
-    }
-    fetchData(params as GroupPageParams);
+      ...form,
+    } as unknown as GroupPageParams);
   };
 
   const reset = () => {

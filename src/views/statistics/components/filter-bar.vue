@@ -118,8 +118,8 @@
                 >
                   <a-option
                     v-for="p in providerOptions"
-                    :key="p.name"
-                    :value="p.name"
+                    :key="p.id"
+                    :value="p.id"
                     :label="p.name"
                   />
                 </a-select>
@@ -182,6 +182,7 @@
       user_id: formData.user_id || 0,
       app_id: formData.app_id || 0,
       app_key: formData.app_key || '',
+      key: formData.key || '',
       provider: formData.provider || '',
       models: formData.models.length > 0 ? formData.models : undefined,
     };

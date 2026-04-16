@@ -9,7 +9,7 @@ const FINANCE_BILL: AppRouteRecordRaw = {
   meta: {
     locale: 'finance.menu.bill',
     requiresAuth: true,
-    icon: 'icon-list',
+    icon: 'lucide-receipt-text',
     order: 116,
     hideChildrenInMenu: true,
     roles: ['user', 'reseller', 'admin'],

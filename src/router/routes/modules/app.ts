@@ -9,7 +9,7 @@ const APP: AppRouteRecordRaw = {
   meta: {
     locale: 'app.menu',
     requiresAuth: true,
-    icon: 'icon-apps',
+    icon: 'lucide-layout-grid',
     order: 90,
     hideChildrenInMenu: true,
     roles: ['user', 'reseller', 'admin'],

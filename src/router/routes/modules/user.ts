@@ -8,7 +8,7 @@ const USER: AppRouteRecordRaw = {
   redirect: '/user/list',
   meta: {
     locale: 'user.menu',
-    icon: 'icon-user',
+    icon: 'lucide-user',
     requiresAuth: true,
     order: 80,
     hideChildrenInMenu: true,

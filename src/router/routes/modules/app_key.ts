@@ -9,7 +9,7 @@ const APP_KEY: AppRouteRecordRaw = {
   meta: {
     locale: 'app.key.menu',
     requiresAuth: true,
-    icon: 'icon-safe',
+    icon: 'lucide-key-round',
     order: 100,
     hideChildrenInMenu: true,
     roles: ['user', 'reseller', 'admin'],

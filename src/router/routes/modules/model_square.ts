@@ -9,10 +9,10 @@ const MODEL_SQUARE: AppRouteRecordRaw = {
   meta: {
     locale: 'model.square.menu',
     requiresAuth: true,
-    icon: 'icon-common',
+    icon: 'lucide-component',
     order: 20,
     hideChildrenInMenu: true,
-    roles: ['user', 'reseller'],
+    roles: ['user', 'reseller', 'admin'],
   },
   children: [
     {
@@ -22,7 +22,7 @@ const MODEL_SQUARE: AppRouteRecordRaw = {
       meta: {
         locale: 'model.square.menu',
         requiresAuth: true,
-        roles: ['user', 'reseller'],
+        roles: ['user', 'reseller', 'admin'],
         activeMenu: 'model_square',
       },
     },

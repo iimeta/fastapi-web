@@ -9,7 +9,7 @@ const MONITOR: AppRouteRecordRaw = {
   meta: {
     locale: 'monitor.menu',
     requiresAuth: true,
-    icon: 'icon-computer',
+    icon: 'lucide-monitor',
     order: 88,
     hideChildrenInMenu: true,
   },

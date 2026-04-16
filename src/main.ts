@@ -8,6 +8,7 @@ import i18n from './locale';
 import directive from './directive';
 import './mock';
 import App from './App.vue';
+import { registerMenuIcons } from './icons/menu-icons';
 // Styles are imported via arco-plugin. See config/plugin/arcoStyleImport.ts in the directory for details
 // 样式通过 arco-plugin 插件导入。详见目录文件 config/plugin/arcoStyleImport.ts
 // https://arco.design/docs/designlab/use-theme-package
@@ -18,6 +19,8 @@ const app = createApp(App);
 
 app.use(ArcoVue, {});
 app.use(ArcoVueIcon);
+
+registerMenuIcons(app);
 
 app.use(router);
 app.use(store);

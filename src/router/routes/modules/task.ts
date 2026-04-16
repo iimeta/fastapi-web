@@ -8,7 +8,7 @@ const TASK: AppRouteRecordRaw = {
   meta: {
     locale: 'task.menu',
     requiresAuth: true,
-    icon: 'icon-calendar',
+    icon: 'lucide-list-checks',
     order: 125,
   },
   children: [

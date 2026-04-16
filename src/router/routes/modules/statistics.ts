@@ -9,7 +9,7 @@ const STATISTICS: AppRouteRecordRaw = {
   meta: {
     locale: 'statistics.databoard.menu',
     requiresAuth: true,
-    icon: 'icon-bar-chart',
+    icon: 'lucide-chart-column-increasing',
     order: 86,
     hideChildrenInMenu: true,
   },

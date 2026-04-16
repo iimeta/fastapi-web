@@ -8,7 +8,7 @@ const LOG: AppRouteRecordRaw = {
   meta: {
     locale: 'log.menu',
     requiresAuth: true,
-    icon: 'icon-message',
+    icon: 'lucide-file-text',
     order: 130,
   },
   children: [

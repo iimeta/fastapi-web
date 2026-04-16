@@ -8,7 +8,7 @@ const NOTICE: AppRouteRecordRaw = {
   meta: {
     locale: 'notice.menu',
     requiresAuth: true,
-    icon: 'icon-notification',
+    icon: 'lucide-bell',
     order: 110,
     roles: ['admin'],
   },

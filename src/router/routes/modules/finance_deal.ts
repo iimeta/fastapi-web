@@ -9,7 +9,7 @@ const FINANCE_DEAL: AppRouteRecordRaw = {
   meta: {
     locale: 'finance.menu.deal_record',
     requiresAuth: true,
-    icon: 'icon-wechatpay',
+    icon: 'lucide-circle-dollar-sign',
     order: 118,
     hideChildrenInMenu: true,
     roles: ['user', 'reseller', 'admin'],

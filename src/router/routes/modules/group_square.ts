@@ -9,10 +9,10 @@ const GROUP_SQUARE: AppRouteRecordRaw = {
   meta: {
     locale: 'group.square.menu',
     requiresAuth: true,
-    icon: 'icon-user-group',
+    icon: 'lucide-boxes',
     order: 30,
     hideChildrenInMenu: true,
-    roles: ['user', 'reseller'],
+    roles: ['user', 'reseller', 'admin'],
   },
   children: [
     {
@@ -22,7 +22,7 @@ const GROUP_SQUARE: AppRouteRecordRaw = {
       meta: {
         locale: 'group.square.menu',
         requiresAuth: true,
-        roles: ['user', 'reseller'],
+        roles: ['user', 'reseller', 'admin'],
         activeMenu: 'group_square',
       },
     },

@@ -8,7 +8,7 @@ const SYS: AppRouteRecordRaw = {
   meta: {
     locale: 'sys.menu',
     requiresAuth: true,
-    icon: 'icon-settings',
+    icon: 'lucide-settings',
     order: 200,
     roles: ['reseller', 'admin'],
   },

@@ -34,42 +34,42 @@
       const menuGroups = [
         {
           title: '',
-          icon: 'icon-dashboard',
+          icon: 'lucide-layout-dashboard',
           routes: ['dashboard'],
         },
         {
           title: '核心资产',
-          icon: 'icon-common',
+          icon: 'lucide-box',
           routes: ['model', 'model_agent', 'key', 'group'],
         },
         {
           title: '资源市场',
-          icon: 'icon-user-group',
+          icon: 'lucide-store',
           routes: ['model_square', 'group_square'],
         },
         {
           title: '数据运营',
-          icon: 'icon-dashboard',
+          icon: 'lucide-chart-column-increasing',
           routes: ['statistics', 'monitor'],
         },
         {
           title: '应用接入',
-          icon: 'icon-apps',
+          icon: 'lucide-layout-grid',
           routes: ['app', 'app_key'],
         },
         {
           title: '财务中心',
-          icon: 'icon-wechatpay',
+          icon: 'lucide-banknote',
           routes: ['bill', 'deal'],
         },
         {
           title: '任务与日志',
-          icon: 'icon-wechatpay',
+          icon: 'lucide-list-checks',
           routes: ['task', 'log'],
         },
         {
           title: '系统配置',
-          icon: 'icon-settings',
+          icon: 'lucide-settings',
           routes: ['user', 'notice', 'sys'],
         },
       ];

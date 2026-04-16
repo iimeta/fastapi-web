@@ -9,7 +9,7 @@ const MODEL_AGENT: AppRouteRecordRaw = {
   meta: {
     locale: 'model.agent.menu',
     requiresAuth: true,
-    icon: 'icon-bug',
+    icon: 'lucide-bot',
     order: 40,
     hideChildrenInMenu: true,
     roles: ['admin'],

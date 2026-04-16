@@ -9,7 +9,7 @@ const MY_GROUP: AppRouteRecordRaw = {
   meta: {
     locale: 'group.menu.my',
     requiresAuth: true,
-    icon: 'icon-user-group',
+    icon: 'lucide-users',
     order: 30,
     hideChildrenInMenu: true,
     roles: ['user', 'reseller'],
