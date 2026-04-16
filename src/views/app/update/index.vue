@@ -2,7 +2,7 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-apps />
+        <lucide-layout-grid />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('app.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('app.menu.update') }}</a-breadcrumb-item>

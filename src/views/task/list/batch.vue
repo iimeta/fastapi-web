@@ -2,7 +2,7 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-calendar />
+        <lucide-calendar-check />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('task.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('task.menu.batch') }}</a-breadcrumb-item>

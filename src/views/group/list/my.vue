@@ -2,7 +2,7 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-user-group />
+        <lucide-users />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('group.menu.my') }}</a-breadcrumb-item>
     </a-breadcrumb>

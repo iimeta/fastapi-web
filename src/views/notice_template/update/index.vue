@@ -2,7 +2,7 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-notification />
+        <lucide-bell />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('notice.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{

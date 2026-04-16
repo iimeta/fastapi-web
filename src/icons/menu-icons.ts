@@ -15,7 +15,7 @@ import IconBell from '~icons/lucide/bell';
 import IconChartBar from '~icons/lucide/chart-column-increasing';
 import IconSettings from '~icons/lucide/settings';
 import IconCalendarCheck from '~icons/lucide/calendar-check';
-import IconUser from '~icons/lucide/user';
+import IconUserRound from '~icons/lucide/user-round';
 import IconMonitorCloud from '~icons/lucide/monitor-cloud';
 import IconCommand from '~icons/lucide/command';
 import IconCircleDollarSign from '~icons/lucide/circle-dollar-sign';
@@ -38,7 +38,7 @@ const menuIcons: Record<string, any> = {
   'lucide-chart-column-increasing': IconChartBar,
   'lucide-settings': IconSettings,
   'lucide-calendar-check': IconCalendarCheck,
-  'lucide-user': IconUser,
+  'lucide-user-round': IconUserRound,
   'lucide-monitor-cloud': IconMonitorCloud,
   'lucide-command': IconCommand,
   'lucide-circle-dollar-sign': IconCircleDollarSign,

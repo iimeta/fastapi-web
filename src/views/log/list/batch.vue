@@ -2,7 +2,7 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-message />
+        <lucide-file-text />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('log.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('log.menu.batch') }}</a-breadcrumb-item>

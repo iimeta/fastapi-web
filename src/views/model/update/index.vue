@@ -2,7 +2,7 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-common />
+        <lucide-box />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('model.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('model.menu.update') }}</a-breadcrumb-item>

@@ -2,7 +2,7 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-safe />
+        <lucide-key />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('key.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('key.menu.create') }}</a-breadcrumb-item>

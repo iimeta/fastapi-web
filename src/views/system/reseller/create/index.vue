@@ -2,7 +2,7 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <icon-settings />
+        <lucide-settings />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('sys.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('reseller.menu.create') }}</a-breadcrumb-item>
