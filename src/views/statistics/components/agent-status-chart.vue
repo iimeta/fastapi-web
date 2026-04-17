@@ -152,6 +152,10 @@
     try {
       const { data } = await queryAgentStatus({
         ...dateRange.value,
+        app_key: props.params.app_key,
+        key: props.params.key,
+        models: props.params.models,
+        provider: props.params.provider,
       });
       d.value = data;
     } catch {

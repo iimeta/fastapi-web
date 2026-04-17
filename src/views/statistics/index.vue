@@ -3,57 +3,69 @@
     <FilterBar @filter-change="handleFilterChange" />
 
     <div class="board-section">
-      <OverviewCards :params="filterParams" />
+      <OverviewCards :key="`overview-${refreshKey}`" :params="filterParams" />
     </div>
 
     <div class="board-section">
-      <TrendChart :params="filterParams" />
+      <TrendChart :key="`trend-${refreshKey}`" :params="filterParams" />
     </div>
 
     <div class="board-section">
-      <ModelPieChart :params="filterParams" />
+      <ModelPieChart :key="`model-pie-${refreshKey}`" :params="filterParams" />
     </div>
 
     <div class="board-section">
-      <ModelSpendChart :params="filterParams" />
+      <ModelSpendChart
+        :key="`model-spend-${refreshKey}`"
+        :params="filterParams"
+      />
     </div>
 
     <div class="board-section">
-      <ModelTrendChart :params="filterParams" />
+      <ModelTrendChart
+        :key="`model-trend-${refreshKey}`"
+        :params="filterParams"
+      />
     </div>
 
     <div class="board-section">
-      <AbnormalChart :params="filterParams" />
+      <AbnormalChart :key="`abnormal-${refreshKey}`" :params="filterParams" />
     </div>
 
     <div class="board-section">
-      <LatencyTrendChart :params="filterParams" />
+      <LatencyTrendChart
+        :key="`latency-${refreshKey}`"
+        :params="filterParams"
+      />
     </div>
 
     <div class="board-section">
-      <TopRanking :params="filterParams" />
+      <TopRanking :key="`top-${refreshKey}`" :params="filterParams" />
     </div>
 
     <div class="board-section">
-      <DimensionAnalysis :params="filterParams" />
+      <DimensionAnalysis
+        :key="`dimension-${refreshKey}`"
+        :params="filterParams"
+      />
     </div>
 
     <div class="board-section">
-      <TaskStatusChart :params="filterParams" />
+      <TaskStatusChart :key="`task-${refreshKey}`" :params="filterParams" />
     </div>
 
     <div v-if="userStore.role === 'admin'" class="board-section">
-      <AgentStatusChart :params="filterParams" />
+      <AgentStatusChart :key="`agent-${refreshKey}`" :params="filterParams" />
     </div>
 
     <div v-if="userStore.role === 'admin'" class="board-section">
-      <KeyStatusChart :params="filterParams" />
+      <KeyStatusChart :key="`key-${refreshKey}`" :params="filterParams" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { reactive } from 'vue';
+  import { reactive, ref } from 'vue';
   import { useUserStore } from '@/store';
   import FilterBar from './components/filter-bar.vue';
   import OverviewCards from './components/overview-cards.vue';
@@ -76,12 +88,16 @@
     user_id: 0,
     app_id: 0,
     app_key: '',
+    key: '',
     provider: '',
     models: undefined as string[] | undefined,
   });
 
+  const refreshKey = ref(0);
+
   const handleFilterChange = (params: any) => {
     Object.assign(filterParams, params);
+    refreshKey.value += 1;
   };
 </script>
 

@@ -167,6 +167,13 @@
     try {
       const { data } = await queryTaskStatus({
         ...dateRange.value,
+        rid: props.params.rid,
+        user_id: props.params.user_id,
+        app_id: props.params.app_id,
+        app_key: props.params.app_key,
+        key: props.params.key,
+        models: props.params.models,
+        provider: props.params.provider,
       });
       batchData.value = buildPieData(data.batch || [], batchStatuses);
       fileData.value = buildPieData(data.file || [], fileStatuses);

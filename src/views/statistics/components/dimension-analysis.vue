@@ -120,7 +120,7 @@
                   class="detail-row"
                   :class="{
                     'detail-row--expandable':
-                      row.model_stats && row.model_stats.length > 0,
+                      filteredModelStats(row).length > 0,
                   }"
                   @click="toggleExpand(idx)"
                 >
@@ -142,7 +142,7 @@
                     >
                     <div class="detail-metric detail-metric--expand">
                       <icon-down
-                        v-if="row.model_stats && row.model_stats.length > 0"
+                        v-if="filteredModelStats(row).length > 0"
                         :class="{ 'expand-icon--open': expandedRows.has(idx) }"
                         class="expand-icon"
                       />
@@ -150,12 +150,9 @@
                   </div>
                 </div>
                 <!-- 展开的模型明细 -->
-                <div
-                  v-if="expandedRows.has(idx) && row.model_stats"
-                  class="model-stats"
-                >
+                <div v-if="expandedRows.has(idx)" class="model-stats">
                   <div
-                    v-for="(ms, mi) in row.model_stats"
+                    v-for="(ms, mi) in filteredModelStats(row)"
                     :key="mi"
                     class="model-stat-row"
                   >
@@ -303,10 +300,10 @@
     const item = topItems.value[selectedIdx.value];
     if (!item) return;
 
-    // model 维度使用 model 类型查询
     const detailType = dimension.value;
 
     const dp: any = {
+      ...props.params,
       ...dateRange.value,
       data_type: detailType,
     };
@@ -319,10 +316,14 @@
         dp.app_id = item.app_id;
         break;
       case 'app_key':
-        dp.app_key = item.app_key;
+        // 优先使用原值, 兼容旧接口
+        dp.app_key = item.app_key_raw || item.app_key;
         break;
       case 'model':
         dp.model_id = item.model;
+        break;
+      case 'provider':
+        dp.provider = item.provider_id || item.provider;
         break;
       default:
     }
@@ -349,7 +350,7 @@
 
   function toggleExpand(idx: number) {
     const row = detailItems.value[idx];
-    if (!row?.model_stats?.length) return;
+    if (!filteredModelStats(row).length) return;
     const s = new Set(expandedRows.value);
     if (s.has(idx)) {
       s.delete(idx);
@@ -357,6 +358,13 @@
       s.add(idx);
     }
     expandedRows.value = s;
+  }
+
+  function filteredModelStats(row: any) {
+    const stats = row?.model_stats || [];
+    const models = props.params?.models;
+    if (!models || !models.length) return stats;
+    return stats.filter((s: any) => models.includes(s.model));
   }
 
   function handlePageChange(page: number) {

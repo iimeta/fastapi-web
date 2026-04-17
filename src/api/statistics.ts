@@ -108,8 +108,10 @@ export interface StatisticsTopItem {
   user_id: number;
   app_id: number;
   app_key: string;
+  app_key_raw?: string;
   model: string;
   provider: string;
+  provider_id?: string;
   call: number;
   tokens: number;
 }
@@ -260,6 +262,10 @@ export interface StatisticsKeyStatusRes {
 export function queryKeyStatus(params?: {
   stat_start_time?: number;
   stat_end_time?: number;
+  app_key?: string;
+  key?: string;
+  models?: string[];
+  provider?: string;
 }) {
   return axios.post<StatisticsKeyStatusRes>(
     '/api/v1/statistics/data/key/status',
@@ -285,6 +291,10 @@ export interface StatisticsAgentStatusRes {
 export function queryAgentStatus(params?: {
   stat_start_time?: number;
   stat_end_time?: number;
+  app_key?: string;
+  key?: string;
+  models?: string[];
+  provider?: string;
 }) {
   return axios.post<StatisticsAgentStatusRes>(
     '/api/v1/statistics/data/agent/status',
@@ -311,6 +321,13 @@ export interface StatisticsTaskStatusRes {
 export function queryTaskStatus(params?: {
   stat_start_time?: number;
   stat_end_time?: number;
+  rid?: number;
+  user_id?: number;
+  app_id?: number;
+  app_key?: string;
+  key?: string;
+  models?: string[];
+  provider?: string;
 }) {
   return axios.post<StatisticsTaskStatusRes>(
     '/api/v1/statistics/data/task/status',
