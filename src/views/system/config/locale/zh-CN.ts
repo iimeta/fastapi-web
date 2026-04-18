@@ -63,6 +63,8 @@ export default {
   'sys.config.item.desc.service_unavailable': '暂停服务开启后, 将拒绝所有API调用请求, 请谨慎操作, 此开关多用于需更新API服务场景时开启, 支持配置IP白名单, 白名单内的IP不受暂停服务限制, 可正常请求, 提前检查服务是否达到预期',
   'sys.config.item.title.general_api': '通用API(实验)',
   'sys.config.item.desc.general_api': '目前通用API接口处于实验阶段, 请根据需要选择是否开启, 支持配置IP白名单, 配置IP白名单后, 仅IP白名单内的可调用通用API接口',
+  'sys.config.item.title.model_agent_session_keep': '会话保持',
+  'sys.config.item.desc.model_agent_session_keep': '配置模型代理会话保持的默认参数, 包括保持时长、失败记录时长、切换阈值以及缓存上限',
   'sys.config.placeholder.are_you_sure': '是否确定',
   'sys.config.placeholder.are_you_sure_reset': '是否确定重置',
   'sys.config.label.email.host': '发信服务器',

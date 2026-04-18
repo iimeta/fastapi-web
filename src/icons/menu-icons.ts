@@ -20,6 +20,7 @@ import IconMonitorCloud from '~icons/lucide/monitor-cloud';
 import IconCommand from '~icons/lucide/command';
 import IconCircleDollarSign from '~icons/lucide/circle-dollar-sign';
 import IconCombine from '~icons/lucide/combine';
+import IconBug from '~icons/lucide/bug';
 
 const menuIcons: Record<string, any> = {
   'lucide-layout-grid': IconApps,
@@ -43,6 +44,7 @@ const menuIcons: Record<string, any> = {
   'lucide-command': IconCommand,
   'lucide-circle-dollar-sign': IconCircleDollarSign,
   'lucide-combine': IconCombine,
+  'lucide-bug': IconBug,
 };
 
 export function registerMenuIcons(app: App) {

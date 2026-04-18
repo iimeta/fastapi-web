@@ -218,4 +218,6 @@ export default {
   'sys.config.dict.text_records.messages': 'Context',
   'sys.config.dict.text_records.image': 'Image Data',
   'sys.config.dict.text_records.audio': 'Audio Data',
+  'sys.config.item.title.model_agent_session_keep': 'Session Keep',
+  'sys.config.item.desc.model_agent_session_keep': 'Configure default session keep parameters for model agents, including keep duration, failure record duration, switch threshold, and cache limits.',
 };

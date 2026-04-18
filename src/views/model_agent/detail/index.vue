@@ -84,6 +84,32 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
+        :label="$t('model.agent.label.is_enable_session_keep')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.${currentData?.is_enable_session_keep || false}`) }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('model.agent.label.session_keep_count')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.session_keep_count || 0 }}
+          <a-button
+            size="mini"
+            status="danger"
+            style="margin-left: 8px"
+            @click="handleClearSessionKeepCache"
+          >
+            {{ $t('button.clear') }}
+          </a-button>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
         :label="$t('model.agent.label.is_remove_abnormal_model')"
       >
         <a-skeleton v-if="loading" :animation="true">
@@ -202,13 +228,17 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import useLoading from '@/hooks/loading';
+  import { Message, Modal } from '@arco-design/web-vue';
+  import { useI18n } from 'vue-i18n';
   import {
     queryModelAgentDetail,
     ModelAgentDetailParams,
     ModelAgentDetail,
+    clearModelAgentSessionKeepCache,
   } from '@/api/model_agent';
 
   const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
   const currentData = ref<ModelAgentDetail>({} as ModelAgentDetail);
   const descriptionValueStyle = {
     width: '350px',
@@ -235,6 +265,22 @@
     }
   };
   getModelAgentDetail();
+
+  const handleClearSessionKeepCache = () => {
+    Modal.warning({
+      title: t('modal.warning.title'),
+      titleAlign: 'center',
+      content: t('button.clear'),
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
+      hideCancel: false,
+      onOk: async () => {
+        await clearModelAgentSessionKeepCache({ id: currentData.value.id });
+        Message.success(t('success.operate'));
+        getModelAgentDetail();
+      },
+    });
+  };
 </script>
 
 <script lang="ts">

@@ -219,6 +219,16 @@ export interface GeneralApi {
   ip_whitelist: string[];
 }
 
+export interface ModelAgentSessionKeep {
+  open: boolean;
+  ttl: number;
+  fail_ttl: number;
+  switch_threshold: number;
+  user_limit: number;
+  agent_limit: number;
+  global_limit: number;
+}
+
 export interface TestItem {
   provider: string;
   model: string;
@@ -262,6 +272,7 @@ export interface SysConfigDetail {
   model_agent_health_check_task: ModelAgentHealthCheckTask;
   service_unavailable: ServiceUnavailable;
   general_api: GeneralApi;
+  model_agent_session_keep: ModelAgentSessionKeep;
   test: Test;
   debug: Debug;
   created_at: string;
@@ -300,6 +311,7 @@ export interface SysConfigUpdate {
   model_agent_health_check_task: ModelAgentHealthCheckTask;
   service_unavailable: ServiceUnavailable;
   general_api: GeneralApi;
+  model_agent_session_keep: ModelAgentSessionKeep;
   test: Test;
   debug: Debug;
 }

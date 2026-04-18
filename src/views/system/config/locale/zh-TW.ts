@@ -218,4 +218,6 @@ export default {
   'sys.config.dict.text_records.messages': '上下文',
   'sys.config.dict.text_records.image': '影像數據',
   'sys.config.dict.text_records.audio': '音訊數據',
+  'sys.config.item.title.model_agent_session_keep': '會話保持',
+  'sys.config.item.desc.model_agent_session_keep': '配置模型代理會話保持的預設參數，包括保持時長、失敗記錄時長、切換閾值以及快取上限',
 };

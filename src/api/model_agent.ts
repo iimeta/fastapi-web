@@ -1,6 +1,16 @@
 import axios from 'axios';
 import qs from 'query-string';
 
+export interface ModelAgentSessionKeep {
+  open: boolean;
+  ttl: number;
+  fail_ttl: number;
+  switch_threshold: number;
+  user_limit: number;
+  agent_limit: number;
+  global_limit: number;
+}
+
 export interface ModelAgentBaseInfo {
   id?: string;
   provider_id: string;
@@ -20,6 +30,8 @@ export interface ModelAgentAdvanced {
   replace_models: string[];
   target_models: string[];
   is_enable_health_check: boolean;
+  is_enable_session_keep: boolean;
+  session_keep_config: ModelAgentSessionKeep;
   is_remove_abnormal_model: boolean;
   is_never_disable: boolean;
   lb_strategy: string;
@@ -120,6 +132,9 @@ export interface ModelAgentDetail {
   replace_models: string[];
   target_models: string[];
   is_enable_health_check: boolean;
+  is_enable_session_keep: boolean;
+  session_keep_config?: ModelAgentSessionKeep;
+  session_keep_count: number;
   is_remove_abnormal_model: boolean;
   is_never_disable: boolean;
   abnormal_models: string[];
@@ -198,4 +213,26 @@ export interface TestModelRes {
 
 export function testModel(data: TestModelParams) {
   return axios.post('/api/v1/model/agent/test/model', data);
+}
+
+export function queryModelAgentSessionKeepCount(
+  params: ModelAgentDetailParams
+) {
+  return axios.get<{ count: number }>(
+    '/api/v1/model/agent/session/keep/count',
+    {
+      params,
+      paramsSerializer: (obj) => {
+        return qs.stringify(obj);
+      },
+    }
+  );
+}
+
+export function clearModelAgentSessionKeepCache(data: { id: string }) {
+  return axios.post('/api/v1/model/agent/session/keep/clear', data);
+}
+
+export function clearAllModelAgentSessionKeepCache() {
+  return axios.post('/api/v1/model/agent/session/keep/clear/all');
 }
