@@ -14,13 +14,13 @@
     <div class="model-square-card__head">
       <div class="model-square-card__provider">
         <svg
-          v-if="logoData"
+          v-if="logoData?.kind === 'svg'"
           class="model-square-card__svg"
           :viewBox="logoData.viewBox"
-          fill="currentColor"
-          :style="{ color: logoData.color }"
+          :style="logoData.color ? { color: logoData.color } : undefined"
         >
-          <path :d="logoData.path" />
+          <path v-if="logoData.path" :d="logoData.path" />
+          <g v-else-if="logoData.markup" v-html="logoData.markup" />
         </svg>
         <span
           v-else
@@ -165,6 +165,11 @@
   import { ModelPage } from '@/api/model';
   import { useAppStore } from '@/store';
   import { parseQuota } from '@/utils/common';
+  import {
+    getProviderBrandColor,
+    getProviderInitial,
+    getProviderLogo,
+  } from '@/utils/provider-brand';
 
   const { t } = useI18n();
   const { copy } = useClipboard();
@@ -178,109 +183,25 @@
     (e: 'clickCard', r: ModelPage): void;
   }>();
 
-  /* ---- SVG logo map ---- */
-  const logoMap: Record<
-    string,
-    { viewBox: string; path: string; color: string }
-  > = {
-    openai: {
-      viewBox: '0 0 24 24',
-      path: 'M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.407-.667zm2.01-3.023l-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.142.08L8.704 5.46a.795.795 0 0 0-.393.681zm1.097-2.365l2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z',
-      color: '#10a37f',
-    },
-    google: {
-      viewBox: '0 0 24 24',
-      path: 'M12 0C5.372 0 0 5.373 0 12s5.372 12 12 12c6.627 0 12-5.373 12-12S18.627 0 12 0zm-.001 4.8a7.2 7.2 0 0 1 7.2 7.2 7.2 7.2 0 1 1-7.2-7.2z',
-      color: '#4285f4',
-    },
-    anthropic: {
-      viewBox: '0 0 24 24',
-      path: 'M17.304 3.541h-3.672l6.696 16.918h3.672zm-10.608 0L0 20.459h3.744l1.37-3.553h7.005l1.369 3.553h3.744L10.536 3.541zm-.372 10.339l2.3-5.967 2.3 5.967z',
-      color: '#d97757',
-    },
-    deepseek: {
-      viewBox: '0 0 24 24',
-      path: 'M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm3.248 7.2a.6.6 0 0 1 .6.6v8.4a.6.6 0 0 1-.6.6H8.752a.6.6 0 0 1-.6-.6V7.8a.6.6 0 0 1 .6-.6z',
-      color: '#4D6BFE',
-    },
-    baidu: {
-      viewBox: '0 0 24 24',
-      path: 'M5.927 12.497c2.063-.443 1.782-2.909 1.72-3.448-.101-.83-.593-2.36-2.32-2.206-2.14.202-1.996 2.975-1.996 2.975s-.461 3.146 2.596 2.679zm3.22-4.803c1.7 0 2.315-1.756 2.315-3.282S10.847.011 9.147.011c-1.7 0-2.315 1.62-2.315 3.146s.615 2.537 2.315 2.537zm5.54.758c1.762.35 2.605-1.265 2.898-2.54.293-1.277.086-3.169-1.762-3.555C14.068 2.97 13.394 4.5 13.197 5.2c-.283 1.022-.18 2.86 1.49 3.253zm4.744 2.735c0-.764-.544-3.31-2.771-3.31-2.227 0-2.622 1.99-2.622 3.539 0 1.358.336 3.281 2.827 3.068 2.492-.214 2.566-2.532 2.566-3.297zm-6.343 3.394c-.499-.56-1.545-.982-2.478-1.06-1.16-.13-1.418.396-2.741.207-1.321-.193-.783-.633-2.224-.245-1.029.275-2.658 1.265-3.27 2.972-.867 2.476.699 6.2 2.404 7.554 1.596 1.249 2.879.687 3.936.588 1.033-.109 1.753.514 3.008.289 1.252-.227 2.097-1.185 2.537-1.87.632-.986 1.035-1.86 1.187-3.37.023-.185-.012-.367-.121-.51-.49-.632-1.733-3.963-2.238-4.555z',
-      color: '#2932e1',
-    },
-    meta: {
-      viewBox: '0 0 24 24',
-      path: 'M6.915 4.03c-1.968 0-3.412 1.06-4.36 2.847C1.524 8.572.93 10.77.93 12.568c0 2.378.79 3.964 2.602 3.964 1.232 0 2.19-.628 3.564-2.704.985-1.49 1.74-2.9 2.36-4.107.398-.775.68-1.353.86-1.754a12.4 12.4 0 0 0-1.202-2.12C8.24 4.674 7.577 4.03 6.915 4.03zM17.085 4.03c-.662 0-1.325.644-2.199 1.817a12.4 12.4 0 0 0-1.202 2.12c.18.401.462.979.86 1.754.62 1.207 1.375 2.617 2.36 4.107 1.374 2.076 2.332 2.704 3.564 2.704 1.813 0 2.602-1.586 2.602-3.964 0-1.798-.594-3.996-1.625-5.691-.948-1.787-2.392-2.847-4.36-2.847z',
-      color: '#0082fb',
-    },
-    mistral: {
-      viewBox: '0 0 24 24',
-      path: 'M0 0h4.8v4.8H0zm19.2 0H24v4.8h-4.8zM0 4.8h4.8v4.8H0zm4.8 0h4.8v4.8H4.8zm9.6 0h4.8v4.8h-4.8zm4.8 0H24v4.8h-4.8zM0 9.6h4.8v4.8H0zm4.8 0h4.8v4.8H4.8zm4.8 0h4.8v4.8H9.6zm4.8 0h4.8v4.8h-4.8zm4.8 0H24v4.8h-4.8zM0 14.4h4.8v4.8H0zm4.8 0h4.8v4.8H4.8zm9.6 0h4.8v4.8h-4.8zm4.8 0H24v4.8h-4.8zM0 19.2h4.8V24H0zm19.2 0H24V24h-4.8z',
-      color: '#ff7000',
-    },
-  };
+  const logoData = computed(() =>
+    getProviderLogo(props.record.provider_code, props.record.provider_name)
+  );
 
-  const logoData = computed(() => {
-    const key = (
-      props.record.provider_code ||
-      props.record.provider_name ||
-      ''
-    ).toLowerCase();
-    const matched = Object.keys(logoMap).find((k) => key.includes(k));
-    return matched ? logoMap[matched] : null;
-  });
-
-  /* ---- 供应商品牌色 ---- */
-  const brandMap: Record<string, string> = {
-    openai: '#10a37f',
-    anthropic: '#d97757',
-    google: '#4285f4',
-    baidu: '#2932e1',
-    aliyun: '#ff6a00',
-    tencent: '#0052d9',
-    minimax: '#ff3b30',
-    zhipu: '#3478f6',
-    zhipuai: '#3478f6',
-    xunfei: '#00a9ff',
-    xfyun: '#00a9ff',
-    deepseek: '#4D6BFE',
-    moonshot: '#1a1a2e',
-    kimi: '#1a1a2e',
-    volcengine: '#3370ff',
-  };
-
-  const brandColor = computed(() => {
-    const key = (
-      props.record.provider_code ||
-      props.record.provider_name ||
-      ''
-    ).toLowerCase();
-    const matched = Object.keys(brandMap).find((k) => key.includes(k));
-    if (matched) return brandMap[matched];
-    const palette = [
-      '#6366f1',
-      '#8b5cf6',
-      '#ec4899',
-      '#14b8a6',
-      '#f59e0b',
-      '#06b6d4',
-    ];
-    let h = 0;
-    for (let i = 0; i < key.length; i += 1) {
-      h = key.charCodeAt(i) + (h * 31 - h);
-    }
-    return palette[Math.abs(h) % palette.length];
-  });
+  const brandColor = computed(() =>
+    getProviderBrandColor(
+      props.record.provider_code,
+      props.record.provider_name
+    )
+  );
 
   const providerGradient = computed(() => {
     const c = brandColor.value;
     return `linear-gradient(135deg, ${c}, ${c}bb)`;
   });
 
-  const initial = computed(() => {
-    const n = props.record.provider_name;
-    return n ? n.charAt(0).toUpperCase() : '?';
-  });
+  const initial = computed(() =>
+    getProviderInitial(props.record.provider_name)
+  );
 
   /* ---- 计费 ---- */
   const billingMethods = computed(
