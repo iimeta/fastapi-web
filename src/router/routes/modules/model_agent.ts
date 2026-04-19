@@ -18,7 +18,7 @@ const MODEL_AGENT: AppRouteRecordRaw = {
     {
       path: 'list',
       name: 'ModelAgentList',
-      component: () => import('@/views/model_agent/list/index.vue'),
+      component: () => import('@/views/model_agent/list/card.vue'),
       meta: {
         locale: 'model.agent.menu',
         requiresAuth: true,
