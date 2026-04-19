@@ -234,96 +234,78 @@
               v-if="formData.is_enable_session_keep"
               field="session_keep_config.ttl"
               :label="$t('model.agent.label.session_keep_ttl')"
-              :rules="[
-                {
-                  required: true,
-                  message: $t('model.agent.placeholder.session_keep_ttl'),
-                },
-              ]"
             >
               <a-input-number
                 v-model="formData.session_keep_config.ttl"
                 :min="1"
                 :placeholder="$t('model.agent.placeholder.session_keep_ttl')"
               >
-                <template #append>{{ $t('unit.minute') }}</template>
+                <template #append>{{ $t('unit.second') }}</template>
               </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="formData.is_enable_session_keep"
               field="session_keep_config.fail_ttl"
               :label="$t('model.agent.label.session_keep_fail_ttl')"
-              :rules="[
-                {
-                  required: true,
-                  message: $t('model.agent.placeholder.session_keep_fail_ttl'),
-                },
-              ]"
             >
               <a-input-number
                 v-model="formData.session_keep_config.fail_ttl"
                 :min="1"
-                :placeholder="$t('model.agent.placeholder.session_keep_fail_ttl')"
+                :placeholder="
+                  $t('model.agent.placeholder.session_keep_fail_ttl')
+                "
               >
-                <template #append>{{ $t('unit.minute') }}</template>
+                <template #append>{{ $t('unit.second') }}</template>
               </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="formData.is_enable_session_keep"
-              field="session_keep_config.switch_threshold"
-              :label="$t('model.agent.label.session_keep_switch_threshold')"
-              :rules="[
-                {
-                  required: true,
-                  message: $t(
-                    'model.agent.placeholder.session_keep_switch_threshold'
-                  ),
-                },
-              ]"
+              field="session_keep_config.fail_switch_threshold"
+              :label="
+                $t('model.agent.label.session_keep_fail_switch_threshold')
+              "
             >
               <a-input-number
-                v-model="formData.session_keep_config.switch_threshold"
+                v-model="formData.session_keep_config.fail_switch_threshold"
                 :min="1"
                 :placeholder="
-                  $t('model.agent.placeholder.session_keep_switch_threshold')
+                  $t(
+                    'model.agent.placeholder.session_keep_fail_switch_threshold'
+                  )
                 "
-              />
+              >
+                <template #append> {{ $t('unit.once') }} </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="formData.is_enable_session_keep"
               field="session_keep_config.user_limit"
               :label="$t('model.agent.label.session_keep_user_limit')"
-              :rules="[
-                {
-                  required: true,
-                  message: $t('model.agent.placeholder.session_keep_user_limit'),
-                },
-              ]"
             >
               <a-input-number
                 v-model="formData.session_keep_config.user_limit"
                 :min="1"
-                :placeholder="$t('model.agent.placeholder.session_keep_user_limit')"
-              />
+                :placeholder="
+                  $t('model.agent.placeholder.session_keep_user_limit')
+                "
+              >
+                <template #append> {{ $t('unit.item') }} </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="formData.is_enable_session_keep"
               field="session_keep_config.agent_limit"
-              :label="$t('model.agent.label.session_keep_agent_limit')"
-              :rules="[
-                {
-                  required: true,
-                  message: $t('model.agent.placeholder.session_keep_agent_limit'),
-                },
-              ]"
+              :label="$t('model.agent.label.session_keep_agent_total_limit')"
             >
               <a-input-number
                 v-model="formData.session_keep_config.agent_limit"
                 :min="1"
                 :placeholder="
-                  $t('model.agent.placeholder.session_keep_agent_limit')
+                  $t('model.agent.placeholder.session_keep_agent_total_limit')
                 "
-              />
+              >
+                <template #append> {{ $t('unit.item') }} </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="formData.is_enable_health_check"
@@ -499,13 +481,12 @@
     is_enable_health_check: false,
     is_enable_session_keep: false,
     session_keep_config: {
-      open: true,
-      ttl: 30,
-      fail_ttl: 5,
-      switch_threshold: 3,
-      user_limit: 50,
-      agent_limit: 10000,
-      global_limit: 200000,
+      ttl: ref(),
+      fail_ttl: ref(),
+      fail_switch_threshold: ref(),
+      user_limit: ref(),
+      agent_limit: ref(),
+      global_limit: ref(),
     },
     is_remove_abnormal_model: true,
     is_never_disable: false,
@@ -559,15 +540,7 @@
       }
       formData.value.is_enable_health_check = data.is_enable_health_check;
       formData.value.is_enable_session_keep = data.is_enable_session_keep;
-      formData.value.session_keep_config = data.session_keep_config || {
-        open: true,
-        ttl: 30,
-        fail_ttl: 5,
-        switch_threshold: 3,
-        user_limit: 50,
-        agent_limit: 10000,
-        global_limit: 200000,
-      };
+      formData.value.session_keep_config = data.session_keep_config || {};
       formData.value.is_remove_abnormal_model = data.is_remove_abnormal_model;
       formData.value.is_never_disable = data.is_never_disable;
       formData.value.lb_strategy = String(data.lb_strategy);

@@ -93,12 +93,76 @@
           {{ $t(`dict.${currentData?.is_enable_session_keep || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('model.agent.label.session_keep_count')">
+      <a-descriptions-item
+        v-if="currentData.is_enable_session_keep"
+        :label="$t('model.agent.label.session_keep_ttl')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData?.session_keep_config?.ttl || '-' }}
+          {{ $t('unit.second') }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        v-if="currentData.is_enable_session_keep"
+        :label="$t('model.agent.label.session_keep_fail_ttl')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData?.session_keep_config?.fail_ttl || '-' }}
+          {{ $t('unit.second') }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        v-if="currentData.is_enable_session_keep"
+        :label="$t('model.agent.label.session_keep_fail_switch_threshold')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData?.session_keep_config?.fail_switch_threshold || '-' }}
+          {{ $t('unit.once') }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        v-if="currentData.is_enable_session_keep"
+        :label="$t('model.agent.label.session_keep_user_limit')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData?.session_keep_config?.user_limit || '-' }}
+          {{ $t('unit.item') }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        v-if="currentData.is_enable_session_keep"
+        :label="$t('model.agent.label.session_keep_agent_total_limit')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData?.session_keep_config?.agent_limit || '-' }}
+          {{ $t('unit.item') }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        v-if="currentData.is_enable_session_keep"
+        :label="$t('model.agent.detail.session_keep_count')"
+      >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
           {{ currentData.session_keep_count || 0 }}
+          {{ $t('unit.item') }}
           <a-button
             size="mini"
             status="danger"
@@ -270,7 +334,7 @@
     Modal.warning({
       title: t('modal.warning.title'),
       titleAlign: 'center',
-      content: t('button.clear'),
+      content: t('model.agent.placeholder.clear'),
       okText: t('button.ok'),
       cancelText: t('button.cancel'),
       hideCancel: false,

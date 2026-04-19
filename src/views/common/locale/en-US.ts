@@ -110,6 +110,7 @@ export default {
   'unit.piece': 'piece',
   'unit.once': 'once',
   'unit.item': 'item',
+  'unit.one': 'piece',
   // size
   'size.mini': 'Mini',
   'size.small': 'Small',
@@ -150,6 +151,7 @@ export default {
   'button.copy': 'Copy',
   'button.recharge': 'Recharge',
   'button.test': 'Test',
+  'button.clear': 'Clear',
   'button.all.enable': 'Enable All',
   'button.all.disable': 'Disable All',
   'button.all.update': 'Update All',

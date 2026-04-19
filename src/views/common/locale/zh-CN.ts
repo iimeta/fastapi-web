@@ -110,6 +110,7 @@ export default {
   'unit.piece': '张',
   'unit.once': '次',
   'unit.item': '条',
+  'unit.one': '个',
   // size
   'size.mini': '迷你',
   'size.small': '偏小',
@@ -150,6 +151,7 @@ export default {
   'button.copy': '复制',
   'button.recharge': '充值',
   'button.test': '测试',
+  'button.clear': '清除',
   'button.all.enable': '全部启用',
   'button.all.disable': '全部禁用',
   'button.all.update': '全部修改',

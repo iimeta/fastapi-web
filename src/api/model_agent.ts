@@ -2,13 +2,12 @@ import axios from 'axios';
 import qs from 'query-string';
 
 export interface ModelAgentSessionKeep {
-  open: boolean;
-  ttl: number;
-  fail_ttl: number;
-  switch_threshold: number;
-  user_limit: number;
-  agent_limit: number;
-  global_limit: number;
+  ttl: any;
+  fail_ttl: any;
+  fail_switch_threshold: any;
+  user_limit: any;
+  agent_limit: any;
+  global_limit: any;
 }
 
 export interface ModelAgentBaseInfo {
@@ -133,7 +132,7 @@ export interface ModelAgentDetail {
   target_models: string[];
   is_enable_health_check: boolean;
   is_enable_session_keep: boolean;
-  session_keep_config?: ModelAgentSessionKeep;
+  session_keep_config: ModelAgentSessionKeep;
   session_keep_count: number;
   is_remove_abnormal_model: boolean;
   is_never_disable: boolean;

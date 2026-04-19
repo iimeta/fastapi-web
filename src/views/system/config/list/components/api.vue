@@ -87,124 +87,6 @@
     >
       <a-form ref="configForm" :model="configFormData" auto-label-width>
         <a-form-item
-          v-if="configFormData.action === 'model_agent_session_keep'"
-          field="model_agent_session_keep.ttl"
-          :label="$t('model.agent.label.session_keep_ttl')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.agent.placeholder.session_keep_ttl'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="configFormData.model_agent_session_keep.ttl"
-            :min="1"
-            allow-clear
-            :placeholder="$t('model.agent.placeholder.session_keep_ttl')"
-          >
-            <template #append> {{ $t('unit.minute') }} </template>
-          </a-input-number>
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'model_agent_session_keep'"
-          field="model_agent_session_keep.fail_ttl"
-          :label="$t('model.agent.label.session_keep_fail_ttl')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.agent.placeholder.session_keep_fail_ttl'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="configFormData.model_agent_session_keep.fail_ttl"
-            :min="1"
-            allow-clear
-            :placeholder="$t('model.agent.placeholder.session_keep_fail_ttl')"
-          >
-            <template #append> {{ $t('unit.minute') }} </template>
-          </a-input-number>
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'model_agent_session_keep'"
-          field="model_agent_session_keep.switch_threshold"
-          :label="$t('model.agent.label.session_keep_switch_threshold')"
-          :rules="[
-            {
-              required: true,
-              message: $t(
-                'model.agent.placeholder.session_keep_switch_threshold'
-              ),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="configFormData.model_agent_session_keep.switch_threshold"
-            :min="1"
-            allow-clear
-            :placeholder="
-              $t('model.agent.placeholder.session_keep_switch_threshold')
-            "
-          >
-            <template #append> {{ $t('unit.once') }} </template>
-          </a-input-number>
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'model_agent_session_keep'"
-          field="model_agent_session_keep.user_limit"
-          :label="$t('model.agent.label.session_keep_user_limit')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.agent.placeholder.session_keep_user_limit'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="configFormData.model_agent_session_keep.user_limit"
-            :min="1"
-            allow-clear
-            :placeholder="$t('model.agent.placeholder.session_keep_user_limit')"
-          />
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'model_agent_session_keep'"
-          field="model_agent_session_keep.agent_limit"
-          :label="$t('model.agent.label.session_keep_agent_limit')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.agent.placeholder.session_keep_agent_limit'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="configFormData.model_agent_session_keep.agent_limit"
-            :min="1"
-            allow-clear
-            :placeholder="$t('model.agent.placeholder.session_keep_agent_limit')"
-          />
-        </a-form-item>
-        <a-form-item
-          v-if="configFormData.action === 'model_agent_session_keep'"
-          field="model_agent_session_keep.global_limit"
-          :label="$t('model.agent.label.session_keep_global_limit')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.agent.placeholder.session_keep_global_limit'),
-            },
-          ]"
-        >
-          <a-input-number
-            v-model="configFormData.model_agent_session_keep.global_limit"
-            :min="1"
-            allow-clear
-            :placeholder="$t('model.agent.placeholder.session_keep_global_limit')"
-          />
-        </a-form-item>
-        <a-form-item
           v-if="configFormData.action === 'base'"
           field="base.err_retry"
           :label="$t('sys.config.label.base.err_retry')"
@@ -814,6 +696,134 @@
             <icon-minus />
           </a-button>
         </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_session_keep'"
+          field="model_agent_session_keep.ttl"
+          :label="$t('sys.config.label.session_keep_ttl')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.session_keep_ttl'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.model_agent_session_keep.ttl"
+            :min="1"
+            allow-clear
+            :placeholder="$t('sys.config.placeholder.session_keep_ttl')"
+          >
+            <template #append> {{ $t('unit.second') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_session_keep'"
+          field="model_agent_session_keep.fail_ttl"
+          :label="$t('sys.config.label.session_keep_fail_ttl')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.session_keep_fail_ttl'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.model_agent_session_keep.fail_ttl"
+            :min="1"
+            allow-clear
+            :placeholder="$t('sys.config.placeholder.session_keep_fail_ttl')"
+          >
+            <template #append> {{ $t('unit.second') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_session_keep'"
+          field="model_agent_session_keep.fail_switch_threshold"
+          :label="$t('sys.config.label.session_keep_fail_switch_threshold')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.placeholder.session_keep_fail_switch_threshold'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="
+              configFormData.model_agent_session_keep.fail_switch_threshold
+            "
+            :min="1"
+            allow-clear
+            :placeholder="
+              $t('sys.config.placeholder.session_keep_fail_switch_threshold')
+            "
+          >
+            <template #append> {{ $t('unit.once') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_session_keep'"
+          field="model_agent_session_keep.user_limit"
+          :label="$t('sys.config.label.session_keep_user_limit')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.session_keep_user_limit'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.model_agent_session_keep.user_limit"
+            :min="1"
+            allow-clear
+            :placeholder="$t('sys.config.placeholder.session_keep_user_limit')"
+          >
+            <template #append> {{ $t('unit.item') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_session_keep'"
+          field="model_agent_session_keep.agent_limit"
+          :label="$t('sys.config.label.session_keep_agent_limit')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.session_keep_agent_limit'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.model_agent_session_keep.agent_limit"
+            :min="1"
+            allow-clear
+            :placeholder="$t('sys.config.placeholder.session_keep_agent_limit')"
+          >
+            <template #append> {{ $t('unit.item') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_session_keep'"
+          field="model_agent_session_keep.global_limit"
+          :label="$t('sys.config.label.session_keep_global_limit')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.session_keep_global_limit'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.model_agent_session_keep.global_limit"
+            :min="1"
+            allow-clear
+            :placeholder="
+              $t('sys.config.placeholder.session_keep_global_limit')
+            "
+          >
+            <template #append> {{ $t('unit.item') }} </template>
+          </a-input-number>
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -1102,6 +1112,14 @@
         reset: true,
       },
       {
+        action: 'model_agent_session_keep',
+        title: t('sys.config.item.title.model_agent_session_keep'),
+        desc: t('sys.config.item.desc.model_agent_session_keep'),
+        open: configFormData.value.model_agent_session_keep.open,
+        config: true,
+        reset: true,
+      },
+      {
         action: 'auto_disabled_error',
         title: t('sys.config.item.title.auto_disabled_error'),
         desc: t('sys.config.item.desc.auto_disabled_error'),
@@ -1130,14 +1148,6 @@
         title: t('sys.config.item.title.not_shield_error'),
         desc: t('sys.config.item.desc.not_shield_error'),
         open: configFormData.value.not_shield_error.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'model_agent_session_keep',
-        title: t('sys.config.item.title.model_agent_session_keep'),
-        desc: t('sys.config.item.desc.model_agent_session_keep'),
-        open: configFormData.value.model_agent_session_keep.open,
         config: true,
         reset: true,
       },

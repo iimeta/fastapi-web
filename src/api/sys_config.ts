@@ -223,7 +223,7 @@ export interface ModelAgentSessionKeep {
   open: boolean;
   ttl: number;
   fail_ttl: number;
-  switch_threshold: number;
+  fail_switch_threshold: number;
   user_limit: number;
   agent_limit: number;
   global_limit: number;
