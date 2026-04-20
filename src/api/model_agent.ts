@@ -48,6 +48,7 @@ export function submitModelAgentCreate(data: ModelAgentCreate) {
 export interface ModelAgentPage {
   id: string;
   provider_id: string;
+  provider_code: string;
   provider_name: string;
   name: string;
   base_url: string;
@@ -115,6 +116,7 @@ export interface ModelAgentDetailParams {
 export interface ModelAgentDetail {
   id: string;
   provider_id: string;
+  provider_code: string;
   provider_name: string;
   name: string;
   base_url: string;

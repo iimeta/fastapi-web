@@ -10,7 +10,17 @@
     <!-- 头部: 首字母 + 名称 + 状态 -->
     <div class="group-square-card__head">
       <div class="group-square-card__avatar-area">
+        <svg
+          v-if="logoData?.kind === 'svg'"
+          class="group-square-card__svg"
+          :viewBox="logoData.viewBox"
+          :style="logoData.color ? { color: logoData.color } : undefined"
+        >
+          <path v-if="logoData.path" :d="logoData.path" />
+          <g v-else-if="logoData.markup" v-html="logoData.markup" />
+        </svg>
         <span
+          v-else
           class="group-square-card__letter"
           :style="{ background: barGradient }"
         >
@@ -131,6 +141,12 @@
 <script lang="ts" setup>
   import { computed } from 'vue';
   import { GroupPage } from '@/api/group';
+  import {
+    getProviderBrandColor,
+    getProviderCompanyLogo,
+    getProviderInitial,
+    getProviderLogo,
+  } from '@/utils/provider-brand';
 
   const props = defineProps<{
     record: GroupPage;
@@ -142,37 +158,22 @@
   }>();
 
   /* ---- 颜色 ---- */
-  const palette = [
-    '#6366f1',
-    '#8b5cf6',
-    '#ec4899',
-    '#14b8a6',
-    '#f59e0b',
-    '#06b6d4',
-    '#10b981',
-    '#f43f5e',
-    '#3b82f6',
-    '#a855f7',
-  ];
+  const logoData = computed(
+    () =>
+      getProviderLogo(undefined, props.record.name) ||
+      getProviderCompanyLogo(undefined, props.record.name)
+  );
 
-  const brandColor = computed(() => {
-    const name = props.record.name || '';
-    let h = 0;
-    for (let i = 0; i < name.length; i += 1) {
-      h = name.charCodeAt(i) + (h * 31 - h);
-    }
-    return palette[Math.abs(h) % palette.length];
-  });
+  const brandColor = computed(() =>
+    getProviderBrandColor(undefined, props.record.name)
+  );
 
   const barGradient = computed(() => {
     const c = brandColor.value;
     return `linear-gradient(135deg, ${c}, ${c}bb)`;
   });
 
-  const initial = computed(() => {
-    const n = props.record.name;
-    return n ? n.charAt(0).toUpperCase() : '?';
-  });
+  const initial = computed(() => getProviderInitial(props.record.name));
 
   /* ---- 计费 ---- */
   const billingMethods = computed(() => props.record.billing_methods || [1, 2]);
@@ -248,6 +249,12 @@
     align-items: center;
     gap: 10px;
     min-width: 0;
+  }
+
+  .group-square-card__svg {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
   }
 
   .group-square-card__letter {

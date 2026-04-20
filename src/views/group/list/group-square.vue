@@ -213,7 +213,23 @@
           <div class="tech-header-grid" />
           <div class="tech-header-content">
             <div class="tech-avatar" :style="{ '--brand': detailBrandColor }">
-              <span class="tech-avatar-letter">
+              <svg
+                v-if="detailLogoData?.kind === 'svg'"
+                class="tech-avatar-svg"
+                :viewBox="detailLogoData.viewBox"
+                :style="
+                  detailLogoData.color
+                    ? { color: detailLogoData.color }
+                    : undefined
+                "
+              >
+                <path v-if="detailLogoData.path" :d="detailLogoData.path" />
+                <g
+                  v-else-if="detailLogoData.markup"
+                  v-html="detailLogoData.markup"
+                />
+              </svg>
+              <span v-else class="tech-avatar-letter">
                 {{ detailInitial }}
               </span>
             </div>
@@ -357,6 +373,12 @@
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import Models from '@/views/common/models.vue';
+  import {
+    getProviderBrandColor,
+    getProviderCompanyLogo,
+    getProviderInitial,
+    getProviderLogo,
+  } from '@/utils/provider-brand';
   import GroupSquareCard from '../components/group-square-card.vue';
   import GroupSquareSkeleton from '../components/group-square-skeleton.vue';
 
@@ -501,34 +523,23 @@
   };
 
   /* ---- 颜色 ---- */
-  const palette = [
-    '#6366f1',
-    '#8b5cf6',
-    '#ec4899',
-    '#14b8a6',
-    '#f59e0b',
-    '#06b6d4',
-    '#10b981',
-    '#f43f5e',
-    '#3b82f6',
-    '#a855f7',
-  ];
+  const detailLogoData = computed(
+    () =>
+      (detailRecord.value &&
+        (getProviderLogo(undefined, detailRecord.value.name) ||
+          getProviderCompanyLogo(undefined, detailRecord.value.name))) ||
+      null
+  );
 
-  const detailBrandColor = computed(() => {
-    if (!detailRecord.value) return '#6366f1';
-    const name = detailRecord.value.name || '';
-    let h = 0;
-    for (let i = 0; i < name.length; i += 1) {
-      h = name.charCodeAt(i) + (h * 31 - h);
-    }
-    return palette[Math.abs(h) % palette.length];
-  });
+  const detailBrandColor = computed(() =>
+    detailRecord.value
+      ? getProviderBrandColor(undefined, detailRecord.value.name)
+      : '#6366f1'
+  );
 
-  const detailInitial = computed(() => {
-    if (!detailRecord.value) return '?';
-    const n = detailRecord.value.name;
-    return n ? n.charAt(0).toUpperCase() : '?';
-  });
+  const detailInitial = computed(() =>
+    detailRecord.value ? getProviderInitial(detailRecord.value.name) : '?'
+  );
 
   const detailBillingMethods = computed(
     () => detailRecord.value?.billing_methods || [1, 2]
@@ -891,6 +902,12 @@
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 10%, transparent),
       0 2px 8px rgba(0, 0, 0, 0.06);
     overflow: hidden;
+  }
+
+  .tech-avatar-svg {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
   }
 
   .tech-avatar-letter {
