@@ -209,16 +209,6 @@ export interface ModelAgentHealthCheckTask {
   key: string;
 }
 
-export interface ServiceUnavailable {
-  open: boolean;
-  ip_whitelist: string[];
-}
-
-export interface GeneralApi {
-  open: boolean;
-  ip_whitelist: string[];
-}
-
 export interface ModelAgentSessionKeep {
   open: boolean;
   ttl: number;
@@ -229,6 +219,21 @@ export interface ModelAgentSessionKeep {
   global_limit: number;
 }
 
+export interface ModelAgentSessionKeepTask {
+  open: boolean;
+  cron: string;
+  lock_minutes: number;
+}
+
+export interface ServiceUnavailable {
+  open: boolean;
+  ip_whitelist: string[];
+}
+
+export interface GeneralApi {
+  open: boolean;
+  ip_whitelist: string[];
+}
 export interface TestItem {
   provider: string;
   model: string;
@@ -270,9 +275,10 @@ export interface SysConfigDetail {
   batch_task: BatchTask;
   reset_task: ResetTask;
   model_agent_health_check_task: ModelAgentHealthCheckTask;
+  model_agent_session_keep: ModelAgentSessionKeep;
+  model_agent_session_keep_task: ModelAgentSessionKeepTask;
   service_unavailable: ServiceUnavailable;
   general_api: GeneralApi;
-  model_agent_session_keep: ModelAgentSessionKeep;
   test: Test;
   debug: Debug;
   created_at: string;
@@ -309,9 +315,10 @@ export interface SysConfigUpdate {
   batch_task: BatchTask;
   reset_task: ResetTask;
   model_agent_health_check_task: ModelAgentHealthCheckTask;
+  model_agent_session_keep: ModelAgentSessionKeep;
+  model_agent_session_keep_task: ModelAgentSessionKeepTask;
   service_unavailable: ServiceUnavailable;
   general_api: GeneralApi;
-  model_agent_session_keep: ModelAgentSessionKeep;
   test: Test;
   debug: Debug;
 }

@@ -473,6 +473,50 @@
           />
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'model_agent_session_keep_task'"
+          field="model_agent_session_keep_task.cron"
+          :label="$t('sys.config.label.cron')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.cron'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.model_agent_session_keep_task.cron"
+            :placeholder="$t('sys.config.placeholder.cron')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_session_keep_task'"
+          field="model_agent_session_keep_task.lock_minutes"
+          :label="$t('sys.config.label.lock_minutes')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.placeholder.model_agent_session_keep_task.lock_minutes'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.model_agent_session_keep_task.lock_minutes"
+            :placeholder="
+              $t(
+                'sys.config.placeholder.model_agent_session_keep_task.lock_minutes'
+              )
+            "
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.minute') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
           v-if="configFormData.action === 'model_agent_health_check_task'"
           field="model_agent_health_check_task.lock_minutes"
           :label="$t('sys.config.label.lock_minutes')"
@@ -898,6 +942,7 @@
     statistics: {},
     notice: {},
     quota_task: {},
+    model_agent_session_keep_task: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
@@ -986,6 +1031,8 @@
     configFormData.value.reset_task = data.reset_task;
     configFormData.value.model_agent_health_check_task =
       data.model_agent_health_check_task;
+    configFormData.value.model_agent_session_keep_task =
+      data.model_agent_session_keep_task;
     configFormData.value.notice = data.notice;
     sysConfigItems.value = [
       {
@@ -1041,6 +1088,14 @@
         title: t('sys.config.item.title.model_agent_health_check_task'),
         desc: t('sys.config.item.desc.model_agent_health_check_task'),
         open: configFormData.value.model_agent_health_check_task.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'model_agent_session_keep_task',
+        title: t('sys.config.item.title.model_agent_session_keep_task'),
+        desc: t('sys.config.item.desc.model_agent_session_keep_task'),
+        open: configFormData.value.model_agent_session_keep_task.open,
         config: true,
         reset: true,
       },
