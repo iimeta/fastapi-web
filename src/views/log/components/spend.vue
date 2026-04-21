@@ -435,6 +435,9 @@
     <template #seconds="{ record }">
       {{ record.seconds || '-' }}
     </template>
+    <template #input_tokens="{ record }">
+      {{ record.input_tokens || '-' }}
+    </template>
     <template #once_ratio="{ record }">
       <Quota :model-value="record.pricing.once_ratio" />
       <template
@@ -1146,6 +1149,13 @@
           title: t('log.columns.spend.video_generation.seconds'),
           dataIndex: 'seconds',
           slotName: 'seconds',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('log.columns.spend.input_tokens'),
+          dataIndex: 'input_tokens',
+          slotName: 'input_tokens',
           align: 'center',
           width: 100,
         },
