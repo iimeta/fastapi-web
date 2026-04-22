@@ -225,6 +225,13 @@
               <a-switch v-model="formData.is_enable_health_check" />
             </a-form-item>
             <a-form-item
+              v-if="formData.is_enable_health_check"
+              field="is_remove_abnormal_model"
+              :label="$t('model.agent.label.is_remove_abnormal_model')"
+            >
+              <a-switch v-model="formData.is_remove_abnormal_model" />
+            </a-form-item>
+            <a-form-item
               field="is_enable_session_keep"
               :label="$t('model.agent.label.is_enable_session_keep')"
             >
@@ -306,13 +313,6 @@
               >
                 <template #append> {{ $t('unit.item') }} </template>
               </a-input-number>
-            </a-form-item>
-            <a-form-item
-              v-if="formData.is_enable_health_check"
-              field="is_remove_abnormal_model"
-              :label="$t('model.agent.label.is_remove_abnormal_model')"
-            >
-              <a-switch v-model="formData.is_remove_abnormal_model" />
             </a-form-item>
             <a-form-item
               field="is_never_disable"

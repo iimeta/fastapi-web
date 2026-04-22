@@ -1382,6 +1382,10 @@
 
   const videoModeOptions = [
     {
+      label: t('model.dict.mode.all'),
+      value: 'all',
+    },
+    {
       label: t('model.dict.mode.no_video_input'),
       value: 'no_video_input',
     },
@@ -1688,12 +1692,7 @@
   };
 
   const initVideoPricing = () => {
-    let modes = [
-      'no_video_input',
-      'no_video_input',
-      'no_video_input',
-      'no_video_input',
-    ];
+    let modes = ['all', 'all', 'all', 'all'];
     let widths = [720, 1280, 1024, 1792];
     let heights = [1280, 720, 1792, 1024];
 
@@ -1715,6 +1714,18 @@
         'no_video_input',
         'no_video_input',
         'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'no_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
+        'has_video_input',
         'has_video_input',
         'has_video_input',
         'has_video_input',
@@ -1729,12 +1740,14 @@
         'has_video_input',
       ];
       widths = [
-        864, 752, 640, 560, 496, 992, 1280, 1112, 960, 834, 720, 1470, 864, 752,
-        640, 560, 496, 992, 1280, 1112, 960, 834, 720, 1470,
+        864, 752, 640, 560, 496, 992, 1280, 1112, 960, 834, 720, 1470, 1920,
+        1664, 1440, 1248, 1080, 2206, 864, 752, 640, 560, 496, 992, 1280, 1112,
+        960, 834, 720, 1470, 1920, 1664, 1440, 1248, 1080, 2206,
       ];
       heights = [
-        496, 560, 640, 752, 864, 432, 720, 834, 960, 1112, 1280, 630, 496, 560,
-        640, 752, 864, 432, 720, 834, 960, 1112, 1280, 630,
+        496, 560, 640, 752, 864, 432, 720, 834, 960, 1112, 1280, 630, 1080,
+        1248, 1440, 1664, 1920, 946, 496, 560, 640, 752, 864, 432, 720, 834,
+        960, 1112, 1280, 630, 1080, 1248, 1440, 1664, 1920, 946,
       ];
     }
     for (let i = 0; i < widths.length; i += 1) {

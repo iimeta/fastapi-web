@@ -318,7 +318,7 @@
       // 子菜单缩进
       .arco-menu-inline {
         .arco-menu-item {
-          padding-left: 14px;
+          padding-left: 6px;
         }
       }
 
