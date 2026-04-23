@@ -205,13 +205,6 @@ export interface TestModelParams {
   key: string;
 }
 
-export interface TestModelRes {
-  trace_id: string;
-  result: boolean;
-  total_time: number;
-  error: any;
-}
-
 export function testModel(data: TestModelParams) {
   return axios.post('/api/v1/model/agent/test/model', data);
 }

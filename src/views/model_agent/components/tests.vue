@@ -212,13 +212,17 @@
         </template>
         <template #result="{ record }">
           <a-spin v-if="record.testing" />
-          <span v-else :title="record.error" @click="handleCopy(record.error)">
-            <span v-if="record.result != undefined">
-              <a-tag v-if="record.result" color="green">
-                {{ $t(`dict.success.${record.result}`) }}
+          <span
+            v-else
+            :title="record.error || record.result"
+            @click="handleCopy(record.error || record.result)"
+          >
+            <span v-if="record.success != undefined">
+              <a-tag v-if="record.success" color="green">
+                {{ $t(`dict.success.${record.success}`) }}
               </a-tag>
               <a-tag v-else color="red">
-                {{ $t(`dict.success.${record.result}`) }}
+                {{ $t(`dict.success.${record.success}`) }}
               </a-tag>
             </span>
             <span v-else> - </span>
@@ -226,7 +230,11 @@
         </template>
         <template #total_time="{ record }">
           <a-spin v-if="record.testing" />
-          <span v-else :title="record.error" @click="handleCopy(record.error)">
+          <span
+            v-else
+            :title="record.error || record.result"
+            @click="handleCopy(record.error || record.result)"
+          >
             <span v-if="record.total_time">
               <a-tag v-if="record.total_time > 60000" color="red">
                 {{ record.total_time }}
@@ -424,7 +432,7 @@
         ],
         filter: (value, record) => {
           const boolValue = value[0] === 'true';
-          return record.result === boolValue;
+          return record.success === boolValue;
         },
       },
     },
@@ -680,6 +688,7 @@
       try {
         const { data } = await testModel(testModelParams.value);
         record.trace_id = data.trace_id;
+        record.success = data.success;
         record.result = data.result;
         record.total_time = data.total_time;
         record.error = data.error;
@@ -690,7 +699,7 @@
           });
         }
       } catch (err) {
-        record.result = false;
+        record.success = false;
         record.total_time = Date.now() - startTime;
         record.error = err;
       } finally {
@@ -783,5 +792,9 @@
 
   .tests-content-divider {
     margin-top: 0;
+  }
+
+  .arco-tag {
+    cursor: pointer;
   }
 </style>

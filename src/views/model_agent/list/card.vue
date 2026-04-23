@@ -2,7 +2,7 @@
   <div class="container">
     <a-breadcrumb class="container-breadcrumb">
       <a-breadcrumb-item>
-        <lucide-bot />
+        <lucide-bug />
       </a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('model.agent.menu') }}</a-breadcrumb-item>
     </a-breadcrumb>
