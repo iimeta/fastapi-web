@@ -53,6 +53,8 @@ export default {
   'sys.config.item.desc.auto_disabled_error': 'When a call error occurs, if the error contains configured content, keys or model agents will be auto-disabled. Empty configuration means no auto-disable (except when error count limit is reached).',
   'sys.config.item.title.auto_enable_error': 'Auto Enable Error',
   'sys.config.item.desc.auto_enable_error': 'Auto-disabled keys can be auto-enabled via this configuration. If the disable reason contains configured error content, it will check if the configured enable time condition is met for auto-enabling.',
+  'sys.config.item.title.auto_retry_error': 'Auto Retry Error',
+  'sys.config.item.desc.auto_retry_error': 'When a call error occurs, if the error contains the configured content, it will be automatically retried. If the configuration is empty, all errors will be automatically retried. If error content is configured, automatic retry will only occur when the error contains that specific content.',
   'sys.config.item.title.not_retry_error': 'No Retry Error',
   'sys.config.item.desc.not_retry_error': 'When a call error occurs, if the error contains configured content, no automatic retry is performed. Empty configuration enables automatic retry.',
   'sys.config.item.title.not_shield_error': 'No Shield Error',

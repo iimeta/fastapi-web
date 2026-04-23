@@ -548,6 +548,42 @@
           </a-button>
         </a-form-item>
         <a-form-item
+          v-for="(item, index) of configFormData.auto_retry_error.errors"
+          v-show="configFormData.action === 'auto_retry_error'"
+          :key="index"
+          :field="`auto_retry_error.errors[${index}]`"
+          :label="`${index + 1}. `"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.required.errors'),
+            },
+          ]"
+          :label-col-style="fieldLabelColStyle"
+        >
+          <a-input
+            v-model="configFormData.auto_retry_error.errors[index]"
+            :placeholder="$t('sys.config.placeholder.errors')"
+            allow-clear
+            class="field-input field-input-wide"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            class="field-action-button"
+            @click="handleAutoRetryErrorAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleAutoRetryErrorDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
+        <a-form-item
           v-for="(item, index) of configFormData.not_retry_error.errors"
           v-show="configFormData.action === 'not_retry_error'"
           :key="index"
@@ -869,6 +905,7 @@
     log: {},
     auto_disabled_error: {},
     auto_enable_error: {},
+    auto_retry_error: {},
     not_retry_error: {},
     not_shield_error: {},
     service_unavailable: {},
@@ -888,6 +925,12 @@
       configFormData.value.auto_enable_error.enable_errors.length === 0
     ) {
       handleAutoEnableErrorAdd();
+    }
+    if (
+      sysConfigItem.action === 'auto_retry_error' &&
+      configFormData.value.auto_retry_error.errors.length === 0
+    ) {
+      handleAutoRetryErrorAdd();
     }
     if (
       sysConfigItem.action === 'not_retry_error' &&
@@ -1000,6 +1043,16 @@
       );
     }
     if (
+      configFormData.value.auto_retry_error.errors.length > 0 &&
+      !configFormData.value.auto_retry_error.errors[
+        configFormData.value.auto_retry_error.errors.length - 1
+      ]
+    ) {
+      handleAutoRetryErrorDel(
+        configFormData.value.auto_retry_error.errors.length - 1
+      );
+    }
+    if (
       configFormData.value.not_retry_error.errors.length > 0 &&
       !configFormData.value.not_retry_error.errors[
         configFormData.value.not_retry_error.errors.length - 1
@@ -1089,6 +1142,7 @@
     configFormData.value.log = data.log;
     configFormData.value.auto_disabled_error = data.auto_disabled_error;
     configFormData.value.auto_enable_error = data.auto_enable_error;
+    configFormData.value.auto_retry_error = data.auto_retry_error;
     configFormData.value.not_retry_error = data.not_retry_error;
     configFormData.value.not_shield_error = data.not_shield_error;
     configFormData.value.service_unavailable = data.service_unavailable;
@@ -1132,6 +1186,14 @@
         title: t('sys.config.item.title.auto_enable_error'),
         desc: t('sys.config.item.desc.auto_enable_error'),
         open: configFormData.value.auto_enable_error.open,
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'auto_retry_error',
+        title: t('sys.config.item.title.auto_retry_error'),
+        desc: t('sys.config.item.desc.auto_retry_error'),
+        open: configFormData.value.auto_retry_error.open,
         config: true,
         reset: true,
       },
@@ -1203,6 +1265,14 @@
     if (configFormData.value.auto_enable_error.enable_errors.length > 1) {
       configFormData.value.auto_enable_error.enable_errors.splice(index, 1);
     }
+  };
+
+  const handleAutoRetryErrorAdd = () => {
+    configFormData.value.auto_retry_error.errors.push('');
+  };
+
+  const handleAutoRetryErrorDel = (index: number) => {
+    configFormData.value.auto_retry_error.errors.splice(index, 1);
   };
 
   const handleNotRetryErrorAdd = () => {

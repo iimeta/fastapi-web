@@ -124,6 +124,11 @@ export interface AutoEnableError {
   enable_errors: EnableError[];
 }
 
+export interface AutoRetryError {
+  open: boolean;
+  errors: string[];
+}
+
 export interface NotRetryError {
   open: boolean;
   errors: string[];
@@ -265,6 +270,7 @@ export interface SysConfigDetail {
   reseller_shield_error: ResellerShieldError;
   auto_disabled_error: AutoDisabledError;
   auto_enable_error: AutoEnableError;
+  auto_retry_error: AutoRetryError;
   not_retry_error: NotRetryError;
   not_shield_error: NotShieldError;
   notice: Notice;
@@ -305,6 +311,7 @@ export interface SysConfigUpdate {
   admin_login: AdminLogin;
   auto_disabled_error: AutoDisabledError;
   auto_enable_error: AutoEnableError;
+  auto_retry_error: AutoRetryError;
   not_retry_error: NotRetryError;
   not_shield_error: NotShieldError;
   notice: Notice;

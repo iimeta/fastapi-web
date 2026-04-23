@@ -53,6 +53,8 @@ export default {
   'sys.config.item.desc.auto_disabled_error': '呼叫報錯時, 包含有配置錯誤內容時則自動會禁用密鑰或模型代理等, 為空則不會自動禁用(達到錯誤次數上限除外)',
   'sys.config.item.title.auto_enable_error': '自動啟用錯誤',
   'sys.config.item.desc.auto_enable_error': '密鑰自動禁用後, 可透過此配置自動啟用, 密鑰禁用原因包含有配置的錯誤內容時, 會根據配置的啟用時間判斷是否滿足啟用條件, 滿足則會自動啟用',
+  'sys.config.item.title.auto_retry_error': '自動重試錯誤',
+  'sys.config.item.desc.auto_retry_error': '呼叫報錯時，包含配置的錯誤內容則會自動重試，配置為空則自動重試所有報錯，如若配置了錯誤內容則僅當報錯包含該內容時才會自動重試',
   'sys.config.item.title.not_retry_error': '不重試錯誤',
   'sys.config.item.desc.not_retry_error': '呼叫報錯時, 包含有配置錯誤內容時則不會自動重試, 為空則會自動重試',
   'sys.config.item.title.not_shield_error': '不遮蔽錯誤',

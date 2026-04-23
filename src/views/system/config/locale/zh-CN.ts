@@ -53,6 +53,8 @@ export default {
   'sys.config.item.desc.auto_disabled_error': '调用报错时, 包含有配置错误内容时则自动会禁用密钥或模型代理等, 为空则不会自动禁用(达到错误次数上限除外)',
   'sys.config.item.title.auto_enable_error': '自动启用错误',
   'sys.config.item.desc.auto_enable_error': '密钥自动禁用后, 可通过此配置自动启用, 密钥禁用原因包含有配置的错误内容时, 会根据配置的启用时间判断是否满足启用条件, 满足则会自动启用',
+  'sys.config.item.title.auto_retry_error': '自动重试错误',
+  'sys.config.item.desc.auto_retry_error': '调用报错时, 包含配置的错误内容则会自动重试, 配置为空则自动重试所有报错, 如若配置了错误内容则仅当报错包含该内容时才会自动重试',
   'sys.config.item.title.not_retry_error': '不重试错误',
   'sys.config.item.desc.not_retry_error': '调用报错时, 包含有配置错误内容时则不会自动重试, 为空则会自动重试',
   'sys.config.item.title.not_shield_error': '不屏蔽错误',
