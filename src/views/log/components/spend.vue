@@ -87,20 +87,20 @@
       <Quota :model-value="record.once.spend_tokens" />
     </template>
 
-    <!-- 模型折扣 -->
+    <!-- 模型倍率 -->
     <template #model_time_rule="{ record }">
       <template v-if="record.model_time_rule">
         {{ record.model_time_rule.name }}
-        {{ Number((record.model_time_rule.discount * 100).toFixed(2)) }}%
+        {{ Number(record.model_time_rule.discount.toFixed(2)) }}x
       </template>
       <template v-else>-</template>
     </template>
 
-    <!-- 分组折扣 -->
+    <!-- 分组倍率 -->
     <template #group_time_rule="{ record }">
       <template v-if="record.group_time_rule">
         {{ record.group_time_rule.name }}
-        {{ Number((record.group_time_rule.discount * 100).toFixed(2)) }}%
+        {{ Number(record.group_time_rule.discount.toFixed(2)) }}x
       </template>
       <template v-else>-</template>
     </template>
@@ -1550,7 +1550,7 @@
       });
     }
 
-    // 模型折扣
+    // 模型倍率
     if (spend.value.model_time_rule) {
       totalSpendColumns.value[0].children.push({
         title: t('log.columns.spend.model_time_rule'),
@@ -1561,7 +1561,7 @@
       });
     }
 
-    // 分组折扣
+    // 分组倍率
     if (spend.value.group_time_rule) {
       totalSpendColumns.value[0].children.push({
         title: t('log.columns.spend.group_time_rule'),

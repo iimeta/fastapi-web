@@ -86,6 +86,7 @@ export default {
   'common.billing_methods': 'Billing Methods',
   'common.type': 'Type',
   'common.discount': 'Discount',
+  'common.multiplier': 'Multiplier',
   'common.default': 'Default',
   'common.public': 'Public',
   'common.lb_strategy': 'Load Balancing Strategy',

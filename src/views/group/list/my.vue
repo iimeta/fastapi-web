@@ -159,7 +159,7 @@
         </template>
         <template #time_rules="{ record }">
           <span v-if="record.time_rules && record.time_rules.length === 1">
-            {{ record.time_rules[0].discount }}%<a-button
+            {{ formatDiscountText(record.time_rules[0].discount) }}<a-button
               v-if="hasModelNames(record.time_rules)"
               type="text"
               size="small"
@@ -221,7 +221,7 @@
       <!-- 时段规则 -->
       <a-modal
         v-model:visible="timeRulesVisible"
-        :title="$t('common.discount')"
+        :title="$t('common.multiplier')"
         hide-title
         hide-cancel
         simple
@@ -234,7 +234,9 @@
           :pagination="false"
           :bordered="false"
         >
-          <template #discount="{ record }"> {{ record.discount }}% </template>
+          <template #discount="{ record }">
+            {{ formatDiscountText(record.discount) }}
+          </template>
           <template #model_names="{ record }">
             {{ record.model_names?.join(', ') || $t('common.all') }}
           </template>
@@ -350,7 +352,7 @@
       width: 168,
     },
     {
-      title: t('common.discount'),
+      title: t('common.multiplier'),
       dataIndex: 'time_rules',
       slotName: 'time_rules',
       align: 'center',
@@ -539,7 +541,7 @@
           width: 100,
         },
         {
-          title: t('common.discount'),
+          title: t('common.multiplier'),
           slotName: 'discount',
           align: 'center',
           width: 100,
@@ -579,8 +581,10 @@
     const discounts = rules.map((r: any) => r.discount);
     const min = Math.min(...discounts);
     const max = Math.max(...discounts);
-    return `${min}%~${max}%`;
+    return `${formatDiscountText(min)}~${formatDiscountText(max)}`;
   };
+
+  const formatDiscountText = (discount: number) => `${discount / 100}x`;
 
   const hasModelNames = (rules: any[]) => {
     return rules.some((r: any) => r.model_names?.length);

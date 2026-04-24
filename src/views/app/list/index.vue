@@ -1219,15 +1219,17 @@
     const discounts = rules.map((r: any) => r.discount);
     const min = Math.min(...discounts);
     const max = Math.max(...discounts);
-    return `${min}%~${max}%`;
+    return `${formatDiscountText(min)}~${formatDiscountText(max)}`;
   };
+
+  const formatDiscountText = (discount: number) => `${discount / 100}x`;
 
   const getGroupDiscountText = (group: GroupList) => {
     if (!group.time_rules?.length) {
       return '';
     }
     if (group.time_rules.length === 1) {
-      return `${group.time_rules[0].discount}%`;
+      return formatDiscountText(group.time_rules[0].discount);
     }
     return getDiscountRange(group.time_rules);
   };

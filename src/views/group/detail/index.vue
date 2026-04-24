@@ -32,7 +32,7 @@
           {{ $t(`dict.${currentData.is_default || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('common.discount')">
+      <a-descriptions-item :label="$t('common.multiplier')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -40,7 +40,7 @@
           <span
             v-if="currentData.time_rules && currentData.time_rules.length === 1"
           >
-            {{ currentData.time_rules[0].discount }}%<a-button
+            {{ formatDiscountText(currentData.time_rules[0].discount) }}<a-button
               v-if="currentData.time_rules.some((r) => r.model_names?.length)"
               type="text"
               size="small"
@@ -396,7 +396,9 @@
         <template #days="{ record }">
           {{ formatDays(record) }}
         </template>
-        <template #discount="{ record }"> {{ record.discount }}% </template>
+        <template #discount="{ record }">
+          {{ formatDiscountText(record.discount) }}
+        </template>
         <template #model_names="{ record }">
           {{ record.model_names?.join(', ') || $t('common.all') }}
         </template>
@@ -487,7 +489,7 @@
           width: 100,
         },
         {
-          title: t('common.discount'),
+          title: t('common.multiplier'),
           slotName: 'discount',
           align: 'center',
           width: 100,
@@ -508,8 +510,10 @@
     const discounts = rules.map((r: any) => r.discount);
     const min = Math.min(...discounts);
     const max = Math.max(...discounts);
-    return `${min}%~${max}%`;
+    return `${formatDiscountText(min)}~${formatDiscountText(max)}`;
   };
+
+  const formatDiscountText = (discount: number) => `${discount / 100}x`;
 
   const viewTimeRules = (rules: any[]) => {
     timeRulesData.value = rules;

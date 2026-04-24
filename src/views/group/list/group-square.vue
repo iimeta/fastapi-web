@@ -294,7 +294,7 @@
                 size="small"
               >
                 <template #discount="{ record }">
-                  {{ record.discount }}%
+                  {{ formatDiscountText(record.discount) }}
                 </template>
                 <template #model_names="{ record }">
                   {{ record.model_names?.join(', ') || $t('common.all') }}
@@ -568,7 +568,7 @@
       width: 100,
     },
     {
-      title: t('common.discount'),
+      title: t('common.multiplier'),
       slotName: 'discount',
       align: 'center',
       width: 80,
@@ -612,6 +612,8 @@
       '0'
     )}`;
   };
+
+  const formatDiscountText = (discount: number) => `${discount / 100}x`;
 
   const formatDays = (rule: any) => {
     if (!rule.days || rule.days.length === 0) return t('common.all');

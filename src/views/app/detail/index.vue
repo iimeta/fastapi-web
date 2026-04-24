@@ -143,7 +143,7 @@
                 currentData.group_time_rules.length === 1
               "
             >
-              {{ currentData.group_time_rules[0].discount }}%<a-button
+              {{ formatDiscountText(currentData.group_time_rules[0].discount) }}<a-button
                 v-if="hasModelNames(currentData.group_time_rules)"
                 type="text"
                 size="small"
@@ -239,7 +239,9 @@
         :pagination="false"
         :bordered="false"
       >
-        <template #discount="{ record }"> {{ record.discount }}% </template>
+        <template #discount="{ record }">
+          {{ formatDiscountText(record.discount) }}
+        </template>
         <template #model_names="{ record }">
           {{ record.model_names?.join(', ') || $t('common.all') }}
         </template>
@@ -291,7 +293,7 @@
           width: 100,
         },
         {
-          title: t('common.discount'),
+          title: t('common.multiplier'),
           slotName: 'discount',
           align: 'center',
           width: 100,
@@ -350,8 +352,10 @@
     const discounts = rules.map((r) => r.discount);
     const min = Math.min(...discounts);
     const max = Math.max(...discounts);
-    return `${min}%~${max}%`;
+    return `${formatDiscountText(min)}~${formatDiscountText(max)}`;
   };
+
+  const formatDiscountText = (discount: number) => `${discount / 100}x`;
 
   const hasModelNames = (rules: TimeRule[]) => {
     return rules.some((r) => r.model_names?.length);

@@ -363,7 +363,7 @@
                 record.group_time_rules && record.group_time_rules.length === 1
               "
             >
-              {{ record.group_time_rules[0].discount }}%<a-button
+              {{ formatDiscountText(record.group_time_rules[0].discount) }}<a-button
                 v-if="hasModelNames(record.group_time_rules)"
                 type="text"
                 size="small"
@@ -933,7 +933,9 @@
           :pagination="false"
           :bordered="false"
         >
-          <template #discount="{ record }"> {{ record.discount }}% </template>
+          <template #discount="{ record }">
+            {{ formatDiscountText(record.discount) }}
+          </template>
           <template #model_names="{ record }">
             {{ record.model_names?.join(', ') || $t('common.all') }}
           </template>
@@ -1964,8 +1966,10 @@
     const discounts = rules.map((r: any) => r.discount);
     const min = Math.min(...discounts);
     const max = Math.max(...discounts);
-    return `${min}%~${max}%`;
+    return `${formatDiscountText(min)}~${formatDiscountText(max)}`;
   };
+
+  const formatDiscountText = (discount: number) => `${discount / 100}x`;
 
   const tableHeaderCellStyle = { background: 'var(--color-bg-2)' };
 
@@ -1981,7 +1985,7 @@
           width: 100,
         },
         {
-          title: t('common.discount'),
+          title: t('common.multiplier'),
           slotName: 'discount',
           align: 'center',
           width: 100,
@@ -2057,7 +2061,7 @@
       return '';
     }
     if (group.time_rules.length === 1) {
-      return `${group.time_rules[0].discount}%`;
+      return formatDiscountText(group.time_rules[0].discount);
     }
     return getDiscountRange(group.time_rules);
   };

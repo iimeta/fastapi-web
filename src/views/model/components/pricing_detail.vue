@@ -14,7 +14,9 @@
     <template #days="{ record }">
       {{ formatDays(record) }}
     </template>
-    <template #discount="{ record }"> {{ record.discount }}% </template>
+    <template #discount="{ record }">
+      {{ formatDiscountText(record.discount) }}
+    </template>
     <template #priority_title>
       {{ $t('time_rule.label.priority') }}
       <a-tooltip :content="$t('time_rule.placeholder.priority')">
@@ -379,6 +381,8 @@
 
   const tableHeaderCellStyle = { background: 'var(--color-bg-2)' };
 
+  const formatDiscountText = (discount: number) => `${discount / 100}x`;
+
   // 时段规则
   const timeRulesColumns = computed<TableColumnData[]>(() =>
     onlyTimeRules.value
@@ -390,7 +394,7 @@
             align: 'center',
           },
           {
-            title: t('common.discount'),
+            title: t('common.multiplier'),
             dataIndex: 'discount',
             slotName: 'discount',
             align: 'center',
@@ -427,7 +431,7 @@
                 align: 'center',
               },
               {
-                title: t('common.discount'),
+                title: t('common.multiplier'),
                 dataIndex: 'discount',
                 slotName: 'discount',
                 align: 'center',

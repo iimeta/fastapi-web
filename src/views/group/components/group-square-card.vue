@@ -95,7 +95,7 @@
             {{ tr.name }}
           </span>
           <span class="group-square-card__time-rule-discount">
-            {{ tr.discount }}%
+            {{ formatDiscountText(tr.discount) }}
           </span>
           <span class="group-square-card__time-rule-range">
             {{ fmtMs(tr.start_time) }}~{{ fmtMs(tr.end_time) }}
@@ -199,6 +199,8 @@
     const m = totalMin % 60;
     return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
   };
+
+  const formatDiscountText = (discount: number) => `${discount / 100}x`;
 
   /* ---- 时段规则 ---- */
   const hasModelNames = (rules: any[]) => {

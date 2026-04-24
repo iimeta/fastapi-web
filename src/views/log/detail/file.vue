@@ -135,9 +135,9 @@
               ? currentData.spend.model_time_rule.name +
                 ' ' +
                 Number(
-                  (currentData.spend.model_time_rule.discount * 100).toFixed(2)
+                  currentData.spend.model_time_rule.discount.toFixed(2)
                 ) +
-                '%'
+                'x'
               : '-'
           }}
         </span>
@@ -158,9 +158,9 @@
               ? currentData.spend.group_time_rule.name +
                 ' ' +
                 Number(
-                  (currentData.spend.group_time_rule.discount * 100).toFixed(2)
+                  currentData.spend.group_time_rule.discount.toFixed(2)
                 ) +
-                '%'
+                'x'
               : '-'
           }}
         </span>
@@ -511,9 +511,9 @@
               ? currentData.spend.model_time_rule.name +
                 ' ' +
                 Number(
-                  (currentData.spend.model_time_rule.discount * 100).toFixed(2)
+                  currentData.spend.model_time_rule.discount.toFixed(2)
                 ) +
-                '%'
+                'x'
               : '-'
           }}
         </span>
@@ -534,9 +534,9 @@
               ? currentData.spend.group_time_rule.name +
                 ' ' +
                 Number(
-                  (currentData.spend.group_time_rule.discount * 100).toFixed(2)
+                  currentData.spend.group_time_rule.discount.toFixed(2)
                 ) +
-                '%'
+                'x'
               : '-'
           }}
         </span>

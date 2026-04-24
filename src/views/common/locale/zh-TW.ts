@@ -86,6 +86,7 @@ export default {
   'common.billing_methods': '計費方式',
   'common.type': '類型',
   'common.discount': '折扣',
+  'common.multiplier': '倍率',
   'common.default': '默認',
   'common.public': '公開',
   'common.lb_strategy': '負載策略',
