@@ -55,6 +55,13 @@
           </div>
         </div>
       </div>
+      <div
+        v-if="groupMultiplierText"
+        class="group-square-card__multiplier"
+        :style="{ '--brand': brandColor }"
+      >
+        {{ groupMultiplierText }}
+      </div>
     </div>
 
     <!-- 备注 -->
@@ -202,6 +209,19 @@
 
   const formatDiscountText = (discount: number) => `${discount / 100}x`;
 
+  const groupMultiplierText = computed(() => {
+    const rules = props.record.time_rules || [];
+    if (!rules.length) return '';
+    if (rules.length === 1) return formatDiscountText(rules[0].discount);
+
+    const discounts = rules.map((r) => r.discount);
+    const min = Math.min(...discounts);
+    const max = Math.max(...discounts);
+    return min === max
+      ? formatDiscountText(min)
+      : `${formatDiscountText(min)}~${formatDiscountText(max)}`;
+  });
+
   /* ---- 时段规则 ---- */
   const hasModelNames = (rules: any[]) => {
     return rules.some((r: any) => r.model_names?.length);
@@ -243,6 +263,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    gap: 10px;
     padding: 16px 18px 0;
   }
 
@@ -251,6 +272,7 @@
     align-items: center;
     gap: 10px;
     min-width: 0;
+    flex: 1;
   }
 
   .group-square-card__svg {
@@ -346,6 +368,22 @@
     line-height: 1;
     padding: 3px 8px;
     border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  .group-square-card__multiplier {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    height: 20px;
+    padding: 0 7px;
+    border-radius: 5px;
+    background: color-mix(in srgb, var(--brand) 7%, transparent);
+    color: color-mix(in srgb, var(--brand) 88%, var(--color-text-1));
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.1px;
     white-space: nowrap;
   }
 

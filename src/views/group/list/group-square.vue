@@ -449,12 +449,15 @@
     setLoading(true);
     try {
       const { data } = await queryGroupPage(params);
-      list.value = data.items;
+      list.value = data?.items || [];
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
-      pagination.total = data.paging.total;
+      pagination.total = data?.paging?.total || 0;
     } catch {
-      /* ignore */
+      list.value = [];
+      pagination.current = params.current;
+      pagination.pageSize = params.pageSize;
+      pagination.total = 0;
     } finally {
       setLoading(false);
     }
@@ -792,6 +795,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 12px;
+    font-weight: 600;
   }
 
   .group-square-info-right {
