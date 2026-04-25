@@ -1,9 +1,9 @@
 import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
-const FINANCE_BILL: AppRouteRecordRaw = {
+const FINANCE: AppRouteRecordRaw = {
   path: '/finance',
-  name: 'bill',
+  name: 'finance',
   component: DEFAULT_LAYOUT,
   redirect: '/finance/bill',
   meta: {
@@ -11,7 +11,6 @@ const FINANCE_BILL: AppRouteRecordRaw = {
     requiresAuth: true,
     icon: 'lucide-receipt-text',
     order: 116,
-    hideChildrenInMenu: true,
     roles: ['user', 'reseller', 'admin'],
   },
   children: [
@@ -22,11 +21,24 @@ const FINANCE_BILL: AppRouteRecordRaw = {
       meta: {
         locale: 'finance.menu.bill',
         requiresAuth: true,
+        icon: 'lucide-receipt-text',
         roles: ['user', 'reseller', 'admin'],
         activeMenu: 'BillList',
+      },
+    },
+    {
+      path: 'deal',
+      name: 'DealRecordList',
+      component: () => import('@/views/finance/list/deal_record.vue'),
+      meta: {
+        locale: 'finance.menu.deal_record',
+        requiresAuth: true,
+        icon: 'lucide-circle-dollar-sign',
+        roles: ['user', 'reseller', 'admin'],
+        activeMenu: 'DealRecordList',
       },
     },
   ],
 };
 
-export default FINANCE_BILL;
+export default FINANCE;

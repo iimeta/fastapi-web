@@ -102,6 +102,14 @@ export default {
   'common.tab.close.right': 'Close Tabs to the Right',
   'common.tab.close.others': 'Close Other Tabs',
   'common.tab.close.all': 'Close All Tabs',
+  // menu group
+  'menu.group.core_assets': 'Core Assets',
+  'menu.group.resource_market': 'Resource Market',
+  'menu.group.data_operations': 'Data Operations',
+  'menu.group.app_access': 'App Access',
+  'menu.group.finance': 'Finance Center',
+  'menu.group.tasks_logs': 'Tasks & Logs',
+  'menu.group.system_config': 'System Config',
   // unit
   'unit.millisecond': 'ms',
   'unit.second': 'second',

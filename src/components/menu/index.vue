@@ -3,7 +3,7 @@
   import { useI18n } from 'vue-i18n';
   import { useRoute, useRouter, RouteRecordRaw } from 'vue-router';
   import type { RouteMeta } from 'vue-router';
-  import { useAppStore } from '@/store';
+  import { useAppStore, useUserStore } from '@/store';
   import { listenerRouteChange } from '@/utils/route-listener';
   import { openWindow, regexUrl } from '@/utils';
   import useMenuTree from './use-menu-tree';
@@ -13,6 +13,7 @@
     setup() {
       const { t } = useI18n();
       const appStore = useAppStore();
+      const userStore = useUserStore();
       const router = useRouter();
       const route = useRoute();
       const { menuTree } = useMenuTree();
@@ -35,41 +36,52 @@
         {
           title: '',
           icon: 'lucide-layout-dashboard',
+          order: 10,
           routes: ['dashboard'],
         },
         {
-          title: '核心资产',
+          title: 'menu.group.core_assets',
           icon: 'lucide-box',
+          order: 20,
           routes: ['model', 'model_agent', 'key', 'group'],
         },
         {
-          title: '资源市场',
+          title: 'menu.group.resource_market',
           icon: 'lucide-store',
+          order: 30,
+          roleOrders: {
+            admin: 45,
+          } as Record<string, number>,
           routes: ['model_square', 'group_square'],
         },
         {
-          title: '数据运营',
+          title: 'menu.group.data_operations',
           icon: 'lucide-chart-column-increasing',
+          order: 40,
           routes: ['statistics', 'monitor'],
         },
         {
-          title: '应用接入',
+          title: 'menu.group.app_access',
           icon: 'lucide-layout-grid',
+          order: 50,
           routes: ['app', 'app_key'],
         },
         {
-          title: '财务中心',
+          title: 'menu.group.finance',
           icon: 'lucide-banknote',
-          routes: ['bill', 'deal'],
+          order: 60,
+          routes: ['BillList', 'DealRecordList'],
         },
         {
-          title: '任务与日志',
+          title: 'menu.group.tasks_logs',
           icon: 'lucide-list-checks',
+          order: 70,
           routes: ['task', 'log'],
         },
         {
-          title: '系统配置',
+          title: 'menu.group.system_config',
           icon: 'lucide-settings',
+          order: 80,
           routes: ['user', 'notice', 'sys'],
         },
       ];
@@ -136,24 +148,39 @@
       // 按分组组织菜单
       const groupedMenuTree = computed(() => {
         const grouped: any[] = [];
-        const routeMap = new Map();
+        const routeMap = new Map<string, RouteRecordRaw>();
+        const collectRoutes = (routes: RouteRecordRaw[]) => {
+          routes.forEach((menuRoute) => {
+            if (menuRoute.name) {
+              routeMap.set(menuRoute.name as string, menuRoute);
+            }
+            if (menuRoute.children?.length) {
+              collectRoutes(menuRoute.children);
+            }
+          });
+        };
 
-        menuTree.value.forEach((menuRoute: RouteRecordRaw) => {
-          routeMap.set(menuRoute.name, menuRoute);
-        });
+        collectRoutes(menuTree.value);
 
-        menuGroups.forEach((group) => {
-          const groupRoutes = group.routes
-            .map((name) => routeMap.get(name))
-            .filter(Boolean);
+        menuGroups
+          .map((group, index) => ({
+            ...group,
+            index,
+            order: group.roleOrders?.[userStore.role] ?? group.order,
+          }))
+          .sort((a, b) => a.order - b.order || a.index - b.index)
+          .forEach((group) => {
+            const groupRoutes = group.routes
+              .map((name) => routeMap.get(name))
+              .filter(Boolean);
 
-          if (groupRoutes.length > 0) {
-            grouped.push({
-              ...group,
-              routes: groupRoutes,
-            });
-          }
-        });
+            if (groupRoutes.length > 0) {
+              grouped.push({
+                ...group,
+                routes: groupRoutes,
+              });
+            }
+          });
 
         return grouped;
       });
@@ -205,7 +232,7 @@
             );
           }
           groupNodes.push(
-            <a-menu-item-group key={`group-${index}`} title={group.title}>
+            <a-menu-item-group key={`group-${index}`} title={t(group.title)}>
               {travel(group.routes)}
             </a-menu-item-group>
           );

@@ -102,6 +102,14 @@ export default {
   'common.tab.close.right': '关闭右侧标签页',
   'common.tab.close.others': '关闭其它标签页',
   'common.tab.close.all': '关闭全部标签页',
+  // menu group
+  'menu.group.core_assets': '核心资产',
+  'menu.group.resource_market': '资源市场',
+  'menu.group.data_operations': '数据运营',
+  'menu.group.app_access': '应用接入',
+  'menu.group.finance': '财务中心',
+  'menu.group.tasks_logs': '任务与日志',
+  'menu.group.system_config': '系统配置',
   // unit
   'unit.millisecond': '毫秒',
   'unit.second': '秒',

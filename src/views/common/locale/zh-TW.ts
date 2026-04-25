@@ -102,6 +102,14 @@ export default {
   'common.tab.close.right': '關閉右側標籤頁',
   'common.tab.close.others': '關閉其它標籤頁',
   'common.tab.close.all': '關閉全部標籤頁',
+  // menu group
+  'menu.group.core_assets': '核心資產',
+  'menu.group.resource_market': '資源市場',
+  'menu.group.data_operations': '數據運營',
+  'menu.group.app_access': '應用接入',
+  'menu.group.finance': '財務中心',
+  'menu.group.tasks_logs': '任務與日誌',
+  'menu.group.system_config': '系統配置',
   // unit
   'unit.millisecond': '毫秒',
   'unit.second': '秒',
