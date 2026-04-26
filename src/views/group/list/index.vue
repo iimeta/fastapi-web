@@ -836,17 +836,35 @@
   };
   getModelAgentList();
 
-  const groupChangePublic = async (params: GroupChangePublic) => {
-    setLoading(true);
-    try {
-      await submitGroupChangePublic(params);
-      Message.success(t('success.operate'));
-      search();
-    } catch (err) {
-      // you can report use errorHandler or other
-    } finally {
-      setLoading(false);
-    }
+  const groupChangePublic = (params: GroupChangePublic) => {
+    const item = renderData.value.find((r) => r.id === params.id);
+    if (item) item.is_public = !params.is_public;
+    const confirmKey = params.is_public
+      ? 'group.public.enable.confirm'
+      : 'group.public.disable.confirm';
+    Modal.warning({
+      title: t('modal.warning.title'),
+      titleAlign: 'center',
+      content: t(confirmKey),
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
+      hideCancel: false,
+      onOk: async () => {
+        setLoading(true);
+        try {
+          await submitGroupChangePublic(params);
+          Message.success(t('success.operate'));
+          search();
+        } catch (err) {
+          // you can report use errorHandler or other
+        } finally {
+          setLoading(false);
+        }
+      },
+      onCancel: () => {
+        //
+      },
+    });
   };
 
   const groupChangeExpire = async (params: GroupChangeExpire) => {

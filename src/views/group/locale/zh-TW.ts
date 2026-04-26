@@ -35,4 +35,6 @@ export default {
   'group.square.menu': '分組廣場',
   'group.square.search.placeholder': '搜尋分組...',
   'group.square.total': '共 {total} 個分組',
+  'group.public.enable.confirm': '開啟後將授予所有用戶訪問權限, 確定開啟公開狀態?',
+  'group.public.disable.confirm': '關閉後將回收所有用戶訪問權限, 確定關閉公開狀態?',
 };

@@ -35,4 +35,6 @@ export default {
   'group.square.menu': 'Group Square',
   'group.square.search.placeholder': 'Search groups...',
   'group.square.total': '{total} groups in total',
+  'group.public.enable.confirm': 'Enabling this will grant all users access. Confirm enabling public status?',
+  'group.public.disable.confirm': 'Disabling this will revoke all users access. Confirm disabling public status?',
 };

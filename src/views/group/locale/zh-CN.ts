@@ -35,4 +35,6 @@ export default {
   'group.square.menu': '分组广场',
   'group.square.search.placeholder': '搜索分组...',
   'group.square.total': '共 {total} 个分组',
+  'group.public.enable.confirm': '开启后将授予所有用户访问权限, 确定开启公开状态?',
+  'group.public.disable.confirm': '关闭后将回收所有用户访问权限, 确定关闭公开状态?',
 };

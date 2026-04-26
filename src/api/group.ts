@@ -62,6 +62,7 @@ export interface GroupPage {
   models: string[];
   model_agents: string[];
   status: number;
+  is_public: boolean;
   remark: string;
   expires_at: any;
 }
