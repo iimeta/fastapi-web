@@ -87,14 +87,41 @@
                 </span>
               </div>
               <div
-                v-if="hasField('used_quota')"
+                v-if="hasField('time_rules')"
                 class="group-card-item__inline-item"
               >
                 <span class="group-card-item__label">
-                  {{ fieldTitleMap.used_quota }}
+                  {{ fieldTitleMap.time_rules }}
                 </span>
                 <span class="group-card-item__value">
-                  <Quota :model-value="record.used_quota" />
+                  <span
+                    v-if="record.time_rules && record.time_rules.length === 1"
+                  >
+                    {{ formatDiscountText(record.time_rules[0].discount) }}
+                    <a-button
+                      v-if="hasModelNames(record.time_rules)"
+                      type="text"
+                      size="mini"
+                      @click.stop="$emit('timeRules', record.time_rules)"
+                    >
+                      {{ $t('button.view') }}
+                    </a-button>
+                  </span>
+                  <span
+                    v-else-if="
+                      record.time_rules && record.time_rules.length > 1
+                    "
+                  >
+                    {{ getDiscountRange(record.time_rules) }}
+                    <a-button
+                      type="text"
+                      size="mini"
+                      @click.stop="$emit('timeRules', record.time_rules)"
+                    >
+                      {{ $t('button.view') }}
+                    </a-button>
+                  </span>
+                  <span v-else>-</span>
                 </span>
               </div>
               <div
@@ -111,74 +138,78 @@
               </div>
             </div>
 
-            <div
-              v-for="field in visibleFields"
-              :key="field.dataIndex"
-              class="group-card-item__field"
-            >
-              <template
+            <div class="group-card-item__inline-row">
+              <div
+                v-if="hasField('lb_strategy')"
+                class="group-card-item__inline-item"
+              >
+                <span class="group-card-item__label">
+                  {{ fieldTitleMap.lb_strategy }}
+                </span>
+                <span class="group-card-item__value">
+                  {{
+                    record.is_enable_model_agent
+                      ? $t(`dict.lb_strategy.${record.lb_strategy || 1}`)
+                      : '-'
+                  }}
+                </span>
+              </div>
+              <div
+                v-if="hasField('used_quota')"
+                class="group-card-item__inline-item"
+              >
+                <span class="group-card-item__label">
+                  {{ fieldTitleMap.used_quota }}
+                </span>
+                <span
+                  class="group-card-item__value"
+                  :title="`${renderQuota(record.used_quota)}`"
+                >
+                  <Quota :model-value="record.used_quota" />
+                </span>
+              </div>
+              <div
+                v-if="hasField('is_public')"
+                class="group-card-item__inline-item"
+              >
+                <span class="group-card-item__label">
+                  {{ fieldTitleMap.is_public }}
+                </span>
+                <span class="group-card-item__value">
+                  <a-switch
+                    :model-value="record.is_public"
+                    :checked-value="true"
+                    :unchecked-value="false"
+                    size="small"
+                    @click.stop
+                    @change="changePublic"
+                  />
+                </span>
+              </div>
+            </div>
+
+            <template v-for="field in visibleFields" :key="field.dataIndex">
+              <div
                 v-if="
-                  !['models', 'used_quota', 'weight'].includes(field.dataIndex)
+                  ![
+                    'models',
+                    'used_quota',
+                    'weight',
+                    'time_rules',
+                    'lb_strategy',
+                    'is_public',
+                  ].includes(field.dataIndex)
                 "
+                class="group-card-item__field"
               >
                 <span class="group-card-item__label">
                   {{ field.title }}
                 </span>
                 <span class="group-card-item__value">
-                  <template v-if="field.dataIndex === 'time_rules'">
-                    <span
-                      v-if="record.time_rules && record.time_rules.length === 1"
-                    >
-                      {{ formatDiscountText(record.time_rules[0].discount) }}
-                      <a-button
-                        v-if="hasModelNames(record.time_rules)"
-                        type="text"
-                        size="mini"
-                        @click.stop="$emit('timeRules', record.time_rules)"
-                      >
-                        {{ $t('button.view') }}
-                      </a-button>
-                    </span>
-                    <span
-                      v-else-if="
-                        record.time_rules && record.time_rules.length > 1
-                      "
-                    >
-                      {{ getDiscountRange(record.time_rules) }}
-                      <a-button
-                        type="text"
-                        size="mini"
-                        @click.stop="$emit('timeRules', record.time_rules)"
-                      >
-                        {{ $t('button.view') }}
-                      </a-button>
-                    </span>
-                    <span v-else>-</span>
-                  </template>
-
-                  <template v-else-if="field.dataIndex === 'model_agent_names'">
+                  <template v-if="field.dataIndex === 'model_agent_names'">
                     <span :title="record.model_agent_names?.join(', ') || ''">
                       {{ record.model_agent_names?.join(', ') || '-' }}
                     </span>
-                  </template>
-
-                  <template v-else-if="field.dataIndex === 'lb_strategy'">
-                    {{
-                      record.is_enable_model_agent
-                        ? $t(`dict.lb_strategy.${record.lb_strategy || 1}`)
-                        : '-'
-                    }}
-                  </template>
-
-                  <template v-else-if="field.dataIndex === 'is_public'">
-                    <a-switch
-                      :model-value="record.is_public"
-                      :checked-value="true"
-                      :unchecked-value="false"
-                      size="small"
-                      @click.stop
-                      @change="changePublic"
-                    />
                   </template>
 
                   <template v-else-if="field.dataIndex === 'expires_at'">
@@ -203,8 +234,8 @@
                     </a-date-picker>
                   </template>
                 </span>
-              </template>
-            </div>
+              </div>
+            </template>
           </div>
         </template>
       </a-card-meta>
@@ -224,7 +255,8 @@
 <script lang="ts" setup>
   import { computed } from 'vue';
   import dayjs from 'dayjs';
-  import { disabledDate } from '@/utils/common';
+  import { useAppStore } from '@/store';
+  import { disabledDate, parseQuota } from '@/utils/common';
   import type {
     GroupChangeExpire,
     GroupChangePublic,
@@ -271,6 +303,15 @@
     (e: 'expireChange', payload: GroupChangeExpire): void;
   }>();
 
+  const appStore = useAppStore();
+
+  const renderQuota = (value: number) => {
+    const symbol = appStore.getCurrencySymbol;
+    if (value > 0) return `${symbol}${parseQuota(value)}`;
+    if (value < 0) return `-${symbol}${parseQuota(-value)}`;
+    return `${symbol}0.00`;
+  };
+
   const cardHeaderStyle = {
     padding: '14px 16px 0 16px',
   };
@@ -303,6 +344,15 @@
     )?.title,
     weight: props.visibleFields.find((item) => item.dataIndex === 'weight')
       ?.title,
+    time_rules: props.visibleFields.find(
+      (item) => item.dataIndex === 'time_rules'
+    )?.title,
+    lb_strategy: props.visibleFields.find(
+      (item) => item.dataIndex === 'lb_strategy'
+    )?.title,
+    is_public: props.visibleFields.find(
+      (item) => item.dataIndex === 'is_public'
+    )?.title,
   }));
 
   const hasField = (dataIndex: string) =>
@@ -469,7 +519,7 @@
 
   .group-card-item__inline-row {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 1fr 1.5fr 1fr;
     gap: 12px;
     margin-bottom: 12px;
     font-size: 12px;
@@ -492,6 +542,7 @@
 
   .group-card-item__label {
     flex-shrink: 0;
+    width: 56px;
     margin-right: 4px;
     font-weight: normal;
     color: rgb(var(--gray-8));
@@ -506,6 +557,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    :deep(.arco-btn-text) {
+      padding-left: 0;
+    }
   }
 
   .group-card-item__inline-item .group-card-item__value {

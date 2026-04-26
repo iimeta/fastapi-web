@@ -106,15 +106,12 @@
                 </span>
               </div>
             </div>
-            <div
-              v-for="field in visibleFields"
-              :key="field.dataIndex"
-              class="model-agent-card-item__field"
-            >
-              <template
+            <template v-for="field in visibleFields" :key="field.dataIndex">
+              <div
                 v-if="
                   !['models', 'weight', 'lb_strategy'].includes(field.dataIndex)
                 "
+                class="model-agent-card-item__field"
               >
                 <span class="model-agent-card-item__label">
                   {{ field.title }}
@@ -129,8 +126,8 @@
                     {{ valueOf(field.dataIndex) }}
                   </template>
                 </span>
-              </template>
-            </div>
+              </div>
+            </template>
           </div>
         </template>
       </a-card-meta>
@@ -390,6 +387,7 @@
 
   .model-agent-card-item__label {
     flex-shrink: 0;
+    width: 56px;
     margin-right: 4px;
     font-weight: normal;
     color: rgb(var(--gray-8));
@@ -404,6 +402,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    :deep(.arco-btn-text) {
+      padding-left: 0;
+    }
   }
 
   .model-agent-card-item__inline-item .model-agent-card-item__value {
