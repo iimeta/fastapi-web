@@ -1,11 +1,13 @@
 import { DEFAULT_LAYOUT } from '../base';
 import { AppRouteRecordRaw } from '../types';
 
+const getModelAgentListView = () => localStorage.getItem('modelAgentListView');
+
 const MODEL_AGENT: AppRouteRecordRaw = {
   path: '/model/agent',
   name: 'model_agent',
   component: DEFAULT_LAYOUT,
-  redirect: '/model/agent/list',
+  redirect: '/model/agent/card',
   meta: {
     locale: 'model.agent.menu',
     requiresAuth: true,
@@ -18,11 +20,35 @@ const MODEL_AGENT: AppRouteRecordRaw = {
     {
       path: 'list',
       name: 'ModelAgentList',
-      component: () => import('@/views/model_agent/list/card.vue'),
+      component: () => import('@/views/model_agent/list/index.vue'),
+      beforeEnter: () => {
+        if (getModelAgentListView() !== 'list') {
+          return { name: 'ModelAgentCardList' };
+        }
+        return true;
+      },
       meta: {
         locale: 'model.agent.menu',
         requiresAuth: true,
         roles: ['admin'],
+        activeMenu: 'model_agent',
+      },
+    },
+    {
+      path: 'card',
+      name: 'ModelAgentCardList',
+      component: () => import('@/views/model_agent/list/card.vue'),
+      beforeEnter: () => {
+        if (getModelAgentListView() === 'list') {
+          return { name: 'ModelAgentList' };
+        }
+        return true;
+      },
+      meta: {
+        locale: 'model.agent.menu',
+        requiresAuth: true,
+        roles: ['admin'],
+        hideInMenu: true,
         activeMenu: 'model_agent',
       },
     },

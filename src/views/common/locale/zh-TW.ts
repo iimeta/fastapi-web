@@ -129,6 +129,8 @@ export default {
   'action.refresh': '刷新',
   'action.density': '密度',
   'action.column_setting': '列設置',
+  'action.list_view': '列表視圖',
+  'action.card_view': '卡片視圖',
   // button
   'button.submit': '提交',
   'button.save': '保存',

@@ -129,6 +129,8 @@ export default {
   'action.refresh': 'Refresh',
   'action.density': 'Density',
   'action.column_setting': 'Column Settings',
+  'action.list_view': 'List View',
+  'action.card_view': 'Card View',
   // button
   'button.submit': 'Submit',
   'button.save': 'Save',

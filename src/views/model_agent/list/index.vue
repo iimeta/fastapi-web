@@ -180,6 +180,11 @@
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
+          <a-tooltip :content="$t('action.card_view')">
+            <div class="action-icon" @click="switchView('card')">
+              <icon-apps size="18" />
+            </div>
+          </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <a-tooltip :content="$t('action.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
@@ -274,6 +279,9 @@
             "
           />
         </template>
+        <template #updated_at="{ record }">
+          {{ formatWithoutYear(record.updated_at) }}
+        </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
             {{ $t('button.detail') }}
@@ -355,6 +363,7 @@
 
 <script lang="ts" setup>
   import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import { useRouter } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { Message, Modal } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
@@ -386,6 +395,8 @@
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
+  const router = useRouter();
+  localStorage.setItem('modelAgentListView', 'list');
   const cardHeaderStyle = {
     padding: '20px',
   };
@@ -691,6 +702,18 @@
   const handleSelectionChange = (rowKeys: Array<any>) => {
     ids.value = rowKeys;
     multiple.value = !rowKeys.length;
+  };
+
+  const switchView = (view: 'list' | 'card') => {
+    localStorage.setItem('modelAgentListView', view);
+    router.replace({
+      name: view === 'card' ? 'ModelAgentCardList' : 'ModelAgentList',
+    });
+  };
+
+  const formatWithoutYear = (value?: string) => {
+    if (!value) return '-';
+    return value.replace(/^\d{4}-/, '');
   };
 
   /**

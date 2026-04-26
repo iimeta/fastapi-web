@@ -184,6 +184,11 @@
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
+          <a-tooltip :content="$t('action.card_view')">
+            <div class="action-icon" @click="switchView('card')">
+              <icon-apps size="18" />
+            </div>
+          </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
             <a-tooltip :content="$t('action.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
@@ -255,7 +260,8 @@
         </template>
         <template #time_rules="{ record }">
           <span v-if="record.time_rules && record.time_rules.length === 1">
-            {{ formatDiscountText(record.time_rules[0].discount) }}<a-button
+            {{ formatDiscountText(record.time_rules[0].discount)
+            }}<a-button
               v-if="hasModelNames(record.time_rules)"
               type="text"
               size="small"
@@ -497,6 +503,7 @@
 
 <script lang="ts" setup>
   import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import { useRouter } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { Message, Modal } from '@arco-design/web-vue';
@@ -533,6 +540,8 @@
   type Column = TableColumnData & { checked?: true };
 
   const { t } = useI18n();
+  const router = useRouter();
+  localStorage.setItem('groupListView', 'list');
   const { loading, setLoading } = useLoading(true);
   const cardHeaderStyle = {
     padding: '20px',
@@ -945,6 +954,13 @@
     modelsVisible.value = true;
     recordId.value = id;
     action.value = 'group';
+  };
+
+  const switchView = (view: 'list' | 'card') => {
+    localStorage.setItem('groupListView', view);
+    router.replace({
+      name: view === 'card' ? 'GroupCardList' : 'GroupList',
+    });
   };
 
   const timeRulesVisible = ref(false);
