@@ -24,6 +24,14 @@ const router = createRouter({
       },
     },
     {
+      path: '/register/invite/:inviteCode',
+      name: 'InviteRegister',
+      component: () => import('@/views/login/index.vue'),
+      meta: {
+        requiresAuth: false,
+      },
+    },
+    {
       path: '/reseller',
       name: 'reseller',
       component: () => import('@/views/login/reseller.vue'),

@@ -108,6 +108,7 @@ export default {
   'menu.group.data_operations': 'Data Operations',
   'menu.group.app_access': 'App Access',
   'menu.group.finance': 'Finance Center',
+  'menu.group.invite': 'Invite Rewards',
   'menu.group.tasks_logs': 'Tasks & Logs',
   'menu.group.system_config': 'System Config',
   // unit

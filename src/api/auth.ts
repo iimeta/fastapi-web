@@ -52,6 +52,7 @@ export interface RegisterData {
   code: string;
   domain?: string;
   path?: string;
+  invite_code?: string;
 }
 
 export function register(data: RegisterData) {

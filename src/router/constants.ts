@@ -1,6 +1,7 @@
 export const WHITE_LIST = [
   { name: 'notFound', children: [] },
   { name: 'login', children: [] },
+  { name: 'InviteRegister', children: [] },
 ];
 
 export const NOT_FOUND = {

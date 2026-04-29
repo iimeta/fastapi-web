@@ -14,6 +14,7 @@ export default {
   'login.email.title2': '登入信箱如未註冊, 請聯絡管理員註冊',
   'login.email.placeholder.email': '請輸入信箱',
   'login.email.placeholder.captcha': '請輸入驗證碼',
+  'login.invite_code.placeholder': '請輸入邀請碼(選填)',
   'login.captcha.get': '取得驗證碼',
   'login.captcha.ing': '傳送中...',
 

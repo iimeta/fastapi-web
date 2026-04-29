@@ -20,6 +20,7 @@ import localeReseller from '@/views/system/reseller/locale/zh-CN';
 import localeSiteConfig from '@/views/system/site_config/locale/zh-CN';
 import localeSysConfig from '@/views/system/config/locale/zh-CN';
 import localeGroup from '@/views/group/locale/zh-CN';
+import localeInvite from '@/views/invite/locale/zh-CN';
 import localeNotice from '@/views/notice/locale/zh-CN';
 import localeNoticeTemplate from '@/views/notice_template/locale/zh-CN';
 import localeDataBoard from '@/views/statistics/locale/zh-CN';
@@ -47,6 +48,7 @@ export default {
   ...localeSiteConfig,
   ...localeSysConfig,
   ...localeGroup,
+  ...localeInvite,
   ...localeNotice,
   ...localeNoticeTemplate,
   ...localeDataBoard,

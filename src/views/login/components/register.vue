@@ -40,6 +40,13 @@
         allow-clear
       />
     </a-form-item>
+    <a-form-item field="inviteCode" hide-label>
+      <a-input
+        v-model="form.inviteCode"
+        :placeholder="$t('login.invite_code.placeholder')"
+        allow-clear
+      />
+    </a-form-item>
     <div class="register-actions">
       <span class="action-link" @click="$emit('toggleLogin')">{{
         $t('login.form.login')
@@ -66,12 +73,13 @@
 <script lang="ts" setup>
   import { ref, toRefs, reactive, computed, getCurrentInstance } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { useRouter } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { ValidatedError, Message } from '@arco-design/web-vue';
   import { getCaptcha, register } from '@/api/auth';
 
   const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
+  const route = useRoute();
   const router = useRouter();
   const loading = ref(false);
   const isAgreed = ref(false);
@@ -84,11 +92,13 @@
   const captchaTimer = ref();
   const captchaBtnNameKey = ref('login.captcha.get');
   const captchaBtnName = computed(() => t(captchaBtnNameKey.value));
+  const inviteCode = typeof route.params.inviteCode === 'string' ? route.params.inviteCode : '';
   const data = reactive({
     form: {
       email: '',
       password: '',
       captcha: '',
+      inviteCode: inviteCode || (typeof route.query.invite_code === 'string' ? route.query.invite_code : ''),
     },
     rules: {
       email: [
@@ -182,6 +192,7 @@
         code: values.captcha,
         domain: window.location.hostname,
         path: window.location.pathname,
+        invite_code: values.inviteCode,
       })
         .then(() => {
           Message.success(t('register.success'));

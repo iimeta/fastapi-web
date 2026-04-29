@@ -73,6 +73,7 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { useUserStore, useAppStore } from '@/store';
   import { Modal } from '@arco-design/web-vue';
@@ -84,11 +85,13 @@
   import Forget from './components/forget.vue';
 
   const { t } = useI18n();
+  const route = useRoute();
   const appStore = useAppStore();
 
   useUserStore().logout();
 
-  const isRegister = ref(false);
+  const inviteCode = typeof route.params.inviteCode === 'string' ? route.params.inviteCode : '';
+  const isRegister = ref(Boolean(inviteCode || typeof route.query.invite_code === 'string'));
   const isForget = ref(false);
 
   const toggleLogin = () => {

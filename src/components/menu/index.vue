@@ -73,6 +73,19 @@
           routes: ['BillList', 'DealRecordList'],
         },
         {
+          title: 'menu.group.invite',
+          icon: 'lucide-gift',
+          order: 65,
+          routes: [
+            'InviteRelations',
+            'InviteRewards',
+            'InviteApply',
+            'ManageInviteRelations',
+            'ManageInviteRewards',
+            'ManageInviteApply',
+          ],
+        },
+        {
           title: 'menu.group.tasks_logs',
           icon: 'lucide-list-checks',
           order: 70,

@@ -14,6 +14,7 @@ export default {
   'login.email.title2': 'If the login email is not registered, please contact the administrator to register.',
   'login.email.placeholder.email': 'Please enter email',
   'login.email.placeholder.captcha': 'Please enter verification code',
+  'login.invite_code.placeholder': 'Please enter invite code (optional)',
   'login.captcha.get': 'Get Verification Code',
   'login.captcha.ing': 'Sending...',
 

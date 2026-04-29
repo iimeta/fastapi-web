@@ -20,4 +20,5 @@ export default {
   'finance.dict.deal_type.2': '扣除',
   'finance.dict.deal_type.3': '赠送',
   'finance.dict.deal_type.4': '过期',
+  'finance.dict.deal_type.5': '邀请奖励入账',
 };

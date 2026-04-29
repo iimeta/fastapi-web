@@ -21,6 +21,13 @@ import IconCommand from '~icons/lucide/command';
 import IconCircleDollarSign from '~icons/lucide/circle-dollar-sign';
 import IconCombine from '~icons/lucide/combine';
 import IconBug from '~icons/lucide/bug';
+import IconGift from '~icons/lucide/gift';
+import IconUsersRound from '~icons/lucide/users-round';
+import IconCoins from '~icons/lucide/coins';
+import IconClipboardCheck from '~icons/lucide/clipboard-check';
+import IconBanknote from '~icons/lucide/banknote';
+import IconStore from '~icons/lucide/store';
+import IconListChecks from '~icons/lucide/list-checks';
 
 const menuIcons: Record<string, any> = {
   'lucide-layout-grid': IconApps,
@@ -45,6 +52,13 @@ const menuIcons: Record<string, any> = {
   'lucide-circle-dollar-sign': IconCircleDollarSign,
   'lucide-combine': IconCombine,
   'lucide-bug': IconBug,
+  'lucide-gift': IconGift,
+  'lucide-users-round': IconUsersRound,
+  'lucide-coins': IconCoins,
+  'lucide-clipboard-check': IconClipboardCheck,
+  'lucide-banknote': IconBanknote,
+  'lucide-store': IconStore,
+  'lucide-list-checks': IconListChecks,
 };
 
 export function registerMenuIcons(app: App) {

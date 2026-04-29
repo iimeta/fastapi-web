@@ -14,6 +14,7 @@ export default {
   'login.email.title2': '登录邮箱如未注册, 请联系管理员注册',
   'login.email.placeholder.email': '请输入邮箱',
   'login.email.placeholder.captcha': '请输入验证码',
+  'login.invite_code.placeholder': '请输入邀请码(选填)',
   'login.captcha.get': '获取验证码',
   'login.captcha.ing': '发送中...',
 

@@ -20,6 +20,7 @@ import localeReseller from '@/views/system/reseller/locale/en-US';
 import localeSiteConfig from '@/views/system/site_config/locale/en-US';
 import localeSysConfig from '@/views/system/config/locale/en-US';
 import localeGroup from '@/views/group/locale/en-US';
+import localeInvite from '@/views/invite/locale/en-US';
 import localeNotice from '@/views/notice/locale/en-US';
 import localeNoticeTemplate from '@/views/notice_template/locale/en-US';
 import localeDataBoard from '@/views/statistics/locale/en-US';
@@ -47,6 +48,7 @@ export default {
   ...localeSiteConfig,
   ...localeSysConfig,
   ...localeGroup,
+  ...localeInvite,
   ...localeNotice,
   ...localeNoticeTemplate,
   ...localeDataBoard,

@@ -6,6 +6,10 @@
         <DataPanel />
         <DataChart />
       </div>
+
+      <!-- 邀请概览 -->
+      <InviteOverview v-if="userStore.role === 'user'" />
+
       <a-grid :cols="24" :col-gap="10" :row-gap="10" class="dashboard-grid-gap">
         <a-grid-item
           :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }"
@@ -61,6 +65,7 @@
   import { useAppStore, useUserStore } from '@/store';
   import Banner from './components/banner.vue';
   import DataPanel from './components/data-panel.vue';
+  import InviteOverview from './components/invite-overview.vue';
   import DataChart from './components/data-chart.vue';
   import DataTop from './components/data-top.vue';
   import ModelPercent from './components/model-percent.vue';
