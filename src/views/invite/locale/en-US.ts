@@ -1,6 +1,5 @@
 export default {
   'invite.menu': 'Invite Rewards',
-  'invite.menu.profile': 'My Invites',
   'invite.menu.relations': 'Invite Relations',
   'invite.menu.rewards': 'Invite Rewards',
   'invite.menu.apply': 'Reward Applications',

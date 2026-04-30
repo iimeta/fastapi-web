@@ -8,7 +8,7 @@
       :bordered="false"
     >
       <div class="ov-row invite-main-row">
-        <div class="ov-card ov-card--calls invite-info-card">
+        <div class="ov-card ov-card--calls">
           <div class="ov-label">{{ $t('invite.columns.invite_code') }}</div>
           <div class="invite-code-row">
             <div class="ov-val ov-val--calls invite-code">{{
@@ -19,7 +19,7 @@
             }}</a-button>
           </div>
         </div>
-        <div class="ov-card ov-card--spend invite-info-card">
+        <div class="ov-card ov-card--spend">
           <div class="ov-label">{{ $t('invite.columns.invite_link') }}</div>
           <div class="invite-link-row">
             <div class="invite-link">{{ displayInviteLink }}</div>
@@ -251,10 +251,6 @@
     }
   }
 
-  .invite-info-card {
-    min-height: 88px;
-  }
-
   .invite-code-row,
   .invite-link-row {
     display: flex;
@@ -276,10 +272,11 @@
     white-space: nowrap;
     color: var(--color-text-1);
     line-height: 22px;
+    font-size: 16px;
   }
 
   .invite-rule {
-    margin-top: 12px;
+    margin-top: 11px;
     padding: 10px 14px;
     border-radius: 4px;
     background: var(--color-fill-1);

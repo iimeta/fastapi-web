@@ -67,15 +67,9 @@
           routes: ['app', 'app_key'],
         },
         {
-          title: 'menu.group.finance',
-          icon: 'lucide-banknote',
-          order: 60,
-          routes: ['BillList', 'DealRecordList'],
-        },
-        {
           title: 'menu.group.invite',
           icon: 'lucide-gift',
-          order: 65,
+          order: 56,
           routes: [
             'InviteRelations',
             'InviteRewards',
@@ -84,6 +78,12 @@
             'ManageInviteRewards',
             'ManageInviteApply',
           ],
+        },
+        {
+          title: 'menu.group.finance',
+          icon: 'lucide-banknote',
+          order: 60,
+          routes: ['BillList', 'DealRecordList'],
         },
         {
           title: 'menu.group.tasks_logs',

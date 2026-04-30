@@ -7,7 +7,7 @@ const INVITE: AppRouteRecordRaw = {
   component: DEFAULT_LAYOUT,
   redirect: () =>
     localStorage.getItem('userRole') === 'user'
-      ? '/invite/profile'
+      ? '/invite/relations'
       : '/invite/manage/relations',
   meta: {
     locale: 'invite.menu',
@@ -17,18 +17,6 @@ const INVITE: AppRouteRecordRaw = {
     roles: ['user', 'reseller', 'admin'],
   },
   children: [
-    {
-      path: 'profile',
-      name: 'InviteProfile',
-      component: () => import('@/views/invite/profile/index.vue'),
-      meta: {
-        locale: 'invite.menu.profile',
-        requiresAuth: true,
-        icon: 'lucide-gift',
-        roles: ['user'],
-        activeMenu: 'InviteProfile',
-      },
-    },
     {
       path: 'relations',
       name: 'InviteRelations',
