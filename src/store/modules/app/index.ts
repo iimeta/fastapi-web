@@ -64,6 +64,12 @@ const useAppStore = defineStore('app', {
     getRegisterTips(state: AppState): string {
       return state.config.register_tips || '';
     },
+    getInviteEnabled(state: AppState): boolean {
+      return Boolean(state.config.invite_enabled);
+    },
+    getInviteCodeRequired(state: AppState): boolean {
+      return Boolean(state.config.invite_code_required);
+    },
     getDefaultLanguage(state: AppState): string | undefined {
       return state.config.default_language;
     },
@@ -246,6 +252,8 @@ const useAppStore = defineStore('app', {
           icp_beian: res.data.icp_beian,
           ga_beian: res.data.ga_beian,
           register_tips: res.data.register_tips,
+          invite_enabled: Boolean(res.data.invite_enabled),
+          invite_code_required: Boolean(res.data.invite_code_required),
           default_language: res.data.default_language,
           currency_symbol: res.data.currency_symbol || '$',
           carousel1_title:

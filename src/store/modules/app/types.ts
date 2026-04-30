@@ -15,6 +15,8 @@ export interface Config {
   icp_beian?: string;
   ga_beian?: string;
   register_tips?: string;
+  invite_enabled?: boolean;
+  invite_code_required?: boolean;
   default_language?: string;
   currency_symbol?: string;
   carousel1_title?: string;

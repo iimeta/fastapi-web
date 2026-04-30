@@ -15,6 +15,7 @@ export default {
   'login.email.placeholder.email': 'Please enter email',
   'login.email.placeholder.captcha': 'Please enter verification code',
   'login.invite_code.placeholder': 'Please enter invite code (optional)',
+  'login.invite_code.placeholder.required': 'Please enter invite code',
   'login.captcha.get': 'Get Verification Code',
   'login.captcha.ing': 'Sending...',
 
@@ -25,6 +26,7 @@ export default {
   'login.email.error.required.email': 'Please enter email',
   'login.email.error.required.captcha': 'Please enter verification code',
   'login.email.error.required.password': 'Please enter password',
+  'login.invite_code.error.required': 'Please enter invite code',
 
   'login.captcha': 'Verification Code',
   'login.remember_me': 'Remember me',

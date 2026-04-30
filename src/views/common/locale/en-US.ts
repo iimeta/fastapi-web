@@ -51,6 +51,8 @@ export default {
   'common.highest': 'Highest',
   'common.sort': 'Sort Number',
   'common.no_limit': 'Unlimited',
+  'common.yes': 'Yes',
+  'common.no': 'No',
   'common.result': 'Result',
   'common.ip_whitelist': 'IP Whitelist',
   'common.ip_blacklist': 'IP Blacklist',

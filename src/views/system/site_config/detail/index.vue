@@ -105,6 +105,172 @@
           {{ currentData.register_tips || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('site.config.label.invite_enabled')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag :color="currentData.invite_enabled ? 'green' : 'red'">
+            {{
+              currentData.invite_enabled ? $t('common.yes') : $t('common.no')
+            }}
+          </a-tag>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('site.config.label.invite_code_required')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag :color="currentData.invite_code_required ? 'green' : 'red'">
+            {{
+              currentData.invite_code_required
+                ? $t('common.yes')
+                : $t('common.no')
+            }}
+          </a-tag>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('site.config.label.invite_reward_quota')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <Quota
+            v-if="currentData.invite_reward_quota"
+            :model-value="currentData.invite_reward_quota"
+          />
+          <span v-else> - </span>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('site.config.label.invitee_grant_quota')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <Quota
+            v-if="currentData.invitee_grant_quota"
+            :model-value="currentData.invitee_grant_quota"
+          />
+          <span v-else> - </span>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('site.config.label.invite_min_apply_quota')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <Quota
+            v-if="currentData.invite_min_apply_quota"
+            :model-value="currentData.invite_min_apply_quota"
+          />
+          <span v-else> - </span>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('site.config.label.invite_daily_limit')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.invite_daily_limit || $t('common.no_limit') }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('site.config.label.invite_total_limit')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.invite_total_limit || $t('common.no_limit') }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('site.config.label.invite_invalid_code_action')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.invite_invalid_code_action
+              ? $t(
+                  `site.config.option.invite_invalid_code_action.${currentData.invite_invalid_code_action}`
+                )
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('site.config.label.invite_recharge_rebate_enabled')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag
+            :color="
+              currentData.invite_recharge_rebate_enabled ? 'green' : 'red'
+            "
+          >
+            {{
+              currentData.invite_recharge_rebate_enabled
+                ? $t('common.yes')
+                : $t('common.no')
+            }}
+          </a-tag>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('site.config.label.invite_recharge_rebate_first')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else class="recharge-rebate-detail">
+          <template v-if="isRechargeRebateTierEnabled('first')">
+            {{ $t('common.yes') }}，
+            <Quota
+              v-if="currentData.invite_recharge_rebate_first_type === 'fixed'"
+              :model-value="currentData.invite_recharge_rebate_first_quota"
+            />
+            <template v-else>
+              {{ currentData.invite_recharge_rebate_first_rate }}%
+            </template>
+          </template>
+          <template v-else>{{ $t('common.no') }}</template>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('site.config.label.invite_recharge_rebate_second')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else class="recharge-rebate-detail">
+          <template v-if="isRechargeRebateTierEnabled('second')">
+            {{ $t('common.yes') }}，
+            <Quota
+              v-if="currentData.invite_recharge_rebate_second_type === 'fixed'"
+              :model-value="currentData.invite_recharge_rebate_second_quota"
+            />
+            <template v-else>
+              {{ currentData.invite_recharge_rebate_second_rate }}%
+            </template>
+          </template>
+          <template v-else>{{ $t('common.no') }}</template>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('site.config.label.invite_rule_text')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else class="site-config-detail-scroll">
+          {{ currentData.invite_rule_text || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('site.config.label.grant_quota')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -278,6 +444,21 @@
     },
   });
 
+  const isRechargeRebateTierEnabled = (tier: 'first' | 'second') => {
+    const enabled = currentData.value[`invite_recharge_rebate_${tier}_enabled`];
+    const type =
+      currentData.value[`invite_recharge_rebate_${tier}_type`] || 'percent';
+    const rate = currentData.value[`invite_recharge_rebate_${tier}_rate`];
+    const quota = currentData.value[`invite_recharge_rebate_${tier}_quota`];
+    if (!currentData.value.invite_recharge_rebate_enabled || !enabled) {
+      return false;
+    }
+    if (type === 'fixed') {
+      return quota > 0;
+    }
+    return rate > 0;
+  };
+
   const getSiteConfigDetail = async (
     params: SiteConfigDetailParams = { id: props.id }
   ) => {
@@ -306,5 +487,10 @@
     display: block;
     max-height: 110px;
     overflow: auto;
+  }
+  .recharge-rebate-detail {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
   }
 </style>

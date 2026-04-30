@@ -51,6 +51,8 @@ export default {
   'common.highest': '最高',
   'common.sort': '排序號',
   'common.no_limit': '不限',
+  'common.yes': '是',
+  'common.no': '否',
   'common.result': '結果',
   'common.ip_whitelist': 'IP白名單',
   'common.ip_blacklist': 'IP黑名單',

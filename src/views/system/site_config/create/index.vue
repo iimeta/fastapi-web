@@ -171,6 +171,245 @@
             </a-form-item>
             <a-form-item
               v-if="!formData.register_tips"
+              field="invite_code_required"
+              :label="$t('site.config.label.invite_code_required')"
+            >
+              <a-switch v-model="formData.invite_code_required" />
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips"
+              field="invite_enabled"
+              :label="$t('site.config.label.invite_enabled')"
+            >
+              <a-switch v-model="formData.invite_enabled" />
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips && formData.invite_enabled"
+              field="invite_reward_quota"
+              :label="$t('site.config.label.invite_reward_quota')"
+            >
+              <a-input-number
+                v-model="formData.invite_reward_quota"
+                :placeholder="$t('site.config.placeholder.invite_reward_quota')"
+                :min="0"
+                :max="9999999999999"
+                :parser="parsePrice"
+                allow-clear
+              >
+                <template #prefix> {{ appStore.getCurrencySymbol }} </template>
+              </a-input-number>
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips && formData.invite_enabled"
+              field="invitee_grant_quota"
+              :label="$t('site.config.label.invitee_grant_quota')"
+            >
+              <a-input-number
+                v-model="formData.invitee_grant_quota"
+                :placeholder="$t('site.config.placeholder.invitee_grant_quota')"
+                :min="0"
+                :max="9999999999999"
+                :parser="parsePrice"
+                allow-clear
+              >
+                <template #prefix> {{ appStore.getCurrencySymbol }} </template>
+              </a-input-number>
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips && formData.invite_enabled"
+              field="invite_min_apply_quota"
+              :label="$t('site.config.label.invite_min_apply_quota')"
+            >
+              <a-input-number
+                v-model="formData.invite_min_apply_quota"
+                :placeholder="
+                  $t('site.config.placeholder.invite_min_apply_quota')
+                "
+                :min="0"
+                :max="9999999999999"
+                :parser="parsePrice"
+                allow-clear
+              >
+                <template #prefix> {{ appStore.getCurrencySymbol }} </template>
+              </a-input-number>
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips && formData.invite_enabled"
+              field="invite_daily_limit"
+              :label="$t('site.config.label.invite_daily_limit')"
+            >
+              <a-input-number
+                v-model="formData.invite_daily_limit"
+                :placeholder="$t('site.config.placeholder.invite_daily_limit')"
+                :precision="0"
+                :min="0"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips && formData.invite_enabled"
+              field="invite_total_limit"
+              :label="$t('site.config.label.invite_total_limit')"
+            >
+              <a-input-number
+                v-model="formData.invite_total_limit"
+                :placeholder="$t('site.config.placeholder.invite_total_limit')"
+                :precision="0"
+                :min="0"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips && formData.invite_enabled"
+              field="invite_invalid_code_action"
+              :label="$t('site.config.label.invite_invalid_code_action')"
+            >
+              <a-select
+                v-model="formData.invite_invalid_code_action"
+                :placeholder="
+                  $t('site.config.placeholder.invite_invalid_code_action')
+                "
+              >
+                <a-option value="allow_register">
+                  {{
+                    $t(
+                      'site.config.option.invite_invalid_code_action.allow_register'
+                    )
+                  }}
+                </a-option>
+                <a-option value="block_register">
+                  {{
+                    $t(
+                      'site.config.option.invite_invalid_code_action.block_register'
+                    )
+                  }}
+                </a-option>
+              </a-select>
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips && formData.invite_enabled"
+              field="invite_recharge_rebate_enabled"
+              :label="$t('site.config.label.invite_recharge_rebate_enabled')"
+            >
+              <a-switch v-model="formData.invite_recharge_rebate_enabled" />
+            </a-form-item>
+            <a-form-item
+              v-if="
+                !formData.register_tips &&
+                formData.invite_enabled &&
+                formData.invite_recharge_rebate_enabled
+              "
+              field="invite_recharge_rebate_first_enabled"
+              :label="$t('site.config.label.invite_recharge_rebate_first')"
+            >
+              <a-switch
+                v-model="formData.invite_recharge_rebate_first_enabled"
+              />
+              <a-select
+                v-model="formData.invite_recharge_rebate_first_type"
+                style="width: 140px; margin-left: 12px"
+              >
+                <a-option value="percent">
+                  {{ $t('site.config.option.rebate_type.percent') }}
+                </a-option>
+                <a-option value="fixed">
+                  {{ $t('site.config.option.rebate_type.fixed') }}
+                </a-option>
+              </a-select>
+              <a-input-number
+                v-if="formData.invite_recharge_rebate_first_type === 'percent'"
+                v-model="formData.invite_recharge_rebate_first_rate"
+                :placeholder="
+                  $t('site.config.placeholder.invite_recharge_rebate_rate')
+                "
+                :min="0"
+                :max="100"
+                :precision="2"
+                allow-clear
+                style="width: 180px; margin-left: 12px"
+              >
+                <template #append>%</template>
+              </a-input-number>
+              <a-input-number
+                v-else
+                v-model="formData.invite_recharge_rebate_first_quota"
+                :placeholder="
+                  $t('site.config.placeholder.invite_recharge_rebate_quota')
+                "
+                :min="0"
+                :max="9999999999999"
+                :parser="parsePrice"
+                allow-clear
+                style="width: 180px; margin-left: 12px"
+              >
+                <template #prefix> {{ appStore.getCurrencySymbol }} </template>
+              </a-input-number>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                !formData.register_tips &&
+                formData.invite_enabled &&
+                formData.invite_recharge_rebate_enabled
+              "
+              field="invite_recharge_rebate_second_enabled"
+              :label="$t('site.config.label.invite_recharge_rebate_second')"
+            >
+              <a-switch
+                v-model="formData.invite_recharge_rebate_second_enabled"
+              />
+              <a-select
+                v-model="formData.invite_recharge_rebate_second_type"
+                style="width: 140px; margin-left: 12px"
+              >
+                <a-option value="percent">
+                  {{ $t('site.config.option.rebate_type.percent') }}
+                </a-option>
+                <a-option value="fixed">
+                  {{ $t('site.config.option.rebate_type.fixed') }}
+                </a-option>
+              </a-select>
+              <a-input-number
+                v-if="formData.invite_recharge_rebate_second_type === 'percent'"
+                v-model="formData.invite_recharge_rebate_second_rate"
+                :placeholder="
+                  $t('site.config.placeholder.invite_recharge_rebate_rate')
+                "
+                :min="0"
+                :max="100"
+                :precision="2"
+                allow-clear
+                style="width: 180px; margin-left: 12px"
+              >
+                <template #append>%</template>
+              </a-input-number>
+              <a-input-number
+                v-else
+                v-model="formData.invite_recharge_rebate_second_quota"
+                :placeholder="
+                  $t('site.config.placeholder.invite_recharge_rebate_quota')
+                "
+                :min="0"
+                :max="9999999999999"
+                :parser="parsePrice"
+                allow-clear
+                style="width: 180px; margin-left: 12px"
+              >
+                <template #prefix> {{ appStore.getCurrencySymbol }} </template>
+              </a-input-number>
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips && formData.invite_enabled"
+              field="invite_rule_text"
+              :label="$t('site.config.label.invite_rule_text')"
+            >
+              <a-textarea
+                v-model="formData.invite_rule_text"
+                :placeholder="$t('site.config.placeholder.invite_rule_text')"
+                :auto-size="{ minRows: 3, maxRows: 20 }"
+              />
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips"
               field="grant_quota"
               :label="$t('site.config.label.grant_quota')"
             >
@@ -598,6 +837,24 @@
     ga_beian: '',
     register_tips: '',
     grant_quota: ref(),
+    invite_enabled: false,
+    invite_code_required: false,
+    invite_reward_quota: ref(),
+    invitee_grant_quota: ref(),
+    invite_min_apply_quota: ref(),
+    invite_daily_limit: undefined,
+    invite_total_limit: undefined,
+    invite_rule_text: '',
+    invite_invalid_code_action: 'allow_register',
+    invite_recharge_rebate_enabled: false,
+    invite_recharge_rebate_first_enabled: false,
+    invite_recharge_rebate_first_type: 'percent',
+    invite_recharge_rebate_first_rate: undefined,
+    invite_recharge_rebate_first_quota: undefined,
+    invite_recharge_rebate_second_enabled: false,
+    invite_recharge_rebate_second_type: 'percent',
+    invite_recharge_rebate_second_rate: undefined,
+    invite_recharge_rebate_second_quota: undefined,
     quota_expires_at: ref(),
     support_email_suffix: ref(),
     register_welcome: '',

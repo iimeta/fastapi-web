@@ -65,7 +65,7 @@
   import { ref, toRefs, reactive, computed, getCurrentInstance } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useStorage } from '@vueuse/core';
-  import { useRouter } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { ValidatedError, Message } from '@arco-design/web-vue';
   import { useUserStore, useAppStore } from '@/store';
   import { getCaptcha } from '@/api/auth';
@@ -73,6 +73,7 @@
 
   const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
+  const route = useRoute();
   const router = useRouter();
   const userStore = useUserStore();
   const appStore = useAppStore();
@@ -84,6 +85,15 @@
   const captchaTimer = ref();
   const captchaBtnNameKey = ref('login.captcha.get');
   const captchaBtnName = computed(() => t(captchaBtnNameKey.value));
+  const inviteCode = computed(() => {
+    if (typeof route.params.inviteCode === 'string') {
+      return route.params.inviteCode;
+    }
+    if (typeof route.query.invite_code === 'string') {
+      return route.query.invite_code;
+    }
+    return '';
+  });
   const data = reactive({
     form: {
       email: '',
@@ -181,6 +191,7 @@
           method: 'code',
           domain: window.location.hostname,
           path: window.location.pathname,
+          invite_code: String(inviteCode.value || '').trim(),
         })
         .then(() => {
           window.localStorage.setItem('userRole', 'user');

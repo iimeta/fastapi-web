@@ -15,6 +15,7 @@ export default {
   'login.email.placeholder.email': '請輸入信箱',
   'login.email.placeholder.captcha': '請輸入驗證碼',
   'login.invite_code.placeholder': '請輸入邀請碼(選填)',
+  'login.invite_code.placeholder.required': '請輸入邀請碼',
   'login.captcha.get': '取得驗證碼',
   'login.captcha.ing': '傳送中...',
 
@@ -25,6 +26,7 @@ export default {
   'login.email.error.required.email': '請輸入信箱',
   'login.email.error.required.captcha': '請輸入驗證碼',
   'login.email.error.required.password': '請輸入密碼',
+  'login.invite_code.error.required': '請輸入邀請碼',
 
   'login.captcha': '驗證碼',
   'login.remember_me': '記住我',

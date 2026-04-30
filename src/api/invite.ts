@@ -17,6 +17,15 @@ export interface InviteProfile {
   credited_quota: number;
   current_quota: number;
   invite_min_apply_quota: number;
+  invite_recharge_rebate_enabled: boolean;
+  invite_recharge_rebate_first_enabled: boolean;
+  invite_recharge_rebate_first_type: string;
+  invite_recharge_rebate_first_rate: number;
+  invite_recharge_rebate_first_quota: number;
+  invite_recharge_rebate_second_enabled: boolean;
+  invite_recharge_rebate_second_type: string;
+  invite_recharge_rebate_second_rate: number;
+  invite_recharge_rebate_second_quota: number;
 }
 
 export function queryInviteProfile() {
@@ -70,6 +79,12 @@ export interface InviteRewardPage {
   quota: number;
   status: number;
   trigger_type: string;
+  source_deal_record_id: string;
+  recharge_sequence: number;
+  recharge_quota: number;
+  rebate_type: string;
+  rebate_rate: number;
+  rebate_quota: number;
   apply_order_id: string;
   deal_record_id: string;
   credited_at: string;

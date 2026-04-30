@@ -40,10 +40,14 @@
         allow-clear
       />
     </a-form-item>
-    <a-form-item field="inviteCode" hide-label>
+    <a-form-item v-if="!hideInviteCodeInput" field="inviteCode" hide-label>
       <a-input
         v-model="form.inviteCode"
-        :placeholder="$t('login.invite_code.placeholder')"
+        :placeholder="
+          inviteCodeRequired
+            ? $t('login.invite_code.placeholder.required')
+            : $t('login.invite_code.placeholder')
+        "
         allow-clear
       />
     </a-form-item>
@@ -59,11 +63,19 @@
       <a-checkbox v-model="isAgreed">
         {{ $t('login.agreement') }}
       </a-checkbox>
-      <a-link href="/user-agreement" target="_blank" class="register-agreement-link">
+      <a-link
+        href="/user-agreement"
+        target="_blank"
+        class="register-agreement-link"
+      >
         {{ $t('login.user_agreement') }}
       </a-link>
       {{ $t('login.and') }}
-      <a-link href="/privacy-policy" target="_blank" class="register-agreement-link">
+      <a-link
+        href="/privacy-policy"
+        target="_blank"
+        class="register-agreement-link"
+      >
         {{ $t('login.privacy_policy') }}
       </a-link>
     </div>
@@ -73,32 +85,45 @@
 <script lang="ts" setup>
   import { ref, toRefs, reactive, computed, getCurrentInstance } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { useRoute, useRouter } from 'vue-router';
+  import { useRoute } from 'vue-router';
   import { ValidatedError, Message } from '@arco-design/web-vue';
   import { getCaptcha, register } from '@/api/auth';
+  import { useAppStore } from '@/store';
 
   const { proxy } = getCurrentInstance() as any;
   const { t } = useI18n();
   const route = useRoute();
-  const router = useRouter();
+  const appStore = useAppStore();
   const loading = ref(false);
   const isAgreed = ref(false);
   const captchaLoading = ref(false);
 
-  defineEmits(['toggleLogin']);
+  const emit = defineEmits(['toggleLogin']);
 
   const captchaDisable = ref(false);
   const captchaTime = ref(60);
   const captchaTimer = ref();
   const captchaBtnNameKey = ref('login.captcha.get');
   const captchaBtnName = computed(() => t(captchaBtnNameKey.value));
-  const inviteCode = typeof route.params.inviteCode === 'string' ? route.params.inviteCode : '';
+  const inviteCodeRequired = computed(() => appStore.getInviteCodeRequired);
+  const routeInviteCode = computed(() => {
+    if (typeof route.params.inviteCode === 'string') {
+      return route.params.inviteCode;
+    }
+    if (typeof route.query.invite_code === 'string') {
+      return route.query.invite_code;
+    }
+    return '';
+  });
+  const hideInviteCodeInput = computed(
+    () => Boolean(routeInviteCode.value) && !inviteCodeRequired.value
+  );
   const data = reactive({
     form: {
       email: '',
       password: '',
       captcha: '',
-      inviteCode: inviteCode || (typeof route.query.invite_code === 'string' ? route.query.invite_code : ''),
+      inviteCode: routeInviteCode.value,
     },
     rules: {
       email: [
@@ -109,6 +134,17 @@
       ],
       captcha: [
         { required: true, message: t('login.email.error.required.captcha') },
+      ],
+      inviteCode: [
+        {
+          validator: (value: string, cb: (error?: string) => void) => {
+            if (inviteCodeRequired.value && !String(value || '').trim()) {
+              cb(t('login.invite_code.error.required'));
+              return;
+            }
+            cb();
+          },
+        },
       ],
     },
   });
@@ -192,11 +228,11 @@
         code: values.captcha,
         domain: window.location.hostname,
         path: window.location.pathname,
-        invite_code: values.inviteCode,
+        invite_code: String(form.value.inviteCode || '').trim(),
       })
         .then(() => {
           Message.success(t('register.success'));
-          router.go(0);
+          emit('toggleLogin');
         })
         .catch(() => {
           form.value.captcha = '';

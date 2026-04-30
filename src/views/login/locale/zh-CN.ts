@@ -15,6 +15,7 @@ export default {
   'login.email.placeholder.email': '请输入邮箱',
   'login.email.placeholder.captcha': '请输入验证码',
   'login.invite_code.placeholder': '请输入邀请码(选填)',
+  'login.invite_code.placeholder.required': '请输入邀请码',
   'login.captcha.get': '获取验证码',
   'login.captcha.ing': '发送中...',
 
@@ -25,6 +26,7 @@ export default {
   'login.email.error.required.email': '请输入邮箱',
   'login.email.error.required.captcha': '请输入验证码',
   'login.email.error.required.password': '请输入密码',
+  'login.invite_code.error.required': '请输入邀请码',
 
   'login.captcha': '验证码',
   'login.remember_me': '记住我',

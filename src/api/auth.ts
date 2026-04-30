@@ -23,6 +23,7 @@ export interface LoginData {
   method: string;
   domain?: string;
   path?: string;
+  invite_code?: string;
 }
 
 export interface LoginRes {

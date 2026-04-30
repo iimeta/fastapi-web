@@ -8,7 +8,9 @@
       </div>
 
       <!-- 邀请概览 -->
-      <InviteOverview v-if="userStore.role === 'user'" />
+      <InviteOverview
+        v-if="userStore.role === 'user' && appStore.getInviteEnabled"
+      />
 
       <a-grid :cols="24" :col-gap="10" :row-gap="10" class="dashboard-grid-gap">
         <a-grid-item
