@@ -5,7 +5,10 @@ const INVITE: AppRouteRecordRaw = {
   path: '/invite',
   name: 'invite',
   component: DEFAULT_LAYOUT,
-  redirect: '/invite/profile',
+  redirect: () =>
+    localStorage.getItem('userRole') === 'user'
+      ? '/invite/profile'
+      : '/invite/manage/relations',
   meta: {
     locale: 'invite.menu',
     requiresAuth: true,
@@ -23,8 +26,7 @@ const INVITE: AppRouteRecordRaw = {
         requiresAuth: true,
         icon: 'lucide-gift',
         roles: ['user'],
-        hideInMenu: true,
-        activeMenu: 'InviteRelations',
+        activeMenu: 'InviteProfile',
       },
     },
     {

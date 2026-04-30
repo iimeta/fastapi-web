@@ -188,6 +188,8 @@
   const statusOptions = [
     { label: t('invite.dict.relation_status.1'), value: 1 },
     { label: t('invite.dict.relation_status.2'), value: 2 },
+    { label: t('invite.dict.relation_status.3'), value: 3 },
+    { label: t('invite.dict.relation_status.4'), value: 4 },
   ];
   const basePagination: Pagination = {
     current: 1,

@@ -79,7 +79,7 @@
           <a-space>
             <a-button
               type="primary"
-              :disabled="selectedKeys.length === 0"
+              :disabled="selectedPendingKeys.length === 0"
               @click="applyRewards"
               >{{ $t('invite.button.apply') }}</a-button
             >
@@ -175,7 +175,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { reactive, ref } from 'vue';
+  import { computed, reactive, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { Message } from '@arco-design/web-vue';
   import type { TableRowSelection } from '@arco-design/web-vue/es/table/interface';
@@ -206,6 +206,11 @@
     showCheckedAll: true,
     onlyCurrent: false,
   } as TableRowSelection);
+  const selectedPendingKeys = computed(() =>
+    selectedKeys.value.filter((key) =>
+      renderData.value.some((item) => item.id === key && item.status === 1)
+    )
+  );
   const statusOptions = [
     { label: t('invite.dict.reward_status.1'), value: 1 },
     { label: t('invite.dict.reward_status.2'), value: 2 },
@@ -252,7 +257,7 @@
     search();
   };
   const applyRewards = async () => {
-    await submitInviteRewardApply(selectedKeys.value);
+    await submitInviteRewardApply(selectedPendingKeys.value);
     Message.success('操作成功');
     fetchData({
       ...basePagination,

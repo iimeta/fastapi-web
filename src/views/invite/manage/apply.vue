@@ -203,6 +203,8 @@
     { label: t('invite.dict.apply_status.1'), value: 1 },
     { label: t('invite.dict.apply_status.2'), value: 2 },
     { label: t('invite.dict.apply_status.3'), value: 3 },
+    { label: t('invite.dict.apply_status.4'), value: 4 },
+    { label: t('invite.dict.apply_status.5'), value: 5 },
   ];
   const basePagination: Pagination = {
     current: 1,
