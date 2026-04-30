@@ -17,7 +17,7 @@ export default {
   'invite.columns.credited_quota': '已入帳額度',
   'invite.columns.invite_min_apply_quota': '最低申請額度',
   'invite.columns.invite_rule_text': '邀請規則',
-  'invite.columns.inviter_user_id': '邀請人ID',
+  'invite.columns.inviter_user_id': '邀請人',
   'invite.columns.invitee_user_id': '用戶ID',
   'invite.columns.apply_order_id': '申請單號',
   'invite.columns.order_no': '申請單號',

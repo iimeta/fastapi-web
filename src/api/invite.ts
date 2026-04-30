@@ -51,7 +51,8 @@ export interface InviteRelationPage {
   updated_at: string;
 }
 
-export interface InviteRelationPageParams extends Partial<Omit<InviteRelationPage, 'created_at'>> {
+export interface InviteRelationPageParams
+  extends Partial<Omit<InviteRelationPage, 'created_at'>> {
   current: number;
   pageSize: number;
   created_at?: string[];
@@ -63,11 +64,19 @@ export interface InviteRelationPageRes {
 }
 
 export function queryInviteRelationPage(params: InviteRelationPageParams) {
-  return axios.post<InviteRelationPageRes>('/api/v1/invite/relations/page', params);
+  return axios.post<InviteRelationPageRes>(
+    '/api/v1/invite/relations/page',
+    params
+  );
 }
 
-export function queryManageInviteRelationPage(params: InviteRelationPageParams) {
-  return axios.post<InviteRelationPageRes>('/api/v1/invite/manage/relations/page', params);
+export function queryManageInviteRelationPage(
+  params: InviteRelationPageParams
+) {
+  return axios.post<InviteRelationPageRes>(
+    '/api/v1/invite/manage/relations/page',
+    params
+  );
 }
 
 export interface InviteRewardPage {
@@ -94,7 +103,8 @@ export interface InviteRewardPage {
   updated_at: string;
 }
 
-export interface InviteRewardPageParams extends Partial<Omit<InviteRewardPage, 'created_at'>> {
+export interface InviteRewardPageParams
+  extends Partial<Omit<InviteRewardPage, 'created_at'>> {
   current: number;
   pageSize: number;
   created_at?: string[];
@@ -110,14 +120,20 @@ export function queryInviteRewardPage(params: InviteRewardPageParams) {
 }
 
 export function queryManageInviteRewardPage(params: InviteRewardPageParams) {
-  return axios.post<InviteRewardPageRes>('/api/v1/invite/manage/rewards/page', params);
+  return axios.post<InviteRewardPageRes>(
+    '/api/v1/invite/manage/rewards/page',
+    params
+  );
 }
 
 export function submitInviteRewardApply(rewardIds: string[]) {
   return axios.post('/api/v1/invite/reward/apply', { reward_ids: rewardIds });
 }
 
-export function submitManageInviteRewardsCancel(ids: string[], cancelledReason?: string) {
+export function submitManageInviteRewardsCancel(
+  ids: string[],
+  cancelledReason?: string
+) {
   return axios.post('/api/v1/invite/manage/rewards/cancel', {
     ids,
     cancelled_reason: cancelledReason,
@@ -144,7 +160,8 @@ export interface InviteRewardApplyPage {
   updated_at: string;
 }
 
-export interface InviteRewardApplyPageParams extends Partial<Omit<InviteRewardApplyPage, 'applied_at'>> {
+export interface InviteRewardApplyPageParams
+  extends Partial<Omit<InviteRewardApplyPage, 'applied_at'>> {
   current: number;
   pageSize: number;
   applied_at?: string[];
@@ -155,15 +172,28 @@ export interface InviteRewardApplyPageRes {
   paging: Paging;
 }
 
-export function queryInviteRewardApplyPage(params: InviteRewardApplyPageParams) {
-  return axios.post<InviteRewardApplyPageRes>('/api/v1/invite/reward/apply/page', params);
+export function queryInviteRewardApplyPage(
+  params: InviteRewardApplyPageParams
+) {
+  return axios.post<InviteRewardApplyPageRes>(
+    '/api/v1/invite/reward/apply/page',
+    params
+  );
 }
 
-export function queryManageInviteRewardApplyPage(params: InviteRewardApplyPageParams) {
-  return axios.post<InviteRewardApplyPageRes>('/api/v1/invite/manage/reward/apply/page', params);
+export function queryManageInviteRewardApplyPage(
+  params: InviteRewardApplyPageParams
+) {
+  return axios.post<InviteRewardApplyPageRes>(
+    '/api/v1/invite/manage/reward/apply/page',
+    params
+  );
 }
 
-export function submitManageInviteRewardApplyApprove(id: string, auditRemark?: string) {
+export function submitManageInviteRewardApplyApprove(
+  id: string,
+  auditRemark?: string
+) {
   return axios.post('/api/v1/invite/manage/reward/apply/approve', {
     id,
     audit_remark: auditRemark,

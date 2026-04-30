@@ -48,22 +48,22 @@
         </div>
       </div>
       <div v-if="profile.invite_rule_text" class="invite-rule">
-        <span>{{ $t('invite.columns.invite_rule_text') }}：</span
-        >{{ profile.invite_rule_text }}
+        <span> {{ $t('invite.columns.invite_rule_text') }}: </span>
+        {{ profile.invite_rule_text }}
       </div>
       <div
         v-if="rechargeRebateRules.length"
         class="invite-rule invite-rebate-rules"
       >
-        <span>{{ $t('invite.columns.recharge_rebate_rule') }}：</span>
+        <span>{{ $t('invite.columns.recharge_rebate_rule') }}: </span>
         <div
           v-for="rule in rechargeRebateRules"
           :key="rule.key"
           class="invite-rebate-rule"
         >
-          {{ rule.label }}：
+          {{ rule.label }}:
           <Quota v-if="rule.type === 'fixed'" :model-value="rule.value" />
-          <template v-else>{{ rule.value }}%</template>
+          <span v-else>{{ rule.value }}%</span>
         </div>
       </div>
     </a-card>

@@ -90,8 +90,11 @@
 
   useUserStore().logout();
 
-  const inviteCode = typeof route.params.inviteCode === 'string' ? route.params.inviteCode : '';
-  const isRegister = ref(Boolean(inviteCode || typeof route.query.invite_code === 'string'));
+  const inviteCode =
+    typeof route.params.inviteCode === 'string' ? route.params.inviteCode : '';
+  const isRegister = ref(
+    Boolean(inviteCode || typeof route.query.invite_code === 'string')
+  );
   const isForget = ref(false);
 
   const toggleLogin = () => {

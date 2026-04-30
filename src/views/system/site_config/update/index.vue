@@ -307,7 +307,7 @@
               />
               <a-select
                 v-model="formData.invite_recharge_rebate_first_type"
-                style="width: 140px; margin-left: 12px"
+                style="width: 20%; margin-left: 12px"
               >
                 <a-option value="percent">
                   {{ $t('site.config.option.rebate_type.percent') }}
@@ -326,7 +326,7 @@
                 :max="100"
                 :precision="2"
                 allow-clear
-                style="width: 180px; margin-left: 12px"
+                style="width: 72%; margin-left: 5px"
               >
                 <template #append>%</template>
               </a-input-number>
@@ -340,7 +340,7 @@
                 :max="9999999999999"
                 :parser="parsePrice"
                 allow-clear
-                style="width: 180px; margin-left: 12px"
+                style="width: 72%; margin-left: 5px"
               >
                 <template #prefix> {{ appStore.getCurrencySymbol }} </template>
               </a-input-number>
@@ -359,7 +359,7 @@
               />
               <a-select
                 v-model="formData.invite_recharge_rebate_second_type"
-                style="width: 140px; margin-left: 12px"
+                style="width: 20%; margin-left: 12px"
               >
                 <a-option value="percent">
                   {{ $t('site.config.option.rebate_type.percent') }}
@@ -378,7 +378,7 @@
                 :max="100"
                 :precision="2"
                 allow-clear
-                style="width: 180px; margin-left: 12px"
+                style="width: 72%; margin-left: 5px"
               >
                 <template #append>%</template>
               </a-input-number>
@@ -392,7 +392,7 @@
                 :max="9999999999999"
                 :parser="parsePrice"
                 allow-clear
-                style="width: 180px; margin-left: 12px"
+                style="width: 72%; margin-left: 5px"
               >
                 <template #prefix> {{ appStore.getCurrencySymbol }} </template>
               </a-input-number>
@@ -849,7 +849,7 @@
     invite_daily_limit: undefined,
     invite_total_limit: undefined,
     invite_rule_text: '',
-    invite_invalid_code_action: 'allow_register',
+    invite_invalid_code_action: 'block_register',
     invite_recharge_rebate_enabled: false,
     invite_recharge_rebate_first_enabled: false,
     invite_recharge_rebate_first_type: 'percent',
@@ -987,7 +987,7 @@
       formData.value.invite_total_limit = data.invite_total_limit;
       formData.value.invite_rule_text = data.invite_rule_text;
       formData.value.invite_invalid_code_action =
-        data.invite_invalid_code_action || 'allow_register';
+        data.invite_invalid_code_action || 'block_register';
       formData.value.invite_recharge_rebate_enabled = Boolean(
         data.invite_recharge_rebate_enabled
       );

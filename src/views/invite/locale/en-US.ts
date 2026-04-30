@@ -17,7 +17,7 @@ export default {
   'invite.columns.credited_quota': 'Credited Quota',
   'invite.columns.invite_min_apply_quota': 'Minimum Apply Quota',
   'invite.columns.invite_rule_text': 'Invite Rules',
-  'invite.columns.inviter_user_id': 'Inviter User ID',
+  'invite.columns.inviter_user_id': 'Inviter User',
   'invite.columns.invitee_user_id': 'User ID',
   'invite.columns.apply_order_id': 'Application No.',
   'invite.columns.order_no': 'Application No.',
