@@ -1,5 +1,5 @@
 export default {
-  'invite.menu': '邀請返佣',
+  'invite.menu': '邀請獎勵',
   'invite.menu.profile': '我的邀請',
   'invite.menu.relations': '邀請關係',
   'invite.menu.rewards': '邀請收益',

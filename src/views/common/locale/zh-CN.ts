@@ -110,7 +110,7 @@ export default {
   'menu.group.data_operations': '数据运营',
   'menu.group.app_access': '应用接入',
   'menu.group.finance': '财务中心',
-  'menu.group.invite': '邀请返佣',
+  'menu.group.invite': '邀请奖励',
   'menu.group.tasks_logs': '任务与日志',
   'menu.group.system_config': '系统配置',
   // unit
