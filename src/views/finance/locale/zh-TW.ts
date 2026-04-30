@@ -20,5 +20,5 @@ export default {
   'finance.dict.deal_type.2': '扣除',
   'finance.dict.deal_type.3': '贈送',
   'finance.dict.deal_type.4': '過期',
-  'finance.dict.deal_type.5': '邀請獎勵入帳',
+  'finance.dict.deal_type.5': '邀請獎勵',
 };

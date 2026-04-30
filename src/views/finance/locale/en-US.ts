@@ -20,5 +20,5 @@ export default {
   'finance.dict.deal_type.2': 'Deduction',
   'finance.dict.deal_type.3': 'Gift',
   'finance.dict.deal_type.4': 'Expired',
-  'finance.dict.deal_type.5': 'Invite Reward Credit',
+  'finance.dict.deal_type.5': 'Invite Reward',
 };

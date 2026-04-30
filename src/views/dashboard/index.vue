@@ -7,7 +7,7 @@
         <DataChart />
       </div>
 
-      <!-- 邀请概览 -->
+      <!-- 我的邀请 -->
       <InviteOverview
         v-if="userStore.role === 'user' && appStore.getInviteEnabled"
       />

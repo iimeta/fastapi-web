@@ -4,7 +4,7 @@
       class="general-card invite-overview"
       :header-style="cardHeaderStyle"
       :body-style="cardBodyStyle"
-      :title="$t('invite.overview.title')"
+      :title="$t('invite.overview.dashboard_title')"
       :bordered="false"
     >
       <div class="ov-row invite-main-row">

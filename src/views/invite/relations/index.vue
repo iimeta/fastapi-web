@@ -48,7 +48,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="created_at"
-                  :label="$t('common.created_at')"
+                  :label="$t('invite.columns.registered_at')"
                 >
                   <a-range-picker
                     v-model="searchFormData.created_at"
@@ -90,11 +90,6 @@
             align="center"
           />
           <a-table-column
-            :title="$t('common.account')"
-            data-index="account"
-            align="center"
-          />
-          <a-table-column
             :title="$t('common.quota')"
             data-index="reward_quota"
             align="center"
@@ -113,7 +108,7 @@
             }}</template>
           </a-table-column>
           <a-table-column
-            :title="$t('common.created_at')"
+            :title="$t('invite.columns.registered_at')"
             data-index="created_at"
             align="center"
           />
