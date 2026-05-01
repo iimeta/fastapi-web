@@ -85,7 +85,27 @@
       </a-row>
       <a-divider class="list-toolbar-divider" />
       <a-row class="list-toolbar-row">
-        <a-col :span="24" class="list-table-actions">
+        <a-col :span="12">
+          <a-space>
+            <a-button
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
+              @click="handleBatchApprove"
+              >{{ $t('invite.button.approve') }}</a-button
+            >
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
+              @click="handleBatchReject"
+              >{{ $t('invite.button.reject') }}</a-button
+            >
+          </a-space>
+        </a-col>
+        <a-col :span="12" class="list-table-actions">
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -139,6 +159,7 @@
         </a-col>
       </a-row>
       <a-table
+        ref="tableRef"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -146,8 +167,10 @@
         :data="renderData"
         :bordered="false"
         :size="size"
+        :row-selection="rowSelection"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
+        @selection-change="handleSelectionChange"
       >
         <template #total_quota="{ record }">
           <Quota :model-value="record.total_quota" />
@@ -156,22 +179,20 @@
           {{ $t(`invite.dict.apply_status.${record.status}`) }}
         </template>
         <template #operations="{ record }">
-          <a-space>
-            <a-button
-              size="mini"
-              type="primary"
-              :disabled="record.status !== 1"
-              @click="approve(record.id)"
-              >{{ $t('invite.button.approve') }}</a-button
-            >
-            <a-button
-              size="mini"
-              status="danger"
-              :disabled="record.status !== 1"
-              @click="reject(record.id)"
-              >{{ $t('invite.button.reject') }}</a-button
-            >
-          </a-space>
+          <a-button
+            type="text"
+            size="small"
+            :disabled="record.status !== 1"
+            @click="handleApprove(record.id)"
+            >{{ $t('invite.button.approve') }}</a-button
+          >
+          <a-button
+            type="text"
+            size="small"
+            :disabled="record.status !== 1"
+            @click="handleReject(record.id)"
+            >{{ $t('invite.button.reject') }}</a-button
+          >
         </template>
       </a-table>
     </a-card>
@@ -206,10 +227,13 @@
 <script lang="ts" setup>
   import { computed, reactive, ref, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { Message } from '@arco-design/web-vue';
+  import { Message, Modal } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import { Pagination } from '@/types/global';
-  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import type {
+    TableColumnData,
+    TableRowSelection,
+  } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import {
@@ -239,6 +263,14 @@
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
+  const tableRef = ref();
+  const ids = ref<string[]>([]);
+  const multiple = ref(true);
+  const rowSelection = reactive({
+    type: 'checkbox',
+    showCheckedAll: true,
+    onlyCurrent: false,
+  } as TableRowSelection);
   const statusOptions = [
     { label: t('invite.dict.apply_status.1'), value: 1 },
     { label: t('invite.dict.apply_status.2'), value: 2 },
@@ -371,6 +403,11 @@
     { deep: true, immediate: true }
   );
 
+  const handleSelectionChange = (rowKeys: Array<any>) => {
+    ids.value = rowKeys;
+    multiple.value = !rowKeys.length;
+  };
+
   const fetchData = async (
     params: InviteRewardApplyPageParams = {
       ...basePagination,
@@ -399,28 +436,89 @@
     searchFormData.value = generateSearchParams();
     search();
   };
-  const approve = async (id: string) => {
-    try {
-      await submitManageInviteRewardApplyApprove(id);
-      Message.success(t('success.operate'));
-      fetchData({
-        ...basePagination,
-        ...searchFormData.value,
-        current: pagination.current,
-      });
-    } catch (e) {
-      // error handled by axios interceptor
-    }
+
+  // 获取选中的待审核申请ID列表
+  const getPendingIds = (targetIds: string[]) =>
+    targetIds.filter((id) =>
+      renderData.value.some((item) => item.id === id && item.status === 1)
+    );
+
+  // 单条通过
+  const handleApprove = (id: string) => {
+    Modal.warning({
+      title: t('modal.warning.title'),
+      titleAlign: 'center',
+      content: t('invite.confirm.approve'),
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
+      hideCancel: false,
+      onOk: async () => {
+        await submitManageInviteRewardApplyApprove(id);
+        Message.success(t('success.operate'));
+        fetchData({
+          ...basePagination,
+          ...searchFormData.value,
+          current: pagination.current,
+        });
+      },
+    });
   };
+
+  // 批量通过
+  const handleBatchApprove = () => {
+    const pendingIds = getPendingIds(ids.value);
+    if (pendingIds.length === 0) {
+      Message.info(t('placeholder.operation.data'));
+      return;
+    }
+    Modal.warning({
+      title: t('modal.warning.title'),
+      titleAlign: 'center',
+      content: t('invite.confirm.batch_approve', {
+        count: pendingIds.length,
+      }),
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
+      hideCancel: false,
+      onOk: async () => {
+        setLoading(true);
+        try {
+          await Promise.all(
+            pendingIds.map((id) => submitManageInviteRewardApplyApprove(id))
+          );
+          Message.success(t('success.operate'));
+          search();
+          tableRef.value.selectAll(false);
+        } finally {
+          setLoading(false);
+        }
+      },
+    });
+  };
+
+  // 单条驳回
   const rejectVisible = ref(false);
-  const rejectId = ref('');
+  const rejectIds = ref<string[]>([]);
   const rejectForm = reactive({
     rejectReason: '',
     returnPending: true,
   });
 
-  const reject = (id: string) => {
-    rejectId.value = id;
+  const handleReject = (id: string) => {
+    rejectIds.value = [id];
+    rejectForm.rejectReason = '';
+    rejectForm.returnPending = true;
+    rejectVisible.value = true;
+  };
+
+  // 批量驳回
+  const handleBatchReject = () => {
+    const pendingIds = getPendingIds(ids.value);
+    if (pendingIds.length === 0) {
+      Message.info(t('placeholder.operation.data'));
+      return;
+    }
+    rejectIds.value = pendingIds;
     rejectForm.rejectReason = '';
     rejectForm.returnPending = true;
     rejectVisible.value = true;
@@ -428,22 +526,24 @@
 
   const handleRejectConfirm = async (done: (closed: boolean) => void) => {
     try {
-      await submitManageInviteRewardApplyReject(
-        rejectId.value,
-        rejectForm.rejectReason || undefined,
-        rejectForm.returnPending
+      await Promise.all(
+        rejectIds.value.map((id) =>
+          submitManageInviteRewardApplyReject(
+            id,
+            rejectForm.rejectReason || undefined,
+            rejectForm.returnPending
+          )
+        )
       );
       Message.success(t('success.operate'));
       done(true);
-      fetchData({
-        ...basePagination,
-        ...searchFormData.value,
-        current: pagination.current,
-      });
+      search();
+      tableRef.value.selectAll(false);
     } catch (e) {
       done(false);
     }
   };
+
   const onPageChange = (current: number) =>
     fetchData({ ...basePagination, ...searchFormData.value, current });
   const onPageSizeChange = (pageSize: number) => {

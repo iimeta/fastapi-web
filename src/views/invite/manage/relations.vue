@@ -102,7 +102,18 @@
       </a-row>
       <a-divider class="list-toolbar-divider" />
       <a-row class="list-toolbar-row">
-        <a-col :span="24" class="list-table-actions">
+        <a-col :span="12">
+          <a-space>
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="selectedCancellableKeys.length === 0"
+              @click="cancelRelations"
+              >{{ $t('invite.button.cancel_relation') }}</a-button
+            >
+          </a-space>
+        </a-col>
+        <a-col :span="12" class="list-table-actions">
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -156,6 +167,7 @@
         </a-col>
       </a-row>
       <a-table
+        v-model:selected-keys="selectedKeys"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -163,6 +175,7 @@
         :data="renderData"
         :bordered="false"
         :size="size"
+        :row-selection="rowSelection"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
       >
@@ -180,13 +193,18 @@
 <script lang="ts" setup>
   import { computed, reactive, ref, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { Message, Modal } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import { Pagination } from '@/types/global';
-  import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import type {
+    TableColumnData,
+    TableRowSelection,
+  } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import {
     queryManageInviteRelationPage,
+    submitManageInviteRelationsCancel,
     InviteRelationPage,
     InviteRelationPageParams,
   } from '@/api/invite';
@@ -207,10 +225,23 @@
     created_at: [],
   });
   const renderData = ref<InviteRelationPage[]>([]);
+  const selectedKeys = ref<string[]>([]);
   const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
+  const rowSelection = reactive({
+    type: 'checkbox',
+    showCheckedAll: true,
+    onlyCurrent: false,
+  } as TableRowSelection);
+  const selectedCancellableKeys = computed(() =>
+    selectedKeys.value.filter((key) =>
+      renderData.value.some(
+        (item) => item.id === key && (item.status === 1 || item.status === 2)
+      )
+    )
+  );
   const statusOptions = [
     { label: t('invite.dict.relation_status.1'), value: 1 },
     { label: t('invite.dict.relation_status.2'), value: 2 },
@@ -345,6 +376,7 @@
     try {
       const { data } = await queryManageInviteRelationPage(params);
       renderData.value = data.items;
+      selectedKeys.value = [];
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
       pagination.total = data.paging.total;
@@ -362,6 +394,25 @@
   const reset = () => {
     searchFormData.value = generateSearchParams();
     search();
+  };
+  const cancelRelations = () => {
+    Modal.warning({
+      title: t('invite.button.cancel_relation'),
+      titleAlign: 'center',
+      content: t('invite.confirm.cancel_relation'),
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
+      hideCancel: false,
+      onOk: async () => {
+        await submitManageInviteRelationsCancel(selectedCancellableKeys.value);
+        Message.success(t('success.operate'));
+        fetchData({
+          ...basePagination,
+          ...searchFormData.value,
+          current: pagination.current,
+        });
+      },
+    });
   };
   const onPageChange = (current: number) =>
     fetchData({ ...basePagination, ...searchFormData.value, current });

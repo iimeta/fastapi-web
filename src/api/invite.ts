@@ -81,6 +81,10 @@ export function queryManageInviteRelationPage(
   );
 }
 
+export function submitManageInviteRelationsCancel(ids: string[]) {
+  return axios.post('/api/v1/invite/manage/relations/cancel', { ids });
+}
+
 export interface InviteRewardPage {
   id: string;
   relation_id: string;
