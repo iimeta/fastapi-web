@@ -260,6 +260,11 @@
       align: 'center',
     },
     {
+      title: 'IP',
+      dataIndex: 'ip',
+      align: 'center',
+    },
+    {
       title: t('invite.columns.registered_at'),
       dataIndex: 'created_at',
       align: 'center',

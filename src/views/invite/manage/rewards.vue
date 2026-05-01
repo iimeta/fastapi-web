@@ -213,6 +213,21 @@
         </template>
       </a-table>
     </a-card>
+    <a-modal
+      v-model:visible="cancelModalVisible"
+      :title="$t('invite.cancel.title')"
+      :ok-loading="cancelLoading"
+      @ok="handleCancelConfirm"
+      @cancel="cancelModalVisible = false"
+    >
+      <a-textarea
+        v-model="cancelledReason"
+        :placeholder="$t('invite.cancel.reason_placeholder')"
+        :max-length="200"
+        :auto-size="{ minRows: 3, maxRows: 6 }"
+        allow-clear
+      />
+    </a-modal>
   </div>
 </template>
 
@@ -266,6 +281,9 @@
       renderData.value.some((item) => item.id === key && item.status === 1)
     )
   );
+  const cancelModalVisible = ref(false);
+  const cancelledReason = ref('');
+  const cancelLoading = ref(false);
   const statusOptions = [
     { label: t('invite.dict.reward_status.1'), value: 1 },
     { label: t('invite.dict.reward_status.2'), value: 2 },
@@ -428,14 +446,27 @@
     searchFormData.value = generateSearchParams();
     search();
   };
-  const cancelRewards = async () => {
-    await submitManageInviteRewardsCancel(selectedPendingKeys.value);
-    Message.success('操作成功');
-    fetchData({
-      ...basePagination,
-      ...searchFormData.value,
-      current: pagination.current,
-    });
+  const cancelRewards = () => {
+    cancelledReason.value = '';
+    cancelModalVisible.value = true;
+  };
+  const handleCancelConfirm = async () => {
+    cancelLoading.value = true;
+    try {
+      await submitManageInviteRewardsCancel(
+        selectedPendingKeys.value,
+        cancelledReason.value || undefined
+      );
+      Message.success(t('success.operate'));
+      cancelModalVisible.value = false;
+      fetchData({
+        ...basePagination,
+        ...searchFormData.value,
+        current: pagination.current,
+      });
+    } finally {
+      cancelLoading.value = false;
+    }
   };
   const onPageChange = (current: number) =>
     fetchData({ ...basePagination, ...searchFormData.value, current });

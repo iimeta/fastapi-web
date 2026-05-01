@@ -293,6 +293,11 @@
       align: 'center',
     },
     {
+      title: t('invite.columns.cancelled_reason'),
+      dataIndex: 'cancelled_reason',
+      align: 'center',
+    },
+    {
       title: t('common.created_at'),
       dataIndex: 'created_at',
       align: 'center',
@@ -394,7 +399,7 @@
   };
   const applyRewards = async () => {
     await submitInviteRewardApply(selectedPendingKeys.value);
-    Message.success('操作成功');
+    Message.success(t('success.operate'));
     fetchData({
       ...basePagination,
       ...searchFormData.value,

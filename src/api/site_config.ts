@@ -38,6 +38,10 @@ export interface SiteConfigCreate {
   invite_min_apply_quota: any;
   invite_daily_limit: any;
   invite_total_limit: any;
+  invite_ip_daily_limit: any;
+  invite_ip_total_limit: any;
+  invite_ip_per_inviter_limit: any;
+  invite_ip_limit_action: string;
   invite_rule_text: string;
   invite_invalid_code_action: string;
   invite_recharge_rebate_enabled: boolean;
@@ -152,6 +156,10 @@ export interface SiteConfigDetail {
   invite_min_apply_quota: number;
   invite_daily_limit: any;
   invite_total_limit: any;
+  invite_ip_daily_limit: any;
+  invite_ip_total_limit: any;
+  invite_ip_per_inviter_limit: any;
+  invite_ip_limit_action: string;
   invite_rule_text: string;
   invite_invalid_code_action: string;
   invite_recharge_rebate_enabled: boolean;
@@ -222,6 +230,10 @@ export interface SiteConfigUpdate {
   invite_min_apply_quota: any;
   invite_daily_limit: any;
   invite_total_limit: any;
+  invite_ip_daily_limit: any;
+  invite_ip_total_limit: any;
+  invite_ip_per_inviter_limit: any;
+  invite_ip_limit_action: string;
   invite_rule_text: string;
   invite_invalid_code_action: string;
   invite_recharge_rebate_enabled: boolean;

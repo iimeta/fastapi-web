@@ -188,6 +188,52 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
+        :label="$t('site.config.label.invite_ip_daily_limit')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.invite_ip_daily_limit || $t('common.no_limit') }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('site.config.label.invite_ip_total_limit')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.invite_ip_total_limit || $t('common.no_limit') }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('site.config.label.invite_ip_per_inviter_limit')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.invite_ip_per_inviter_limit || $t('common.no_limit') }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('site.config.label.invite_ip_limit_action')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.invite_ip_limit_action
+              ? $t(
+                  `site.config.option.invite_ip_limit_action.${currentData.invite_ip_limit_action}`
+                )
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
         :label="$t('site.config.label.invite_invalid_code_action')"
       >
         <a-skeleton v-if="loading" :animation="true">

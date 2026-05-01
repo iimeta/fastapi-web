@@ -175,6 +175,31 @@
         </template>
       </a-table>
     </a-card>
+    <a-modal
+      v-model:visible="rejectVisible"
+      :title="$t('invite.reject.title')"
+      :ok-text="$t('invite.button.reject')"
+      :ok-button-props="{ status: 'danger' }"
+      @before-ok="handleRejectConfirm"
+      @cancel="rejectVisible = false"
+    >
+      <a-form :model="rejectForm" layout="vertical">
+        <a-form-item :label="$t('invite.columns.reject_reason')">
+          <a-textarea
+            v-model="rejectForm.rejectReason"
+            :placeholder="$t('invite.reject.reason_placeholder')"
+            :max-length="200"
+            :auto-size="{ minRows: 2, maxRows: 5 }"
+            show-word-limit
+          />
+        </a-form-item>
+        <a-form-item>
+          <a-checkbox v-model="rejectForm.returnPending">
+            {{ $t('invite.reject.return_pending') }}
+          </a-checkbox>
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </div>
 </template>
 
@@ -375,22 +400,49 @@
     search();
   };
   const approve = async (id: string) => {
-    await submitManageInviteRewardApplyApprove(id);
-    Message.success('操作成功');
-    fetchData({
-      ...basePagination,
-      ...searchFormData.value,
-      current: pagination.current,
-    });
+    try {
+      await submitManageInviteRewardApplyApprove(id);
+      Message.success(t('success.operate'));
+      fetchData({
+        ...basePagination,
+        ...searchFormData.value,
+        current: pagination.current,
+      });
+    } catch (e) {
+      // error handled by axios interceptor
+    }
   };
-  const reject = async (id: string) => {
-    await submitManageInviteRewardApplyReject(id, undefined, true);
-    Message.success('操作成功');
-    fetchData({
-      ...basePagination,
-      ...searchFormData.value,
-      current: pagination.current,
-    });
+  const rejectVisible = ref(false);
+  const rejectId = ref('');
+  const rejectForm = reactive({
+    rejectReason: '',
+    returnPending: true,
+  });
+
+  const reject = (id: string) => {
+    rejectId.value = id;
+    rejectForm.rejectReason = '';
+    rejectForm.returnPending = true;
+    rejectVisible.value = true;
+  };
+
+  const handleRejectConfirm = async (done: (closed: boolean) => void) => {
+    try {
+      await submitManageInviteRewardApplyReject(
+        rejectId.value,
+        rejectForm.rejectReason || undefined,
+        rejectForm.returnPending
+      );
+      Message.success(t('success.operate'));
+      done(true);
+      fetchData({
+        ...basePagination,
+        ...searchFormData.value,
+        current: pagination.current,
+      });
+    } catch (e) {
+      done(false);
+    }
   };
   const onPageChange = (current: number) =>
     fetchData({ ...basePagination, ...searchFormData.value, current });

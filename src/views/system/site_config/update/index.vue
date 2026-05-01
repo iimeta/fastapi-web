@@ -261,6 +261,70 @@
             </a-form-item>
             <a-form-item
               v-if="!formData.register_tips && formData.invite_enabled"
+              field="invite_ip_daily_limit"
+              :label="$t('site.config.label.invite_ip_daily_limit')"
+            >
+              <a-input-number
+                v-model="formData.invite_ip_daily_limit"
+                :placeholder="
+                  $t('site.config.placeholder.invite_ip_daily_limit')
+                "
+                :precision="0"
+                :min="0"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips && formData.invite_enabled"
+              field="invite_ip_total_limit"
+              :label="$t('site.config.label.invite_ip_total_limit')"
+            >
+              <a-input-number
+                v-model="formData.invite_ip_total_limit"
+                :placeholder="
+                  $t('site.config.placeholder.invite_ip_total_limit')
+                "
+                :precision="0"
+                :min="0"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips && formData.invite_enabled"
+              field="invite_ip_per_inviter_limit"
+              :label="$t('site.config.label.invite_ip_per_inviter_limit')"
+            >
+              <a-input-number
+                v-model="formData.invite_ip_per_inviter_limit"
+                :placeholder="
+                  $t('site.config.placeholder.invite_ip_per_inviter_limit')
+                "
+                :precision="0"
+                :min="0"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips && formData.invite_enabled"
+              field="invite_ip_limit_action"
+              :label="$t('site.config.label.invite_ip_limit_action')"
+            >
+              <a-select
+                v-model="formData.invite_ip_limit_action"
+                :placeholder="
+                  $t('site.config.placeholder.invite_ip_limit_action')
+                "
+              >
+                <a-option value="block">
+                  {{ $t('site.config.option.invite_ip_limit_action.block') }}
+                </a-option>
+                <a-option value="silent">
+                  {{ $t('site.config.option.invite_ip_limit_action.silent') }}
+                </a-option>
+              </a-select>
+            </a-form-item>
+            <a-form-item
+              v-if="!formData.register_tips && formData.invite_enabled"
               field="invite_invalid_code_action"
               :label="$t('site.config.label.invite_invalid_code_action')"
             >
@@ -848,6 +912,10 @@
     invite_min_apply_quota: ref(),
     invite_daily_limit: undefined,
     invite_total_limit: undefined,
+    invite_ip_daily_limit: undefined,
+    invite_ip_total_limit: undefined,
+    invite_ip_per_inviter_limit: undefined,
+    invite_ip_limit_action: 'silent',
     invite_rule_text: '',
     invite_invalid_code_action: 'block_register',
     invite_recharge_rebate_enabled: false,
@@ -985,6 +1053,12 @@
       formData.value.invite_min_apply_quota = data.invite_min_apply_quota;
       formData.value.invite_daily_limit = data.invite_daily_limit;
       formData.value.invite_total_limit = data.invite_total_limit;
+      formData.value.invite_ip_daily_limit = data.invite_ip_daily_limit;
+      formData.value.invite_ip_total_limit = data.invite_ip_total_limit;
+      formData.value.invite_ip_per_inviter_limit =
+        data.invite_ip_per_inviter_limit;
+      formData.value.invite_ip_limit_action =
+        data.invite_ip_limit_action || 'silent';
       formData.value.invite_rule_text = data.invite_rule_text;
       formData.value.invite_invalid_code_action =
         data.invite_invalid_code_action || 'block_register';

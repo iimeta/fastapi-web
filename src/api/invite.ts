@@ -11,6 +11,8 @@ export interface InviteProfile {
   invite_code: string;
   invite_link: string;
   invite_rule_text: string;
+  invite_reward_quota: number;
+  invitee_grant_quota: number;
   total_invites: number;
   pending_quota: number;
   applying_quota: number;
