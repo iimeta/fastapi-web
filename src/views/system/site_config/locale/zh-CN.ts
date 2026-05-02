@@ -48,7 +48,7 @@ export default {
   'site.config.placeholder.invite_ip_daily_limit': '请输入同一IP单日注册上限, 0为不限制',
   'site.config.label.invite_ip_total_limit': 'IP总次数上限',
   'site.config.placeholder.invite_ip_total_limit': '请输入同一IP累计注册上限, 0为不限制',
-  'site.config.label.invite_ip_per_inviter_limit': 'IP同邀请人上限',
+  'site.config.label.invite_ip_per_inviter_limit': '同IP邀请人上限',
   'site.config.placeholder.invite_ip_per_inviter_limit': '请输入同一IP同一邀请人注册上限, 0为不限制',
   'site.config.label.invite_ip_limit_action': 'IP限制处理',
   'site.config.placeholder.invite_ip_limit_action': '请选择触发IP限制后的处理方式',

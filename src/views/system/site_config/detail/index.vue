@@ -139,8 +139,8 @@
         </a-skeleton>
         <span v-else>
           <Quota
-            v-if="currentData.invite_reward_quota"
-            :model-value="currentData.invite_reward_quota"
+            v-if="currentData.invite_config?.reward_quota"
+            :model-value="currentData.invite_config?.reward_quota"
           />
           <span v-else> - </span>
         </span>
@@ -151,8 +151,8 @@
         </a-skeleton>
         <span v-else>
           <Quota
-            v-if="currentData.invitee_grant_quota"
-            :model-value="currentData.invitee_grant_quota"
+            v-if="currentData.invite_config?.grant_quota"
+            :model-value="currentData.invite_config?.grant_quota"
           />
           <span v-else> - </span>
         </span>
@@ -165,8 +165,8 @@
         </a-skeleton>
         <span v-else>
           <Quota
-            v-if="currentData.invite_min_apply_quota"
-            :model-value="currentData.invite_min_apply_quota"
+            v-if="currentData.invite_config?.min_apply_quota"
+            :model-value="currentData.invite_config?.min_apply_quota"
           />
           <span v-else> - </span>
         </span>
@@ -176,7 +176,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.invite_daily_limit || $t('common.no_limit') }}
+          {{ currentData.invite_config?.daily_limit || $t('common.no_limit') }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('site.config.label.invite_total_limit')">
@@ -184,7 +184,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.invite_total_limit || $t('common.no_limit') }}
+          {{ currentData.invite_config?.total_limit || $t('common.no_limit') }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item
@@ -194,7 +194,9 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.invite_ip_daily_limit || $t('common.no_limit') }}
+          {{
+            currentData.invite_config?.ip_daily_limit || $t('common.no_limit')
+          }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item
@@ -204,7 +206,9 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.invite_ip_total_limit || $t('common.no_limit') }}
+          {{
+            currentData.invite_config?.ip_total_limit || $t('common.no_limit')
+          }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item
@@ -214,7 +218,10 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.invite_ip_per_inviter_limit || $t('common.no_limit') }}
+          {{
+            currentData.invite_config?.ip_per_inviter_limit ||
+            $t('common.no_limit')
+          }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item
@@ -225,9 +232,9 @@
         </a-skeleton>
         <span v-else>
           {{
-            currentData.invite_ip_limit_action
+            currentData.invite_config?.ip_limit_action
               ? $t(
-                  `site.config.option.invite_ip_limit_action.${currentData.invite_ip_limit_action}`
+                  `site.config.option.invite_ip_limit_action.${currentData.invite_config?.ip_limit_action}`
                 )
               : '-'
           }}
@@ -241,9 +248,9 @@
         </a-skeleton>
         <span v-else>
           {{
-            currentData.invite_invalid_code_action
+            currentData.invite_config?.invalid_code_action
               ? $t(
-                  `site.config.option.invite_invalid_code_action.${currentData.invite_invalid_code_action}`
+                  `site.config.option.invite_invalid_code_action.${currentData.invite_config?.invalid_code_action}`
                 )
               : '-'
           }}
@@ -258,11 +265,13 @@
         <span v-else>
           <a-tag
             :color="
-              currentData.invite_recharge_rebate_enabled ? 'green' : 'red'
+              currentData.invite_config?.recharge_rebate_enabled
+                ? 'green'
+                : 'red'
             "
           >
             {{
-              currentData.invite_recharge_rebate_enabled
+              currentData.invite_config?.recharge_rebate_enabled
                 ? $t('common.yes')
                 : $t('common.no')
             }}
@@ -279,11 +288,16 @@
           <template v-if="isRechargeRebateTierEnabled('first')">
             {{ $t('common.yes') }}，
             <Quota
-              v-if="currentData.invite_recharge_rebate_first_type === 'fixed'"
-              :model-value="currentData.invite_recharge_rebate_first_quota"
+              v-if="
+                currentData.invite_config?.recharge_rebate_first_type ===
+                'fixed'
+              "
+              :model-value="
+                currentData.invite_config?.recharge_rebate_first_quota
+              "
             />
             <template v-else>
-              {{ currentData.invite_recharge_rebate_first_rate }}%
+              {{ currentData.invite_config?.recharge_rebate_first_rate }}%
             </template>
           </template>
           <template v-else>{{ $t('common.no') }}</template>
@@ -299,11 +313,16 @@
           <template v-if="isRechargeRebateTierEnabled('second')">
             {{ $t('common.yes') }}，
             <Quota
-              v-if="currentData.invite_recharge_rebate_second_type === 'fixed'"
-              :model-value="currentData.invite_recharge_rebate_second_quota"
+              v-if="
+                currentData.invite_config?.recharge_rebate_second_type ===
+                'fixed'
+              "
+              :model-value="
+                currentData.invite_config?.recharge_rebate_second_quota
+              "
             />
             <template v-else>
-              {{ currentData.invite_recharge_rebate_second_rate }}%
+              {{ currentData.invite_config?.recharge_rebate_second_rate }}%
             </template>
           </template>
           <template v-else>{{ $t('common.no') }}</template>
@@ -314,7 +333,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else class="site-config-detail-scroll">
-          {{ currentData.invite_rule_text || '-' }}
+          {{ currentData.invite_config?.rule_text || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('site.config.label.grant_quota')">
@@ -491,12 +510,12 @@
   });
 
   const isRechargeRebateTierEnabled = (tier: 'first' | 'second') => {
-    const enabled = currentData.value[`invite_recharge_rebate_${tier}_enabled`];
-    const type =
-      currentData.value[`invite_recharge_rebate_${tier}_type`] || 'percent';
-    const rate = currentData.value[`invite_recharge_rebate_${tier}_rate`];
-    const quota = currentData.value[`invite_recharge_rebate_${tier}_quota`];
-    if (!currentData.value.invite_recharge_rebate_enabled || !enabled) {
+    const inviteConfig = currentData.value.invite_config;
+    const enabled = inviteConfig?.[`recharge_rebate_${tier}_enabled`];
+    const type = inviteConfig?.[`recharge_rebate_${tier}_type`] || 'percent';
+    const rate = inviteConfig?.[`recharge_rebate_${tier}_rate`];
+    const quota = inviteConfig?.[`recharge_rebate_${tier}_quota`];
+    if (!inviteConfig?.recharge_rebate_enabled || !enabled) {
       return false;
     }
     if (type === 'fixed') {

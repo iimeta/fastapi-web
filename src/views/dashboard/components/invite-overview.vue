@@ -56,9 +56,9 @@
           </div>
         </div>
       </div>
-      <div v-if="profile.invite_rule_text" class="invite-rule">
+      <div v-if="profile.rule_text" class="invite-rule">
         <span>{{ $t('invite.columns.invite_rule_text') }}: </span>
-        {{ profile.invite_rule_text }}
+        {{ profile.rule_text }}
       </div>
     </a-card>
   </a-spin>
@@ -109,7 +109,7 @@
     {
       key: 'invite_min_apply_quota',
       label: t('invite.columns.invite_min_apply_quota'),
-      value: profile.value.invite_min_apply_quota || 0,
+      value: profile.value.min_apply_quota || 0,
       color: '#eb2f96',
       quota: true,
     },
@@ -123,74 +123,69 @@
       color: string;
       displayType: 'quota' | 'percent';
     }[] = [];
-    if (profile.value.invite_reward_quota > 0) {
+    if (profile.value.reward_quota > 0) {
       items.push({
         key: 'invite_reward',
         label: t('invite.columns.invite_reward_rule'),
-        value: profile.value.invite_reward_quota,
+        value: profile.value.reward_quota,
         color: '#7b61ff',
         displayType: 'quota',
       });
     }
-    if (profile.value.invitee_grant_quota > 0) {
+    if (profile.value.grant_quota > 0) {
       items.push({
         key: 'invitee_grant',
         label: t('invite.columns.invitee_grant_rule'),
-        value: profile.value.invitee_grant_quota,
+        value: profile.value.grant_quota,
         color: '#14C9C9',
         displayType: 'quota',
       });
     }
-    if (profile.value.invite_recharge_rebate_enabled) {
-      if (profile.value.invite_recharge_rebate_first_enabled) {
-        const type =
-          profile.value.invite_recharge_rebate_first_type || 'percent';
-        if (
-          type === 'fixed' &&
-          profile.value.invite_recharge_rebate_first_quota > 0
-        ) {
+    if (profile.value.recharge_rebate_enabled) {
+      if (profile.value.recharge_rebate_first_enabled) {
+        const type = profile.value.recharge_rebate_first_type || 'percent';
+        if (type === 'fixed' && profile.value.recharge_rebate_first_quota > 0) {
           items.push({
             key: 'rebate_first',
             label: t('invite.columns.first_recharge_rebate'),
-            value: profile.value.invite_recharge_rebate_first_quota,
+            value: profile.value.recharge_rebate_first_quota,
             color: '#ff7d00',
             displayType: 'quota',
           });
         } else if (
           type === 'percent' &&
-          profile.value.invite_recharge_rebate_first_rate > 0
+          profile.value.recharge_rebate_first_rate > 0
         ) {
           items.push({
             key: 'rebate_first',
             label: t('invite.columns.first_recharge_rebate'),
-            value: profile.value.invite_recharge_rebate_first_rate,
+            value: profile.value.recharge_rebate_first_rate,
             color: '#ff7d00',
             displayType: 'percent',
           });
         }
       }
-      if (profile.value.invite_recharge_rebate_second_enabled) {
-        const type =
-          profile.value.invite_recharge_rebate_second_type || 'percent';
+      if (profile.value.recharge_rebate_second_enabled) {
+        const type = profile.value.recharge_rebate_second_type || 'percent';
         if (
           type === 'fixed' &&
-          profile.value.invite_recharge_rebate_second_quota > 0
+          profile.value.recharge_rebate_second_quota > 0
         ) {
           items.push({
             key: 'rebate_second',
             label: t('invite.columns.following_recharge_rebate'),
-            value: profile.value.invite_recharge_rebate_second_quota,
+            value: profile.value.recharge_rebate_second_quota,
             color: '#F7BA1E',
             displayType: 'quota',
           });
         } else if (
           type === 'percent' &&
-          profile.value.invite_recharge_rebate_second_rate > 0
+          profile.value.recharge_rebate_second_rate > 0
         ) {
           items.push({
             key: 'rebate_second',
             label: t('invite.columns.following_recharge_rebate'),
-            value: profile.value.invite_recharge_rebate_second_rate,
+            value: profile.value.recharge_rebate_second_rate,
             color: '#F7BA1E',
             displayType: 'percent',
           });

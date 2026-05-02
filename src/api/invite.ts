@@ -10,24 +10,24 @@ export interface Paging {
 export interface InviteProfile {
   invite_code: string;
   invite_link: string;
-  invite_rule_text: string;
-  invite_reward_quota: number;
-  invitee_grant_quota: number;
+  rule_text: string;
+  reward_quota: number;
+  grant_quota: number;
   total_invites: number;
   pending_quota: number;
   applying_quota: number;
   credited_quota: number;
   current_quota: number;
-  invite_min_apply_quota: number;
-  invite_recharge_rebate_enabled: boolean;
-  invite_recharge_rebate_first_enabled: boolean;
-  invite_recharge_rebate_first_type: string;
-  invite_recharge_rebate_first_rate: number;
-  invite_recharge_rebate_first_quota: number;
-  invite_recharge_rebate_second_enabled: boolean;
-  invite_recharge_rebate_second_type: string;
-  invite_recharge_rebate_second_rate: number;
-  invite_recharge_rebate_second_quota: number;
+  min_apply_quota: number;
+  recharge_rebate_enabled: boolean;
+  recharge_rebate_first_enabled: boolean;
+  recharge_rebate_first_type: string;
+  recharge_rebate_first_rate: number;
+  recharge_rebate_first_quota: number;
+  recharge_rebate_second_enabled: boolean;
+  recharge_rebate_second_type: string;
+  recharge_rebate_second_rate: number;
+  recharge_rebate_second_quota: number;
 }
 
 export function queryInviteProfile() {
