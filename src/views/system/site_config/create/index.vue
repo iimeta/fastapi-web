@@ -244,7 +244,9 @@
                 :precision="0"
                 :min="0"
                 allow-clear
-              />
+              >
+                <template #append> {{ $t('unit.once') }} </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="!formData.register_tips && formData.invite_enabled"
@@ -257,7 +259,9 @@
                 :precision="0"
                 :min="0"
                 allow-clear
-              />
+              >
+                <template #append> {{ $t('unit.once') }} </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="!formData.register_tips && formData.invite_enabled"
@@ -272,7 +276,9 @@
                 :precision="0"
                 :min="0"
                 allow-clear
-              />
+              >
+                <template #append> {{ $t('unit.one') }} </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="!formData.register_tips && formData.invite_enabled"
@@ -287,7 +293,9 @@
                 :precision="0"
                 :min="0"
                 allow-clear
-              />
+              >
+                <template #append> {{ $t('unit.one') }} </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="!formData.register_tips && formData.invite_enabled"
@@ -302,7 +310,9 @@
                 :precision="0"
                 :min="0"
                 allow-clear
-              />
+              >
+                <template #append> {{ $t('unit.one') }} </template>
+              </a-input-number>
             </a-form-item>
             <a-form-item
               v-if="!formData.register_tips && formData.invite_enabled"
