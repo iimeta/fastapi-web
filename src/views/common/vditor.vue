@@ -96,7 +96,7 @@
     cache: {
       enable: false,
     },
-    cdn: 'https://vditor.fastapi.pro/vditor@3.11.1',
+    cdn: 'https://vditor.fastapi.pro/vditor@3.11.2',
     lang: defaultLocale as any,
     toolbar: [
       'emoji',
