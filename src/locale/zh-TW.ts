@@ -23,6 +23,7 @@ import localeGroup from '@/views/group/locale/zh-TW';
 import localeInvite from '@/views/invite/locale/zh-TW';
 import localeNotice from '@/views/notice/locale/zh-TW';
 import localeNoticeTemplate from '@/views/notice_template/locale/zh-TW';
+import localeTicket from '@/views/ticket/locale/zh-TW';
 import localeDataBoard from '@/views/statistics/locale/zh-TW';
 import localeMonitor from '@/views/monitor/locale/zh-TW';
 
@@ -51,6 +52,7 @@ export default {
   ...localeInvite,
   ...localeNotice,
   ...localeNoticeTemplate,
+  ...localeTicket,
   ...localeDataBoard,
   ...localeMonitor,
 };

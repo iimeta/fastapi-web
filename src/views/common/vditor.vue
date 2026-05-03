@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div id="vditor" class="content"></div>
-    <div class="attribute">
+    <div v-if="showVariables" class="attribute">
       <a-descriptions
         :title="$t('common.variable.user')"
         :column="{ xs: 1, md: 2, lg: 3 }"
@@ -83,7 +83,10 @@
 
   const props = defineProps<{
     modelValue: string;
+    showVariables?: boolean;
   }>();
+
+  const showVariables = props.showVariables !== false;
 
   const emit = defineEmits<(e: 'update:modelValue', value: string) => void>();
 
@@ -151,12 +154,13 @@
     },
   };
 
+  const getValue = () => vditor.value?.getValue() || '';
+  defineExpose({ getValue });
+
   watch(
     () => props.modelValue,
     (value) => {
-      if (value !== vditor.value?.getValue()) {
-        vditor.value?.destroy();
-        vditor.value = new Vditor('vditor', options);
+      if (vditor.value && value !== vditor.value.getValue()) {
         vditor.value.setValue(value);
       }
     }

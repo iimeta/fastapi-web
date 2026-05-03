@@ -28,6 +28,9 @@ import IconClipboardCheck from '~icons/lucide/clipboard-check';
 import IconBanknote from '~icons/lucide/banknote';
 import IconStore from '~icons/lucide/store';
 import IconListChecks from '~icons/lucide/list-checks';
+import IconHeadset from '~icons/lucide/headset';
+import IconCirclePlus from '~icons/lucide/circle-plus';
+import IconList from '~icons/lucide/list';
 
 const menuIcons: Record<string, any> = {
   'lucide-layout-grid': IconApps,
@@ -59,6 +62,9 @@ const menuIcons: Record<string, any> = {
   'lucide-banknote': IconBanknote,
   'lucide-store': IconStore,
   'lucide-list-checks': IconListChecks,
+  'lucide-headset': IconHeadset,
+  'lucide-circle-plus': IconCirclePlus,
+  'lucide-list': IconList,
 };
 
 export function registerMenuIcons(app: App) {

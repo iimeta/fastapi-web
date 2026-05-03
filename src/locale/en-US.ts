@@ -23,6 +23,7 @@ import localeGroup from '@/views/group/locale/en-US';
 import localeInvite from '@/views/invite/locale/en-US';
 import localeNotice from '@/views/notice/locale/en-US';
 import localeNoticeTemplate from '@/views/notice_template/locale/en-US';
+import localeTicket from '@/views/ticket/locale/en-US';
 import localeDataBoard from '@/views/statistics/locale/en-US';
 import localeMonitor from '@/views/monitor/locale/en-US';
 
@@ -51,6 +52,7 @@ export default {
   ...localeInvite,
   ...localeNotice,
   ...localeNoticeTemplate,
+  ...localeTicket,
   ...localeDataBoard,
   ...localeMonitor,
 };

@@ -112,6 +112,7 @@ export default {
   'menu.group.finance': '財務中心',
   'menu.group.invite': '邀請獎勵',
   'menu.group.tasks_logs': '任務與日誌',
+  'menu.group.support': '服務支持',
   'menu.group.system_config': '系統配置',
   // unit
   'unit.millisecond': '毫秒',

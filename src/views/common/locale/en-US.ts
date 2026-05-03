@@ -112,6 +112,7 @@ export default {
   'menu.group.finance': 'Finance Center',
   'menu.group.invite': 'Invite Rewards',
   'menu.group.tasks_logs': 'Tasks & Logs',
+  'menu.group.support': 'Support',
   'menu.group.system_config': 'System Config',
   // unit
   'unit.millisecond': 'ms',

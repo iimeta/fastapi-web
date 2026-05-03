@@ -92,6 +92,12 @@
           routes: ['task', 'log'],
         },
         {
+          title: 'menu.group.support',
+          icon: 'lucide-headset',
+          order: 75,
+          routes: ['TicketCreate', 'TicketMyList', 'TicketList'],
+        },
+        {
           title: 'menu.group.system_config',
           icon: 'lucide-settings',
           order: 80,
