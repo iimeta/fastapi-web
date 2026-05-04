@@ -37,6 +37,7 @@ export interface TicketPage {
   status: number;
   user_id: number;
   user_name: string;
+  user_role: string;
   assignee_id: number;
   assignee_role: string;
   reply_count: number;
@@ -93,6 +94,7 @@ export interface TicketDetail {
   status: number;
   user_id: number;
   user_name: string;
+  user_role: string;
   assignee_id: number;
   assignee_role: string;
   reply_count: number;

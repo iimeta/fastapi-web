@@ -69,7 +69,15 @@
                 }}</a-option>
               </a-select>
             </a-form-item>
-            <a-form-item field="priority" :label="$t('ticket.label.priority')">
+            <a-form-item
+              field="priority"
+              :label="$t('ticket.label.priority')"
+              :rules="[
+                {
+                  required: true,
+                },
+              ]"
+            >
               <a-radio-group v-model="formData.priority">
                 <a-radio :value="1">{{ $t('ticket.dict.priority.1') }}</a-radio>
                 <a-radio :value="2">{{ $t('ticket.dict.priority.2') }}</a-radio>

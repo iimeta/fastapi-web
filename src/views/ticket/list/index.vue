@@ -28,7 +28,7 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="6">
+              <a-col :span="isMyTickets ? 8 : 6">
                 <a-form-item
                   field="ticket_no"
                   :label="$t('ticket.label.ticket_no')"
@@ -40,7 +40,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="6">
+              <a-col :span="isMyTickets ? 8 : 6">
                 <a-form-item field="title" :label="$t('ticket.label.title')">
                   <a-input
                     v-model="searchFormData.title"
@@ -49,7 +49,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="6">
+              <a-col :span="isMyTickets ? 8 : 6">
                 <a-form-item
                   field="category"
                   :label="$t('ticket.label.category')"
@@ -78,7 +78,45 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="6">
+              <a-col v-if="userStore.role !== 'user' && !isMyTickets" :span="6">
+                <a-form-item
+                  field="user_name"
+                  :label="$t('ticket.label.submitter')"
+                >
+                  <a-input
+                    v-model="searchFormData.user_name"
+                    :placeholder="$t('ticket.placeholder.submitter')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="isMyTickets ? 8 : 6">
+                <a-form-item
+                  field="priority"
+                  :label="$t('ticket.label.priority')"
+                >
+                  <a-select
+                    v-model="searchFormData.priority"
+                    :placeholder="$t('common.all')"
+                    :scrollbar="false"
+                    allow-clear
+                  >
+                    <a-option :value="1">{{
+                      $t('ticket.dict.priority.1')
+                    }}</a-option>
+                    <a-option :value="2">{{
+                      $t('ticket.dict.priority.2')
+                    }}</a-option>
+                    <a-option :value="3">{{
+                      $t('ticket.dict.priority.3')
+                    }}</a-option>
+                    <a-option :value="4">{{
+                      $t('ticket.dict.priority.4')
+                    }}</a-option>
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="isMyTickets ? 8 : 6">
                 <a-form-item field="status" :label="$t('ticket.label.status')">
                   <a-select
                     v-model="searchFormData.status"
@@ -107,45 +145,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col v-if="userStore.role !== 'user'" :span="6">
-                <a-form-item
-                  field="user_name"
-                  :label="$t('ticket.label.submitter')"
-                >
-                  <a-input
-                    v-model="searchFormData.user_name"
-                    :placeholder="$t('ticket.placeholder.submitter')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="6">
-                <a-form-item
-                  field="priority"
-                  :label="$t('ticket.label.priority')"
-                >
-                  <a-select
-                    v-model="searchFormData.priority"
-                    :placeholder="$t('common.all')"
-                    :scrollbar="false"
-                    allow-clear
-                  >
-                    <a-option :value="1">{{
-                      $t('ticket.dict.priority.1')
-                    }}</a-option>
-                    <a-option :value="2">{{
-                      $t('ticket.dict.priority.2')
-                    }}</a-option>
-                    <a-option :value="3">{{
-                      $t('ticket.dict.priority.3')
-                    }}</a-option>
-                    <a-option :value="4">{{
-                      $t('ticket.dict.priority.4')
-                    }}</a-option>
-                  </a-select>
-                </a-form-item>
-              </a-col>
-              <a-col :span="6">
+              <a-col :span="isMyTickets ? 8 : 6">
                 <a-form-item
                   field="created_at"
                   :label="$t('ticket.label.created_at')"
@@ -270,15 +270,11 @@
       >
         <template #ticket_no="{ record }">
           <a-space :size="2">
-            <span>{{ record.ticket_no }}</span>
-            <a-button
-              v-if="record.ticket_no"
-              type="text"
-              size="mini"
+            {{ record.ticket_no }}
+            <icon-copy
+              class="copy-btn"
               @click.stop="handleCopyTicketNo(record.ticket_no)"
-            >
-              <template #icon><icon-copy /></template>
-            </a-button>
+            />
           </a-space>
         </template>
         <template #title="{ record }">
@@ -445,47 +441,35 @@
         dataIndex: 'category',
         slotName: 'category',
         align: 'center',
-        width: 110,
       },
       {
         title: t('ticket.label.priority'),
         dataIndex: 'priority',
         slotName: 'priority',
         align: 'center',
-        width: 90,
       },
       {
         title: t('ticket.label.status'),
         dataIndex: 'status',
         slotName: 'status',
         align: 'center',
-        width: 100,
       },
     ];
 
-    // Non-user roles can see submitter
     if (userStore.role !== 'user') {
       cols.push({
         title: t('ticket.label.submitter'),
         dataIndex: 'user_name',
         slotName: 'user_name',
         align: 'center',
-        width: 120,
       });
     }
 
     cols.push(
       {
-        title: t('ticket.label.reply_count'),
-        dataIndex: 'reply_count',
-        align: 'center',
-        width: 90,
-      },
-      {
         title: t('ticket.label.created_at'),
         dataIndex: 'created_at',
         align: 'center',
-        width: 170,
       },
       {
         title: t('common.operations'),
@@ -723,5 +707,5 @@
 </script>
 
 <style scoped lang="less">
-  @import '@/assets/style/page-list.less';
+  // 公共骨架已由 page-list.less 全局提供
 </style>

@@ -30,16 +30,22 @@
           <a-tag :color="priorityColor(ticketData.priority || 2)" size="small">
             {{ $t(`ticket.dict.priority.${ticketData.priority || 2}`) }}
           </a-tag>
-          <a-tag size="small">
+          <a-tag
+            :color="categoryColor(ticketData.category || 'other')"
+            size="small"
+          >
             {{ $t(`ticket.dict.category.${ticketData.category || 'other'}`) }}
           </a-tag>
           <span class="meta-item">
             {{ $t('ticket.label.submitter') }}:
             {{ ticketData.user_name || '-' }}
           </span>
-          <span v-if="ticketData.assignee_role" class="meta-item">
+          <span
+            v-if="userStore.role === 'admin' && ticketData.assignee_role"
+            class="meta-item"
+          >
             {{ $t('ticket.label.assignee') }}:
-            <a-tag size="small">
+            <a-tag :color="roleColor(ticketData.assignee_role)" size="small">
               {{ $t(`ticket.dict.role.${ticketData.assignee_role}`) }}
             </a-tag>
           </span>
@@ -96,8 +102,17 @@
         <!-- Original content -->
         <div class="timeline-item">
           <div class="timeline-avatar">
-            <a-tag :color="roleColor('user')" size="small">
-              {{ $t('ticket.dict.role.user') }}
+            <a-tag
+              :color="roleColor(displayRole(ticketData.user_role || 'user'))"
+              size="small"
+            >
+              {{
+                $t(
+                  `ticket.dict.role.${displayRole(
+                    ticketData.user_role || 'user'
+                  )}`
+                )
+              }}
             </a-tag>
           </div>
           <div class="timeline-body">
@@ -118,11 +133,17 @@
           v-for="reply in ticketData.replies"
           :key="reply.id"
           class="timeline-item"
-          :class="{ 'timeline-item--staff': reply.role !== 'user' }"
+          :class="{
+            'timeline-item--staff':
+              displayRole(reply.role || 'user') !== 'user',
+          }"
         >
           <div class="timeline-avatar">
-            <a-tag :color="roleColor(reply.role || 'user')" size="small">
-              {{ $t(`ticket.dict.role.${reply.role || 'user'}`) }}
+            <a-tag
+              :color="roleColor(displayRole(reply.role || 'user'))"
+              size="small"
+            >
+              {{ $t(`ticket.dict.role.${displayRole(reply.role || 'user')}`) }}
             </a-tag>
           </div>
           <div class="timeline-body">
@@ -144,7 +165,6 @@
         v-if="ticketData.status && ticketData.status !== 6"
         class="ticket-reply-form"
       >
-        <div class="reply-form-title">{{ $t('ticket.button.reply') }}</div>
         <Vditor
           ref="replyEditorRef"
           v-model="replyContent"
@@ -354,6 +374,24 @@
     }
   };
 
+  // 角色显示映射
+  // 管理员查看: 看到真实角色
+  // 用户查看: 代理商作为处理人的回复显示为"管理员", 避免用户疑惑
+  // 代理商查看自己提交的工单: 自己显示"代理商", 管理员回复显示"管理员"
+  // 代理商查看用户提交的工单(作为处理人): 显示真实角色
+  const displayRole = (role: string) => {
+    if (userStore.role === 'admin') return role;
+    // 用户视角: 工单分配给代理商处理时, 代理商回复显示为管理员
+    if (
+      userStore.role === 'user' &&
+      role === 'reseller' &&
+      ticketData.value.assignee_role === 'reseller'
+    ) {
+      return 'admin';
+    }
+    return role;
+  };
+
   const priorityColor = (priority: number) => {
     const colors: Record<number, string> = {
       1: 'gray',
@@ -362,6 +400,17 @@
       4: 'red',
     };
     return colors[priority] || 'gray';
+  };
+
+  const categoryColor = (category: string) => {
+    const colors: Record<string, string> = {
+      account: 'blue',
+      billing: 'orange',
+      technical: 'purple',
+      feature: 'cyan',
+      other: 'gray',
+    };
+    return colors[category] || 'gray';
   };
 
   const statusColor = (status: number) => {
@@ -580,12 +629,5 @@
     border-radius: 8px;
     padding: 16px 20px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-  }
-
-  .reply-form-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: #1d2129;
-    margin-bottom: 12px;
   }
 </style>
