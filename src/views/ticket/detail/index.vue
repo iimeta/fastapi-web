@@ -1,24 +1,67 @@
 <template>
   <div class="ticket-detail">
     <a-spin :loading="loading" style="width: 100%">
-      <!-- Compact Header -->
+      <!-- Header -->
       <div class="ticket-header">
         <div class="ticket-header-top">
-          <a-button size="small" @click="goBack">
-            <template #icon><icon-left /></template>
-            {{ $t('button.return') }}
-          </a-button>
-          <span v-if="ticketData.ticket_no" class="ticket-no">
-            {{ ticketData.ticket_no }}
-            <a-button
-              type="text"
-              size="mini"
-              class="copy-btn"
-              @click="handleCopyTicketNo"
-            >
-              <template #icon><icon-copy /></template>
+          <div class="ticket-header-left">
+            <a-button size="small" @click="goBack">
+              <template #icon><icon-left /></template>
+              {{ $t('button.return') }}
             </a-button>
-          </span>
+            <span v-if="ticketData.ticket_no" class="ticket-no">
+              {{ ticketData.ticket_no }}
+              <a-button
+                type="text"
+                size="mini"
+                class="copy-btn"
+                @click="handleCopyTicketNo"
+              >
+                <template #icon><icon-copy /></template>
+              </a-button>
+            </span>
+          </div>
+          <!-- Action Buttons -->
+          <div v-if="hasActions" class="ticket-actions">
+            <a-button
+              v-if="isHandler && ticketData.status === 2"
+              size="small"
+              type="primary"
+              @click="handleStatusUpdate(3)"
+            >
+              {{ $t('ticket.button.start') }}
+            </a-button>
+            <a-button
+              v-if="
+                isHandler &&
+                (ticketData.status === 1 ||
+                  ticketData.status === 3 ||
+                  ticketData.status === 4)
+              "
+              size="small"
+              type="primary"
+              status="success"
+              @click="handleStatusUpdate(5)"
+            >
+              {{ $t('ticket.button.resolve') }}
+            </a-button>
+            <a-button
+              v-if="ticketData.status === 5 || ticketData.status === 6"
+              size="small"
+              type="primary"
+              @click="handleStatusUpdate(2)"
+            >
+              {{ $t('ticket.button.reopen') }}
+            </a-button>
+            <a-button
+              v-if="ticketData.status !== 6"
+              size="small"
+              status="danger"
+              @click="handleClose"
+            >
+              {{ $t('ticket.button.close') }}
+            </a-button>
+          </div>
         </div>
 
         <h2 class="ticket-title">{{ ticketData.title }}</h2>
@@ -52,48 +95,6 @@
           <span class="meta-item meta-time">
             {{ ticketData.created_at }}
           </span>
-        </div>
-
-        <!-- Action Buttons -->
-        <div v-if="hasActions" class="ticket-actions">
-          <a-button
-            v-if="ticketData.status !== 6"
-            size="small"
-            status="danger"
-            @click="handleClose"
-          >
-            {{ $t('ticket.button.close') }}
-          </a-button>
-          <a-button
-            v-if="ticketData.status === 5 || ticketData.status === 6"
-            size="small"
-            type="primary"
-            @click="handleStatusUpdate(2)"
-          >
-            {{ $t('ticket.button.reopen') }}
-          </a-button>
-          <a-button
-            v-if="isHandler && ticketData.status === 2"
-            size="small"
-            type="primary"
-            @click="handleStatusUpdate(3)"
-          >
-            {{ $t('ticket.button.start') }}
-          </a-button>
-          <a-button
-            v-if="
-              isHandler &&
-              (ticketData.status === 1 ||
-                ticketData.status === 3 ||
-                ticketData.status === 4)
-            "
-            size="small"
-            type="primary"
-            status="success"
-            @click="handleStatusUpdate(5)"
-          >
-            {{ $t('ticket.button.resolve') }}
-          </a-button>
         </div>
       </div>
 
@@ -171,7 +172,18 @@
           :show-variables="false"
           style="width: 100%"
         />
-        <div style="margin-top: 12px; text-align: right">
+        <div
+          style="
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <a-button @click="goBack">
+            <template #icon><icon-left /></template>
+            {{ $t('button.return') }}
+          </a-button>
           <a-button type="primary" :loading="replyLoading" @click="handleReply">
             {{ $t('ticket.button.reply') }}
           </a-button>
@@ -447,24 +459,40 @@
 
 <style scoped lang="less">
   .ticket-detail {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 16px 20px;
+    background: #fff;
+    min-height: 100vh;
+    max-width: 100%;
+    margin: -16px -20px;
+    padding: 24px 0;
   }
 
   .ticket-header {
-    background: #fff;
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 32px 20px;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 32px;
+      right: 32px;
+      border-bottom: 1px solid #f0f0f0;
+    }
   }
 
   .ticket-header-top {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .ticket-header-left {
+    display: flex;
+    align-items: center;
     gap: 12px;
-    margin-bottom: 10px;
   }
 
   .ticket-no {
@@ -482,8 +510,8 @@
   }
 
   .ticket-title {
-    margin: 0 0 10px;
-    font-size: 18px;
+    margin: 0 0 12px;
+    font-size: 20px;
     font-weight: 600;
     line-height: 1.4;
     color: #1d2129;
@@ -511,24 +539,19 @@
   .ticket-actions {
     display: flex;
     gap: 8px;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid #f0f0f0;
   }
 
   // Timeline
   .ticket-timeline {
-    background: #fff;
-    border-radius: 8px;
-    padding: 4px 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 32px;
   }
 
   .timeline-item {
     display: flex;
-    gap: 12px;
-    padding: 16px 0;
+    gap: 14px;
+    padding: 20px 0;
 
     & + .timeline-item {
       border-top: 1px solid #f0f0f0;
@@ -549,7 +572,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   .timeline-name {
@@ -568,7 +591,7 @@
     :deep(img) {
       max-width: 100%;
       cursor: pointer;
-      border-radius: 4px;
+      border-radius: 6px;
       transition: opacity 0.2s;
 
       &:hover {
@@ -578,8 +601,8 @@
 
     :deep(pre) {
       background: #f7f8fa;
-      padding: 10px;
-      border-radius: 4px;
+      padding: 12px;
+      border-radius: 6px;
       overflow-x: auto;
       font-size: 13px;
     }
@@ -594,7 +617,7 @@
     :deep(blockquote) {
       border-left: 3px solid #e5e6eb;
       padding-left: 12px;
-      margin: 6px 0;
+      margin: 8px 0;
       color: #86909c;
     }
 
@@ -614,20 +637,29 @@
   .timeline-item--staff {
     .timeline-body {
       background: #f7f8fa;
-      border-radius: 6px;
-      padding: 10px 14px;
+      border-radius: 8px;
+      padding: 12px 16px;
     }
 
     .timeline-header {
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
   }
 
   // Reply form
   .ticket-reply-form {
-    background: #fff;
-    border-radius: 8px;
-    padding: 16px 20px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 20px 32px 0;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 32px;
+      right: 32px;
+      border-top: 1px solid #f0f0f0;
+    }
   }
 </style>
