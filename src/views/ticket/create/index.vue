@@ -10,7 +10,7 @@
     <a-spin :loading="loading" style="width: 100%">
       <a-card
         class="general-card"
-        :body-style="{ padding: '20px' }"
+        :body-style="cardBodyStyle"
         :bordered="false"
       >
         <div class="wrapper">
@@ -140,6 +140,9 @@
   const { loading, setLoading } = useLoading(false);
   const formRef = ref<FormInstance>();
   const contentEditorRef = ref<{ getValue: () => string }>();
+  const cardBodyStyle = {
+    padding: '0 20px 20px 20px',
+  };
 
   const formData = reactive({
     title: '',
@@ -176,4 +179,10 @@
 
 <style scoped lang="less">
   @import '@/assets/style/page-form.less';
+
+  .general-card {
+    &:first-child {
+      padding-top: 61px;
+    }
+  }
 </style>
