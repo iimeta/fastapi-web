@@ -156,6 +156,14 @@ export interface Quota {
   expired_clear_defer: number;
 }
 
+export interface Ticket {
+  open: boolean;
+  notice: boolean;
+  cron: string;
+  lock_minutes: number;
+  auto_close_days: number;
+}
+
 export interface QuotaTask {
   open: boolean;
   cron: string;
@@ -275,6 +283,7 @@ export interface SysConfigDetail {
   not_shield_error: NotShieldError;
   notice: Notice;
   quota: Quota;
+  ticket: Ticket;
   quota_task: QuotaTask;
   video_task: VideoTask;
   file_task: FileTask;
@@ -316,6 +325,7 @@ export interface SysConfigUpdate {
   not_shield_error: NotShieldError;
   notice: Notice;
   quota: Quota;
+  ticket: Ticket;
   quota_task: QuotaTask;
   video_task: VideoTask;
   file_task: FileTask;

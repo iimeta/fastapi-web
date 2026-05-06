@@ -513,6 +513,72 @@
           </a-input-number>
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'ticket'"
+          field="ticket.notice"
+          :label="$t('sys.config.label.ticket.notice')"
+        >
+          <a-switch v-model="configFormData.ticket.notice" />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'ticket'"
+          field="ticket.cron"
+          :label="$t('sys.config.label.cron')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.cron'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.ticket.cron"
+            :placeholder="$t('sys.config.placeholder.cron')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'ticket'"
+          field="ticket.lock_minutes"
+          :label="$t('sys.config.label.lock_minutes')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.ticket.lock_minutes'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.ticket.lock_minutes"
+            :placeholder="$t('sys.config.placeholder.ticket.lock_minutes')"
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.minute') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'ticket'"
+          field="ticket.auto_close_days"
+          :label="$t('sys.config.label.ticket.auto_close_days')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.ticket.auto_close_days'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.ticket.auto_close_days"
+            :placeholder="$t('sys.config.placeholder.ticket.auto_close_days')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.day') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
           v-for="(item, index) of configFormData.test.tests"
           v-show="configFormData.action === 'test'"
           :key="index"
@@ -656,6 +722,7 @@
     reseller_shield_error: {},
     admin_login: {},
     quota: {},
+    ticket: {},
     test: {},
   } as SysConfigUpdate);
 
@@ -803,6 +870,7 @@
     configFormData.value.reseller_shield_error = data.reseller_shield_error;
     configFormData.value.admin_login = data.admin_login;
     configFormData.value.quota = data.quota;
+    configFormData.value.ticket = data.ticket;
     configFormData.value.test = data.test;
     sysConfigItems.value = [
       {
@@ -846,6 +914,14 @@
         action: 'quota',
         title: t('sys.config.item.title.quota'),
         desc: t('sys.config.item.desc.quota'),
+        config: true,
+        reset: true,
+      },
+      {
+        action: 'ticket',
+        title: t('sys.config.item.title.ticket'),
+        desc: t('sys.config.item.desc.ticket'),
+        open: configFormData.value.ticket.open,
         config: true,
         reset: true,
       },
