@@ -200,6 +200,22 @@
           {{ currentData.remark || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('invite.columns.inviter_user_id')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.inviter_user_id || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('invite.columns.invite_code')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.invite_code || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('user.detail.login_ip')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

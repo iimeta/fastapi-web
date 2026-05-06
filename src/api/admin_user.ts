@@ -111,6 +111,8 @@ export interface UserDetail {
   expire_warning_notice: boolean;
   expire_notice: boolean;
   remark: string;
+  inviter_user_id: number;
+  invite_code: string;
   status: number;
   rid: number;
   login_ip: string;

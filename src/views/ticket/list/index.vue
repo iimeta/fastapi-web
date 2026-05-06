@@ -28,7 +28,7 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="isMyTickets ? 8 : 6">
+              <a-col :span="8">
                 <a-form-item
                   field="ticket_no"
                   :label="$t('ticket.label.ticket_no')"
@@ -40,7 +40,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="isMyTickets ? 8 : 6">
+              <a-col :span="8">
                 <a-form-item field="title" :label="$t('ticket.label.title')">
                   <a-input
                     v-model="searchFormData.title"
@@ -49,7 +49,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="isMyTickets ? 8 : 6">
+              <a-col :span="8">
                 <a-form-item
                   field="category"
                   :label="$t('ticket.label.category')"
@@ -82,6 +82,7 @@
                 <a-form-item
                   field="user_name"
                   :label="$t('ticket.label.submitter')"
+                  :label-col-props="{ span: 6 }"
                 >
                   <a-input
                     v-model="searchFormData.user_name"
@@ -94,6 +95,7 @@
                 <a-form-item
                   field="priority"
                   :label="$t('ticket.label.priority')"
+                  :label-col-props="{ span: isMyTickets ? 5 : 6 }"
                 >
                   <a-select
                     v-model="searchFormData.priority"
@@ -116,7 +118,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="isMyTickets ? 8 : 6">
+              <a-col :span="isMyTickets ? 8 : 5">
                 <a-form-item field="status" :label="$t('ticket.label.status')">
                   <a-select
                     v-model="searchFormData.status"
@@ -145,10 +147,11 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="isMyTickets ? 8 : 6">
+              <a-col :span="isMyTickets ? 8 : 7">
                 <a-form-item
                   field="created_at"
                   :label="$t('ticket.label.created_at')"
+                  :label-col-props="{ span: isMyTickets ? 5 : 6 }"
                 >
                   <a-range-picker
                     v-model="searchFormData.created_at"
@@ -470,6 +473,7 @@
         title: t('ticket.label.created_at'),
         dataIndex: 'created_at',
         align: 'center',
+        width: 170,
       },
       {
         title: t('common.operations'),
