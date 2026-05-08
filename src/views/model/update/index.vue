@@ -115,20 +115,6 @@
                 </a-option>
               </a-select>
             </a-form-item>
-            <a-form-item field="base_url" :label="$t('model.label.base_url')">
-              <a-input
-                v-model="formData.base_url"
-                :placeholder="$t('model.placeholder.base_url')"
-                class="input"
-              />
-            </a-form-item>
-            <a-form-item field="path" :label="$t('model.label.path')">
-              <a-input
-                v-model="formData.path"
-                :placeholder="$t('model.placeholder.path')"
-                class="input"
-              />
-            </a-form-item>
             <a-form-item field="remark" :label="$t('model.label.remark')">
               <a-textarea
                 v-model="formData.remark"
