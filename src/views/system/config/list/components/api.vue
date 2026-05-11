@@ -76,7 +76,7 @@
         configFormData.action === 'base'
           ? 588
           : configFormData.action === 'log'
-          ? 647
+          ? 728
           : configFormData.action === 'model_agent_session_keep'
           ? 588
           : 728
@@ -445,6 +445,85 @@
             :placeholder="$t('sys.config.placeholder.cron')"
             allow-clear
           />
+        </a-form-item>
+        <a-form-item
+          v-for="(item, index) of configFormData.log.privacy_fields"
+          v-show="configFormData.action === 'log'"
+          :key="index"
+          :field="
+            `log.privacy_fields[${index}].key` &&
+            `log.privacy_fields[${index}].label` &&
+            `log.privacy_fields[${index}].category` &&
+            `log.privacy_fields[${index}].description`
+          "
+          :label="`${index + 1}. `"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.required.log.privacy_fields'),
+            },
+          ]"
+          :label-col-style="fieldLabelColStyle"
+        >
+          <a-input
+            v-model="configFormData.log.privacy_fields[index].key"
+            :placeholder="$t('sys.config.placeholder.log.privacy_field_key')"
+            allow-clear
+            class="field-input field-input-privacy-key"
+          />
+          <a-input
+            v-model="configFormData.log.privacy_fields[index].label"
+            :placeholder="$t('sys.config.placeholder.log.privacy_field_label')"
+            allow-clear
+            class="field-input field-input-privacy-label"
+          />
+          <a-input
+            v-model="configFormData.log.privacy_fields[index].description"
+            :placeholder="
+              $t('sys.config.placeholder.log.privacy_field_description')
+            "
+            allow-clear
+            class="field-input field-input-privacy-description"
+          />
+          <a-select
+            v-model="configFormData.log.privacy_fields[index].category"
+            :placeholder="
+              $t('sys.config.placeholder.log.privacy_field_category')
+            "
+            class="field-input field-input-privacy-category"
+          >
+            <a-option value="request">
+              {{ $t('sys.config.dict.privacy_category.request') }}
+            </a-option>
+            <a-option value="response">
+              {{ $t('sys.config.dict.privacy_category.response') }}
+            </a-option>
+            <a-option value="resource">
+              {{ $t('sys.config.dict.privacy_category.resource') }}
+            </a-option>
+            <a-option value="network">
+              {{ $t('sys.config.dict.privacy_category.network') }}
+            </a-option>
+          </a-select>
+          <a-switch
+            v-model="configFormData.log.privacy_fields[index].enabled"
+            class="field-input"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            class="field-action-button"
+            @click="handlePrivacyFieldAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handlePrivacyFieldDel(index)"
+          >
+            <icon-minus />
+          </a-button>
         </a-form-item>
         <a-form-item
           v-for="(item, index) of configFormData.auto_disabled_error.errors"
@@ -915,6 +994,12 @@
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
     if (
+      sysConfigItem.action === 'log' &&
+      configFormData.value.log.privacy_fields.length === 0
+    ) {
+      handlePrivacyFieldAdd();
+    }
+    if (
       sysConfigItem.action === 'auto_disabled_error' &&
       configFormData.value.auto_disabled_error.errors.length === 0
     ) {
@@ -1140,6 +1225,8 @@
     const { data } = await querySysConfigDetail();
     configFormData.value.base = data.base;
     configFormData.value.log = data.log;
+    configFormData.value.log.privacy_fields =
+      configFormData.value.log.privacy_fields || [];
     configFormData.value.auto_disabled_error = data.auto_disabled_error;
     configFormData.value.auto_enable_error = data.auto_enable_error;
     configFormData.value.auto_retry_error = data.auto_retry_error;
@@ -1306,6 +1393,24 @@
   const handleGeneralApiDel = (index: number) => {
     configFormData.value.general_api.ip_whitelist.splice(index, 1);
   };
+
+  const handlePrivacyFieldAdd = () => {
+    configFormData.value.log.privacy_fields.push({
+      key: '',
+      label: '',
+      category: 'request',
+      description: '',
+      log_types: [],
+      enabled: true,
+      sort: configFormData.value.log.privacy_fields.length + 1,
+    });
+  };
+
+  const handlePrivacyFieldDel = (index: number) => {
+    if (configFormData.value.log.privacy_fields.length > 1) {
+      configFormData.value.log.privacy_fields.splice(index, 1);
+    }
+  };
 </script>
 
 <script lang="ts">
@@ -1343,6 +1448,22 @@
 
   .field-input-ip {
     width: 84%;
+  }
+
+  .field-input-privacy-key {
+    width: 16%;
+  }
+
+  .field-input-privacy-label {
+    width: 18%;
+  }
+
+  .field-input-privacy-description {
+    width: 28%;
+  }
+
+  .field-input-privacy-category {
+    width: 16%;
   }
 
   .field-action-button {

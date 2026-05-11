@@ -60,6 +60,16 @@ export interface Midjourney {
   cdn_original_url: string;
 }
 
+export interface PrivacyLogFieldOption {
+  key: string;
+  label: string;
+  category: string;
+  description?: string;
+  log_types?: string[];
+  enabled: boolean;
+  sort?: number;
+}
+
 export interface Log {
   open: boolean;
   text_records: string[];
@@ -72,6 +82,7 @@ export interface Log {
   general_reserve: number;
   status: number[];
   cron: string;
+  privacy_fields: PrivacyLogFieldOption[];
 }
 
 export interface UserLoginRegister {
