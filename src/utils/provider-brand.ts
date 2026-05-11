@@ -265,6 +265,12 @@ const volcengineLogo = makeSvgLogo(`
   </svg>
 `);
 
+const fastapiLogo = makeSvgLogo(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="512" height="514" viewBox="0 0 512 514" role="img">
+    <image href="/logo.png" width="512" height="514" preserveAspectRatio="xMidYMid meet" />
+  </svg>
+`);
+
 const providerAssets: ProviderAsset[] = [
   {
     aliases: ['openai', 'chatgpt', 'gpt', 'codex'],
@@ -421,6 +427,11 @@ const providerAssets: ProviderAsset[] = [
     aliases: ['volcengine', '火山引擎'],
     color: '#ff6b3d',
     logo: volcengineLogo,
+  },
+  {
+    aliases: ['智元', 'FastAPI'],
+    color: '#993D92',
+    logo: fastapiLogo,
   },
 ];
 
@@ -581,6 +592,25 @@ const providerCompanyAssets: ProviderAsset[] = [
     aliases: ['volcengine', '火山引擎'],
     color: '#ff6b3d',
     logo: volcengineLogo,
+  },
+  {
+    aliases: [
+      'aliyun',
+      'alibaba',
+      'alibabacloud',
+      'dashscope',
+      'tongyi',
+      'qwen',
+      '阿里云',
+      '通义',
+    ],
+    color: '#ff6a00',
+    logo: qwenLogo,
+  },
+  {
+    aliases: ['智元', 'FastAPI'],
+    color: '#993D92',
+    logo: fastapiLogo,
   },
 ];
 

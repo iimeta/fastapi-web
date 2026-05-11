@@ -481,7 +481,6 @@
         slotName: 'operations',
         align: 'center',
         width: 150,
-        fixed: 'right',
       }
     );
 
