@@ -56,7 +56,7 @@ export default {
   'model.form.title.init_model': '同步模型數據',
   'model.label.url': '模型介面',
   'model.error.required.url': '請輸入模型介面',
-  'model.placeholder.url': 'Fast API 模型介面, 如: https://api.fastapi.ai/v1/models',
+  'model.placeholder.url': 'Fast API 模型介面, 如: https://api.fastapi.ai',
   'model.placeholder.key': 'Fast API 應用密鑰, 如: sk-FastAPI1DKp0fzcD0Bf0sOJV1',
   'model.label.is_config_model_agent': '配置代理',
   'model.label.is_cover_price': '覆蓋價格',

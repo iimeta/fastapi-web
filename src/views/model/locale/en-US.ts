@@ -56,7 +56,7 @@ export default {
   'model.form.title.init_model': 'Sync Model Data',
   'model.label.url': 'Model Interface',
   'model.error.required.url': 'Please enter model interface',
-  'model.placeholder.url': 'Fast API model interface, e.g., https://api.fastapi.ai/v1/models',
+  'model.placeholder.url': 'Fast API model interface, e.g., https://api.fastapi.ai',
   'model.placeholder.key': 'Fast API application key, e.g., sk-FastAPI1DKp0fzcD0Bf0sOJV1',
   'model.label.is_config_model_agent': 'Configure Agent',
   'model.label.is_cover_price': 'Overwrite Price',

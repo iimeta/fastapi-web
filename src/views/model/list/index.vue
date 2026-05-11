@@ -1139,6 +1139,29 @@
   const initModelVisible = ref(false);
   const initForm = ref<FormInstance>();
   const initFormData = ref<ModelInit>({} as ModelInit);
+  const INIT_MODEL_CACHE_KEY = 'model_init_params';
+
+  const loadCachedInitModelParams = (): Partial<ModelInit> => {
+    try {
+      const cached = localStorage.getItem(INIT_MODEL_CACHE_KEY);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+    } catch (e) {
+      // ignore
+    }
+    return {};
+  };
+
+  const saveCachedInitModelParams = () => {
+    localStorage.setItem(
+      INIT_MODEL_CACHE_KEY,
+      JSON.stringify({
+        url: initFormData.value.url,
+        key: initFormData.value.key,
+      })
+    );
+  };
 
   const agentForm = ref<FormInstance>();
   const agentFormVisible = ref(false);
@@ -1148,8 +1171,9 @@
   const initModel = async () => {
     setLoading(true);
     try {
-      initFormData.value.url = '';
-      initFormData.value.key = '';
+      const cachedParams = loadCachedInitModelParams();
+      initFormData.value.url = cachedParams.url || '';
+      initFormData.value.key = cachedParams.key || '';
       initFormData.value.is_config_model_agent = true;
       initFormData.value.is_cover_price = false;
       initModelVisible.value = true;
@@ -1171,6 +1195,7 @@
     setLoading(true);
     try {
       await submitModelInit(initFormData.value);
+      saveCachedInitModelParams();
       done();
       window.location.reload();
     } catch (err) {
