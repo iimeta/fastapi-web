@@ -459,7 +459,6 @@
               </a-checkbox>
               <a-checkbox
                 v-model="configFormData.log.privacy.is_default_enable_request"
-                :disabled="!configFormData.log.privacy.is_enable_request"
               >
                 {{ $t('sys.config.label.log.privacy_default_enable') }}
               </a-checkbox>
@@ -468,7 +467,6 @@
           <a-form-item
             v-for="(item, index) of configFormData.log.privacy
               .request_privacy_fields"
-            v-show="configFormData.log.privacy.is_enable_request"
             :key="`request-${index}`"
             :field="
               `log.privacy.request_privacy_fields[${index}].key` &&
@@ -532,7 +530,6 @@
               </a-checkbox>
               <a-checkbox
                 v-model="configFormData.log.privacy.is_default_enable_response"
-                :disabled="!configFormData.log.privacy.is_enable_response"
               >
                 {{ $t('sys.config.label.log.privacy_default_enable') }}
               </a-checkbox>
@@ -541,7 +538,6 @@
           <a-form-item
             v-for="(item, index) of configFormData.log.privacy
               .response_privacy_fields"
-            v-show="configFormData.log.privacy.is_enable_response"
             :key="`response-${index}`"
             :field="
               `log.privacy.response_privacy_fields[${index}].key` &&
@@ -605,7 +601,6 @@
               </a-checkbox>
               <a-checkbox
                 v-model="configFormData.log.privacy.is_default_enable_resource"
-                :disabled="!configFormData.log.privacy.is_enable_resource"
               >
                 {{ $t('sys.config.label.log.privacy_default_enable') }}
               </a-checkbox>
@@ -614,7 +609,6 @@
           <a-form-item
             v-for="(item, index) of configFormData.log.privacy
               .resource_privacy_fields"
-            v-show="configFormData.log.privacy.is_enable_resource"
             :key="`resource-${index}`"
             :field="
               `log.privacy.resource_privacy_fields[${index}].key` &&
@@ -678,7 +672,6 @@
               </a-checkbox>
               <a-checkbox
                 v-model="configFormData.log.privacy.is_default_enable_network"
-                :disabled="!configFormData.log.privacy.is_enable_network"
               >
                 {{ $t('sys.config.label.log.privacy_default_enable') }}
               </a-checkbox>
@@ -687,7 +680,6 @@
           <a-form-item
             v-for="(item, index) of configFormData.log.privacy
               .network_privacy_fields"
-            v-show="configFormData.log.privacy.is_enable_network"
             :key="`network-${index}`"
             :field="
               `log.privacy.network_privacy_fields[${index}].key` &&

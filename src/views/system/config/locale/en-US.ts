@@ -153,7 +153,7 @@ export default {
   'sys.config.label.log.cron': 'CRON Expression',
   'sys.config.label.log.privacy': 'Log Privacy Configuration',
   'sys.config.label.log.privacy_enable': 'Allow User Configuration',
-  'sys.config.label.log.privacy_default_enable': 'Default On for Unconfigured Users',
+  'sys.config.label.log.privacy_default_enable': 'Default Recording',
   'sys.config.error.required.log.privacy_fields': 'Please enter field key, name, and category',
   'sys.config.placeholder.log.privacy_field_key': 'Field Key',
   'sys.config.placeholder.log.privacy_field_label': 'Field Name',

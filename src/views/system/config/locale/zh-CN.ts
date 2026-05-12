@@ -153,7 +153,7 @@ export default {
   'sys.config.label.log.cron': 'CRON表达式',
   'sys.config.label.log.privacy': '日志隐私配置',
   'sys.config.label.log.privacy_enable': '开放用户配置',
-  'sys.config.label.log.privacy_default_enable': '未配置用户默认开启',
+  'sys.config.label.log.privacy_default_enable': '默认记录',
   'sys.config.error.required.log.privacy_fields': '请输入字段标识、名称和分类',
   'sys.config.placeholder.log.privacy_field_key': '字段标识',
   'sys.config.placeholder.log.privacy_field_label': '字段名称',
