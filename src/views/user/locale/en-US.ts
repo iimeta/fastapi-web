@@ -44,6 +44,9 @@ export default {
   'user.detail.login_ip': 'Login IP',
   'user.detail.login_time': 'Login Time',
   'user.detail.login_domain': 'Login Domain',
+  'user.detail.privacy_settings': 'Privacy Settings',
+  'user.detail.privacy_configured': 'Configured',
+  'user.detail.privacy_unconfigured': 'Not Configured',
   // form
   'user.form.name': 'Name/Email',
   'user.form.placeholder.name': 'Please enter name/email',

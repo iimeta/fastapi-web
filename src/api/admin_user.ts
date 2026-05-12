@@ -85,6 +85,18 @@ export interface UserDetailParams {
   id: any;
 }
 
+export interface UserPrivacy {
+  is_configured: boolean;
+  log_request_content: boolean;
+  log_response_content: boolean;
+  log_resource_url: boolean;
+  log_client_ip: boolean;
+  log_request_fields: string[];
+  log_response_fields: string[];
+  log_resource_fields: string[];
+  log_network_fields: string[];
+}
+
 export interface UserDetail {
   id: string;
   user_id: number;
@@ -118,6 +130,7 @@ export interface UserDetail {
   login_ip: string;
   login_time: string;
   login_domain: string;
+  privacy?: UserPrivacy;
   created_at: string;
   updated_at: string;
 }

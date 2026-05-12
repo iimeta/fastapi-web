@@ -44,6 +44,9 @@ export default {
   'user.detail.login_ip': '登入IP',
   'user.detail.login_time': '登入時間',
   'user.detail.login_domain': '登入網域',
+  'user.detail.privacy_settings': '隱私設定',
+  'user.detail.privacy_configured': '已設定',
+  'user.detail.privacy_unconfigured': '未設定',
   // form
   'user.form.name': '姓名/信箱',
   'user.form.placeholder.name': '請輸入姓名/信箱',

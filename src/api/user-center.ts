@@ -39,6 +39,7 @@ export function changeAvatar(
 }
 
 export interface UserPrivacy {
+  is_configured: boolean;
   log_request_content: boolean;
   log_response_content: boolean;
   log_resource_url: boolean;
@@ -52,23 +53,36 @@ export interface UserPrivacy {
 export interface PrivacyLogFieldOption {
   key: string;
   label: string;
-  category: string;
   description?: string;
   log_types?: string[];
   enabled: boolean;
   sort?: number;
 }
 
+export interface LogPrivacy {
+  is_enable_request: boolean;
+  is_default_enable_request: boolean;
+  request_privacy_fields: PrivacyLogFieldOption[];
+  is_enable_response: boolean;
+  is_default_enable_response: boolean;
+  response_privacy_fields: PrivacyLogFieldOption[];
+  is_enable_resource: boolean;
+  is_default_enable_resource: boolean;
+  resource_privacy_fields: PrivacyLogFieldOption[];
+  is_enable_network: boolean;
+  is_default_enable_network: boolean;
+  network_privacy_fields: PrivacyLogFieldOption[];
+}
+
+export interface UserPrivacyRes {
+  privacy: UserPrivacy;
+  log_privacy: LogPrivacy;
+}
+
 export function getPrivacySettings() {
-  return axios.get<UserPrivacy>('/api/v1/user/privacy');
+  return axios.get<UserPrivacyRes>('/api/v1/user/privacy');
 }
 
 export function updatePrivacySettings(data: UserPrivacy) {
   return axios.post('/api/v1/user/privacy', data);
-}
-
-export function getPrivacyLogFields() {
-  return axios.get<{ items: PrivacyLogFieldOption[] }>(
-    '/api/v1/user/privacy/fields'
-  );
 }

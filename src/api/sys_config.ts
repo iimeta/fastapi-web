@@ -63,11 +63,25 @@ export interface Midjourney {
 export interface PrivacyLogFieldOption {
   key: string;
   label: string;
-  category: string;
   description?: string;
   log_types?: string[];
   enabled: boolean;
   sort?: number;
+}
+
+export interface LogPrivacy {
+  is_enable_request: boolean;
+  is_default_enable_request: boolean;
+  request_privacy_fields: PrivacyLogFieldOption[];
+  is_enable_response: boolean;
+  is_default_enable_response: boolean;
+  response_privacy_fields: PrivacyLogFieldOption[];
+  is_enable_resource: boolean;
+  is_default_enable_resource: boolean;
+  resource_privacy_fields: PrivacyLogFieldOption[];
+  is_enable_network: boolean;
+  is_default_enable_network: boolean;
+  network_privacy_fields: PrivacyLogFieldOption[];
 }
 
 export interface Log {
@@ -82,7 +96,7 @@ export interface Log {
   general_reserve: number;
   status: number[];
   cron: string;
-  privacy_fields: PrivacyLogFieldOption[];
+  privacy: LogPrivacy;
 }
 
 export interface UserLoginRegister {

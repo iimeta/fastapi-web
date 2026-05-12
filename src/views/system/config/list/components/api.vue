@@ -446,85 +446,302 @@
             allow-clear
           />
         </a-form-item>
-        <a-form-item
-          v-for="(item, index) of configFormData.log.privacy_fields"
-          v-show="configFormData.action === 'log'"
-          :key="index"
-          :field="
-            `log.privacy_fields[${index}].key` &&
-            `log.privacy_fields[${index}].label` &&
-            `log.privacy_fields[${index}].category` &&
-            `log.privacy_fields[${index}].description`
-          "
-          :label="`${index + 1}. `"
-          :rules="[
-            {
-              required: true,
-              message: $t('sys.config.error.required.log.privacy_fields'),
-            },
-          ]"
-          :label-col-style="fieldLabelColStyle"
-        >
-          <a-input
-            v-model="configFormData.log.privacy_fields[index].key"
-            :placeholder="$t('sys.config.placeholder.log.privacy_field_key')"
-            allow-clear
-            class="field-input field-input-privacy-key"
-          />
-          <a-input
-            v-model="configFormData.log.privacy_fields[index].label"
-            :placeholder="$t('sys.config.placeholder.log.privacy_field_label')"
-            allow-clear
-            class="field-input field-input-privacy-label"
-          />
-          <a-input
-            v-model="configFormData.log.privacy_fields[index].description"
-            :placeholder="
-              $t('sys.config.placeholder.log.privacy_field_description')
+        <template v-if="configFormData.action === 'log'">
+          <a-divider orientation="left">
+            {{ $t('sys.config.label.log.privacy') }}
+          </a-divider>
+          <a-form-item :label="$t('sys.config.dict.privacy_category.request')">
+            <a-space size="large">
+              <a-checkbox
+                v-model="configFormData.log.privacy.is_enable_request"
+              >
+                {{ $t('sys.config.label.log.privacy_enable') }}
+              </a-checkbox>
+              <a-checkbox
+                v-model="configFormData.log.privacy.is_default_enable_request"
+                :disabled="!configFormData.log.privacy.is_enable_request"
+              >
+                {{ $t('sys.config.label.log.privacy_default_enable') }}
+              </a-checkbox>
+            </a-space>
+          </a-form-item>
+          <a-form-item
+            v-for="(item, index) of configFormData.log.privacy
+              .request_privacy_fields"
+            v-show="configFormData.log.privacy.is_enable_request"
+            :key="`request-${index}`"
+            :field="
+              `log.privacy.request_privacy_fields[${index}].key` &&
+              `log.privacy.request_privacy_fields[${index}].label`
             "
-            allow-clear
-            class="field-input field-input-privacy-description"
-          />
-          <a-select
-            v-model="configFormData.log.privacy_fields[index].category"
-            :placeholder="
-              $t('sys.config.placeholder.log.privacy_field_category')
+            :label="`${index + 1}. `"
+            :rules="[
+              {
+                required: true,
+                message: $t('sys.config.error.required.log.privacy_fields'),
+              },
+            ]"
+            :label-col-style="fieldLabelColStyle"
+          >
+            <a-input
+              v-model="item.key"
+              :placeholder="$t('sys.config.placeholder.log.privacy_field_key')"
+              allow-clear
+              class="field-input field-input-privacy-key"
+            />
+            <a-input
+              v-model="item.label"
+              :placeholder="
+                $t('sys.config.placeholder.log.privacy_field_label')
+              "
+              allow-clear
+              class="field-input field-input-privacy-label"
+            />
+            <a-input
+              v-model="item.description"
+              :placeholder="
+                $t('sys.config.placeholder.log.privacy_field_description')
+              "
+              allow-clear
+              class="field-input field-input-privacy-description"
+            />
+            <a-switch v-model="item.enabled" class="field-input" />
+            <a-button
+              type="primary"
+              shape="circle"
+              class="field-action-button"
+              @click="handlePrivacyFieldAdd('request')"
+            >
+              <icon-plus />
+            </a-button>
+            <a-button
+              type="secondary"
+              shape="circle"
+              @click="handlePrivacyFieldDel('request', index)"
+            >
+              <icon-minus />
+            </a-button>
+          </a-form-item>
+
+          <a-form-item :label="$t('sys.config.dict.privacy_category.response')">
+            <a-space size="large">
+              <a-checkbox
+                v-model="configFormData.log.privacy.is_enable_response"
+              >
+                {{ $t('sys.config.label.log.privacy_enable') }}
+              </a-checkbox>
+              <a-checkbox
+                v-model="configFormData.log.privacy.is_default_enable_response"
+                :disabled="!configFormData.log.privacy.is_enable_response"
+              >
+                {{ $t('sys.config.label.log.privacy_default_enable') }}
+              </a-checkbox>
+            </a-space>
+          </a-form-item>
+          <a-form-item
+            v-for="(item, index) of configFormData.log.privacy
+              .response_privacy_fields"
+            v-show="configFormData.log.privacy.is_enable_response"
+            :key="`response-${index}`"
+            :field="
+              `log.privacy.response_privacy_fields[${index}].key` &&
+              `log.privacy.response_privacy_fields[${index}].label`
             "
-            class="field-input field-input-privacy-category"
+            :label="`${index + 1}. `"
+            :rules="[
+              {
+                required: true,
+                message: $t('sys.config.error.required.log.privacy_fields'),
+              },
+            ]"
+            :label-col-style="fieldLabelColStyle"
           >
-            <a-option value="request">
-              {{ $t('sys.config.dict.privacy_category.request') }}
-            </a-option>
-            <a-option value="response">
-              {{ $t('sys.config.dict.privacy_category.response') }}
-            </a-option>
-            <a-option value="resource">
-              {{ $t('sys.config.dict.privacy_category.resource') }}
-            </a-option>
-            <a-option value="network">
-              {{ $t('sys.config.dict.privacy_category.network') }}
-            </a-option>
-          </a-select>
-          <a-switch
-            v-model="configFormData.log.privacy_fields[index].enabled"
-            class="field-input"
-          />
-          <a-button
-            type="primary"
-            shape="circle"
-            class="field-action-button"
-            @click="handlePrivacyFieldAdd()"
+            <a-input
+              v-model="item.key"
+              :placeholder="$t('sys.config.placeholder.log.privacy_field_key')"
+              allow-clear
+              class="field-input field-input-privacy-key"
+            />
+            <a-input
+              v-model="item.label"
+              :placeholder="
+                $t('sys.config.placeholder.log.privacy_field_label')
+              "
+              allow-clear
+              class="field-input field-input-privacy-label"
+            />
+            <a-input
+              v-model="item.description"
+              :placeholder="
+                $t('sys.config.placeholder.log.privacy_field_description')
+              "
+              allow-clear
+              class="field-input field-input-privacy-description"
+            />
+            <a-switch v-model="item.enabled" class="field-input" />
+            <a-button
+              type="primary"
+              shape="circle"
+              class="field-action-button"
+              @click="handlePrivacyFieldAdd('response')"
+            >
+              <icon-plus />
+            </a-button>
+            <a-button
+              type="secondary"
+              shape="circle"
+              @click="handlePrivacyFieldDel('response', index)"
+            >
+              <icon-minus />
+            </a-button>
+          </a-form-item>
+
+          <a-form-item :label="$t('sys.config.dict.privacy_category.resource')">
+            <a-space size="large">
+              <a-checkbox
+                v-model="configFormData.log.privacy.is_enable_resource"
+              >
+                {{ $t('sys.config.label.log.privacy_enable') }}
+              </a-checkbox>
+              <a-checkbox
+                v-model="configFormData.log.privacy.is_default_enable_resource"
+                :disabled="!configFormData.log.privacy.is_enable_resource"
+              >
+                {{ $t('sys.config.label.log.privacy_default_enable') }}
+              </a-checkbox>
+            </a-space>
+          </a-form-item>
+          <a-form-item
+            v-for="(item, index) of configFormData.log.privacy
+              .resource_privacy_fields"
+            v-show="configFormData.log.privacy.is_enable_resource"
+            :key="`resource-${index}`"
+            :field="
+              `log.privacy.resource_privacy_fields[${index}].key` &&
+              `log.privacy.resource_privacy_fields[${index}].label`
+            "
+            :label="`${index + 1}. `"
+            :rules="[
+              {
+                required: true,
+                message: $t('sys.config.error.required.log.privacy_fields'),
+              },
+            ]"
+            :label-col-style="fieldLabelColStyle"
           >
-            <icon-plus />
-          </a-button>
-          <a-button
-            type="secondary"
-            shape="circle"
-            @click="handlePrivacyFieldDel(index)"
+            <a-input
+              v-model="item.key"
+              :placeholder="$t('sys.config.placeholder.log.privacy_field_key')"
+              allow-clear
+              class="field-input field-input-privacy-key"
+            />
+            <a-input
+              v-model="item.label"
+              :placeholder="
+                $t('sys.config.placeholder.log.privacy_field_label')
+              "
+              allow-clear
+              class="field-input field-input-privacy-label"
+            />
+            <a-input
+              v-model="item.description"
+              :placeholder="
+                $t('sys.config.placeholder.log.privacy_field_description')
+              "
+              allow-clear
+              class="field-input field-input-privacy-description"
+            />
+            <a-switch v-model="item.enabled" class="field-input" />
+            <a-button
+              type="primary"
+              shape="circle"
+              class="field-action-button"
+              @click="handlePrivacyFieldAdd('resource')"
+            >
+              <icon-plus />
+            </a-button>
+            <a-button
+              type="secondary"
+              shape="circle"
+              @click="handlePrivacyFieldDel('resource', index)"
+            >
+              <icon-minus />
+            </a-button>
+          </a-form-item>
+
+          <a-form-item :label="$t('sys.config.dict.privacy_category.network')">
+            <a-space size="large">
+              <a-checkbox
+                v-model="configFormData.log.privacy.is_enable_network"
+              >
+                {{ $t('sys.config.label.log.privacy_enable') }}
+              </a-checkbox>
+              <a-checkbox
+                v-model="configFormData.log.privacy.is_default_enable_network"
+                :disabled="!configFormData.log.privacy.is_enable_network"
+              >
+                {{ $t('sys.config.label.log.privacy_default_enable') }}
+              </a-checkbox>
+            </a-space>
+          </a-form-item>
+          <a-form-item
+            v-for="(item, index) of configFormData.log.privacy
+              .network_privacy_fields"
+            v-show="configFormData.log.privacy.is_enable_network"
+            :key="`network-${index}`"
+            :field="
+              `log.privacy.network_privacy_fields[${index}].key` &&
+              `log.privacy.network_privacy_fields[${index}].label`
+            "
+            :label="`${index + 1}. `"
+            :rules="[
+              {
+                required: true,
+                message: $t('sys.config.error.required.log.privacy_fields'),
+              },
+            ]"
+            :label-col-style="fieldLabelColStyle"
           >
-            <icon-minus />
-          </a-button>
-        </a-form-item>
+            <a-input
+              v-model="item.key"
+              :placeholder="$t('sys.config.placeholder.log.privacy_field_key')"
+              allow-clear
+              class="field-input field-input-privacy-key"
+            />
+            <a-input
+              v-model="item.label"
+              :placeholder="
+                $t('sys.config.placeholder.log.privacy_field_label')
+              "
+              allow-clear
+              class="field-input field-input-privacy-label"
+            />
+            <a-input
+              v-model="item.description"
+              :placeholder="
+                $t('sys.config.placeholder.log.privacy_field_description')
+              "
+              allow-clear
+              class="field-input field-input-privacy-description"
+            />
+            <a-switch v-model="item.enabled" class="field-input" />
+            <a-button
+              type="primary"
+              shape="circle"
+              class="field-action-button"
+              @click="handlePrivacyFieldAdd('network')"
+            >
+              <icon-plus />
+            </a-button>
+            <a-button
+              type="secondary"
+              shape="circle"
+              @click="handlePrivacyFieldDel('network', index)"
+            >
+              <icon-minus />
+            </a-button>
+          </a-form-item>
+        </template>
         <a-form-item
           v-for="(item, index) of configFormData.auto_disabled_error.errors"
           v-show="configFormData.action === 'auto_disabled_error'"
@@ -950,6 +1167,8 @@
   import { FormInstance, Message, Modal } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
   import {
+    LogPrivacy,
+    PrivacyLogFieldOption,
     SysConfigItem,
     querySysConfigDetail,
     SysConfigUpdate,
@@ -992,12 +1211,40 @@
     model_agent_session_keep: {},
   } as SysConfigUpdate);
 
+  const defaultLogPrivacy = (): LogPrivacy => ({
+    is_enable_request: true,
+    is_default_enable_request: false,
+    request_privacy_fields: [],
+    is_enable_response: true,
+    is_default_enable_response: false,
+    response_privacy_fields: [],
+    is_enable_resource: true,
+    is_default_enable_resource: false,
+    resource_privacy_fields: [],
+    is_enable_network: true,
+    is_default_enable_network: false,
+    network_privacy_fields: [],
+  });
+
+  const getPrivacyFields = (category: string): PrivacyLogFieldOption[] => {
+    const privacy = configFormData.value.log?.privacy;
+    switch (category) {
+      case 'request':
+        return privacy.request_privacy_fields;
+      case 'response':
+        return privacy.response_privacy_fields;
+      case 'resource':
+        return privacy.resource_privacy_fields;
+      case 'network':
+        return privacy.network_privacy_fields;
+      default:
+        return [];
+    }
+  };
+
   const configHandle = async (sysConfigItem: SysConfigItem) => {
-    if (
-      sysConfigItem.action === 'log' &&
-      configFormData.value.log.privacy_fields.length === 0
-    ) {
-      handlePrivacyFieldAdd();
+    if (sysConfigItem.action === 'log') {
+      normalizeLogPrivacy();
     }
     if (
       sysConfigItem.action === 'auto_disabled_error' &&
@@ -1225,8 +1472,7 @@
     const { data } = await querySysConfigDetail();
     configFormData.value.base = data.base;
     configFormData.value.log = data.log;
-    configFormData.value.log.privacy_fields =
-      configFormData.value.log.privacy_fields || [];
+    normalizeLogPrivacy();
     configFormData.value.auto_disabled_error = data.auto_disabled_error;
     configFormData.value.auto_enable_error = data.auto_enable_error;
     configFormData.value.auto_retry_error = data.auto_retry_error;
@@ -1394,21 +1640,37 @@
     configFormData.value.general_api.ip_whitelist.splice(index, 1);
   };
 
-  const handlePrivacyFieldAdd = () => {
-    configFormData.value.log.privacy_fields.push({
+  const normalizeLogPrivacy = () => {
+    configFormData.value.log.privacy = {
+      ...defaultLogPrivacy(),
+      ...(configFormData.value.log.privacy || {}),
+    };
+    configFormData.value.log.privacy.request_privacy_fields =
+      configFormData.value.log.privacy.request_privacy_fields || [];
+    configFormData.value.log.privacy.response_privacy_fields =
+      configFormData.value.log.privacy.response_privacy_fields || [];
+    configFormData.value.log.privacy.resource_privacy_fields =
+      configFormData.value.log.privacy.resource_privacy_fields || [];
+    configFormData.value.log.privacy.network_privacy_fields =
+      configFormData.value.log.privacy.network_privacy_fields || [];
+  };
+
+  const handlePrivacyFieldAdd = (category: string) => {
+    const fields = getPrivacyFields(category);
+    fields.push({
       key: '',
       label: '',
-      category: 'request',
       description: '',
       log_types: [],
       enabled: true,
-      sort: configFormData.value.log.privacy_fields.length + 1,
+      sort: fields.length + 1,
     });
   };
 
-  const handlePrivacyFieldDel = (index: number) => {
-    if (configFormData.value.log.privacy_fields.length > 1) {
-      configFormData.value.log.privacy_fields.splice(index, 1);
+  const handlePrivacyFieldDel = (category: string, index: number) => {
+    const fields = getPrivacyFields(category);
+    if (fields.length > 1) {
+      fields.splice(index, 1);
     }
   };
 </script>
@@ -1451,22 +1713,18 @@
   }
 
   .field-input-privacy-key {
-    width: 16%;
+    width: 25%;
   }
 
   .field-input-privacy-label {
-    width: 18%;
+    width: 25%;
   }
 
   .field-input-privacy-description {
     width: 28%;
   }
 
-  .field-input-privacy-category {
-    width: 16%;
-  }
-
   .field-action-button {
-    margin: 0 10px 0 10px;
+    margin-right: 5px;
   }
 </style>
