@@ -77,7 +77,7 @@
               <a-input-number
                 v-model="rule.discount"
                 :placeholder="$t('common.discount')"
-                :min="0.01"
+                :min="0.0001"
                 :max="9999999999999"
                 :parser="parseDiscount"
                 hide-button
