@@ -224,6 +224,9 @@
       : []
   );
 
+  const fieldKeys = (fields: PrivacyLogFieldOption[]) =>
+    fields.map((item) => item.key).filter((key) => !!key);
+
   const setForm = (data: UserPrivacy) => {
     Object.assign(form, defaultPrivacy(), data);
   };
@@ -249,10 +252,17 @@
     }
     saving.value = true;
     try {
-      await updatePrivacySettings({
+      const { data } = await updatePrivacySettings({
         ...JSON.parse(JSON.stringify(form)),
         is_configured: true,
       });
+      if (!pendingSave.value) {
+        initialized.value = false;
+        logPrivacy.value = data.log_privacy || logPrivacy.value;
+        setForm(data.privacy || defaultPrivacy());
+        await nextTick();
+        initialized.value = true;
+      }
     } finally {
       saving.value = false;
       if (pendingSave.value) {
@@ -264,6 +274,10 @@
 
   const queueSave = () => {
     if (!initialized.value || loading.value) return;
+    if (saving.value) {
+      pendingSave.value = true;
+      return;
+    }
     if (saveTimer) {
       clearTimeout(saveTimer);
     }
@@ -273,6 +287,114 @@
       });
     }, 500);
   };
+
+  watch(
+    () => form.log_request_content,
+    (value, oldValue) => {
+      if (
+        !initialized.value ||
+        !value ||
+        oldValue ||
+        form.log_request_fields.length > 0
+      ) {
+        return;
+      }
+      form.log_request_fields = fieldKeys(requestFields.value);
+    }
+  );
+
+  watch(
+    () => form.log_request_fields,
+    (fields) => {
+      if (
+        initialized.value &&
+        form.log_request_content &&
+        fields.length === 0
+      ) {
+        form.log_request_content = false;
+      }
+    },
+    { deep: true }
+  );
+
+  watch(
+    () => form.log_response_content,
+    (value, oldValue) => {
+      if (
+        !initialized.value ||
+        !value ||
+        oldValue ||
+        form.log_response_fields.length > 0
+      ) {
+        return;
+      }
+      form.log_response_fields = fieldKeys(responseFields.value);
+    }
+  );
+
+  watch(
+    () => form.log_response_fields,
+    (fields) => {
+      if (
+        initialized.value &&
+        form.log_response_content &&
+        fields.length === 0
+      ) {
+        form.log_response_content = false;
+      }
+    },
+    { deep: true }
+  );
+
+  watch(
+    () => form.log_resource_url,
+    (value, oldValue) => {
+      if (
+        !initialized.value ||
+        !value ||
+        oldValue ||
+        form.log_resource_fields.length > 0
+      ) {
+        return;
+      }
+      form.log_resource_fields = fieldKeys(resourceFields.value);
+    }
+  );
+
+  watch(
+    () => form.log_resource_fields,
+    (fields) => {
+      if (initialized.value && form.log_resource_url && fields.length === 0) {
+        form.log_resource_url = false;
+      }
+    },
+    { deep: true }
+  );
+
+  watch(
+    () => form.log_client_ip,
+    (value, oldValue) => {
+      if (
+        !initialized.value ||
+        !value ||
+        oldValue ||
+        form.log_network_fields.length > 0
+      ) {
+        return;
+      }
+      form.log_network_fields = fieldKeys(networkFields.value);
+    }
+  );
+
+  watch(
+    () => form.log_network_fields,
+    (fields) => {
+      if (initialized.value && form.log_client_ip && fields.length === 0) {
+        form.log_client_ip = false;
+      }
+    },
+    { deep: true }
+  );
 
   watch(form, queueSave, { deep: true });
 

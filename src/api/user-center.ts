@@ -84,5 +84,5 @@ export function getPrivacySettings() {
 }
 
 export function updatePrivacySettings(data: UserPrivacy) {
-  return axios.post('/api/v1/user/privacy', data);
+  return axios.post<UserPrivacyRes>('/api/v1/user/privacy', data);
 }
