@@ -5,10 +5,13 @@ export default {
   'finance.menu.deal_record': '交易记录',
   // label
   'finance.label.bill.stat_date': '账单日期',
+  'finance.label.bill.data_type': '数据维度',
+  'finance.placeholder.bill.data_type': '请选择数据维度',
   // form
   'finance.form.created_at': '时间',
   'finance.form.title.bill_export': '导出账单明细',
   'finance.error.required.stat_date': '请选择账单日期',
+  'finance.error.required.data_type': '请选择数据维度',
   // columns
   'finance.columns.created_at': '时间',
   'finance.columns.models': '模型数',
@@ -21,4 +24,7 @@ export default {
   'finance.dict.deal_type.3': '赠送',
   'finance.dict.deal_type.4': '过期',
   'finance.dict.deal_type.5': '邀请奖励',
+  'finance.dict.bill.data_type.user': '用户',
+  'finance.dict.bill.data_type.app': '应用',
+  'finance.dict.bill.data_type.app_key': '应用密钥',
 };

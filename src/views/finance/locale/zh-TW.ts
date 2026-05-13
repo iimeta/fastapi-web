@@ -5,10 +5,13 @@ export default {
   'finance.menu.deal_record': '交易記錄',
   // label
   'finance.label.bill.stat_date': '帳單日期',
+  'finance.label.bill.data_type': '資料維度',
+  'finance.placeholder.bill.data_type': '請選擇資料維度',
   // form
   'finance.form.created_at': '時間',
   'finance.form.title.bill_export': '匯出帳單明細',
   'finance.error.required.stat_date': '請選擇帳單日期',
+  'finance.error.required.data_type': '請選擇資料維度',
   // columns
   'finance.columns.created_at': '時間',
   'finance.columns.models': '模型數',
@@ -21,4 +24,7 @@ export default {
   'finance.dict.deal_type.3': '贈送',
   'finance.dict.deal_type.4': '過期',
   'finance.dict.deal_type.5': '邀請獎勵',
+  'finance.dict.bill.data_type.user': '使用者',
+  'finance.dict.bill.data_type.app': '應用',
+  'finance.dict.bill.data_type.app_key': '應用密鑰',
 };

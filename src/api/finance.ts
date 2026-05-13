@@ -65,6 +65,7 @@ export interface BillExportParams {
   ids?: string[];
   stat_date?: any;
   user_id?: number;
+  data_type?: 'user' | 'app' | 'app_key';
 }
 
 export function submitBillExport(params: BillExportParams) {

@@ -75,7 +75,7 @@
       <a-row class="finance-bill-list-toolbar-row">
         <a-col :span="12">
           <a-space>
-            <a-button type="primary" @click="handleBillExport({})">
+            <a-button type="primary" @click="openBillExportModal">
               {{ $t('button.export') }}
             </a-button>
           </a-space>
@@ -180,6 +180,29 @@
       >
         <a-form ref="billExportForm" :model="billExportFormData">
           <a-form-item
+            field="data_type"
+            :label="$t('finance.label.bill.data_type')"
+            :rules="[
+              {
+                required: true,
+                message: $t('finance.error.required.data_type'),
+              },
+            ]"
+          >
+            <a-radio-group v-model="billExportFormData.data_type">
+              <a-radio value="user">
+                {{ $t('finance.dict.bill.data_type.user') }}
+              </a-radio>
+              <a-radio value="app">
+                {{ $t('finance.dict.bill.data_type.app') }}
+              </a-radio>
+              <a-radio value="app_key">
+                {{ $t('finance.dict.bill.data_type.app_key') }}
+              </a-radio>
+            </a-radio-group>
+          </a-form-item>
+          <a-form-item
+            v-if="ids.length === 0"
             field="stat_date"
             :label="$t('finance.label.bill.stat_date')"
             :rules="[
@@ -195,6 +218,7 @@
             />
           </a-form-item>
           <a-form-item
+            v-if="ids.length === 0"
             v-permission="['reseller', 'admin']"
             field="user_id"
             :label="$t('common.user_id')"
@@ -461,7 +485,19 @@
 
   const billExportForm = ref<FormInstance>();
   const billExportFormVisible = ref(false);
-  const billExportFormData = ref<BillExportParams>({} as BillExportParams);
+  const generateBillExportParams = () =>
+    ({
+      data_type: 'user',
+    } as BillExportParams);
+  const billExportFormData = ref<BillExportParams>(generateBillExportParams());
+
+  const openBillExportModal = () => {
+    billExportFormData.value = {
+      ...generateBillExportParams(),
+      user_id: searchFormData.value.user_id,
+    };
+    billExportFormVisible.value = true;
+  };
 
   const billExportHandleBeforeOk = async (done: any) => {
     const res = await billExportForm.value?.validate();
