@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div id="vditor" class="content"></div>
-    <div v-if="showVariables" class="attribute">
+    <div v-if="props.showVariables" class="attribute">
       <a-descriptions
         :title="$t('common.variable.user')"
         :column="{ xs: 1, md: 2, lg: 3 }"
@@ -83,10 +83,8 @@
 
   const props = defineProps<{
     modelValue: string;
-    showVariables?: boolean;
+    showVariables: boolean;
   }>();
-
-  const showVariables = props.showVariables !== false;
 
   const emit = defineEmits<(e: 'update:modelValue', value: string) => void>();
 

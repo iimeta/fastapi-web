@@ -186,7 +186,11 @@
                 },
               ]"
             >
-              <Vditor v-model="formData.content" class="notice-form-editor" />
+              <Vditor
+                v-model="formData.content"
+                :show-variables="true"
+                class="notice-form-editor"
+              />
             </a-form-item>
             <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea

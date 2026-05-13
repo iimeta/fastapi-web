@@ -166,6 +166,34 @@
                 >
                   {{ $t('notice.template.dict.scenes.notice_login') }}
                 </a-checkbox>
+                <a-checkbox
+                  v-model="formData.scenes"
+                  value="ticket_create"
+                  class="scenes"
+                >
+                  {{ $t('notice.template.dict.scenes.ticket_create') }}
+                </a-checkbox>
+                <a-checkbox
+                  v-model="formData.scenes"
+                  value="ticket_reply"
+                  class="scenes"
+                >
+                  {{ $t('notice.template.dict.scenes.ticket_reply') }}
+                </a-checkbox>
+                <a-checkbox
+                  v-model="formData.scenes"
+                  value="ticket_status"
+                  class="scenes"
+                >
+                  {{ $t('notice.template.dict.scenes.ticket_status') }}
+                </a-checkbox>
+                <a-checkbox
+                  v-model="formData.scenes"
+                  value="ticket_auto_close"
+                  class="scenes"
+                >
+                  {{ $t('notice.template.dict.scenes.ticket_auto_close') }}
+                </a-checkbox>
               </a-space>
             </a-form-item>
             <a-form-item
@@ -196,6 +224,7 @@
             >
               <Vditor
                 v-model="formData.content"
+                :show-variables="true"
                 class="notice-template-form-editor"
               />
             </a-form-item>
