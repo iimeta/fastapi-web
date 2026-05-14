@@ -191,6 +191,108 @@
           {{ $t(`dict.${currentData?.is_never_disable || false}`) }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('model.agent.label.data_passthrough')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            $t(`dict.enable.${currentData.is_enable_data_passthrough || false}`)
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('model.agent.label.req_passthrough')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <template v-if="currentData.req_passthrough_params?.length">
+            <a-tag
+              v-for="item in currentData.req_passthrough_params"
+              :key="item"
+              size="small"
+              style="margin-right: 4px"
+            >
+              {{ $t(`dict.req_passthrough.${item}`) }}
+            </a-tag>
+          </template>
+          <template v-else>-</template>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('model.agent.label.req_header_passthrough_mode')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.req_passthrough_params?.includes('req_header')
+              ? $t(
+                  `dict.passthrough_mode.${
+                    currentData.req_header_passthrough_mode || 1
+                  }`
+                )
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('model.agent.label.req_header_passthrough_list')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.req_header_passthrough_list?.join(', ') || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('model.agent.label.res_passthrough')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <template v-if="currentData.res_passthrough_params?.length">
+            <a-tag
+              v-for="item in currentData.res_passthrough_params"
+              :key="item"
+              size="small"
+              style="margin-right: 4px"
+            >
+              {{ $t(`dict.res_passthrough.${item}`) }}
+            </a-tag>
+          </template>
+          <template v-else>-</template>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('model.agent.label.res_header_passthrough_mode')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.res_passthrough_params?.includes('res_header')
+              ? $t(
+                  `dict.passthrough_mode.${
+                    currentData.res_header_passthrough_mode || 1
+                  }`
+                )
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('model.agent.label.res_header_passthrough_list')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.res_header_passthrough_list?.join(', ') || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item
         :label="$t('model.agent.detail.abnormal_models')"
         :span="2"

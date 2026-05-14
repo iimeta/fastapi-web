@@ -37,6 +37,13 @@ export interface ModelAgentAdvanced {
   key: string;
   is_agents_only: boolean;
   is_never_disable_key: boolean;
+  is_enable_data_passthrough: boolean;
+  req_passthrough_params: string[];
+  req_header_passthrough_mode: string;
+  req_header_passthrough_list: string[];
+  res_passthrough_params: string[];
+  res_header_passthrough_mode: string;
+  res_header_passthrough_list: string[];
 }
 
 export type ModelAgentCreate = ModelAgentBaseInfo & ModelAgentAdvanced;
@@ -144,8 +151,17 @@ export interface ModelAgentDetail {
   key: string;
   status: number;
   remark: string;
+  is_agents_only: boolean;
+  is_never_disable_key: boolean;
   is_auto_disabled: boolean;
   auto_disabled_reason: string;
+  is_enable_data_passthrough: boolean;
+  req_passthrough_params: string[];
+  req_header_passthrough_mode: number;
+  req_header_passthrough_list: string[];
+  res_passthrough_params: string[];
+  res_header_passthrough_mode: number;
+  res_header_passthrough_list: string[];
   created_at: string;
   updated_at: string;
 }

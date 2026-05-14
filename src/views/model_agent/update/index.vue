@@ -356,6 +356,127 @@
             >
               <a-switch v-model="formData.is_never_disable_key" />
             </a-form-item>
+            <a-form-item
+              field="is_enable_data_passthrough"
+              :label="$t('model.agent.label.data_passthrough')"
+            >
+              <a-switch v-model="formData.is_enable_data_passthrough" />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_enable_data_passthrough"
+              field="req_passthrough_params"
+              :label="$t('model.agent.label.req_passthrough')"
+            >
+              <a-checkbox-group v-model="formData.req_passthrough_params">
+                <a-checkbox value="req_header">{{
+                  $t('dict.req_passthrough.req_header')
+                }}</a-checkbox>
+                <a-checkbox value="req_path">{{
+                  $t('dict.req_passthrough.req_path')
+                }}</a-checkbox>
+                <a-checkbox value="req_data">{{
+                  $t('dict.req_passthrough.req_data')
+                }}</a-checkbox>
+              </a-checkbox-group>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_data_passthrough &&
+                formData.req_passthrough_params.includes('req_header')
+              "
+              field="req_header_passthrough_mode"
+              :label="$t('model.agent.label.req_header_passthrough_mode')"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.req_header_passthrough_mode"
+                  value="1"
+                  :default-checked="true"
+                >
+                  {{ $t('dict.passthrough_mode.1') }}
+                </a-radio>
+                <a-radio
+                  v-model="formData.req_header_passthrough_mode"
+                  value="2"
+                >
+                  {{ $t('dict.passthrough_mode.2') }}
+                </a-radio>
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_data_passthrough &&
+                formData.req_passthrough_params.includes('req_header') &&
+                formData.req_header_passthrough_mode === '2'
+              "
+              field="req_header_passthrough_list"
+              :label="$t('model.agent.label.req_header_passthrough_list')"
+            >
+              <a-input-tag
+                v-model="formData.req_header_passthrough_list"
+                :placeholder="
+                  $t('model.agent.placeholder.req_header_passthrough_list')
+                "
+                class="input"
+                allow-clear
+              />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_enable_data_passthrough"
+              field="res_passthrough_params"
+              :label="$t('model.agent.label.res_passthrough')"
+            >
+              <a-checkbox-group v-model="formData.res_passthrough_params">
+                <a-checkbox value="res_header">{{
+                  $t('dict.res_passthrough.res_header')
+                }}</a-checkbox>
+                <a-checkbox value="res_data">{{
+                  $t('dict.res_passthrough.res_data')
+                }}</a-checkbox>
+              </a-checkbox-group>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_data_passthrough &&
+                formData.res_passthrough_params.includes('res_header')
+              "
+              field="res_header_passthrough_mode"
+              :label="$t('model.agent.label.res_header_passthrough_mode')"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.res_header_passthrough_mode"
+                  value="1"
+                  :default-checked="true"
+                >
+                  {{ $t('dict.passthrough_mode.1') }}
+                </a-radio>
+                <a-radio
+                  v-model="formData.res_header_passthrough_mode"
+                  value="2"
+                >
+                  {{ $t('dict.passthrough_mode.2') }}
+                </a-radio>
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_data_passthrough &&
+                formData.res_passthrough_params.includes('res_header') &&
+                formData.res_header_passthrough_mode === '2'
+              "
+              field="res_header_passthrough_list"
+              :label="$t('model.agent.label.res_header_passthrough_list')"
+            >
+              <a-input-tag
+                v-model="formData.res_header_passthrough_list"
+                :placeholder="
+                  $t('model.agent.placeholder.res_header_passthrough_list')
+                "
+                class="input"
+                allow-clear
+              />
+            </a-form-item>
             <a-space>
               <div class="submit-btn">
                 <a-button
@@ -494,6 +615,13 @@
     key: '',
     is_agents_only: true,
     is_never_disable_key: false,
+    is_enable_data_passthrough: false,
+    req_passthrough_params: [],
+    req_header_passthrough_mode: '1',
+    req_header_passthrough_list: [],
+    res_passthrough_params: [],
+    res_header_passthrough_mode: '1',
+    res_header_passthrough_list: [],
   });
 
   const submitForm = async () => {
@@ -545,6 +673,22 @@
       formData.value.is_never_disable = data.is_never_disable;
       formData.value.lb_strategy = String(data.lb_strategy);
       formData.value.key = data.key;
+      formData.value.is_agents_only = data.is_agents_only || false;
+      formData.value.is_never_disable_key = data.is_never_disable_key || false;
+      formData.value.is_enable_data_passthrough =
+        data.is_enable_data_passthrough || false;
+      formData.value.req_passthrough_params = data.req_passthrough_params || [];
+      formData.value.req_header_passthrough_mode = String(
+        data.req_header_passthrough_mode || 1
+      );
+      formData.value.req_header_passthrough_list =
+        data.req_header_passthrough_list || [];
+      formData.value.res_passthrough_params = data.res_passthrough_params || [];
+      formData.value.res_header_passthrough_mode = String(
+        data.res_header_passthrough_mode || 1
+      );
+      formData.value.res_header_passthrough_list =
+        data.res_header_passthrough_list || [];
       getKeyPlaceholder();
     } catch (err) {
       // you can report use errorHandler or other
