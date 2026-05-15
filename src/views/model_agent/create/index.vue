@@ -147,16 +147,9 @@
               </a-select>
             </a-form-item>
             <a-form-item field="models" :label="$t('common.bind_models')">
-              <a-tree-select
+              <model-select
                 v-model="formData.models"
                 :placeholder="$t('model.agent.placeholder.models')"
-                :allow-search="true"
-                :allow-clear="true"
-                :tree-checkable="true"
-                :data="treeData"
-                :max-tag-count="3"
-                :scrollbar="false"
-                tree-checked-strategy="child"
               />
               <a-button @click="handleQuickFill">
                 {{ $t('model.agent.button.quick_fill') }}
@@ -506,7 +499,7 @@
   } from '@/api/model_agent';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryGroupList, GroupList } from '@/api/group';
-  import { queryModelTree, Tree } from '@/api/model';
+  import ModelSelect from '@/components/model-select/index.vue';
 
   const { loading, setLoading } = useLoading(false);
   const cardBodyStyle = {
@@ -561,17 +554,6 @@
     }
   };
   getGroupList();
-
-  const treeData = ref<Tree[]>([]);
-  const getModelTree = async () => {
-    try {
-      const { data } = await queryModelTree();
-      treeData.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelTree();
 
   const formRef = ref<FormInstance>();
   const formData = ref<ModelAgentCreate>({

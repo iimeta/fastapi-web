@@ -86,16 +86,9 @@
             </a-divider>
 
             <a-form-item field="models" :label="$t('common.bind_models')">
-              <a-tree-select
+              <model-select
                 v-model="formData.models"
                 :placeholder="$t('key.placeholder.models')"
-                :allow-search="true"
-                :allow-clear="true"
-                :tree-checkable="true"
-                :data="treeData"
-                :max-tag-count="3"
-                :scrollbar="false"
-                tree-checked-strategy="child"
               />
             </a-form-item>
             <a-form-item
@@ -163,7 +156,7 @@
   import { useI18n } from 'vue-i18n';
   import { submitKeyCreate, KeyCreate } from '@/api/key';
   import { queryProviderList, ProviderList } from '@/api/provider';
-  import { queryModelTree, Tree } from '@/api/model';
+  import ModelSelect from '@/components/model-select/index.vue';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
 
   const { loading, setLoading } = useLoading(false);
@@ -207,17 +200,6 @@
         keyPlaceholder.value = t('key.placeholder.key');
     }
   };
-
-  const treeData = ref<Tree[]>([]);
-  const getModelTree = async () => {
-    try {
-      const { data } = await queryModelTree();
-      treeData.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelTree();
 
   const modelAgents = ref<ModelAgentList[]>([]);
   const getModelAgentList = async () => {

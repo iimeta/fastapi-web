@@ -584,18 +584,11 @@
             },
           ]"
         >
-          <a-tree-select
+          <model-select
             v-model="configFormData.model_agent_health_check_task.models"
             :placeholder="
               $t('sys.config.placeholder.model_agent_health_check_task.models')
             "
-            :allow-search="true"
-            :allow-clear="true"
-            :tree-checkable="true"
-            :data="treeData"
-            :max-tag-count="3"
-            :scrollbar="false"
-            tree-checked-strategy="child"
           />
         </a-form-item>
         <a-form-item
@@ -896,7 +889,7 @@
     submitSysConfigReset,
     submitSysConfigChangeStatus,
   } from '@/api/sys_config';
-  import { queryModelTree, Tree } from '@/api/model';
+  import ModelSelect from '@/components/model-select/index.vue';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
 
   const { setLoading } = useLoading(true);
@@ -912,17 +905,6 @@
     padding: '20px 20px 0 20px',
     maxHeight: '520px',
   };
-
-  const treeData = ref<Tree[]>([]);
-  const getModelTree = async () => {
-    try {
-      const { data } = await queryModelTree();
-      treeData.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelTree();
 
   const modelAgents = ref<ModelAgentList[]>([]);
   const getModelAgentList = async () => {

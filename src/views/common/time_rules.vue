@@ -117,19 +117,13 @@
                   {{ $t('time_rule.dict.day_mode.month') }}
                 </a-option>
               </a-select>
-              <a-tree-select
+              <model-select
                 v-if="props.layout === 'two-line'"
                 v-model="rule.models"
-                :allow-search="true"
-                :allow-clear="true"
-                :tree-checkable="true"
-                :data="props.modelTreeData"
                 :placeholder="$t('time_rule.label.models')"
                 :max-tag-count="1"
-                :scrollbar="false"
-                tree-checked-strategy="child"
                 class="time-rules-select--models"
-                @change="emitUpdate"
+                @update:model-value="emitUpdate"
               />
             </div>
           </div>
@@ -205,7 +199,7 @@
   import { ref, computed, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import type { TimeRule } from '@/api/common';
-  import type { Tree } from '@/api/model';
+  import ModelSelect from '@/components/model-select/index.vue';
   import { parseDiscount } from '@/utils/common';
 
   const { t } = useI18n();
@@ -213,7 +207,6 @@
   const props = defineProps<{
     modelValue?: TimeRule[];
     layout?: 'inline' | 'two-line';
-    modelTreeData?: Tree[];
   }>();
 
   function isTwoLine(rule: TimeRule) {

@@ -30,7 +30,6 @@
               ref="timeRulesRef"
               v-model="formData.time_rules"
               layout="two-line"
-              :model-tree-data="treeData"
             />
 
             <a-form-item
@@ -98,16 +97,9 @@
                 },
               ]"
             >
-              <a-tree-select
+              <model-select
                 v-model="formData.models"
-                :allow-search="true"
-                :allow-clear="true"
-                :tree-checkable="true"
-                :data="treeData"
                 :placeholder="$t('placeholder.model')"
-                :max-tag-count="3"
-                :scrollbar="false"
-                tree-checked-strategy="child"
               />
             </a-form-item>
             <a-form-item
@@ -892,7 +884,8 @@
   import { useAppStore } from '@/store';
   import { disabledDate, parsePrice } from '@/utils/common';
   import { submitGroupCreate, GroupCreate } from '@/api/group';
-  import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
+  import { queryModelList, ModelList } from '@/api/model';
+  import ModelSelect from '@/components/model-select/index.vue';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import TimeRules from '@/views/common/time_rules.vue';
   import Quota from '@/views/common/quota.vue';
@@ -916,17 +909,6 @@
     }
   };
   getModelList();
-
-  const treeData = ref<Tree[]>([]);
-  const getModelTree = async () => {
-    try {
-      const { data } = await queryModelTree();
-      treeData.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelTree();
 
   const modelAgents = ref<ModelAgentList[]>([]);
   const getModelAgentList = async () => {

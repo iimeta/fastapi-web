@@ -322,6 +322,13 @@ export default {
   'dict.language.zh-TW': '繁體中文',
   'dict.language.en-US': 'English',
   'dict.language.default': 'Follow System',
+  // model select
+  'modelSelect.search': 'Search model...',
+  'modelSelect.selected': 'Selected',
+  'modelSelect.selected_models': 'Selected Models',
+  'modelSelect.clear': 'Clear',
+  'modelSelect.empty': 'No selection',
+  'modelSelect.no_match': 'No matching results',
   // time_rule
   'time_rule.label.rule': 'Period Rule',
   'time_rule.label.name': 'Period Name',

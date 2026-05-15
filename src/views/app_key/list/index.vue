@@ -363,7 +363,8 @@
                 record.group_time_rules && record.group_time_rules.length === 1
               "
             >
-              {{ formatDiscountText(record.group_time_rules[0].discount) }}<a-button
+              {{ formatDiscountText(record.group_time_rules[0].discount)
+              }}<a-button
                 v-if="hasModelNames(record.group_time_rules)"
                 type="text"
                 size="small"
@@ -500,16 +501,9 @@
             </a-space>
           </a-form-item>
           <a-form-item field="models" :label="$t('common.models')">
-            <a-tree-select
+            <model-select
               v-model="formData.models"
               :placeholder="$t('app.key.placeholder.key.models')"
-              :allow-search="true"
-              :allow-clear="true"
-              :tree-checkable="true"
-              :data="treeData"
-              :max-tag-count="3"
-              :scrollbar="false"
-              tree-checked-strategy="child"
             />
           </a-form-item>
           <a-form-item field="is_limit_quota" :label="$t('common.limit_quota')">
@@ -1095,16 +1089,10 @@
             </a-space>
           </a-form-item>
           <a-form-item field="models" :label="$t('common.models')">
-            <a-tree-select
+            <model-select
               v-model="batchFormData.models"
               :placeholder="$t('app.key.placeholder.key.models')"
-              :allow-search="true"
-              :allow-clear="true"
-              :tree-checkable="true"
-              :data="treeData"
-              :max-tag-count="3"
-              :scrollbar="false"
-              tree-checked-strategy="child"
+            />
             />
           </a-form-item>
           <a-form-item field="is_limit_quota" :label="$t('common.limit_quota')">
@@ -1602,7 +1590,8 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { useAppStore } from '@/store';
-  import { queryModelList, ModelList, queryModelTree, Tree } from '@/api/model';
+  import { queryModelList, ModelList } from '@/api/model';
+  import ModelSelect from '@/components/model-select/index.vue';
   import { queryGroupList, GroupList } from '@/api/group';
   import type { TimeRule } from '@/api/common';
   import { useClipboard } from '@vueuse/core';
@@ -1941,17 +1930,6 @@
     }
   };
   getModelList();
-
-  const treeData = ref<Tree[]>([]);
-  const getModelTree = async () => {
-    try {
-      const { data } = await queryModelTree();
-      treeData.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelTree();
 
   const groups = ref<GroupList[]>([]);
   const selectedGroup = computed(() =>

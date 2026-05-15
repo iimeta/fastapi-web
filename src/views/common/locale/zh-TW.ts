@@ -322,6 +322,13 @@ export default {
   'dict.language.zh-TW': '繁體中文',
   'dict.language.en-US': 'English',
   'dict.language.default': '跟隨系統',
+  // model select
+  'modelSelect.search': '搜尋模型...',
+  'modelSelect.selected': '已選',
+  'modelSelect.selected_models': '已選模型',
+  'modelSelect.clear': '清空',
+  'modelSelect.empty': '暫無選擇',
+  'modelSelect.no_match': '無匹配結果',
   // time_rule
   'time_rule.label.rule': '時段規則',
   'time_rule.label.name': '時段名稱',
