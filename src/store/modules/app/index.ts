@@ -25,8 +25,8 @@ const useAppStore = defineStore('app', {
     appAsyncMenus(state: AppState): RouteRecordNormalized[] {
       return state.serverMenu as unknown as RouteRecordNormalized[];
     },
-    getDomain(state: AppState): string | undefined {
-      return state.config.domain;
+    getDomain(state: AppState): string[] | undefined {
+      return state.config.domains;
     },
     getTitle(state: AppState): string {
       return state.config.title || '';
@@ -52,7 +52,7 @@ const useAppStore = defineStore('app', {
     getJumpUrl(state: AppState): string | undefined {
       return (
         state.config.jump_url ||
-        (state.config.domain ? undefined : 'https://www.fastapi.ai')
+        (state.config.domains?.length ? undefined : 'https://www.fastapi.ai')
       );
     },
     getIcpBeian(state: AppState): string | undefined {
@@ -120,7 +120,7 @@ const useAppStore = defineStore('app', {
     getAnnouncementMoreUrl(state: AppState): string | undefined {
       return (
         state.config.announcement_more_url ||
-        (state.config.announcement_title && state.config.domain
+        (state.config.announcement_title && state.config.domains?.length
           ? undefined
           : 'https://www.fastapi.ai/releases/')
       );
@@ -149,7 +149,7 @@ const useAppStore = defineStore('app', {
     getDocumentMoreUrl(state: AppState): string | undefined {
       return (
         state.config.document_more_url ||
-        (state.config.document_title && state.config.domain
+        (state.config.document_title && state.config.domains?.length
           ? undefined
           : 'https://www.fastapi.ai')
       );
@@ -239,7 +239,7 @@ const useAppStore = defineStore('app', {
         domain: window.location.hostname,
       }).then((res) => {
         this.config = {
-          domain: res.data.domain,
+          domains: res.data.domains,
           title: res.data.title || '智元 Fast API',
           logo: res.data.logo || '/logo.png',
           favicon: res.data.favicon || '/favicon.ico',
@@ -258,19 +258,20 @@ const useAppStore = defineStore('app', {
           currency_symbol: res.data.currency_symbol || '$',
           carousel1_title:
             res.data.carousel1_title ||
-            (res.data.domain ? undefined : '赞助商'),
+            (res.data.domains?.length ? undefined : '赞助商'),
           carousels1: res.data.carousels1,
           carousel2_title:
-            res.data.carousel2_title || (res.data.domain ? undefined : '作者'),
+            res.data.carousel2_title ||
+            (res.data.domains?.length ? undefined : '作者'),
           carousels2: res.data.carousels2,
           announcement_title:
             res.data.announcement_title ||
-            (res.data.domain ? undefined : '公告'),
+            (res.data.domains?.length ? undefined : '公告'),
           announcement_more_url: res.data.announcement_more_url,
           announcements: res.data.announcements,
           document_title:
             res.data.document_title ||
-            (res.data.domain ? undefined : '使用指南'),
+            (res.data.domains?.length ? undefined : '使用指南'),
           document_more_url: res.data.document_more_url,
           documents: res.data.documents,
           recharge_tips: res.data.recharge_tips,

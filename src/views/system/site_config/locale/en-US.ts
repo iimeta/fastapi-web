@@ -4,7 +4,7 @@ export default {
   'site.config.menu.update': 'Edit Site Configuration',
   'site.config.menu.detail': 'Site Configuration Details',
   'site.config.label.domain': 'Domain',
-  'site.config.placeholder.domain': 'Please enter domain, e.g., www.abc.com',
+  'site.config.placeholder.domain': 'Enter domain and press Enter, e.g., www.abc.com',
   'site.config.error.required.domain': 'Please enter domain',
   'site.config.label.title': 'Title',
   'site.config.placeholder.title': 'Please enter title',

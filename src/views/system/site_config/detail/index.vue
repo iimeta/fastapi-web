@@ -6,7 +6,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.domain }}
+          {{ currentData.domains?.join(', ') || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('site.config.label.title')">

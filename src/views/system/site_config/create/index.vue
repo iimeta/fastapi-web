@@ -22,18 +22,19 @@
             :wrapper-col-props="{ span: 18 }"
           >
             <a-form-item
-              field="domain"
+              field="domains"
               :label="$t('site.config.label.domain')"
               :rules="[
                 {
                   required: true,
-                  message: $t('site.config.error.required.domain'),
+                  validator: domainsValidator,
                 },
               ]"
             >
-              <a-input
-                v-model="formData.domain"
+              <a-input-tag
+                v-model="formData.domains"
                 :placeholder="$t('site.config.placeholder.domain')"
+                unique-value
                 allow-clear
               />
             </a-form-item>
@@ -904,8 +905,18 @@
 
   const router = useRouter();
   const formRef = ref<FormInstance>();
+  const domainsValidator = (
+    value: string[],
+    callback: (error?: string) => void
+  ) => {
+    if (!value || value.length === 0) {
+      callback(t('site.config.error.required.domain'));
+    } else {
+      callback();
+    }
+  };
   const formData = ref<SiteConfigCreate>({
-    domain: '',
+    domains: [],
     title: '',
     logo: '',
     favicon: '',

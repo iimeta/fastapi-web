@@ -4,7 +4,7 @@ export default {
   'site.config.menu.update': '修改站點配置',
   'site.config.menu.detail': '站點配置詳情',
   'site.config.label.domain': '網域',
-  'site.config.placeholder.domain': '請輸入網域, 如: www.abc.com',
+  'site.config.placeholder.domain': '輸入網域後按回車添加, 如: www.abc.com',
   'site.config.error.required.domain': '請輸入網域',
   'site.config.label.title': '標題',
   'site.config.placeholder.title': '請輸入標題',

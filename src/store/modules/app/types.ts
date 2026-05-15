@@ -2,7 +2,7 @@ import type { RouteRecordNormalized } from 'vue-router';
 import { Carousel, Announcement, Document } from '@/api/site_config';
 
 export interface Config {
-  domain?: string;
+  domains?: string[];
   title?: string;
   logo?: string;
   favicon?: string;

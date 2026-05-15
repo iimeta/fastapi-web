@@ -368,6 +368,9 @@
         <template #user_id="{ record }">
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
+        <template #prompt="{ record }">
+          {{ record.prompt || '-' }}
+        </template>
         <template #images="{ record }">
           <a-button
             type="text"

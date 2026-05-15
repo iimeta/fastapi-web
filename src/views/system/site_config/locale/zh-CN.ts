@@ -4,7 +4,7 @@ export default {
   'site.config.menu.update': '修改站点配置',
   'site.config.menu.detail': '站点配置详情',
   'site.config.label.domain': '域名',
-  'site.config.placeholder.domain': '请输入域名, 如: www.abc.com',
+  'site.config.placeholder.domain': '输入域名后按回车添加, 如: www.abc.com',
   'site.config.error.required.domain': '请输入域名',
   'site.config.label.title': '标题',
   'site.config.placeholder.title': '请输入标题',

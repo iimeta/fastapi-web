@@ -40,7 +40,7 @@ export interface InviteConfig {
 }
 
 export interface SiteConfigCreate {
-  domain: string;
+  domains: string[];
   title: string;
   logo: string;
   favicon: string;
@@ -87,7 +87,7 @@ export function submitSiteConfigCreate(data: SiteConfigCreate) {
 
 export interface SiteConfigPage {
   id: string;
-  domain: string;
+  domains: string[];
   title: string;
   logo: string;
   favicon: string;
@@ -139,7 +139,7 @@ export interface SiteConfigDetailParams {
 
 export interface SiteConfigDetail {
   id: string;
-  domain: string;
+  domains: string[];
   title: string;
   logo: string;
   favicon: string;
@@ -194,7 +194,7 @@ export function querySiteConfigDetail(params: SiteConfigDetailParams) {
 
 export interface SiteConfigUpdate {
   id: string;
-  domain: string;
+  domains: string[];
   title: string;
   logo: string;
   favicon: string;

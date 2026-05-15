@@ -242,6 +242,9 @@
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
       >
+        <template #domains="{ record }">
+          {{ record.domains?.join(', ') || '-' }}
+        </template>
         <template #register_tips="{ record }">
           {{ record.register_tips || '-' }}
         </template>
@@ -403,8 +406,8 @@
     },
     {
       title: t('site.config.label.domain'),
-      dataIndex: 'domain',
-      slotName: 'domain',
+      dataIndex: 'domains',
+      slotName: 'domains',
       align: 'center',
       ellipsis: true,
       tooltip: true,
