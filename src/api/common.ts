@@ -89,6 +89,7 @@ export interface OncePricing {
 }
 
 export interface Pricing {
+  currency_symbol?: string;
   billing_rule: any;
   billing_methods: number[];
   billing_items: string[];
@@ -181,6 +182,7 @@ export interface OnceSpend {
 }
 
 export interface Spend {
+  currency_symbol?: string;
   billing_rule: number;
   billing_methods: number[];
   billing_items: string[];

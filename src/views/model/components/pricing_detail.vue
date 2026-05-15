@@ -39,13 +39,25 @@
         {{ $t(`model.dict.service_tier.${record.service_tier}`) }}
       </template>
       <template #input_ratio="{ record }">
-        <Quota :model-value="record.input_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.input_ratio"
+        />
+        / M
       </template>
       <template #output_ratio="{ record }">
-        <Quota :model-value="record.output_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.output_ratio"
+        />
+        / M
       </template>
       <template #reasoning_ratio="{ record }">
-        <Quota :model-value="record.reasoning_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.reasoning_ratio"
+        />
+        / M
       </template>
     </a-table>
 
@@ -62,7 +74,11 @@
         {{ $t(`model.dict.service_tier.${record.service_tier}`) }}
       </template>
       <template #read_ratio="{ record }">
-        <Quota :model-value="record.read_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.read_ratio"
+        />
+        / M
       </template>
     </a-table>
 
@@ -76,14 +92,25 @@
       class="pricing-detail-table-spacing"
     >
       <template #input_ratio="{ record }">
-        <Quota :model-value="record.input_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.input_ratio"
+        />
+        / M
       </template>
       <template #output_ratio="{ record }">
-        <Quota :model-value="record.output_ratio" />
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.output_ratio"
+        />
         {{ modelType === 5 || modelType === 6 ? '/ min' : '/ M' }}
       </template>
       <template #read_ratio="{ record }">
-        <Quota :model-value="record.read_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.read_ratio"
+        />
+        / M
       </template>
     </a-table>
 
@@ -100,7 +127,11 @@
       class="pricing-detail-table-spacing"
     >
       <template #read_ratio="{ record }">
-        <Quota :model-value="record.read_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.read_ratio"
+        />
+        / M
       </template>
     </a-table>
 
@@ -120,13 +151,25 @@
         {{ record.gt }}k - {{ record.lte }}k
       </template>
       <template #input_ratio="{ record }">
-        <Quota :model-value="record.input_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.input_ratio"
+        />
+        / M
       </template>
       <template #output_ratio="{ record }">
-        <Quota :model-value="record.output_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.output_ratio"
+        />
+        / M
       </template>
       <template #reasoning_ratio="{ record }">
-        <Quota :model-value="record.reasoning_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.reasoning_ratio"
+        />
+        / M
       </template>
     </a-table>
 
@@ -146,10 +189,18 @@
         {{ record.gt }}k - {{ record.lte }}k
       </template>
       <template #read_ratio="{ record }">
-        <Quota :model-value="record.read_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.read_ratio"
+        />
+        / M
       </template>
       <template #write_ratio="{ record }">
-        <Quota :model-value="record.write_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.write_ratio"
+        />
+        / M
       </template>
     </a-table>
 
@@ -163,13 +214,25 @@
       class="pricing-detail-table-spacing"
     >
       <template #input_ratio="{ record }">
-        <Quota :model-value="record.input_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.input_ratio"
+        />
+        / M
       </template>
       <template #output_ratio="{ record }">
-        <Quota :model-value="record.output_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.output_ratio"
+        />
+        / M
       </template>
       <template #read_ratio="{ record }">
-        <Quota :model-value="record.read_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.read_ratio"
+        />
+        / M
       </template>
     </a-table>
 
@@ -186,7 +249,11 @@
         {{ record.width }} × {{ record.height }}
       </template>
       <template #once_ratio="{ record }">
-        <Quota :model-value="record.once_ratio" /> / {{ $t('unit.piece') }}
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.once_ratio"
+        />
+        / {{ $t('unit.piece') }}
       </template>
       <template #is_default="{ record }">
         {{ record.is_default ? $t('dict.true') : '-' }}
@@ -206,7 +273,11 @@
       class="pricing-detail-table-spacing"
     >
       <template #read_ratio="{ record }">
-        <Quota :model-value="record.read_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.read_ratio"
+        />
+        / M
       </template>
     </a-table>
 
@@ -220,7 +291,11 @@
       class="pricing-detail-table-spacing"
     >
       <template #once_ratio="{ record }">
-        <Quota :model-value="record.once_ratio" /> / {{ $t('unit.piece') }}
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.once_ratio"
+        />
+        / {{ $t('unit.piece') }}
       </template>
       <template #is_default="{ record }">
         {{ record.is_default ? $t('dict.true') : '-' }}
@@ -237,13 +312,25 @@
       class="pricing-detail-table-spacing"
     >
       <template #input_ratio="{ record }">
-        <Quota :model-value="record.input_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.input_ratio"
+        />
+        / M
       </template>
       <template #output_ratio="{ record }">
-        <Quota :model-value="record.output_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.output_ratio"
+        />
+        / M
       </template>
       <template #read_ratio="{ record }">
-        <Quota :model-value="record.read_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.read_ratio"
+        />
+        / M
       </template>
     </a-table>
 
@@ -263,7 +350,10 @@
         {{ record.width }} × {{ record.height }}
       </template>
       <template #once_ratio="{ record }">
-        <Quota :model-value="record.once_ratio" />
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.once_ratio"
+        />
         <template
           v-if="
             props.providerCode === 'VolcEngine' ||
@@ -292,7 +382,11 @@
       class="pricing-detail-table-spacing"
     >
       <template #read_ratio="{ record }">
-        <Quota :model-value="record.read_ratio" /> / M
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.read_ratio"
+        />
+        / M
       </template>
     </a-table>
 
@@ -306,7 +400,11 @@
       class="pricing-detail-table-spacing"
     >
       <template #once_ratio="{ record }">
-        <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.once_ratio"
+        />
+        / {{ $t('unit.once') }}
       </template>
       <template #is_default="{ record }">
         {{ record.is_default ? $t('dict.true') : '-' }}
@@ -323,7 +421,11 @@
       class="pricing-detail-table-spacing"
     >
       <template #once_ratio="{ record }">
-        <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.once_ratio"
+        />
+        / {{ $t('unit.once') }}
       </template>
     </a-table>
 
@@ -337,7 +439,11 @@
       class="pricing-detail-table-spacing"
     >
       <template #once_ratio="{ record }">
-        <Quota :model-value="record.once_ratio" /> / {{ $t('unit.once') }}
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.once_ratio"
+        />
+        / {{ $t('unit.once') }}
       </template>
     </a-table>
   </template>

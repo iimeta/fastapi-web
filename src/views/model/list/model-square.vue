@@ -331,7 +331,9 @@
           <div class="tech-card tech-pricing-card">
             <div class="tech-card-title">
               <span class="tech-card-icon tech-card-icon--currency">{{
-                appStore.getCurrencySymbol || '$'
+                detailRecord.pricing?.currency_symbol ||
+                appStore.getCurrencySymbol ||
+                '$'
               }}</span>
               {{ $t('model.columns.pricing') }}
             </div>

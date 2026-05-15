@@ -15,6 +15,8 @@ export default {
   'model.placeholder.path': '如: /chat/completions',
   'model.label.remark': '說明',
   'model.placeholder.remark': '請輸入說明',
+  'model.label.currency_symbol': '貨幣符號',
+  'model.placeholder.currency_symbol': '請輸入或選擇貨幣符號, 不填則使用站點配置',
   'model.label.data_passthrough': '數據透傳',
   'model.label.req_passthrough': '請求透傳',
   'model.label.res_passthrough': '響應透傳',

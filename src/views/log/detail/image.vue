@@ -116,9 +116,7 @@
             currentData.spend.model_time_rule
               ? currentData.spend.model_time_rule.name +
                 ' ' +
-                Number(
-                  currentData.spend.model_time_rule.discount.toFixed(2)
-                ) +
+                Number(currentData.spend.model_time_rule.discount.toFixed(2)) +
                 'x'
               : '-'
           }}
@@ -139,9 +137,7 @@
             currentData.spend.group_time_rule
               ? currentData.spend.group_time_rule.name +
                 ' ' +
-                Number(
-                  currentData.spend.group_time_rule.discount.toFixed(2)
-                ) +
+                Number(currentData.spend.group_time_rule.discount.toFixed(2)) +
                 'x'
               : '-'
           }}
@@ -182,6 +178,7 @@
           <Quota
             v-if="currentData.status === 1 || currentData.status === 2"
             :model-value="currentData.spend.total_spend_tokens"
+            :currency-symbol="currentData.spend?.currency_symbol"
           />
           <span v-else> - </span>
         </span>
@@ -474,9 +471,7 @@
             currentData.spend.model_time_rule
               ? currentData.spend.model_time_rule.name +
                 ' ' +
-                Number(
-                  currentData.spend.model_time_rule.discount.toFixed(2)
-                ) +
+                Number(currentData.spend.model_time_rule.discount.toFixed(2)) +
                 'x'
               : '-'
           }}
@@ -497,9 +492,7 @@
             currentData.spend.group_time_rule
               ? currentData.spend.group_time_rule.name +
                 ' ' +
-                Number(
-                  currentData.spend.group_time_rule.discount.toFixed(2)
-                ) +
+                Number(currentData.spend.group_time_rule.discount.toFixed(2)) +
                 'x'
               : '-'
           }}
@@ -540,6 +533,7 @@
           <Quota
             v-if="currentData.status === 1 || currentData.status === 2"
             :model-value="currentData.spend.total_spend_tokens"
+            :currency-symbol="currentData.spend?.currency_symbol"
           />
           <span v-else> - </span>
         </span>

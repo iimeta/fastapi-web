@@ -403,6 +403,7 @@
             <Quota
               v-if="record.status === 1 || record.status === 2"
               :model-value="record.spend.total_spend_tokens"
+              :currency-symbol="record.spend?.currency_symbol"
             />
             <span v-else> - </span>
           </span>

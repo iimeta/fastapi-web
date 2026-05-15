@@ -118,9 +118,7 @@
     <div class="model-square-card__pricing">
       <div class="model-square-card__pricing-hd">
         <span class="model-square-card__pricing-title">
-          <span class="model-square-card__pricing-icon">{{
-            app.getCurrencySymbol || '$'
-          }}</span>
+          <span class="model-square-card__pricing-icon">{{ sym }}</span>
           {{ $t('model.columns.pricing') }}
         </span>
         <a-button
@@ -248,7 +246,9 @@
 
   const items = computed(() => props.record.pricing?.billing_items || []);
 
-  const sym = computed(() => app.getCurrencySymbol || '$');
+  const sym = computed(
+    () => props.record.pricing?.currency_symbol || app.getCurrencySymbol || '$'
+  );
   const fmt = (v: any) => {
     if (v > 0) return `${sym.value}\u2009${parseQuota(v)}`;
     if (v < 0) return `-${sym.value}\u2009${parseQuota(-v)}`;

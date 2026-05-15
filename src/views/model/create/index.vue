@@ -115,6 +115,23 @@
                 </a-option>
               </a-select>
             </a-form-item>
+            <a-form-item
+              field="currency_symbol"
+              :label="$t('model.label.currency_symbol')"
+            >
+              <a-select
+                v-model="formData.pricing.currency_symbol"
+                :placeholder="$t('model.placeholder.currency_symbol')"
+                :scrollbar="false"
+                allow-search
+                allow-clear
+                allow-create
+                class="model-form-wide-input"
+              >
+                <a-option value="¥"> ¥ </a-option>
+                <a-option value="$"> $ </a-option>
+              </a-select>
+            </a-form-item>
             <a-form-item field="remark" :label="$t('model.label.remark')">
               <a-textarea
                 v-model="formData.remark"
