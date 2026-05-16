@@ -188,6 +188,12 @@
               v-if="!formData.register_tips && formData.invite_enabled"
               field="invite_config.reward_quota"
               :label="$t('site.config.label.invite_reward_quota')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('site.config.placeholder.invite_reward_quota'),
+                },
+              ]"
             >
               <a-input-number
                 v-model="formData.invite_config.reward_quota"
@@ -204,6 +210,12 @@
               v-if="!formData.register_tips && formData.invite_enabled"
               field="invite_config.grant_quota"
               :label="$t('site.config.label.invitee_grant_quota')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('site.config.placeholder.invitee_grant_quota'),
+                },
+              ]"
             >
               <a-input-number
                 v-model="formData.invite_config.grant_quota"
@@ -319,6 +331,12 @@
               v-if="!formData.register_tips && formData.invite_enabled"
               field="invite_config.ip_limit_action"
               :label="$t('site.config.label.invite_ip_limit_action')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('site.config.placeholder.invite_ip_limit_action'),
+                },
+              ]"
             >
               <a-select
                 v-model="formData.invite_config.ip_limit_action"
@@ -338,6 +356,14 @@
               v-if="!formData.register_tips && formData.invite_enabled"
               field="invite_config.invalid_code_action"
               :label="$t('site.config.label.invite_invalid_code_action')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t(
+                    'site.config.placeholder.invite_invalid_code_action'
+                  ),
+                },
+              ]"
             >
               <a-select
                 v-model="formData.invite_config.invalid_code_action"
@@ -378,6 +404,7 @@
               "
               field="invite_config.recharge_rebate_first_enabled"
               :label="$t('site.config.label.invite_recharge_rebate_first')"
+              :rules="[{ validator: rebateFirstValidator }]"
             >
               <a-switch
                 v-model="formData.invite_config.recharge_rebate_first_enabled"
@@ -402,9 +429,9 @@
                 :placeholder="
                   $t('site.config.placeholder.invite_recharge_rebate_rate')
                 "
+                :parser="parseDiscount"
                 :min="0"
                 :max="100"
-                :precision="2"
                 allow-clear
                 style="width: 72%; margin-left: 5px"
               >
@@ -433,6 +460,7 @@
               "
               field="invite_config.recharge_rebate_second_enabled"
               :label="$t('site.config.label.invite_recharge_rebate_second')"
+              :rules="[{ validator: rebateSecondValidator }]"
             >
               <a-switch
                 v-model="formData.invite_config.recharge_rebate_second_enabled"
@@ -457,9 +485,9 @@
                 :placeholder="
                   $t('site.config.placeholder.invite_recharge_rebate_rate')
                 "
+                :parser="parseDiscount"
                 :min="0"
                 :max="100"
-                :precision="2"
                 allow-clear
                 style="width: 72%; margin-left: 5px"
               >
@@ -888,7 +916,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { useAppStore } from '@/store';
-  import { parsePrice } from '@/utils/common';
+  import { parsePrice, parseDiscount } from '@/utils/common';
   import {
     submitSiteConfigUpdate,
     SiteConfigUpdate,
@@ -918,6 +946,52 @@
       callback();
     }
   };
+
+  const rebateFirstValidator = (
+    _value: unknown,
+    cb: (error?: string) => void
+  ) => {
+    if (!formData.value.invite_config.recharge_rebate_first_enabled)
+      return cb();
+    if (formData.value.invite_config.recharge_rebate_first_type === 'percent') {
+      if (
+        formData.value.invite_config.recharge_rebate_first_rate === undefined ||
+        formData.value.invite_config.recharge_rebate_first_rate === null
+      )
+        return cb(t('site.config.placeholder.invite_recharge_rebate_rate'));
+    } else if (
+      formData.value.invite_config.recharge_rebate_first_quota === undefined ||
+      formData.value.invite_config.recharge_rebate_first_quota === null
+    ) {
+      return cb(t('site.config.placeholder.invite_recharge_rebate_quota'));
+    }
+    return cb();
+  };
+
+  const rebateSecondValidator = (
+    _value: unknown,
+    cb: (error?: string) => void
+  ) => {
+    if (!formData.value.invite_config.recharge_rebate_second_enabled)
+      return cb();
+    if (
+      formData.value.invite_config.recharge_rebate_second_type === 'percent'
+    ) {
+      if (
+        formData.value.invite_config.recharge_rebate_second_rate ===
+          undefined ||
+        formData.value.invite_config.recharge_rebate_second_rate === null
+      )
+        return cb(t('site.config.placeholder.invite_recharge_rebate_rate'));
+    } else if (
+      formData.value.invite_config.recharge_rebate_second_quota === undefined ||
+      formData.value.invite_config.recharge_rebate_second_quota === null
+    ) {
+      return cb(t('site.config.placeholder.invite_recharge_rebate_quota'));
+    }
+    return cb();
+  };
+
   const formData = ref<SiteConfigUpdate>({
     id: '',
     domains: [],
