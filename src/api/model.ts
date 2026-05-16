@@ -230,6 +230,12 @@ export interface ModelBatchOperate {
   target_model?: string;
   target_models?: string[];
   fallback_config?: FallbackConfig;
+  req_passthrough_params?: string[];
+  req_header_passthrough_mode?: number;
+  req_header_passthrough_list?: string[];
+  res_passthrough_params?: string[];
+  res_header_passthrough_mode?: number;
+  res_header_passthrough_list?: string[];
 }
 
 export function submitModelBatchOperate(data: ModelBatchOperate) {

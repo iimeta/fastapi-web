@@ -156,6 +156,9 @@ export default {
   'model.placeholder.batch.operation.fallback.enable': '是否確定啟用所選{count}條資料的後備模型?',
   'model.placeholder.batch.operation.fallback.disable': '是否確定關閉所選{count}條資料的後備模型?',
   'model.placeholder.batch.operation.fallback.all': '是否確定將所選{count}條資料的後備配置啟用並全部後備到所選配置?',
+  'model.placeholder.batch.operation.data_passthrough.enable': '是否確定啟用所選{count}條資料的數據透傳?',
+  'model.placeholder.batch.operation.data_passthrough.disable': '是否確定關閉所選{count}條資料的數據透傳?',
+  'model.placeholder.batch.operation.data_passthrough.all': '是否確定將所選{count}條資料的數據透傳啟用並使用所選的透傳配置?',
   // detail
   'model.detail.decision_model_name': '智能匹配-判定模型',
   'model.detail.target_model_names': '按關鍵字-目標模型',
@@ -165,6 +168,7 @@ export default {
   'model.form.title.model_agent': '全部代理',
   'model.form.title.forward': '全部轉發',
   'model.form.title.fallback': '全部後備',
+  'model.form.title.data_passthrough': '全部透傳',
   // columns
   'model.columns.pricing': '定價',
   // button
@@ -177,6 +181,9 @@ export default {
   'model.button.all_fallback': '全部後備',
   'model.button.enable_fallback': '啟用後備',
   'model.button.close_fallback': '關閉後備',
+  'model.button.all_data_passthrough': '全部透傳',
+  'model.button.enable_data_passthrough': '啟用透傳',
+  'model.button.close_data_passthrough': '關閉透傳',
   // dict
   'model.dict.is_support_system_role.true': '支持',
   'model.dict.is_support_system_role.false': '不支持',

@@ -157,6 +157,9 @@ export default {
   'model.placeholder.batch.operation.fallback.enable': 'Are you sure you want to enable fallback models for the selected {count} item(s)?',
   'model.placeholder.batch.operation.fallback.disable': 'Are you sure you want to disable fallback models for the selected {count} item(s)?',
   'model.placeholder.batch.operation.fallback.all': 'Are you sure you want to enable fallback configuration and set all to the selected configuration for the selected {count} item(s)?',
+  'model.placeholder.batch.operation.data_passthrough.enable': 'Are you sure you want to enable data passthrough for the selected {count} item(s)?',
+  'model.placeholder.batch.operation.data_passthrough.disable': 'Are you sure you want to disable data passthrough for the selected {count} item(s)?',
+  'model.placeholder.batch.operation.data_passthrough.all': 'Are you sure you want to enable data passthrough and apply the selected configuration for the selected {count} item(s)?',
   // detail
   'model.detail.decision_model_name': 'Smart Matching - Judgment Model',
   'model.detail.target_model_names': 'By Keywords - Target Models',
@@ -166,6 +169,7 @@ export default {
   'model.form.title.model_agent': 'All Agents',
   'model.form.title.forward': 'All Forwarding',
   'model.form.title.fallback': 'All Fallback',
+  'model.form.title.data_passthrough': 'All Passthrough',
   // columns
   'model.columns.pricing': 'Pricing',
   // button
@@ -178,6 +182,9 @@ export default {
   'model.button.all_fallback': 'All Fallback',
   'model.button.enable_fallback': 'Enable Fallback',
   'model.button.close_fallback': 'Disable Fallback',
+  'model.button.all_data_passthrough': 'All Passthrough',
+  'model.button.enable_data_passthrough': 'Enable Passthrough',
+  'model.button.close_data_passthrough': 'Disable Passthrough',
   // dict
   'model.dict.is_support_system_role.true': 'Supports',
   'model.dict.is_support_system_role.false': 'Not Support',

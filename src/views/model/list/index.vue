@@ -190,6 +190,51 @@
               :title="multiple ? $t('placeholder.operation.data') : ''"
               @click="
                 handleBatch({
+                  action: 'data_passthrough',
+                  value: 'all',
+                })
+              "
+            >
+              {{ $t('model.button.all_data_passthrough') }}
+            </a-button>
+            <a-button
+              v-if="renderData.length !== 0"
+              type="primary"
+              status="success"
+              :disabled="multiple"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
+              @click="
+                handleBatch({
+                  action: 'data_passthrough',
+                  value: true,
+                })
+              "
+            >
+              {{ $t('model.button.enable_data_passthrough') }}
+            </a-button>
+            <a-button
+              v-if="renderData.length !== 0"
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
+              @click="
+                handleBatch({
+                  action: 'data_passthrough',
+                  value: false,
+                })
+              "
+            >
+              {{ $t('model.button.close_data_passthrough') }}
+            </a-button>
+            <a-button
+              v-if="renderData.length !== 0"
+              type="primary"
+              status="warning"
+              :disabled="multiple"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
+              @click="
+                handleBatch({
                   action: 'forward',
                   value: 'all',
                 })
@@ -227,7 +272,7 @@
             >
               {{ $t('model.button.close_forward') }}
             </a-button>
-            <a-button
+            <!-- <a-button
               v-if="renderData.length !== 0"
               type="primary"
               status="warning"
@@ -271,7 +316,7 @@
               "
             >
               {{ $t('model.button.close_fallback') }}
-            </a-button>
+            </a-button> -->
             <a-button
               v-if="renderData.length !== 0"
               type="primary"
@@ -717,6 +762,125 @@
                 :label="item.name"
               />
             </a-select>
+          </a-form-item>
+        </a-form>
+      </a-modal>
+
+      <a-modal
+        v-model:visible="passthroughFormVisible"
+        :title="$t('model.form.title.data_passthrough')"
+        @cancel="passthroughHandleCancel"
+        @before-ok="passthroughHandleBeforeOk"
+      >
+        <a-form ref="passthroughForm" :model="passthroughFormData">
+          <a-form-item
+            field="req_passthrough_params"
+            :label="$t('model.label.req_passthrough')"
+          >
+            <a-checkbox-group
+              v-model="passthroughFormData.req_passthrough_params"
+            >
+              <a-checkbox value="req_header">{{
+                $t('dict.req_passthrough.req_header')
+              }}</a-checkbox>
+              <a-checkbox value="req_path">{{
+                $t('dict.req_passthrough.req_path')
+              }}</a-checkbox>
+              <a-checkbox value="req_data">{{
+                $t('dict.req_passthrough.req_data')
+              }}</a-checkbox>
+            </a-checkbox-group>
+          </a-form-item>
+          <a-form-item
+            v-if="
+              passthroughFormData.req_passthrough_params?.includes('req_header')
+            "
+            field="req_header_passthrough_mode"
+            :label="$t('model.label.req_header_passthrough_mode')"
+          >
+            <a-space size="large">
+              <a-radio
+                v-model="passthroughFormData.req_header_passthrough_mode"
+                :value="1"
+                :default-checked="true"
+              >
+                {{ $t('dict.passthrough_mode.1') }}
+              </a-radio>
+              <a-radio
+                v-model="passthroughFormData.req_header_passthrough_mode"
+                :value="2"
+              >
+                {{ $t('dict.passthrough_mode.2') }}
+              </a-radio>
+            </a-space>
+          </a-form-item>
+          <a-form-item
+            v-if="
+              passthroughFormData.req_passthrough_params?.includes(
+                'req_header'
+              ) && passthroughFormData.req_header_passthrough_mode === 2
+            "
+            field="req_header_passthrough_list"
+            :label="$t('model.label.req_header_passthrough_list')"
+          >
+            <a-input-tag
+              v-model="passthroughFormData.req_header_passthrough_list"
+              :placeholder="$t('model.placeholder.req_header_passthrough_list')"
+              allow-clear
+            />
+          </a-form-item>
+          <a-form-item
+            field="res_passthrough_params"
+            :label="$t('model.label.res_passthrough')"
+          >
+            <a-checkbox-group
+              v-model="passthroughFormData.res_passthrough_params"
+            >
+              <a-checkbox value="res_header">{{
+                $t('dict.res_passthrough.res_header')
+              }}</a-checkbox>
+              <a-checkbox value="res_data">{{
+                $t('dict.res_passthrough.res_data')
+              }}</a-checkbox>
+            </a-checkbox-group>
+          </a-form-item>
+          <a-form-item
+            v-if="
+              passthroughFormData.res_passthrough_params?.includes('res_header')
+            "
+            field="res_header_passthrough_mode"
+            :label="$t('model.label.res_header_passthrough_mode')"
+          >
+            <a-space size="large">
+              <a-radio
+                v-model="passthroughFormData.res_header_passthrough_mode"
+                :value="1"
+                :default-checked="true"
+              >
+                {{ $t('dict.passthrough_mode.1') }}
+              </a-radio>
+              <a-radio
+                v-model="passthroughFormData.res_header_passthrough_mode"
+                :value="2"
+              >
+                {{ $t('dict.passthrough_mode.2') }}
+              </a-radio>
+            </a-space>
+          </a-form-item>
+          <a-form-item
+            v-if="
+              passthroughFormData.res_passthrough_params?.includes(
+                'res_header'
+              ) && passthroughFormData.res_header_passthrough_mode === 2
+            "
+            field="res_header_passthrough_list"
+            :label="$t('model.label.res_header_passthrough_list')"
+          >
+            <a-input-tag
+              v-model="passthroughFormData.res_header_passthrough_list"
+              :placeholder="$t('model.placeholder.res_header_passthrough_list')"
+              allow-clear
+            />
           </a-form-item>
         </a-form>
       </a-modal>
@@ -1280,6 +1444,48 @@
     fallbackFormVisible.value = false;
   };
 
+  const passthroughForm = ref<FormInstance>();
+  const passthroughFormVisible = ref(false);
+  const passthroughFormData = ref<ModelBatchOperate>({} as ModelBatchOperate);
+  passthroughFormData.value.req_passthrough_params = [
+    'req_header',
+    'req_path',
+    'req_data',
+  ];
+  passthroughFormData.value.req_header_passthrough_mode = 1;
+  passthroughFormData.value.req_header_passthrough_list = [];
+  passthroughFormData.value.res_passthrough_params = ['res_header', 'res_data'];
+  passthroughFormData.value.res_header_passthrough_mode = 1;
+  passthroughFormData.value.res_header_passthrough_list = [];
+
+  const passthroughHandleBeforeOk = async (done: any) => {
+    const res = await passthroughForm.value?.validate();
+    if (res) {
+      passthroughFormVisible.value = true;
+      done(false);
+      return;
+    }
+    done();
+    handleBatch({
+      action: 'data_passthrough',
+      value: 'all',
+      req_passthrough_params: passthroughFormData.value.req_passthrough_params,
+      req_header_passthrough_mode:
+        passthroughFormData.value.req_header_passthrough_mode,
+      req_header_passthrough_list:
+        passthroughFormData.value.req_header_passthrough_list,
+      res_passthrough_params: passthroughFormData.value.res_passthrough_params,
+      res_header_passthrough_mode:
+        passthroughFormData.value.res_header_passthrough_mode,
+      res_header_passthrough_list:
+        passthroughFormData.value.res_header_passthrough_list,
+    });
+  };
+
+  const passthroughHandleCancel = () => {
+    passthroughFormVisible.value = false;
+  };
+
   /**
    * 已选择的数据行发生改变时触发
    *
@@ -1385,6 +1591,34 @@
             }
           }
           break;
+        case 'data_passthrough':
+          if (params.value === true) {
+            alertContent = t(
+              'model.placeholder.batch.operation.data_passthrough.enable',
+              {
+                count: ids.value.length,
+              }
+            );
+          } else if (params.value === false) {
+            alertContent = t(
+              'model.placeholder.batch.operation.data_passthrough.disable',
+              {
+                count: ids.value.length,
+              }
+            );
+          } else if (params.value === 'all') {
+            if (!params.req_passthrough_params) {
+              passthroughFormVisible.value = true;
+            } else {
+              alertContent = t(
+                'model.placeholder.batch.operation.data_passthrough.all',
+                {
+                  count: ids.value.length,
+                }
+              );
+            }
+          }
+          break;
         case 'status':
           if (params.value === 1) {
             alertContent = t('placeholder.batch.operation.enable', {
@@ -1424,6 +1658,14 @@
         params.action === 'fallback' &&
         params.value === 'all' &&
         !params.fallback_config
+      ) {
+        return;
+      }
+
+      if (
+        params.action === 'data_passthrough' &&
+        params.value === 'all' &&
+        !params.req_passthrough_params
       ) {
         return;
       }
