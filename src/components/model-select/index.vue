@@ -21,7 +21,7 @@
 
     <a-modal
       v-model:visible="visible"
-      :width="888"
+      :width="1080"
       :ok-text="$t('button.ok')"
       :cancel-text="$t('button.cancel')"
       unmount-on-close
@@ -180,7 +180,8 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, computed } from 'vue';
+  import { ref, computed, inject, provide } from 'vue';
+  import { formItemInjectionKey } from '@arco-design/web-vue/es/form/context';
   import { queryModelTree, Tree } from '@/api/model';
 
   interface Props {
@@ -198,6 +199,23 @@
   const emit = defineEmits<{
     (e: 'update:modelValue', value: string[]): void;
   }>();
+
+  const formItemCtx = inject(formItemInjectionKey, undefined);
+
+  // 隔离内部 Arco 组件, 防止继承父级 form-item 的校验错误状态
+  provide(formItemInjectionKey, {
+    eventHandlers: {},
+    size: undefined,
+    disabled: false,
+    error: false,
+    feedback: undefined,
+    updateValidateState: (
+      _field: string,
+      _state: { status: string; message: string }
+    ) => {
+      return undefined;
+    },
+  } as any);
 
   const visible = ref(false);
   const searchText = ref('');
@@ -337,6 +355,7 @@
 
   function handleOk() {
     emit('update:modelValue', [...tempSelected.value]);
+    formItemCtx?.eventHandlers?.onChange?.();
   }
 
   function handleCancel() {
@@ -349,6 +368,7 @@
       'update:modelValue',
       props.modelValue.filter((v) => v !== String(removed))
     );
+    formItemCtx?.eventHandlers?.onChange?.();
     setTimeout(() => {
       skipOpen.value = false;
     }, 100);
@@ -357,6 +377,7 @@
   function handleClearAll() {
     skipOpen.value = true;
     emit('update:modelValue', []);
+    formItemCtx?.eventHandlers?.onChange?.();
     setTimeout(() => {
       skipOpen.value = false;
     }, 100);
@@ -474,7 +495,7 @@
     }
 
     &__selected {
-      width: 200px;
+      width: 260px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
