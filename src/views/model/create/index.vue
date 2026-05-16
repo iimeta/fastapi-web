@@ -156,127 +156,6 @@
             />
 
             <a-form-item
-              field="is_enable_data_passthrough"
-              :label="$t('model.label.data_passthrough')"
-            >
-              <a-switch v-model="formData.is_enable_data_passthrough" />
-            </a-form-item>
-            <a-form-item
-              v-if="formData.is_enable_data_passthrough"
-              field="req_passthrough_params"
-              :label="$t('model.label.req_passthrough')"
-            >
-              <a-checkbox-group v-model="formData.req_passthrough_params">
-                <a-checkbox value="req_header">{{
-                  $t('dict.req_passthrough.req_header')
-                }}</a-checkbox>
-                <a-checkbox value="req_path">{{
-                  $t('dict.req_passthrough.req_path')
-                }}</a-checkbox>
-                <a-checkbox value="req_data">{{
-                  $t('dict.req_passthrough.req_data')
-                }}</a-checkbox>
-              </a-checkbox-group>
-            </a-form-item>
-            <a-form-item
-              v-if="
-                formData.is_enable_data_passthrough &&
-                formData.req_passthrough_params.includes('req_header')
-              "
-              field="req_header_passthrough_mode"
-              :label="$t('model.label.req_header_passthrough_mode')"
-            >
-              <a-space size="large">
-                <a-radio
-                  v-model="formData.req_header_passthrough_mode"
-                  value="1"
-                  :default-checked="true"
-                >
-                  {{ $t('dict.passthrough_mode.1') }}
-                </a-radio>
-                <a-radio
-                  v-model="formData.req_header_passthrough_mode"
-                  value="2"
-                >
-                  {{ $t('dict.passthrough_mode.2') }}
-                </a-radio>
-              </a-space>
-            </a-form-item>
-            <a-form-item
-              v-if="
-                formData.is_enable_data_passthrough &&
-                formData.req_passthrough_params.includes('req_header') &&
-                formData.req_header_passthrough_mode === '2'
-              "
-              field="req_header_passthrough_list"
-              :label="$t('model.label.req_header_passthrough_list')"
-            >
-              <a-input-tag
-                v-model="formData.req_header_passthrough_list"
-                :placeholder="
-                  $t('model.placeholder.req_header_passthrough_list')
-                "
-                allow-clear
-                class="model-form-wide-input"
-              />
-            </a-form-item>
-            <a-form-item
-              v-if="formData.is_enable_data_passthrough"
-              field="res_passthrough_params"
-              :label="$t('model.label.res_passthrough')"
-            >
-              <a-checkbox-group v-model="formData.res_passthrough_params">
-                <a-checkbox value="res_header">{{
-                  $t('dict.res_passthrough.res_header')
-                }}</a-checkbox>
-                <a-checkbox value="res_data">{{
-                  $t('dict.res_passthrough.res_data')
-                }}</a-checkbox>
-              </a-checkbox-group>
-            </a-form-item>
-            <a-form-item
-              v-if="
-                formData.is_enable_data_passthrough &&
-                formData.res_passthrough_params.includes('res_header')
-              "
-              field="res_header_passthrough_mode"
-              :label="$t('model.label.res_header_passthrough_mode')"
-            >
-              <a-space size="large">
-                <a-radio
-                  v-model="formData.res_header_passthrough_mode"
-                  value="1"
-                  :default-checked="true"
-                >
-                  {{ $t('dict.passthrough_mode.1') }}
-                </a-radio>
-                <a-radio
-                  v-model="formData.res_header_passthrough_mode"
-                  value="2"
-                >
-                  {{ $t('dict.passthrough_mode.2') }}
-                </a-radio>
-              </a-space>
-            </a-form-item>
-            <a-form-item
-              v-if="
-                formData.is_enable_data_passthrough &&
-                formData.res_passthrough_params.includes('res_header') &&
-                formData.res_header_passthrough_mode === '2'
-              "
-              field="res_header_passthrough_list"
-              :label="$t('model.label.res_header_passthrough_list')"
-            >
-              <a-input-tag
-                v-model="formData.res_header_passthrough_list"
-                :placeholder="
-                  $t('model.placeholder.res_header_passthrough_list')
-                "
-                allow-clear
-                class="model-form-wide-input"
-              />
-            </a-form-item>
-            <a-form-item
               field="is_public"
               :label="$t('common.is_public')"
               :rules="[
@@ -437,6 +316,127 @@
                   :label="item.name"
                 />
               </a-select>
+            </a-form-item>
+            <a-form-item
+              field="is_enable_data_passthrough"
+              :label="$t('model.label.data_passthrough')"
+            >
+              <a-switch v-model="formData.is_enable_data_passthrough" />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_enable_data_passthrough"
+              field="req_passthrough_params"
+              :label="$t('model.label.req_passthrough')"
+            >
+              <a-checkbox-group v-model="formData.req_passthrough_params">
+                <a-checkbox value="req_header">{{
+                  $t('dict.req_passthrough.req_header')
+                }}</a-checkbox>
+                <a-checkbox value="req_path">{{
+                  $t('dict.req_passthrough.req_path')
+                }}</a-checkbox>
+                <a-checkbox value="req_data">{{
+                  $t('dict.req_passthrough.req_data')
+                }}</a-checkbox>
+              </a-checkbox-group>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_data_passthrough &&
+                formData.req_passthrough_params.includes('req_header')
+              "
+              field="req_header_passthrough_mode"
+              :label="$t('model.label.req_header_passthrough_mode')"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.req_header_passthrough_mode"
+                  value="1"
+                  :default-checked="true"
+                >
+                  {{ $t('dict.passthrough_mode.1') }}
+                </a-radio>
+                <a-radio
+                  v-model="formData.req_header_passthrough_mode"
+                  value="2"
+                >
+                  {{ $t('dict.passthrough_mode.2') }}
+                </a-radio>
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_data_passthrough &&
+                formData.req_passthrough_params.includes('req_header') &&
+                formData.req_header_passthrough_mode === '2'
+              "
+              field="req_header_passthrough_list"
+              :label="$t('model.label.req_header_passthrough_list')"
+            >
+              <a-input-tag
+                v-model="formData.req_header_passthrough_list"
+                :placeholder="
+                  $t('model.placeholder.req_header_passthrough_list')
+                "
+                allow-clear
+                class="model-form-wide-input"
+              />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_enable_data_passthrough"
+              field="res_passthrough_params"
+              :label="$t('model.label.res_passthrough')"
+            >
+              <a-checkbox-group v-model="formData.res_passthrough_params">
+                <a-checkbox value="res_header">{{
+                  $t('dict.res_passthrough.res_header')
+                }}</a-checkbox>
+                <a-checkbox value="res_data">{{
+                  $t('dict.res_passthrough.res_data')
+                }}</a-checkbox>
+              </a-checkbox-group>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_data_passthrough &&
+                formData.res_passthrough_params.includes('res_header')
+              "
+              field="res_header_passthrough_mode"
+              :label="$t('model.label.res_header_passthrough_mode')"
+            >
+              <a-space size="large">
+                <a-radio
+                  v-model="formData.res_header_passthrough_mode"
+                  value="1"
+                  :default-checked="true"
+                >
+                  {{ $t('dict.passthrough_mode.1') }}
+                </a-radio>
+                <a-radio
+                  v-model="formData.res_header_passthrough_mode"
+                  value="2"
+                >
+                  {{ $t('dict.passthrough_mode.2') }}
+                </a-radio>
+              </a-space>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_data_passthrough &&
+                formData.res_passthrough_params.includes('res_header') &&
+                formData.res_header_passthrough_mode === '2'
+              "
+              field="res_header_passthrough_list"
+              :label="$t('model.label.res_header_passthrough_list')"
+            >
+              <a-input-tag
+                v-model="formData.res_header_passthrough_list"
+                :placeholder="
+                  $t('model.placeholder.res_header_passthrough_list')
+                "
+                allow-clear
+                class="model-form-wide-input"
+              />
             </a-form-item>
             <a-form-item
               field="model_forward"
