@@ -877,13 +877,12 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import useLoading from '@/hooks/loading';
   import { FormInstance, Message, Modal } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
   import {
     SysConfigItem,
-    querySysConfigDetail,
     SysConfigUpdate,
     submitSysConfigUpdate,
     submitSysConfigReset,
@@ -891,9 +890,11 @@
   } from '@/api/sys_config';
   import ModelSelect from '@/components/model-select/index.vue';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
+  import { useSysConfig } from '../composables/use-sys-config';
 
   const { setLoading } = useLoading(true);
   const { t } = useI18n();
+  const { data: sysConfigData, refresh: refreshSysConfig } = useSysConfig();
 
   const configCardHeaderStyle = {
     padding: '16px',
@@ -962,7 +963,7 @@
       await submitSysConfigUpdate(configFormData.value);
       done();
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } catch (err) {
       done(false);
     } finally {
@@ -981,7 +982,7 @@
         action: sysConfigItem.action,
       });
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } finally {
       setLoading(false);
     }
@@ -995,7 +996,7 @@
         open: sysConfigItem.open || false,
       });
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } finally {
       setLoading(false);
     }
@@ -1003,95 +1004,98 @@
 
   const sysConfigItems = ref<SysConfigItem[]>({} as SysConfigItem[]);
 
-  const getSysConfigDetail = async () => {
-    const { data } = await querySysConfigDetail();
-    configFormData.value.quota_task = data.quota_task;
-    configFormData.value.statistics = data.statistics;
-    configFormData.value.video_task = data.video_task;
-    configFormData.value.file_task = data.file_task;
-    configFormData.value.batch_task = data.batch_task;
-    configFormData.value.reset_task = data.reset_task;
-    configFormData.value.model_agent_health_check_task =
-      data.model_agent_health_check_task;
-    configFormData.value.model_agent_session_keep_task =
-      data.model_agent_session_keep_task;
-    configFormData.value.notice = data.notice;
-    sysConfigItems.value = [
-      {
-        action: 'quota_task',
-        title: t('sys.config.item.title.quota_task'),
-        desc: t('sys.config.item.desc.quota_task'),
-        open: configFormData.value.quota_task.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'statistics',
-        title: t('sys.config.item.title.statistics'),
-        desc: t('sys.config.item.desc.statistics'),
-        open: configFormData.value.statistics.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'video_task',
-        title: t('sys.config.item.title.video_task'),
-        desc: t('sys.config.item.desc.video_task'),
-        open: configFormData.value.video_task.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'file_task',
-        title: t('sys.config.item.title.file_task'),
-        desc: t('sys.config.item.desc.file_task'),
-        open: configFormData.value.file_task.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'batch_task',
-        title: t('sys.config.item.title.batch_task'),
-        desc: t('sys.config.item.desc.batch_task'),
-        open: configFormData.value.batch_task.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'reset_task',
-        title: t('sys.config.item.title.reset_task'),
-        desc: t('sys.config.item.desc.reset_task'),
-        open: configFormData.value.reset_task.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'model_agent_health_check_task',
-        title: t('sys.config.item.title.model_agent_health_check_task'),
-        desc: t('sys.config.item.desc.model_agent_health_check_task'),
-        open: configFormData.value.model_agent_health_check_task.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'model_agent_session_keep_task',
-        title: t('sys.config.item.title.model_agent_session_keep_task'),
-        desc: t('sys.config.item.desc.model_agent_session_keep_task'),
-        open: configFormData.value.model_agent_session_keep_task.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'notice',
-        title: t('sys.config.item.title.notice'),
-        desc: t('sys.config.item.desc.notice'),
-        open: configFormData.value.notice.open,
-        config: true,
-        reset: true,
-      },
-    ];
-  };
-  getSysConfigDetail();
+  watch(
+    sysConfigData,
+    (data) => {
+      if (!data) return;
+      configFormData.value.quota_task = data.quota_task;
+      configFormData.value.statistics = data.statistics;
+      configFormData.value.video_task = data.video_task;
+      configFormData.value.file_task = data.file_task;
+      configFormData.value.batch_task = data.batch_task;
+      configFormData.value.reset_task = data.reset_task;
+      configFormData.value.model_agent_health_check_task =
+        data.model_agent_health_check_task;
+      configFormData.value.model_agent_session_keep_task =
+        data.model_agent_session_keep_task;
+      configFormData.value.notice = data.notice;
+      sysConfigItems.value = [
+        {
+          action: 'quota_task',
+          title: t('sys.config.item.title.quota_task'),
+          desc: t('sys.config.item.desc.quota_task'),
+          open: configFormData.value.quota_task.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'statistics',
+          title: t('sys.config.item.title.statistics'),
+          desc: t('sys.config.item.desc.statistics'),
+          open: configFormData.value.statistics.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'video_task',
+          title: t('sys.config.item.title.video_task'),
+          desc: t('sys.config.item.desc.video_task'),
+          open: configFormData.value.video_task.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'file_task',
+          title: t('sys.config.item.title.file_task'),
+          desc: t('sys.config.item.desc.file_task'),
+          open: configFormData.value.file_task.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'batch_task',
+          title: t('sys.config.item.title.batch_task'),
+          desc: t('sys.config.item.desc.batch_task'),
+          open: configFormData.value.batch_task.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'reset_task',
+          title: t('sys.config.item.title.reset_task'),
+          desc: t('sys.config.item.desc.reset_task'),
+          open: configFormData.value.reset_task.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'model_agent_health_check_task',
+          title: t('sys.config.item.title.model_agent_health_check_task'),
+          desc: t('sys.config.item.desc.model_agent_health_check_task'),
+          open: configFormData.value.model_agent_health_check_task.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'model_agent_session_keep_task',
+          title: t('sys.config.item.title.model_agent_session_keep_task'),
+          desc: t('sys.config.item.desc.model_agent_session_keep_task'),
+          open: configFormData.value.model_agent_session_keep_task.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'notice',
+          title: t('sys.config.item.title.notice'),
+          desc: t('sys.config.item.desc.notice'),
+          open: configFormData.value.notice.open,
+          config: true,
+          reset: true,
+        },
+      ];
+    },
+    { immediate: true }
+  );
 </script>
 
 <script lang="ts">

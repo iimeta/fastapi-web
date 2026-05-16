@@ -50,6 +50,9 @@
   import General from './components/general.vue';
   import Task from './components/task.vue';
   import API from './components/api.vue';
+  import { provideSysConfig } from './composables/use-sys-config';
+
+  provideSysConfig();
 
   const cardHeaderStyle = {
     padding: '20px',

@@ -264,21 +264,22 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import useLoading from '@/hooks/loading';
   import { FormInstance, Message, Modal } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
   import {
     SysConfigItem,
-    querySysConfigDetail,
     SysConfigUpdate,
     submitSysConfigUpdate,
     submitSysConfigReset,
     submitSysConfigChangeStatus,
   } from '@/api/sys_config';
+  import { useSysConfig } from '../composables/use-sys-config';
 
   const { setLoading } = useLoading(true);
   const { t } = useI18n();
+  const { data: sysConfigData, refresh: refreshSysConfig } = useSysConfig();
 
   const configCardHeaderStyle = {
     padding: '16px',
@@ -340,7 +341,7 @@
       await submitSysConfigUpdate(configFormData.value);
       done();
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } catch (err) {
       done(false);
     } finally {
@@ -359,7 +360,7 @@
         action: sysConfigItem.action,
       });
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } finally {
       setLoading(false);
     }
@@ -373,7 +374,7 @@
         open: sysConfigItem.open || false,
       });
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } finally {
       setLoading(false);
     }
@@ -381,46 +382,49 @@
 
   const sysConfigItems = ref<SysConfigItem[]>({} as SysConfigItem[]);
 
-  const getSysConfigDetail = async () => {
-    const { data } = await querySysConfigDetail();
-    configFormData.value.email = data.email;
-    configFormData.value.http = data.http;
-    configFormData.value.core = data.core;
-    configFormData.value.core.replace_error_prefixes =
-      configFormData.value.core.replace_error_prefixes?.join(',');
-    configFormData.value.debug = data.debug;
-    sysConfigItems.value = [
-      {
-        action: 'email',
-        title: t('sys.config.item.title.email'),
-        desc: t('sys.config.item.desc.email'),
-        open: configFormData.value.email.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'http',
-        title: t('sys.config.item.title.http'),
-        desc: t('sys.config.item.desc.http'),
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'core',
-        title: t('sys.config.item.title.core'),
-        desc: t('sys.config.item.desc.core'),
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'debug',
-        title: t('sys.config.item.title.debug'),
-        desc: t('sys.config.item.desc.debug'),
-        open: configFormData.value.debug.open,
-      },
-    ];
-  };
-  getSysConfigDetail();
+  watch(
+    sysConfigData,
+    (data) => {
+      if (!data) return;
+      configFormData.value.email = data.email;
+      configFormData.value.http = data.http;
+      configFormData.value.core = data.core;
+      configFormData.value.core.replace_error_prefixes =
+        configFormData.value.core.replace_error_prefixes?.join(',');
+      configFormData.value.debug = data.debug;
+      sysConfigItems.value = [
+        {
+          action: 'email',
+          title: t('sys.config.item.title.email'),
+          desc: t('sys.config.item.desc.email'),
+          open: configFormData.value.email.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'http',
+          title: t('sys.config.item.title.http'),
+          desc: t('sys.config.item.desc.http'),
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'core',
+          title: t('sys.config.item.title.core'),
+          desc: t('sys.config.item.desc.core'),
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'debug',
+          title: t('sys.config.item.title.debug'),
+          desc: t('sys.config.item.desc.debug'),
+          open: configFormData.value.debug.open,
+        },
+      ];
+    },
+    { immediate: true }
+  );
 </script>
 
 <script lang="ts">

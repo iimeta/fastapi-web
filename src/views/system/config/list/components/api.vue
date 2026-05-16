@@ -1154,7 +1154,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import useLoading from '@/hooks/loading';
   import { FormInstance, Message, Modal } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
@@ -1162,16 +1162,17 @@
     LogPrivacy,
     PrivacyLogFieldOption,
     SysConfigItem,
-    querySysConfigDetail,
     SysConfigUpdate,
     submitSysConfigUpdate,
     submitSysConfigReset,
     submitSysConfigRefresh,
     submitSysConfigChangeStatus,
   } from '@/api/sys_config';
+  import { useSysConfig } from '../composables/use-sys-config';
 
   const { setLoading } = useLoading(true);
   const { t } = useI18n();
+  const { data: sysConfigData, refresh: refreshSysConfig } = useSysConfig();
 
   const configCardHeaderStyle = {
     padding: '16px',
@@ -1330,7 +1331,7 @@
       await submitSysConfigUpdate(configFormData.value);
       done();
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } catch (err) {
       done(false);
     } finally {
@@ -1425,7 +1426,7 @@
         action: sysConfigItem.action,
       });
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } finally {
       setLoading(false);
     }
@@ -1438,7 +1439,7 @@
         action: sysConfigItem.action,
       });
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } finally {
       setLoading(false);
     }
@@ -1452,7 +1453,7 @@
         open: sysConfigItem.open || false,
       });
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } finally {
       setLoading(false);
     }
@@ -1460,115 +1461,118 @@
 
   const sysConfigItems = ref<SysConfigItem[]>({} as SysConfigItem[]);
 
-  const getSysConfigDetail = async () => {
-    const { data } = await querySysConfigDetail();
-    configFormData.value.base = data.base;
-    configFormData.value.log = data.log;
-    normalizeLogPrivacy();
-    configFormData.value.auto_disabled_error = data.auto_disabled_error;
-    configFormData.value.auto_enable_error = data.auto_enable_error;
-    configFormData.value.auto_retry_error = data.auto_retry_error;
-    configFormData.value.not_retry_error = data.not_retry_error;
-    configFormData.value.not_shield_error = data.not_shield_error;
-    configFormData.value.service_unavailable = data.service_unavailable;
-    configFormData.value.general_api = data.general_api;
-    configFormData.value.model_agent_session_keep =
-      data.model_agent_session_keep;
-    sysConfigItems.value = [
-      {
-        action: 'base',
-        title: t('sys.config.item.title.base'),
-        desc: t('sys.config.item.desc.base'),
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'log',
-        title: t('sys.config.item.title.log'),
-        desc: t('sys.config.item.desc.log'),
-        open: configFormData.value.log.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'model_agent_session_keep',
-        title: t('sys.config.item.title.model_agent_session_keep'),
-        desc: t('sys.config.item.desc.model_agent_session_keep'),
-        open: configFormData.value.model_agent_session_keep.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'auto_disabled_error',
-        title: t('sys.config.item.title.auto_disabled_error'),
-        desc: t('sys.config.item.desc.auto_disabled_error'),
-        open: configFormData.value.auto_disabled_error.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'auto_enable_error',
-        title: t('sys.config.item.title.auto_enable_error'),
-        desc: t('sys.config.item.desc.auto_enable_error'),
-        open: configFormData.value.auto_enable_error.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'auto_retry_error',
-        title: t('sys.config.item.title.auto_retry_error'),
-        desc: t('sys.config.item.desc.auto_retry_error'),
-        open: configFormData.value.auto_retry_error.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'not_retry_error',
-        title: t('sys.config.item.title.not_retry_error'),
-        desc: t('sys.config.item.desc.not_retry_error'),
-        open: configFormData.value.not_retry_error.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'not_shield_error',
-        title: t('sys.config.item.title.not_shield_error'),
-        desc: t('sys.config.item.desc.not_shield_error'),
-        open: configFormData.value.not_shield_error.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'reset_api_error',
-        title: t('sys.config.item.title.reset_api_error'),
-        desc: t('sys.config.item.desc.reset_api_error'),
-        reset: true,
-      },
-      {
-        action: 'refresh_api_cache',
-        title: t('sys.config.item.title.refresh_api_cache'),
-        desc: t('sys.config.item.desc.refresh_api_cache'),
-        refresh: true,
-      },
-      {
-        action: 'service_unavailable',
-        title: t('sys.config.item.title.service_unavailable'),
-        desc: t('sys.config.item.desc.service_unavailable'),
-        open: configFormData.value.service_unavailable.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'general_api',
-        title: t('sys.config.item.title.general_api'),
-        desc: t('sys.config.item.desc.general_api'),
-        open: configFormData.value.general_api.open,
-        config: true,
-        reset: true,
-      },
-    ];
-  };
-  getSysConfigDetail();
+  watch(
+    sysConfigData,
+    (data) => {
+      if (!data) return;
+      configFormData.value.base = data.base;
+      configFormData.value.log = data.log;
+      normalizeLogPrivacy();
+      configFormData.value.auto_disabled_error = data.auto_disabled_error;
+      configFormData.value.auto_enable_error = data.auto_enable_error;
+      configFormData.value.auto_retry_error = data.auto_retry_error;
+      configFormData.value.not_retry_error = data.not_retry_error;
+      configFormData.value.not_shield_error = data.not_shield_error;
+      configFormData.value.service_unavailable = data.service_unavailable;
+      configFormData.value.general_api = data.general_api;
+      configFormData.value.model_agent_session_keep =
+        data.model_agent_session_keep;
+      sysConfigItems.value = [
+        {
+          action: 'base',
+          title: t('sys.config.item.title.base'),
+          desc: t('sys.config.item.desc.base'),
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'log',
+          title: t('sys.config.item.title.log'),
+          desc: t('sys.config.item.desc.log'),
+          open: configFormData.value.log.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'model_agent_session_keep',
+          title: t('sys.config.item.title.model_agent_session_keep'),
+          desc: t('sys.config.item.desc.model_agent_session_keep'),
+          open: configFormData.value.model_agent_session_keep.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'auto_disabled_error',
+          title: t('sys.config.item.title.auto_disabled_error'),
+          desc: t('sys.config.item.desc.auto_disabled_error'),
+          open: configFormData.value.auto_disabled_error.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'auto_enable_error',
+          title: t('sys.config.item.title.auto_enable_error'),
+          desc: t('sys.config.item.desc.auto_enable_error'),
+          open: configFormData.value.auto_enable_error.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'auto_retry_error',
+          title: t('sys.config.item.title.auto_retry_error'),
+          desc: t('sys.config.item.desc.auto_retry_error'),
+          open: configFormData.value.auto_retry_error.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'not_retry_error',
+          title: t('sys.config.item.title.not_retry_error'),
+          desc: t('sys.config.item.desc.not_retry_error'),
+          open: configFormData.value.not_retry_error.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'not_shield_error',
+          title: t('sys.config.item.title.not_shield_error'),
+          desc: t('sys.config.item.desc.not_shield_error'),
+          open: configFormData.value.not_shield_error.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'reset_api_error',
+          title: t('sys.config.item.title.reset_api_error'),
+          desc: t('sys.config.item.desc.reset_api_error'),
+          reset: true,
+        },
+        {
+          action: 'refresh_api_cache',
+          title: t('sys.config.item.title.refresh_api_cache'),
+          desc: t('sys.config.item.desc.refresh_api_cache'),
+          refresh: true,
+        },
+        {
+          action: 'service_unavailable',
+          title: t('sys.config.item.title.service_unavailable'),
+          desc: t('sys.config.item.desc.service_unavailable'),
+          open: configFormData.value.service_unavailable.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'general_api',
+          title: t('sys.config.item.title.general_api'),
+          desc: t('sys.config.item.desc.general_api'),
+          open: configFormData.value.general_api.open,
+          config: true,
+          reset: true,
+        },
+      ];
+    },
+    { immediate: true }
+  );
 
   const handleAutoDisabledErrorAdd = () => {
     configFormData.value.auto_disabled_error.errors.push('');

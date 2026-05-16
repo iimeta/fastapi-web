@@ -668,7 +668,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import useLoading from '@/hooks/loading';
   import { FormInstance, Message, Modal } from '@arco-design/web-vue';
   import { useI18n } from 'vue-i18n';
@@ -676,16 +676,17 @@
   import { queryProviderList, ProviderList } from '@/api/provider';
   import {
     SysConfigItem,
-    querySysConfigDetail,
     SysConfigUpdate,
     submitSysConfigUpdate,
     submitSysConfigReset,
     submitSysConfigChangeStatus,
   } from '@/api/sys_config';
+  import { useSysConfig } from '../composables/use-sys-config';
 
   const { setLoading } = useLoading(true);
   const { t } = useI18n();
   const appStore = useAppStore();
+  const { data: sysConfigData, refresh: refreshSysConfig } = useSysConfig();
 
   const configCardHeaderStyle = {
     padding: '16px',
@@ -782,7 +783,7 @@
       await submitSysConfigUpdate(configFormData.value);
       done();
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } catch (err) {
       done(false);
     } finally {
@@ -840,7 +841,7 @@
         action: sysConfigItem.action,
       });
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } finally {
       setLoading(false);
     }
@@ -854,7 +855,7 @@
         open: sysConfigItem.open || false,
       });
       Message.success(t('success.operate'));
-      getSysConfigDetail();
+      refreshSysConfig();
     } finally {
       setLoading(false);
     }
@@ -862,79 +863,83 @@
 
   const sysConfigItems = ref<SysConfigItem[]>({} as SysConfigItem[]);
 
-  const getSysConfigDetail = async () => {
-    const { data } = await querySysConfigDetail();
-    configFormData.value.user_login_register = data.user_login_register;
-    configFormData.value.user_shield_error = data.user_shield_error;
-    configFormData.value.reseller_login_register = data.reseller_login_register;
-    configFormData.value.reseller_shield_error = data.reseller_shield_error;
-    configFormData.value.admin_login = data.admin_login;
-    configFormData.value.quota = data.quota;
-    configFormData.value.ticket = data.ticket;
-    configFormData.value.test = data.test;
-    sysConfigItems.value = [
-      {
-        action: 'user_login_register',
-        title: t('sys.config.item.title.user_login_register'),
-        desc: t('sys.config.item.desc.user_login_register'),
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'user_shield_error',
-        title: t('sys.config.item.title.user_shield_error'),
-        desc: t('sys.config.item.desc.user_shield_error'),
-        open: configFormData.value.user_shield_error.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'reseller_login_register',
-        title: t('sys.config.item.title.reseller_login_register'),
-        desc: t('sys.config.item.desc.reseller_login_register'),
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'reseller_shield_error',
-        title: t('sys.config.item.title.reseller_shield_error'),
-        desc: t('sys.config.item.desc.reseller_shield_error'),
-        open: configFormData.value.reseller_shield_error.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'admin_login',
-        title: t('sys.config.item.title.admin_login'),
-        desc: t('sys.config.item.desc.admin_login'),
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'quota',
-        title: t('sys.config.item.title.quota'),
-        desc: t('sys.config.item.desc.quota'),
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'ticket',
-        title: t('sys.config.item.title.ticket'),
-        desc: t('sys.config.item.desc.ticket'),
-        open: configFormData.value.ticket.open,
-        config: true,
-        reset: true,
-      },
-      {
-        action: 'test',
-        title: t('sys.config.item.title.test'),
-        desc: t('sys.config.item.desc.test'),
-        config: true,
-        reset: true,
-      },
-    ];
-  };
-  getSysConfigDetail();
+  watch(
+    sysConfigData,
+    (data) => {
+      if (!data) return;
+      configFormData.value.user_login_register = data.user_login_register;
+      configFormData.value.user_shield_error = data.user_shield_error;
+      configFormData.value.reseller_login_register =
+        data.reseller_login_register;
+      configFormData.value.reseller_shield_error = data.reseller_shield_error;
+      configFormData.value.admin_login = data.admin_login;
+      configFormData.value.quota = data.quota;
+      configFormData.value.ticket = data.ticket;
+      configFormData.value.test = data.test;
+      sysConfigItems.value = [
+        {
+          action: 'user_login_register',
+          title: t('sys.config.item.title.user_login_register'),
+          desc: t('sys.config.item.desc.user_login_register'),
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'user_shield_error',
+          title: t('sys.config.item.title.user_shield_error'),
+          desc: t('sys.config.item.desc.user_shield_error'),
+          open: configFormData.value.user_shield_error.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'reseller_login_register',
+          title: t('sys.config.item.title.reseller_login_register'),
+          desc: t('sys.config.item.desc.reseller_login_register'),
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'reseller_shield_error',
+          title: t('sys.config.item.title.reseller_shield_error'),
+          desc: t('sys.config.item.desc.reseller_shield_error'),
+          open: configFormData.value.reseller_shield_error.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'admin_login',
+          title: t('sys.config.item.title.admin_login'),
+          desc: t('sys.config.item.desc.admin_login'),
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'quota',
+          title: t('sys.config.item.title.quota'),
+          desc: t('sys.config.item.desc.quota'),
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'ticket',
+          title: t('sys.config.item.title.ticket'),
+          desc: t('sys.config.item.desc.ticket'),
+          open: configFormData.value.ticket.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'test',
+          title: t('sys.config.item.title.test'),
+          desc: t('sys.config.item.desc.test'),
+          config: true,
+          reset: true,
+        },
+      ];
+    },
+    { immediate: true }
+  );
 
   const handleUserShieldErrorAdd = () => {
     configFormData.value.user_shield_error.errors.push('');
