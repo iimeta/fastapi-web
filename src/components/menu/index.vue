@@ -113,6 +113,9 @@
           title: 'menu.group.tasks_logs',
           icon: 'lucide-list-checks',
           order: 70,
+          roleOrders: {
+            admin: 42,
+          } as Record<string, number>,
           routes: ['task', 'log'],
         },
         {
