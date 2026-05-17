@@ -1,5 +1,13 @@
 <script lang="tsx">
-  import { defineComponent, ref, h, compile, computed } from 'vue';
+  import {
+    defineComponent,
+    ref,
+    h,
+    compile,
+    computed,
+    onMounted,
+    onBeforeUnmount,
+  } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useRoute, useRouter, RouteRecordRaw } from 'vue-router';
   import type { RouteMeta } from 'vue-router';
@@ -32,6 +40,10 @@
       const selectedKey = ref<string[]>([]);
 
       // 菜单分组配置
+      // defaultCollapsed: 控制分组默认是否收起
+      //   - boolean: 对所有角色生效
+      //   - Record<string, boolean>: 按角色配置, 如 { admin: true, user: false }
+      //   - 未配置时默认展开
       const menuGroups = [
         {
           title: '',
@@ -53,6 +65,9 @@
             admin: 45,
           } as Record<string, number>,
           routes: ['model_square', 'group_square'],
+          defaultCollapsed: {
+            admin: true,
+          },
         },
         {
           title: 'menu.group.data_operations',
@@ -65,6 +80,9 @@
           icon: 'lucide-layout-grid',
           order: 50,
           routes: ['app', 'app_key'],
+          defaultCollapsed: {
+            admin: true,
+          },
         },
         {
           title: 'menu.group.invite',
@@ -78,12 +96,18 @@
             'ManageInviteRewards',
             'ManageInviteApply',
           ],
+          defaultCollapsed: {
+            admin: true,
+          },
         },
         {
           title: 'menu.group.finance',
           icon: 'lucide-banknote',
           order: 60,
           routes: ['BillList', 'DealRecordList'],
+          defaultCollapsed: {
+            admin: true,
+          },
         },
         {
           title: 'menu.group.tasks_logs',
@@ -96,6 +120,9 @@
           icon: 'lucide-headset',
           order: 75,
           routes: ['TicketCreate', 'TicketMyList', 'TicketList'],
+          defaultCollapsed: {
+            admin: true,
+          },
         },
         {
           title: 'menu.group.system_config',
@@ -104,6 +131,117 @@
           routes: ['user', 'notice', 'sys'],
         },
       ];
+
+      // 解析分组的默认收起状态
+      const getDefaultCollapsed = (group: (typeof menuGroups)[number]) => {
+        const dc = (group as any).defaultCollapsed;
+        if (dc === undefined || dc === null) return false;
+        if (typeof dc === 'boolean') return dc;
+        if (typeof dc === 'object') {
+          const roleVal = dc[userStore.role];
+          return roleVal !== undefined ? roleVal : false;
+        }
+        return false;
+      };
+
+      // 记录每个分组的收起状态, key 为 group.title
+      const collapsedGroups = ref<Record<string, boolean>>({});
+
+      // 初始化收起状态
+      const initCollapsedState = () => {
+        const state: Record<string, boolean> = {};
+        menuGroups.forEach((group) => {
+          if (group.title) {
+            state[group.title] = getDefaultCollapsed(group);
+          }
+        });
+        collapsedGroups.value = state;
+      };
+      initCollapsedState();
+
+      const toggleGroup = (groupTitle: string) => {
+        collapsedGroups.value[groupTitle] = !collapsedGroups.value[groupTitle];
+      };
+
+      // 原生事件委托处理分组标题点击和hover
+      const menuRef = ref<HTMLElement | null>(null);
+
+      const findGroupEl = (target: HTMLElement) => {
+        if (
+          target.closest('.arco-menu-item') ||
+          target.closest('.arco-menu-inline-header') ||
+          target.closest('.arco-menu-pop-header')
+        ) {
+          return null;
+        }
+        return target.closest('.menu-group--collapsible') as HTMLElement | null;
+      };
+
+      const handleMenuClick = (e: MouseEvent) => {
+        const groupEl = findGroupEl(e.target as HTMLElement);
+        if (!groupEl) return;
+        const titleEl = groupEl.querySelector(
+          '.arco-menu-group-title'
+        ) as HTMLElement | null;
+        if (!titleEl) return;
+        const keyEl = titleEl.querySelector(
+          '[data-group-key]'
+        ) as HTMLElement | null;
+        if (!keyEl) return;
+        const groupKey = keyEl.getAttribute('data-group-key');
+        if (groupKey) {
+          e.stopPropagation();
+          e.preventDefault();
+          toggleGroup(groupKey);
+        }
+      };
+
+      let lastHoverGroup: HTMLElement | null = null;
+      let lastHoverTitle: HTMLElement | null = null;
+      const handleMouseOver = (e: MouseEvent) => {
+        const groupEl = findGroupEl(e.target as HTMLElement);
+        if (groupEl === lastHoverGroup) return;
+        if (lastHoverTitle) {
+          lastHoverTitle.classList.remove('menu-group-title--hover');
+        }
+        if (lastHoverGroup) {
+          lastHoverGroup.style.cursor = '';
+        }
+        lastHoverGroup = groupEl;
+        if (groupEl) {
+          const titleEl = groupEl.querySelector(
+            '.arco-menu-group-title'
+          ) as HTMLElement | null;
+          lastHoverTitle = titleEl;
+          if (titleEl) {
+            titleEl.classList.add('menu-group-title--hover');
+          }
+          groupEl.style.cursor = 'pointer';
+        } else {
+          lastHoverTitle = null;
+        }
+      };
+      const handleMouseLeave = () => {
+        if (lastHoverTitle) {
+          lastHoverTitle.classList.remove('menu-group-title--hover');
+          lastHoverTitle = null;
+        }
+        if (lastHoverGroup) {
+          lastHoverGroup.style.cursor = '';
+          lastHoverGroup = null;
+        }
+      };
+
+      onMounted(() => {
+        menuRef.value?.addEventListener('click', handleMenuClick, true);
+        menuRef.value?.addEventListener('mouseover', handleMouseOver);
+        menuRef.value?.addEventListener('mouseleave', handleMouseLeave);
+      });
+      onBeforeUnmount(() => {
+        menuRef.value?.removeEventListener('click', handleMenuClick, true);
+        menuRef.value?.removeEventListener('mouseover', handleMouseOver);
+        menuRef.value?.removeEventListener('mouseleave', handleMouseLeave);
+      });
 
       const goto = (item: RouteRecordRaw) => {
         if (regexUrl.test(item.path)) {
@@ -250,9 +388,42 @@
               <div class="menu-divider" key={`divider-${index}`}></div>
             );
           }
+
+          const isCollapsible = !!group.title;
+          const isGroupCollapsed =
+            isCollapsible && collapsedGroups.value[group.title];
+
           groupNodes.push(
-            <a-menu-item-group key={`group-${index}`} title={t(group.title)}>
-              {travel(group.routes)}
+            <a-menu-item-group
+              key={`group-${index}`}
+              class={[
+                {
+                  'menu-group--collapsible': isCollapsible,
+                },
+              ]}
+              v-slots={{
+                title: () =>
+                  isCollapsible ? (
+                    <span class="menu-group-title" data-group-key={group.title}>
+                      <span class="menu-group-title__text">
+                        {t(group.title)}
+                      </span>
+                      <span
+                        class={[
+                          'menu-group-title__arrow',
+                          {
+                            'menu-group-title__arrow--collapsed':
+                              isGroupCollapsed,
+                          },
+                        ]}
+                      ></span>
+                    </span>
+                  ) : (
+                    ''
+                  ),
+              }}
+            >
+              {isGroupCollapsed ? null : travel(group.routes)}
             </a-menu-item-group>
           );
         });
@@ -261,20 +432,22 @@
       };
 
       return () => (
-        <a-menu
-          mode={topMenu.value ? 'horizontal' : 'vertical'}
-          v-model:collapsed={collapsed.value}
-          v-model:open-keys={openKeys.value}
-          show-collapse-button={appStore.device !== 'mobile'}
-          auto-open={true}
-          selected-keys={selectedKey.value}
-          auto-open-selected={true}
-          level-indent={20}
-          style="height: 100%;width:100%;"
-          onCollapse={setCollapse}
-        >
-          {renderSubMenu()}
-        </a-menu>
+        <div ref={menuRef} style="height: 100%;width:100%;">
+          <a-menu
+            mode={topMenu.value ? 'horizontal' : 'vertical'}
+            v-model:collapsed={collapsed.value}
+            v-model:open-keys={openKeys.value}
+            show-collapse-button={appStore.device !== 'mobile'}
+            auto-open={true}
+            selected-keys={selectedKey.value}
+            auto-open-selected={true}
+            level-indent={20}
+            style="height: 100%;width:100%;"
+            onCollapse={setCollapse}
+          >
+            {renderSubMenu()}
+          </a-menu>
+        </div>
       );
     },
   });
@@ -295,6 +468,59 @@
 </style>
 
 <style lang="less">
+  // 可收缩分组
+  .arco-menu .menu-group--collapsible.arco-menu-group {
+    > .arco-menu-group-title {
+      user-select: none;
+      border-radius: 6px;
+
+      &.menu-group-title--hover {
+        background: rgba(var(--primary-6), 0.08);
+      }
+    }
+  }
+
+  .menu-group-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    &__text {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &__arrow {
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+      flex-shrink: 0;
+
+      &::before {
+        content: '';
+        display: block;
+        width: 0;
+        height: 0;
+        border-left: 4.5px solid transparent;
+        border-right: 4.5px solid transparent;
+        border-top: 5px solid var(--color-text-3);
+      }
+
+      &--collapsed::before {
+        border-left: 5px solid var(--color-text-3);
+        border-right: 0;
+        border-top: 4.5px solid transparent;
+        border-bottom: 4.5px solid transparent;
+      }
+    }
+  }
+
   .arco-menu {
     background: transparent;
     font-size: 12px;
