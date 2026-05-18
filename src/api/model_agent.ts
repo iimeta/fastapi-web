@@ -1,13 +1,31 @@
 import axios from 'axios';
 import qs from 'query-string';
 
+export interface SessionKeepKeySource {
+  type: string;
+  key: string;
+}
+
+export interface SessionKeepRule {
+  name: string;
+  model_regex: string[];
+  path_regex: string[];
+  key_sources: SessionKeepKeySource[];
+  transform: string;
+  model_regex_str?: string;
+  path_regex_str?: string;
+}
+
 export interface ModelAgentSessionKeep {
+  mode: any;
   ttl: any;
   fail_ttl: any;
   fail_switch_threshold: any;
   user_limit: any;
   agent_limit: any;
   global_limit: any;
+  rules: SessionKeepRule[];
+  enable_system_prompt_hash: any;
 }
 
 export interface ModelAgentBaseInfo {

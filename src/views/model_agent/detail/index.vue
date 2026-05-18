@@ -95,6 +95,55 @@
       </a-descriptions-item>
       <a-descriptions-item
         v-if="currentData.is_enable_session_keep"
+        :label="$t('model.agent.label.session_keep_mode')"
+      >
+        <span>{{ currentData?.session_keep_config?.mode || '-' }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        v-if="
+          currentData.is_enable_session_keep &&
+          currentData?.session_keep_config?.mode === 'rule'
+        "
+        :label="$t('model.agent.label.session_keep_enable_system_prompt_hash')"
+      >
+        <span>{{
+          $t(
+            `dict.${
+              currentData?.session_keep_config?.enable_system_prompt_hash ||
+              false
+            }`
+          )
+        }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        v-if="
+          currentData.is_enable_session_keep &&
+          currentData?.session_keep_config?.mode === 'rule' &&
+          currentData?.session_keep_config?.rules?.length > 0
+        "
+        :label="$t('model.agent.label.session_keep_rules')"
+      >
+        <div>
+          <div
+            v-for="(rule, idx) in currentData.session_keep_config.rules"
+            :key="idx"
+            style="margin-bottom: 4px"
+          >
+            <a-tag>{{ rule.name }}</a-tag>
+            <span v-if="rule.transform && rule.transform !== 'none'">
+              [{{ rule.transform }}]
+            </span>
+            <span v-if="rule.path_regex?.length">
+              path: {{ rule.path_regex.join(', ') }}
+            </span>
+            <span v-if="rule.model_regex?.length">
+              model: {{ rule.model_regex.join(', ') }}
+            </span>
+          </div>
+        </div>
+      </a-descriptions-item>
+      <a-descriptions-item
+        v-if="currentData.is_enable_session_keep"
         :label="$t('model.agent.label.session_keep_ttl')"
       >
         <a-skeleton v-if="loading" :animation="true">

@@ -247,14 +247,32 @@ export interface ModelAgentHealthCheckTask {
   key: string;
 }
 
+export interface SessionKeepKeySource {
+  type: string;
+  key: string;
+}
+
+export interface SessionKeepRule {
+  name: string;
+  model_regex: string[];
+  path_regex: string[];
+  key_sources: SessionKeepKeySource[];
+  transform: string;
+  model_regex_str?: string;
+  path_regex_str?: string;
+}
+
 export interface ModelAgentSessionKeep {
   open: boolean;
+  mode: string;
   ttl: number;
   fail_ttl: number;
   fail_switch_threshold: number;
   user_limit: number;
   agent_limit: number;
   global_limit: number;
+  rules: SessionKeepRule[];
+  enable_system_prompt_hash: boolean;
 }
 
 export interface ModelAgentSessionKeepTask {

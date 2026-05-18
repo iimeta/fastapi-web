@@ -78,7 +78,7 @@
           : configFormData.action === 'log'
           ? 728
           : configFormData.action === 'model_agent_session_keep'
-          ? 588
+          ? 780
           : 728
       "
       :body-style="configModalBodyStyle"
@@ -1022,6 +1022,214 @@
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'model_agent_session_keep'"
+          field="model_agent_session_keep.mode"
+          :label="$t('sys.config.label.session_keep_mode')"
+        >
+          <a-radio-group v-model="configFormData.model_agent_session_keep.mode">
+            <a-radio value="user">{{
+              $t('sys.config.label.session_keep_mode_user')
+            }}</a-radio>
+            <a-radio value="rule">{{
+              $t('sys.config.label.session_keep_mode_rule')
+            }}</a-radio>
+          </a-radio-group>
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'model_agent_session_keep' &&
+            configFormData.model_agent_session_keep.mode === 'rule'
+          "
+          field="model_agent_session_keep.enable_system_prompt_hash"
+          :label="$t('sys.config.label.session_keep_enable_system_prompt_hash')"
+        >
+          <a-switch
+            v-model="
+              configFormData.model_agent_session_keep.enable_system_prompt_hash
+            "
+          />
+        </a-form-item>
+        <a-form-item
+          v-for="(rule, ruleIndex) in configFormData.model_agent_session_keep
+            .rules"
+          v-show="
+            configFormData.action === 'model_agent_session_keep' &&
+            configFormData.model_agent_session_keep.mode === 'rule'
+          "
+          :key="ruleIndex"
+          :label="`${ruleIndex + 1}.`"
+          :label-col-style="fieldLabelColStyle"
+        >
+          <div class="rule-row-wrap">
+            <div class="rule-row">
+              <a-input
+                v-model="rule.name"
+                :placeholder="
+                  $t('sys.config.placeholder.session_keep_rule_name')
+                "
+                allow-clear
+                class="field-input field-input-rule-name"
+              />
+              <a-select
+                v-model="rule.transform"
+                :placeholder="
+                  $t('sys.config.label.session_keep_rule_transform')
+                "
+                allow-clear
+                class="field-input field-input-rule-transform"
+              >
+                <a-option value="none">none</a-option>
+                <a-option value="md5">md5</a-option>
+                <a-option value="prefix:8">prefix:8</a-option>
+                <a-option value="prefix:16">prefix:16</a-option>
+              </a-select>
+              <a-input
+                v-model="rule.model_regex_str"
+                :placeholder="
+                  $t('sys.config.placeholder.session_keep_rule_model_regex')
+                "
+                allow-clear
+                class="field-input field-input-rule-regex"
+                @change="
+                  rule.model_regex = rule.model_regex_str
+                    ? rule.model_regex_str
+                        .split(',')
+                        .map((s) => s.trim())
+                        .filter((s) => s)
+                    : []
+                "
+              />
+              <a-input
+                v-model="rule.path_regex_str"
+                :placeholder="
+                  $t('sys.config.placeholder.session_keep_rule_path_regex')
+                "
+                allow-clear
+                class="field-input field-input-rule-regex"
+                @change="
+                  rule.path_regex = rule.path_regex_str
+                    ? rule.path_regex_str
+                        .split(',')
+                        .map((s) => s.trim())
+                        .filter((s) => s)
+                    : []
+                "
+              />
+            </div>
+            <div class="rule-row">
+              <div
+                v-for="(src, srcIndex) in rule.key_sources"
+                :key="srcIndex"
+                class="rule-key-source-row"
+              >
+                <a-select
+                  v-model="src.type"
+                  class="field-input field-input-rule-src-type"
+                >
+                  <a-option value="body">body</a-option>
+                  <a-option value="header">header</a-option>
+                </a-select>
+                <a-input
+                  v-model="src.key"
+                  :placeholder="
+                    $t(
+                      'sys.config.placeholder.session_keep_rule_key_source_key'
+                    )
+                  "
+                  allow-clear
+                  class="field-input field-input-rule-src-key"
+                />
+                <a-button
+                  type="primary"
+                  shape="circle"
+                  size="small"
+                  class="field-action-button"
+                  @click="rule.key_sources.push({ type: 'body', key: '' })"
+                >
+                  <icon-plus />
+                </a-button>
+                <a-button
+                  type="secondary"
+                  shape="circle"
+                  size="small"
+                  @click="rule.key_sources.splice(srcIndex, 1)"
+                >
+                  <icon-minus />
+                </a-button>
+              </div>
+              <a-button
+                v-if="!rule.key_sources.length"
+                type="text"
+                size="small"
+                @click="rule.key_sources.push({ type: 'body', key: '' })"
+              >
+                <icon-plus />
+                {{ $t('sys.config.label.session_keep_rule_add_key_source') }}
+              </a-button>
+            </div>
+          </div>
+          <div class="rule-actions">
+            <a-button
+              type="primary"
+              shape="circle"
+              class="field-action-button"
+              @click="
+                configFormData.model_agent_session_keep.rules.push({
+                  name: '',
+                  model_regex: [],
+                  model_regex_str: '',
+                  path_regex: [],
+                  path_regex_str: '',
+                  key_sources: [{ type: 'body', key: '' }],
+                  transform: 'none',
+                })
+              "
+            >
+              <icon-plus />
+            </a-button>
+            <a-button
+              type="secondary"
+              shape="circle"
+              @click="
+                configFormData.model_agent_session_keep.rules.splice(
+                  ruleIndex,
+                  1
+                )
+              "
+            >
+              <icon-minus />
+            </a-button>
+          </div>
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'model_agent_session_keep' &&
+            configFormData.model_agent_session_keep.mode === 'rule' &&
+            (!configFormData.model_agent_session_keep.rules ||
+              configFormData.model_agent_session_keep.rules.length === 0)
+          "
+          :label="$t('sys.config.label.session_keep_rules')"
+        >
+          <a-button
+            type="dashed"
+            long
+            @click="
+              configFormData.model_agent_session_keep.rules.push({
+                name: '',
+                model_regex: [],
+                model_regex_str: '',
+                path_regex: [],
+                path_regex_str: '',
+                key_sources: [{ type: 'body', key: '' }],
+                transform: 'none',
+              })
+            "
+          >
+            <icon-plus />
+            {{ $t('sys.config.label.session_keep_rule_add') }}
+          </a-button>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'model_agent_session_keep'"
           field="model_agent_session_keep.ttl"
           :label="$t('sys.config.label.session_keep_ttl')"
           :rules="[
@@ -1280,6 +1488,23 @@
       configFormData.value.general_api.ip_whitelist.length === 0
     ) {
       handleGeneralApiAdd();
+    }
+    if (sysConfigItem.action === 'model_agent_session_keep') {
+      if (!configFormData.value.model_agent_session_keep.rules) {
+        configFormData.value.model_agent_session_keep.rules = [];
+      }
+      if (!configFormData.value.model_agent_session_keep.mode) {
+        configFormData.value.model_agent_session_keep.mode = 'user';
+      }
+      configFormData.value.model_agent_session_keep.rules.forEach(
+        (rule: any) => {
+          if (!rule.key_sources) rule.key_sources = [];
+          if (!rule.model_regex) rule.model_regex = [];
+          if (!rule.path_regex) rule.path_regex = [];
+          rule.model_regex_str = rule.model_regex.join(', ');
+          rule.path_regex_str = rule.path_regex.join(', ');
+        }
+      );
     }
     configTitle.value = t(`sys.config.item.title.${sysConfigItem.action}`);
     configFormData.value.action = sysConfigItem.action;
@@ -1722,5 +1947,52 @@
 
   .field-action-button {
     margin-right: 5px;
+  }
+
+  .field-input-rule-name {
+    width: 18%;
+  }
+
+  .field-input-rule-transform {
+    width: 12%;
+  }
+
+  .field-input-rule-regex {
+    width: 28%;
+  }
+
+  .field-input-rule-src-type {
+    width: 100px;
+  }
+
+  .field-input-rule-src-key {
+    width: 200px;
+  }
+
+  .rule-row-wrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 5px;
+  }
+
+  .rule-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .rule-key-source-row {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  .rule-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 10px;
+    flex-shrink: 0;
   }
 </style>

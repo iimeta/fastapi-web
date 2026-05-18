@@ -224,6 +224,228 @@
             </a-form-item>
             <a-form-item
               v-if="formData.is_enable_session_keep"
+              field="session_keep_config.mode"
+              :label="$t('model.agent.label.session_keep_mode')"
+            >
+              <a-radio-group v-model="formData.session_keep_config.mode">
+                <a-radio value="user">{{
+                  $t('model.agent.label.session_keep_mode_user')
+                }}</a-radio>
+                <a-radio value="rule">{{
+                  $t('model.agent.label.session_keep_mode_rule')
+                }}</a-radio>
+              </a-radio-group>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_session_keep &&
+                formData.session_keep_config.mode === 'rule'
+              "
+              field="session_keep_config.enable_system_prompt_hash"
+              :label="
+                $t('model.agent.label.session_keep_enable_system_prompt_hash')
+              "
+            >
+              <a-switch
+                v-model="formData.session_keep_config.enable_system_prompt_hash"
+              />
+            </a-form-item>
+            <a-form-item
+              v-for="(rule, ruleIndex) in formData.session_keep_config.rules"
+              v-show="
+                formData.is_enable_session_keep &&
+                formData.session_keep_config.mode === 'rule'
+              "
+              :key="ruleIndex"
+              :label="`${ruleIndex + 1}.`"
+            >
+              <div
+                style="display: flex; flex-direction: column; flex: 1; gap: 5px"
+              >
+                <div style="display: flex; align-items: center">
+                  <a-input
+                    v-model="rule.name"
+                    :placeholder="
+                      $t('model.agent.placeholder.session_keep_rule_name')
+                    "
+                    allow-clear
+                    style="width: 18%; margin-right: 5px"
+                  />
+                  <a-select
+                    v-model="rule.transform"
+                    :placeholder="
+                      $t('model.agent.label.session_keep_rule_transform')
+                    "
+                    allow-clear
+                    style="width: 12%; margin-right: 5px"
+                  >
+                    <a-option value="none">none</a-option>
+                    <a-option value="md5">md5</a-option>
+                    <a-option value="prefix:8">prefix:8</a-option>
+                    <a-option value="prefix:16">prefix:16</a-option>
+                  </a-select>
+                  <a-input
+                    v-model="rule.model_regex_str"
+                    :placeholder="
+                      $t(
+                        'model.agent.placeholder.session_keep_rule_model_regex'
+                      )
+                    "
+                    allow-clear
+                    style="width: 28%; margin-right: 5px"
+                    @change="
+                      rule.model_regex = rule.model_regex_str
+                        ? rule.model_regex_str
+                            .split(',')
+                            .map((s) => s.trim())
+                            .filter((s) => s)
+                        : []
+                    "
+                  />
+                  <a-input
+                    v-model="rule.path_regex_str"
+                    :placeholder="
+                      $t('model.agent.placeholder.session_keep_rule_path_regex')
+                    "
+                    allow-clear
+                    style="width: 28%; margin-right: 5px"
+                    @change="
+                      rule.path_regex = rule.path_regex_str
+                        ? rule.path_regex_str
+                            .split(',')
+                            .map((s) => s.trim())
+                            .filter((s) => s)
+                        : []
+                    "
+                  />
+                </div>
+                <div
+                  style="display: flex; align-items: center; flex-wrap: wrap"
+                >
+                  <div
+                    v-for="(src, srcIndex) in rule.key_sources"
+                    :key="srcIndex"
+                    style="
+                      display: flex;
+                      align-items: center;
+                      margin-right: 10px;
+                    "
+                  >
+                    <a-select
+                      v-model="src.type"
+                      style="width: 100px; margin-right: 5px"
+                    >
+                      <a-option value="body">body</a-option>
+                      <a-option value="header">header</a-option>
+                    </a-select>
+                    <a-input
+                      v-model="src.key"
+                      :placeholder="
+                        $t(
+                          'model.agent.placeholder.session_keep_rule_key_source_key'
+                        )
+                      "
+                      allow-clear
+                      style="width: 200px; margin-right: 5px"
+                    />
+                    <a-button
+                      type="primary"
+                      shape="circle"
+                      size="small"
+                      style="margin-right: 5px"
+                      @click="rule.key_sources.push({ type: 'body', key: '' })"
+                    >
+                      <icon-plus />
+                    </a-button>
+                    <a-button
+                      type="secondary"
+                      shape="circle"
+                      size="small"
+                      @click="rule.key_sources.splice(srcIndex, 1)"
+                    >
+                      <icon-minus />
+                    </a-button>
+                  </div>
+                  <a-button
+                    v-if="!rule.key_sources.length"
+                    type="text"
+                    size="small"
+                    @click="rule.key_sources.push({ type: 'body', key: '' })"
+                  >
+                    <icon-plus />
+                    {{
+                      $t('model.agent.label.session_keep_rule_add_key_source')
+                    }}
+                  </a-button>
+                </div>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 5px;
+                  margin-left: 10px;
+                  flex-shrink: 0;
+                "
+              >
+                <a-button
+                  type="primary"
+                  shape="circle"
+                  @click="
+                    formData.session_keep_config.rules.push({
+                      name: '',
+                      model_regex: [],
+                      model_regex_str: '',
+                      path_regex: [],
+                      path_regex_str: '',
+                      key_sources: [{ type: 'body', key: '' }],
+                      transform: 'none',
+                    })
+                  "
+                >
+                  <icon-plus />
+                </a-button>
+                <a-button
+                  type="secondary"
+                  shape="circle"
+                  @click="
+                    formData.session_keep_config.rules.splice(ruleIndex, 1)
+                  "
+                >
+                  <icon-minus />
+                </a-button>
+              </div>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_session_keep &&
+                formData.session_keep_config.mode === 'rule' &&
+                (!formData.session_keep_config.rules ||
+                  formData.session_keep_config.rules.length === 0)
+              "
+              :label="$t('model.agent.label.session_keep_rules')"
+            >
+              <a-button
+                type="dashed"
+                long
+                @click="
+                  formData.session_keep_config.rules.push({
+                    name: '',
+                    model_regex: [],
+                    model_regex_str: '',
+                    path_regex: [],
+                    path_regex_str: '',
+                    key_sources: [{ type: 'body', key: '' }],
+                    transform: 'none',
+                  })
+                "
+              >
+                <icon-plus />
+                {{ $t('model.agent.label.session_keep_rule_add') }}
+              </a-button>
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_enable_session_keep"
               field="session_keep_config.ttl"
               :label="$t('model.agent.label.session_keep_ttl')"
             >
@@ -572,12 +794,15 @@
     is_enable_health_check: false,
     is_enable_session_keep: false,
     session_keep_config: {
+      mode: ref('user'),
       ttl: ref(),
       fail_ttl: ref(),
       fail_switch_threshold: ref(),
       user_limit: ref(),
       agent_limit: ref(),
       global_limit: ref(),
+      rules: [],
+      enable_system_prompt_hash: ref(false),
     },
     is_remove_abnormal_model: true,
     is_never_disable: false,
