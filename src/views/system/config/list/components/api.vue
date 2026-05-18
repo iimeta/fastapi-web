@@ -78,7 +78,7 @@
           : configFormData.action === 'log'
           ? 728
           : configFormData.action === 'model_agent_session_keep'
-          ? 780
+          ? 1080
           : 728
       "
       :body-style="configModalBodyStyle"
@@ -1024,29 +1024,20 @@
           v-if="configFormData.action === 'model_agent_session_keep'"
           field="model_agent_session_keep.mode"
           :label="$t('sys.config.label.session_keep_mode')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
         >
           <a-radio-group v-model="configFormData.model_agent_session_keep.mode">
-            <a-radio value="user">{{
-              $t('sys.config.label.session_keep_mode_user')
-            }}</a-radio>
-            <a-radio value="rule">{{
-              $t('sys.config.label.session_keep_mode_rule')
-            }}</a-radio>
+            <a-radio value="rule">
+              {{ $t('sys.config.label.session_keep_mode_rule') }}
+            </a-radio>
+            <a-radio value="user">
+              {{ $t('sys.config.label.session_keep_mode_user') }}
+            </a-radio>
           </a-radio-group>
-        </a-form-item>
-        <a-form-item
-          v-if="
-            configFormData.action === 'model_agent_session_keep' &&
-            configFormData.model_agent_session_keep.mode === 'rule'
-          "
-          field="model_agent_session_keep.enable_system_prompt_hash"
-          :label="$t('sys.config.label.session_keep_enable_system_prompt_hash')"
-        >
-          <a-switch
-            v-model="
-              configFormData.model_agent_session_keep.enable_system_prompt_hash
-            "
-          />
         </a-form-item>
         <a-form-item
           v-for="(rule, ruleIndex) in configFormData.model_agent_session_keep
@@ -1075,7 +1066,8 @@
                   $t('sys.config.label.session_keep_rule_transform')
                 "
                 allow-clear
-                class="field-input field-input-rule-transform"
+                class="field-input"
+                style="flex: none; width: 15%; margin-right: 5px"
               >
                 <a-option value="none">none</a-option>
                 <a-option value="md5">md5</a-option>
@@ -1115,15 +1107,20 @@
                 "
               />
             </div>
-            <div class="rule-row">
+            <div>
               <div
                 v-for="(src, srcIndex) in rule.key_sources"
                 :key="srcIndex"
-                class="rule-key-source-row"
+                style="
+                  display: flex;
+                  align-items: center;
+                  margin-right: 10px;
+                  margin-bottom: 5px;
+                "
               >
                 <a-select
                   v-model="src.type"
-                  class="field-input field-input-rule-src-type"
+                  style="width: 18.2%; margin-right: 5px"
                 >
                   <a-option value="body">body</a-option>
                   <a-option value="header">header</a-option>
@@ -1136,13 +1133,13 @@
                     )
                   "
                   allow-clear
-                  class="field-input field-input-rule-src-key"
+                  style="width: 70%; margin-right: 8px"
                 />
                 <a-button
                   type="primary"
                   shape="circle"
                   size="small"
-                  class="field-action-button"
+                  style="margin-right: 5px"
                   @click="rule.key_sources.push({ type: 'body', key: '' })"
                 >
                   <icon-plus />
@@ -1355,6 +1352,20 @@
           >
             <template #append> {{ $t('unit.item') }} </template>
           </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'model_agent_session_keep' &&
+            configFormData.model_agent_session_keep.mode === 'rule'
+          "
+          field="model_agent_session_keep.enable_system_prompt_hash"
+          :label="$t('sys.config.label.session_keep_enable_system_prompt_hash')"
+        >
+          <a-switch
+            v-model="
+              configFormData.model_agent_session_keep.enable_system_prompt_hash
+            "
+          />
         </a-form-item>
       </a-form>
     </a-modal>
@@ -1950,23 +1961,13 @@
   }
 
   .field-input-rule-name {
+    flex: none;
     width: 18%;
   }
 
-  .field-input-rule-transform {
-    width: 12%;
-  }
-
   .field-input-rule-regex {
-    width: 28%;
-  }
-
-  .field-input-rule-src-type {
-    width: 100px;
-  }
-
-  .field-input-rule-src-key {
-    width: 200px;
+    flex: none;
+    width: 32%;
   }
 
   .rule-row-wrap {
@@ -1979,13 +1980,6 @@
   .rule-row {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-  }
-
-  .rule-key-source-row {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
   }
 
   .rule-actions {

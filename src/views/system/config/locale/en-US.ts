@@ -241,7 +241,7 @@ export default {
   'sys.config.label.session_keep_rule_add_key_source': 'Add Key Source',
   'sys.config.label.session_keep_rule_transform': 'Transform',
   'sys.config.label.session_keep_enable_system_prompt_hash': 'SystemPrompt Hash Fallback',
-  'sys.config.placeholder.session_keep_rule_name': 'Please enter rule name',
+  'sys.config.placeholder.session_keep_rule_name': 'rule name',
   'sys.config.placeholder.session_keep_rule_model_regex': 'Model regex, comma separated',
   'sys.config.placeholder.session_keep_rule_path_regex': 'Path regex, comma separated',
   'sys.config.placeholder.session_keep_rule_key_source_key': 'Enter gjson path or header name',

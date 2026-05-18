@@ -241,7 +241,7 @@ export default {
   'sys.config.label.session_keep_rule_add_key_source': '添加提取源',
   'sys.config.label.session_keep_rule_transform': '值轉換',
   'sys.config.label.session_keep_enable_system_prompt_hash': '系統提示詞哈希兜底',
-  'sys.config.placeholder.session_keep_rule_name': '請輸入規則名稱',
+  'sys.config.placeholder.session_keep_rule_name': '規則名稱',
   'sys.config.placeholder.session_keep_rule_model_regex': '模型正則, 多個用逗號分隔',
   'sys.config.placeholder.session_keep_rule_path_regex': '路徑正則, 多個用逗號分隔',
   'sys.config.placeholder.session_keep_rule_key_source_key': '請輸入gjson路徑或Header名',

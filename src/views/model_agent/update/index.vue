@@ -236,27 +236,13 @@
               :label="$t('model.agent.label.session_keep_mode')"
             >
               <a-radio-group v-model="formData.session_keep_config.mode">
-                <a-radio value="user">{{
-                  $t('model.agent.label.session_keep_mode_user')
-                }}</a-radio>
-                <a-radio value="rule">{{
-                  $t('model.agent.label.session_keep_mode_rule')
-                }}</a-radio>
+                <a-radio value="rule">
+                  {{ $t('model.agent.label.session_keep_mode_rule') }}
+                </a-radio>
+                <a-radio value="user">
+                  {{ $t('model.agent.label.session_keep_mode_user') }}
+                </a-radio>
               </a-radio-group>
-            </a-form-item>
-            <a-form-item
-              v-if="
-                formData.is_enable_session_keep &&
-                formData.session_keep_config.mode === 'rule'
-              "
-              field="session_keep_config.enable_system_prompt_hash"
-              :label="
-                $t('model.agent.label.session_keep_enable_system_prompt_hash')
-              "
-            >
-              <a-switch
-                v-model="formData.session_keep_config.enable_system_prompt_hash"
-              />
             </a-form-item>
             <a-form-item
               v-for="(rule, ruleIndex) in formData.session_keep_config.rules"
@@ -285,7 +271,7 @@
                       $t('model.agent.label.session_keep_rule_transform')
                     "
                     allow-clear
-                    style="width: 12%; margin-right: 5px"
+                    style="width: 15%; margin-right: 5px"
                   >
                     <a-option value="none">none</a-option>
                     <a-option value="md5">md5</a-option>
@@ -300,7 +286,7 @@
                       )
                     "
                     allow-clear
-                    style="width: 28%; margin-right: 5px"
+                    style="width: 32%; margin-right: 5px"
                     @change="
                       rule.model_regex = rule.model_regex_str
                         ? rule.model_regex_str
@@ -316,7 +302,7 @@
                       $t('model.agent.placeholder.session_keep_rule_path_regex')
                     "
                     allow-clear
-                    style="width: 28%; margin-right: 5px"
+                    style="width: 32%; margin-right: 5px"
                     @change="
                       rule.path_regex = rule.path_regex_str
                         ? rule.path_regex_str
@@ -327,9 +313,7 @@
                     "
                   />
                 </div>
-                <div
-                  style="display: flex; align-items: center; flex-wrap: wrap"
-                >
+                <div>
                   <div
                     v-for="(src, srcIndex) in rule.key_sources"
                     :key="srcIndex"
@@ -337,11 +321,12 @@
                       display: flex;
                       align-items: center;
                       margin-right: 10px;
+                      margin-bottom: 5px;
                     "
                   >
                     <a-select
                       v-model="src.type"
-                      style="width: 100px; margin-right: 5px"
+                      style="width: 18.4%; margin-right: 5px"
                     >
                       <a-option value="body">body</a-option>
                       <a-option value="header">header</a-option>
@@ -354,7 +339,7 @@
                         )
                       "
                       allow-clear
-                      style="width: 200px; margin-right: 5px"
+                      style="width: 70%; margin-right: 8px"
                     />
                     <a-button
                       type="primary"
@@ -528,6 +513,20 @@
               >
                 <template #append> {{ $t('unit.item') }} </template>
               </a-input-number>
+            </a-form-item>
+            <a-form-item
+              v-if="
+                formData.is_enable_session_keep &&
+                formData.session_keep_config.mode === 'rule'
+              "
+              field="session_keep_config.enable_system_prompt_hash"
+              :label="
+                $t('model.agent.label.session_keep_enable_system_prompt_hash')
+              "
+            >
+              <a-switch
+                v-model="formData.session_keep_config.enable_system_prompt_hash"
+              />
             </a-form-item>
             <a-form-item
               field="is_never_disable"
@@ -806,7 +805,7 @@
     is_enable_health_check: false,
     is_enable_session_keep: false,
     session_keep_config: {
-      mode: ref('user'),
+      mode: ref('rule'),
       ttl: ref(),
       fail_ttl: ref(),
       fail_switch_threshold: ref(),
