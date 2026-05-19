@@ -392,57 +392,65 @@
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
         <template #input_tokens="{ record }">
-          {{
-            record.spend.text?.input_tokens
-              ? parseQuota(record.spend.text?.input_tokens)
-              : parseQuota(record.spend.tiered_text?.input_tokens)
-              ? parseQuota(record.spend.tiered_text?.input_tokens)
-              : parseQuota(record.spend.once?.input_tokens)
-              ? parseQuota(record.spend.once?.input_tokens)
-              : record.status === 1
-              ? 0
-              : '-'
-          }}
-          <div
-            v-if="
-              record.spend.text_cache?.write_tokens ||
-              record.spend.tiered_text_cache?.write_tokens
-            "
-            class="cache-tokens"
-          >
-            {{
-              parseQuota(
+          <div class="tokens-cell">
+            <span>
+              {{
+                record.spend.text?.input_tokens
+                  ? parseQuota(record.spend.text?.input_tokens)
+                  : parseQuota(record.spend.tiered_text?.input_tokens)
+                  ? parseQuota(record.spend.tiered_text?.input_tokens)
+                  : parseQuota(record.spend.once?.input_tokens)
+                  ? parseQuota(record.spend.once?.input_tokens)
+                  : record.status === 1
+                  ? 0
+                  : '-'
+              }}
+            </span>
+            <div
+              v-if="
                 record.spend.text_cache?.write_tokens ||
-                  record.spend.tiered_text_cache?.write_tokens
-              )
-            }}
+                record.spend.tiered_text_cache?.write_tokens
+              "
+              class="cache-tokens"
+            >
+              {{
+                parseQuota(
+                  record.spend.text_cache?.write_tokens ||
+                    record.spend.tiered_text_cache?.write_tokens
+                )
+              }}
+            </div>
           </div>
         </template>
         <template #output_tokens="{ record }">
-          {{
-            record.spend.text?.output_tokens
-              ? parseQuota(record.spend.text?.output_tokens)
-              : parseQuota(record.spend.tiered_text?.output_tokens)
-              ? parseQuota(record.spend.tiered_text?.output_tokens)
-              : parseQuota(record.spend.once?.output_tokens)
-              ? parseQuota(record.spend.once?.output_tokens)
-              : record.status === 1
-              ? 0
-              : '-'
-          }}
-          <div
-            v-if="
-              record.spend.text_cache?.read_tokens ||
-              record.spend.tiered_text_cache?.read_tokens
-            "
-            class="cache-tokens"
-          >
-            {{
-              parseQuota(
+          <div class="tokens-cell">
+            <span>
+              {{
+                record.spend.text?.output_tokens
+                  ? parseQuota(record.spend.text?.output_tokens)
+                  : parseQuota(record.spend.tiered_text?.output_tokens)
+                  ? parseQuota(record.spend.tiered_text?.output_tokens)
+                  : parseQuota(record.spend.once?.output_tokens)
+                  ? parseQuota(record.spend.once?.output_tokens)
+                  : record.status === 1
+                  ? 0
+                  : '-'
+              }}
+            </span>
+            <div
+              v-if="
                 record.spend.text_cache?.read_tokens ||
-                  record.spend.tiered_text_cache?.read_tokens
-              )
-            }}
+                record.spend.tiered_text_cache?.read_tokens
+              "
+              class="cache-tokens"
+            >
+              {{
+                parseQuota(
+                  record.spend.text_cache?.read_tokens ||
+                    record.spend.tiered_text_cache?.read_tokens
+                )
+              }}
+            </div>
           </div>
         </template>
         <template #total_spend_tokens="{ record }">
@@ -1581,6 +1589,14 @@
   // Keep local: text list toolbar row needs center alignment
   .log-list-toolbar-row {
     align-items: center;
+  }
+
+  .tokens-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
   }
 
   .cache-tokens {
