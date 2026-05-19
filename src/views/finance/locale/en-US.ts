@@ -24,6 +24,7 @@ export default {
   'finance.dict.deal_type.3': 'Gift',
   'finance.dict.deal_type.4': 'Expired',
   'finance.dict.deal_type.5': 'Invite Reward',
+  'finance.dict.deal_type.8': 'Refund',
   'finance.dict.bill.data_type.user': 'User',
   'finance.dict.bill.data_type.app': 'Application',
   'finance.dict.bill.data_type.app_key': 'Application Key',

@@ -500,6 +500,9 @@
               <a-radio v-model="formData.quota_type" value="3">
                 {{ $t('finance.dict.deal_type.3') }}
               </a-radio>
+              <a-radio v-model="formData.quota_type" value="8">
+                {{ $t('finance.dict.deal_type.8') }}
+              </a-radio>
             </a-space>
           </a-form-item>
           <a-form-item
@@ -1131,7 +1134,10 @@
             formData.value.quota_expires_at = '';
             formData.value.is_send_notice = true;
             rechargeVisible.value = true;
-          } else if (formData.value.quota_type === '2') {
+          } else if (
+            formData.value.quota_type === '2' ||
+            formData.value.quota_type === '8'
+          ) {
             alertContent = t('reseller.placeholder.batch.operation.deduct', {
               count: ids.value.length,
               currencySymbol: appStore.getCurrencySymbol,

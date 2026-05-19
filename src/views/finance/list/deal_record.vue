@@ -330,6 +330,10 @@
       label: t('finance.dict.deal_type.5'),
       value: 5,
     },
+    {
+      label: t('finance.dict.deal_type.8'),
+      value: 8,
+    },
   ]);
 
   const statusOptions = computed<SelectOptionData[]>(() => [

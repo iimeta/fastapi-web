@@ -24,6 +24,7 @@ export default {
   'finance.dict.deal_type.3': '赠送',
   'finance.dict.deal_type.4': '过期',
   'finance.dict.deal_type.5': '邀请奖励',
+  'finance.dict.deal_type.8': '退款',
   'finance.dict.bill.data_type.user': '用户',
   'finance.dict.bill.data_type.app': '应用',
   'finance.dict.bill.data_type.app_key': '应用密钥',
