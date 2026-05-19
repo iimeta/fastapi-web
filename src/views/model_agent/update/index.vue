@@ -813,7 +813,7 @@
       agent_limit: ref(),
       global_limit: ref(),
       rules: [],
-      enable_system_prompt_hash: ref(false),
+      enable_system_prompt_hash: ref(true),
     },
     is_remove_abnormal_model: true,
     is_never_disable: false,
@@ -874,13 +874,17 @@
       }
       formData.value.is_enable_health_check = data.is_enable_health_check;
       formData.value.is_enable_session_keep = data.is_enable_session_keep;
-      formData.value.session_keep_config = data.session_keep_config || {};
-      if (!formData.value.session_keep_config.rules) {
-        formData.value.session_keep_config.rules = [];
-      }
-      if (!formData.value.session_keep_config.mode) {
-        formData.value.session_keep_config.mode = '';
-      }
+      formData.value.session_keep_config = data.session_keep_config || {
+        mode: ref('rule'),
+        ttl: ref(),
+        fail_ttl: ref(),
+        fail_switch_threshold: ref(),
+        user_limit: ref(),
+        agent_limit: ref(),
+        global_limit: ref(),
+        rules: [],
+        enable_system_prompt_hash: ref(true),
+      };
       formData.value.is_remove_abnormal_model = data.is_remove_abnormal_model;
       formData.value.is_never_disable = data.is_never_disable;
       formData.value.lb_strategy = String(data.lb_strategy);

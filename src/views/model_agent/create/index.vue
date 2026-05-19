@@ -801,7 +801,7 @@
       agent_limit: ref(),
       global_limit: ref(),
       rules: [],
-      enable_system_prompt_hash: ref(false),
+      enable_system_prompt_hash: ref(true),
     },
     is_remove_abnormal_model: true,
     is_never_disable: false,
