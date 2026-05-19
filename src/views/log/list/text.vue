@@ -403,6 +403,20 @@
               ? 0
               : '-'
           }}
+          <div
+            v-if="
+              record.spend.text_cache?.write_tokens ||
+              record.spend.tiered_text_cache?.write_tokens
+            "
+            class="cache-tokens"
+          >
+            {{
+              parseQuota(
+                record.spend.text_cache?.write_tokens ||
+                  record.spend.tiered_text_cache?.write_tokens
+              )
+            }}
+          </div>
         </template>
         <template #output_tokens="{ record }">
           {{
@@ -416,6 +430,20 @@
               ? 0
               : '-'
           }}
+          <div
+            v-if="
+              record.spend.text_cache?.read_tokens ||
+              record.spend.tiered_text_cache?.read_tokens
+            "
+            class="cache-tokens"
+          >
+            {{
+              parseQuota(
+                record.spend.text_cache?.read_tokens ||
+                  record.spend.tiered_text_cache?.read_tokens
+              )
+            }}
+          </div>
         </template>
         <template #total_spend_tokens="{ record }">
           <span
@@ -1553,5 +1581,15 @@
   // Keep local: text list toolbar row needs center alignment
   .log-list-toolbar-row {
     align-items: center;
+  }
+
+  .cache-tokens {
+    color: var(--color-text-3);
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  :deep(.arco-table-td .arco-table-cell) {
+    padding: 4px 16px;
   }
 </style>
