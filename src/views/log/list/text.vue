@@ -392,7 +392,7 @@
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
         <template #input_tokens="{ record }">
-          <div class="tokens-cell">
+          <div class="tokens-cell" :style="tokensCellStyle">
             <span>
               {{
                 record.spend.text?.input_tokens
@@ -423,7 +423,7 @@
           </div>
         </template>
         <template #output_tokens="{ record }">
-          <div class="tokens-cell">
+          <div class="tokens-cell" :style="tokensCellStyle">
             <span>
               {{
                 record.spend.text?.output_tokens
@@ -933,6 +933,11 @@
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
+  const tokensCellStyle = computed(() => ({
+    minHeight: { mini: '26px', small: '30px', medium: '34px', large: '38px' }[
+      size.value
+    ],
+  }));
   const ids = ref<Array<string>>([]);
   const multiple = ref(true);
   const tableRef = ref();
@@ -1596,7 +1601,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 34px;
   }
 
   .cache-tokens {
