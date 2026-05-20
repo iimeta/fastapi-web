@@ -517,6 +517,17 @@
 
   const onlyTimeRules = computed(() => !!props.onlyTimeRules);
 
+  const isClaudeProvider = computed(() => {
+    const code = (props.providerCode || '').toLowerCase();
+    const name = (props.providerName || '').toLowerCase();
+    return (
+      code.includes('claude') ||
+      code.includes('anthropic') ||
+      name.includes('claude') ||
+      name.includes('anthropic')
+    );
+  });
+
   const pricing = ref(props.modelValue);
   const timeRules = ref(props.timeRules || []);
 
@@ -642,7 +653,7 @@
 
   // 文本缓存
   const textCachePricing = ref<CachePricing[]>([]);
-  const textCachePricingColumns = ref<TableColumnData[]>([
+  const textCachePricingColumns = computed<TableColumnData[]>(() => [
     {
       title: t('dict.billing_items.text_cache'),
       headerCellStyle: tableHeaderCellStyle,
@@ -652,36 +663,44 @@
           dataIndex: 'service_tier',
           slotName: 'service_tier',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('model.label.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
         },
-        {
-          title: t('model.label.write_ratio'),
-          dataIndex: 'write_ratio',
-          slotName: 'write_ratio',
-          align: 'center',
-          width: 200,
-        },
-        {
-          title: t('model.label.write_5m_ratio'),
-          dataIndex: 'write_5m_ratio',
-          slotName: 'write_5m_ratio',
-          align: 'center',
-          width: 200,
-        },
-        {
-          title: t('model.label.write_1h_ratio'),
-          dataIndex: 'write_1h_ratio',
-          slotName: 'write_1h_ratio',
-          align: 'center',
-          width: 200,
-        },
+        ...(!isClaudeProvider.value
+          ? [
+              {
+                title: t('model.label.write_ratio'),
+                dataIndex: 'write_ratio',
+                slotName: 'write_ratio',
+                align: 'center' as const,
+                width: 100,
+              },
+            ]
+          : []),
+        ...(isClaudeProvider.value
+          ? [
+              {
+                title: t('model.label.write_5m_ratio'),
+                dataIndex: 'write_5m_ratio',
+                slotName: 'write_5m_ratio',
+                align: 'center' as const,
+                width: 100,
+              },
+              {
+                title: t('model.label.write_1h_ratio'),
+                dataIndex: 'write_1h_ratio',
+                slotName: 'write_1h_ratio',
+                align: 'center' as const,
+                width: 100,
+              },
+            ]
+          : []),
       ],
     },
   ]);
@@ -777,7 +796,7 @@
 
   // 阶梯文本缓存
   const tieredTextCachePricing = ref<CachePricing[]>([]);
-  const tieredTextCachePricingColumns = ref<TableColumnData[]>([
+  const tieredTextCachePricingColumns = computed<TableColumnData[]>(() => [
     {
       title: t('dict.billing_items.tiered_text_cache'),
       headerCellStyle: tableHeaderCellStyle,
@@ -787,43 +806,51 @@
           dataIndex: 'mode',
           slotName: 'mode',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('model.label.tiered.input_tokens'),
           dataIndex: 'gt',
           slotName: 'gt',
           align: 'center',
-          width: 200,
+          width: 100,
         },
         {
           title: t('model.label.tiered.read_ratio'),
           dataIndex: 'read_ratio',
           slotName: 'read_ratio',
           align: 'center',
-          width: 200,
+          width: 100,
         },
-        {
-          title: t('model.label.tiered.write_ratio'),
-          dataIndex: 'write_ratio',
-          slotName: 'write_ratio',
-          align: 'center',
-          width: 200,
-        },
-        {
-          title: t('model.label.tiered.write_5m_ratio'),
-          dataIndex: 'write_5m_ratio',
-          slotName: 'write_5m_ratio',
-          align: 'center',
-          width: 200,
-        },
-        {
-          title: t('model.label.tiered.write_1h_ratio'),
-          dataIndex: 'write_1h_ratio',
-          slotName: 'write_1h_ratio',
-          align: 'center',
-          width: 200,
-        },
+        ...(!isClaudeProvider.value
+          ? [
+              {
+                title: t('model.label.tiered.write_ratio'),
+                dataIndex: 'write_ratio',
+                slotName: 'write_ratio',
+                align: 'center' as const,
+                width: 100,
+              },
+            ]
+          : []),
+        ...(isClaudeProvider.value
+          ? [
+              {
+                title: t('model.label.tiered.write_5m_ratio'),
+                dataIndex: 'write_5m_ratio',
+                slotName: 'write_5m_ratio',
+                align: 'center' as const,
+                width: 100,
+              },
+              {
+                title: t('model.label.tiered.write_1h_ratio'),
+                dataIndex: 'write_1h_ratio',
+                slotName: 'write_1h_ratio',
+                align: 'center' as const,
+                width: 100,
+              },
+            ]
+          : []),
       ],
     },
   ]);
@@ -1121,6 +1148,18 @@
 
     // 文本缓存
     if (pricing.value.billing_items.includes('text_cache')) {
+      if (isClaudeProvider.value) {
+        pricing.value.text_cache?.forEach((item: CachePricing) => {
+          if (
+            !item.write_5m_ratio &&
+            !item.write_1h_ratio &&
+            item.write_ratio
+          ) {
+            item.write_5m_ratio = item.write_ratio;
+            item.write_ratio = null;
+          }
+        });
+      }
       textCachePricing.value = pricing.value.text_cache;
     }
 
@@ -1161,6 +1200,18 @@
 
     // 阶梯文本缓存
     if (pricing.value.billing_items.includes('tiered_text_cache')) {
+      if (isClaudeProvider.value) {
+        pricing.value.tiered_text_cache?.forEach((item: CachePricing) => {
+          if (
+            !item.write_5m_ratio &&
+            !item.write_1h_ratio &&
+            item.write_ratio
+          ) {
+            item.write_5m_ratio = item.write_ratio;
+            item.write_ratio = null;
+          }
+        });
+      }
       tieredTextCachePricing.value = pricing.value.tiered_text_cache;
     }
 

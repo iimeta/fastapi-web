@@ -789,7 +789,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, watch } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { parseQuota } from '@/utils/common';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -819,6 +819,17 @@
   }>();
 
   const spend = ref(props.modelValue);
+
+  const isClaudeProvider = computed(() => {
+    const code = (props.providerCode || '').toLowerCase();
+    const name = (props.providerName || '').toLowerCase();
+    return (
+      code.includes('claude') ||
+      code.includes('anthropic') ||
+      name.includes('claude') ||
+      name.includes('anthropic')
+    );
+  });
 
   const tableHeaderCellStyle = { background: 'var(--color-bg-2)' };
 
@@ -900,7 +911,7 @@
 
   // 文本缓存
   const textCacheSpend = ref<CacheSpend[]>([]);
-  const textCacheSpendColumns = ref<TableColumnData[]>([
+  const textCacheSpendColumns = computed<TableColumnData[]>(() => [
     {
       title: t('dict.billing_items.text_cache'),
       headerCellStyle: tableHeaderCellStyle,
@@ -926,48 +937,56 @@
           align: 'center',
           width: 100,
         },
-        {
-          title: t('log.columns.spend.write_tokens'),
-          dataIndex: 'write_tokens',
-          slotName: 'write_tokens',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('log.columns.spend.write_ratio'),
-          dataIndex: 'write_ratio',
-          slotName: 'write_ratio',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('log.columns.spend.write_5m_tokens'),
-          dataIndex: 'write_5m_tokens',
-          slotName: 'write_5m_tokens',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('log.columns.spend.write_5m_ratio'),
-          dataIndex: 'write_5m_ratio',
-          slotName: 'write_5m_ratio',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('log.columns.spend.write_1h_tokens'),
-          dataIndex: 'write_1h_tokens',
-          slotName: 'write_1h_tokens',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('log.columns.spend.write_1h_ratio'),
-          dataIndex: 'write_1h_ratio',
-          slotName: 'write_1h_ratio',
-          align: 'center',
-          width: 100,
-        },
+        ...(!isClaudeProvider.value
+          ? [
+              {
+                title: t('log.columns.spend.write_tokens'),
+                dataIndex: 'write_tokens',
+                slotName: 'write_tokens',
+                align: 'center' as const,
+                width: 100,
+              },
+              {
+                title: t('log.columns.spend.write_ratio'),
+                dataIndex: 'write_ratio',
+                slotName: 'write_ratio',
+                align: 'center' as const,
+                width: 100,
+              },
+            ]
+          : []),
+        ...(isClaudeProvider.value
+          ? [
+              {
+                title: t('log.columns.spend.write_5m_tokens'),
+                dataIndex: 'write_5m_tokens',
+                slotName: 'write_5m_tokens',
+                align: 'center' as const,
+                width: 100,
+              },
+              {
+                title: t('log.columns.spend.write_5m_ratio'),
+                dataIndex: 'write_5m_ratio',
+                slotName: 'write_5m_ratio',
+                align: 'center' as const,
+                width: 100,
+              },
+              {
+                title: t('log.columns.spend.write_1h_tokens'),
+                dataIndex: 'write_1h_tokens',
+                slotName: 'write_1h_tokens',
+                align: 'center' as const,
+                width: 100,
+              },
+              {
+                title: t('log.columns.spend.write_1h_ratio'),
+                dataIndex: 'write_1h_ratio',
+                slotName: 'write_1h_ratio',
+                align: 'center' as const,
+                width: 100,
+              },
+            ]
+          : []),
         {
           title: t('log.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
@@ -1141,7 +1160,7 @@
 
   // 阶梯文本缓存
   const tieredTextCacheSpend = ref<CacheSpend[]>([]);
-  const tieredTextCacheSpendColumns = ref<TableColumnData[]>([
+  const tieredTextCacheSpendColumns = computed<TableColumnData[]>(() => [
     {
       title: t('dict.billing_items.tiered_text_cache'),
       headerCellStyle: tableHeaderCellStyle,
@@ -1174,48 +1193,56 @@
           align: 'center',
           width: 100,
         },
-        {
-          title: t('log.columns.spend.write_tokens'),
-          dataIndex: 'write_tokens',
-          slotName: 'write_tokens',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('model.label.tiered.write_ratio'),
-          dataIndex: 'write_ratio',
-          slotName: 'write_ratio',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('log.columns.spend.write_5m_tokens'),
-          dataIndex: 'write_5m_tokens',
-          slotName: 'write_5m_tokens',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('log.columns.spend.write_5m_ratio'),
-          dataIndex: 'write_5m_ratio',
-          slotName: 'write_5m_ratio',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('log.columns.spend.write_1h_tokens'),
-          dataIndex: 'write_1h_tokens',
-          slotName: 'write_1h_tokens',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('log.columns.spend.write_1h_ratio'),
-          dataIndex: 'write_1h_ratio',
-          slotName: 'write_1h_ratio',
-          align: 'center',
-          width: 100,
-        },
+        ...(!isClaudeProvider.value
+          ? [
+              {
+                title: t('log.columns.spend.write_tokens'),
+                dataIndex: 'write_tokens',
+                slotName: 'write_tokens',
+                align: 'center' as const,
+                width: 100,
+              },
+              {
+                title: t('model.label.tiered.write_ratio'),
+                dataIndex: 'write_ratio',
+                slotName: 'write_ratio',
+                align: 'center' as const,
+                width: 100,
+              },
+            ]
+          : []),
+        ...(isClaudeProvider.value
+          ? [
+              {
+                title: t('log.columns.spend.write_5m_tokens'),
+                dataIndex: 'write_5m_tokens',
+                slotName: 'write_5m_tokens',
+                align: 'center' as const,
+                width: 100,
+              },
+              {
+                title: t('log.columns.spend.write_5m_ratio'),
+                dataIndex: 'write_5m_ratio',
+                slotName: 'write_5m_ratio',
+                align: 'center' as const,
+                width: 100,
+              },
+              {
+                title: t('log.columns.spend.write_1h_tokens'),
+                dataIndex: 'write_1h_tokens',
+                slotName: 'write_1h_tokens',
+                align: 'center' as const,
+                width: 100,
+              },
+              {
+                title: t('log.columns.spend.write_1h_ratio'),
+                dataIndex: 'write_1h_ratio',
+                slotName: 'write_1h_ratio',
+                align: 'center' as const,
+                width: 100,
+              },
+            ]
+          : []),
         {
           title: t('log.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
@@ -1661,6 +1688,19 @@
       spend.value.billing_items.includes('text_cache') &&
       spend.value.text_cache
     ) {
+      if (
+        isClaudeProvider.value &&
+        !spend.value.text_cache.write_5m_tokens &&
+        !spend.value.text_cache.write_1h_tokens &&
+        spend.value.text_cache.write_tokens
+      ) {
+        spend.value.text_cache.write_5m_tokens =
+          spend.value.text_cache.write_tokens;
+        if (spend.value.text_cache.pricing) {
+          spend.value.text_cache.pricing.write_5m_ratio =
+            spend.value.text_cache.pricing.write_ratio;
+        }
+      }
       textCacheSpend.value[0] = spend.value.text_cache;
       totalSpendColumns.value[0].children.push({
         title: t('dict.billing_items.text_cache'),
@@ -1718,6 +1758,19 @@
       spend.value.billing_items.includes('tiered_text_cache') &&
       spend.value.tiered_text_cache
     ) {
+      if (
+        isClaudeProvider.value &&
+        !spend.value.tiered_text_cache.write_5m_tokens &&
+        !spend.value.tiered_text_cache.write_1h_tokens &&
+        spend.value.tiered_text_cache.write_tokens
+      ) {
+        spend.value.tiered_text_cache.write_5m_tokens =
+          spend.value.tiered_text_cache.write_tokens;
+        if (spend.value.tiered_text_cache.pricing) {
+          spend.value.tiered_text_cache.pricing.write_5m_ratio =
+            spend.value.tiered_text_cache.pricing.write_ratio;
+        }
+      }
       tieredTextCacheSpend.value[0] = spend.value.tiered_text_cache;
       totalSpendColumns.value[0].children.push({
         title: t('dict.billing_items.tiered_text_cache'),

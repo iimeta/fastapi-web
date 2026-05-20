@@ -16,8 +16,7 @@ export default {
   'model.label.remark': 'Description',
   'model.placeholder.remark': 'Please enter description',
   'model.label.currency_symbol': 'Currency Symbol',
-  'model.placeholder.currency_symbol':
-    'Enter or select currency symbol. Uses site config if empty',
+  'model.placeholder.currency_symbol': 'Enter or select currency symbol. Uses site config if empty',
   'model.label.data_passthrough': 'Data Passthrough',
   'model.label.req_passthrough': 'Request Passthrough',
   'model.label.res_passthrough': 'Response Passthrough',

@@ -339,52 +339,59 @@
             v-model="formData.text_cache[index].service_tier"
             :placeholder="$t('model.label.service_tier')"
             :options="serviceTierOptions"
-            class="pricing-select--medium pricing-field--spaced"
+            class="pricing-select--compact pricing-field--spaced"
           />
           <a-input-number
             v-model="formData.text_cache[index].read_ratio"
-            :placeholder="$t('model.placeholder.read_ratio')"
+            :placeholder="$t('model.placeholder.tiered_cache_read_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            class="pricing-input--wide"
+            class="pricing-field--spaced"
+            :class="{
+              'pricing-text-cache-read-ratio': !isClaudeProvider,
+              'pricing-input--compact': isClaudeProvider,
+            }"
           >
             <template #prefix> {{ cs }} </template>
             <template #append> / M </template>
           </a-input-number>
           <a-input-number
+            v-if="!isClaudeProvider"
             v-model="formData.text_cache[index].write_ratio"
             :placeholder="$t('model.placeholder.tiered_cache_write_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            class="pricing-input--wide"
+            class="pricing-text-cache-write-ratio"
           >
             <template #prefix> {{ cs }} </template>
             <template #append> / M </template>
           </a-input-number>
           <a-input-number
+            v-if="isClaudeProvider"
             v-model="formData.text_cache[index].write_5m_ratio"
             :placeholder="$t('model.placeholder.write_5m_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            class="pricing-input--wide"
+            class="pricing-input--compact pricing-field--spaced"
           >
             <template #prefix> {{ cs }} </template>
             <template #append> / M </template>
           </a-input-number>
           <a-input-number
+            v-if="isClaudeProvider"
             v-model="formData.text_cache[index].write_1h_ratio"
             :placeholder="$t('model.placeholder.write_1h_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
             allow-clear
-            class="pricing-input--wide"
+            class="pricing-input--compact"
           >
             <template #prefix> {{ cs }} </template>
             <template #append> / M </template>
@@ -638,7 +645,13 @@
             :min="0"
             :max="999999"
             :step="1"
-            class="pricing-input-number--smallish pricing-field--spaced"
+            hide-button
+            :class="{
+              'pricing-input-number--smallish pricing-field--spaced':
+                !isClaudeProvider,
+              'pricing-input-number--tiny pricing-field--spaced-sm':
+                isClaudeProvider,
+            }"
           >
           </a-input-number>
           -
@@ -649,7 +662,13 @@
             :min="0"
             :max="999999"
             :step="1"
-            class="pricing-input-number--medium-lg pricing-field--offset"
+            hide-button
+            :class="{
+              'pricing-input-number--medium-lg pricing-field--offset':
+                !isClaudeProvider,
+              'pricing-input-number--small pricing-field--offset-both':
+                isClaudeProvider,
+            }"
           >
             <template #append> / k </template>
           </a-input-number>
@@ -659,44 +678,50 @@
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
-            allow-clear
-            class="pricing-input-number--cache pricing-field--spaced"
+            hide-button
+            class="pricing-field--spaced"
+            :class="{
+              'pricing-input-number--cache': !isClaudeProvider,
+              'pricing-select--compact': isClaudeProvider,
+            }"
           >
             <template #prefix> {{ cs }} </template>
-            <template #append> / M </template>
+            <template v-if="!isClaudeProvider" #append> / M </template>
           </a-input-number>
           <a-input-number
+            v-if="!isClaudeProvider"
             v-model="formData.tiered_text_cache[index].write_ratio"
             :placeholder="$t('model.placeholder.tiered_cache_write_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
-            allow-clear
+            hide-button
             class="pricing-input-number--cache"
           >
             <template #prefix> {{ cs }} </template>
             <template #append> / M </template>
           </a-input-number>
           <a-input-number
+            v-if="isClaudeProvider"
             v-model="formData.tiered_text_cache[index].write_5m_ratio"
             :placeholder="$t('model.placeholder.write_5m_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
-            allow-clear
-            class="pricing-input-number--cache pricing-field--spaced"
+            hide-button
+            class="pricing-select--compact pricing-field--spaced"
           >
             <template #prefix> {{ cs }} </template>
-            <template #append> / M </template>
           </a-input-number>
           <a-input-number
+            v-if="isClaudeProvider"
             v-model="formData.tiered_text_cache[index].write_1h_ratio"
             :placeholder="$t('model.placeholder.write_1h_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
-            allow-clear
-            class="pricing-input-number--cache"
+            hide-button
+            class="pricing-input-number--medium"
           >
             <template #prefix> {{ cs }} </template>
             <template #append> / M </template>
@@ -1328,6 +1353,35 @@
   const cs = computed(
     () => props.modelValue?.currency_symbol || appStore.getCurrencySymbol
   );
+
+  const isClaudeProvider = computed(() => {
+    if (!provider.value) return false;
+    const code = (provider.value.code || '').toLowerCase();
+    const name = (provider.value.name || '').toLowerCase();
+    return (
+      code.includes('claude') ||
+      code.includes('anthropic') ||
+      name.includes('claude') ||
+      name.includes('anthropic')
+    );
+  });
+
+  const migrateCacheWriteRatio = () => {
+    if (!isClaudeProvider.value) return;
+    formData.value.text_cache?.forEach((item) => {
+      if (!item.write_5m_ratio && !item.write_1h_ratio && item.write_ratio) {
+        item.write_5m_ratio = item.write_ratio;
+        item.write_ratio = null;
+      }
+    });
+    formData.value.tiered_text_cache?.forEach((item) => {
+      if (!item.write_5m_ratio && !item.write_1h_ratio && item.write_ratio) {
+        item.write_5m_ratio = item.write_ratio;
+        item.write_ratio = null;
+      }
+    });
+  };
+
   const providerMap = new Map();
   const provider = ref<ProviderList>();
 
@@ -1466,6 +1520,9 @@
     () => props.modelValue,
     (val) => {
       formData.value = val;
+      if (props.providerId && providerMap.size > 0) {
+        provider.value = providerMap.get(props.providerId);
+      }
       if (!activeKey.value) {
         lastLength.value = formData.value.billing_items.length;
         for (let i = 0; i < billingItems.length; i += 1) {
@@ -1475,6 +1532,7 @@
           }
         }
       }
+      migrateCacheWriteRatio();
     },
     { deep: true, immediate: true }
   );
@@ -1969,6 +2027,8 @@
       }
     }
 
+    migrateCacheWriteRatio();
+
     if (formData.value.billing_items.includes('image')) {
       if (!formData.value.image) {
         formData.value.image = {
@@ -2281,5 +2341,13 @@
 
   .input {
     width: 762px;
+  }
+
+  .pricing-text-cache-read-ratio {
+    width: 284px;
+  }
+
+  .pricing-text-cache-write-ratio {
+    width: 285px;
   }
 </style>
