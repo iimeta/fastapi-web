@@ -287,10 +287,20 @@
     // 文本缓存: 读取 $x / M
     if (has('text_cache') && p.text_cache?.length) {
       const r = p.text_cache[0];
+      const lines = [`${rl} ${fmt(r.read_ratio)} / M`];
+      if (r.write_ratio) {
+        lines.push(`${wl} ${fmt(r.write_ratio)} / M`);
+      }
+      if (r.write_5m_ratio) {
+        lines.push(`5m ${wl} ${fmt(r.write_5m_ratio)} / M`);
+      }
+      if (r.write_1h_ratio) {
+        lines.push(`1h ${wl} ${fmt(r.write_1h_ratio)} / M`);
+      }
       arr.push({
         key: 'text_cache',
         label: t('dict.billing_items.text_cache'),
-        value: `${rl} ${fmt(r.read_ratio)} / M`,
+        value: lines.join('\n'),
       });
     }
     // 阶梯文本: 输入 0k-200k $x / M, 输出 0k-200k $x / M
@@ -312,6 +322,12 @@
       const lines = [`${rl} ${range} ${fmt(r.read_ratio)} / M`];
       if (r.write_ratio) {
         lines.push(`${wl} ${range} ${fmt(r.write_ratio)} / M`);
+      }
+      if (r.write_5m_ratio) {
+        lines.push(`5m ${wl} ${fmt(r.write_5m_ratio)} / M`);
+      }
+      if (r.write_1h_ratio) {
+        lines.push(`1h ${wl} ${fmt(r.write_1h_ratio)} / M`);
       }
       arr.push({
         key: 'tiered_cache',

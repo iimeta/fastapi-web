@@ -353,6 +353,42 @@
             <template #prefix> {{ cs }} </template>
             <template #append> / M </template>
           </a-input-number>
+          <a-input-number
+            v-model="formData.text_cache[index].write_ratio"
+            :placeholder="$t('model.placeholder.tiered_cache_write_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parsePrice"
+            allow-clear
+            class="pricing-input--wide"
+          >
+            <template #prefix> {{ cs }} </template>
+            <template #append> / M </template>
+          </a-input-number>
+          <a-input-number
+            v-model="formData.text_cache[index].write_5m_ratio"
+            :placeholder="$t('model.placeholder.write_5m_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parsePrice"
+            allow-clear
+            class="pricing-input--wide"
+          >
+            <template #prefix> {{ cs }} </template>
+            <template #append> / M </template>
+          </a-input-number>
+          <a-input-number
+            v-model="formData.text_cache[index].write_1h_ratio"
+            :placeholder="$t('model.placeholder.write_1h_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parsePrice"
+            allow-clear
+            class="pricing-input--wide"
+          >
+            <template #prefix> {{ cs }} </template>
+            <template #append> / M </template>
+          </a-input-number>
           <a-button
             type="primary"
             shape="circle"
@@ -632,6 +668,30 @@
           <a-input-number
             v-model="formData.tiered_text_cache[index].write_ratio"
             :placeholder="$t('model.placeholder.tiered_cache_write_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parsePrice"
+            allow-clear
+            class="pricing-input-number--cache"
+          >
+            <template #prefix> {{ cs }} </template>
+            <template #append> / M </template>
+          </a-input-number>
+          <a-input-number
+            v-model="formData.tiered_text_cache[index].write_5m_ratio"
+            :placeholder="$t('model.placeholder.write_5m_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parsePrice"
+            allow-clear
+            class="pricing-input-number--cache pricing-field--spaced"
+          >
+            <template #prefix> {{ cs }} </template>
+            <template #append> / M </template>
+          </a-input-number>
+          <a-input-number
+            v-model="formData.tiered_text_cache[index].write_1h_ratio"
+            :placeholder="$t('model.placeholder.write_1h_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"

@@ -234,6 +234,36 @@
       />
       / M
     </template>
+    <template #write_tokens="{ record }">
+      {{ parseQuota(record.write_tokens) || '0' }}
+    </template>
+    <template #write_ratio="{ record }">
+      <Quota
+        :currency-symbol="props.modelValue.currency_symbol"
+        :model-value="record.pricing.write_ratio"
+      />
+      / M
+    </template>
+    <template #write_5m_tokens="{ record }">
+      {{ parseQuota(record.write_5m_tokens) || '0' }}
+    </template>
+    <template #write_5m_ratio="{ record }">
+      <Quota
+        :currency-symbol="props.modelValue.currency_symbol"
+        :model-value="record.pricing.write_5m_ratio"
+      />
+      / M
+    </template>
+    <template #write_1h_tokens="{ record }">
+      {{ parseQuota(record.write_1h_tokens) || '0' }}
+    </template>
+    <template #write_1h_ratio="{ record }">
+      <Quota
+        :currency-symbol="props.modelValue.currency_symbol"
+        :model-value="record.pricing.write_1h_ratio"
+      />
+      / M
+    </template>
     <template #spend_tokens="{ record }">
       <Quota
         :currency-symbol="props.modelValue.currency_symbol"
@@ -398,6 +428,26 @@
       <Quota
         :currency-symbol="props.modelValue.currency_symbol"
         :model-value="record.pricing.write_ratio"
+      />
+      / M
+    </template>
+    <template #write_5m_tokens="{ record }">
+      {{ parseQuota(record.write_5m_tokens) || '0' }}
+    </template>
+    <template #write_5m_ratio="{ record }">
+      <Quota
+        :currency-symbol="props.modelValue.currency_symbol"
+        :model-value="record.pricing.write_5m_ratio"
+      />
+      / M
+    </template>
+    <template #write_1h_tokens="{ record }">
+      {{ parseQuota(record.write_1h_tokens) || '0' }}
+    </template>
+    <template #write_1h_ratio="{ record }">
+      <Quota
+        :currency-symbol="props.modelValue.currency_symbol"
+        :model-value="record.pricing.write_1h_ratio"
       />
       / M
     </template>
@@ -877,6 +927,48 @@
           width: 100,
         },
         {
+          title: t('log.columns.spend.write_tokens'),
+          dataIndex: 'write_tokens',
+          slotName: 'write_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('log.columns.spend.write_ratio'),
+          dataIndex: 'write_ratio',
+          slotName: 'write_ratio',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('log.columns.spend.write_5m_tokens'),
+          dataIndex: 'write_5m_tokens',
+          slotName: 'write_5m_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('log.columns.spend.write_5m_ratio'),
+          dataIndex: 'write_5m_ratio',
+          slotName: 'write_5m_ratio',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('log.columns.spend.write_1h_tokens'),
+          dataIndex: 'write_1h_tokens',
+          slotName: 'write_1h_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('log.columns.spend.write_1h_ratio'),
+          dataIndex: 'write_1h_ratio',
+          slotName: 'write_1h_ratio',
+          align: 'center',
+          width: 100,
+        },
+        {
           title: t('log.columns.spend.spend_tokens'),
           dataIndex: 'spend_tokens',
           slotName: 'spend_tokens',
@@ -1093,6 +1185,34 @@
           title: t('model.label.tiered.write_ratio'),
           dataIndex: 'write_ratio',
           slotName: 'write_ratio',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('log.columns.spend.write_5m_tokens'),
+          dataIndex: 'write_5m_tokens',
+          slotName: 'write_5m_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('log.columns.spend.write_5m_ratio'),
+          dataIndex: 'write_5m_ratio',
+          slotName: 'write_5m_ratio',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('log.columns.spend.write_1h_tokens'),
+          dataIndex: 'write_1h_tokens',
+          slotName: 'write_1h_tokens',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('log.columns.spend.write_1h_ratio'),
+          dataIndex: 'write_1h_ratio',
+          slotName: 'write_1h_ratio',
           align: 'center',
           width: 100,
         },

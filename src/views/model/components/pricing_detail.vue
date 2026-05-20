@@ -80,6 +80,27 @@
         />
         / M
       </template>
+      <template #write_ratio="{ record }">
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.write_ratio"
+        />
+        / M
+      </template>
+      <template #write_5m_ratio="{ record }">
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.write_5m_ratio"
+        />
+        / M
+      </template>
+      <template #write_1h_ratio="{ record }">
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.write_1h_ratio"
+        />
+        / M
+      </template>
     </a-table>
 
     <!-- 音频 -->
@@ -199,6 +220,20 @@
         <Quota
           :currency-symbol="props.modelValue?.currency_symbol"
           :model-value="record.write_ratio"
+        />
+        / M
+      </template>
+      <template #write_5m_ratio="{ record }">
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.write_5m_ratio"
+        />
+        / M
+      </template>
+      <template #write_1h_ratio="{ record }">
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.write_1h_ratio"
         />
         / M
       </template>
@@ -626,6 +661,27 @@
           align: 'center',
           width: 200,
         },
+        {
+          title: t('model.label.write_ratio'),
+          dataIndex: 'write_ratio',
+          slotName: 'write_ratio',
+          align: 'center',
+          width: 200,
+        },
+        {
+          title: t('model.label.write_5m_ratio'),
+          dataIndex: 'write_5m_ratio',
+          slotName: 'write_5m_ratio',
+          align: 'center',
+          width: 200,
+        },
+        {
+          title: t('model.label.write_1h_ratio'),
+          dataIndex: 'write_1h_ratio',
+          slotName: 'write_1h_ratio',
+          align: 'center',
+          width: 200,
+        },
       ],
     },
   ]);
@@ -751,6 +807,20 @@
           title: t('model.label.tiered.write_ratio'),
           dataIndex: 'write_ratio',
           slotName: 'write_ratio',
+          align: 'center',
+          width: 200,
+        },
+        {
+          title: t('model.label.tiered.write_5m_ratio'),
+          dataIndex: 'write_5m_ratio',
+          slotName: 'write_5m_ratio',
+          align: 'center',
+          width: 200,
+        },
+        {
+          title: t('model.label.tiered.write_1h_ratio'),
+          dataIndex: 'write_1h_ratio',
+          slotName: 'write_1h_ratio',
           align: 'center',
           width: 200,
         },

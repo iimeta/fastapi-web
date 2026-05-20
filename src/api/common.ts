@@ -26,6 +26,8 @@ export interface CachePricing {
   service_tier?: string;
   read_ratio: any;
   write_ratio?: any;
+  write_5m_ratio?: any;
+  write_1h_ratio?: any;
   mode?: string;
   gt?: any;
   lte?: any;
@@ -123,6 +125,8 @@ export interface CacheSpend {
   pricing: CachePricing;
   read_tokens: number;
   write_tokens: number;
+  write_5m_tokens: number;
+  write_1h_tokens: number;
   spend_tokens: number;
 }
 
