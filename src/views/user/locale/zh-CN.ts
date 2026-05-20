@@ -52,4 +52,6 @@ export default {
   'user.form.placeholder.name': '请输入姓名/邮箱',
   'user.form.quota': '额度低于',
   'user.form.title.del': '删除用户',
+  // privacy
+  'user.update.privacy_settings': '隐私设置',
 };

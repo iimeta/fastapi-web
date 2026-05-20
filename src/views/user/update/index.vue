@@ -372,6 +372,109 @@
                 :placeholder="$t('placeholder.remark')"
               />
             </a-form-item>
+            <template v-if="formData.privacy && hasPrivacyFields">
+              <a-divider orientation="left">
+                {{ $t('user.update.privacy_settings') }}
+              </a-divider>
+              <a-form-item
+                v-if="requestFields.length > 0"
+                :label="$t('user.center.privacy.request')"
+              >
+                <a-switch v-model="formData.privacy.log_request_content" />
+              </a-form-item>
+              <a-form-item
+                v-if="
+                  requestFields.length > 0 &&
+                  formData.privacy.log_request_content
+                "
+              >
+                <a-checkbox-group v-model="formData.privacy.log_request_fields">
+                  <a-space :size="12" wrap>
+                    <a-checkbox
+                      v-for="item in requestFields"
+                      :key="item.key"
+                      :value="item.key"
+                    >
+                      {{ item.label }}
+                    </a-checkbox>
+                  </a-space>
+                </a-checkbox-group>
+              </a-form-item>
+              <a-form-item
+                v-if="responseFields.length > 0"
+                :label="$t('user.center.privacy.response')"
+              >
+                <a-switch v-model="formData.privacy.log_response_content" />
+              </a-form-item>
+              <a-form-item
+                v-if="
+                  responseFields.length > 0 &&
+                  formData.privacy.log_response_content
+                "
+              >
+                <a-checkbox-group
+                  v-model="formData.privacy.log_response_fields"
+                >
+                  <a-space :size="12" wrap>
+                    <a-checkbox
+                      v-for="item in responseFields"
+                      :key="item.key"
+                      :value="item.key"
+                    >
+                      {{ item.label }}
+                    </a-checkbox>
+                  </a-space>
+                </a-checkbox-group>
+              </a-form-item>
+              <a-form-item
+                v-if="resourceFields.length > 0"
+                :label="$t('user.center.privacy.resource')"
+              >
+                <a-switch v-model="formData.privacy.log_resource_url" />
+              </a-form-item>
+              <a-form-item
+                v-if="
+                  resourceFields.length > 0 && formData.privacy.log_resource_url
+                "
+              >
+                <a-checkbox-group
+                  v-model="formData.privacy.log_resource_fields"
+                >
+                  <a-space :size="12" wrap>
+                    <a-checkbox
+                      v-for="item in resourceFields"
+                      :key="item.key"
+                      :value="item.key"
+                    >
+                      {{ item.label }}
+                    </a-checkbox>
+                  </a-space>
+                </a-checkbox-group>
+              </a-form-item>
+              <a-form-item
+                v-if="networkFields.length > 0"
+                :label="$t('user.center.privacy.client_ip')"
+              >
+                <a-switch v-model="formData.privacy.log_client_ip" />
+              </a-form-item>
+              <a-form-item
+                v-if="
+                  networkFields.length > 0 && formData.privacy.log_client_ip
+                "
+              >
+                <a-checkbox-group v-model="formData.privacy.log_network_fields">
+                  <a-space :size="12" wrap>
+                    <a-checkbox
+                      v-for="item in networkFields"
+                      :key="item.key"
+                      :value="item.key"
+                    >
+                      {{ item.label }}
+                    </a-checkbox>
+                  </a-space>
+                </a-checkbox-group>
+              </a-form-item>
+            </template>
             <a-space>
               <div class="submit-btn">
                 <a-button
@@ -397,7 +500,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
@@ -407,9 +510,15 @@
   import {
     submitUserUpdate,
     UserUpdate,
+    UserPrivacy,
     UserDetailParams,
     queryUserDetail,
   } from '@/api/admin_user';
+  import {
+    LogPrivacy,
+    PrivacyLogFieldOption,
+    querySysConfigDetail,
+  } from '@/api/sys_config';
   import { queryGroupList, GroupList } from '@/api/group';
   import Quota from '@/views/common/quota.vue';
 
@@ -422,6 +531,49 @@
   const router = useRouter();
 
   const groups = ref<GroupList[]>([]);
+  const logPrivacy = ref<LogPrivacy>();
+  const privacyInitialized = ref(false);
+
+  const defaultPrivacy = (): UserPrivacy => ({
+    is_configured: false,
+    log_request_content: false,
+    log_response_content: false,
+    log_resource_url: false,
+    log_client_ip: false,
+    log_request_fields: [],
+    log_response_fields: [],
+    log_resource_fields: [],
+    log_network_fields: [],
+  });
+
+  const sortFields = (fields: PrivacyLogFieldOption[]) =>
+    [...(fields || [])]
+      .filter((item) => item.enabled && item.key)
+      .sort((a, b) => (a.sort || 0) - (b.sort || 0));
+
+  const requestFields = computed(() =>
+    sortFields(logPrivacy.value?.request_privacy_fields || [])
+  );
+  const responseFields = computed(() =>
+    sortFields(logPrivacy.value?.response_privacy_fields || [])
+  );
+  const resourceFields = computed(() =>
+    sortFields(logPrivacy.value?.resource_privacy_fields || [])
+  );
+  const networkFields = computed(() =>
+    sortFields(logPrivacy.value?.network_privacy_fields || [])
+  );
+
+  const hasPrivacyFields = computed(
+    () =>
+      requestFields.value.length > 0 ||
+      responseFields.value.length > 0 ||
+      resourceFields.value.length > 0 ||
+      networkFields.value.length > 0
+  );
+
+  const fieldKeys = (fields: PrivacyLogFieldOption[]) =>
+    fields.map((item) => item.key);
 
   const getGroupList = async () => {
     try {
@@ -449,14 +601,53 @@
     groups: [],
     remark: '',
     status: 1,
+    privacy: defaultPrivacy(),
   });
+
+  const initPrivacyFromDetail = (
+    userPrivacy: UserPrivacy | undefined,
+    sysLogPrivacy: LogPrivacy | undefined
+  ) => {
+    if (!sysLogPrivacy) {
+      formData.value.privacy = defaultPrivacy();
+      return;
+    }
+
+    if (!userPrivacy || !userPrivacy.is_configured) {
+      formData.value.privacy = {
+        is_configured: false,
+        log_request_content: sysLogPrivacy.is_default_enable_request || false,
+        log_response_content: sysLogPrivacy.is_default_enable_response || false,
+        log_resource_url: sysLogPrivacy.is_default_enable_resource || false,
+        log_client_ip: sysLogPrivacy.is_default_enable_network || false,
+        log_request_fields: sysLogPrivacy.is_default_enable_request
+          ? fieldKeys(sortFields(sysLogPrivacy.request_privacy_fields || []))
+          : [],
+        log_response_fields: sysLogPrivacy.is_default_enable_response
+          ? fieldKeys(sortFields(sysLogPrivacy.response_privacy_fields || []))
+          : [],
+        log_resource_fields: sysLogPrivacy.is_default_enable_resource
+          ? fieldKeys(sortFields(sysLogPrivacy.resource_privacy_fields || []))
+          : [],
+        log_network_fields: sysLogPrivacy.is_default_enable_network
+          ? fieldKeys(sortFields(sysLogPrivacy.network_privacy_fields || []))
+          : [],
+      };
+    } else {
+      formData.value.privacy = { ...userPrivacy };
+    }
+  };
 
   const getUserDetail = async (
     params: UserDetailParams = { id: route.query.id }
   ) => {
     setLoading(true);
+    privacyInitialized.value = false;
     try {
-      const { data } = await queryUserDetail(params);
+      const [{ data }, configRes] = await Promise.all([
+        queryUserDetail(params),
+        querySysConfigDetail(),
+      ]);
       formData.value.id = data.id;
       formData.value.name = data.name;
       formData.value.email = data.email;
@@ -470,6 +661,10 @@
       formData.value.groups = data.groups;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
+
+      logPrivacy.value = configRes.data.log?.privacy;
+      initPrivacyFromDetail(data.privacy, logPrivacy.value);
+      privacyInitialized.value = true;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {
@@ -478,12 +673,144 @@
   };
   getUserDetail();
 
+  // Watch: turning on switch auto-selects all fields
+  watch(
+    () => formData.value.privacy?.log_request_content,
+    (value, oldValue) => {
+      const { privacy } = formData.value;
+      if (
+        !privacy ||
+        !privacyInitialized.value ||
+        !value ||
+        oldValue ||
+        (privacy.log_request_fields?.length || 0) > 0
+      )
+        return;
+      privacy.log_request_fields = fieldKeys(requestFields.value);
+    }
+  );
+  watch(
+    () => formData.value.privacy?.log_request_fields,
+    (fields) => {
+      const { privacy } = formData.value;
+      if (
+        privacy &&
+        privacyInitialized.value &&
+        privacy.log_request_content &&
+        fields?.length === 0
+      ) {
+        privacy.log_request_content = false;
+      }
+    },
+    { deep: true }
+  );
+
+  watch(
+    () => formData.value.privacy?.log_response_content,
+    (value, oldValue) => {
+      const { privacy } = formData.value;
+      if (
+        !privacy ||
+        !privacyInitialized.value ||
+        !value ||
+        oldValue ||
+        (privacy.log_response_fields?.length || 0) > 0
+      )
+        return;
+      privacy.log_response_fields = fieldKeys(responseFields.value);
+    }
+  );
+  watch(
+    () => formData.value.privacy?.log_response_fields,
+    (fields) => {
+      const { privacy } = formData.value;
+      if (
+        privacy &&
+        privacyInitialized.value &&
+        privacy.log_response_content &&
+        fields?.length === 0
+      ) {
+        privacy.log_response_content = false;
+      }
+    },
+    { deep: true }
+  );
+
+  watch(
+    () => formData.value.privacy?.log_resource_url,
+    (value, oldValue) => {
+      const { privacy } = formData.value;
+      if (
+        !privacy ||
+        !privacyInitialized.value ||
+        !value ||
+        oldValue ||
+        (privacy.log_resource_fields?.length || 0) > 0
+      )
+        return;
+      privacy.log_resource_fields = fieldKeys(resourceFields.value);
+    }
+  );
+  watch(
+    () => formData.value.privacy?.log_resource_fields,
+    (fields) => {
+      const { privacy } = formData.value;
+      if (
+        privacy &&
+        privacyInitialized.value &&
+        privacy.log_resource_url &&
+        fields?.length === 0
+      ) {
+        privacy.log_resource_url = false;
+      }
+    },
+    { deep: true }
+  );
+
+  watch(
+    () => formData.value.privacy?.log_client_ip,
+    (value, oldValue) => {
+      const { privacy } = formData.value;
+      if (
+        !privacy ||
+        !privacyInitialized.value ||
+        !value ||
+        oldValue ||
+        (privacy.log_network_fields?.length || 0) > 0
+      )
+        return;
+      privacy.log_network_fields = fieldKeys(networkFields.value);
+    }
+  );
+  watch(
+    () => formData.value.privacy?.log_network_fields,
+    (fields) => {
+      const { privacy } = formData.value;
+      if (
+        privacy &&
+        privacyInitialized.value &&
+        privacy.log_client_ip &&
+        fields?.length === 0
+      ) {
+        privacy.log_client_ip = false;
+      }
+    },
+    { deep: true }
+  );
+
   const submitForm = async () => {
     const res = await formRef.value?.validate();
     if (!res) {
       setLoading(true);
       try {
-        await submitUserUpdate(formData.value).then(() => {
+        const submitData = { ...formData.value };
+        if (submitData.privacy) {
+          submitData.privacy = {
+            ...submitData.privacy,
+            is_configured: true,
+          };
+        }
+        await submitUserUpdate(submitData).then(() => {
           Message.success(t('success.update'));
           router.push({
             name: 'UserList',

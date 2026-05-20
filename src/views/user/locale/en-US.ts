@@ -52,4 +52,6 @@ export default {
   'user.form.placeholder.name': 'Please enter name/email',
   'user.form.quota': 'Quota Below',
   'user.form.title.del': 'Delete User',
+  // privacy
+  'user.update.privacy_settings': 'Privacy Settings',
 };

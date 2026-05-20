@@ -52,4 +52,6 @@ export default {
   'user.form.placeholder.name': '請輸入姓名/信箱',
   'user.form.quota': '額度低於',
   'user.form.title.del': '刪除用戶',
+  // privacy
+  'user.update.privacy_settings': '隱私設定',
 };

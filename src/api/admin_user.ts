@@ -159,6 +159,7 @@ export interface UserUpdate {
   groups: string[];
   remark: string;
   status: number;
+  privacy?: UserPrivacy;
 }
 
 export function submitUserUpdate(data: UserUpdate) {

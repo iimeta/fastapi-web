@@ -363,11 +363,10 @@
 
   const effectivePrivacyEnabled = (
     configured = false,
-    allowUserConfig = false,
     defaultEnabled = false,
     userEnabled = false
   ) => {
-    if (!configured || !allowUserConfig) {
+    if (!configured) {
       return defaultEnabled;
     }
     return userEnabled;
@@ -375,7 +374,6 @@
 
   const effectivePrivacyFields = (
     configured = false,
-    allowUserConfig = false,
     defaultEnabled = false,
     userEnabled = false,
     userFields: string[] = [],
@@ -383,14 +381,13 @@
   ) => {
     const enabled = effectivePrivacyEnabled(
       configured,
-      allowUserConfig,
       defaultEnabled,
       userEnabled
     );
     if (!enabled) {
       return [];
     }
-    if (!configured || !allowUserConfig) {
+    if (!configured) {
       return defaultPrivacyFields(configFields);
     }
     const allowed = new Set(defaultPrivacyFields(configFields));
@@ -404,31 +401,26 @@
       is_configured: privacy?.is_configured || false,
       log_request_content: effectivePrivacyEnabled(
         privacy?.is_configured,
-        privacyConfig?.is_enable_request,
         privacyConfig?.is_default_enable_request,
         privacy?.log_request_content
       ),
       log_response_content: effectivePrivacyEnabled(
         privacy?.is_configured,
-        privacyConfig?.is_enable_response,
         privacyConfig?.is_default_enable_response,
         privacy?.log_response_content
       ),
       log_resource_url: effectivePrivacyEnabled(
         privacy?.is_configured,
-        privacyConfig?.is_enable_resource,
         privacyConfig?.is_default_enable_resource,
         privacy?.log_resource_url
       ),
       log_client_ip: effectivePrivacyEnabled(
         privacy?.is_configured,
-        privacyConfig?.is_enable_network,
         privacyConfig?.is_default_enable_network,
         privacy?.log_client_ip
       ),
       log_request_fields: effectivePrivacyFields(
         privacy?.is_configured,
-        privacyConfig?.is_enable_request,
         privacyConfig?.is_default_enable_request,
         privacy?.log_request_content,
         privacy?.log_request_fields,
@@ -436,7 +428,6 @@
       ),
       log_response_fields: effectivePrivacyFields(
         privacy?.is_configured,
-        privacyConfig?.is_enable_response,
         privacyConfig?.is_default_enable_response,
         privacy?.log_response_content,
         privacy?.log_response_fields,
@@ -444,7 +435,6 @@
       ),
       log_resource_fields: effectivePrivacyFields(
         privacy?.is_configured,
-        privacyConfig?.is_enable_resource,
         privacyConfig?.is_default_enable_resource,
         privacy?.log_resource_url,
         privacy?.log_resource_fields,
@@ -452,7 +442,6 @@
       ),
       log_network_fields: effectivePrivacyFields(
         privacy?.is_configured,
-        privacyConfig?.is_enable_network,
         privacyConfig?.is_default_enable_network,
         privacy?.log_client_ip,
         privacy?.log_network_fields,
