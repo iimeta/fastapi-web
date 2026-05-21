@@ -621,8 +621,7 @@
             `tiered_text_cache[${index}].mode` &&
             `tiered_text_cache[${index}].gt` &&
             `tiered_text_cache[${index}].lte` &&
-            `tiered_text_cache[${index}].read_ratio` &&
-            `tiered_text_cache[${index}].write_ratio`
+            `tiered_text_cache[${index}].read_ratio`
           "
           :label="`${index + 1}. ` + $t('model.label.text_cache')"
           :rules="[
