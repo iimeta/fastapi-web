@@ -613,14 +613,14 @@
 
 <style scoped lang="less">
   .model-square-page {
-    padding: 10px;
+    padding: 15px;
   }
 
   /* ===== 筛选区 ===== */
 
   .model-square-filter-card {
     margin-bottom: 15px;
-    border-radius: 10px;
+    border-radius: 4px;
 
     // Keep local: filter card needs tighter top padding for search row
     :deep(.arco-card-body) {

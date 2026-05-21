@@ -648,14 +648,14 @@
 
 <style scoped lang="less">
   .group-square-page {
-    padding: 10px;
+    padding: 15px;
   }
 
   /* ===== 筛选区 ===== */
 
   .group-square-filter-card {
     margin-bottom: 15px;
-    border-radius: 10px;
+    border-radius: 4px;
 
     :deep(.arco-card-body) {
       padding: 15px 15px 0px 15px;

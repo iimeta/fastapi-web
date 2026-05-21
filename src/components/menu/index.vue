@@ -402,6 +402,7 @@
               class={[
                 {
                   'menu-group--collapsible': isCollapsible,
+                  'menu-group--collapsed': isGroupCollapsed,
                 },
               ]}
               v-slots={{
@@ -483,6 +484,20 @@
     }
   }
 
+  // 分组收起状态 - 标题改为菜单项风格
+  .arco-menu .menu-group--collapsed.arco-menu-group {
+    > .arco-menu-group-title {
+      padding: 8px 12px 8px 24px;
+      font-size: 14px;
+      color: var(--color-text-2);
+      text-transform: none;
+      letter-spacing: normal;
+      line-height: 1.5;
+      border-radius: 6px;
+      margin: 1px 0;
+    }
+  }
+
   .menu-group-title {
     display: flex;
     align-items: center;
@@ -536,6 +551,15 @@
       letter-spacing: 0.3px;
       text-transform: uppercase;
       line-height: 1.2;
+    }
+
+    .menu-group--collapsed .arco-menu-item-group-title {
+      padding: 8px 12px;
+      font-size: 14px;
+      color: var(--color-text-1);
+      text-transform: none;
+      letter-spacing: normal;
+      line-height: 1.5;
     }
 
     .arco-menu-inner {
@@ -652,6 +676,10 @@
       &::before {
         background: rgba(var(--primary-6), 0.8);
       }
+    }
+
+    .menu-group--collapsed .arco-menu-item-group-title {
+      color: rgba(255, 255, 255, 0.85);
     }
 
     .arco-menu-inner .arco-menu-item {
