@@ -55,7 +55,7 @@
           title: 'menu.group.core_assets',
           icon: 'lucide-box',
           order: 20,
-          routes: ['model', 'model_agent', 'key', 'group'],
+          routes: ['model', 'model_agent', 'key', 'group', 'user'],
         },
         {
           title: 'menu.group.resource_market',
@@ -131,7 +131,10 @@
           title: 'menu.group.system_config',
           icon: 'lucide-settings',
           order: 80,
-          routes: ['user', 'notice', 'sys'],
+          routes: ['notice', 'sys'],
+          defaultCollapsed: {
+            admin: true,
+          },
         },
       ];
 

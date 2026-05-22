@@ -1093,7 +1093,6 @@
               v-model="batchFormData.models"
               :placeholder="$t('app.key.placeholder.key.models')"
             />
-            />
           </a-form-item>
           <a-form-item field="is_limit_quota" :label="$t('common.limit_quota')">
             <a-switch v-model="batchFormData.is_limit_quota" />
