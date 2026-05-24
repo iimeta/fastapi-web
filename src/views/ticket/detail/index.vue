@@ -1,203 +1,221 @@
 <template>
-  <div class="ticket-detail">
-    <a-spin :loading="loading" style="width: 100%">
-      <!-- Header -->
-      <div class="ticket-header">
-        <div class="ticket-header-top">
-          <div class="ticket-header-left">
-            <a-button size="small" @click="goBack">
+  <div class="container">
+    <a-breadcrumb class="container-breadcrumb">
+      <a-breadcrumb-item>
+        <lucide-headset />
+      </a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('ticket.menu') }}</a-breadcrumb-item>
+      <a-breadcrumb-item>{{ $t('ticket.menu.detail') }}</a-breadcrumb-item>
+    </a-breadcrumb>
+    <div class="ticket-detail">
+      <a-spin :loading="loading" style="width: 100%">
+        <!-- Header -->
+        <div class="ticket-header">
+          <div class="ticket-header-top">
+            <div class="ticket-header-left">
+              <a-button size="small" @click="goBack">
+                <template #icon><icon-left /></template>
+                {{ $t('button.return') }}
+              </a-button>
+              <span v-if="ticketData.ticket_no" class="ticket-no">
+                {{ ticketData.ticket_no }}
+                <a-button
+                  type="text"
+                  size="mini"
+                  class="copy-btn"
+                  @click="handleCopyTicketNo"
+                >
+                  <template #icon><icon-copy /></template>
+                </a-button>
+              </span>
+            </div>
+            <!-- Action Buttons -->
+            <div v-if="hasActions" class="ticket-actions">
+              <a-button
+                v-if="isHandler && ticketData.status === 2"
+                size="small"
+                type="primary"
+                @click="handleStatusUpdate(3)"
+              >
+                {{ $t('ticket.button.start') }}
+              </a-button>
+              <a-button
+                v-if="
+                  isHandler &&
+                  (ticketData.status === 1 ||
+                    ticketData.status === 3 ||
+                    ticketData.status === 4)
+                "
+                size="small"
+                type="primary"
+                status="success"
+                @click="handleStatusUpdate(5)"
+              >
+                {{ $t('ticket.button.resolve') }}
+              </a-button>
+              <a-button
+                v-if="ticketData.status === 5 || ticketData.status === 6"
+                size="small"
+                type="primary"
+                @click="handleStatusUpdate(2)"
+              >
+                {{ $t('ticket.button.reopen') }}
+              </a-button>
+              <a-button
+                v-if="ticketData.status !== 6"
+                size="small"
+                status="danger"
+                @click="handleClose"
+              >
+                {{ $t('ticket.button.close') }}
+              </a-button>
+            </div>
+          </div>
+
+          <h2 class="ticket-title">{{ ticketData.title }}</h2>
+
+          <div class="ticket-meta">
+            <a-tag :color="statusColor(ticketData.status || 2)" size="small">
+              {{ $t(`ticket.dict.status.${ticketData.status || 2}`) }}
+            </a-tag>
+            <a-tag
+              :color="priorityColor(ticketData.priority || 2)"
+              size="small"
+            >
+              {{ $t(`ticket.dict.priority.${ticketData.priority || 2}`) }}
+            </a-tag>
+            <a-tag
+              :color="categoryColor(ticketData.category || 'other')"
+              size="small"
+            >
+              {{ $t(`ticket.dict.category.${ticketData.category || 'other'}`) }}
+            </a-tag>
+            <span class="meta-item">
+              {{ $t('ticket.label.submitter') }}:
+              {{ ticketData.user_name || '-' }}
+            </span>
+            <span
+              v-if="userStore.role === 'admin' && ticketData.assignee_role"
+              class="meta-item"
+            >
+              {{ $t('ticket.label.assignee') }}:
+              <a-tag :color="roleColor(ticketData.assignee_role)" size="small">
+                {{ $t(`ticket.dict.role.${ticketData.assignee_role}`) }}
+              </a-tag>
+            </span>
+            <span class="meta-item meta-time">
+              {{ ticketData.created_at }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Timeline: Original + Replies -->
+        <div class="ticket-timeline">
+          <!-- Original content -->
+          <div class="timeline-item">
+            <div class="timeline-avatar">
+              <a-tag
+                :color="roleColor(displayRole(ticketData.user_role || 'user'))"
+                size="small"
+              >
+                {{
+                  $t(
+                    `ticket.dict.role.${displayRole(
+                      ticketData.user_role || 'user'
+                    )}`
+                  )
+                }}
+              </a-tag>
+            </div>
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <span class="timeline-name">{{ ticketData.user_name }}</span>
+                <span class="timeline-time">{{ ticketData.created_at }}</span>
+              </div>
+              <div
+                class="timeline-content"
+                @click="handleImageClick"
+                v-html="contentHtml"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Replies -->
+          <div
+            v-for="reply in ticketData.replies"
+            :key="reply.id"
+            class="timeline-item"
+            :class="{
+              'timeline-item--staff':
+                displayRole(reply.role || 'user') !== 'user',
+            }"
+          >
+            <div class="timeline-avatar">
+              <a-tag
+                :color="roleColor(displayRole(reply.role || 'user'))"
+                size="small"
+              >
+                {{
+                  $t(`ticket.dict.role.${displayRole(reply.role || 'user')}`)
+                }}
+              </a-tag>
+            </div>
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <span class="timeline-name">{{ reply.user_name }}</span>
+                <span class="timeline-time">{{ reply.created_at }}</span>
+              </div>
+              <div
+                class="timeline-content"
+                @click="handleImageClick"
+                v-html="replyHtmlMap[reply.id] || ''"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reply Form -->
+        <div
+          v-if="ticketData.status && ticketData.status !== 6"
+          class="ticket-reply-form"
+        >
+          <Vditor
+            ref="replyEditorRef"
+            v-model="replyContent"
+            :show-variables="false"
+            style="width: 100%"
+          />
+          <div
+            style="
+              margin-top: 12px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <a-button @click="goBack">
               <template #icon><icon-left /></template>
               {{ $t('button.return') }}
             </a-button>
-            <span v-if="ticketData.ticket_no" class="ticket-no">
-              {{ ticketData.ticket_no }}
-              <a-button
-                type="text"
-                size="mini"
-                class="copy-btn"
-                @click="handleCopyTicketNo"
-              >
-                <template #icon><icon-copy /></template>
-              </a-button>
-            </span>
-          </div>
-          <!-- Action Buttons -->
-          <div v-if="hasActions" class="ticket-actions">
             <a-button
-              v-if="isHandler && ticketData.status === 2"
-              size="small"
               type="primary"
-              @click="handleStatusUpdate(3)"
+              :loading="replyLoading"
+              @click="handleReply"
             >
-              {{ $t('ticket.button.start') }}
-            </a-button>
-            <a-button
-              v-if="
-                isHandler &&
-                (ticketData.status === 1 ||
-                  ticketData.status === 3 ||
-                  ticketData.status === 4)
-              "
-              size="small"
-              type="primary"
-              status="success"
-              @click="handleStatusUpdate(5)"
-            >
-              {{ $t('ticket.button.resolve') }}
-            </a-button>
-            <a-button
-              v-if="ticketData.status === 5 || ticketData.status === 6"
-              size="small"
-              type="primary"
-              @click="handleStatusUpdate(2)"
-            >
-              {{ $t('ticket.button.reopen') }}
-            </a-button>
-            <a-button
-              v-if="ticketData.status !== 6"
-              size="small"
-              status="danger"
-              @click="handleClose"
-            >
-              {{ $t('ticket.button.close') }}
+              {{ $t('ticket.button.reply') }}
             </a-button>
           </div>
         </div>
 
-        <h2 class="ticket-title">{{ ticketData.title }}</h2>
-
-        <div class="ticket-meta">
-          <a-tag :color="statusColor(ticketData.status || 2)" size="small">
-            {{ $t(`ticket.dict.status.${ticketData.status || 2}`) }}
-          </a-tag>
-          <a-tag :color="priorityColor(ticketData.priority || 2)" size="small">
-            {{ $t(`ticket.dict.priority.${ticketData.priority || 2}`) }}
-          </a-tag>
-          <a-tag
-            :color="categoryColor(ticketData.category || 'other')"
-            size="small"
-          >
-            {{ $t(`ticket.dict.category.${ticketData.category || 'other'}`) }}
-          </a-tag>
-          <span class="meta-item">
-            {{ $t('ticket.label.submitter') }}:
-            {{ ticketData.user_name || '-' }}
-          </span>
-          <span
-            v-if="userStore.role === 'admin' && ticketData.assignee_role"
-            class="meta-item"
-          >
-            {{ $t('ticket.label.assignee') }}:
-            <a-tag :color="roleColor(ticketData.assignee_role)" size="small">
-              {{ $t(`ticket.dict.role.${ticketData.assignee_role}`) }}
-            </a-tag>
-          </span>
-          <span class="meta-item meta-time">
-            {{ ticketData.created_at }}
-          </span>
-        </div>
-      </div>
-
-      <!-- Timeline: Original + Replies -->
-      <div class="ticket-timeline">
-        <!-- Original content -->
-        <div class="timeline-item">
-          <div class="timeline-avatar">
-            <a-tag
-              :color="roleColor(displayRole(ticketData.user_role || 'user'))"
-              size="small"
-            >
-              {{
-                $t(
-                  `ticket.dict.role.${displayRole(
-                    ticketData.user_role || 'user'
-                  )}`
-                )
-              }}
-            </a-tag>
-          </div>
-          <div class="timeline-body">
-            <div class="timeline-header">
-              <span class="timeline-name">{{ ticketData.user_name }}</span>
-              <span class="timeline-time">{{ ticketData.created_at }}</span>
-            </div>
-            <div
-              class="timeline-content"
-              @click="handleImageClick"
-              v-html="contentHtml"
-            ></div>
-          </div>
-        </div>
-
-        <!-- Replies -->
-        <div
-          v-for="reply in ticketData.replies"
-          :key="reply.id"
-          class="timeline-item"
-          :class="{
-            'timeline-item--staff':
-              displayRole(reply.role || 'user') !== 'user',
-          }"
-        >
-          <div class="timeline-avatar">
-            <a-tag
-              :color="roleColor(displayRole(reply.role || 'user'))"
-              size="small"
-            >
-              {{ $t(`ticket.dict.role.${displayRole(reply.role || 'user')}`) }}
-            </a-tag>
-          </div>
-          <div class="timeline-body">
-            <div class="timeline-header">
-              <span class="timeline-name">{{ reply.user_name }}</span>
-              <span class="timeline-time">{{ reply.created_at }}</span>
-            </div>
-            <div
-              class="timeline-content"
-              @click="handleImageClick"
-              v-html="replyHtmlMap[reply.id] || ''"
-            ></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Reply Form -->
-      <div
-        v-if="ticketData.status && ticketData.status !== 6"
-        class="ticket-reply-form"
-      >
-        <Vditor
-          ref="replyEditorRef"
-          v-model="replyContent"
-          :show-variables="false"
-          style="width: 100%"
+        <!-- Image Preview -->
+        <a-image-preview-group
+          v-model:visible="previewVisible"
+          v-model:current="previewCurrent"
+          :src-list="previewSrcList"
+          infinite
         />
-        <div
-          style="
-            margin-top: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
-        >
-          <a-button @click="goBack">
-            <template #icon><icon-left /></template>
-            {{ $t('button.return') }}
-          </a-button>
-          <a-button type="primary" :loading="replyLoading" @click="handleReply">
-            {{ $t('ticket.button.reply') }}
-          </a-button>
-        </div>
-      </div>
-
-      <!-- Image Preview -->
-      <a-image-preview-group
-        v-model:visible="previewVisible"
-        v-model:current="previewCurrent"
-        :src-list="previewSrcList"
-        infinite
-      />
-    </a-spin>
+      </a-spin>
+    </div>
   </div>
 </template>
 
@@ -458,12 +476,14 @@
 </script>
 
 <style scoped lang="less">
+  @import '@/assets/style/page-form.less';
+
   .ticket-detail {
     background: #fff;
-    min-height: 100vh;
+    min-height: calc(100vh - 120px);
     max-width: 100%;
-    margin: -16px -20px;
     padding: 24px 0;
+    border-radius: 4px;
   }
 
   .ticket-header {

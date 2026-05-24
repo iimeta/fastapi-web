@@ -101,7 +101,6 @@
                 v-model="formData.models"
                 :placeholder="$t('placeholder.model')"
               />
-              />
             </a-form-item>
             <a-form-item
               field="is_public"
