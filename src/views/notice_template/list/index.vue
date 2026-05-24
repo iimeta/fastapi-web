@@ -526,6 +526,22 @@
       label: t('notice.template.dict.scenes.notice_login'),
       value: 'notice_login',
     },
+    {
+      label: t('notice.template.dict.scenes.ticket_create'),
+      value: 'ticket_create',
+    },
+    {
+      label: t('notice.template.dict.scenes.ticket_reply'),
+      value: 'ticket_reply',
+    },
+    {
+      label: t('notice.template.dict.scenes.ticket_status'),
+      value: 'ticket_status',
+    },
+    {
+      label: t('notice.template.dict.scenes.ticket_auto_close'),
+      value: 'ticket_auto_close',
+    },
   ]);
 
   const statusOptions = computed<SelectOptionData[]>(() => [
