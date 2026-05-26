@@ -43,7 +43,7 @@
       // defaultCollapsed: 控制分组默认是否收起
       //   - boolean: 对所有角色生效
       //   - Record<string, boolean>: 按角色配置, 如 { admin: true, user: false }
-      //   - 未配置时默认展开
+      //   - 未配置时默认收起
       const menuGroups = [
         {
           title: '',
@@ -65,9 +65,6 @@
             admin: 45,
           } as Record<string, number>,
           routes: ['model_square', 'group_square'],
-          defaultCollapsed: {
-            admin: true,
-          },
         },
         {
           title: 'menu.group.data_operations',
@@ -80,9 +77,6 @@
           icon: 'lucide-layout-grid',
           order: 50,
           routes: ['app', 'app_key'],
-          defaultCollapsed: {
-            admin: true,
-          },
         },
         {
           title: 'menu.group.invite',
@@ -96,18 +90,12 @@
             'ManageInviteRewards',
             'ManageInviteApply',
           ],
-          defaultCollapsed: {
-            admin: true,
-          },
         },
         {
           title: 'menu.group.finance',
           icon: 'lucide-banknote',
           order: 60,
           routes: ['BillList', 'DealRecordList'],
-          defaultCollapsed: {
-            admin: true,
-          },
         },
         {
           title: 'menu.group.tasks_logs',
@@ -123,9 +111,6 @@
           icon: 'lucide-headset',
           order: 75,
           routes: ['TicketCreate', 'TicketMyList', 'TicketList'],
-          defaultCollapsed: {
-            admin: true,
-          },
         },
         {
           title: 'menu.group.system_config',
@@ -141,13 +126,13 @@
       // 解析分组的默认收起状态
       const getDefaultCollapsed = (group: (typeof menuGroups)[number]) => {
         const dc = (group as any).defaultCollapsed;
-        if (dc === undefined || dc === null) return false;
+        if (dc === undefined || dc === null) return true;
         if (typeof dc === 'boolean') return dc;
         if (typeof dc === 'object') {
           const roleVal = dc[userStore.role];
-          return roleVal !== undefined ? roleVal : false;
+          return roleVal !== undefined ? roleVal : true;
         }
-        return false;
+        return true;
       };
 
       // 记录每个分组的收起状态, key 为 group.title
