@@ -129,7 +129,7 @@ const useAppStore = defineStore('app', {
       return (
         state.config.announcements || [
           {
-            content: 'v2.4.0 版本发布\u3000',
+            content: 'v2.4.0 版本发布\u30002026-06-03',
             jump_url: 'https://www.fastapi.ai/releases/#v2-4-0',
           },
           {
