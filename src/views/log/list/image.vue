@@ -371,6 +371,9 @@
         <template #prompt="{ record }">
           {{ record.prompt || '-' }}
         </template>
+        <template #size="{ record }">
+          {{ record.size || '-' }}
+        </template>
         <template #images="{ record }">
           <a-button
             type="text"
@@ -697,6 +700,12 @@
       align: 'center',
       ellipsis: true,
       tooltip: true,
+    },
+    {
+      title: t('log.columns.size'),
+      dataIndex: 'size',
+      slotName: 'size',
+      align: 'center',
     },
     {
       title: t('log.columns.images'),

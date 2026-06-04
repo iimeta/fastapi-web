@@ -80,6 +80,7 @@ export default {
   'log.columns.characters': '字符数',
   'log.columns.minute': '分钟数',
   'log.columns.prompt': '提示词',
+  'log.columns.size': '分辨率',
   'log.columns.images': '图像',
   'log.columns.action': '接口',
   'log.columns.video_id': '视频ID',
