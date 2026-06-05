@@ -1080,7 +1080,7 @@
     (val) => {
       cloneColumns.value = cloneDeep(val);
       if (userRole !== 'admin') {
-        cloneColumns.value.splice(6, 1);
+        cloneColumns.value.splice(10, 1);
       }
       cloneColumns.value.forEach((item, index) => {
         item.checked = true;
