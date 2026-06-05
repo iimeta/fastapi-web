@@ -411,6 +411,109 @@
             <span v-else> - </span>
           </span>
         </template>
+        <template #stream="{ record }">
+          {{ $t(`dict.${record.stream || false}`) }}
+        </template>
+        <template #conn_time="{ record }">
+          <a-tag
+            v-if="record.conn_time > 30000"
+            v-permission="['user', 'reseller']"
+            color="red"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.conn_time > 15000"
+            v-permission="['user', 'reseller']"
+            color="orange"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.conn_time > 5000"
+            v-permission="['user', 'reseller']"
+            color="gold"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag v-else v-permission="['user', 'reseller']" color="green">
+            {{ record.conn_time || '-' }}
+          </a-tag>
+          <a-tag
+            v-if="record.conn_time > 10000"
+            v-permission="['admin']"
+            color="red"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.conn_time > 5000"
+            v-permission="['admin']"
+            color="orange"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.conn_time > 3000"
+            v-permission="['admin']"
+            color="gold"
+          >
+            {{ record.conn_time }}
+          </a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">
+            {{ record.conn_time || '-' }}
+          </a-tag>
+        </template>
+        <template #duration="{ record }">
+          <a-tag
+            v-if="record.duration > 180000"
+            v-permission="['user', 'reseller']"
+            color="red"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.duration > 120000"
+            v-permission="['user', 'reseller']"
+            color="orange"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.duration > 90000"
+            v-permission="['user', 'reseller']"
+            color="gold"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag v-else v-permission="['user', 'reseller']" color="green">
+            {{ record.duration || '-' }}
+          </a-tag>
+          <a-tag
+            v-if="record.duration > 120000"
+            v-permission="['admin']"
+            color="red"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.duration > 90000"
+            v-permission="['admin']"
+            color="orange"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag
+            v-else-if="record.duration > 60000"
+            v-permission="['admin']"
+            color="gold"
+          >
+            {{ record.duration }}
+          </a-tag>
+          <a-tag v-else v-permission="['admin']" color="green">
+            {{ record.duration || '-' }}
+          </a-tag>
+        </template>
         <template #total_time="{ record }">
           <a-tag
             v-if="record.total_time > 180000"
@@ -755,6 +858,25 @@
           ),
         ],
       },
+    },
+    {
+      title: t('log.columns.stream'),
+      dataIndex: 'stream',
+      slotName: 'stream',
+      align: 'center',
+      width: 60,
+    },
+    {
+      title: t('log.columns.conn_time'),
+      dataIndex: 'conn_time',
+      slotName: 'conn_time',
+      align: 'center',
+    },
+    {
+      title: t('log.columns.duration'),
+      dataIndex: 'duration',
+      slotName: 'duration',
+      align: 'center',
     },
     {
       title: t('log.columns.total_time'),

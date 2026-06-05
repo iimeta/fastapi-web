@@ -79,6 +79,12 @@
           $t(`dict.model_type.${currentData.model_type}`)
         }}</span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.stream')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>{{ $t(`dict.${currentData.stream || false}`) }}</span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('log.columns.prompt')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -181,6 +187,44 @@
             :currency-symbol="currentData.spend?.currency_symbol"
           />
           <span v-else> - </span>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.conn_time')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.conn_time > 30000" color="red">
+            {{ currentData.conn_time }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.conn_time > 15000" color="orange">
+            {{ currentData.conn_time }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.conn_time > 5000" color="gold">
+            {{ currentData.conn_time }} ms
+          </a-tag>
+          <a-tag v-else color="green"
+            >{{ currentData.conn_time || '-' }} ms</a-tag
+          >
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.duration')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.duration > 180000" color="red">
+            {{ currentData.duration }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.duration > 120000" color="orange">
+            {{ currentData.duration }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.duration > 90000" color="gold">
+            {{ currentData.duration }} ms
+          </a-tag>
+          <a-tag v-else color="green"
+            >{{ currentData.duration || '-' }} ms</a-tag
+          >
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('log.detail.total_time')">
@@ -344,6 +388,14 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>{{ currentData.real_model }}</span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.stream')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ $t(`dict.${currentData.stream || false}`) }}
+        </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('log.detail.enable_fallback')">
         <a-skeleton v-if="loading" :animation="true">
@@ -536,6 +588,44 @@
             :currency-symbol="currentData.spend?.currency_symbol"
           />
           <span v-else> - </span>
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.conn_time')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.conn_time > 10000" color="red">
+            {{ currentData.conn_time }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.conn_time > 5000" color="orange">
+            {{ currentData.conn_time }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.conn_time > 3000" color="gold">
+            {{ currentData.conn_time }} ms
+          </a-tag>
+          <a-tag v-else color="green"
+            >{{ currentData.conn_time || '-' }} ms</a-tag
+          >
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.duration')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <a-tag v-if="currentData.duration > 120000" color="red">
+            {{ currentData.duration }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.duration > 90000" color="orange">
+            {{ currentData.duration }} ms
+          </a-tag>
+          <a-tag v-else-if="currentData.duration > 60000" color="gold">
+            {{ currentData.duration }} ms
+          </a-tag>
+          <a-tag v-else color="green"
+            >{{ currentData.duration || '-' }} ms</a-tag
+          >
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('log.detail.total_time')">

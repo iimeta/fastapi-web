@@ -143,6 +143,9 @@ export interface ImagePage {
   app_id: any;
   model: string;
   total_tokens: number;
+  stream: boolean;
+  conn_time: number;
+  duration: number;
   total_time: number;
   internal_time: number;
   req_time: any;
@@ -195,6 +198,9 @@ export interface ImageDetail {
   quality: string;
   image_data: any;
   spend: Spend;
+  stream: boolean;
+  conn_time: number;
+  duration: number;
   total_time: number;
   internal_time: number;
   req_time: string;
