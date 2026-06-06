@@ -39,22 +39,6 @@
           {{ $t(`dict.model_type.${currentData.type}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('model.label.base_url')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.base_url || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('model.label.path')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.path || '-' }}
-        </span>
-      </a-descriptions-item>
       <a-descriptions-item :label="$t('model.label.billing_rule')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

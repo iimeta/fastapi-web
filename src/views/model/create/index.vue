@@ -864,8 +864,6 @@
     name: '',
     model: '',
     type: '1',
-    base_url: '',
-    path: '',
     remark: '',
     is_enable_preset_config: false,
     preset_config: {

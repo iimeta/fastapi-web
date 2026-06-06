@@ -48,8 +48,6 @@ export interface Model {
   name: string;
   model: string;
   type: string;
-  base_url: string;
-  path: string;
   remark: string;
   time_rules?: TimeRule[];
   pricing: Pricing;
@@ -168,8 +166,6 @@ export interface ModelDetail {
   name: string;
   model: string;
   type: number;
-  base_url: string;
-  path: string;
   time_rules?: TimeRule[];
   pricing: Pricing;
   groups: string[];

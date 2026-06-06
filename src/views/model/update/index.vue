@@ -850,8 +850,6 @@
     name: '',
     model: '',
     type: '1',
-    base_url: '',
-    path: '',
     remark: '',
     is_enable_preset_config: false,
     preset_config: {
@@ -976,8 +974,6 @@
       formData.value.name = data.name;
       formData.value.model = data.model;
       formData.value.type = String(data.type);
-      formData.value.base_url = data.base_url;
-      formData.value.path = data.path;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
       formData.value.time_rules = data.time_rules;
