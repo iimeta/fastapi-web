@@ -208,6 +208,9 @@
             {{ record.image_id || '-' }}
           </span>
         </template>
+        <template #quality="{ record }">
+          {{ record.quality || '-' }}
+        </template>
         <template #image_url="{ record }">
           <span
             class="copy-btn"

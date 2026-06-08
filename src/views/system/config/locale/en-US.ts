@@ -194,6 +194,8 @@ export default {
   'sys.config.placeholder.ticket.auto_close_days': 'Enter ticket auto close days, 0 disables auto close',
   'sys.config.placeholder.video_task.lock_minutes': 'Enter single video task timeout',
   'sys.config.placeholder.image_task.lock_minutes': 'Enter single image task timeout',
+  'sys.config.label.image_task.timeout': 'Generation Timeout',
+  'sys.config.placeholder.image_task.timeout': 'Enter image generation timeout',
   'sys.config.label.image_task.is_enable_storage': 'Enable Storage',
   'sys.config.label.image_task.storage_dir': 'Storage Directory',
   'sys.config.placeholder.image_task.storage_dir': 'Default storage in /resource/public/image folder under admin deployment directory.',

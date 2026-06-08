@@ -12,7 +12,7 @@ export default {
   'task.detail.creator': '调用密钥',
   'task.detail.image_url': '图像URL',
   'task.detail.image_id': '图像ID',
-  'task.detail.n': '生成数量',
+  'task.detail.n': '张数',
   'task.detail.quality': '质量',
   'task.detail.size': '尺寸',
   'task.detail.response_format': '响应格式',

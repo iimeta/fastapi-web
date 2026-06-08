@@ -194,6 +194,8 @@ export default {
   'sys.config.placeholder.ticket.auto_close_days': '請輸入工單自動關閉天數, 0表示不自動關閉',
   'sys.config.placeholder.video_task.lock_minutes': '請輸入單次影片任務超時時間',
   'sys.config.placeholder.image_task.lock_minutes': '請輸入單次繪圖任務超時時間',
+  'sys.config.label.image_task.timeout': '生成逾時',
+  'sys.config.placeholder.image_task.timeout': '請輸入圖片生成逾時時間',
   'sys.config.label.image_task.is_enable_storage': '啟用儲存',
   'sys.config.label.image_task.storage_dir': '儲存目錄',
   'sys.config.placeholder.image_task.storage_dir': '默認儲存到admin部署目錄下的/resource/public/image數據夾中',

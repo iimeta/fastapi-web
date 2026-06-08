@@ -142,6 +142,7 @@ export interface ImagePage {
   user_id: any;
   app_id: any;
   model: string;
+  action: string;
   total_tokens: number;
   stream: boolean;
   conn_time: number;
@@ -180,6 +181,7 @@ export interface ImageDetail {
   model_name: string;
   model: string;
   model_type: number;
+  action: string;
   key: string;
   real_model_id: string;
   real_model_name: string;

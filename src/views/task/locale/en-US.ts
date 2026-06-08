@@ -12,7 +12,7 @@ export default {
   'task.detail.creator': 'Calling Key',
   'task.detail.image_url': 'Image URL',
   'task.detail.image_id': 'Image ID',
-  'task.detail.n': 'Count',
+  'task.detail.n': 'Images',
   'task.detail.quality': 'Quality',
   'task.detail.size': 'Size',
   'task.detail.response_format': 'Response Format',
