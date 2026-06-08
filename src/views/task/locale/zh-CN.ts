@@ -1,5 +1,7 @@
 export default {
   'task.menu': '任务中心',
+  'task.menu.image': '绘图任务',
+  'task.menu.image.detail': '绘图任务详情',
   'task.menu.video': '视频任务',
   'task.menu.video.detail': '视频任务详情',
   'task.menu.file': '文件任务',
@@ -8,6 +10,12 @@ export default {
   'task.menu.batch.detail': '批处理任务详情',
   // detail
   'task.detail.creator': '调用密钥',
+  'task.detail.image_url': '图像URL',
+  'task.detail.image_id': '图像ID',
+  'task.detail.n': '生成数量',
+  'task.detail.quality': '质量',
+  'task.detail.size': '尺寸',
+  'task.detail.response_format': '响应格式',
   'task.detail.video_url': '视频URL',
   'task.detail.video_id': '视频ID',
   'task.detail.width_height': '宽度 × 高度',
@@ -36,6 +44,8 @@ export default {
   // form
   'task.form.trace_id': 'TraceID',
   'task.form.user_id': 'UserID',
+  'task.form.placeholder.image_id': '请输入图像ID',
+  'task.form.placeholder.image_url': '请输入图像URL',
   'task.form.placeholder.video_id': '请输入视频ID',
   'task.form.placeholder.video_url': '请输入视频URL',
   'task.form.placeholder.file_id': '请输入文件ID',

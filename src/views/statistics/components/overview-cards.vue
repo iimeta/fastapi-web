@@ -133,6 +133,7 @@
     total_batch_tasks: 0,
     total_file_tasks: 0,
     total_video_tasks: 0,
+    total_image_tasks: 0,
   });
 
   const s = ref<StatisticsSummaryRes>({
@@ -233,6 +234,12 @@
           label: t('common.provider'),
           value: d.value.total_providers,
           color: '#eb2f96',
+        },
+        {
+          key: 'image',
+          label: t('task.menu.image'),
+          value: d.value.total_image_tasks,
+          color: '#f5222d',
         },
         {
           key: 'video',

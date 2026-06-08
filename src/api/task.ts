@@ -85,6 +85,81 @@ export function videoCopyField(params: VideoCopyFieldParams) {
   return axios.post<VideoCopyFieldRes>('/api/v1/task/video/copy/field', params);
 }
 
+export interface ImagePage {
+  id: string;
+  trace_id: string;
+  user_id: number;
+  app_id: number;
+  task_id: string;
+  image_url: string;
+  image_time: number;
+  status: number;
+  created_at: any;
+}
+
+export interface ImagePageParams extends Partial<ImagePage> {
+  current: number;
+  pageSize: number;
+}
+
+export interface ImagePageRes {
+  items: ImagePage[];
+  paging: Paging;
+}
+
+export function queryImagePage(params: ImagePageParams) {
+  return axios.post<ImagePageRes>('/api/v1/task/image/page', params);
+}
+
+export interface ImageDetail {
+  id: string;
+  trace_id: string;
+  user_id: number;
+  app_id: number;
+  model: string;
+  image_id: string;
+  width: number;
+  height: number;
+  n: number;
+  quality: string;
+  size: string;
+  response_format: string;
+  prompt: string;
+  progress: number;
+  status: string;
+  completed_at: string;
+  expires_at: string;
+  image_url: string;
+  file_name: string;
+  file_path: string;
+  error: any;
+  creator: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export function queryImageDetail(params: DetailParams) {
+  return axios.get<ImageDetail>('/api/v1/task/image/detail', {
+    params,
+    paramsSerializer: (obj) => {
+      return qs.stringify(obj);
+    },
+  });
+}
+
+export interface ImageCopyFieldParams {
+  id: string;
+  field: string;
+}
+
+export interface ImageCopyFieldRes {
+  value: string;
+}
+
+export function imageCopyField(params: ImageCopyFieldParams) {
+  return axios.post<ImageCopyFieldRes>('/api/v1/task/image/copy/field', params);
+}
+
 export interface FilePage {
   id: string;
   trace_id: string;

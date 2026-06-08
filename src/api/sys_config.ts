@@ -195,6 +195,17 @@ export interface QuotaTask {
   lock_minutes: number;
 }
 
+export interface ImageTask {
+  open: boolean;
+  cron: string;
+  lock_minutes: number;
+  is_enable_storage: boolean;
+  storage_dir: string;
+  storage_base_url: string;
+  storage_expires_at: number;
+  storage_expired_delete: boolean;
+}
+
 export interface VideoTask {
   open: boolean;
   cron: string;
@@ -328,6 +339,7 @@ export interface SysConfigDetail {
   quota: Quota;
   ticket: Ticket;
   quota_task: QuotaTask;
+  image_task: ImageTask;
   video_task: VideoTask;
   file_task: FileTask;
   batch_task: BatchTask;
@@ -370,6 +382,7 @@ export interface SysConfigUpdate {
   quota: Quota;
   ticket: Ticket;
   quota_task: QuotaTask;
+  image_task: ImageTask;
   video_task: VideoTask;
   file_task: FileTask;
   batch_task: BatchTask;

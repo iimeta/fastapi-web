@@ -168,6 +168,113 @@
           </a-input-number>
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'image_task'"
+          field="image_task.cron"
+          :label="$t('sys.config.label.cron')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.cron'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.image_task.cron"
+            :placeholder="$t('sys.config.placeholder.cron')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_task'"
+          field="image_task.lock_minutes"
+          :label="$t('sys.config.label.lock_minutes')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.image_task.lock_minutes'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.image_task.lock_minutes"
+            :placeholder="$t('sys.config.placeholder.image_task.lock_minutes')"
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.minute') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_task'"
+          field="image_task.is_enable_storage"
+          :label="$t('sys.config.label.image_task.is_enable_storage')"
+        >
+          <a-switch v-model="configFormData.image_task.is_enable_storage" />
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'image_task' &&
+            configFormData.image_task.is_enable_storage
+          "
+          field="image_task.storage_dir"
+          :label="$t('sys.config.label.image_task.storage_dir')"
+        >
+          <a-input
+            v-model="configFormData.image_task.storage_dir"
+            :placeholder="$t('sys.config.placeholder.image_task.storage_dir')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'image_task' &&
+            configFormData.image_task.is_enable_storage
+          "
+          field="image_task.storage_base_url"
+          :label="$t('sys.config.label.image_task.storage_base_url')"
+        >
+          <a-input
+            v-model="configFormData.image_task.storage_base_url"
+            :placeholder="
+              $t('sys.config.placeholder.image_task.storage_base_url')
+            "
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'image_task' &&
+            configFormData.image_task.is_enable_storage
+          "
+          field="image_task.storage_expires_at"
+          :label="$t('sys.config.label.image_task.storage_expires_at')"
+        >
+          <a-input-number
+            v-model="configFormData.image_task.storage_expires_at"
+            :placeholder="
+              $t('sys.config.placeholder.image_task.storage_expires_at')
+            "
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.minute') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="
+            configFormData.action === 'image_task' &&
+            configFormData.image_task.is_enable_storage
+          "
+          field="image_task.storage_expired_delete"
+          :label="$t('sys.config.label.image_task.storage_expired_delete')"
+        >
+          <a-switch
+            v-model="configFormData.image_task.storage_expired_delete"
+          />
+        </a-form-item>
+        <a-form-item
           v-if="configFormData.action === 'video_task'"
           field="video_task.cron"
           :label="$t('sys.config.label.cron')"
@@ -1010,6 +1117,7 @@
       if (!data) return;
       configFormData.value.quota_task = data.quota_task;
       configFormData.value.statistics = data.statistics;
+      configFormData.value.image_task = data.image_task;
       configFormData.value.video_task = data.video_task;
       configFormData.value.file_task = data.file_task;
       configFormData.value.batch_task = data.batch_task;
@@ -1033,6 +1141,14 @@
           title: t('sys.config.item.title.statistics'),
           desc: t('sys.config.item.desc.statistics'),
           open: configFormData.value.statistics.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'image_task',
+          title: t('sys.config.item.title.image_task'),
+          desc: t('sys.config.item.desc.image_task'),
+          open: configFormData.value.image_task.open,
           config: true,
           reset: true,
         },

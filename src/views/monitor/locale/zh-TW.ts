@@ -15,6 +15,8 @@ export default {
   'monitor.activeBatch': '進行中批處理',
   'monitor.activeVideo': '進行中視頻',
   'monitor.queuedVideo': '排隊中視頻',
+  'monitor.activeImage': '進行中繪圖',
+  'monitor.queuedImage': '排隊中繪圖',
   'monitor.queuedBatch': '排隊中批處理',
   'monitor.mode.realtime': '實時',
   'monitor.mode.history': '歷史',

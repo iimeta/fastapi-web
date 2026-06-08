@@ -204,6 +204,7 @@ export interface StatisticsOverviewRes {
   today_apps: number;
   total_batch_tasks: number;
   total_file_tasks: number;
+  total_image_tasks: number;
   total_video_tasks: number;
 }
 
@@ -311,9 +312,12 @@ export interface TaskStatusItem {
 export interface StatisticsTaskStatusRes {
   batch: TaskStatusItem[];
   file: TaskStatusItem[];
+  image: TaskStatusItem[];
   video: TaskStatusItem[];
   active_batch: number;
+  active_image: number;
   active_video: number;
+  queued_image: number;
   queued_video: number;
   queued_batch: number;
 }

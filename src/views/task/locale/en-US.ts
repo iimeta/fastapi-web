@@ -1,5 +1,7 @@
 export default {
   'task.menu': 'Task Center',
+  'task.menu.image': 'Image Tasks',
+  'task.menu.image.detail': 'Image Task Details',
   'task.menu.video': 'Video Tasks',
   'task.menu.video.detail': 'Video Task Details',
   'task.menu.file': 'File Tasks',
@@ -8,6 +10,12 @@ export default {
   'task.menu.batch.detail': 'Batch Task Details',
   // detail
   'task.detail.creator': 'Calling Key',
+  'task.detail.image_url': 'Image URL',
+  'task.detail.image_id': 'Image ID',
+  'task.detail.n': 'Count',
+  'task.detail.quality': 'Quality',
+  'task.detail.size': 'Size',
+  'task.detail.response_format': 'Response Format',
   'task.detail.video_url': 'Video URL',
   'task.detail.video_id': 'Video ID',
   'task.detail.width_height': 'Width × Height',
@@ -36,6 +44,8 @@ export default {
   // form
   'task.form.trace_id': 'TraceID',
   'task.form.user_id': 'UserID',
+  'task.form.placeholder.image_id': 'Please enter image ID',
+  'task.form.placeholder.image_url': 'Please enter image URL',
   'task.form.placeholder.video_id': 'Please enter video ID',
   'task.form.placeholder.video_url': 'Please enter video URL',
   'task.form.placeholder.file_id': 'Please enter file ID',

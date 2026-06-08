@@ -7,15 +7,19 @@
       <DateShortcut :show-all="false" @change="handleDateChange" />
     </div>
     <a-grid :cols="24" :col-gap="12" :row-gap="0">
-      <a-grid-item :span="8">
+      <a-grid-item :span="6">
+        <div class="task-sub-title">{{ $t('task.menu.image') }}</div>
+        <Chart height="280px" :option="imageOption" />
+      </a-grid-item>
+      <a-grid-item :span="6">
         <div class="task-sub-title">{{ $t('task.menu.video') }}</div>
         <Chart height="280px" :option="videoOption" />
       </a-grid-item>
-      <a-grid-item :span="8">
+      <a-grid-item :span="6">
         <div class="task-sub-title">{{ $t('task.menu.file') }}</div>
         <Chart height="280px" :option="fileOption" />
       </a-grid-item>
-      <a-grid-item :span="8">
+      <a-grid-item :span="6">
         <div class="task-sub-title">{{ $t('task.menu.batch') }}</div>
         <Chart height="280px" :option="batchOption" />
       </a-grid-item>
@@ -87,6 +91,13 @@
     'error',
     'expired',
   ];
+  const imageStatuses = [
+    'queued',
+    'in_progress',
+    'completed',
+    'failed',
+    'expired',
+  ];
   const videoStatuses = [
     'queued',
     'in_progress',
@@ -110,6 +121,7 @@
   const batchData = ref<any[]>(buildPieData([], batchStatuses));
   const fileData = ref<any[]>(buildPieData([], fileStatuses));
   const videoData = ref<any[]>(buildPieData([], videoStatuses));
+  const imageData = ref<any[]>(buildPieData([], imageStatuses));
 
   function makePieOption(isDark: boolean, data: any[]) {
     return {
@@ -162,6 +174,9 @@
   const { chartOption: videoOption } = useChartOption((isDark) =>
     makePieOption(isDark, videoData.value)
   );
+  const { chartOption: imageOption } = useChartOption((isDark) =>
+    makePieOption(isDark, imageData.value)
+  );
 
   const fetchData = async () => {
     try {
@@ -178,6 +193,7 @@
       batchData.value = buildPieData(data.batch || [], batchStatuses);
       fileData.value = buildPieData(data.file || [], fileStatuses);
       videoData.value = buildPieData(data.video || [], videoStatuses);
+      imageData.value = buildPieData(data.image || [], imageStatuses);
     } catch {
       /* empty */
     }

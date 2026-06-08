@@ -13,6 +13,17 @@ const TASK: AppRouteRecordRaw = {
   },
   children: [
     {
+      path: 'image',
+      name: 'TaskImageList',
+      component: () => import('@/views/task/list/image.vue'),
+      meta: {
+        locale: 'task.menu.image',
+        requiresAuth: true,
+        roles: ['user', 'reseller', 'admin'],
+        activeMenu: 'TaskImageList',
+      },
+    },
+    {
       path: 'video',
       name: 'TaskVideoList',
       component: () => import('@/views/task/list/video.vue'),

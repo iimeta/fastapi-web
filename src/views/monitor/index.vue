@@ -170,6 +170,18 @@
           </div>
           <div class="global-label">TPM</div>
         </div>
+        <div v-if="isAdmin" class="global-item global-item--active-image">
+          <div class="global-val global-val--active-image">
+            {{ globalPerf.active_image }}
+          </div>
+          <div class="global-label">{{ $t('monitor.activeImage') }}</div>
+        </div>
+        <div v-if="isAdmin" class="global-item global-item--queued-image">
+          <div class="global-val global-val--queued-image">
+            {{ globalPerf.queued_image }}
+          </div>
+          <div class="global-label">{{ $t('monitor.queuedImage') }}</div>
+        </div>
         <div v-if="isAdmin" class="global-item global-item--active-video">
           <div class="global-val global-val--active-video">
             {{ globalPerf.active_video }}
@@ -319,7 +331,9 @@
     tpm: 0,
     active_batch: 0,
     active_video: 0,
+    active_image: 0,
     queued_video: 0,
+    queued_image: 0,
     queued_batch: 0,
   });
 
@@ -450,7 +464,9 @@
         const { data } = await queryTaskStatus();
         globalPerf.active_batch = data.active_batch || 0;
         globalPerf.active_video = data.active_video || 0;
+        globalPerf.active_image = data.active_image || 0;
         globalPerf.queued_video = data.queued_video || 0;
+        globalPerf.queued_image = data.queued_image || 0;
         globalPerf.queued_batch = data.queued_batch || 0;
       } catch {
         /* empty */

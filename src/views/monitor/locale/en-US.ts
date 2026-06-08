@@ -15,6 +15,8 @@ export default {
   'monitor.activeBatch': 'Active Batch',
   'monitor.activeVideo': 'Active Video',
   'monitor.queuedVideo': 'Queued Video',
+  'monitor.activeImage': 'Active Image',
+  'monitor.queuedImage': 'Queued Image',
   'monitor.queuedBatch': 'Queued Batch',
   'monitor.mode.realtime': 'Realtime',
   'monitor.mode.history': 'History',

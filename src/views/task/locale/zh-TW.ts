@@ -1,5 +1,7 @@
 export default {
   'task.menu': '任務中心',
+  'task.menu.image': '繪圖任務',
+  'task.menu.image.detail': '繪圖任務詳情',
   'task.menu.video': '影片任務',
   'task.menu.video.detail': '影片任務詳情',
   'task.menu.file': '檔案任務',
@@ -8,6 +10,12 @@ export default {
   'task.menu.batch.detail': '批次處理任務詳情',
   // detail
   'task.detail.creator': '呼叫密鑰',
+  'task.detail.image_url': '圖像URL',
+  'task.detail.image_id': '圖像ID',
+  'task.detail.n': '生成數量',
+  'task.detail.quality': '品質',
+  'task.detail.size': '尺寸',
+  'task.detail.response_format': '回應格式',
   'task.detail.video_url': '影片URL',
   'task.detail.video_id': '影片ID',
   'task.detail.width_height': '寬度 × 高度',
@@ -36,6 +44,8 @@ export default {
   // form
   'task.form.trace_id': 'TraceID',
   'task.form.user_id': 'UserID',
+  'task.form.placeholder.image_id': '請輸入圖像ID',
+  'task.form.placeholder.image_url': '請輸入圖像URL',
   'task.form.placeholder.video_id': '請輸入影片ID',
   'task.form.placeholder.video_url': '請輸入影片URL',
   'task.form.placeholder.file_id': '請輸入檔案ID',
