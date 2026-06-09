@@ -89,12 +89,12 @@
           {{ currentData.prompt }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('task.detail.n')">
+      <a-descriptions-item :label="$t('task.detail.size')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.n }}
+          {{ currentData.size || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('task.detail.quality')">
@@ -105,20 +105,12 @@
           {{ currentData.quality || '-' }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('task.detail.size')">
+      <a-descriptions-item :label="$t('task.detail.output_format')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.size || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('task.detail.progress')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ currentData.progress || 0 }}
+          {{ currentData.output_format || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('common.status')">

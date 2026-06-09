@@ -123,6 +123,7 @@ export interface ImageDetail {
   n: number;
   quality: string;
   size: string;
+  output_format: string;
   response_format: string;
   prompt: string;
   progress: number;

@@ -15,6 +15,7 @@ export default {
   'task.detail.n': 'Images',
   'task.detail.quality': 'Quality',
   'task.detail.size': 'Size',
+  'task.detail.output_format': 'Output Format',
   'task.detail.response_format': 'Response Format',
   'task.detail.video_url': 'Video URL',
   'task.detail.video_id': 'Video ID',

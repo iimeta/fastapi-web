@@ -208,8 +208,8 @@
             {{ record.image_id || '-' }}
           </span>
         </template>
-        <template #quality="{ record }">
-          {{ record.quality || '-' }}
+        <template #prompt="{ record }">
+          {{ record.prompt || '-' }}
         </template>
         <template #image_url="{ record }">
           <span
@@ -392,16 +392,12 @@
       tooltip: true,
     },
     {
-      title: t('task.detail.n'),
-      dataIndex: 'n',
-      slotName: 'n',
+      title: t('task.detail.prompt'),
+      dataIndex: 'prompt',
+      slotName: 'prompt',
       align: 'center',
-    },
-    {
-      title: t('task.detail.quality'),
-      dataIndex: 'quality',
-      slotName: 'quality',
-      align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('task.detail.size'),

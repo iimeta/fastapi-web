@@ -80,7 +80,7 @@ export default {
   'log.columns.characters': 'Characters',
   'log.columns.minute': 'Minutes',
   'log.columns.prompt': 'Prompt',
-  'log.columns.size': 'Resolution',
+  'log.columns.size': 'Size',
   'log.columns.images': 'Images',
   'log.columns.action': 'Interface',
   'log.columns.video_id': 'Video ID',
