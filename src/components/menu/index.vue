@@ -154,6 +154,41 @@
         collapsedGroups.value[groupTitle] = !collapsedGroups.value[groupTitle];
       };
 
+      const findMenuOpenKeys = (target: string) => {
+        const result: string[] = [];
+        let isFind = false;
+        const backtrack = (item: RouteRecordRaw, keys: string[]) => {
+          if (item.name === target) {
+            isFind = true;
+            result.push(...keys);
+            return;
+          }
+          if (item.children?.length) {
+            item.children.forEach((el) => {
+              backtrack(el, [...keys, el.name as string]);
+            });
+          }
+        };
+        menuTree.value.forEach((el: RouteRecordRaw) => {
+          if (isFind) return;
+          backtrack(el, [el.name as string]);
+        });
+        return result;
+      };
+
+      // 展开包含指定路由的分组(保证选中菜单所在分组默认展开)
+      const expandGroupForRoute = (target: string) => {
+        if (!target) return;
+        const keys = findMenuOpenKeys(target);
+        const topName = keys[0] ?? target;
+        const group = menuGroups.find(
+          (g) => g.title && g.routes.includes(topName)
+        );
+        if (group?.title) {
+          collapsedGroups.value[group.title] = false;
+        }
+      };
+
       // 原生事件委托处理分组标题点击和hover
       const menuRef = ref<HTMLElement | null>(null);
 
@@ -250,28 +285,6 @@
         });
       };
 
-      const findMenuOpenKeys = (target: string) => {
-        const result: string[] = [];
-        let isFind = false;
-        const backtrack = (item: RouteRecordRaw, keys: string[]) => {
-          if (item.name === target) {
-            isFind = true;
-            result.push(...keys);
-            return;
-          }
-          if (item.children?.length) {
-            item.children.forEach((el) => {
-              backtrack(el, [...keys, el.name as string]);
-            });
-          }
-        };
-        menuTree.value.forEach((el: RouteRecordRaw) => {
-          if (isFind) return;
-          backtrack(el, [el.name as string]);
-        });
-        return result;
-      };
-
       listenerRouteChange((newRoute) => {
         const { requiresAuth, activeMenu, hideInMenu } = newRoute.meta;
         if (requiresAuth && (!hideInMenu || activeMenu)) {
@@ -285,6 +298,8 @@
           selectedKey.value = [
             activeMenu || menuOpenKeys[menuOpenKeys.length - 1],
           ];
+
+          expandGroupForRoute((activeMenu || newRoute.name) as string);
         }
       }, true);
 
