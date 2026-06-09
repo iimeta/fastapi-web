@@ -228,6 +228,20 @@
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'image_task'"
+          field="image_task.data_format"
+          :label="$t('sys.config.label.image_task.data_format')"
+        >
+          <a-radio-group v-model="configFormData.image_task.data_format">
+            <a-radio :value="1">
+              {{ $t('sys.config.dict.image_task.data_format.1') }}
+            </a-radio>
+            <a-radio :value="2">
+              {{ $t('sys.config.dict.image_task.data_format.2') }}
+            </a-radio>
+          </a-radio-group>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_task'"
           field="image_task.is_enable_storage"
           :label="$t('sys.config.label.image_task.is_enable_storage')"
         >

@@ -200,6 +200,7 @@ export interface ImageTask {
   cron: string;
   lock_minutes: number;
   timeout: number;
+  data_format: number;
   is_enable_storage: boolean;
   storage_dir: string;
   storage_base_url: string;
