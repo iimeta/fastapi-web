@@ -161,6 +161,20 @@ export function imageCopyField(params: ImageCopyFieldParams) {
   return axios.post<ImageCopyFieldRes>('/api/v1/task/image/copy/field', params);
 }
 
+export function regenerateImage(params: { id: string }) {
+  return axios.post('/api/v1/task/image/regenerate', params);
+}
+
+export interface ImageBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+}
+
+export function submitImageBatchOperate(data: ImageBatchOperate) {
+  return axios.post('/api/v1/task/image/batch/operate', data);
+}
+
 export interface FilePage {
   id: string;
   trace_id: string;

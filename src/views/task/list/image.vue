@@ -137,7 +137,26 @@
       </a-row>
       <a-divider class="task-image-list-toolbar-divider" />
       <a-row class="task-image-list-toolbar-row">
-        <a-col :span="24" class="task-image-list-table-actions">
+        <a-col v-permission="['admin']" :span="12">
+          <a-space>
+            <a-button
+              type="primary"
+              :disabled="multiple"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
+              @click="
+                handleBatch({
+                  action: 'regenerate',
+                })
+              "
+            >
+              {{ $t('task.button.regenerate') }}
+            </a-button>
+          </a-space>
+        </a-col>
+        <a-col
+          :span="userRole === 'admin' ? 12 : 24"
+          class="task-image-list-table-actions"
+        >
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -202,6 +221,7 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
+        @selection-change="handleSelectionChange"
       >
         <template #image_id="{ record }">
           <span class="copy-btn" @click="handleCopy(record.image_id)">
@@ -243,6 +263,17 @@
           <a-button type="text" size="small" @click="detailHandle(record.id)">
             {{ $t('button.detail') }}
           </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            :disabled="
+              record.status !== 'in_progress' && record.status !== 'failed'
+            "
+            @click="regenerateHandle(record.id)"
+          >
+            {{ $t('task.button.regenerate') }}
+          </a-button>
         </template>
       </a-table>
 
@@ -264,10 +295,17 @@
 <script lang="ts" setup>
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { Message } from '@arco-design/web-vue';
+  import { Message, Modal } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import { queryAppList, AppList } from '@/api/app';
-  import { queryImagePage, ImagePage, ImagePageParams } from '@/api/task';
+  import {
+    queryImagePage,
+    ImagePage,
+    ImagePageParams,
+    regenerateImage,
+    ImageBatchOperate,
+    submitImageBatchOperate,
+  } from '@/api/task';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -289,6 +327,9 @@
     showCheckedAll: true,
     onlyCurrent: false,
   } as TableRowSelection);
+
+  const ids = ref<Array<string>>([]);
+  const multiple = ref(true);
 
   const generateFormModel = () => {
     return {
@@ -431,7 +472,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 75,
+      width: 150,
     },
   ]);
 
@@ -581,6 +622,59 @@
   };
   const detailHandleCancel = () => {
     detailVisible.value = false;
+  };
+
+  const regenerateHandle = (id: string) => {
+    Modal.warning({
+      title: t('modal.warning.title'),
+      titleAlign: 'center',
+      content: t('task.button.regenerate.confirm'),
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
+      hideCancel: false,
+      onOk: () => {
+        setLoading(true);
+        regenerateImage({ id })
+          .then(() => {
+            Message.success(t('success.operate'));
+            search();
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      },
+    });
+  };
+
+  const handleSelectionChange = (rowKeys: Array<any>) => {
+    ids.value = rowKeys;
+    multiple.value = !rowKeys.length;
+  };
+
+  const handleBatch = (params: ImageBatchOperate) => {
+    Modal.warning({
+      title: t('modal.warning.title'),
+      titleAlign: 'center',
+      content: t('task.button.batch.regenerate.confirm', {
+        count: ids.value.length,
+      }),
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
+      hideCancel: false,
+      onOk: () => {
+        setLoading(true);
+        params.ids = ids.value;
+        submitImageBatchOperate(params)
+          .then(() => {
+            Message.success(t('success.operate'));
+            search();
+            tableRef.value.selectAll(false);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      },
+    });
   };
 
   const { copy, copied } = useClipboard();

@@ -67,4 +67,7 @@ export default {
   'task.dict.status.finalizing': 'Finalizing',
   'task.dict.status.cancelling': 'Cancelling',
   'task.dict.status.cancelled': 'Cancelled',
+  'task.button.regenerate': 'Regenerate',
+  'task.button.regenerate.confirm': 'Are you sure you want to regenerate this task? It will reset the task status to queued and run again',
+  'task.button.batch.regenerate.confirm': 'Are you sure you want to regenerate the {count} selected items? It will reset the task status to queued and run again',
 };

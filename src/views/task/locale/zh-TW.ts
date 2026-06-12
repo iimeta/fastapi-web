@@ -67,4 +67,7 @@ export default {
   'task.dict.status.finalizing': '定稿中',
   'task.dict.status.cancelling': '取消中',
   'task.dict.status.cancelled': '已取消',
+  'task.button.regenerate': '重新生成',
+  'task.button.regenerate.confirm': '確定要重新生成該任務嗎? 將把任務狀態重置為排隊中並重新執行',
+  'task.button.batch.regenerate.confirm': '是否確定重新生成所選的{count}條數據? 將把任務狀態重置為排隊中並重新執行',
 };

@@ -228,6 +228,35 @@
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'image_task'"
+          field="image_task.retry_count"
+          :label="$t('sys.config.label.image_task.retry_count')"
+        >
+          <a-input-number
+            v-model="configFormData.image_task.retry_count"
+            :placeholder="$t('sys.config.placeholder.image_task.retry_count')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.once') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_task'"
+          field="image_task.submit_mode"
+          :label="$t('sys.config.label.image_task.submit_mode')"
+        >
+          <a-radio-group v-model="configFormData.image_task.submit_mode">
+            <a-radio :value="1">
+              {{ $t('sys.config.dict.image_task.submit_mode.1') }}
+            </a-radio>
+            <a-radio :value="2">
+              {{ $t('sys.config.dict.image_task.submit_mode.2') }}
+            </a-radio>
+          </a-radio-group>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_task'"
           field="image_task.data_format"
           :label="$t('sys.config.label.image_task.data_format')"
         >
