@@ -62,6 +62,7 @@
           icon: 'lucide-store',
           order: 30,
           roleOrders: {
+            reseller: 45,
             admin: 45,
           } as Record<string, number>,
           routes: ['model_square', 'group_square'],
@@ -76,12 +77,18 @@
           title: 'menu.group.app_access',
           icon: 'lucide-layout-grid',
           order: 50,
+          roleOrders: {
+            user: 22,
+          } as Record<string, number>,
           routes: ['app', 'app_key'],
         },
         {
           title: 'menu.group.invite',
           icon: 'lucide-gift',
           order: 56,
+          roleOrders: {
+            user: 28,
+          } as Record<string, number>,
           routes: [
             'InviteRelations',
             'InviteRewards',
@@ -92,19 +99,24 @@
           ],
         },
         {
-          title: 'menu.group.finance',
-          icon: 'lucide-banknote',
-          order: 60,
-          routes: ['BillList', 'DealRecordList'],
-        },
-        {
           title: 'menu.group.tasks_logs',
           icon: 'lucide-list-checks',
-          order: 70,
+          order: 60,
           roleOrders: {
+            reseller: 42,
             admin: 42,
           } as Record<string, number>,
           routes: ['task', 'log'],
+        },
+        {
+          title: 'menu.group.finance',
+          icon: 'lucide-banknote',
+          order: 70,
+          roleOrders: {
+            reseller: 43,
+            admin: 43,
+          } as Record<string, number>,
+          routes: ['BillList', 'DealRecordList'],
         },
         {
           title: 'menu.group.support',
