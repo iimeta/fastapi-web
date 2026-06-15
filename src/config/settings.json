@@ -6,6 +6,7 @@
   "topMenu": false,
   "hideMenu": false,
   "menuCollapse": false,
+  "menuGroupExpand": false,
   "autoOpen": true,
   "footer": true,
   "themeColor": "#165DFF",

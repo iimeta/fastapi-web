@@ -12,8 +12,60 @@ import {
 } from '@/api/site_config';
 import { AppState } from './types';
 
+const SETTINGS_STORAGE_KEY = 'app-settings';
+
+// 需要本地缓存的设置项(排除运行时临时状态)
+const PERSIST_KEYS: (keyof AppState)[] = [
+  'theme',
+  'colorWeak',
+  'navbar',
+  'menu',
+  'topMenu',
+  'hideMenu',
+  'menuCollapse',
+  'menuGroupExpand',
+  'footer',
+  'themeColor',
+  'menuWidth',
+  'tabBar',
+  'menuFromServer',
+];
+
+const loadPersistedSettings = (): Partial<AppState> => {
+  try {
+    const raw = localStorage.getItem(SETTINGS_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw) as Partial<AppState>;
+    const result: Partial<AppState> = {};
+    PERSIST_KEYS.forEach((key) => {
+      if (parsed[key] !== undefined) {
+        (result as Record<string, unknown>)[key] = parsed[key];
+      }
+    });
+    return result;
+  } catch {
+    return {};
+  }
+};
+
+const savePersistedSettings = (state: AppState) => {
+  try {
+    const data: Record<string, unknown> = {};
+    PERSIST_KEYS.forEach((key) => {
+      data[key] = state[key];
+    });
+    localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    // ignore storage errors
+  }
+};
+
 const useAppStore = defineStore('app', {
-  state: (): AppState => ({ ...defaultSettings, config: {} }),
+  state: (): AppState => ({
+    ...defaultSettings,
+    ...loadPersistedSettings(),
+    config: {},
+  }),
 
   getters: {
     appCurrentSetting(state: AppState): AppState {
@@ -186,6 +238,7 @@ const useAppStore = defineStore('app', {
     updateSettings(partial: Partial<AppState>) {
       // @ts-ignore-next-line
       this.$patch(partial);
+      savePersistedSettings(this.$state);
     },
 
     // Change theme color

@@ -5,6 +5,7 @@
     h,
     compile,
     computed,
+    watch,
     onMounted,
     onBeforeUnmount,
   } from 'vue';
@@ -137,6 +138,8 @@
 
       // 解析分组的默认收起状态
       const getDefaultCollapsed = (group: (typeof menuGroups)[number]) => {
+        // 全局开启"展开菜单分组"时, 所有分组默认展开
+        if (appStore.menuGroupExpand) return false;
         const dc = (group as any).defaultCollapsed;
         if (dc === undefined || dc === null) return true;
         if (typeof dc === 'boolean') return dc;
@@ -200,6 +203,18 @@
           collapsedGroups.value[group.title] = false;
         }
       };
+
+      // 切换"展开菜单分组"开关时, 重新应用各分组的默认收起状态,
+      // 并保证当前路由所在分组保持展开
+      watch(
+        () => appStore.menuGroupExpand,
+        () => {
+          initCollapsedState();
+          expandGroupForRoute(
+            (route.meta.activeMenu || route.name) as string
+          );
+        }
+      );
 
       // 原生事件委托处理分组标题点击和hover
       const menuRef = ref<HTMLElement | null>(null);

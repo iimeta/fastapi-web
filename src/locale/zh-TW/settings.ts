@@ -13,6 +13,7 @@ export default {
   'settings.navbar.screen.toExit': '點擊退出全螢幕模式',
   'settings.navbar.alerts': '消息通知',
   'settings.menu': '選單欄',
+  'settings.menuGroupExpand': '展開選單分組',
   'settings.topMenu': '頂部選單欄',
   'settings.tabBar': '多頁籤',
   'settings.footer': '底部',

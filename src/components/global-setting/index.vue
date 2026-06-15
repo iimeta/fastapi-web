@@ -42,6 +42,11 @@
       key: 'menu',
       defaultVal: appStore.menu,
     },
+    {
+      name: 'settings.menuGroupExpand',
+      key: 'menuGroupExpand',
+      defaultVal: appStore.menuGroupExpand,
+    },
     // {
     //   name: 'settings.topMenu',
     //   key: 'topMenu',
