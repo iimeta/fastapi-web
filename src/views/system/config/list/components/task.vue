@@ -65,7 +65,7 @@
     <a-modal
       v-model:visible="configVisible"
       :title="$t(configTitle)"
-      :width="568"
+      :width="588"
       :body-style="configModalBodyStyle"
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
@@ -256,6 +256,21 @@
             allow-clear
           >
             <template #append> {{ $t('unit.item') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_task'"
+          field="image_task.reclaim"
+          :label="$t('sys.config.label.image_task.reclaim')"
+        >
+          <a-input-number
+            v-model="configFormData.image_task.reclaim"
+            :placeholder="$t('sys.config.placeholder.image_task.reclaim')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.second') }} </template>
           </a-input-number>
         </a-form-item>
         <a-form-item

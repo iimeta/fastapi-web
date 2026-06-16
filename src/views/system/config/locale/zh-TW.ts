@@ -200,6 +200,8 @@ export default {
   'sys.config.placeholder.image_task.retry_count': '請輸入重試次數, 0表示不重試',
   'sys.config.label.image_task.concurrency_limit': '並發限制',
   'sys.config.placeholder.image_task.concurrency_limit': '請輸入進行中任務數量限制, 0表示不限制',
+  'sys.config.label.image_task.reclaim': '逾時回收',
+  'sys.config.placeholder.image_task.reclaim': '進行中任務逾時回收時長, 0表示自動按逾時×(重試+1)推算',
   'sys.config.label.image_task.submit_mode': '提交模式',
   'sys.config.dict.image_task.submit_mode.1': '同步',
   'sys.config.dict.image_task.submit_mode.2': '非同步',

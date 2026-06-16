@@ -200,6 +200,8 @@ export default {
   'sys.config.placeholder.image_task.retry_count': 'Enter retry count, 0 means no retry',
   'sys.config.label.image_task.concurrency_limit': 'Concurrency Limit',
   'sys.config.placeholder.image_task.concurrency_limit': 'Enter the limit of in-progress tasks, 0 means no limit',
+  'sys.config.label.image_task.reclaim': 'Reclaim Timeout',
+  'sys.config.placeholder.image_task.reclaim': 'Reclaim timeout for in-progress tasks, 0 means auto-derive from timeout × (retry + 1)',
   'sys.config.label.image_task.submit_mode': 'Submit Mode',
   'sys.config.dict.image_task.submit_mode.1': 'Sync',
   'sys.config.dict.image_task.submit_mode.2': 'Async',

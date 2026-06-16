@@ -69,6 +69,22 @@
           />
         </span>
       </a-descriptions-item>
+      <a-descriptions-item
+        v-if="currentData.job_id"
+        :label="$t('task.detail.job_id')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.job_id }}
+          <icon-copy
+            class="copy-btn"
+            @click="handleCopy(currentData.job_id)"
+          />
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('task.detail.image_url')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

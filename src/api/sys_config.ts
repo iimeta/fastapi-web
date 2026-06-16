@@ -202,6 +202,7 @@ export interface ImageTask {
   timeout: number;
   retry_count: number;
   concurrency_limit: number;
+  reclaim: number;
   submit_mode: number;
   data_format: number;
   is_enable_storage: boolean;

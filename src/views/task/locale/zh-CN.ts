@@ -12,6 +12,7 @@ export default {
   'task.detail.creator': '调用密钥',
   'task.detail.image_url': '图像URL',
   'task.detail.image_id': '图像ID',
+  'task.detail.job_id': '上游任务ID',
   'task.detail.n': '张数',
   'task.detail.quality': '质量',
   'task.detail.size': '分辨率',

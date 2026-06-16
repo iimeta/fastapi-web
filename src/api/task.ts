@@ -118,6 +118,7 @@ export interface ImageDetail {
   app_id: number;
   model: string;
   image_id: string;
+  job_id: string;
   width: number;
   height: number;
   n: number;
