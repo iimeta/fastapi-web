@@ -79,19 +79,14 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['reseller']" :span="8">
-                <a-form-item
-                  field="total_time"
-                  :label="$t('log.form.total_time')"
-                >
-                  <a-input-number
-                    v-model="searchFormData.total_time"
-                    :placeholder="$t('log.form.placeholder.total_time')"
-                    :precision="0"
-                    :min="1"
+                <a-form-item field="action" :label="$t('log.form.action')">
+                  <a-select
+                    v-model="searchFormData.action"
+                    :placeholder="$t('common.all')"
+                    :options="actionOptions"
+                    :scrollbar="false"
                     allow-clear
-                  >
-                    <template #append> ms </template>
-                  </a-input-number>
+                  />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
@@ -193,19 +188,14 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="total_time"
-                  :label="$t('log.form.total_time')"
-                >
-                  <a-input-number
-                    v-model="searchFormData.total_time"
-                    :placeholder="$t('log.form.placeholder.total_time')"
-                    :precision="0"
-                    :min="1"
+                <a-form-item field="action" :label="$t('log.form.action')">
+                  <a-select
+                    v-model="searchFormData.action"
+                    :placeholder="$t('common.all')"
+                    :options="actionOptions"
+                    :scrollbar="false"
                     allow-clear
-                  >
-                    <template #append> ms </template>
-                  </a-input-number>
+                  />
                 </a-form-item>
               </a-col>
               <a-col :span="5">
@@ -732,7 +722,7 @@
       key: '',
       models: [],
       model_agents: [],
-      total_time: ref(),
+      action: ref(),
       status: ref(),
       req_time: [
         dayjs().format('YYYY-MM-DD 00:00:00'),
@@ -942,6 +932,33 @@
       slotName: 'operations',
       align: 'center',
       width: 75,
+    },
+  ]);
+
+  const actionOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: 'generations',
+      value: 'generations',
+    },
+    {
+      label: 'edits',
+      value: 'edits',
+    },
+    {
+      label: 'list',
+      value: 'list',
+    },
+    {
+      label: 'retrieve',
+      value: 'retrieve',
+    },
+    {
+      label: 'content',
+      value: 'content',
+    },
+    {
+      label: 'delete',
+      value: 'delete',
     },
   ]);
 

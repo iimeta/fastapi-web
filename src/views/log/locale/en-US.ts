@@ -58,6 +58,7 @@ export default {
   'log.form.trace_id': 'TraceID',
   'log.form.user_id': 'UserID',
   'log.form.model_agents': 'Agents',
+  'log.form.action': 'Interface',
   'log.form.total_time': 'Time >',
   'log.form.placeholder.total_time': 'Please enter total time',
   'log.form.status': 'Result',

@@ -58,6 +58,7 @@ export default {
   'log.form.trace_id': 'TraceID',
   'log.form.user_id': 'UserID',
   'log.form.model_agents': '代理',
+  'log.form.action': '接口',
   'log.form.total_time': '耗时大于',
   'log.form.placeholder.total_time': '请输入总耗时',
   'log.form.status': '结果',
