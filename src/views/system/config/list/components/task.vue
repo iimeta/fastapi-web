@@ -243,6 +243,23 @@
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'image_task'"
+          field="image_task.concurrency_limit"
+          :label="$t('sys.config.label.image_task.concurrency_limit')"
+        >
+          <a-input-number
+            v-model="configFormData.image_task.concurrency_limit"
+            :placeholder="
+              $t('sys.config.placeholder.image_task.concurrency_limit')
+            "
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.item') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_task'"
           field="image_task.submit_mode"
           :label="$t('sys.config.label.image_task.submit_mode')"
         >

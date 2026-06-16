@@ -198,6 +198,8 @@ export default {
   'sys.config.placeholder.image_task.timeout': '请输入图片生成超时时间',
   'sys.config.label.image_task.retry_count': '重试次数',
   'sys.config.placeholder.image_task.retry_count': '请输入重试次数, 0表示不重试',
+  'sys.config.label.image_task.concurrency_limit': '并发限制',
+  'sys.config.placeholder.image_task.concurrency_limit': '请输入进行中任务数量限制, 0表示不限制',
   'sys.config.label.image_task.submit_mode': '提交模式',
   'sys.config.dict.image_task.submit_mode.1': '同步',
   'sys.config.dict.image_task.submit_mode.2': '异步',
