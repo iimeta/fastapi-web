@@ -79,10 +79,7 @@
         </a-skeleton>
         <span v-else>
           {{ currentData.job_id }}
-          <icon-copy
-            class="copy-btn"
-            @click="handleCopy(currentData.job_id)"
-          />
+          <icon-copy class="copy-btn" @click="handleCopy(currentData.job_id)" />
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('task.detail.image_url')" :span="2">
@@ -145,6 +142,7 @@
             color="orange"
           >
             {{ $t(`task.dict.status.${currentData.status}`) }}
+            {{ currentData.progress || 0 }}%
           </a-tag>
           <a-tag
             v-else-if="currentData.status === 'failed' || !currentData.status"

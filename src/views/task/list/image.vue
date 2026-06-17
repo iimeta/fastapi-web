@@ -248,6 +248,7 @@
           </a-tag>
           <a-tag v-else-if="record.status === 'in_progress'" color="orange">
             {{ $t(`task.dict.status.${record.status}`) }}
+            {{ record.progress || 0 }}%
           </a-tag>
           <a-tag
             v-else-if="record.status === 'failed' || !record.status"
