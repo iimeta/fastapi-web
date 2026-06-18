@@ -1367,6 +1367,123 @@
             "
           />
         </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_storage'"
+          field="image_storage.cron"
+          :label="$t('sys.config.label.cron')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.cron'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.image_storage.cron"
+            :placeholder="$t('sys.config.placeholder.cron')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_storage'"
+          field="image_storage.lock_minutes"
+          :label="$t('sys.config.label.lock_minutes')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.image_storage.lock_minutes'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.image_storage.lock_minutes"
+            :placeholder="
+              $t('sys.config.placeholder.image_storage.lock_minutes')
+            "
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.minute') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_storage'"
+          field="image_storage.download_timeout"
+          :label="$t('sys.config.label.image_storage.download_timeout')"
+          :rules="[
+            {
+              required: true,
+              message: $t(
+                'sys.config.placeholder.image_storage.download_timeout'
+              ),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.image_storage.download_timeout"
+            :placeholder="
+              $t('sys.config.placeholder.image_storage.download_timeout')
+            "
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.second') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_storage'"
+          field="image_storage.storage_dir"
+          :label="$t('sys.config.label.image_storage.storage_dir')"
+        >
+          <a-input
+            v-model="configFormData.image_storage.storage_dir"
+            :placeholder="
+              $t('sys.config.placeholder.image_storage.storage_dir')
+            "
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_storage'"
+          field="image_storage.storage_base_url"
+          :label="$t('sys.config.label.image_storage.storage_base_url')"
+        >
+          <a-input
+            v-model="configFormData.image_storage.storage_base_url"
+            :placeholder="
+              $t('sys.config.placeholder.image_storage.storage_base_url')
+            "
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_storage'"
+          field="image_storage.storage_expires_at"
+          :label="$t('sys.config.label.image_storage.storage_expires_at')"
+        >
+          <a-input-number
+            v-model="configFormData.image_storage.storage_expires_at"
+            :placeholder="
+              $t('sys.config.placeholder.image_storage.storage_expires_at')
+            "
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.minute') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_storage'"
+          field="image_storage.storage_expired_delete"
+          :label="$t('sys.config.label.image_storage.storage_expired_delete')"
+        >
+          <a-switch
+            v-model="configFormData.image_storage.storage_expired_delete"
+          />
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -1421,6 +1538,7 @@
     service_unavailable: {},
     general_api: {},
     model_agent_session_keep: {},
+    image_storage: {},
   } as SysConfigUpdate);
 
   const defaultLogPrivacy = (): LogPrivacy => ({
@@ -1713,6 +1831,7 @@
       configFormData.value.general_api = data.general_api;
       configFormData.value.model_agent_session_keep =
         data.model_agent_session_keep;
+      configFormData.value.image_storage = data.image_storage;
       sysConfigItems.value = [
         {
           action: 'base',
@@ -1726,6 +1845,14 @@
           title: t('sys.config.item.title.log'),
           desc: t('sys.config.item.desc.log'),
           open: configFormData.value.log.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'image_storage',
+          title: t('sys.config.item.title.image_storage'),
+          desc: t('sys.config.item.desc.image_storage'),
+          open: configFormData.value.image_storage.open,
           config: true,
           reset: true,
         },

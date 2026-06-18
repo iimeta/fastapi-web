@@ -212,6 +212,17 @@ export interface ImageTask {
   storage_expired_delete: boolean;
 }
 
+export interface ImageStorage {
+  open: boolean;
+  cron: string;
+  lock_minutes: number;
+  download_timeout: number;
+  storage_dir: string;
+  storage_base_url: string;
+  storage_expires_at: number;
+  storage_expired_delete: boolean;
+}
+
 export interface VideoTask {
   open: boolean;
   cron: string;
@@ -346,6 +357,7 @@ export interface SysConfigDetail {
   ticket: Ticket;
   quota_task: QuotaTask;
   image_task: ImageTask;
+  image_storage: ImageStorage;
   video_task: VideoTask;
   file_task: FileTask;
   batch_task: BatchTask;
@@ -389,6 +401,7 @@ export interface SysConfigUpdate {
   ticket: Ticket;
   quota_task: QuotaTask;
   image_task: ImageTask;
+  image_storage: ImageStorage;
   video_task: VideoTask;
   file_task: FileTask;
   batch_task: BatchTask;
