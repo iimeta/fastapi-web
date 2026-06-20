@@ -232,12 +232,22 @@
           {{ record.prompt || '-' }}
         </template>
         <template #image_url="{ record }">
-          <span
-            class="copy-btn"
-            @click="handleCopy(getFullUrl(record.image_url))"
+          <a-button
+            type="text"
+            size="small"
+            :disabled="
+              !record.image_url &&
+              !(record.image_urls && record.image_urls.length > 0)
+            "
+            @click="viewImage(record.id)"
           >
-            {{ getFullUrl(record.image_url) || '-' }}
-          </span>
+            {{ $t('button.view') }}
+          </a-button>
+          <a-image-preview-group
+            v-if="imageVisibleId === record.id"
+            v-model:visible="imageVisible"
+            :src-list="getImageSrcList(record)"
+          />
         </template>
         <template #status="{ record }">
           <a-tag v-if="record.status === 'completed'" color="green">
@@ -448,12 +458,10 @@
       align: 'center',
     },
     {
-      title: t('task.detail.image_url'),
+      title: t('task.detail.image'),
       dataIndex: 'image_url',
       slotName: 'image_url',
       align: 'center',
-      ellipsis: true,
-      tooltip: true,
     },
     {
       title: t('common.status'),
@@ -689,6 +697,13 @@
     }
   });
 
+  const imageVisibleId = ref();
+  const imageVisible = ref(false);
+  const viewImage = (id: any) => {
+    imageVisibleId.value = id;
+    imageVisible.value = true;
+  };
+
   const getFullUrl = (url: string) => {
     if (!url) return '';
 
@@ -697,6 +712,16 @@
     }
 
     return window.location.origin + (url.startsWith('/') ? url : `/${url}`);
+  };
+
+  const getImageSrcList = (record: ImagePage) => {
+    if (record.image_urls && record.image_urls.length > 0) {
+      return record.image_urls.map(getFullUrl);
+    }
+    if (record.image_url) {
+      return [getFullUrl(record.image_url)];
+    }
+    return [];
   };
 </script>
 

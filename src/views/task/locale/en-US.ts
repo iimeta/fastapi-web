@@ -11,6 +11,7 @@ export default {
   // detail
   'task.detail.creator': 'Calling Key',
   'task.detail.image_url': 'Image URL',
+  'task.detail.image': 'Image',
   'task.detail.image_id': 'Image ID',
   'task.detail.job_id': 'Upstream Job ID',
   'task.detail.n': 'Images',

@@ -92,6 +92,7 @@ export interface ImagePage {
   app_id: number;
   task_id: string;
   image_url: string;
+  image_urls: string[];
   image_time: number;
   status: number;
   created_at: any;
@@ -132,8 +133,11 @@ export interface ImageDetail {
   completed_at: string;
   expires_at: string;
   image_url: string;
+  image_urls: string[];
   file_name: string;
+  file_names: string[];
   file_path: string;
+  file_paths: string[];
   error: any;
   creator: string;
   created_at: string;

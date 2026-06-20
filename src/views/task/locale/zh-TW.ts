@@ -11,6 +11,7 @@ export default {
   // detail
   'task.detail.creator': '呼叫密鑰',
   'task.detail.image_url': '圖像URL',
+  'task.detail.image': '圖像',
   'task.detail.image_id': '圖像ID',
   'task.detail.job_id': '上游任務ID',
   'task.detail.n': '張數',

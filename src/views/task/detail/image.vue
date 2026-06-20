@@ -86,13 +86,30 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
-          {{ getFullUrl(currentData.image_url) || '-' }}
-          <icon-copy
-            class="copy-btn"
-            @click="handleCopy(getFullUrl(currentData.image_url))"
-          />
-        </span>
+        <div v-else>
+          <div
+            v-if="currentData.image_urls && currentData.image_urls.length > 1"
+          >
+            <div
+              v-for="(url, index) in currentData.image_urls"
+              :key="index"
+              style="margin-bottom: 4px"
+            >
+              <span>{{ getFullUrl(url) }}</span>
+              <icon-copy
+                class="copy-btn"
+                @click="handleCopy(getFullUrl(url))"
+              />
+            </div>
+          </div>
+          <span v-else>
+            {{ getFullUrl(currentData.image_url) || '-' }}
+            <icon-copy
+              class="copy-btn"
+              @click="handleCopy(getFullUrl(currentData.image_url))"
+            />
+          </span>
+        </div>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('task.detail.prompt')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
@@ -108,6 +125,14 @@
         </a-skeleton>
         <span v-else>
           {{ currentData.size || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('task.detail.n')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.n || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('task.detail.quality')">
@@ -164,28 +189,48 @@
         </span>
       </a-descriptions-item>
       <a-descriptions-item
-        v-if="currentData.file_name"
+        v-if="
+          currentData.file_name ||
+          (currentData.file_names && currentData.file_names.length > 0)
+        "
         :label="$t('task.detail.file_name')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
-          {{ currentData.file_name }}
-        </span>
+        <div v-else>
+          <div
+            v-if="currentData.file_names && currentData.file_names.length > 1"
+          >
+            <div v-for="(name, index) in currentData.file_names" :key="index">
+              {{ name }}
+            </div>
+          </div>
+          <span v-else>{{ currentData.file_name }}</span>
+        </div>
       </a-descriptions-item>
       <a-descriptions-item
-        v-if="currentData.file_path"
+        v-if="
+          currentData.file_path ||
+          (currentData.file_paths && currentData.file_paths.length > 0)
+        "
         :label="$t('task.detail.file_path')"
         :span="2"
       >
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
-          {{ currentData.file_path }}
-        </span>
+        <div v-else>
+          <div
+            v-if="currentData.file_paths && currentData.file_paths.length > 1"
+          >
+            <div v-for="(fp, index) in currentData.file_paths" :key="index">
+              {{ fp }}
+            </div>
+          </div>
+          <span v-else>{{ currentData.file_path }}</span>
+        </div>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('task.detail.completed_at')">
         <a-skeleton v-if="loading" :animation="true">
