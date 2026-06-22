@@ -221,6 +221,8 @@ export default {
   'sys.config.placeholder.image_storage.lock_minutes': 'Enter single image storage cleanup task timeout',
   'sys.config.label.image_storage.download_timeout': 'Download Timeout',
   'sys.config.placeholder.image_storage.download_timeout': 'Enter image download timeout',
+  'sys.config.label.image_storage.retry_count': 'Retry Count',
+  'sys.config.placeholder.image_storage.retry_count': 'Enter retry count, 0 means no retry',
   'sys.config.label.image_storage.storage_dir': 'Storage Directory',
   'sys.config.placeholder.image_storage.storage_dir': 'Default storage in /resource/public/image folder under api deployment directory.',
   'sys.config.label.image_storage.storage_base_url': 'Access URL',

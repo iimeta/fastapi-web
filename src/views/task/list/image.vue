@@ -326,6 +326,7 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { useClipboard } from '@vueuse/core';
+  import dayjs from 'dayjs';
   import Detail from '../detail/image.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -350,7 +351,10 @@
       image_id: '',
       image_url: '',
       status: ref(),
-      created_at: [],
+      created_at: [
+        dayjs().format('YYYY-MM-DD 00:00:00'),
+        dayjs().format('YYYY-MM-DD 23:59:59'),
+      ],
     };
   };
 
@@ -518,6 +522,7 @@
   const fetchData = async (
     params: ImagePageParams = {
       ...basePagination,
+      ...formModel.value,
     }
   ) => {
     setLoading(true);

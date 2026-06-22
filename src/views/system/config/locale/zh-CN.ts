@@ -221,6 +221,8 @@ export default {
   'sys.config.placeholder.image_storage.lock_minutes': '请输入单次绘图转储清理任务超时时间',
   'sys.config.label.image_storage.download_timeout': '下载超时',
   'sys.config.placeholder.image_storage.download_timeout': '请输入图片下载超时时间',
+  'sys.config.label.image_storage.retry_count': '重试次数',
+  'sys.config.placeholder.image_storage.retry_count': '请输入重试次数, 0表示不重试',
   'sys.config.label.image_storage.storage_dir': '存储目录',
   'sys.config.placeholder.image_storage.storage_dir': '默认存储到api部署目录下的/resource/public/image文件夹中',
   'sys.config.label.image_storage.storage_base_url': '访问地址',

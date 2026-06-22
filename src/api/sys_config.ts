@@ -217,6 +217,7 @@ export interface ImageStorage {
   cron: string;
   lock_minutes: number;
   download_timeout: number;
+  retry_count: number;
   storage_dir: string;
   storage_base_url: string;
   storage_expires_at: number;

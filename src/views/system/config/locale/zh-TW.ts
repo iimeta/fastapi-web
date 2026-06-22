@@ -221,6 +221,8 @@ export default {
   'sys.config.placeholder.image_storage.lock_minutes': '請輸入單次繪圖轉儲清理任務超時時間',
   'sys.config.label.image_storage.download_timeout': '下載超時',
   'sys.config.placeholder.image_storage.download_timeout': '請輸入圖片下載超時時間',
+  'sys.config.label.image_storage.retry_count': '重試次數',
+  'sys.config.placeholder.image_storage.retry_count': '請輸入重試次數, 0表示不重試',
   'sys.config.label.image_storage.storage_dir': '儲存目錄',
   'sys.config.placeholder.image_storage.storage_dir': '默認儲存到api部署目錄下的/resource/public/image資料夾中',
   'sys.config.label.image_storage.storage_base_url': '存取地址',

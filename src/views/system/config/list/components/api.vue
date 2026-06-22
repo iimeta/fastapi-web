@@ -1434,6 +1434,23 @@
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'image_storage'"
+          field="image_storage.retry_count"
+          :label="$t('sys.config.label.image_storage.retry_count')"
+        >
+          <a-input-number
+            v-model="configFormData.image_storage.retry_count"
+            :placeholder="
+              $t('sys.config.placeholder.image_storage.retry_count')
+            "
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.once') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_storage'"
           field="image_storage.storage_dir"
           :label="$t('sys.config.label.image_storage.storage_dir')"
         >
