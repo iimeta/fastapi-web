@@ -31,6 +31,7 @@ export default {
   'task.detail.expires_at': '过期时间',
   'task.detail.file_name': '文件名',
   'task.detail.file_path': '文件路径',
+  'task.detail.input_file_paths': '输入文件路径',
   'task.detail.batch_trace_id': 'Batch Trace ID',
   'task.detail.purpose': '用途',
   'task.detail.file_id': '文件ID',

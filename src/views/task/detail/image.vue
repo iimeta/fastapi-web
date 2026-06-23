@@ -232,6 +232,23 @@
           <span v-else>{{ currentData.file_path }}</span>
         </div>
       </a-descriptions-item>
+      <a-descriptions-item
+        v-if="
+          currentData.input_file_paths &&
+          currentData.input_file_paths.length > 0
+        "
+        :label="$t('task.detail.input_file_paths')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <div v-else>
+          <div v-for="(fp, index) in currentData.input_file_paths" :key="index">
+            {{ fp }}
+          </div>
+        </div>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('task.detail.completed_at')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

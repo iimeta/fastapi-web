@@ -138,6 +138,7 @@ export interface ImageDetail {
   file_names: string[];
   file_path: string;
   file_paths: string[];
+  input_file_paths: string[];
   error: any;
   creator: string;
   created_at: string;

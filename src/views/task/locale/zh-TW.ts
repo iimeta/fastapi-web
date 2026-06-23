@@ -31,6 +31,7 @@ export default {
   'task.detail.expires_at': '過期時間',
   'task.detail.file_name': '檔案名稱',
   'task.detail.file_path': '檔案路徑',
+  'task.detail.input_file_paths': '輸入檔案路徑',
   'task.detail.batch_trace_id': 'Batch Trace ID',
   'task.detail.purpose': '用途',
   'task.detail.file_id': '檔案ID',

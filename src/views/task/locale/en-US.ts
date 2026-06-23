@@ -31,6 +31,7 @@ export default {
   'task.detail.expires_at': 'Expires At',
   'task.detail.file_name': 'File Name',
   'task.detail.file_path': 'File Path',
+  'task.detail.input_file_paths': 'Input File Paths',
   'task.detail.batch_trace_id': 'Batch Trace ID',
   'task.detail.purpose': 'Purpose',
   'task.detail.file_id': 'File ID',
