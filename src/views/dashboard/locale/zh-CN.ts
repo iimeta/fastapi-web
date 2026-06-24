@@ -24,6 +24,7 @@ export default {
   'dashboard.chart.abnormal': '异常数',
   'dashboard.ranking': '排名',
   'dashboard.expense': '费用',
+  'dashboard.api': 'API接口',
   'dashboard.quota_warning': '额度预警',
   'dashboard.label.quota_warning.warning_threshold': '预警阈值',
   'dashboard.placeholder.quota_warning.warning_threshold': '请输入预警阈值',

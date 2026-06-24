@@ -51,13 +51,14 @@ export interface Base {
   allow_request_abort: boolean;
 }
 
-export interface Midjourney {
-  open: boolean;
-  cdn_url: string;
-  api_base_url: string;
-  api_secret: string;
-  api_secret_header: string;
-  cdn_original_url: string;
+export interface ApiItem {
+  name: string;
+  url: string;
+  remark: string;
+}
+
+export interface Api {
+  apis: ApiItem[];
 }
 
 export interface PrivacyLogFieldOption {
@@ -341,7 +342,7 @@ export interface SysConfigDetail {
   email: Email;
   statistics: Statistics;
   base: Base;
-  midjourney: Midjourney;
+  api: Api;
   log: Log;
   user_login_register: UserLoginRegister;
   admin_login: AdminLogin;
@@ -385,7 +386,7 @@ export interface SysConfigUpdate {
   email: Email;
   statistics: Statistics;
   base: Base;
-  midjourney: Midjourney;
+  api: Api;
   log: Log;
   user_login_register: UserLoginRegister;
   user_shield_error: UserShieldError;

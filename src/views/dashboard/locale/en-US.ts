@@ -24,6 +24,7 @@ export default {
   'dashboard.chart.abnormal': 'Exceptions',
   'dashboard.ranking': 'Ranking',
   'dashboard.expense': 'Cost',
+  'dashboard.api': 'API Endpoints',
   'dashboard.quota_warning': 'Quota Warning',
   'dashboard.label.quota_warning.warning_threshold': 'Warning Threshold',
   'dashboard.placeholder.quota_warning.warning_threshold': 'Please enter the warning threshold',

@@ -79,6 +79,8 @@
           ? 728
           : configFormData.action === 'model_agent_session_keep'
           ? 1080
+          : configFormData.action === 'api'
+          ? 828
           : 728
       "
       :body-style="configModalBodyStyle"
@@ -1021,6 +1023,58 @@
           </a-button>
         </a-form-item>
         <a-form-item
+          v-for="(item, index) of configFormData.api.apis"
+          v-show="configFormData.action === 'api'"
+          :key="index"
+          :field="
+            `api.apis[${index}].name` &&
+            `api.apis[${index}].url` &&
+            `api.apis[${index}].remark`
+          "
+          :label="`${index + 1}. `"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.required.api'),
+            },
+          ]"
+          :label-col-style="fieldLabelColStyle"
+        >
+          <a-input
+            v-model="configFormData.api.apis[index].name"
+            :placeholder="$t('sys.config.placeholder.api.name')"
+            allow-clear
+            class="field-input field-input-api-name"
+          />
+          <a-input
+            v-model="configFormData.api.apis[index].url"
+            :placeholder="$t('sys.config.placeholder.api.url')"
+            allow-clear
+            class="field-input field-input-api-url"
+          />
+          <a-input
+            v-model="configFormData.api.apis[index].remark"
+            :placeholder="$t('sys.config.placeholder.api.remark')"
+            allow-clear
+            class="field-input field-input-api-remark"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            class="field-action-button"
+            @click="handleApiAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleApiDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
+        <a-form-item
           v-if="configFormData.action === 'model_agent_session_keep'"
           field="model_agent_session_keep.mode"
           :label="$t('sys.config.label.session_keep_mode')"
@@ -1520,6 +1574,7 @@
     submitSysConfigReset,
     submitSysConfigRefresh,
     submitSysConfigChangeStatus,
+    ApiItem,
   } from '@/api/sys_config';
   import { useSysConfig } from '../composables/use-sys-config';
 
@@ -1554,6 +1609,7 @@
     not_shield_error: {},
     service_unavailable: {},
     general_api: {},
+    api: {},
     model_agent_session_keep: {},
     image_storage: {},
   } as SysConfigUpdate);
@@ -1634,6 +1690,12 @@
       configFormData.value.general_api.ip_whitelist.length === 0
     ) {
       handleGeneralApiAdd();
+    }
+    if (
+      sysConfigItem.action === 'api' &&
+      configFormData.value.api.apis.length === 0
+    ) {
+      handleApiAdd();
     }
     if (sysConfigItem.action === 'model_agent_session_keep') {
       if (!configFormData.value.model_agent_session_keep.rules) {
@@ -1788,6 +1850,15 @@
         configFormData.value.general_api.ip_whitelist.length - 1
       );
     }
+    if (
+      configFormData.value.api.apis.length > 0 &&
+      (!configFormData.value.api.apis[configFormData.value.api.apis.length - 1]
+        .name ||
+        !configFormData.value.api.apis[configFormData.value.api.apis.length - 1]
+          .url)
+    ) {
+      handleApiDel(configFormData.value.api.apis.length - 1);
+    }
   };
 
   const sysConfigReset = async (sysConfigItem: SysConfigItem) => {
@@ -1846,6 +1917,7 @@
       configFormData.value.not_shield_error = data.not_shield_error;
       configFormData.value.service_unavailable = data.service_unavailable;
       configFormData.value.general_api = data.general_api;
+      configFormData.value.api = data.api;
       configFormData.value.model_agent_session_keep =
         data.model_agent_session_keep;
       configFormData.value.image_storage = data.image_storage;
@@ -1854,6 +1926,13 @@
           action: 'base',
           title: t('sys.config.item.title.base'),
           desc: t('sys.config.item.desc.base'),
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'api',
+          title: t('sys.config.item.title.api'),
+          desc: t('sys.config.item.desc.api'),
           config: true,
           reset: true,
         },
@@ -2016,6 +2095,18 @@
     configFormData.value.general_api.ip_whitelist.splice(index, 1);
   };
 
+  const handleApiAdd = () => {
+    configFormData.value.api.apis.push({
+      name: '',
+      url: '',
+      remark: '',
+    } as ApiItem);
+  };
+
+  const handleApiDel = (index: number) => {
+    configFormData.value.api.apis.splice(index, 1);
+  };
+
   const normalizeLogPrivacy = () => {
     configFormData.value.log.privacy = {
       ...defaultLogPrivacy(),
@@ -2086,6 +2177,18 @@
 
   .field-input-ip {
     width: 84%;
+  }
+
+  .field-input-api-name {
+    width: 20%;
+  }
+
+  .field-input-api-url {
+    width: 35%;
+  }
+
+  .field-input-api-remark {
+    width: 33%;
   }
 
   .field-input-privacy-key {
