@@ -339,7 +339,7 @@
 
 <script lang="ts" setup>
   import { computed, nextTick, reactive, ref, watch } from 'vue';
-  import { useRouter } from 'vue-router';
+  import { useRouter, onBeforeRouteLeave } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import { Message, Modal } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
@@ -503,7 +503,44 @@
       setLoading(false);
     }
   };
-  fetchData();
+  const FILTER_KEY = 'model_agent_list_filter';
+  const SAVE_TO_NAMES = ['ModelAgentUpdate', 'ModelAgentCreate'];
+
+  const restoreAndFetch = () => {
+    const saved = sessionStorage.getItem(FILTER_KEY);
+    if (saved) {
+      sessionStorage.removeItem(FILTER_KEY);
+      try {
+        const { search: savedSearch, current, pageSize } = JSON.parse(saved);
+        searchFormData.value = { ...generateSearchParams(), ...savedSearch };
+        basePagination.pageSize = pageSize ?? basePagination.pageSize;
+        fetchData({
+          ...basePagination,
+          ...searchFormData.value,
+          current: current ?? 1,
+          pageSize: pageSize ?? basePagination.pageSize,
+        } as ModelAgentPageParams);
+        return;
+      } catch {
+        // 解析失败则走默认
+      }
+    }
+    fetchData();
+  };
+  restoreAndFetch();
+
+  onBeforeRouteLeave((to) => {
+    if (SAVE_TO_NAMES.includes(to.name as string)) {
+      sessionStorage.setItem(
+        FILTER_KEY,
+        JSON.stringify({
+          search: searchFormData.value,
+          current: pagination.current,
+          pageSize: pagination.pageSize,
+        })
+      );
+    }
+  });
 
   const search = () => {
     fetchData({
@@ -513,6 +550,7 @@
   };
 
   const reset = () => {
+    sessionStorage.removeItem(FILTER_KEY);
     searchFormData.value = generateSearchParams();
     search();
   };
