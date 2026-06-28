@@ -533,7 +533,8 @@
 
   const tableHeaderCellStyle = { background: 'var(--color-bg-2)' };
 
-  const formatDiscountText = (discount: number) => `${discount / 100}x`;
+  const formatDiscountText = (discount: number) =>
+    `${Number((discount / 100).toFixed(10))}x`;
 
   // 时段规则
   const timeRulesColumns = computed<TableColumnData[]>(() =>

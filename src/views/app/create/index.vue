@@ -534,7 +534,8 @@
     return `${formatDiscountText(min)}~${formatDiscountText(max)}`;
   };
 
-  const formatDiscountText = (discount: number) => `${discount / 100}x`;
+  const formatDiscountText = (discount: number) =>
+    `${Number((discount / 100).toFixed(10))}x`;
 
   const getGroupDiscountText = (group: GroupList) => {
     if (!group.time_rules?.length) {

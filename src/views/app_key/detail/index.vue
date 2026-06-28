@@ -200,7 +200,8 @@
                 currentData.group_time_rules.length === 1
               "
             >
-              {{ formatDiscountText(currentData.group_time_rules[0].discount) }}<a-button
+              {{ formatDiscountText(currentData.group_time_rules[0].discount)
+              }}<a-button
                 v-if="hasModelNames(currentData.group_time_rules)"
                 type="text"
                 size="small"
@@ -426,7 +427,8 @@
     return `${formatDiscountText(min)}~${formatDiscountText(max)}`;
   };
 
-  const formatDiscountText = (discount: number) => `${discount / 100}x`;
+  const formatDiscountText = (discount: number) =>
+    `${Number((discount / 100).toFixed(10))}x`;
 
   const hasModelNames = (rules: TimeRule[]) => {
     return rules.some((r) => r.model_names?.length);

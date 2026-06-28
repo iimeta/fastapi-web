@@ -616,7 +616,8 @@
     )}`;
   };
 
-  const formatDiscountText = (discount: number) => `${discount / 100}x`;
+  const formatDiscountText = (discount: number) =>
+    `${Number((discount / 100).toFixed(10))}x`;
 
   const formatDays = (rule: any) => {
     if (!rule.days || rule.days.length === 0) return t('common.all');

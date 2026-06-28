@@ -207,7 +207,8 @@
     return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
   };
 
-  const formatDiscountText = (discount: number) => `${discount / 100}x`;
+  const formatDiscountText = (discount: number) =>
+    `${Number((discount / 100).toFixed(10))}x`;
 
   const groupMultiplierText = computed(() => {
     const rules = props.record.time_rules || [];

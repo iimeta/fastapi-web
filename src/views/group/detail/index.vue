@@ -40,7 +40,8 @@
           <span
             v-if="currentData.time_rules && currentData.time_rules.length === 1"
           >
-            {{ formatDiscountText(currentData.time_rules[0].discount) }}<a-button
+            {{ formatDiscountText(currentData.time_rules[0].discount)
+            }}<a-button
               v-if="currentData.time_rules.some((r) => r.model_names?.length)"
               type="text"
               size="small"
@@ -513,7 +514,8 @@
     return `${formatDiscountText(min)}~${formatDiscountText(max)}`;
   };
 
-  const formatDiscountText = (discount: number) => `${discount / 100}x`;
+  const formatDiscountText = (discount: number) =>
+    `${Number((discount / 100).toFixed(10))}x`;
 
   const viewTimeRules = (rules: any[]) => {
     timeRulesData.value = rules;

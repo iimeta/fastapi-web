@@ -365,7 +365,8 @@
     return `${formatDiscountText(min)}~${formatDiscountText(max)}`;
   };
 
-  const formatDiscountText = (discount: number) => `${discount / 100}x`;
+  const formatDiscountText = (discount: number) =>
+    `${Number((discount / 100).toFixed(10))}x`;
 
   const hasModelNames = (rules: any[]) => {
     return rules.some((r: any) => r.model_names?.length);
