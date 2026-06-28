@@ -261,6 +261,7 @@
                 @detail="detailHandle"
                 @models="modelsHandle"
                 @update="updateHandle"
+                @copy="copyHandle"
                 @time-rules="viewTimeRules"
                 @public-change="groupChangePublic"
                 @status-change="groupChangeStatus"
@@ -773,6 +774,13 @@
     router.push({
       name: 'GroupUpdate',
       query: { id },
+    });
+  };
+
+  const copyHandle = (id: string) => {
+    router.push({
+      name: 'GroupUpdate',
+      query: { id, mode: 'copy' },
     });
   };
 

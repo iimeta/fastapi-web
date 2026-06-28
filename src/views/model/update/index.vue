@@ -781,6 +781,7 @@
   import { FormInstance, Message } from '@arco-design/web-vue';
   import {
     Model,
+    submitModelCreate,
     submitModelUpdate,
     queryModelDetail,
     ModelDetailParams,
@@ -798,6 +799,7 @@
   const { t } = useI18n();
   const route = useRoute();
   const router = useRouter();
+  const isCopy = route.query.mode === 'copy';
 
   const providers = ref<ProviderList[]>([]);
   const getProviderList = async () => {
@@ -949,12 +951,21 @@
       }
       setLoading(true);
       try {
-        await submitModelUpdate(formData.value).then(() => {
-          Message.success(t('success.update'));
-          router.push({
-            name: 'ModelList',
+        if (isCopy) {
+          await submitModelCreate(formData.value).then(() => {
+            Message.success(t('success.create'));
+            router.push({
+              name: 'ModelList',
+            });
           });
-        });
+        } else {
+          await submitModelUpdate(formData.value).then(() => {
+            Message.success(t('success.update'));
+            router.push({
+              name: 'ModelList',
+            });
+          });
+        }
       } catch (err) {
         // you can report use errorHandler or other
       } finally {
@@ -969,7 +980,9 @@
     setLoading(true);
     try {
       const { data } = await queryModelDetail(params);
-      formData.value.id = data.id;
+      if (!isCopy) {
+        formData.value.id = data.id;
+      }
       formData.value.provider_id = data.provider_id;
       formData.value.name = data.name;
       formData.value.model = data.model;

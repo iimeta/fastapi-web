@@ -271,6 +271,7 @@
                 @detail="detailHandle"
                 @models="modelsHandle"
                 @update="updateHandle"
+                @copy="copyHandle"
                 @keys="keysHandle"
                 @test="testsHandle"
                 @status-change="modelAgentChangeStatus"
@@ -715,6 +716,13 @@
     router.push({
       name: 'ModelAgentUpdate',
       query: { id },
+    });
+  };
+
+  const copyHandle = (id: string) => {
+    router.push({
+      name: 'ModelAgentUpdate',
+      query: { id, mode: 'copy' },
     });
   };
 

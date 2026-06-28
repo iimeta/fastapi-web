@@ -722,6 +722,7 @@
   import { useRoute, useRouter } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import {
+    submitModelAgentCreate,
     submitModelAgentUpdate,
     ModelAgentUpdate,
     queryModelAgentDetail,
@@ -740,6 +741,7 @@
   const route = useRoute();
   const router = useRouter();
   const { t } = useI18n();
+  const isCopy = route.query.mode === 'copy';
 
   const providers = ref<ProviderList[]>([]);
   const providerMap = new Map();
@@ -835,12 +837,21 @@
     if (!res) {
       setLoading(true);
       try {
-        await submitModelAgentUpdate(formData.value).then(() => {
-          Message.success(t('success.update'));
-          router.push({
-            name: 'ModelAgentList',
+        if (isCopy) {
+          await submitModelAgentCreate(formData.value).then(() => {
+            Message.success(t('success.create'));
+            router.push({
+              name: 'ModelAgentList',
+            });
           });
-        });
+        } else {
+          await submitModelAgentUpdate(formData.value).then(() => {
+            Message.success(t('success.update'));
+            router.push({
+              name: 'ModelAgentList',
+            });
+          });
+        }
       } catch (err) {
         // you can report use errorHandler or other
       } finally {
@@ -856,7 +867,9 @@
     try {
       getProviderList();
       const { data } = await queryModelAgentDetail(params);
-      formData.value.id = data.id;
+      if (!isCopy) {
+        formData.value.id = data.id;
+      }
       formData.value.provider_id = data.provider_id;
       formData.value.name = data.name;
       formData.value.base_url = data.base_url;

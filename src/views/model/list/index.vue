@@ -483,6 +483,18 @@
             @click="
               $router.push({
                 name: 'ModelUpdate',
+                query: { id: record.id, mode: 'copy' },
+              })
+            "
+          >
+            {{ $t('button.copy') }}
+          </a-button>
+          <a-button
+            type="text"
+            size="small"
+            @click="
+              $router.push({
+                name: 'ModelUpdate',
                 query: { id: record.id },
               })
             "
@@ -1074,7 +1086,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 120,
+      width: 160,
     },
   ]);
 

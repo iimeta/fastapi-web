@@ -135,6 +135,9 @@
         <a-button type="primary" @click.stop="$emit('update', record.id)">
           {{ $t('button.update') }}
         </a-button>
+        <a-button @click.stop="$emit('copy', record.id)">
+          {{ $t('button.copy') }}
+        </a-button>
         <a-button @click.stop="$emit('keys', record.id)">
           {{ $t('button.key') }}
         </a-button>
@@ -180,6 +183,7 @@
     (e: 'detail', id: string): void;
     (e: 'models', id: string): void;
     (e: 'update', id: string): void;
+    (e: 'copy', id: string): void;
     (e: 'keys', id: string): void;
     (e: 'test', id: string): void;
     (e: 'statusChange', payload: ModelAgentChangeStatus): void;

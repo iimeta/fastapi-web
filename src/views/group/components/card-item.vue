@@ -244,6 +244,9 @@
         <a-button type="primary" @click.stop="$emit('update', record.id)">
           {{ $t('button.update') }}
         </a-button>
+        <a-button @click.stop="$emit('copy', record.id)">
+          {{ $t('button.copy') }}
+        </a-button>
         <a-button @click.stop="$emit('detail', record.id)">
           {{ $t('button.detail') }}
         </a-button>
@@ -297,6 +300,7 @@
     (e: 'detail', id: string): void;
     (e: 'models', id: string): void;
     (e: 'update', id: string): void;
+    (e: 'copy', id: string): void;
     (e: 'timeRules', rules: any[]): void;
     (e: 'publicChange', payload: GroupChangePublic): void;
     (e: 'statusChange', payload: GroupChangeStatus): void;

@@ -884,6 +884,7 @@
   import { useAppStore } from '@/store';
   import { disabledDate, parsePrice } from '@/utils/common';
   import {
+    submitGroupCreate,
     submitGroupUpdate,
     GroupUpdate,
     GroupDetailParams,
@@ -904,6 +905,7 @@
   const route = useRoute();
   const router = useRouter();
   const appStore = useAppStore();
+  const isCopy = route.query.mode === 'copy';
 
   const models = ref<ModelList[]>([]);
   const getModelList = async () => {
@@ -971,12 +973,21 @@
     if (!res && !timeRulesRes) {
       setLoading(true);
       try {
-        await submitGroupUpdate(formData.value).then(() => {
-          Message.success(t('success.update'));
-          router.push({
-            name: 'GroupList',
+        if (isCopy) {
+          await submitGroupCreate(formData.value).then(() => {
+            Message.success(t('success.create'));
+            router.push({
+              name: 'GroupList',
+            });
           });
-        });
+        } else {
+          await submitGroupUpdate(formData.value).then(() => {
+            Message.success(t('success.update'));
+            router.push({
+              name: 'GroupList',
+            });
+          });
+        }
       } catch (err) {
         // you can report use errorHandler or other
       } finally {
@@ -991,7 +1002,9 @@
     setLoading(true);
     try {
       const { data } = await queryGroupDetail(params);
-      formData.value.id = data.id;
+      if (!isCopy) {
+        formData.value.id = data.id;
+      }
       formData.value.name = data.name;
       formData.value.time_rules = data.time_rules || [];
       formData.value.billing_methods = data.billing_methods || [1, 2];
