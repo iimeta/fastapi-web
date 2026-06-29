@@ -672,14 +672,32 @@
       title:
         userRole === 'reseller' || userRole === 'admin'
           ? t('common.user_id')
-          : t('common.app_id'),
+          : t('common.app_name'),
       dataIndex:
-        userRole === 'reseller' || userRole === 'admin' ? 'user_id' : 'app_id',
+        userRole === 'reseller' || userRole === 'admin'
+          ? 'user_id'
+          : 'app_name',
       slotName:
-        userRole === 'reseller' || userRole === 'admin' ? 'user_id' : 'app_id',
+        userRole === 'reseller' || userRole === 'admin'
+          ? 'user_id'
+          : 'app_name',
       align: 'center',
-      width: 75,
+      ellipsis: true,
+      tooltip: true,
     },
+    ...(userRole === 'user'
+      ? [
+          {
+            title: t('common.key_name'),
+            dataIndex: 'key_name',
+            slotName: 'key_name',
+            align: 'center',
+            width: 100,
+            ellipsis: true,
+            tooltip: true,
+          } as TableColumnData,
+        ]
+      : []),
     {
       title: t('common.model'),
       dataIndex: 'model',
@@ -961,7 +979,9 @@
     (val) => {
       cloneColumns.value = cloneDeep(val);
       if (userRole !== 'admin') {
-        cloneColumns.value.splice(8, 1);
+        cloneColumns.value = cloneColumns.value.filter(
+          (item) => item.dataIndex !== 'internal_time'
+        );
       }
       cloneColumns.value.forEach((item, index) => {
         item.checked = true;

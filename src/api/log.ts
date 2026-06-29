@@ -8,6 +8,8 @@ export interface TextPage {
   trace_id: any;
   user_id: any;
   app_id: any;
+  app_name: string;
+  key_name: string;
   model: string;
   spend: Spend;
   stream: boolean;
@@ -141,6 +143,8 @@ export interface ImagePage {
   trace_id: any;
   user_id: any;
   app_id: any;
+  app_name: string;
+  key_name: string;
   model: string;
   action: string;
   total_tokens: number;
@@ -243,6 +247,8 @@ export interface AudioPage {
   trace_id: any;
   user_id: any;
   app_id: any;
+  app_name: string;
+  key_name: string;
   model: string;
   total_tokens: number;
   total_time: number;
@@ -334,6 +340,8 @@ export interface VideoPage {
   trace_id: any;
   user_id: any;
   app_id: any;
+  app_name: string;
+  key_name: string;
   model: string;
   total_tokens: number;
   total_time: number;
@@ -427,6 +435,8 @@ export interface FilePage {
   trace_id: any;
   user_id: any;
   app_id: any;
+  app_name: string;
+  key_name: string;
   model: string;
   total_tokens: number;
   total_time: number;
@@ -520,6 +530,8 @@ export interface BatchPage {
   trace_id: any;
   user_id: any;
   app_id: any;
+  app_name: string;
+  key_name: string;
   model: string;
   total_tokens: number;
   total_time: number;
@@ -613,6 +625,8 @@ export interface GeneralPage {
   trace_id: any;
   user_id: any;
   app_id: any;
+  app_name: string;
+  key_name: string;
   model: string;
   spend: Spend;
   stream: boolean;
