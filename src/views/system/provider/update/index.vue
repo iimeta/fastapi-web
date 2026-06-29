@@ -189,10 +189,6 @@
       value: t('provider.dict.name.360AI'),
     },
     {
-      label: t('provider.dict.name.Midjourney'),
-      value: t('provider.dict.name.Midjourney'),
-    },
-    {
       label: t('provider.dict.name.FastAPI'),
       value: t('provider.dict.name.FastAPI'),
     },
@@ -262,10 +258,6 @@
     {
       label: t('provider.dict.code.GCPGemini'),
       value: t('provider.dict.code.GCPGemini'),
-    },
-    {
-      label: t('provider.dict.code.Midjourney'),
-      value: t('provider.dict.code.Midjourney'),
     },
     {
       label: t('provider.dict.code.FastAPI'),

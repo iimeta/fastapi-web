@@ -79,13 +79,6 @@ export interface SearchPricing {
   is_default: string;
 }
 
-export interface MidjourneyPricing {
-  name: any;
-  action: any;
-  path: any;
-  once_ratio: any;
-}
-
 export interface OncePricing {
   once_ratio: any;
 }
@@ -109,7 +102,6 @@ export interface Pricing {
   video_generation: VideoGenerationPricing[];
   video_cache: CachePricing;
   search: SearchPricing[];
-  midjourney: MidjourneyPricing[];
   once: OncePricing;
 }
 
@@ -173,11 +165,6 @@ export interface SearchSpend {
   spend_tokens: number;
 }
 
-export interface MidjourneySpend {
-  pricing: MidjourneyPricing;
-  spend_tokens: number;
-}
-
 export interface OnceSpend {
   pricing: OncePricing;
   spend_tokens: number;
@@ -204,7 +191,6 @@ export interface Spend {
   video_generation: VideoGenerationSpend;
   video_cache: CacheSpend;
   search: SearchSpend;
-  midjourney: MidjourneySpend;
   once: OnceSpend;
   group_id: string;
   group_name: string;

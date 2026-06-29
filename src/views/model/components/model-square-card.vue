@@ -417,14 +417,6 @@
         value: `${fmt(d.once_ratio)} / ${t('unit.once')}`,
       });
     }
-    // Midjourney: 价格 / 次
-    if (has('midjourney') && p.midjourney?.length) {
-      arr.push({
-        key: 'mj',
-        label: t('dict.billing_items.midjourney'),
-        value: `${fmt(p.midjourney[0].once_ratio)} / ${t('unit.once')}`,
-      });
-    }
     // 一次: 价格 / 次
     if (has('once') && p.once) {
       arr.push({

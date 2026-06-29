@@ -202,15 +202,6 @@
           {{ $t('dict.billing_items.search') }}
         </a-checkbox>
         <a-checkbox
-          v-if="formData.billing_methods.includes(1)"
-          v-model="formData.billing_items"
-          value="midjourney"
-          class="billing-items"
-          @change="handleBillingItemsChange"
-        >
-          {{ $t('dict.billing_items.midjourney') }}
-        </a-checkbox>
-        <a-checkbox
           v-if="formData.billing_methods.includes(2)"
           v-model="formData.billing_items"
           value="once"
@@ -1217,74 +1208,6 @@
         </a-form-item>
       </a-tab-pane>
 
-      <!-- Midjourney -->
-      <a-tab-pane
-        v-if="formData.billing_items.includes('midjourney')"
-        key="midjourney"
-        :title="$t('dict.billing_items.midjourney')"
-      >
-        <a-form-item
-          v-for="(_, index) of formData.midjourney"
-          :key="index"
-          :field="
-            `midjourney[${index}].name` &&
-            `midjourney[${index}].action` &&
-            `midjourney[${index}].path` &&
-            `midjourney[${index}].once_ratio`
-          "
-          :label="`${index + 1}. ` + $t('model.label.midjourney')"
-          :rules="[
-            {
-              required: true,
-              message: $t('model.error.required.midjourney'),
-            },
-          ]"
-        >
-          <a-input
-            v-model="formData.midjourney[index].name"
-            :placeholder="$t('model.placeholder.midjourney.name')"
-            class="pricing-input--midjourney-name pricing-field--spaced"
-          />
-          <a-input
-            v-model="formData.midjourney[index].action"
-            :placeholder="$t('model.placeholder.midjourney.action')"
-            class="pricing-input--midjourney-name pricing-field--spaced"
-          />
-          <a-input
-            v-model="formData.midjourney[index].path"
-            :placeholder="$t('model.placeholder.midjourney.path')"
-            class="pricing-input--midjourney-path pricing-field--spaced"
-          />
-          <a-input-number
-            v-model="formData.midjourney[index].once_ratio"
-            :placeholder="$t('model.placeholder.midjourney.once_ratio')"
-            :min="0"
-            :max="9999999999999"
-            :parser="parsePrice"
-            allow-clear
-            class="pricing-input--compact"
-          >
-            <template #prefix> {{ cs }} </template>
-            <template #append> / {{ $t('unit.once') }} </template>
-          </a-input-number>
-          <a-button
-            type="primary"
-            shape="circle"
-            class="pricing-action-btn"
-            @click="handleMidjourneyPricingAdd()"
-          >
-            <icon-plus />
-          </a-button>
-          <a-button
-            type="secondary"
-            shape="circle"
-            @click="handleMidjourneyPricingDel(index)"
-          >
-            <icon-minus />
-          </a-button>
-        </a-form-item>
-      </a-tab-pane>
-
       <!-- 一次 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('once')"
@@ -1334,7 +1257,6 @@
     VisionPricing,
     VideoGenerationPricing,
     SearchPricing,
-    MidjourneyPricing,
   } from '@/api/common';
 
   const { t } = useI18n();
@@ -1452,10 +1374,6 @@
     {
       label: t('dict.billing_items.search'),
       value: 'search',
-    },
-    {
-      label: t('dict.billing_items.midjourney'),
-      value: 'midjourney',
     },
     {
       label: t('dict.billing_items.once'),
@@ -1911,82 +1829,6 @@
     }
   };
 
-  const handleMidjourneyPricingAdd = (n?: string, a?: string, p?: string) => {
-    const midjourneyPricing: MidjourneyPricing = {
-      name: n,
-      action: a,
-      path: p,
-      once_ratio: ref(),
-    };
-    formData.value.midjourney.push(midjourneyPricing);
-  };
-
-  const handleMidjourneyPricingDel = (index: number) => {
-    if (formData.value.midjourney.length > 1) {
-      formData.value.midjourney.splice(index, 1);
-    }
-  };
-
-  const initMidjourneyPricing = () => {
-    const names = [
-      '绘图',
-      '放大',
-      '变换',
-      '强变换',
-      '弱变换',
-      '描述',
-      '混图',
-      '重绘',
-      '局部重绘',
-      '变焦',
-      '自定义变焦',
-      '平移',
-      '缩词',
-      '窗口',
-      '换脸',
-      '任务',
-    ];
-    const actions = [
-      'IMAGINE',
-      'UPSCALE',
-      'VARIATION',
-      'HIGH_VARIATION',
-      'LOW_VARIATION',
-      'DESCRIBE',
-      'BLEND',
-      'REROLL',
-      'INPAINT',
-      'ZOOM',
-      'CUSTOM_ZOOM',
-      'PAN',
-      'SHORTEN',
-      'MODAL',
-      'SWAP_FACE',
-      'TASK',
-    ];
-    const paths = [
-      '/submit/imagine',
-      '/submit/change',
-      '/submit/change',
-      '/submit/action',
-      '/submit/action',
-      '/submit/describe',
-      '/submit/blend',
-      '/submit/action',
-      '/submit/action',
-      '/submit/action',
-      '/submit/action',
-      '/submit/action',
-      '/submit/shorten',
-      '/submit/modal',
-      '/insight-face/swap',
-      '/task/*',
-    ];
-    for (let i = 0; i < names.length; i += 1) {
-      handleMidjourneyPricingAdd(names[i], actions[i], paths[i]);
-    }
-  };
-
   const handleBillingItemsChange = () => {
     provider.value = providerMap.get(props.providerId);
 
@@ -2112,15 +1954,6 @@
       }
       if (formData.value.search.length === 0) {
         initSearchPricing();
-      }
-    }
-
-    if (formData.value.billing_items.includes('midjourney')) {
-      if (!formData.value.midjourney) {
-        formData.value.midjourney = [];
-      }
-      if (formData.value.midjourney.length === 0) {
-        initMidjourneyPricing();
       }
     }
 
@@ -2287,14 +2120,6 @@
 
   .pricing-input--video-price {
     width: 239px;
-  }
-
-  :deep(.pricing-input--midjourney-name) {
-    width: 155px;
-  }
-
-  :deep(.pricing-input--midjourney-path) {
-    width: 168px;
   }
 
   :deep(.pricing-select--compact) {

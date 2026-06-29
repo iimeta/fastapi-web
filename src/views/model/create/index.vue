@@ -907,7 +907,6 @@
         read_ratio: ref(),
       },
       search: [],
-      midjourney: [],
       once: {
         once_ratio: ref(),
       },

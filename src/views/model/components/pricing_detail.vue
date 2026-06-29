@@ -446,24 +446,6 @@
       </template>
     </a-table>
 
-    <!-- Midjourney -->
-    <a-table
-      v-if="pricing.billing_items.includes('midjourney')"
-      :columns="midjourneyPricingColumns"
-      :data="midjourneyPricing"
-      :pagination="false"
-      :bordered="false"
-      class="pricing-detail-table-spacing"
-    >
-      <template #once_ratio="{ record }">
-        <Quota
-          :currency-symbol="props.modelValue?.currency_symbol"
-          :model-value="record.once_ratio"
-        />
-        / {{ $t('unit.once') }}
-      </template>
-    </a-table>
-
     <!-- 一次 -->
     <a-table
       v-if="pricing.billing_items.includes('once')"
@@ -499,7 +481,6 @@
     VideoPricing,
     VideoGenerationPricing,
     SearchPricing,
-    MidjourneyPricing,
     OncePricing,
   } from '@/api/common';
   import Quota from '@/views/common/quota.vue';
@@ -1084,45 +1065,6 @@
     },
   ]);
 
-  // Midjourney
-  const midjourneyPricing = ref<MidjourneyPricing[]>([]);
-  const midjourneyPricingColumns = ref<TableColumnData[]>([
-    {
-      title: t('dict.billing_items.midjourney'),
-      headerCellStyle: tableHeaderCellStyle,
-      children: [
-        {
-          title: t('model.label.midjourney.name'),
-          dataIndex: 'name',
-          slotName: 'name',
-          align: 'center',
-          width: 200,
-        },
-        {
-          title: t('model.label.midjourney.action'),
-          dataIndex: 'action',
-          slotName: 'action',
-          align: 'center',
-          width: 200,
-        },
-        {
-          title: t('model.label.midjourney.path'),
-          dataIndex: 'path',
-          slotName: 'path',
-          align: 'center',
-          width: 200,
-        },
-        {
-          title: t('model.label.once_ratio'),
-          dataIndex: 'once_ratio',
-          slotName: 'once_ratio',
-          align: 'center',
-          width: 200,
-        },
-      ],
-    },
-  ]);
-
   // 一次
   const oncePricing = ref<OncePricing[]>([]);
   const oncePricingColumns = ref<TableColumnData[]>([
@@ -1294,11 +1236,6 @@
     // 搜索
     if (pricing.value.billing_items.includes('search')) {
       searchPricing.value = pricing.value.search;
-    }
-
-    // Midjourney
-    if (pricing.value.billing_items.includes('midjourney')) {
-      midjourneyPricing.value = pricing.value.midjourney;
     }
 
     // 一次

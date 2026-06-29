@@ -30,7 +30,6 @@ export default {
   'provider.dict.name.ZhipuAI': 'Zhipu AI',
   'provider.dict.name.VolcEngine': 'Volcano Engine',
   'provider.dict.name.360AI': '360 AI Brain',
-  'provider.dict.name.Midjourney': 'Midjourney',
   'provider.dict.name.FastAPI': 'Zhiyuan Fast API',
   'provider.dict.code.OpenAI': 'OpenAI',
   'provider.dict.code.Anthropic': 'Anthropic',
@@ -48,6 +47,5 @@ export default {
   'provider.dict.code.AWSClaude': 'AWSClaude',
   'provider.dict.code.GCPClaude': 'GCPClaude',
   'provider.dict.code.GCPGemini': 'GCPGemini',
-  'provider.dict.code.Midjourney': 'Midjourney',
   'provider.dict.code.FastAPI': 'FastAPI',
 };

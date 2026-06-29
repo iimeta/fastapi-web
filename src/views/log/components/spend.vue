@@ -119,14 +119,6 @@
       />
     </template>
 
-    <!-- Midjourney -->
-    <template #midjourney="{ record }">
-      <Quota
-        :currency-symbol="props.modelValue.currency_symbol"
-        :model-value="record.midjourney.spend_tokens"
-      />
-    </template>
-
     <!-- 一次 -->
     <template #once="{ record }">
       <Quota
@@ -724,39 +716,6 @@
     </template>
   </a-table>
 
-  <!-- Midjourney -->
-  <a-table
-    v-if="spend.billing_items.includes('midjourney') && midjourneySpend.length"
-    :columns="midjourneySpendColumns"
-    :data="midjourneySpend"
-    :pagination="false"
-    :bordered="false"
-    class="spend-detail-table-spacing"
-  >
-    <template #name="{ record }">
-      {{ record.pricing.name }}
-    </template>
-    <template #action="{ record }">
-      {{ record.pricing.action }}
-    </template>
-    <template #path="{ record }">
-      {{ record.pricing.path }}
-    </template>
-    <template #once_ratio="{ record }">
-      <Quota
-        :currency-symbol="props.modelValue.currency_symbol"
-        :model-value="record.pricing.once_ratio"
-      />
-      / {{ $t('unit.once') }}
-    </template>
-    <template #spend_tokens="{ record }">
-      <Quota
-        :currency-symbol="props.modelValue.currency_symbol"
-        :model-value="record.spend_tokens"
-      />
-    </template>
-  </a-table>
-
   <!-- 一次 -->
   <a-table
     v-if="spend.billing_items.includes('once') && onceSpend.length"
@@ -804,7 +763,6 @@
     VideoSpend,
     VideoGenerationSpend,
     SearchSpend,
-    MidjourneySpend,
     OnceSpend,
   } from '@/api/common';
   import Quota from '@/views/common/quota.vue';
@@ -1581,52 +1539,6 @@
     },
   ]);
 
-  // Midjourney
-  const midjourneySpend = ref<MidjourneySpend[]>([]);
-  const midjourneySpendColumns = ref<TableColumnData[]>([
-    {
-      title: t('dict.billing_items.midjourney'),
-      headerCellStyle: tableHeaderCellStyle,
-      children: [
-        {
-          title: t('model.label.midjourney.name'),
-          dataIndex: 'name',
-          slotName: 'name',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('model.label.midjourney.action'),
-          dataIndex: 'action',
-          slotName: 'action',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('model.label.midjourney.path'),
-          dataIndex: 'path',
-          slotName: 'path',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('log.columns.spend.once_ratio'),
-          dataIndex: 'once_ratio',
-          slotName: 'once_ratio',
-          align: 'center',
-          width: 100,
-        },
-        {
-          title: t('log.columns.spend.spend_tokens'),
-          dataIndex: 'spend_tokens',
-          slotName: 'spend_tokens',
-          align: 'center',
-          width: 100,
-        },
-      ],
-    },
-  ]);
-
   // 一次
   const onceSpend = ref<OnceSpend[]>([]);
   const onceSpendColumns = ref<TableColumnData[]>([
@@ -1884,21 +1796,6 @@
         title: t('dict.billing_items.search'),
         dataIndex: 'search',
         slotName: 'search',
-        align: 'center',
-        width: 100,
-      });
-    }
-
-    // Midjourney
-    if (
-      spend.value.billing_items.includes('midjourney') &&
-      spend.value.midjourney
-    ) {
-      midjourneySpend.value[0] = spend.value.midjourney;
-      totalSpendColumns.value[0].children.push({
-        title: t('dict.billing_items.midjourney'),
-        dataIndex: 'midjourney',
-        slotName: 'midjourney',
         align: 'center',
         width: 100,
       });
