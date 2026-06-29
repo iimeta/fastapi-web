@@ -978,7 +978,7 @@
       title:
         userRole === 'reseller' || userRole === 'admin'
           ? t('common.user_id')
-          : t('common.app_name'),
+          : t('common.app'),
       dataIndex:
         userRole === 'reseller' || userRole === 'admin'
           ? 'user_id'
