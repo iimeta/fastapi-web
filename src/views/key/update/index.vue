@@ -21,9 +21,6 @@
             :label-col-props="{ span: 4 }"
             :wrapper-col-props="{ span: 18 }"
           >
-            <a-divider orientation="left">
-              {{ $t('common.title.base_info') }}
-            </a-divider>
             <a-form-item
               field="provider_id"
               :label="$t('common.provider')"
@@ -75,26 +72,15 @@
                 :max="999"
               />
             </a-form-item>
-            <a-form-item field="remark" :label="$t('common.remark')">
-              <a-textarea
-                v-model="formData.remark"
-                :placeholder="$t('placeholder.remark')"
-              />
-            </a-form-item>
-
-            <a-divider orientation="left">
-              {{ $t('common.title.advanced') }}
-            </a-divider>
-
-            <a-form-item field="models" :label="$t('common.bind_models')">
-              <model-select
-                v-model="formData.models"
-                :placeholder="$t('key.placeholder.models')"
-              />
-            </a-form-item>
             <a-form-item
               field="model_agents"
               :label="$t('common.bind_model_agents')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('key.placeholder.model_agents'),
+                },
+              ]"
             >
               <a-select
                 v-model="formData.model_agents"
@@ -114,16 +100,16 @@
               </a-select>
             </a-form-item>
             <a-form-item
-              field="is_agents_only"
-              :label="$t('key.label.is_agents_only')"
-            >
-              <a-switch v-model="formData.is_agents_only" />
-            </a-form-item>
-            <a-form-item
               field="is_never_disable"
               :label="$t('key.label.is_never_disable')"
             >
               <a-switch v-model="formData.is_never_disable" />
+            </a-form-item>
+            <a-form-item field="remark" :label="$t('common.remark')">
+              <a-textarea
+                v-model="formData.remark"
+                :placeholder="$t('placeholder.remark')"
+              />
             </a-form-item>
             <a-space>
               <div class="submit-btn">
@@ -227,9 +213,7 @@
     weight: ref(20),
     remark: '',
     status: 1,
-    models: [],
     model_agents: [],
-    is_agents_only: false,
     is_never_disable: false,
   });
 
@@ -265,9 +249,7 @@
       formData.value.weight = data.weight;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
-      formData.value.models = data.models;
       formData.value.model_agents = data.model_agents;
-      formData.value.is_agents_only = data.is_agents_only;
       formData.value.is_never_disable = data.is_never_disable;
       getKeyPlaceholder();
     } catch (err) {

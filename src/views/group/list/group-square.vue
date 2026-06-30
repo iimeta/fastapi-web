@@ -649,7 +649,7 @@
 
 <style scoped lang="less">
   .group-square-page {
-    padding: 15px;
+    padding: 12px;
   }
 
   /* ===== 筛选区 ===== */

@@ -11,9 +11,7 @@ export interface KeyBaseInfo {
 
 export interface KeyAdvanced {
   weight: any;
-  models: string[];
   model_agents: string[];
-  is_agents_only: boolean;
   is_never_disable: boolean;
 }
 
@@ -75,11 +73,8 @@ export interface KeyDetail {
   key: string;
   used_quota: number;
   weight: number;
-  models: string[];
-  model_names: string[];
   model_agents: string[];
   model_agent_names: string[];
-  is_agents_only: boolean;
   is_never_disable: boolean;
   status: number;
   remark: string;
@@ -119,7 +114,7 @@ export interface KeyBatchOperate {
   value?: any;
   provider_id?: string;
   key?: string;
-  models?: string[];
+  auto_disabled_reason?: string;
   model_agents?: string[];
   status?: number;
   remark?: string;

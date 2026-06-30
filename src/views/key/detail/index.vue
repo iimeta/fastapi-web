@@ -46,28 +46,12 @@
           </a-tag>
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('common.bind_models')" :span="2">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else class="detail-textarea detail-textarea--tall">
-          {{ currentData?.model_names?.join('\n') || '-' }}
-        </span>
-      </a-descriptions-item>
       <a-descriptions-item :label="$t('common.bind_model_agents')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else class="detail-textarea detail-textarea--tall">
           {{ currentData?.model_agent_names?.join('\n') || '-' }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('key.label.is_agents_only')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ $t(`dict.${currentData?.is_agents_only || false}`) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('key.label.is_never_disable')">

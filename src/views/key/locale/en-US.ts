@@ -22,6 +22,8 @@ export default {
   'key.detail.is_auto_disabled': 'Auto Disabled',
   'key.detail.auto_disabled_reason': 'Disable Reason',
   // form
-  'key.form.remark': 'Remarks/Reason',
-  'key.form.placeholder.remark': 'Please enter remarks/disable reason',
+  'key.form.auto_disabled_reason': 'Disable Reason',
+  'key.form.placeholder.auto_disabled_reason': 'Please enter disable reason',
+  'key.form.remark': 'Remarks',
+  'key.form.placeholder.remark': 'Please enter remarks',
 };

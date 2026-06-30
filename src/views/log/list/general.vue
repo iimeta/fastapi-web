@@ -796,8 +796,7 @@
           ? 'user_id'
           : 'app_name',
       align: 'center',
-      ellipsis: true,
-      tooltip: true,
+      width: userRole === 'reseller' || userRole === 'admin' ? 75 : undefined,
     },
     ...(userRole === 'user'
       ? [
@@ -806,9 +805,6 @@
             dataIndex: 'key_name',
             slotName: 'key_name',
             align: 'center',
-            width: 100,
-            ellipsis: true,
-            tooltip: true,
           } as TableColumnData,
         ]
       : []),
@@ -825,21 +821,18 @@
       dataIndex: 'input_tokens',
       slotName: 'input_tokens',
       align: 'center',
-      width: 85,
     },
     {
       title: t('log.columns.output_tokens'),
       dataIndex: 'output_tokens',
       slotName: 'output_tokens',
       align: 'center',
-      width: 85,
     },
     {
       title: t('common.total.spend'),
       dataIndex: 'total_spend_tokens',
       slotName: 'total_spend_tokens',
       align: 'center',
-      width: 110,
       slots: {
         title: () => [
           h(
@@ -882,7 +875,6 @@
       dataIndex: 'stream',
       slotName: 'stream',
       align: 'center',
-      width: 60,
     },
     {
       title: t('log.columns.conn_time'),

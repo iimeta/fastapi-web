@@ -22,6 +22,8 @@ export default {
   'key.detail.is_auto_disabled': '自动禁用',
   'key.detail.auto_disabled_reason': '禁用原因',
   // form
-  'key.form.remark': '备注/原因',
-  'key.form.placeholder.remark': '请输入备注/禁用原因',
+  'key.form.auto_disabled_reason': '禁用原因',
+  'key.form.placeholder.auto_disabled_reason': '请输入禁用原因',
+  'key.form.remark': '备注',
+  'key.form.placeholder.remark': '请输入备注',
 };

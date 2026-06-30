@@ -70,6 +70,7 @@ export default {
   'model.agent.detail.session_keep_count': '会话保持缓存数量',
   // columns
   'model.agent.columns.total_time': '耗时(ms)',
+  'model.agent.columns.lb_strategy': '密钥负载',
   // button
   'model.agent.button.quick_fill': '快速填入',
   // dict

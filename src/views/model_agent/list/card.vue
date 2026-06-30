@@ -427,7 +427,7 @@
     { title: t('common.bind_group'), dataIndex: 'group_names' },
     { title: t('common.bind_models'), dataIndex: 'models' },
     { title: t('common.weight'), dataIndex: 'weight' },
-    { title: t('common.lb_strategy'), dataIndex: 'lb_strategy' },
+    { title: t('model.agent.columns.lb_strategy'), dataIndex: 'lb_strategy' },
   ]);
 
   const cloneFields = ref<FieldItem[]>([]);

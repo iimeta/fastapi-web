@@ -514,7 +514,7 @@
       align: 'center',
     },
     {
-      title: t('common.lb_strategy'),
+      title: t('model.agent.columns.lb_strategy'),
       dataIndex: 'lb_strategy',
       slotName: 'lb_strategy',
       align: 'center',

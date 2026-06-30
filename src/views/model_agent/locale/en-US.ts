@@ -70,6 +70,7 @@ export default {
   'model.agent.detail.session_keep_count': 'Session Keep Cache Count',
   // columns
   'model.agent.columns.total_time': 'Time(ms)',
+  'model.agent.columns.lb_strategy': 'Key Load Balancing Strategy',
   // button
   'model.agent.button.quick_fill': 'Quick Fill',
   // dict

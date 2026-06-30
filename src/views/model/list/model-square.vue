@@ -613,7 +613,7 @@
 
 <style scoped lang="less">
   .model-square-page {
-    padding: 15px;
+    padding: 12px;
   }
 
   /* ===== 筛选区 ===== */

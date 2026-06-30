@@ -682,8 +682,7 @@
           ? 'user_id'
           : 'app_name',
       align: 'center',
-      ellipsis: true,
-      tooltip: true,
+      width: userRole === 'reseller' || userRole === 'admin' ? 75 : undefined,
     },
     ...(userRole === 'user'
       ? [
@@ -692,9 +691,6 @@
             dataIndex: 'key_name',
             slotName: 'key_name',
             align: 'center',
-            width: 100,
-            ellipsis: true,
-            tooltip: true,
           } as TableColumnData,
         ]
       : []),
@@ -725,7 +721,6 @@
       dataIndex: 'total_spend_tokens',
       slotName: 'total_spend_tokens',
       align: 'center',
-      width: 110,
       slots: {
         title: () => [
           h(

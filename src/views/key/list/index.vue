@@ -39,35 +39,6 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="7">
-                <a-form-item field="key" :label="$t('common.key')">
-                  <a-input
-                    v-model="searchFormData.key"
-                    :placeholder="$t('placeholder.key')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="9">
-                <a-form-item field="models" :label="$t('common.model')">
-                  <a-select
-                    v-model="searchFormData.models"
-                    :placeholder="$t('common.all')"
-                    :max-tag-count="2"
-                    :scrollbar="false"
-                    multiple
-                    allow-search
-                    allow-clear
-                  >
-                    <a-option
-                      v-for="item in models"
-                      :key="item.id"
-                      :value="item.id"
-                      :label="item.name"
-                    />
-                  </a-select>
-                </a-form-item>
-              </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="model_agents"
@@ -91,7 +62,30 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="7">
+              <a-col :span="8">
+                <a-form-item field="key" :label="$t('common.key')">
+                  <a-input
+                    v-model="searchFormData.key"
+                    :placeholder="$t('placeholder.key')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="auto_disabled_reason"
+                  :label="$t('key.form.auto_disabled_reason')"
+                >
+                  <a-input
+                    v-model="searchFormData.auto_disabled_reason"
+                    :placeholder="
+                      $t('key.form.placeholder.auto_disabled_reason')
+                    "
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
@@ -102,7 +96,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="9">
+              <a-col :span="8">
                 <a-form-item field="remark" :label="$t('key.form.remark')">
                   <a-input
                     v-model="searchFormData.remark"
@@ -301,14 +295,6 @@
           }}
           <icon-copy class="copy-btn" @click="handleCopy(record.id)" />
         </template>
-        <template #models="{ record }">
-          <span v-if="record.models">
-            <a-button type="text" size="small" @click="modelsHandle(record.id)">
-              {{ $t('button.view') }}
-            </a-button>
-          </span>
-          <span v-else>-</span>
-        </template>
         <template #model_agent_names="{ record }">
           {{ record?.model_agent_names?.join(',') || '-' }}
         </template>
@@ -364,20 +350,6 @@
       >
         <Detail :id="recordId" />
       </a-drawer>
-
-      <!-- 绑定模型 -->
-      <a-modal
-        v-model:visible="modelsVisible"
-        :title="$t('common.bind_models')"
-        :modal-style="modelsModalStyle"
-        unmount-on-close
-        hide-cancel
-        simple
-        width="1080px"
-        :ok-text="$t('button.close')"
-      >
-        <Models :id="recordId" :action="action" />
-      </a-modal>
     </a-card>
   </div>
 </template>
@@ -406,11 +378,9 @@
     submitKeyBatchOperate,
     queryKeyDetail,
   } from '@/api/key';
-  import { queryModelList, ModelList } from '@/api/model';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { useClipboard } from '@vueuse/core';
-  import Models from '@/views/common/models.vue';
   import Quota from '@/views/common/quota.vue';
   import Detail from '../detail/index.vue';
 
@@ -426,9 +396,6 @@
   const cardBodyStyle = {
     padding: '25px 20px 20px 20px',
   };
-  const modelsModalStyle = {
-    padding: '25px 15px 20px 15px',
-  };
 
   const rowSelection = reactive({
     type: 'checkbox',
@@ -441,7 +408,7 @@
       type: 2,
       provider_id: '',
       key: '',
-      models: [],
+      auto_disabled_reason: '',
       model_agents: ref(),
       quota: ref(),
       status: ref(),
@@ -504,14 +471,6 @@
       slotName: 'key',
       align: 'center',
       width: 230,
-    },
-    {
-      title: t('common.bind_models'),
-      dataIndex: 'models',
-      slotName: 'models',
-      align: 'center',
-      ellipsis: true,
-      tooltip: true,
     },
     {
       title: t('common.model_agents'),
@@ -601,7 +560,7 @@
         data.items.length > 0 &&
         (searchFormData.value.provider_id ||
           searchFormData.value.key ||
-          searchFormData.value.models.length > 0 ||
+          searchFormData.value.auto_disabled_reason ||
           searchFormData.value.model_agents ||
           searchFormData.value.status ||
           searchFormData.value.remark)
@@ -717,18 +676,6 @@
     }
   };
   getProviderList();
-
-  const models = ref<ModelList[]>([]);
-
-  const getModelList = async () => {
-    try {
-      const { data } = await queryModelList();
-      models.value = data.items;
-    } catch (err) {
-      // you can report use errorHandler or other
-    }
-  };
-  getModelList();
 
   const modelAgents = ref<ModelAgentList[]>([]);
 
@@ -866,15 +813,6 @@
   };
   const detailHandleCancel = () => {
     detailVisible.value = false;
-  };
-
-  const modelsVisible = ref(false);
-  const action = ref();
-
-  const modelsHandle = (id: string) => {
-    modelsVisible.value = true;
-    recordId.value = id;
-    action.value = 'key';
   };
 </script>
 

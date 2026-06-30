@@ -104,7 +104,7 @@
 <style lang="less" scoped>
   .container {
     background-color: var(--color-fill-2);
-    padding: 15px 15px 20px 15px;
+    padding: 12px 12px 20px 12px;
     padding-bottom: 0;
     display: flex;
   }
