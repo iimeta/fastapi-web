@@ -46,7 +46,6 @@ export default {
   'log.detail.fallback_model': 'Fallback Model',
   'log.detail.enable_forward': 'Enable Forwarding',
   'log.detail.forward_rule': 'Forwarding Rule',
-  'log.detail.enable_model_agent': 'Enable Agent',
   'log.detail.action': 'Interface',
   'log.detail.video_id': 'Video ID',
   'log.detail.file_id': 'File ID',

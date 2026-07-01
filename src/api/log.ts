@@ -64,7 +64,6 @@ export interface TextDetail {
   real_model_id: string;
   real_model_name: string;
   real_model: string;
-  is_enable_model_agent: boolean;
   model_agent_id: string;
   model_agent: any;
   is_enable_forward: boolean;
@@ -190,7 +189,6 @@ export interface ImageDetail {
   real_model_id: string;
   real_model_name: string;
   real_model: string;
-  is_enable_model_agent: boolean;
   model_agent_id: string;
   model_agent: any;
   is_enable_forward: boolean;
@@ -289,7 +287,6 @@ export interface AudioDetail {
   real_model_id: string;
   real_model_name: string;
   real_model: string;
-  is_enable_model_agent: boolean;
   model_agent_id: string;
   model_agent: any;
   is_enable_forward: boolean;
@@ -382,7 +379,6 @@ export interface VideoDetail {
   real_model_id: string;
   real_model_name: string;
   real_model: string;
-  is_enable_model_agent: boolean;
   model_agent_id: string;
   model_agent: any;
   is_enable_forward: boolean;
@@ -477,7 +473,6 @@ export interface FileDetail {
   real_model_id: string;
   real_model_name: string;
   real_model: string;
-  is_enable_model_agent: boolean;
   model_agent_id: string;
   model_agent: any;
   is_enable_forward: boolean;
@@ -572,7 +567,6 @@ export interface BatchDetail {
   real_model_id: string;
   real_model_name: string;
   real_model: string;
-  is_enable_model_agent: boolean;
   model_agent_id: string;
   model_agent: any;
   is_enable_forward: boolean;
@@ -670,7 +664,6 @@ export interface GeneralDetail {
   real_model_id: string;
   real_model_name: string;
   real_model: string;
-  is_enable_model_agent: boolean;
   model_agent_id: string;
   model_agent: any;
   is_enable_forward: boolean;

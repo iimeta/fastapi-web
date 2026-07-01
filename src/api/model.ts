@@ -62,7 +62,6 @@ export interface Model {
   groups: string[];
   is_enable_preset_config: boolean;
   preset_config: PresetConfig;
-  is_enable_model_agent: boolean;
   lb_strategy: string;
   model_agents: string[];
   is_enable_forward: boolean;
@@ -180,7 +179,6 @@ export interface ModelDetail {
   is_public: boolean;
   is_enable_preset_config: boolean;
   preset_config: PresetConfig;
-  is_enable_model_agent: boolean;
   lb_strategy: number;
   model_agents: string[];
   model_agent_names: string[];

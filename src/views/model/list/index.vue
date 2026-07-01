@@ -155,36 +155,6 @@
             <a-button
               v-if="renderData.length !== 0"
               type="primary"
-              status="success"
-              :disabled="multiple"
-              :title="multiple ? $t('placeholder.operation.data') : ''"
-              @click="
-                handleBatch({
-                  action: 'agent',
-                  value: true,
-                })
-              "
-            >
-              {{ $t('model.button.enable_model_agent') }}
-            </a-button>
-            <a-button
-              v-if="renderData.length !== 0"
-              type="primary"
-              status="danger"
-              :disabled="multiple"
-              :title="multiple ? $t('placeholder.operation.data') : ''"
-              @click="
-                handleBatch({
-                  action: 'agent',
-                  value: false,
-                })
-              "
-            >
-              {{ $t('model.button.close_model_agent') }}
-            </a-button>
-            <a-button
-              v-if="renderData.length !== 0"
-              type="primary"
               status="warning"
               :disabled="multiple"
               :title="multiple ? $t('placeholder.operation.data') : ''"
@@ -455,8 +425,8 @@
         </template>
         <template #lb_strategy="{ record }">
           {{
-            record.is_enable_model_agent
-              ? $t(`dict.lb_strategy.${record.lb_strategy || 1}`)
+            record.lb_strategy
+              ? $t(`dict.lb_strategy.${record.lb_strategy}`)
               : '-'
           }}
         </template>
@@ -1520,18 +1490,7 @@
       });
       switch (params.action) {
         case 'agent':
-          if (params.value === true) {
-            alertContent = t('model.placeholder.batch.operation.agent.enable', {
-              count: ids.value.length,
-            });
-          } else if (params.value === false) {
-            alertContent = t(
-              'model.placeholder.batch.operation.agent.disable',
-              {
-                count: ids.value.length,
-              }
-            );
-          } else if (params.value === 'all') {
+          if (params.value === 'all') {
             if (!params.model_agents) {
               agentFormVisible.value = true;
             } else {

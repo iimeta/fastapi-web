@@ -245,20 +245,12 @@
               <a-switch v-model="formData.preset_config.is_support_stream" />
             </a-form-item>
             <a-form-item
-              field="is_enable_model_agent"
-              :label="$t('common.enable_model_agent')"
-            >
-              <a-switch
-                v-model="formData.is_enable_model_agent"
-                :disabled="formData.is_enable_model_agent"
-              />
-            </a-form-item>
-            <a-form-item
               field="lb_strategy"
               :label="$t('common.lb_strategy')"
               :rules="[
                 {
                   required: true,
+                  message: $t('model.error.required.lb_strategy'),
                 },
               ]"
             >
@@ -911,7 +903,6 @@
     res_header_passthrough_list: [],
     is_public: true,
     groups: [],
-    is_enable_model_agent: true,
     lb_strategy: '1',
     model_agents: [],
     is_enable_forward: false,
@@ -1056,9 +1047,9 @@
       formData.value.groups = data.groups;
       formData.value.is_enable_preset_config = data.is_enable_preset_config;
       formData.value.preset_config = data.preset_config;
-      formData.value.is_enable_model_agent =
-        data.is_enable_model_agent || false;
-      formData.value.lb_strategy = String(data.lb_strategy);
+      formData.value.lb_strategy = data.lb_strategy
+        ? String(data.lb_strategy)
+        : '';
       formData.value.model_agents = data.model_agents;
       formData.value.is_enable_forward = data.is_enable_forward;
 

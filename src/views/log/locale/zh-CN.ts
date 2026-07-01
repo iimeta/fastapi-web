@@ -46,7 +46,6 @@ export default {
   'log.detail.fallback_model': '后备模型',
   'log.detail.enable_forward': '启用转发',
   'log.detail.forward_rule': '转发规则',
-  'log.detail.enable_model_agent': '启用代理',
   'log.detail.action': '接口',
   'log.detail.video_id': '视频ID',
   'log.detail.file_id': '文件ID',

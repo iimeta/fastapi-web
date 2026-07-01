@@ -415,14 +415,6 @@
             : '-'
         }}</span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('log.detail.enable_model_agent')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>{{
-          $t(`dict.${currentData.is_enable_model_agent || false}`)
-        }}</span>
-      </a-descriptions-item>
       <a-descriptions-item :label="$t('log.detail.model_agent_name')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :widths="['200px']" :rows="1" />

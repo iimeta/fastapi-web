@@ -262,12 +262,6 @@
               <a-switch v-model="formData.preset_config.is_support_stream" />
             </a-form-item>
             <a-form-item
-              field="is_enable_model_agent"
-              :label="$t('common.enable_model_agent')"
-            >
-              <a-switch v-model="formData.is_enable_model_agent" disabled />
-            </a-form-item>
-            <a-form-item
               field="lb_strategy"
               :label="$t('common.lb_strategy')"
               :rules="[
@@ -920,7 +914,6 @@
     res_header_passthrough_list: [],
     is_public: true,
     groups: [],
-    is_enable_model_agent: true,
     lb_strategy: '1',
     model_agents: [],
     is_enable_forward: false,
