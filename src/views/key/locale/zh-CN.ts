@@ -16,7 +16,6 @@ export default {
   'key.error.required.key': '请输入密钥',
   'key.placeholder.models': '请绑定模型, 可同时绑定多个模型',
   'key.placeholder.model_agents': '请绑定模型代理, 可同时绑定多个模型代理',
-  'key.label.is_agents_only': '模型代理专用',
   'key.label.is_never_disable': '永不禁用',
   // detail
   'key.detail.is_auto_disabled': '自动禁用',

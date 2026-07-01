@@ -551,12 +551,6 @@
               />
             </a-form-item>
             <a-form-item
-              field="is_agents_only"
-              :label="$t('model.agent.label.is_agents_only')"
-            >
-              <a-switch v-model="formData.is_agents_only" />
-            </a-form-item>
-            <a-form-item
               field="is_never_disable_key"
               :label="$t('model.agent.label.is_never_disable_key')"
             >
@@ -807,7 +801,6 @@
     is_never_disable: false,
     lb_strategy: '1',
     key: '',
-    is_agents_only: true,
     is_never_disable_key: false,
     is_enable_data_passthrough: false,
     req_passthrough_params: [],

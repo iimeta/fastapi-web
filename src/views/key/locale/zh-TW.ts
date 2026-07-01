@@ -16,7 +16,6 @@ export default {
   'key.error.required.key': '請輸入密鑰',
   'key.placeholder.models': '請綁定模型, 可同時綁定多個模型',
   'key.placeholder.model_agents': '請綁定模型代理, 可同時綁定多個模型代理',
-  'key.label.is_agents_only': '模型代理專用',
   'key.label.is_never_disable': '永不禁用',
   // detail
   'key.detail.is_auto_disabled': '自動禁用',

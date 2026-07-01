@@ -45,7 +45,6 @@ export default {
   'model.agent.label.is_remove_abnormal_model': 'Remove Abnormal Models',
   'model.agent.label.is_never_disable': 'Never Disable',
   'model.agent.label.lb_strategy': 'Key Load Balancing Strategy',
-  'model.agent.label.is_agents_only': 'Agent Only',
   'model.agent.label.is_never_disable_key': 'Keys Never Disable',
   'model.agent.label.data_passthrough': 'Data Passthrough',
   'model.agent.label.req_passthrough': 'Request Passthrough',

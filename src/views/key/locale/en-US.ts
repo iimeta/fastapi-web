@@ -16,7 +16,6 @@ export default {
   'key.error.required.key': 'Please enter the key',
   'key.placeholder.models': 'Please bind models. Multiple models can be bound simultaneously.',
   'key.placeholder.model_agents': 'Please bind model agents. Multiple model agents can be bound simultaneously.',
-  'key.label.is_agents_only': 'For Model Agents Only',
   'key.label.is_never_disable': 'Never Disable',
   // detail
   'key.detail.is_auto_disabled': 'Auto Disabled',

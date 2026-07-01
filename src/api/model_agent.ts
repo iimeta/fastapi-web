@@ -53,7 +53,6 @@ export interface ModelAgentAdvanced {
   is_never_disable: boolean;
   lb_strategy: string;
   key: string;
-  is_agents_only: boolean;
   is_never_disable_key: boolean;
   is_enable_data_passthrough: boolean;
   req_passthrough_params: string[];
@@ -169,7 +168,6 @@ export interface ModelAgentDetail {
   key: string;
   status: number;
   remark: string;
-  is_agents_only: boolean;
   is_never_disable_key: boolean;
   is_auto_disabled: boolean;
   auto_disabled_reason: string;

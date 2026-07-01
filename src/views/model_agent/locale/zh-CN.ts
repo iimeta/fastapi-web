@@ -45,7 +45,6 @@ export default {
   'model.agent.label.is_remove_abnormal_model': '移除异常模型',
   'model.agent.label.is_never_disable': '永不禁用',
   'model.agent.label.lb_strategy': '密钥负载策略',
-  'model.agent.label.is_agents_only': '代理专用',
   'model.agent.label.is_never_disable_key': '密钥永不禁用',
   'model.agent.label.data_passthrough': '数据透传',
   'model.agent.label.req_passthrough': '请求透传',

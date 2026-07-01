@@ -1312,6 +1312,12 @@
       for (let i = 0; i < data.items.length; i += 1) {
         providerMap.set(data.items[i].id, data.items[i]);
       }
+      // provider list may resolve after the model detail has populated the
+      // watch; sync provider.value here so isClaudeProvider isn't left false.
+      if (props.providerId) {
+        provider.value = providerMap.get(props.providerId);
+        migrateCacheWriteRatio();
+      }
     } catch (err) {
       // you can report use errorHandler or other
     }
