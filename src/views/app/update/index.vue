@@ -419,6 +419,12 @@
             <a-form-item
               field="ip_whitelist"
               :label="$t('common.ip_whitelist')"
+              :rules="[
+                {
+                  required: true,
+                  message: $t('app.error.required.ip_whitelist'),
+                },
+              ]"
             >
               <a-textarea
                 v-model="formData.ip_whitelist"

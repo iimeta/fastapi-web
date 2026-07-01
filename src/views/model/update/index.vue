@@ -248,7 +248,10 @@
               field="is_enable_model_agent"
               :label="$t('common.enable_model_agent')"
             >
-              <a-switch v-model="formData.is_enable_model_agent" disabled />
+              <a-switch
+                v-model="formData.is_enable_model_agent"
+                :disabled="formData.is_enable_model_agent"
+              />
             </a-form-item>
             <a-form-item
               field="lb_strategy"

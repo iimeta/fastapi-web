@@ -829,11 +829,20 @@
               </a-option>
             </a-select>
           </a-form-item>
-          <a-form-item field="ip_whitelist" :label="$t('common.ip_whitelist')">
+          <a-form-item
+            field="ip_whitelist"
+            :label="$t('common.ip_whitelist')"
+            :rules="[
+              {
+                required: true,
+                message: $t('app.error.required.ip_whitelist'),
+              },
+            ]"
+          >
             <a-textarea
               v-model="formData.ip_whitelist"
               :placeholder="$t('app.placeholder.ip_whitelist')"
-              :auto-size="{ minRows: 5, maxRows: 5 }"
+              :auto-size="{ minRows: 6, maxRows: 6 }"
             />
           </a-form-item>
           <a-form-item field="ip_blacklist" :label="$t('common.ip_blacklist')">
