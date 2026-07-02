@@ -79,19 +79,17 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['reseller']" :span="8">
-                <a-form-item
-                  field="total_time"
-                  :label="$t('log.form.total_time')"
-                >
-                  <a-input-number
-                    v-model="searchFormData.total_time"
-                    :placeholder="$t('log.form.placeholder.total_time')"
-                    :precision="0"
-                    :min="1"
+                <a-form-item field="actions" :label="$t('log.form.action')">
+                  <a-select
+                    v-model="searchFormData.actions"
+                    :placeholder="$t('common.all')"
+                    :options="actionOptions"
+                    :max-tag-count="1"
+                    :scrollbar="false"
+                    multiple
+                    allow-search
                     allow-clear
-                  >
-                    <template #append> ms </template>
-                  </a-input-number>
+                  />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
@@ -193,19 +191,17 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="total_time"
-                  :label="$t('log.form.total_time')"
-                >
-                  <a-input-number
-                    v-model="searchFormData.total_time"
-                    :placeholder="$t('log.form.placeholder.total_time')"
-                    :precision="0"
-                    :min="1"
+                <a-form-item field="actions" :label="$t('log.form.action')">
+                  <a-select
+                    v-model="searchFormData.actions"
+                    :placeholder="$t('common.all')"
+                    :options="actionOptions"
+                    :max-tag-count="1"
+                    :scrollbar="false"
+                    multiple
+                    allow-search
                     allow-clear
-                  >
-                    <template #append> ms </template>
-                  </a-input-number>
+                  />
                 </a-form-item>
               </a-col>
               <a-col :span="5">
@@ -390,6 +386,9 @@
       >
         <template #user_id="{ record }">
           {{ record.is_smart_match ? '-' : record.user_id }}
+        </template>
+        <template #action="{ record }">
+          {{ record.action || '-' }}
         </template>
         <template #input_tokens="{ record }">
           <div class="tokens-cell" :style="tokensCellStyle">
@@ -919,7 +918,7 @@
       key: '',
       models: [],
       model_agents: [],
-      total_time: ref(),
+      actions: [],
       status: ref(),
       req_time: [
         dayjs().format('YYYY-MM-DD 00:00:00'),
@@ -1007,6 +1006,12 @@
       align: 'center',
       ellipsis: true,
       tooltip: true,
+    },
+    {
+      title: t('log.columns.action'),
+      dataIndex: 'action',
+      slotName: 'action',
+      align: 'center',
     },
     {
       title: t('log.columns.input_tokens'),
@@ -1148,6 +1153,49 @@
       slotName: 'operations',
       align: 'center',
       width: 75,
+    },
+  ]);
+
+  const actionOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: 'completions',
+      value: 'completions',
+    },
+    {
+      label: 'responses',
+      value: 'responses',
+    },
+    {
+      label: 'messages',
+      value: 'messages',
+    },
+    {
+      label: 'interactions',
+      value: 'interactions',
+    },
+    {
+      label: 'generateContent',
+      value: 'generateContent',
+    },
+    {
+      label: 'streamGenerateContent',
+      value: 'streamGenerateContent',
+    },
+    {
+      label: 'embeddings',
+      value: 'embeddings',
+    },
+    {
+      label: 'compact',
+      value: 'compact',
+    },
+    {
+      label: 'moderations',
+      value: 'moderations',
+    },
+    {
+      label: 'realtime',
+      value: 'realtime',
     },
   ]);
 

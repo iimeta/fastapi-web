@@ -79,12 +79,15 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['reseller']" :span="8">
-                <a-form-item field="action" :label="$t('log.form.action')">
+                <a-form-item field="actions" :label="$t('log.form.action')">
                   <a-select
-                    v-model="searchFormData.action"
+                    v-model="searchFormData.actions"
                     :placeholder="$t('common.all')"
                     :options="actionOptions"
+                    :max-tag-count="1"
                     :scrollbar="false"
+                    multiple
+                    allow-search
                     allow-clear
                   />
                 </a-form-item>
@@ -188,12 +191,15 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="action" :label="$t('log.form.action')">
+                <a-form-item field="actions" :label="$t('log.form.action')">
                   <a-select
-                    v-model="searchFormData.action"
+                    v-model="searchFormData.actions"
                     :placeholder="$t('common.all')"
                     :options="actionOptions"
+                    :max-tag-count="1"
                     :scrollbar="false"
+                    multiple
+                    allow-search
                     allow-clear
                   />
                 </a-form-item>
@@ -722,7 +728,7 @@
       key: '',
       models: [],
       model_agents: [],
-      action: ref(),
+      actions: [],
       status: ref(),
       req_time: [
         dayjs().format('YYYY-MM-DD 00:00:00'),

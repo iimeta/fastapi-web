@@ -11,6 +11,7 @@ export interface TextPage {
   app_name: string;
   key_name: string;
   model: string;
+  action: string;
   spend: Spend;
   stream: boolean;
   conn_time: number;
@@ -248,6 +249,7 @@ export interface AudioPage {
   app_name: string;
   key_name: string;
   model: string;
+  action: string;
   total_tokens: number;
   total_time: number;
   internal_time: number;
@@ -622,6 +624,7 @@ export interface GeneralPage {
   app_name: string;
   key_name: string;
   model: string;
+  action: string;
   spend: Spend;
   stream: boolean;
   conn_time: number;

@@ -123,7 +123,7 @@ export interface PerMinuteParams {
   user_id: any;
   key: string;
   models: string[];
-  total_time: any;
+  actions?: string[];
   status: any;
   req_time: string[];
 }
