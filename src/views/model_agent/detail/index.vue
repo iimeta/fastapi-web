@@ -57,6 +57,14 @@
           {{ $t(`dict.billing_methods.${currentData.billing_methods || 1}`) }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.endpoints')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ endpointLabels(currentData.endpoints) }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('common.weight')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -451,10 +459,22 @@
     ModelAgentDetail,
     clearModelAgentSessionKeepCache,
   } from '@/api/model_agent';
+  import { ENDPOINTS } from '@/api/common';
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
   const currentData = ref<ModelAgentDetail>({} as ModelAgentDetail);
+  const endpointLabels = (values?: string[]) => {
+    if (!values || values.length === 0) {
+      return '-';
+    }
+    return values
+      .map((v) => {
+        const ep = ENDPOINTS.find((item) => item.value === v);
+        return ep ? t(ep.label) : v;
+      })
+      .join('、');
+  };
   const descriptionValueStyle = {
     width: '350px',
     padding: '5px 8px 5px 20px',

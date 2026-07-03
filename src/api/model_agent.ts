@@ -40,6 +40,7 @@ export interface ModelAgentBaseInfo {
 }
 
 export interface ModelAgentAdvanced {
+  endpoints: string[];
   billing_methods: number[];
   groups: string[];
   models: string[];
@@ -146,6 +147,7 @@ export interface ModelAgentDetail {
   base_url: string;
   path: string;
   weight: number;
+  endpoints: string[];
   billing_methods: number[];
   groups: string[];
   group_names: string[];

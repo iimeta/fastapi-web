@@ -198,3 +198,30 @@ export interface Spend {
   group_time_rule?: TimeRule;
   total_spend_tokens: number;
 }
+
+// 支持的端点可选项[OpenAI风格用规范化路径, Google用action, general用请求路径属动态特例不放入]
+export const ENDPOINTS = [
+  // OpenAI 风格 (value = 规范化路径)
+  { value: '/v1/chat/completions', label: 'dict.endpoint.chat_completions' },
+  { value: '/v1/responses', label: 'dict.endpoint.responses' },
+  { value: '/v1/images/generations', label: 'dict.endpoint.image_generations' },
+  { value: '/v1/images/edits', label: 'dict.endpoint.image_edits' },
+  { value: '/v1/audio/speech', label: 'dict.endpoint.audio_speech' },
+  {
+    value: '/v1/audio/transcriptions',
+    label: 'dict.endpoint.audio_transcriptions',
+  },
+  { value: '/v1/embeddings', label: 'dict.endpoint.embeddings' },
+  { value: '/v1/moderations', label: 'dict.endpoint.moderations' },
+  { value: '/v1/messages', label: 'dict.endpoint.messages' },
+  { value: '/v1/videos', label: 'dict.endpoint.video_generations' },
+  { value: '/v1/realtime', label: 'dict.endpoint.realtime' },
+  // Google (value = action)
+  { value: 'generateContent', label: 'dict.endpoint.generate_content' },
+  {
+    value: 'streamGenerateContent',
+    label: 'dict.endpoint.stream_generate_content',
+  },
+  { value: 'predict', label: 'dict.endpoint.predict' },
+  { value: 'embedContent', label: 'dict.endpoint.embed_content' },
+];

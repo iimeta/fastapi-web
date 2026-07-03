@@ -60,6 +60,7 @@ export interface Model {
   res_header_passthrough_list: string[];
   is_public: boolean;
   groups: string[];
+  endpoints: string[];
   is_enable_preset_config: boolean;
   preset_config: PresetConfig;
   lb_strategy: string;
@@ -177,6 +178,7 @@ export interface ModelDetail {
   res_header_passthrough_mode: number;
   res_header_passthrough_list: string[];
   is_public: boolean;
+  endpoints: string[];
   is_enable_preset_config: boolean;
   preset_config: PresetConfig;
   lb_strategy: number;

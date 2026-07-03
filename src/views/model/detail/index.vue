@@ -254,6 +254,14 @@
           {{ currentData?.preset_config?.max_tokens || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('common.endpoints')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ endpointLabels(currentData.endpoints) }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('common.lb_strategy')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -460,8 +468,9 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { Pricing } from '@/api/common';
+  import { Pricing, ENDPOINTS } from '@/api/common';
   import {
     queryModelDetail,
     ModelDetailParams,
@@ -470,7 +479,19 @@
   import PricingDetail from '../components/pricing_detail.vue';
 
   const { loading, setLoading } = useLoading(true);
+  const { t } = useI18n();
   const currentData = ref<ModelDetail>({} as ModelDetail);
+  const endpointLabels = (values?: string[]) => {
+    if (!values || values.length === 0) {
+      return '-';
+    }
+    return values
+      .map((v) => {
+        const ep = ENDPOINTS.find((item) => item.value === v);
+        return ep ? t(ep.label) : v;
+      })
+      .join('、');
+  };
   const descriptionValueStyle = {
     width: '350px',
     padding: '5px 8px 5px 15px',

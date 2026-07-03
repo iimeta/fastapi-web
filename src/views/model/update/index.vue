@@ -244,6 +244,17 @@
             >
               <a-switch v-model="formData.preset_config.is_support_stream" />
             </a-form-item>
+            <a-form-item field="endpoints" :label="$t('common.endpoints')">
+              <a-checkbox-group v-model="formData.endpoints">
+                <a-checkbox
+                  v-for="ep in ENDPOINTS"
+                  :key="ep.value"
+                  :value="ep.value"
+                >
+                  {{ $t(ep.label) }}
+                </a-checkbox>
+              </a-checkbox-group>
+            </a-form-item>
             <a-form-item
               field="lb_strategy"
               :label="$t('common.lb_strategy')"
@@ -783,6 +794,7 @@
     queryModelList,
     ModelList,
   } from '@/api/model';
+  import { ENDPOINTS } from '@/api/common';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import { queryGroupList, GroupList } from '@/api/group';
@@ -903,6 +915,7 @@
     res_header_passthrough_list: [],
     is_public: true,
     groups: [],
+    endpoints: [],
     lb_strategy: '1',
     model_agents: [],
     is_enable_forward: false,
@@ -1045,6 +1058,7 @@
         data.res_header_passthrough_list || [];
       formData.value.is_public = data.is_public || false;
       formData.value.groups = data.groups;
+      formData.value.endpoints = data.endpoints || [];
       formData.value.is_enable_preset_config = data.is_enable_preset_config;
       formData.value.preset_config = data.preset_config;
       formData.value.lb_strategy = data.lb_strategy

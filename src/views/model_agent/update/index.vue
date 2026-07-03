@@ -89,6 +89,17 @@
                 :placeholder="$t('model.agent.placeholder.path')"
               />
             </a-form-item>
+            <a-form-item field="endpoints" :label="$t('common.endpoints')">
+              <a-checkbox-group v-model="formData.endpoints">
+                <a-checkbox
+                  v-for="ep in ENDPOINTS"
+                  :key="ep.value"
+                  :value="ep.value"
+                >
+                  {{ $t(ep.label) }}
+                </a-checkbox>
+              </a-checkbox-group>
+            </a-form-item>
             <a-form-item field="weight" :label="$t('common.weight')">
               <a-input-number
                 v-model="formData.weight"
@@ -723,6 +734,7 @@
     ModelAgentDetailParams,
     quickFillModel,
   } from '@/api/model_agent';
+  import { ENDPOINTS } from '@/api/common';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryGroupList, GroupList } from '@/api/group';
   import ModelSelect from '@/components/model-select/index.vue';
@@ -789,6 +801,7 @@
     name: '',
     base_url: '',
     path: '',
+    endpoints: [],
     weight: ref(20),
     remark: '',
     status: 1,
@@ -867,6 +880,7 @@
       formData.value.name = data.name;
       formData.value.base_url = data.base_url;
       formData.value.path = data.path;
+      formData.value.endpoints = data.endpoints || [];
       formData.value.weight = data.weight;
       formData.value.remark = data.remark;
       formData.value.status = data.status;
