@@ -1197,6 +1197,14 @@
       label: 'realtime',
       value: 'realtime',
     },
+    {
+      label: 'generations',
+      value: 'generations',
+    },
+    {
+      label: 'edits',
+      value: 'edits',
+    },
   ]);
 
   const statusOptions = computed<SelectOptionData[]>(() => [

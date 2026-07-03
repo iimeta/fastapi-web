@@ -979,6 +979,30 @@
       label: 'delete',
       value: 'delete',
     },
+    {
+      label: 'completions',
+      value: 'completions',
+    },
+    {
+      label: 'responses',
+      value: 'responses',
+    },
+    {
+      label: 'messages',
+      value: 'messages',
+    },
+    {
+      label: 'interactions',
+      value: 'interactions',
+    },
+    {
+      label: 'generateContent',
+      value: 'generateContent',
+    },
+    {
+      label: 'streamGenerateContent',
+      value: 'streamGenerateContent',
+    },
   ]);
 
   const statusOptions = computed<SelectOptionData[]>(() => [
