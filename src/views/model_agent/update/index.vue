@@ -832,10 +832,10 @@
     key: '',
     is_never_disable_key: false,
     is_enable_data_passthrough: false,
-    req_passthrough_params: [],
+    req_passthrough_params: ['req_header', 'req_path', 'req_data'],
     req_header_passthrough_mode: '1',
     req_header_passthrough_list: [],
-    res_passthrough_params: [],
+    res_passthrough_params: ['res_header', 'res_data'],
     res_header_passthrough_mode: '1',
     res_header_passthrough_list: [],
   });
@@ -914,13 +914,15 @@
       formData.value.is_never_disable_key = data.is_never_disable_key || false;
       formData.value.is_enable_data_passthrough =
         data.is_enable_data_passthrough || false;
-      formData.value.req_passthrough_params = data.req_passthrough_params || [];
+      formData.value.req_passthrough_params =
+        data.req_passthrough_params || formData.value.req_passthrough_params;
       formData.value.req_header_passthrough_mode = String(
         data.req_header_passthrough_mode || 1
       );
       formData.value.req_header_passthrough_list =
         data.req_header_passthrough_list || [];
-      formData.value.res_passthrough_params = data.res_passthrough_params || [];
+      formData.value.res_passthrough_params =
+        data.res_passthrough_params || formData.value.res_passthrough_params;
       formData.value.res_header_passthrough_mode = String(
         data.res_header_passthrough_mode || 1
       );

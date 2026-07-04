@@ -818,10 +818,10 @@
     key: '',
     is_never_disable_key: false,
     is_enable_data_passthrough: false,
-    req_passthrough_params: [],
+    req_passthrough_params: ['req_header', 'req_path', 'req_data'],
     req_header_passthrough_mode: '1',
     req_header_passthrough_list: [],
-    res_passthrough_params: [],
+    res_passthrough_params: ['res_header', 'res_data'],
     res_header_passthrough_mode: '1',
     res_header_passthrough_list: [],
   });

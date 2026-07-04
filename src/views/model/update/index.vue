@@ -1045,13 +1045,15 @@
 
       formData.value.is_enable_data_passthrough =
         data.is_enable_data_passthrough || false;
-      formData.value.req_passthrough_params = data.req_passthrough_params || [];
+      formData.value.req_passthrough_params =
+        data.req_passthrough_params || formData.value.req_passthrough_params;
       formData.value.req_header_passthrough_mode = String(
         data.req_header_passthrough_mode || 1
       );
       formData.value.req_header_passthrough_list =
         data.req_header_passthrough_list || [];
-      formData.value.res_passthrough_params = data.res_passthrough_params || [];
+      formData.value.res_passthrough_params =
+        data.res_passthrough_params || formData.value.res_passthrough_params;
       formData.value.res_header_passthrough_mode = String(
         data.res_header_passthrough_mode || 1
       );
