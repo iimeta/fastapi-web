@@ -262,7 +262,7 @@
           {{ endpointLabels(currentData.endpoints) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('common.lb_strategy')">
+      <a-descriptions-item :label="$t('model.columns.lb_strategy')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
@@ -488,7 +488,7 @@
     return values
       .map((v) => {
         const ep = ENDPOINTS.find((item) => item.value === v);
-        return ep ? t(ep.label) : v;
+        return ep ? ep.label : v;
       })
       .join('、');
   };

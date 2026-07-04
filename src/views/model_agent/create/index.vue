@@ -95,8 +95,9 @@
                   v-for="ep in ENDPOINTS"
                   :key="ep.value"
                   :value="ep.value"
+                  class="endpoint-checkbox"
                 >
-                  {{ $t(ep.label) }}
+                  {{ ep.label }}
                 </a-checkbox>
               </a-checkbox-group>
             </a-form-item>
@@ -290,14 +291,7 @@
                     "
                     allow-clear
                     style="width: 32%; margin-right: 5px"
-                    @change="
-                      rule.model_regex = rule.model_regex_str
-                        ? rule.model_regex_str
-                            .split(',')
-                            .map((s) => s.trim())
-                            .filter((s) => s)
-                        : []
-                    "
+                    @change="onModelRegexChange(rule)"
                   />
                   <a-input
                     v-model="rule.path_regex_str"
@@ -306,14 +300,7 @@
                     "
                     allow-clear
                     style="width: 32%; margin-right: 5px"
-                    @change="
-                      rule.path_regex = rule.path_regex_str
-                        ? rule.path_regex_str
-                            .split(',')
-                            .map((s) => s.trim())
-                            .filter((s) => s)
-                        : []
-                    "
+                    @change="onPathRegexChange(rule)"
                   />
                 </div>
                 <div>
@@ -721,6 +708,7 @@
   import {
     submitModelAgentCreate,
     ModelAgentCreate,
+    SessionKeepRule,
     quickFillModel,
   } from '@/api/model_agent';
   import { ENDPOINTS } from '@/api/common';
@@ -735,6 +723,20 @@
 
   const router = useRouter();
   const { t } = useI18n();
+
+  const parseRegexStr = (value?: string) =>
+    value
+      ? value
+          .split(',')
+          .map((s) => s.trim())
+          .filter((s) => s)
+      : [];
+  const onModelRegexChange = (rule: SessionKeepRule) => {
+    rule.model_regex = parseRegexStr(rule.model_regex_str);
+  };
+  const onPathRegexChange = (rule: SessionKeepRule) => {
+    rule.path_regex = parseRegexStr(rule.path_regex_str);
+  };
 
   const providers = ref<ProviderList[]>([]);
   const providerMap = new Map();

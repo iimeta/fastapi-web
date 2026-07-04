@@ -471,7 +471,7 @@
     return values
       .map((v) => {
         const ep = ENDPOINTS.find((item) => item.value === v);
-        return ep ? t(ep.label) : v;
+        return ep ? ep.label : v;
       })
       .join('、');
   };

@@ -446,7 +446,7 @@
     { title: t('common.model_agents'), dataIndex: 'model_agent_names' },
     { title: t('common.used_quota'), dataIndex: 'used_quota' },
     { title: t('group.label.weight'), dataIndex: 'weight' },
-    { title: t('common.lb_strategy'), dataIndex: 'lb_strategy' },
+    { title: t('group.columns.lb_strategy'), dataIndex: 'lb_strategy' },
     { title: t('common.public'), dataIndex: 'is_public' },
     { title: t('common.expires_at'), dataIndex: 'expires_at' },
   ]);

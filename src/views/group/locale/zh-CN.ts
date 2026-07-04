@@ -27,6 +27,8 @@ export default {
   'group.label.content_length': '内容长度',
   'group.placeholder.content_length': '请输入内容长度, 全部上下文内容长度 > N',
   'group.error.required.content_length': '请输入内容长度',
+  // columns
+  'group.columns.lb_strategy': '代理负载',
   // detail
   'group.detail.is_default': '默认分组',
   // desc

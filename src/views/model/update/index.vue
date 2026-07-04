@@ -250,8 +250,9 @@
                   v-for="ep in ENDPOINTS"
                   :key="ep.value"
                   :value="ep.value"
+                  class="endpoint-checkbox"
                 >
-                  {{ $t(ep.label) }}
+                  {{ ep.label }}
                 </a-checkbox>
               </a-checkbox-group>
             </a-form-item>

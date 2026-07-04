@@ -162,6 +162,7 @@ export default {
   'model.form.title.data_passthrough': '全部透傳',
   // columns
   'model.columns.pricing': '定價',
+  'model.columns.lb_strategy': '代理負載',
   // button
   'model.button.all_model_agent': '全部代理',
   'model.button.all_forward': '全部轉發',

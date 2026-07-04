@@ -110,7 +110,7 @@
           {{ $t(`dict.enable.${currentData.is_enable_model_agent || false}`) }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('common.lb_strategy')">
+      <a-descriptions-item :label="$t('group.columns.lb_strategy')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>

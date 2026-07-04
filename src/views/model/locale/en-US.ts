@@ -162,6 +162,7 @@ export default {
   'model.form.title.data_passthrough': 'All Passthrough',
   // columns
   'model.columns.pricing': 'Pricing',
+  'model.columns.lb_strategy': 'Agent Load',
   // button
   'model.button.all_model_agent': 'All Agents',
   'model.button.all_forward': 'All Forward',

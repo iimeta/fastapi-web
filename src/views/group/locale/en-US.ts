@@ -27,6 +27,8 @@ export default {
   'group.label.content_length': 'Content Length',
   'group.placeholder.content_length': 'Please enter the content length threshold (applies when total context length > N)',
   'group.error.required.content_length': 'Please enter the content length',
+  // columns
+  'group.columns.lb_strategy': 'Agent Load',
   // detail
   'group.detail.is_default': 'Default Group',
   // desc

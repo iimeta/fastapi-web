@@ -1032,7 +1032,7 @@
       tooltip: true,
     },
     {
-      title: t('common.lb_strategy'),
+      title: t('model.columns.lb_strategy'),
       dataIndex: 'lb_strategy',
       slotName: 'lb_strategy',
       align: 'center',
