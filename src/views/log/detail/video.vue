@@ -134,7 +134,7 @@
             currentData.spend.model_time_rule
               ? currentData.spend.model_time_rule.name +
                 ' ' +
-                Number(currentData.spend.model_time_rule.discount.toFixed(2)) +
+                Number(currentData.spend.model_time_rule.discount.toFixed(6)) +
                 'x'
               : '-'
           }}
@@ -155,7 +155,7 @@
             currentData.spend.group_time_rule
               ? currentData.spend.group_time_rule.name +
                 ' ' +
-                Number(currentData.spend.group_time_rule.discount.toFixed(2)) +
+                Number(currentData.spend.group_time_rule.discount.toFixed(6)) +
                 'x'
               : '-'
           }}
@@ -499,7 +499,7 @@
             currentData.spend.model_time_rule
               ? currentData.spend.model_time_rule.name +
                 ' ' +
-                Number(currentData.spend.model_time_rule.discount.toFixed(2)) +
+                Number(currentData.spend.model_time_rule.discount.toFixed(6)) +
                 'x'
               : '-'
           }}
@@ -520,7 +520,7 @@
             currentData.spend.group_time_rule
               ? currentData.spend.group_time_rule.name +
                 ' ' +
-                Number(currentData.spend.group_time_rule.discount.toFixed(2)) +
+                Number(currentData.spend.group_time_rule.discount.toFixed(6)) +
                 'x'
               : '-'
           }}

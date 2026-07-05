@@ -131,7 +131,7 @@
     <template #model_time_rule="{ record }">
       <template v-if="record.model_time_rule">
         {{ record.model_time_rule.name }}
-        {{ Number(record.model_time_rule.discount.toFixed(2)) }}x
+        {{ Number(record.model_time_rule.discount.toFixed(6)) }}x
       </template>
       <template v-else>-</template>
     </template>
@@ -140,7 +140,7 @@
     <template #group_time_rule="{ record }">
       <template v-if="record.group_time_rule">
         {{ record.group_time_rule.name }}
-        {{ Number(record.group_time_rule.discount.toFixed(2)) }}x
+        {{ Number(record.group_time_rule.discount.toFixed(6)) }}x
       </template>
       <template v-else>-</template>
     </template>
