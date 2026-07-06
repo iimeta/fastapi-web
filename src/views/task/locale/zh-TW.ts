@@ -50,6 +50,8 @@ export default {
   'task.form.user_id': 'UserID',
   'task.form.placeholder.image_id': '請輸入圖像ID',
   'task.form.placeholder.image_url': '請輸入圖像URL',
+  'task.form.placeholder.prompt': '請輸入提示詞',
+  'task.form.placeholder.quality': '請輸入質量',
   'task.form.placeholder.video_id': '請輸入影片ID',
   'task.form.placeholder.video_url': '請輸入影片URL',
   'task.form.placeholder.file_id': '請輸入檔案ID',

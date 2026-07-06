@@ -94,6 +94,8 @@ export interface ImagePage {
   image_url: string;
   image_urls: string[];
   image_time: number;
+  prompt: string;
+  quality: string;
   status: number;
   created_at: any;
 }

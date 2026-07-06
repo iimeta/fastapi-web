@@ -50,6 +50,8 @@ export default {
   'task.form.user_id': 'UserID',
   'task.form.placeholder.image_id': '请输入图像ID',
   'task.form.placeholder.image_url': '请输入图像URL',
+  'task.form.placeholder.prompt': '请输入提示词',
+  'task.form.placeholder.quality': '请输入质量',
   'task.form.placeholder.video_id': '请输入视频ID',
   'task.form.placeholder.video_url': '请输入视频URL',
   'task.form.placeholder.file_id': '请输入文件ID',

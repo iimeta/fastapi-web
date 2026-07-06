@@ -50,6 +50,8 @@ export default {
   'task.form.user_id': 'UserID',
   'task.form.placeholder.image_id': 'Please enter image ID',
   'task.form.placeholder.image_url': 'Please enter image URL',
+  'task.form.placeholder.prompt': 'Please enter prompt',
+  'task.form.placeholder.quality': 'Please enter quality',
   'task.form.placeholder.video_id': 'Please enter video ID',
   'task.form.placeholder.video_url': 'Please enter video URL',
   'task.form.placeholder.file_id': 'Please enter file ID',

@@ -22,7 +22,7 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col v-permission="['user']" :span="8">
+              <a-col v-permission="['user']" :span="6">
                 <a-form-item field="app_id" :label="$t('common.app')">
                   <a-select
                     v-model="formModel.app_id"
@@ -39,7 +39,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col v-permission="['reseller', 'admin']" :span="8">
+              <a-col v-permission="['reseller', 'admin']" :span="6">
                 <a-form-item field="user_id" :label="$t('task.form.user_id')">
                   <a-input-number
                     v-model="formModel.user_id"
@@ -49,7 +49,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="trace_id" :label="$t('task.form.trace_id')">
                   <a-input
                     v-model="formModel.trace_id"
@@ -58,7 +58,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item
                   field="image_id"
                   :label="$t('task.detail.image_id')"
@@ -70,7 +70,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item
                   field="image_url"
                   :label="$t('task.detail.image_url')"
@@ -82,7 +82,25 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
+                <a-form-item field="prompt" :label="$t('task.detail.prompt')">
+                  <a-input
+                    v-model="formModel.prompt"
+                    :placeholder="$t('task.form.placeholder.prompt')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
+                <a-form-item field="quality" :label="$t('task.detail.quality')">
+                  <a-input
+                    v-model="formModel.quality"
+                    :placeholder="$t('task.form.placeholder.quality')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="formModel.status"
@@ -93,7 +111,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item
                   field="created_at"
                   :label="$t('common.created_at')"
@@ -350,6 +368,8 @@
       trace_id: '',
       image_id: '',
       image_url: '',
+      prompt: '',
+      quality: '',
       status: ref(),
       created_at: [
         dayjs().format('YYYY-MM-DD 00:00:00'),
