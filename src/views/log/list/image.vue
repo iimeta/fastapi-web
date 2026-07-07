@@ -389,26 +389,41 @@
           />
         </template>
         <template #total_spend_tokens="{ record }">
-          <span
-            class="spend"
-            @click="
-              record.status === 1 || record.status === 2
-                ? spendHandle(
-                    record.spend,
-                    record.model_type,
-                    record.provider_code,
-                    record.provider_name
-                  )
-                : undefined
-            "
-          >
-            <Quota
-              v-if="record.status === 1 || record.status === 2"
-              :model-value="record.spend.total_spend_tokens"
-              :currency-symbol="record.spend?.currency_symbol"
-            />
-            <span v-else> - </span>
-          </span>
+          <div class="spend-cell">
+            <span
+              class="spend"
+              @click="
+                record.status === 1 || record.status === 2
+                  ? spendHandle(
+                      record.spend,
+                      record.model_type,
+                      record.provider_code,
+                      record.provider_name
+                    )
+                  : undefined
+              "
+            >
+              <Quota
+                v-if="record.status === 1 || record.status === 2"
+                :model-value="record.spend.total_spend_tokens"
+                :currency-symbol="record.spend?.currency_symbol"
+              />
+              <span v-else> - </span>
+            </span>
+            <div
+              v-if="
+                userRole === 'admin' &&
+                (record.status === 1 || record.status === 2) &&
+                otherSpendTokens(record.spend)
+              "
+              class="other-spend"
+            >
+              <Quota
+                :model-value="otherSpendTokens(record.spend)"
+                :currency-symbol="record.spend?.currency_symbol"
+              />
+            </div>
+          </div>
         </template>
         <template #stream="{ record }">
           {{ $t(`dict.${record.stream || false}`) }}
@@ -1221,6 +1236,18 @@
     providerCode.value = pc || '';
     providerName.value = pn || '';
   };
+
+  // 总花费按 image_generation 计费，此处汇总其余计费项（text、text_cache、
+  // image、image_cache）的花费，单独展示在总花费下方
+  const otherSpendTokens = (s: Spend) => {
+    if (!s) return 0;
+    return (
+      (s.text?.spend_tokens || 0) +
+      (s.text_cache?.spend_tokens || 0) +
+      (s.image?.spend_tokens || 0) +
+      (s.image_cache?.spend_tokens || 0)
+    );
+  };
 </script>
 
 <script lang="ts">
@@ -1234,4 +1261,19 @@
 
   // 公共骨架已由 page-list.less 全局提供
   // 列表共享样式已由 log-list-shared.less 提供
+
+  .spend-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // 其余计费项（text、text_cache、image、image_cache）花费汇总，
+  // 参考文本日志缓存样式，展示在总花费下方
+  .other-spend {
+    color: var(--color-text-3);
+    font-size: 12px;
+    line-height: 1;
+  }
 </style>
