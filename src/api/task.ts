@@ -142,6 +142,8 @@ export interface ImageDetail {
   file_paths: string[];
   input_file_paths: string[];
   error: any;
+  model_agent_id: string;
+  model_agent: any;
   creator: string;
   created_at: string;
   updated_at: string;
