@@ -280,8 +280,11 @@
       :bordered="false"
       class="pricing-detail-table-spacing"
     >
+      <template #quality="{ record }">
+        {{ record.quality || '-' }}
+      </template>
       <template #width="{ record }">
-        {{ record.width }} × {{ record.height }}
+        {{ record.width || '-' }} × {{ record.height || '-' }}
       </template>
       <template #once_ratio="{ record }">
         <Quota

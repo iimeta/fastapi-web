@@ -264,6 +264,9 @@
         <template #prompt="{ record }">
           {{ record.prompt || '-' }}
         </template>
+        <template #size="{ record }">
+          {{ record.size || '-' }}
+        </template>
         <template #image_url="{ record }">
           <a-button
             type="text"

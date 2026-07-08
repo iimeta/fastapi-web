@@ -504,7 +504,7 @@
       {{ record.pricing.quality || '-' }}
     </template>
     <template #width="{ record }">
-      {{ record.pricing.width }} × {{ record.pricing.height }}
+      {{ record.pricing.width || '-' }} × {{ record.pricing.height || '-' }}
     </template>
     <template #n="{ record }"> {{ record.n || '0' }} </template>
     <template #once_ratio="{ record }">
