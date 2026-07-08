@@ -40,6 +40,7 @@ export interface ModelAgentBaseInfo {
 }
 
 export interface ModelAgentAdvanced {
+  tags: string[];
   endpoints: string[];
   billing_methods: number[];
   groups: string[];
@@ -80,10 +81,13 @@ export interface ModelAgentPage {
   path: string;
   weight: number;
   billing_methods: number[];
+  groups: string[];
+  group_names: string[];
   models: string[];
   model_names: string[];
   status: number;
   remark: string;
+  tags: string[];
 }
 export interface Paging {
   page: number;
@@ -126,6 +130,14 @@ export function queryModelAgentList() {
   return axios.get<ModelAgentListRes>('/api/v1/model/agent/list');
 }
 
+export interface ModelAgentTagListRes {
+  tags: string[];
+}
+
+export function queryModelAgentTagList() {
+  return axios.get<ModelAgentTagListRes>('/api/v1/model/agent/tags');
+}
+
 export interface ModelAgentDeleteParams {
   id: string;
 }
@@ -146,6 +158,7 @@ export interface ModelAgentDetail {
   name: string;
   base_url: string;
   path: string;
+  tags: string[];
   weight: number;
   endpoints: string[];
   billing_methods: number[];

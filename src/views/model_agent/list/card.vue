@@ -16,12 +16,12 @@
         <a-col :flex="1">
           <a-form
             :model="searchFormData"
-            :label-col-props="{ span: 5 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 7 }"
+            :wrapper-col-props="{ span: 17 }"
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="provider_id" :label="$t('common.provider')">
                   <a-select
                     v-model="searchFormData.provider_id"
@@ -39,7 +39,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="name" :label="$t('model.agent.label.name')">
                   <a-input
                     v-model="searchFormData.name"
@@ -48,7 +48,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item
                   field="base_url"
                   :label="$t('model.agent.label.base_url')"
@@ -60,7 +60,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="models" :label="$t('common.bind_models')">
                   <a-select
                     v-model="searchFormData.models"
@@ -80,7 +80,47 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
+                <a-form-item field="groups" :label="$t('common.bind_group')">
+                  <a-select
+                    v-model="searchFormData.groups"
+                    :placeholder="$t('common.all')"
+                    :max-tag-count="2"
+                    :scrollbar="false"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in groups"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
+                <a-form-item field="tags" :label="$t('model.agent.label.tags')">
+                  <a-select
+                    v-model="searchFormData.tags"
+                    :placeholder="$t('common.all')"
+                    :max-tag-count="2"
+                    :scrollbar="false"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in tagOptions"
+                      :key="item"
+                      :value="item"
+                      :label="item"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
@@ -91,7 +131,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="remark" :label="$t('common.remark')">
                   <a-input
                     v-model="searchFormData.remark"
@@ -351,6 +391,7 @@
     submitModelAgentChangeStatus,
     ModelAgentBatchOperate,
     submitModelAgentBatchOperate,
+    queryModelAgentTagList,
   } from '@/api/model_agent';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -358,6 +399,7 @@
   import Sortable from 'sortablejs';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryModelList, ModelList } from '@/api/model';
+  import { queryGroupList, GroupList } from '@/api/group';
   import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
   import Tests from '../components/tests.vue';
@@ -371,6 +413,8 @@
     models: string[];
     status: number | undefined;
     remark: string;
+    tags: string[];
+    groups: string[];
   };
   type FieldItem = {
     title: string;
@@ -399,6 +443,8 @@
     models: [],
     status: undefined,
     remark: '',
+    groups: [],
+    tags: [],
   });
 
   const renderData = ref<ModelAgentCardRecord[]>([]);
@@ -428,6 +474,7 @@
     { title: t('common.bind_models'), dataIndex: 'models' },
     { title: t('common.weight'), dataIndex: 'weight' },
     { title: t('model.agent.columns.lb_strategy'), dataIndex: 'lb_strategy' },
+    { title: t('model.agent.label.tags'), dataIndex: 'tags' },
   ]);
 
   const cloneFields = ref<FieldItem[]>([]);
@@ -464,6 +511,7 @@
 
   const providers = ref<ProviderList[]>([]);
   const models = ref<ModelList[]>([]);
+  const groups = ref<GroupList[]>([]);
 
   const multiple = computed(() => ids.value.length === 0);
   const currentPageIds = computed(() =>
@@ -665,6 +713,27 @@
     }
   };
   getModelList();
+
+  const tagOptions = ref<string[]>([]);
+  const getTagList = async () => {
+    try {
+      const { data } = await queryModelAgentTagList();
+      tagOptions.value = data.tags || [];
+    } catch (err) {
+      // ignore
+    }
+  };
+  getTagList();
+
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // ignore
+    }
+  };
+  getGroupList();
 
   const modelAgentChangeStatus = async (params: ModelAgentChangeStatus) => {
     setLoading(true);

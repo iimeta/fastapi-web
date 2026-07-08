@@ -33,6 +33,24 @@
           {{ currentData.path || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('model.agent.label.tags')" :span="2">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <template v-if="currentData.tags?.length">
+            <a-tag
+              v-for="item in currentData.tags"
+              :key="item"
+              size="small"
+              style="margin-right: 4px"
+            >
+              {{ item }}
+            </a-tag>
+          </template>
+          <template v-else>-</template>
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('common.bind_group')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />

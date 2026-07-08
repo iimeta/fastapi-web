@@ -11,6 +11,8 @@ export default {
   'model.agent.error.required.base_url': '請輸入代理地址',
   'model.agent.label.path': '代理路徑',
   'model.agent.placeholder.path': '請輸入代理路徑, 如: /chat/completions',
+  'model.agent.label.tags': '標籤',
+  'model.agent.placeholder.tags': '請輸入標籤, 按回車確認, 可多個',
   'model.agent.placeholder.groups': '請綁定分組, 可同時綁定多個分組',
   'model.agent.placeholder.models': '請綁定模型, 可同時綁定多個模型',
   'model.agent.label.replace_models': '模型替換',

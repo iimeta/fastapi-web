@@ -122,6 +122,11 @@
                       {{ record.group_names?.join(', ') || '-' }}
                     </span>
                   </template>
+                  <template v-else-if="field.dataIndex === 'tags'">
+                    <span :title="record.tags?.join(', ') || ''">
+                      {{ record.tags?.join(', ') || '-' }}
+                    </span>
+                  </template>
                   <template v-else>
                     {{ valueOf(field.dataIndex) }}
                   </template>

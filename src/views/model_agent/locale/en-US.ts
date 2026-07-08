@@ -11,6 +11,8 @@ export default {
   'model.agent.error.required.base_url': 'Please enter agent URL',
   'model.agent.label.path': 'Agent Path',
   'model.agent.placeholder.path': 'Please enter agent path, e.g., /chat/completions',
+  'model.agent.label.tags': 'Tags',
+  'model.agent.placeholder.tags': 'Enter tag, press Enter to confirm, multiple allowed',
   'model.agent.placeholder.groups': 'Please bind groups. Multiple groups can be bound simultaneously.',
   'model.agent.placeholder.models': 'Please bind models. Multiple models can be bound simultaneously.',
   'model.agent.label.replace_models': 'Model Replacement',

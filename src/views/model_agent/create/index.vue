@@ -110,6 +110,25 @@
                 :max="100"
               />
             </a-form-item>
+            <a-form-item field="tags" :label="$t('model.agent.label.tags')">
+              <a-select
+                v-model="formData.tags"
+                :placeholder="$t('model.agent.placeholder.tags')"
+                :max-tag-count="10"
+                :scrollbar="false"
+                multiple
+                allow-create
+                allow-search
+                allow-clear
+              >
+                <a-option
+                  v-for="item in tagOptions"
+                  :key="item"
+                  :value="item"
+                  :label="item"
+                />
+              </a-select>
+            </a-form-item>
             <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -710,6 +729,7 @@
     ModelAgentCreate,
     SessionKeepRule,
     quickFillModel,
+    queryModelAgentTagList,
   } from '@/api/model_agent';
   import { ENDPOINTS } from '@/api/common';
   import { queryProviderList, ProviderList } from '@/api/provider';
@@ -784,12 +804,24 @@
   };
   getGroupList();
 
+  const tagOptions = ref<string[]>([]);
+  const getTagList = async () => {
+    try {
+      const { data } = await queryModelAgentTagList();
+      tagOptions.value = data.tags || [];
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getTagList();
+
   const formRef = ref<FormInstance>();
   const formData = ref<ModelAgentCreate>({
     provider_id: '',
     name: '',
     base_url: '',
     path: '',
+    tags: [],
     endpoints: [],
     weight: ref(20),
     remark: '',

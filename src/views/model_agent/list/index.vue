@@ -16,12 +16,12 @@
         <a-col :flex="1">
           <a-form
             :model="searchFormData"
-            :label-col-props="{ span: 5 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 7 }"
+            :wrapper-col-props="{ span: 17 }"
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="provider_id" :label="$t('common.provider')">
                   <a-select
                     v-model="searchFormData.provider_id"
@@ -39,7 +39,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="name" :label="$t('model.agent.label.name')">
                   <a-input
                     v-model="searchFormData.name"
@@ -48,7 +48,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item
                   field="base_url"
                   :label="$t('model.agent.label.base_url')"
@@ -60,7 +60,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="models" :label="$t('common.bind_models')">
                   <a-select
                     v-model="searchFormData.models"
@@ -80,7 +80,47 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
+                <a-form-item field="groups" :label="$t('common.bind_group')">
+                  <a-select
+                    v-model="searchFormData.groups"
+                    :placeholder="$t('common.all')"
+                    :max-tag-count="2"
+                    :scrollbar="false"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in groups"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
+                <a-form-item field="tags" :label="$t('model.agent.label.tags')">
+                  <a-select
+                    v-model="searchFormData.tags"
+                    :placeholder="$t('common.all')"
+                    :max-tag-count="2"
+                    :scrollbar="false"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in tagOptions"
+                      :key="item"
+                      :value="item"
+                      :label="item"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
@@ -91,7 +131,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="remark" :label="$t('common.remark')">
                   <a-input
                     v-model="searchFormData.remark"
@@ -249,6 +289,9 @@
         <template #group_names="{ record }">
           {{ record?.group_names?.join(',') || '-' }}
         </template>
+        <template #tags="{ record }">
+          {{ record?.tags?.join(',') || '-' }}
+        </template>
         <template #models="{ record }">
           <span v-if="record.models">
             <a-button type="text" size="small" @click="modelsHandle(record.id)">
@@ -387,6 +430,7 @@
     submitModelAgentChangeStatus,
     ModelAgentBatchOperate,
     submitModelAgentBatchOperate,
+    queryModelAgentTagList,
   } from '@/api/model_agent';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -398,6 +442,7 @@
   import Sortable from 'sortablejs';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryModelList, ModelList } from '@/api/model';
+  import { queryGroupList, GroupList } from '@/api/group';
   import Models from '@/views/common/models.vue';
   import Detail from '../detail/index.vue';
   import Tests from '../components/tests.vue';
@@ -433,6 +478,8 @@
       models: [],
       status: ref(),
       remark: '',
+      tags: [],
+      groups: [],
     };
   };
   const renderData = ref<ModelAgentPage[]>([]);
@@ -512,6 +559,14 @@
       dataIndex: 'weight',
       slotName: 'weight',
       align: 'center',
+    },
+    {
+      title: t('model.agent.label.tags'),
+      dataIndex: 'tags',
+      slotName: 'tags',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('model.agent.columns.lb_strategy'),
@@ -730,6 +785,30 @@
     }
   };
   getModelList();
+
+  const tagOptions = ref<string[]>([]);
+
+  const getTagList = async () => {
+    try {
+      const { data } = await queryModelAgentTagList();
+      tagOptions.value = data.tags || [];
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getTagList();
+
+  const groups = ref<GroupList[]>([]);
+
+  const getGroupList = async () => {
+    try {
+      const { data } = await queryGroupList();
+      groups.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getGroupList();
 
   const modelAgentChangeStatus = async (params: ModelAgentChangeStatus) => {
     setLoading(true);
