@@ -414,6 +414,7 @@
               v-if="
                 userRole === 'admin' &&
                 (record.status === 1 || record.status === 2) &&
+                record.spend?.billing_items?.includes('image_generation') &&
                 otherSpendTokens(record.spend)
               "
               class="other-spend"
