@@ -18,6 +18,11 @@ export interface StatisticsSummaryRes {
   abnormal_rate: number;
   active_users: number;
   active_apps: number;
+  input_tokens: number;
+  output_tokens: number;
+  reasoning_tokens: number;
+  cache_read_tokens: number;
+  cache_write_tokens: number;
   prev_total: number;
   prev_tokens: number;
   prev_abnormal: number;

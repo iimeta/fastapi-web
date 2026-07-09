@@ -64,6 +64,27 @@
         </div>
       </div>
     </div>
+    <div class="ov-row">
+      <div
+        v-for="item in tokenItems"
+        :key="item.key"
+        class="ov-card"
+        :style="{ borderLeft: `3px solid ${item.color}` }"
+      >
+        <div class="ov-label">{{ item.label }}</div>
+        <div class="ov-val" :style="{ color: item.color }">
+          {{ n(item.value) }}
+        </div>
+      </div>
+      <div class="ov-card" :style="{ borderLeft: '3px solid #14c9c9' }">
+        <div class="ov-label">
+          {{ $t('statistics.databoard.overview.cacheHitRate') }}
+        </div>
+        <div class="ov-val" :style="{ color: '#14c9c9' }">
+          {{ pct(cacheHitRate) }}
+        </div>
+      </div>
+    </div>
     <div class="ov-row ov-row-sm">
       <div
         v-for="item in resourceItems"
@@ -143,6 +164,11 @@
     abnormal_rate: 0,
     active_users: 0,
     active_apps: 0,
+    input_tokens: 0,
+    output_tokens: 0,
+    reasoning_tokens: 0,
+    cache_read_tokens: 0,
+    cache_write_tokens: 0,
     prev_total: 0,
     prev_tokens: 0,
     prev_abnormal: 0,
@@ -170,6 +196,56 @@
   const abnormalRateChange = computed(() =>
     calcChange(s.value.abnormal_rate, s.value.prev_abnormal_rate)
   );
+
+  interface TokenItem {
+    key: string;
+    label: string;
+    value: number;
+    color: string;
+  }
+
+  const tokenItems = computed<TokenItem[]>(() => [
+    {
+      key: 'input',
+      label: t('statistics.databoard.overview.inputTokens'),
+      value: s.value.input_tokens,
+      color: '#3469ff',
+    },
+    {
+      key: 'output',
+      label: t('statistics.databoard.overview.outputTokens'),
+      value: s.value.output_tokens,
+      color: '#23c343',
+    },
+    {
+      key: 'reasoning',
+      label: t('statistics.databoard.overview.reasoningTokens'),
+      value: s.value.reasoning_tokens,
+      color: '#7b61ff',
+    },
+    {
+      key: 'cacheRead',
+      label: t('statistics.databoard.overview.cacheReadTokens'),
+      value: s.value.cache_read_tokens,
+      color: '#ea8d24',
+    },
+    {
+      key: 'cacheWrite',
+      label: t('statistics.databoard.overview.cacheWriteTokens'),
+      value: s.value.cache_write_tokens,
+      color: '#eb2f96',
+    },
+  ]);
+
+  // 缓存命中率 = 缓存读取 / (缓存读取 + 输入 + 缓存写入) × 100
+  const cacheHitRate = computed(() => {
+    const denom =
+      s.value.cache_read_tokens +
+      s.value.input_tokens +
+      s.value.cache_write_tokens;
+    if (!denom) return 0;
+    return (s.value.cache_read_tokens / denom) * 100;
+  });
 
   interface ResourceItem {
     key: string;
