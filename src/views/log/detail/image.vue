@@ -238,13 +238,13 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          <a-tag v-if="currentData.total_time > 180000" color="red">
+          <a-tag v-if="currentData.total_time > 500000" color="red">
             {{ currentData.total_time }} ms
           </a-tag>
-          <a-tag v-else-if="currentData.total_time > 120000" color="orange">
+          <a-tag v-else-if="currentData.total_time > 300000" color="orange">
             {{ currentData.total_time }} ms
           </a-tag>
-          <a-tag v-else-if="currentData.total_time > 90000" color="gold">
+          <a-tag v-else-if="currentData.total_time > 180000" color="gold">
             {{ currentData.total_time }} ms
           </a-tag>
           <a-tag v-else color="green"
@@ -637,13 +637,13 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          <a-tag v-if="currentData.total_time > 120000" color="red">
+          <a-tag v-if="currentData.total_time > 300000" color="red">
             {{ currentData.total_time }} ms
           </a-tag>
-          <a-tag v-else-if="currentData.total_time > 90000" color="orange">
+          <a-tag v-else-if="currentData.total_time > 210000" color="orange">
             {{ currentData.total_time }} ms
           </a-tag>
-          <a-tag v-else-if="currentData.total_time > 60000" color="gold">
+          <a-tag v-else-if="currentData.total_time > 120000" color="gold">
             {{ currentData.total_time }} ms
           </a-tag>
           <a-tag v-else color="green"

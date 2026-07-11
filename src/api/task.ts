@@ -97,6 +97,7 @@ export interface ImagePage {
   prompt: string;
   quality: string;
   status: number;
+  total_time: number;
   created_at: any;
 }
 

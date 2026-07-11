@@ -531,21 +531,21 @@
         </template>
         <template #total_time="{ record }">
           <a-tag
-            v-if="record.total_time > 180000"
+            v-if="record.total_time > 500000"
             v-permission="['user', 'reseller']"
             color="red"
           >
             {{ record.total_time }}
           </a-tag>
           <a-tag
-            v-else-if="record.total_time > 120000"
+            v-else-if="record.total_time > 300000"
             v-permission="['user', 'reseller']"
             color="orange"
           >
             {{ record.total_time }}
           </a-tag>
           <a-tag
-            v-else-if="record.total_time > 90000"
+            v-else-if="record.total_time > 180000"
             v-permission="['user', 'reseller']"
             color="gold"
           >
@@ -555,21 +555,21 @@
             record.total_time || '-'
           }}</a-tag>
           <a-tag
-            v-if="record.total_time > 120000"
+            v-if="record.total_time > 300000"
             v-permission="['admin']"
             color="red"
           >
             {{ record.total_time }}
           </a-tag>
           <a-tag
-            v-else-if="record.total_time > 90000"
+            v-else-if="record.total_time > 210000"
             v-permission="['admin']"
             color="orange"
           >
             {{ record.total_time }}
           </a-tag>
           <a-tag
-            v-else-if="record.total_time > 60000"
+            v-else-if="record.total_time > 120000"
             v-permission="['admin']"
             color="gold"
           >

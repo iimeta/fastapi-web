@@ -8,6 +8,10 @@ export default {
   'task.menu.file.detail': 'File Task Details',
   'task.menu.batch': 'Batch Tasks',
   'task.menu.batch.detail': 'Batch Task Details',
+  // columns
+  'task.columns.total_time': 'Total Time',
+  'task.columns.tooltip.total_time':
+    'Time from task creation to completion, unit: ms (milliseconds)',
   // detail
   'task.detail.creator': 'Calling Key',
   'task.detail.image_url': 'Image URL',

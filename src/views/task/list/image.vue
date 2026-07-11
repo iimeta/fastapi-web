@@ -285,6 +285,12 @@
             :src-list="getImageSrcList(record)"
           />
         </template>
+        <template #total_time="{ record }">
+          <span v-if="!record.total_time">-</span>
+          <a-tag v-else :color="getTotalTimeColor(record.total_time)">
+            {{ record.total_time }}
+          </a-tag>
+        </template>
         <template #status="{ record }">
           <a-tag v-if="record.status === 'completed'" color="green">
             {{ $t(`task.dict.status.${record.status}`) }}
@@ -340,9 +346,10 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import { computed, ref, reactive, watch, nextTick, h } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { Message, Modal } from '@arco-design/web-vue';
+  import { Message, Modal, Tooltip } from '@arco-design/web-vue';
+  import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
   import useLoading from '@/hooks/loading';
   import { queryAppList, AppList } from '@/api/app';
   import {
@@ -505,6 +512,52 @@
       slotName: 'image_url',
       align: 'center',
     },
+    ...(userRole === 'admin'
+      ? [
+          {
+            title: t('task.columns.total_time'),
+            dataIndex: 'total_time',
+            slotName: 'total_time',
+            align: 'center',
+            slots: {
+              title: () => [
+                h(
+                  'div',
+                  {
+                    style: {
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '3px',
+                      justifyContent: 'center',
+                    },
+                  },
+                  [
+                    h('span', t('task.columns.total_time')),
+                    h(
+                      Tooltip,
+                      {
+                        content: t('task.columns.tooltip.total_time'),
+                        contentStyle: {
+                          whiteSpace: 'nowrap',
+                          maxWidth: 'none',
+                        },
+                      },
+                      {
+                        default: () =>
+                          h(IconQuestionCircle, {
+                            style: {
+                              color: 'var(--color-text-3)',
+                            },
+                          }),
+                      }
+                    ),
+                  ]
+                ),
+              ],
+            },
+          } as TableColumnData,
+        ]
+      : []),
     {
       title: t('common.status'),
       dataIndex: 'status',
@@ -765,6 +818,14 @@
       return [getFullUrl(record.image_url)];
     }
     return [];
+  };
+
+  // 总耗时(后端返回, 毫秒)按管理员阈值着色, 与日志列表逻辑一致
+  const getTotalTimeColor = (totalTime: number) => {
+    if (totalTime > 300000) return 'red';
+    if (totalTime > 210000) return 'orange';
+    if (totalTime > 120000) return 'gold';
+    return 'green';
   };
 </script>
 

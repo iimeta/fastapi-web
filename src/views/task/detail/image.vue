@@ -115,7 +115,7 @@
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
-        <span v-else>
+        <span v-else class="task-detail-scroll-110">
           {{ currentData.prompt }}
         </span>
       </a-descriptions-item>

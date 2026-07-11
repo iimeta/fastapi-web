@@ -8,6 +8,9 @@ export default {
   'task.menu.file.detail': '檔案任務詳情',
   'task.menu.batch': '批次處理任務',
   'task.menu.batch.detail': '批次處理任務詳情',
+  // columns
+  'task.columns.total_time': '總耗時',
+  'task.columns.tooltip.total_time': '從建立任務到完成所用的時長, 單位: ms(毫秒)',
   // detail
   'task.detail.creator': '呼叫密鑰',
   'task.detail.image_url': '圖像URL',
