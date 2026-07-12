@@ -211,12 +211,8 @@
 
 <script lang="ts" setup>
   import { ref, reactive, onBeforeMount, onBeforeUnmount } from 'vue';
-  import {
-    queryBaseData,
-    BaseDataRecord,
-    queryPerSecond,
-    queryPerMinute,
-  } from '@/api/dashboard';
+  import { queryBaseData, BaseDataRecord } from '@/api/dashboard';
+  import { queryMonitorGlobal } from '@/api/monitor';
 
   const baseData = reactive({}) as BaseDataRecord;
 
@@ -226,30 +222,24 @@
   const tpm = ref(0);
 
   let getBaseDataIntervalId: ReturnType<typeof setInterval> | undefined;
-  let getPerSecondIntervalId: ReturnType<typeof setInterval> | undefined;
-  let getPerMinuteIntervalId: ReturnType<typeof setInterval> | undefined;
+  let getMonitorGlobalIntervalId: ReturnType<typeof setInterval> | undefined;
 
   const getBaseData = async () => {
     const { data } = await queryBaseData();
     Object.assign(baseData, data);
   };
 
-  const getPerSecond = async () => {
-    const { data } = await queryPerSecond();
+  const getMonitorGlobal = async () => {
+    const { data } = await queryMonitorGlobal();
     rps.value = data.rps;
     tps.value = data.tps;
-  };
-
-  const getPerMinute = async () => {
-    const { data } = await queryPerMinute();
     rpm.value = data.rpm;
     tpm.value = data.tpm;
   };
 
   const clearTimers = () => {
     clearInterval(getBaseDataIntervalId);
-    clearInterval(getPerSecondIntervalId);
-    clearInterval(getPerMinuteIntervalId);
+    clearInterval(getMonitorGlobalIntervalId);
   };
 
   /**
@@ -263,15 +253,11 @@
     // 获取基础数据
     getBaseData();
     // 每秒执行一次的操作
-    getPerSecond();
-    // 每分钟执行一次的操作
-    getPerMinute();
+    getMonitorGlobal();
     // 设置定时器，每180分钟获取一次基础数据
     getBaseDataIntervalId = setInterval(getBaseData, 180 * 1000);
-    // 设置定时器，每1秒执行一次getPerSecond函数
-    getPerSecondIntervalId = setInterval(getPerSecond, 1000);
-    // 设置定时器，每5分钟执行一次getPerMinute函数
-    getPerMinuteIntervalId = setInterval(getPerMinute, 3000);
+    // 设置定时器，每3秒执行一次getMonitorGlobal函数
+    getMonitorGlobalIntervalId = setInterval(getMonitorGlobal, 3000);
   };
 
   /**
