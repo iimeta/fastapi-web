@@ -104,6 +104,7 @@ export interface ImagePage {
 export interface ImagePageParams extends Partial<ImagePage> {
   current: number;
   pageSize: number;
+  model_agents?: string[];
 }
 
 export interface ImagePageRes {

@@ -88,7 +88,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="5">
+              <a-col v-permission="['user', 'reseller']" :span="5">
                 <a-form-item field="quality" :label="$t('task.detail.quality')">
                   <a-input
                     v-model="formModel.quality"
@@ -97,17 +97,41 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="6">
+              <a-col :span="userRole === 'admin' ? 5 : 6">
                 <a-form-item
                   field="prompt"
                   :label="$t('task.detail.prompt')"
-                  :label-col-props="{ span: 6 }"
+                  :label-col-props="{ span: userRole === 'admin' ? 5 : 6 }"
                 >
                   <a-input
                     v-model="formModel.prompt"
                     :placeholder="$t('task.form.placeholder.prompt')"
                     allow-clear
                   />
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['admin']" :span="6">
+                <a-form-item
+                  field="model_agents"
+                  :label="$t('log.form.model_agents')"
+                  :label-col-props="{ span: 6 }"
+                >
+                  <a-select
+                    v-model="formModel.model_agents"
+                    :placeholder="$t('common.all')"
+                    :max-tag-count="1"
+                    :scrollbar="false"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in modelAgents"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    />
+                  </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="6">
@@ -352,6 +376,7 @@
   import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
   import useLoading from '@/hooks/loading';
   import { queryAppList, AppList } from '@/api/app';
+  import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
   import {
     queryImagePage,
     ImagePage,
@@ -395,6 +420,7 @@
       image_url: '',
       prompt: '',
       quality: '',
+      model_agents: [],
       status: ref(),
       created_at: [
         dayjs().format('YYYY-MM-DD 00:00:00'),
@@ -430,6 +456,20 @@
 
   if (userRole === 'user') {
     getAppList();
+  }
+
+  const modelAgents = ref<ModelAgentList[]>([]);
+  const getModelAgentList = async () => {
+    try {
+      const { data } = await queryModelAgentList();
+      modelAgents.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+
+  if (userRole === 'admin') {
+    getModelAgentList();
   }
 
   const basePagination: Pagination = {
