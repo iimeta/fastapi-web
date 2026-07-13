@@ -10,8 +10,7 @@ export default {
   'task.menu.batch.detail': 'Batch Task Details',
   // columns
   'task.columns.total_time': 'Total Time',
-  'task.columns.tooltip.total_time':
-    'Time from task creation to completion, unit: ms (milliseconds)',
+  'task.columns.tooltip.total_time': 'Time from task creation to completion, unit: ms (milliseconds)',
   // detail
   'task.detail.creator': 'Calling Key',
   'task.detail.image_url': 'Image URL',
@@ -51,7 +50,6 @@ export default {
   'task.detail.cancelled_at': 'Cancelled At',
   // form
   'task.form.trace_id': 'TraceID',
-  'task.form.user_id': 'UserID',
   'task.form.placeholder.image_id': 'Please enter image ID',
   'task.form.placeholder.image_url': 'Please enter image URL',
   'task.form.placeholder.prompt': 'Please enter prompt',

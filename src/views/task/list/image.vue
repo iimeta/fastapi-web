@@ -40,7 +40,12 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['reseller', 'admin']" :span="5">
-                <a-form-item field="user_id" :label="$t('task.form.user_id')">
+                <a-form-item
+                  field="user_id"
+                  :label="$t('common.user_id')"
+                  :label-col-props="{ span: userRole === 'admin' ? 7 : 6 }"
+                  :wrapper-col-props="{ span: userRole === 'admin' ? 17 : 18 }"
+                >
                   <a-input-number
                     v-model="formModel.user_id"
                     :placeholder="$t('placeholder.user_id')"
@@ -89,7 +94,11 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['user', 'reseller']" :span="5">
-                <a-form-item field="quality" :label="$t('task.detail.quality')">
+                <a-form-item
+                  field="quality"
+                  :label="$t('task.detail.quality')"
+                  :label-col-props="{ span: userRole === 'reseller' ? 6 : 5 }"
+                >
                   <a-input
                     v-model="formModel.quality"
                     :placeholder="$t('task.form.placeholder.quality')"
@@ -101,7 +110,8 @@
                 <a-form-item
                   field="prompt"
                   :label="$t('task.detail.prompt')"
-                  :label-col-props="{ span: userRole === 'admin' ? 5 : 6 }"
+                  :label-col-props="{ span: userRole === 'admin' ? 7 : 6 }"
+                  :wrapper-col-props="{ span: userRole === 'admin' ? 17 : 18 }"
                 >
                   <a-input
                     v-model="formModel.prompt"

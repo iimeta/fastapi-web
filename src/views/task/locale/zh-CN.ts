@@ -50,7 +50,6 @@ export default {
   'task.detail.cancelled_at': '取消时间',
   // form
   'task.form.trace_id': 'TraceID',
-  'task.form.user_id': 'UserID',
   'task.form.placeholder.image_id': '请输入图像ID',
   'task.form.placeholder.image_url': '请输入图像URL',
   'task.form.placeholder.prompt': '请输入提示词',
