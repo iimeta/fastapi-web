@@ -96,7 +96,32 @@
                   :key="item.id"
                   :value="item.id"
                   :label="item.name"
-                />
+                >
+                  <div class="agent-form-option">
+                    <div class="agent-form-option--content">
+                      <span class="agent-form-option--name">{{
+                        item.name
+                      }}</span>
+                      <span
+                        v-if="item.remark"
+                        class="agent-form-option--remark"
+                        >{{ item.remark }}</span
+                      >
+                    </div>
+                    <span
+                      v-if="item.tags && item.tags.length"
+                      class="agent-form-option--tags"
+                    >
+                      <a-tag
+                        v-for="tag in item.tags"
+                        :key="tag"
+                        size="small"
+                        color="arcoblue"
+                        >{{ tag }}</a-tag
+                      >
+                    </span>
+                  </div>
+                </a-option>
               </a-select>
             </a-form-item>
             <a-form-item
@@ -148,7 +173,6 @@
     KeyDetailParams,
   } from '@/api/key';
   import { queryProviderList, ProviderList } from '@/api/provider';
-  import ModelSelect from '@/components/model-select/index.vue';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
 
   const { loading, setLoading } = useLoading(false);

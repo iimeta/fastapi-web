@@ -119,6 +119,7 @@ export interface ModelAgentList {
   weight: number;
   models: string[];
   status: number;
+  tags: string[];
   remark: string;
 }
 
