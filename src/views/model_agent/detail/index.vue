@@ -43,6 +43,7 @@
               v-for="item in currentData.tags"
               :key="item"
               size="small"
+              color="arcoblue"
               style="margin-right: 4px"
             >
               {{ item }}
