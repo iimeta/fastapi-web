@@ -41,6 +41,13 @@
       const selectedKey = ref<string[]>([]);
 
       // 菜单分组配置
+      // order: 分组排序值, 越小越靠前; 值相同时按数组声明顺序排列
+      // roleOrders: 按角色覆盖排序值, 如 { admin: 45, user: 22 }
+      //   - 当前角色命中时用该值代替 order, 未命中则回退到 order
+      // roles: 控制分组对哪些角色可见 (仅控制分组标题的显隐)
+      //   - 不配置: 所有角色可见
+      //   - string[]: 仅列出的角色可见, 如 ['admin']; 含 '*' 表示全部可见
+      //   注意: 分组内路由的真正权限仍由各路由的 meta.roles 决定
       // defaultCollapsed: 控制分组默认是否收起
       //   - boolean: 对所有角色生效
       //   - Record<string, boolean>: 按角色配置, 如 { admin: true, user: false }
@@ -210,9 +217,7 @@
         () => appStore.menuGroupExpand,
         () => {
           initCollapsedState();
-          expandGroupForRoute(
-            (route.meta.activeMenu || route.name) as string
-          );
+          expandGroupForRoute((route.meta.activeMenu || route.name) as string);
         }
       );
 
@@ -358,6 +363,12 @@
             index,
             order: group.roleOrders?.[userStore.role] ?? group.order,
           }))
+          .filter((group) => {
+            const roles = (group as any).roles as string[] | undefined;
+            return (
+              !roles || roles.includes('*') || roles.includes(userStore.role)
+            );
+          })
           .sort((a, b) => a.order - b.order || a.index - b.index)
           .forEach((group) => {
             const groupRoutes = group.routes
