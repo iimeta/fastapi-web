@@ -107,8 +107,7 @@ export default {
   'common.tab.close.all': '关闭全部标签页',
   // menu group
   'menu.group.core_assets': '核心资产',
-  'menu.group.resource_market': '资源市场',
-  'menu.group.data_operations': '数据运营',
+  'menu.group.resource_overview': '资源概览',
   'menu.group.app_access': '应用接入',
   'menu.group.finance': '财务中心',
   'menu.group.invite': '邀请奖励',

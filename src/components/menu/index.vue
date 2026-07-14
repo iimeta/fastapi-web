@@ -40,108 +40,143 @@
       const openKeys = ref<string[]>([]);
       const selectedKey = ref<string[]>([]);
 
-      // 菜单分组配置
-      // order: 分组排序值, 越小越靠前; 值相同时按数组声明顺序排列
-      // roleOrders: 按角色覆盖排序值, 如 { admin: 45, user: 22 }
-      //   - 当前角色命中时用该值代替 order, 未命中则回退到 order
-      // roles: 控制分组对哪些角色可见 (仅控制分组标题的显隐)
-      //   - 不配置: 所有角色可见
-      //   - string[]: 仅列出的角色可见, 如 ['admin']; 含 '*' 表示全部可见
-      //   注意: 分组内路由的真正权限仍由各路由的 meta.roles 决定
-      // defaultCollapsed: 控制分组默认是否收起
-      //   - boolean: 对所有角色生效
-      //   - Record<string, boolean>: 按角色配置, 如 { admin: true, user: false }
-      //   - 未配置时默认收起
-      const menuGroups = [
-        {
-          title: '',
-          icon: 'lucide-layout-dashboard',
-          order: 10,
-          routes: ['dashboard'],
-        },
-        {
-          title: 'menu.group.core_assets',
-          icon: 'lucide-box',
-          order: 20,
-          routes: ['model', 'model_agent', 'key', 'group', 'user'],
-        },
-        {
-          title: 'menu.group.resource_market',
-          icon: 'lucide-store',
-          order: 30,
-          roleOrders: {
-            reseller: 45,
-            admin: 45,
-          } as Record<string, number>,
-          routes: ['model_square', 'group_square'],
-        },
-        {
-          title: 'menu.group.data_operations',
-          icon: 'lucide-chart-column-increasing',
-          order: 40,
-          routes: ['statistics', 'monitor'],
-        },
-        {
-          title: 'menu.group.app_access',
-          icon: 'lucide-layout-grid',
-          order: 50,
-          roleOrders: {
-            user: 22,
-          } as Record<string, number>,
-          routes: ['app', 'app_key'],
-        },
-        {
-          title: 'menu.group.invite',
-          icon: 'lucide-gift',
-          order: 56,
-          roleOrders: {
-            user: 28,
-          } as Record<string, number>,
-          routes: [
-            'InviteRelations',
-            'InviteRewards',
-            'InviteApply',
-            'ManageInviteRelations',
-            'ManageInviteRewards',
-            'ManageInviteApply',
-          ],
-        },
-        {
-          title: 'menu.group.tasks_logs',
-          icon: 'lucide-list-checks',
-          order: 60,
-          roleOrders: {
-            reseller: 42,
-            admin: 42,
-          } as Record<string, number>,
-          routes: ['task', 'log'],
-        },
-        {
-          title: 'menu.group.finance',
-          icon: 'lucide-banknote',
-          order: 70,
-          roleOrders: {
-            reseller: 43,
-            admin: 43,
-          } as Record<string, number>,
-          routes: ['BillList', 'DealRecordList'],
-        },
-        {
-          title: 'menu.group.support',
-          icon: 'lucide-headset',
-          order: 75,
-          routes: ['TicketCreate', 'TicketMyList', 'TicketList'],
-        },
-        {
-          title: 'menu.group.system_config',
-          icon: 'lucide-settings',
-          order: 80,
-          routes: ['notice', 'sys'],
-          defaultCollapsed: {
-            admin: true,
+      // 菜单分组配置 (按角色拆分: user / reseller / admin 各用各的分组)
+      // 每个角色一个数组, 数组顺序即菜单从上到下的显示顺序, 关注度高的放前面
+      // 分组字段:
+      //   title: 分组标题的 i18n key; 为空串 '' 时不渲染标题(如工作台, 作为置顶项)
+      //   icon:  预留图标字段(当前渲染未使用, 保留以备后用)
+      //   routes: 分组包含的路由 name; 无权限的路由会被自动过滤, 过滤后为空则整组隐藏
+      //   defaultCollapsed: 默认是否收起 (boolean); 不配置则默认收起
+      const MENU_GROUPS_BY_ROLE: Record<string, any[]> = {
+        // 用户
+        user: [
+          {
+            title: '',
+            icon: 'lucide-layout-dashboard',
+            routes: ['dashboard'],
           },
-        },
-      ];
+          {
+            title: 'menu.group.app_access',
+            icon: 'lucide-layout-grid',
+            routes: ['app', 'app_key'],
+          },
+          {
+            title: 'menu.group.resource_overview',
+            icon: 'lucide-layers',
+            routes: ['model_square', 'group_square', 'statistics', 'monitor'],
+          },
+          {
+            title: 'menu.group.tasks_logs',
+            icon: 'lucide-list-checks',
+            routes: ['task', 'log'],
+          },
+          {
+            title: 'menu.group.finance',
+            icon: 'lucide-banknote',
+            routes: [
+              'BillList',
+              'DealRecordList',
+              'InviteRewards',
+              'InviteApply',
+            ],
+          },
+          {
+            title: 'menu.group.support',
+            icon: 'lucide-headset',
+            routes: ['TicketCreate', 'TicketMyList'],
+          },
+        ],
+        // 代理商
+        reseller: [
+          {
+            title: '',
+            icon: 'lucide-layout-dashboard',
+            routes: ['dashboard'],
+          },
+          {
+            title: 'menu.group.core_assets',
+            icon: 'lucide-box',
+            routes: ['user', 'app', 'app_key'],
+          },
+          {
+            title: 'menu.group.resource_overview',
+            icon: 'lucide-chart-column-increasing',
+            routes: ['statistics', 'monitor', 'model_square', 'group_square'],
+          },
+          {
+            title: 'menu.group.tasks_logs',
+            icon: 'lucide-list-checks',
+            routes: ['task', 'log'],
+          },
+          {
+            title: 'menu.group.finance',
+            icon: 'lucide-banknote',
+            routes: [
+              'BillList',
+              'DealRecordList',
+              'ManageInviteRelations',
+              'ManageInviteRewards',
+              'ManageInviteApply',
+            ],
+          },
+          {
+            title: 'menu.group.system_config',
+            icon: 'lucide-settings',
+            routes: ['TicketList', 'TicketCreate', 'TicketMyList', 'sys'],
+          },
+        ],
+        // 管理员
+        admin: [
+          {
+            title: '',
+            icon: 'lucide-layout-dashboard',
+            routes: ['dashboard'],
+          },
+          {
+            title: 'menu.group.core_assets',
+            icon: 'lucide-box',
+            routes: [
+              'model',
+              'model_agent',
+              'key',
+              'group',
+              'user',
+              'app',
+              'app_key',
+            ],
+          },
+          {
+            title: 'menu.group.resource_overview',
+            icon: 'lucide-chart-column-increasing',
+            routes: ['statistics', 'monitor', 'model_square', 'group_square'],
+          },
+          {
+            title: 'menu.group.tasks_logs',
+            icon: 'lucide-list-checks',
+            routes: ['task', 'log'],
+          },
+          {
+            title: 'menu.group.finance',
+            icon: 'lucide-banknote',
+            routes: [
+              'BillList',
+              'DealRecordList',
+              'ManageInviteRelations',
+              'ManageInviteRewards',
+              'ManageInviteApply',
+            ],
+          },
+          {
+            title: 'menu.group.system_config',
+            icon: 'lucide-settings',
+            routes: ['TicketList', 'notice', 'sys'],
+          },
+        ],
+      };
+
+      // 当前角色对应的分组 (角色登录后即固定, 菜单随之挂载)
+      const menuGroups =
+        MENU_GROUPS_BY_ROLE[userStore.role] ?? MENU_GROUPS_BY_ROLE.user;
 
       // 解析分组的默认收起状态
       const getDefaultCollapsed = (group: (typeof menuGroups)[number]) => {
@@ -202,9 +237,11 @@
       const expandGroupForRoute = (target: string) => {
         if (!target) return;
         const keys = findMenuOpenKeys(target);
-        const topName = keys[0] ?? target;
+        // 命中分组内任意路由即展开(兼容引用父路由或子路由 name 的分组)
         const group = menuGroups.find(
-          (g) => g.title && g.routes.includes(topName)
+          (g) =>
+            g.title &&
+            g.routes.some((r: string) => keys.includes(r) || r === target)
         );
         if (group?.title) {
           collapsedGroups.value[group.title] = false;
@@ -357,31 +394,18 @@
 
         collectRoutes(menuTree.value);
 
-        menuGroups
-          .map((group, index) => ({
-            ...group,
-            index,
-            order: group.roleOrders?.[userStore.role] ?? group.order,
-          }))
-          .filter((group) => {
-            const roles = (group as any).roles as string[] | undefined;
-            return (
-              !roles || roles.includes('*') || roles.includes(userStore.role)
-            );
-          })
-          .sort((a, b) => a.order - b.order || a.index - b.index)
-          .forEach((group) => {
-            const groupRoutes = group.routes
-              .map((name) => routeMap.get(name))
-              .filter(Boolean);
+        menuGroups.forEach((group) => {
+          const groupRoutes = group.routes
+            .map((name: string) => routeMap.get(name))
+            .filter(Boolean);
 
-            if (groupRoutes.length > 0) {
-              grouped.push({
-                ...group,
-                routes: groupRoutes,
-              });
-            }
-          });
+          if (groupRoutes.length > 0) {
+            grouped.push({
+              ...group,
+              routes: groupRoutes,
+            });
+          }
+        });
 
         return grouped;
       });

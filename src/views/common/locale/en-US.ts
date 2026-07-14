@@ -107,8 +107,7 @@ export default {
   'common.tab.close.all': 'Close All Tabs',
   // menu group
   'menu.group.core_assets': 'Core Assets',
-  'menu.group.resource_market': 'Resource Market',
-  'menu.group.data_operations': 'Data Operations',
+  'menu.group.resource_overview': 'Resource Overview',
   'menu.group.app_access': 'App Access',
   'menu.group.finance': 'Finance Center',
   'menu.group.invite': 'Invite Rewards',

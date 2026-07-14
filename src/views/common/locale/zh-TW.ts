@@ -107,8 +107,7 @@ export default {
   'common.tab.close.all': '關閉全部標籤頁',
   // menu group
   'menu.group.core_assets': '核心資產',
-  'menu.group.resource_market': '資源市場',
-  'menu.group.data_operations': '數據運營',
+  'menu.group.resource_overview': '資源概覽',
   'menu.group.app_access': '應用接入',
   'menu.group.finance': '財務中心',
   'menu.group.invite': '邀請獎勵',
