@@ -21,6 +21,7 @@
     queryModelTrend,
     StatisticsModelTrendRes,
   } from '@/api/statistics';
+  import { fmtCount } from '@/utils/common';
   import Chart from '@/components/chart/index.vue';
   import DateShortcut from './date-shortcut.vue';
 
@@ -77,6 +78,7 @@
         backgroundColor: isDark ? '#333' : '#fff',
         borderColor: isDark ? '#555' : '#e5e5e5',
         textStyle: { color: isDark ? '#ddd' : '#333' },
+        valueFormatter: (v: any) => fmtCount(v),
       },
       xAxis: {
         type: 'category',

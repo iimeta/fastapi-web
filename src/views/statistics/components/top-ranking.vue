@@ -30,6 +30,7 @@
   import { useUserStore, useAppStore } from '@/store';
   import useChartOption from '@/hooks/chart-option';
   import { queryTop, StatisticsTopItem } from '@/api/statistics';
+  import { fmtCount, fmtMoney } from '@/utils/common';
   import Chart from '@/components/chart/index.vue';
   import DateShortcut from './date-shortcut.vue';
 
@@ -69,6 +70,7 @@
       backgroundColor: isDark ? '#333' : '#fff',
       borderColor: isDark ? '#555' : '#e5e5e5',
       textStyle: { color: isDark ? '#ddd' : '#333' },
+      valueFormatter: (v: any) => fmtCount(v),
     },
     xAxis: {
       type: 'category',
@@ -141,8 +143,7 @@
         data: tokensValues.value,
         barMaxWidth: 18,
         tooltip: {
-          valueFormatter: (v: any) =>
-            `${cs.value}\u2009${Number(v).toFixed(6)}`,
+          valueFormatter: (v: any) => `${cs.value}\u2009${fmtMoney(v)}`,
         },
         itemStyle: {
           borderRadius: [3, 3, 0, 0],

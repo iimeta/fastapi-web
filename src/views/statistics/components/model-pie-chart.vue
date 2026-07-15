@@ -18,6 +18,7 @@
     queryModelPercent,
     StatisticsModelPercentItem,
   } from '@/api/statistics';
+  import { fmtCount } from '@/utils/common';
   import Chart from '@/components/chart/index.vue';
   import DateShortcut from './date-shortcut.vue';
 
@@ -53,7 +54,7 @@
         formatter(params: any) {
           const p = params[0];
           const pct = total > 0 ? ((p.value / total) * 100).toFixed(1) : '0';
-          return `${p.name}: ${p.value} (${pct}%)`;
+          return `${p.name}: ${fmtCount(p.value)} (${pct}%)`;
         },
       },
       grid: {

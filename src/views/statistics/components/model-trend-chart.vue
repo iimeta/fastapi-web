@@ -26,6 +26,7 @@
   import { useAppStore } from '@/store';
   import useChartOption from '@/hooks/chart-option';
   import { queryModelTrend, StatisticsModelTrendRes } from '@/api/statistics';
+  import { fmtCount, fmtMoney } from '@/utils/common';
   import Chart from '@/components/chart/index.vue';
   import DateShortcut from './date-shortcut.vue';
 
@@ -83,11 +84,11 @@
       trigger: 'axis',
       backgroundColor: isDark ? '#333' : '#fff',
       borderColor: isDark ? '#555' : '#e5e5e5',
-      textStyle: { color: isDark ? '#ddd' : '#333', fontSize: 12 },
+      textStyle: { color: isDark ? '#ddd' : '#333' },
       valueFormatter: (v: any) =>
         metric.value === 'tokens'
-          ? `${cs.value}\u2009${Number(v).toFixed(6)}`
-          : Number(v).toLocaleString(),
+          ? `${cs.value}\u2009${fmtMoney(v)}`
+          : fmtCount(v),
     },
     xAxis: {
       type: 'category',

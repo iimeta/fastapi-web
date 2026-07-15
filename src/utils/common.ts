@@ -51,3 +51,16 @@ export function fmtTokens(v: number): string {
   if (n >= 100) return n.toFixed(2);
   return n.toFixed(6);
 }
+
+// 计数类数值：带千位符的整数，如 1,010,000
+export function fmtCount(v: number): string {
+  return Number(v || 0).toLocaleString('en-US');
+}
+
+// 货币类数值：整数部分带千位符，保留 6 位小数，如 1,010,000.123456
+export function fmtMoney(v: number): string {
+  return Number(v || 0).toLocaleString('en-US', {
+    minimumFractionDigits: 6,
+    maximumFractionDigits: 6,
+  });
+}

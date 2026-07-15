@@ -24,6 +24,7 @@
   import { useAppStore } from '@/store';
   import useChartOption from '@/hooks/chart-option';
   import { queryAgentStatus, StatisticsAgentStatusRes } from '@/api/statistics';
+  import { fmtCount, fmtMoney } from '@/utils/common';
   import Chart from '@/components/chart/index.vue';
   import DateShortcut from './date-shortcut.vue';
 
@@ -53,7 +54,7 @@
   const { chartOption: pieOption } = useChartOption((isDark) => ({
     tooltip: {
       trigger: 'item',
-      formatter: '{b}: {c} ({d}%)',
+      formatter: (p: any) => `${p.name}: ${fmtCount(p.value)} (${p.percent}%)`,
       backgroundColor: isDark ? '#333' : '#fff',
       textStyle: { color: isDark ? '#ddd' : '#333' },
     },
@@ -113,7 +114,7 @@
       axisPointer: { type: 'shadow' },
       backgroundColor: isDark ? '#333' : '#fff',
       textStyle: { color: isDark ? '#ddd' : '#333' },
-      valueFormatter: (v: any) => `${cs.value}\u2009${Number(v).toFixed(6)}`,
+      valueFormatter: (v: any) => `${cs.value}\u2009${fmtMoney(v)}`,
     },
     xAxis: {
       type: 'category',

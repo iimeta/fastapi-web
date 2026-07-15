@@ -17,6 +17,7 @@
   import { useAppStore, useUserStore } from '@/store';
   import useChartOption from '@/hooks/chart-option';
   import { queryTrend, StatisticsTrendItem } from '@/api/statistics';
+  import { fmtCount, fmtMoney } from '@/utils/common';
   import Chart from '@/components/chart/index.vue';
   import DateShortcut from './date-shortcut.vue';
 
@@ -51,6 +52,7 @@
       backgroundColor: isDark ? '#333' : '#fff',
       borderColor: isDark ? '#555' : '#e5e5e5',
       textStyle: { color: isDark ? '#ddd' : '#333' },
+      valueFormatter: (v: any) => fmtCount(v),
       axisPointer: { type: 'cross', crossStyle: { color: '#999' } },
     },
     xAxis: {
@@ -98,8 +100,7 @@
         lineStyle: { width: 2, color: '#EA8D24' },
         itemStyle: { color: '#EA8D24' },
         tooltip: {
-          valueFormatter: (v: any) =>
-            `${cs.value}\u2009${Number(v).toFixed(6)}`,
+          valueFormatter: (v: any) => `${cs.value}\u2009${fmtMoney(v)}`,
         },
         areaStyle: {
           color: {

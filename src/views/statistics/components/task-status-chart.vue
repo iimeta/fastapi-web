@@ -33,6 +33,7 @@
   import dayjs from 'dayjs';
   import useChartOption from '@/hooks/chart-option';
   import { queryTaskStatus, TaskStatusItem } from '@/api/statistics';
+  import { fmtCount } from '@/utils/common';
   import Chart from '@/components/chart/index.vue';
   import DateShortcut from './date-shortcut.vue';
 
@@ -127,7 +128,8 @@
     return {
       tooltip: {
         trigger: 'item' as const,
-        formatter: '{b}: {c} ({d}%)',
+        formatter: (p: any) =>
+          `${p.name}: ${fmtCount(p.value)} (${p.percent}%)`,
         backgroundColor: isDark ? '#333' : '#fff',
         textStyle: { color: isDark ? '#ddd' : '#333' },
       },
