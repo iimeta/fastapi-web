@@ -172,6 +172,7 @@ export default {
   'sys.config.label.account_login': '账密登录',
   'sys.config.label.email_login': '邮箱登录',
   'sys.config.label.email_register': '用户注册',
+  'sys.config.label.verify_email': '验证邮箱',
   'sys.config.label.email_retrieve': '找回密码',
   'sys.config.label.session_expire': '会话过期',
   'sys.config.placeholder.session_expire': '请输入会话过期时长',

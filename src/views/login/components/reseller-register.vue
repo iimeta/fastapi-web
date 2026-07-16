@@ -16,7 +16,7 @@
         allow-clear
       />
     </a-form-item>
-    <a-form-item field="captcha" hide-label>
+    <a-form-item v-if="verifyEmail" field="captcha" hide-label>
       <a-input
         v-model="form.captcha"
         class="reseller-register-captcha-input"
@@ -33,7 +33,11 @@
         {{ captchaBtnName }}
       </a-button>
     </a-form-item>
-    <a-form-item field="password" hide-label class="reseller-register-password-item">
+    <a-form-item
+      field="password"
+      hide-label
+      class="reseller-register-password-item"
+    >
       <a-input-password
         v-model="form.password"
         :placeholder="$t('login.account.placeholder.password')"
@@ -52,11 +56,19 @@
       <a-checkbox v-model="isAgreed">
         {{ $t('login.agreement') }}
       </a-checkbox>
-      <a-link href="/user-agreement" target="_blank" class="reseller-register-agreement-link">
+      <a-link
+        href="/user-agreement"
+        target="_blank"
+        class="reseller-register-agreement-link"
+      >
         {{ $t('login.user_agreement') }}
       </a-link>
       {{ $t('login.and') }}
-      <a-link href="/privacy-policy" target="_blank" class="reseller-register-agreement-link">
+      <a-link
+        href="/privacy-policy"
+        target="_blank"
+        class="reseller-register-agreement-link"
+      >
         {{ $t('login.privacy_policy') }}
       </a-link>
     </div>
@@ -79,6 +91,14 @@
 
   defineEmits(['toggleLogin']);
 
+  // 是否验证邮箱(开启后注册需发送验证码, 关闭仅正则校验邮箱格式)
+  defineProps({
+    verifyEmail: {
+      type: Boolean,
+      default: true,
+    },
+  });
+
   const captchaDisable = ref(false);
   const captchaTime = ref(60);
   const captchaTimer = ref();
@@ -93,6 +113,10 @@
     rules: {
       email: [
         { required: true, message: t('login.email.error.required.email') },
+        {
+          match: /^[a-zA-Z0-9_\-.+]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+          message: t('login.email.error.format.email'),
+        },
       ],
       password: [
         { required: true, message: t('login.email.error.required.password') },

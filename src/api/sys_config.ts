@@ -104,6 +104,7 @@ export interface UserLoginRegister {
   account_login: boolean;
   email_login: boolean;
   email_register: boolean;
+  verify_email: boolean;
   email_retrieve: boolean;
   session_expire: number;
 }
@@ -117,6 +118,7 @@ export interface ResellerLoginRegister {
   account_login: boolean;
   email_login: boolean;
   email_register: boolean;
+  verify_email: boolean;
   email_retrieve: boolean;
   session_expire: number;
 }

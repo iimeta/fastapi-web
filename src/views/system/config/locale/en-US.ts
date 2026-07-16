@@ -172,6 +172,7 @@ export default {
   'sys.config.label.account_login': 'Account Login',
   'sys.config.label.email_login': 'Email Login',
   'sys.config.label.email_register': 'User Registration',
+  'sys.config.label.verify_email': 'Verify Email',
   'sys.config.label.email_retrieve': 'Retrieve Password',
   'sys.config.label.session_expire': 'Session Expiration',
   'sys.config.placeholder.session_expire': 'Enter session expiration duration',

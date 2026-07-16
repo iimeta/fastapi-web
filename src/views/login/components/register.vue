@@ -16,7 +16,7 @@
         allow-clear
       />
     </a-form-item>
-    <a-form-item field="captcha" hide-label>
+    <a-form-item v-if="verifyEmail" field="captcha" hide-label>
       <a-input
         v-model="form.captcha"
         class="register-captcha-input"
@@ -100,6 +100,14 @@
 
   const emit = defineEmits(['toggleLogin']);
 
+  // 是否验证邮箱(开启后注册需发送验证码, 关闭仅正则校验邮箱格式)
+  defineProps({
+    verifyEmail: {
+      type: Boolean,
+      default: true,
+    },
+  });
+
   const captchaDisable = ref(false);
   const captchaTime = ref(60);
   const captchaTimer = ref();
@@ -128,6 +136,10 @@
     rules: {
       email: [
         { required: true, message: t('login.email.error.required.email') },
+        {
+          match: /^[a-zA-Z0-9_\-.+]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+          message: t('login.email.error.format.email'),
+        },
       ],
       password: [
         { required: true, message: t('login.email.error.required.password') },

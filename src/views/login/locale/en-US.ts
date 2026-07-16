@@ -24,6 +24,7 @@ export default {
   'login.account.error.required.password': 'Please enter password',
   'login.account.error.required.captcha': 'Please enter verification code',
   'login.email.error.required.email': 'Please enter email',
+  'login.email.error.format.email': 'Please enter a valid email',
   'login.email.error.required.captcha': 'Please enter verification code',
   'login.email.error.required.password': 'Please enter password',
   'login.invite_code.error.required': 'Please enter invite code',

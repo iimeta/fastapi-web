@@ -120,6 +120,18 @@
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'user_login_register'"
+          field="user_login_register.verify_email"
+          :label="$t('sys.config.label.verify_email')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch v-model="configFormData.user_login_register.verify_email" />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'user_login_register'"
           field="user_login_register.email_retrieve"
           :label="$t('sys.config.label.email_retrieve')"
           :rules="[
@@ -228,6 +240,20 @@
         >
           <a-switch
             v-model="configFormData.reseller_login_register.email_register"
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'reseller_login_register'"
+          field="reseller_login_register.verify_email"
+          :label="$t('sys.config.label.verify_email')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch
+            v-model="configFormData.reseller_login_register.verify_email"
           />
         </a-form-item>
         <a-form-item

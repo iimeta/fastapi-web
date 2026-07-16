@@ -14,7 +14,11 @@
       <div class="left-banner"></div>
       <div class="login-card">
         <div class="title"> {{ appStore.getTitle + $t('login.welcome') }} </div>
-        <Register v-if="isRegister" @toggleLogin="toggleLogin" />
+        <Register
+          v-if="isRegister"
+          :verify-email="sysConfig.user_login_register.verify_email"
+          @toggleLogin="toggleLogin"
+        />
         <Forget v-else-if="isForget" @toggleLogin="toggleLogin" />
         <a-tabs v-else class="account-tab">
           <template #extra>

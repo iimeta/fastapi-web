@@ -56,7 +56,8 @@
                   <a-input-number
                     v-model="searchFormData.quota"
                     :placeholder="$t('placeholder.quota')"
-                    :min="0.000001"
+                    :precision="0"
+                    :min="1"
                     :max="9999999999999"
                     allow-clear
                   >

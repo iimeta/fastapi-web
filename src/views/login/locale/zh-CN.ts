@@ -24,6 +24,7 @@ export default {
   'login.account.error.required.password': '请输入密码',
   'login.account.error.required.captcha': '请输入验证码',
   'login.email.error.required.email': '请输入邮箱',
+  'login.email.error.format.email': '请输入正确的邮箱',
   'login.email.error.required.captcha': '请输入验证码',
   'login.email.error.required.password': '请输入密码',
   'login.invite_code.error.required': '请输入邀请码',

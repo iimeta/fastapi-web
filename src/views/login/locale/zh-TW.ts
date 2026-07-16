@@ -24,6 +24,7 @@ export default {
   'login.account.error.required.password': '請輸入密碼',
   'login.account.error.required.captcha': '請輸入驗證碼',
   'login.email.error.required.email': '請輸入信箱',
+  'login.email.error.format.email': '請輸入正確的信箱',
   'login.email.error.required.captcha': '請輸入驗證碼',
   'login.email.error.required.password': '請輸入密碼',
   'login.invite_code.error.required': '請輸入邀請碼',
