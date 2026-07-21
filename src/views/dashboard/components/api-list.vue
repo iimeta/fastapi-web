@@ -36,6 +36,7 @@
   import { useI18n } from 'vue-i18n';
   import { Message } from '@arco-design/web-vue';
   import { querySysConfig, ApiItem } from '@/api/sys_config';
+  import { querySiteConfig } from '@/api/site_config';
 
   const { t } = useI18n();
 
@@ -45,6 +46,19 @@
   const apis = ref<ApiItem[]>([]);
 
   const getApiList = async () => {
+    // 优先使用站点配置的API, 未配置则回退到系统配置
+    try {
+      const { data } = await querySiteConfig({
+        domain: window.location.hostname,
+      });
+      if (data?.apis && data.apis.length > 0) {
+        apis.value = data.apis;
+        return;
+      }
+    } catch (err) {
+      // ignore
+    }
+
     try {
       const { data } = await querySysConfig({
         domain: window.location.hostname,

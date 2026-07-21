@@ -113,6 +113,10 @@ export default {
   'site.config.label.documents': '文件',
   'site.config.placeholder.documents.title': '請輸入文件標題',
   'site.config.placeholder.documents.jump_url': '跳轉URL, 如: https://abc.com',
+  'site.config.label.apis': 'API介面',
+  'site.config.placeholder.apis.name': '請輸入介面名稱',
+  'site.config.placeholder.apis.url': '請輸入API地址',
+  'site.config.placeholder.apis.remark': '請輸入說明',
   'site.config.label.recharge_tips': '充值提示',
   'site.config.placeholder.recharge_tips': '輸入充值提示後, 用戶點選充值, 會自動彈出此提示',
   // form

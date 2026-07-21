@@ -872,6 +872,42 @@
               </a-button>
             </a-form-item>
             <a-form-item
+              v-for="(apis, index) of formData.apis"
+              :key="index"
+              :label="`${index + 1}. ` + $t('site.config.label.apis')"
+            >
+              <a-input
+                v-model="formData.apis[index].name"
+                :placeholder="$t('site.config.placeholder.apis.name')"
+                class="site-config-form-api-name"
+              />
+              <a-input
+                v-model="formData.apis[index].url"
+                :placeholder="$t('site.config.placeholder.apis.url')"
+                class="site-config-form-api-url"
+              />
+              <a-input
+                v-model="formData.apis[index].remark"
+                :placeholder="$t('site.config.placeholder.apis.remark')"
+                class="site-config-form-api-remark"
+              />
+              <a-button
+                type="primary"
+                shape="circle"
+                class="site-config-form-pair-add-btn"
+                @click="handleApisAdd()"
+              >
+                <icon-plus />
+              </a-button>
+              <a-button
+                type="secondary"
+                shape="circle"
+                @click="handleApisDel(index)"
+              >
+                <icon-minus />
+              </a-button>
+            </a-form-item>
+            <a-form-item
               field="recharge_tips"
               :label="$t('site.config.label.recharge_tips')"
             >
@@ -923,6 +959,7 @@
     Carousel,
     Announcement,
     Document,
+    ApiItem,
   } from '@/api/site_config';
   import { FormInstance, Message } from '@arco-design/web-vue';
   import { useRouter } from 'vue-router';
@@ -1032,6 +1069,7 @@
     document_title: '',
     document_more_url: '',
     documents: [],
+    apis: [],
     recharge_tips: '',
     remark: '',
   });
@@ -1090,6 +1128,17 @@
 
         documentsRemoveIndexes.reverse().forEach((item) => {
           formData.value.documents.splice(item, 1);
+        });
+
+        const apisRemoveIndexes: number[] = [];
+        formData.value.apis.forEach((item, index) => {
+          if (!item.name && !item.url) {
+            apisRemoveIndexes.push(index);
+          }
+        });
+
+        apisRemoveIndexes.reverse().forEach((item) => {
+          formData.value.apis.splice(item, 1);
         });
 
         await submitSiteConfigCreate(formData.value).then(() => {
@@ -1169,11 +1218,27 @@
     }
   };
 
+  const handleApisAdd = () => {
+    const api: ApiItem = {
+      name: '',
+      url: '',
+      remark: '',
+    };
+    formData.value.apis.push(api);
+  };
+
+  const handleApisDel = (index: number) => {
+    if (formData.value.apis.length > 1) {
+      formData.value.apis.splice(index, 1);
+    }
+  };
+
   for (let i = 0; i < 3; i += 1) {
     handleCarousels1Add();
     handleCarousels2Add();
     handleAnnouncementsAdd();
     handleDocumentsAdd();
+    handleApisAdd();
   }
 
   handleDocumentsAdd();

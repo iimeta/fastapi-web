@@ -113,6 +113,10 @@ export default {
   'site.config.label.documents': 'Documents',
   'site.config.placeholder.documents.title': 'Please enter document title',
   'site.config.placeholder.documents.jump_url': 'Jump URL, e.g., https://abc.com',
+  'site.config.label.apis': 'API',
+  'site.config.placeholder.apis.name': 'Enter API name',
+  'site.config.placeholder.apis.url': 'Enter API URL',
+  'site.config.placeholder.apis.remark': 'Enter description',
   'site.config.label.recharge_tips': 'Recharge Notice',
   'site.config.placeholder.recharge_tips': 'After entering recharge notice, users will see this notice when clicking recharge.',
   // form

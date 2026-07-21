@@ -113,6 +113,10 @@ export default {
   'site.config.label.documents': '文档',
   'site.config.placeholder.documents.title': '请输入文档标题',
   'site.config.placeholder.documents.jump_url': '跳转URL, 如: https://abc.com',
+  'site.config.label.apis': 'API接口',
+  'site.config.placeholder.apis.name': '请输入接口名称',
+  'site.config.placeholder.apis.url': '请输入API地址',
+  'site.config.placeholder.apis.remark': '请输入说明',
   'site.config.label.recharge_tips': '充值提示',
   'site.config.placeholder.recharge_tips': '输入充值提示后, 用户点击充值, 会自动弹出此提示',
   // form

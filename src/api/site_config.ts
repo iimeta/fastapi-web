@@ -16,6 +16,12 @@ export interface Document {
   jump_url: string;
 }
 
+export interface ApiItem {
+  name: string;
+  url: string;
+  remark: string;
+}
+
 export interface InviteConfig {
   reward_quota?: any;
   grant_quota?: any;
@@ -77,6 +83,7 @@ export interface SiteConfigCreate {
   document_title: string;
   document_more_url: string;
   documents: Document[];
+  apis: ApiItem[];
   recharge_tips: string;
   remark: string;
 }
@@ -176,6 +183,7 @@ export interface SiteConfigDetail {
   document_title: string;
   document_more_url: string;
   documents: Document[];
+  apis: ApiItem[];
   recharge_tips: string;
   remark: string;
   status: number;
@@ -231,6 +239,7 @@ export interface SiteConfigUpdate {
   document_title: string;
   document_more_url: string;
   documents: Document[];
+  apis: ApiItem[];
   recharge_tips: string;
   remark: string;
   status: number;
