@@ -237,6 +237,7 @@ export default {
   'sys.config.label.image_storage.storage_expires_at': '過期時間',
   'sys.config.placeholder.image_storage.storage_expires_at': '資源檔案的過期時間, 為空默認使用任務的過期時間',
   'sys.config.label.image_storage.storage_expired_delete': '過期刪除',
+  'sys.config.label.image_storage.is_return_base64': '返回Base64',
   'sys.config.label.video_task.is_enable_storage': '啟用儲存',
   'sys.config.label.video_task.storage_dir': '儲存目錄',
   'sys.config.placeholder.video_task.storage_dir': '默認儲存到admin部署目錄下的/resource/public/video數據夾中',

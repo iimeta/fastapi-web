@@ -225,6 +225,7 @@ export interface ImageStorage {
   storage_base_url: string;
   storage_expires_at: number;
   storage_expired_delete: boolean;
+  is_return_base64: boolean;
 }
 
 export interface VideoTask {

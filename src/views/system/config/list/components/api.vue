@@ -1555,6 +1555,13 @@
             v-model="configFormData.image_storage.storage_expired_delete"
           />
         </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_storage'"
+          field="image_storage.is_return_base64"
+          :label="$t('sys.config.label.image_storage.is_return_base64')"
+        >
+          <a-switch v-model="configFormData.image_storage.is_return_base64" />
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>

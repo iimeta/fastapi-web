@@ -237,6 +237,7 @@ export default {
   'sys.config.label.image_storage.storage_expires_at': 'Expiration Time',
   'sys.config.placeholder.image_storage.storage_expires_at': 'Resource file expiration time. Empty defaults to task expiration time.',
   'sys.config.label.image_storage.storage_expired_delete': 'Delete on Expiration',
+  'sys.config.label.image_storage.is_return_base64': 'Return Base64',
   'sys.config.label.video_task.is_enable_storage': 'Enable Storage',
   'sys.config.label.video_task.storage_dir': 'Storage Directory',
   'sys.config.placeholder.video_task.storage_dir': 'Default storage in /resource/public/video folder under admin deployment directory.',
