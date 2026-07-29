@@ -323,12 +323,9 @@
     UserDetailParams,
     UserDetail,
     UserPrivacy,
-  } from '@/api/admin_user';
-  import {
     LogPrivacy,
     PrivacyLogFieldOption,
-    querySysConfigDetail,
-  } from '@/api/sys_config';
+  } from '@/api/admin_user';
   import Quota from '@/views/common/quota.vue';
 
   const { t } = useI18n();
@@ -492,12 +489,9 @@
   const getUserDetail = async (params: UserDetailParams = { id: props.id }) => {
     setLoading(true);
     try {
-      const [userRes, configRes] = await Promise.all([
-        queryUserDetail(params),
-        querySysConfigDetail(),
-      ]);
-      currentData.value = userRes.data;
-      logPrivacy.value = configRes.data.log?.privacy;
+      const { data } = await queryUserDetail(params);
+      currentData.value = data;
+      logPrivacy.value = data.log_privacy;
     } catch (err) {
       // you can report use errorHandler or other
     } finally {

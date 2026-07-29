@@ -513,12 +513,9 @@
     UserPrivacy,
     UserDetailParams,
     queryUserDetail,
-  } from '@/api/admin_user';
-  import {
     LogPrivacy,
     PrivacyLogFieldOption,
-    querySysConfigDetail,
-  } from '@/api/sys_config';
+  } from '@/api/admin_user';
   import { queryGroupList, GroupList } from '@/api/group';
   import Quota from '@/views/common/quota.vue';
 
@@ -644,10 +641,7 @@
     setLoading(true);
     privacyInitialized.value = false;
     try {
-      const [{ data }, configRes] = await Promise.all([
-        queryUserDetail(params),
-        querySysConfigDetail(),
-      ]);
+      const { data } = await queryUserDetail(params);
       formData.value.id = data.id;
       formData.value.name = data.name;
       formData.value.email = data.email;
@@ -662,7 +656,7 @@
       formData.value.remark = data.remark;
       formData.value.status = data.status;
 
-      logPrivacy.value = configRes.data.log?.privacy;
+      logPrivacy.value = data.log_privacy;
       initPrivacyFromDetail(data.privacy, logPrivacy.value);
       privacyInitialized.value = true;
     } catch (err) {
