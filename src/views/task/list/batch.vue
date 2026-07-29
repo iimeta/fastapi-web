@@ -40,7 +40,7 @@
                 </a-form-item>
               </a-col>
               <a-col v-permission="['reseller', 'admin']" :span="8">
-                <a-form-item field="user_id" :label="$t('task.form.user_id')">
+                <a-form-item field="user_id" :label="$t('common.user_id')">
                   <a-input-number
                     v-model="formModel.user_id"
                     :placeholder="$t('placeholder.user_id')"
