@@ -30,6 +30,7 @@ export default {
   'invite.columns.applied_at': 'Applied At',
   'invite.columns.audited_at': 'Audited At',
   'invite.columns.trigger_type': 'Reward Type',
+  'invite.placeholder.apply_order_id': 'Please enter the application number',
   'invite.columns.recharge_rebate': 'Recharge Rebate',
   'invite.columns.recharge_rebate_rule': 'Recharge Rebate Rules',
   'invite.columns.first_recharge_rebate': 'First Recharge',

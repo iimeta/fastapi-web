@@ -30,6 +30,7 @@ export default {
   'invite.columns.applied_at': '申請時間',
   'invite.columns.audited_at': '審核時間',
   'invite.columns.trigger_type': '收益類型',
+  'invite.placeholder.apply_order_id': '請輸入申請單號',
   'invite.columns.recharge_rebate': '充值返利',
   'invite.columns.recharge_rebate_rule': '充值返利規則',
   'invite.columns.first_recharge_rebate': '首次充值',

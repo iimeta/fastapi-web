@@ -23,6 +23,18 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
+                <a-form-item
+                  field="order_no"
+                  :label="$t('invite.columns.order_no')"
+                >
+                  <a-input
+                    v-model="searchFormData.order_no"
+                    :placeholder="$t('invite.placeholder.apply_order_id')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
                 <a-form-item field="user_id" :label="$t('common.user_id')">
                   <a-input-number
                     v-model="searchFormData.user_id"
@@ -34,11 +46,10 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="rid" :label="$t('common.reseller_id')">
+                <a-form-item field="quota_gt" :label="$t('common.quota_gt')">
                   <a-input-number
-                    v-model="searchFormData.rid"
-                    :placeholder="$t('placeholder.reseller_id')"
-                    :precision="0"
+                    v-model="searchFormData.quota_gt"
+                    :placeholder="$t('placeholder.quota')"
                     :min="0"
                     allow-clear
                   />
@@ -62,6 +73,17 @@
                 >
                   <a-range-picker
                     v-model="searchFormData.applied_at"
+                    class="list-full-width"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="audited_at"
+                  :label="$t('invite.columns.audited_at')"
+                >
+                  <a-range-picker
+                    v-model="searchFormData.audited_at"
                     class="list-full-width"
                   />
                 </a-form-item>
@@ -178,6 +200,9 @@
         <template #status="{ record }">
           {{ $t(`invite.dict.apply_status.${record.status}`) }}
         </template>
+        <template #reject_reason="{ record }">
+          {{ record.reject_reason || '-' }}
+        </template>
         <template #operations="{ record }">
           <a-button
             type="text"
@@ -253,10 +278,12 @@
   const cardHeaderStyle = { padding: '20px' };
   const cardBodyStyle = { padding: '25px 20px 20px 20px' };
   const generateSearchParams = () => ({
+    order_no: undefined,
     user_id: undefined,
-    rid: undefined,
+    quota_gt: undefined,
     status: undefined,
     applied_at: [],
+    audited_at: [],
   });
   const renderData = ref<InviteRewardApplyPage[]>([]);
   const searchFormData = ref(generateSearchParams());
@@ -296,11 +323,13 @@
     {
       title: t('invite.columns.order_no'),
       dataIndex: 'order_no',
+      slotName: 'order_no',
       align: 'center',
     },
     {
       title: t('common.user_id'),
       dataIndex: 'user_id',
+      slotName: 'user_id',
       align: 'center',
     },
     {
@@ -318,16 +347,19 @@
     {
       title: t('invite.columns.reject_reason'),
       dataIndex: 'reject_reason',
+      slotName: 'reject_reason',
       align: 'center',
     },
     {
       title: t('invite.columns.applied_at'),
       dataIndex: 'applied_at',
+      slotName: 'applied_at',
       align: 'center',
     },
     {
       title: t('invite.columns.audited_at'),
       dataIndex: 'audited_at',
+      slotName: 'audited_at',
       align: 'center',
     },
     {
@@ -335,7 +367,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 180,
+      width: 120,
     },
   ]);
 

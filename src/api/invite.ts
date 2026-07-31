@@ -114,6 +114,7 @@ export interface InviteRewardPageParams
   current: number;
   pageSize: number;
   created_at?: string[];
+  quota_gt?: number;
 }
 
 export interface InviteRewardPageRes {
@@ -167,10 +168,12 @@ export interface InviteRewardApplyPage {
 }
 
 export interface InviteRewardApplyPageParams
-  extends Partial<Omit<InviteRewardApplyPage, 'applied_at'>> {
+  extends Partial<Omit<InviteRewardApplyPage, 'applied_at' | 'audited_at'>> {
   current: number;
   pageSize: number;
   applied_at?: string[];
+  audited_at?: string[];
+  quota_gt?: number;
 }
 
 export interface InviteRewardApplyPageRes {

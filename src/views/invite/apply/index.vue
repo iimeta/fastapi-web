@@ -21,6 +21,18 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
+                <a-form-item
+                  field="order_no"
+                  :label="$t('invite.columns.order_no')"
+                >
+                  <a-input
+                    v-model="searchFormData.order_no"
+                    :placeholder="$t('invite.placeholder.apply_order_id')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
@@ -131,6 +143,9 @@
         <template #status="{ record }">
           {{ $t(`invite.dict.apply_status.${record.status}`) }}
         </template>
+        <template #reject_reason="{ record }">
+          {{ record.reject_reason || '-' }}
+        </template>
       </a-table>
     </a-card>
   </div>
@@ -158,7 +173,11 @@
   const { t } = useI18n();
   const cardHeaderStyle = { padding: '20px' };
   const cardBodyStyle = { padding: '25px 20px 20px 20px' };
-  const generateSearchParams = () => ({ status: undefined, applied_at: [] });
+  const generateSearchParams = () => ({
+    order_no: undefined,
+    status: undefined,
+    applied_at: [],
+  });
   const renderData = ref<InviteRewardApplyPage[]>([]);
   const searchFormData = ref(generateSearchParams());
   const cloneColumns = ref<Column[]>([]);
@@ -189,6 +208,7 @@
     {
       title: t('invite.columns.order_no'),
       dataIndex: 'order_no',
+      slotName: 'order_no',
       align: 'center',
     },
     {
@@ -206,16 +226,19 @@
     {
       title: t('invite.columns.reject_reason'),
       dataIndex: 'reject_reason',
+      slotName: 'reject_reason',
       align: 'center',
     },
     {
       title: t('invite.columns.applied_at'),
       dataIndex: 'applied_at',
+      slotName: 'applied_at',
       align: 'center',
     },
     {
       title: t('invite.columns.audited_at'),
       dataIndex: 'audited_at',
+      slotName: 'audited_at',
       align: 'center',
     },
   ]);

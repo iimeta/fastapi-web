@@ -35,6 +35,42 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
+                <a-form-item
+                  field="apply_order_id"
+                  :label="$t('invite.columns.order_no')"
+                >
+                  <a-input
+                    v-model="searchFormData.apply_order_id"
+                    :placeholder="$t('invite.placeholder.apply_order_id')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="quota_gt" :label="$t('common.quota_gt')">
+                  <a-input-number
+                    v-model="searchFormData.quota_gt"
+                    :placeholder="$t('placeholder.quota')"
+                    :min="0"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="trigger_type"
+                  :label="$t('invite.columns.trigger_type')"
+                >
+                  <a-select
+                    v-model="searchFormData.trigger_type"
+                    :placeholder="$t('common.all')"
+                    :options="triggerTypeOptions"
+                    :scrollbar="false"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
@@ -66,10 +102,10 @@
               <template #icon><icon-search /></template>
               {{ $t('button.search') }}
             </a-button>
-            <!-- <a-button @click="reset">
+            <a-button @click="reset">
               <template #icon><icon-refresh /></template>
               {{ $t('button.reset') }}
-            </a-button> -->
+            </a-button>
           </a-space>
         </a-col>
       </a-row>
@@ -183,6 +219,12 @@
           </span>
           <span v-else>-</span>
         </template>
+        <template #apply_order_id="{ record }">
+          {{ record.apply_order_id || '-' }}
+        </template>
+        <template #cancelled_reason="{ record }">
+          {{ record.cancelled_reason || '-' }}
+        </template>
       </a-table>
     </a-card>
   </div>
@@ -217,7 +259,10 @@
   const cardBodyStyle = { padding: '25px 20px 20px 20px' };
   const generateSearchParams = () => ({
     invitee_user_id: undefined,
+    apply_order_id: undefined,
+    quota_gt: undefined,
     status: undefined,
+    trigger_type: undefined,
     created_at: [],
   });
   const renderData = ref<InviteRewardPage[]>([]);
@@ -243,6 +288,10 @@
     { label: t('invite.dict.reward_status.4'), value: 4 },
     { label: t('invite.dict.reward_status.5'), value: 5 },
   ];
+  const triggerTypeOptions = [
+    { label: t('invite.dict.trigger_type.register'), value: 'register' },
+    { label: t('invite.dict.trigger_type.recharge'), value: 'recharge' },
+  ];
   const basePagination: Pagination = {
     current: 1,
     pageSize: 20,
@@ -261,6 +310,7 @@
     {
       title: t('invite.columns.invitee_user_id'),
       dataIndex: 'invitee_user_id',
+      slotName: 'invitee_user_id',
       align: 'center',
     },
     {
@@ -290,16 +340,19 @@
     {
       title: t('invite.columns.apply_order_id'),
       dataIndex: 'apply_order_id',
+      slotName: 'apply_order_id',
       align: 'center',
     },
     {
       title: t('invite.columns.cancelled_reason'),
       dataIndex: 'cancelled_reason',
+      slotName: 'cancelled_reason',
       align: 'center',
     },
     {
       title: t('common.created_at'),
       dataIndex: 'created_at',
+      slotName: 'created_at',
       align: 'center',
     },
   ]);
@@ -428,6 +481,6 @@
   }
 
   .list-search-divider {
-    height: 32px;
+    height: 84px;
   }
 </style>

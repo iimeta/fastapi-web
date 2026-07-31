@@ -51,12 +51,27 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="rid" :label="$t('common.reseller_id')">
-                  <a-input-number
-                    v-model="searchFormData.rid"
-                    :placeholder="$t('placeholder.reseller_id')"
-                    :precision="0"
-                    :min="0"
+                <a-form-item
+                  field="apply_order_id"
+                  :label="$t('invite.columns.order_no')"
+                >
+                  <a-input
+                    v-model="searchFormData.apply_order_id"
+                    :placeholder="$t('invite.placeholder.apply_order_id')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="trigger_type"
+                  :label="$t('invite.columns.trigger_type')"
+                >
+                  <a-select
+                    v-model="searchFormData.trigger_type"
+                    :placeholder="$t('common.all')"
+                    :options="triggerTypeOptions"
+                    :scrollbar="false"
                     allow-clear
                   />
                 </a-form-item>
@@ -211,6 +226,12 @@
           </span>
           <span v-else>-</span>
         </template>
+        <template #apply_order_id="{ record }">
+          {{ record.apply_order_id || '-' }}
+        </template>
+        <template #cancelled_reason="{ record }">
+          {{ record.cancelled_reason || '-' }}
+        </template>
       </a-table>
     </a-card>
     <a-modal
@@ -261,8 +282,9 @@
   const generateSearchParams = () => ({
     inviter_user_id: undefined,
     invitee_user_id: undefined,
-    rid: undefined,
+    apply_order_id: undefined,
     status: undefined,
+    trigger_type: undefined,
     created_at: [],
   });
   const renderData = ref<InviteRewardPage[]>([]);
@@ -291,6 +313,10 @@
     { label: t('invite.dict.reward_status.4'), value: 4 },
     { label: t('invite.dict.reward_status.5'), value: 5 },
   ];
+  const triggerTypeOptions = [
+    { label: t('invite.dict.trigger_type.register'), value: 'register' },
+    { label: t('invite.dict.trigger_type.recharge'), value: 'recharge' },
+  ];
   const basePagination: Pagination = {
     current: 1,
     pageSize: 20,
@@ -309,11 +335,13 @@
     {
       title: t('invite.columns.inviter_user_id'),
       dataIndex: 'inviter_user_id',
+      slotName: 'inviter_user_id',
       align: 'center',
     },
     {
       title: t('invite.columns.invitee_user_id'),
       dataIndex: 'invitee_user_id',
+      slotName: 'invitee_user_id',
       align: 'center',
     },
     {
@@ -343,14 +371,21 @@
     {
       title: t('invite.columns.apply_order_id'),
       dataIndex: 'apply_order_id',
+      slotName: 'apply_order_id',
       align: 'center',
     },
     {
       title: t('invite.columns.cancelled_reason'),
       dataIndex: 'cancelled_reason',
+      slotName: 'cancelled_reason',
       align: 'center',
     },
-    { title: t('common.created_at'), dataIndex: 'created_at', align: 'center' },
+    {
+      title: t('common.created_at'),
+      dataIndex: 'created_at',
+      slotName: 'created_at',
+      align: 'center',
+    },
   ]);
 
   const handleSelectDensity = (

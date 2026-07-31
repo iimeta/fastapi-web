@@ -51,12 +51,19 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="rid" :label="$t('common.reseller_id')">
-                  <a-input-number
-                    v-model="searchFormData.rid"
-                    :placeholder="$t('placeholder.reseller_id')"
-                    :precision="0"
-                    :min="0"
+                <a-form-item field="account" :label="$t('common.account')">
+                  <a-input
+                    v-model="searchFormData.account"
+                    :placeholder="$t('placeholder.account')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item field="ip" :label="$t('common.ip')">
+                  <a-input
+                    v-model="searchFormData.ip"
+                    :placeholder="$t('placeholder.ip')"
                     allow-clear
                   />
                 </a-form-item>
@@ -220,7 +227,8 @@
   const generateSearchParams = () => ({
     inviter_user_id: undefined,
     invitee_user_id: undefined,
-    rid: undefined,
+    account: undefined,
+    ip: undefined,
     status: undefined,
     created_at: [],
   });

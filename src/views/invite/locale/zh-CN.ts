@@ -30,6 +30,7 @@ export default {
   'invite.columns.applied_at': '申请时间',
   'invite.columns.audited_at': '审核时间',
   'invite.columns.trigger_type': '收益类型',
+  'invite.placeholder.apply_order_id': '请输入申请单号',
   'invite.columns.recharge_rebate': '充值返利',
   'invite.columns.recharge_rebate_rule': '充值返利规则',
   'invite.columns.first_recharge_rebate': '首次充值',
