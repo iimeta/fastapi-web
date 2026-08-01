@@ -1562,6 +1562,30 @@
         >
           <a-switch v-model="configFormData.image_storage.is_return_base64" />
         </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_storage'"
+          field="image_storage.raw_user_ids"
+          :label="$t('sys.config.label.image_storage.raw_user_ids')"
+        >
+          <a-input-tag
+            v-model="configFormData.image_storage.raw_user_ids"
+            :placeholder="
+              $t('sys.config.placeholder.image_storage.raw_user_ids')
+            "
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'image_storage'"
+          field="image_storage.raw_keys"
+          :label="$t('sys.config.label.image_storage.raw_keys')"
+        >
+          <a-input-tag
+            v-model="configFormData.image_storage.raw_keys"
+            :placeholder="$t('sys.config.placeholder.image_storage.raw_keys')"
+            allow-clear
+          />
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -1768,6 +1792,13 @@
 
     setLoading(true);
     try {
+      // a-input-tag 输出字符串数组, raw_user_ids 后端为 []int, 提交前转数字并过滤非法值
+      if (configFormData.value.image_storage?.raw_user_ids) {
+        configFormData.value.image_storage.raw_user_ids =
+          configFormData.value.image_storage.raw_user_ids
+            .map((id: any) => Number(id))
+            .filter((id: number) => Number.isInteger(id) && id > 0);
+      }
       await submitSysConfigUpdate(configFormData.value);
       done();
       Message.success(t('success.operate'));
@@ -1928,6 +1959,11 @@
       configFormData.value.model_agent_session_keep =
         data.model_agent_session_keep;
       configFormData.value.image_storage = data.image_storage;
+      // raw 名单可能未返回, 兜底为数组供 a-input-tag 绑定
+      configFormData.value.image_storage.raw_user_ids =
+        data.image_storage.raw_user_ids ?? [];
+      configFormData.value.image_storage.raw_keys =
+        data.image_storage.raw_keys ?? [];
       sysConfigItems.value = [
         {
           action: 'base',
