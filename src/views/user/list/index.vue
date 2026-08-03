@@ -585,6 +585,12 @@
           >
             <a-switch v-model="formData.is_send_notice" />
           </a-form-item>
+          <a-form-item
+            field="is_recharge_rebate"
+            :label="$t('user.label.is_recharge_rebate')"
+          >
+            <a-switch v-model="formData.is_recharge_rebate" />
+          </a-form-item>
         </a-form>
       </a-modal>
 
@@ -1034,6 +1040,7 @@
       formData.value.user_id = params.user_id;
       formData.value.quota_expires_at = params.quota_expires_at;
       formData.value.is_send_notice = true;
+      formData.value.is_recharge_rebate = true;
       tableRef.value.selectAll(false);
       rechargeVisible.value = true;
     } catch (err) {
@@ -1063,6 +1070,7 @@
         quota_type: formData.value.quota_type,
         quota_expires_at: formData.value.quota_expires_at,
         is_send_notice: formData.value.is_send_notice,
+        is_recharge_rebate: formData.value.is_recharge_rebate,
       });
       return;
     }
@@ -1123,6 +1131,7 @@
             formData.value.quota_type = '1';
             formData.value.quota_expires_at = '';
             formData.value.is_send_notice = true;
+            formData.value.is_recharge_rebate = true;
             rechargeVisible.value = true;
           } else if (
             formData.value.quota_type === '2' ||

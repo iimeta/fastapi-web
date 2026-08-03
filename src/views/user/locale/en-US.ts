@@ -24,6 +24,7 @@ export default {
   'user.placeholder.quota_expires_at': 'Please set quota expiration time',
   'user.label.del.data': 'Delete Data',
   'user.label.is_send_notice': 'Send Notification',
+  'user.label.is_recharge_rebate': 'Recharge Rebate',
   'user.placeholder.are_you_sure_delete': 'Are you sure you want to delete the user',
   'user.placeholder.and_also_delete': 'and also delete',
   'user.placeholder.batch.operation': 'Are you sure you want to perform the operation on the selected {count} user(s)?',

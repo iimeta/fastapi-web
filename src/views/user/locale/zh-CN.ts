@@ -24,6 +24,7 @@ export default {
   'user.placeholder.quota_expires_at': '请设置额度过期时间',
   'user.label.del.data': '删除数据',
   'user.label.is_send_notice': '发送通知',
+  'user.label.is_recharge_rebate': '充值返利',
   'user.placeholder.are_you_sure_delete': '是否确定删除用户',
   'user.placeholder.and_also_delete': '以及同时删除',
   'user.placeholder.batch.operation': '是否确定操作所选的{count}位用户?',
