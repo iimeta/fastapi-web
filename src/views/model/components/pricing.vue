@@ -233,6 +233,7 @@
           :key="index"
           :field="
             `text[${index}].service_tier` &&
+            `text[${index}].mode` &&
             `text[${index}].input_ratio` &&
             `text[${index}].output_ratio` &&
             `text[${index}].reasoning_ratio`
@@ -250,6 +251,12 @@
             :placeholder="$t('model.label.service_tier')"
             :options="serviceTierOptions"
             class="pricing-select--compact pricing-field--spaced"
+          />
+          <a-select
+            v-model="formData.text[index].mode"
+            :placeholder="$t('model.placeholder.tiered_mode')"
+            :options="modeOptions"
+            class="pricing-select--mode pricing-field--spaced"
           />
           <a-input-number
             v-model="formData.text[index].input_ratio"
@@ -316,6 +323,7 @@
           :key="index"
           :field="
             `text_cache[${index}].service_tier` &&
+            `text_cache[${index}].mode` &&
             `text_cache[${index}].read_ratio`
           "
           :label="`${index + 1}. ` + $t('model.label.text_cache')"
@@ -331,6 +339,12 @@
             :placeholder="$t('model.label.service_tier')"
             :options="serviceTierOptions"
             class="pricing-select--compact pricing-field--spaced"
+          />
+          <a-select
+            v-model="formData.text_cache[index].mode"
+            :placeholder="$t('model.placeholder.tiered_mode')"
+            :options="modeOptions"
+            class="pricing-select--mode pricing-field--spaced"
           />
           <a-input-number
             v-model="formData.text_cache[index].read_ratio"
@@ -502,6 +516,7 @@
           v-for="(_, index) of formData.tiered_text"
           :key="index"
           :field="
+            `tiered_text[${index}].service_tier` &&
             `tiered_text[${index}].mode` &&
             `tiered_text[${index}].gt` &&
             `tiered_text[${index}].lte` &&
@@ -517,6 +532,12 @@
             },
           ]"
         >
+          <a-select
+            v-model="formData.tiered_text[index].service_tier"
+            :placeholder="$t('model.label.service_tier')"
+            :options="serviceTierOptions"
+            class="pricing-select--compact pricing-field--spaced"
+          />
           <a-select
             v-model="formData.tiered_text[index].mode"
             :placeholder="$t('model.placeholder.tiered_mode')"
@@ -609,6 +630,7 @@
           v-for="(_, index) of formData.tiered_text_cache"
           :key="index"
           :field="
+            `tiered_text_cache[${index}].service_tier` &&
             `tiered_text_cache[${index}].mode` &&
             `tiered_text_cache[${index}].gt` &&
             `tiered_text_cache[${index}].lte` &&
@@ -622,6 +644,12 @@
             },
           ]"
         >
+          <a-select
+            v-model="formData.tiered_text_cache[index].service_tier"
+            :placeholder="$t('model.label.service_tier')"
+            :options="serviceTierOptions"
+            class="pricing-select--compact pricing-field--spaced"
+          />
           <a-select
             v-model="formData.tiered_text_cache[index].mode"
             :placeholder="$t('model.placeholder.tiered_mode')"
@@ -1473,6 +1501,7 @@
   const handleTextPricingAdd = (s?: string) => {
     const textPricing: TextPricing = {
       service_tier: s,
+      mode: 'all',
       input_ratio: ref(),
       output_ratio: ref(),
       reasoning_ratio: ref(),
@@ -1493,6 +1522,7 @@
   const handleTextCachePricingAdd = (s?: string) => {
     const cachePricing: CachePricing = {
       service_tier: s,
+      mode: 'all',
       read_ratio: ref(),
     };
     formData.value.text_cache.push(cachePricing);
@@ -2046,12 +2076,12 @@
   }
 
   .pricing-form-item--wide {
-    width: 1088px;
+    width: 1220px;
     margin-bottom: 0;
   }
 
   .pricing-tabs {
-    width: 1088px;
+    width: 1220px;
   }
 
   .pricing-radio--spaced {
