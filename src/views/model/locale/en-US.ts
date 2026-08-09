@@ -183,6 +183,7 @@ export default {
   'model.dict.service_tier.default': 'Default',
   'model.dict.service_tier.priority': 'Priority',
   'model.dict.service_tier.flex': 'Flex',
+  'model.dict.service_tier.fast': 'Fast',
   'model.dict.mode.all': 'All',
   'model.dict.mode.thinking': 'Thinking',
   'model.dict.mode.non_thinking': 'Non-Thinking',

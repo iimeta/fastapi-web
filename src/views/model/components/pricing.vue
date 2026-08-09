@@ -1404,6 +1404,10 @@
       label: t('model.dict.service_tier.flex'),
       value: 'flex',
     },
+    {
+      label: t('model.dict.service_tier.fast'),
+      value: 'fast',
+    },
   ];
 
   const modeOptions = [

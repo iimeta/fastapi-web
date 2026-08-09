@@ -183,6 +183,7 @@ export default {
   'model.dict.service_tier.default': '默認',
   'model.dict.service_tier.priority': '優先',
   'model.dict.service_tier.flex': '彈性',
+  'model.dict.service_tier.fast': '快速',
   'model.dict.mode.all': '全部',
   'model.dict.mode.thinking': '思考',
   'model.dict.mode.non_thinking': '非思考',
