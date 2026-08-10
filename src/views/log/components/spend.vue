@@ -166,6 +166,11 @@
     <template #service_tier="{ record }">
       {{ $t(`model.dict.service_tier.${record.pricing.service_tier}`) }}
     </template>
+    <template #mode="{ record }">
+      {{
+        record.pricing.mode ? $t(`model.dict.mode.${record.pricing.mode}`) : '-'
+      }}
+    </template>
     <template #input_tokens="{ record }">
       {{ parseQuota(record.input_tokens) || '0' }}
     </template>
@@ -215,6 +220,11 @@
   >
     <template #service_tier="{ record }">
       {{ $t(`model.dict.service_tier.${record.pricing.service_tier}`) }}
+    </template>
+    <template #mode="{ record }">
+      {{
+        record.pricing.mode ? $t(`model.dict.mode.${record.pricing.mode}`) : '-'
+      }}
     </template>
     <template #read_tokens="{ record }">
       {{ parseQuota(record.read_tokens) || '0' }}
@@ -341,6 +351,13 @@
     :bordered="false"
     class="spend-detail-table-spacing"
   >
+    <template #service_tier="{ record }">
+      {{
+        record.pricing.service_tier
+          ? $t(`model.dict.service_tier.${record.pricing.service_tier}`)
+          : '-'
+      }}
+    </template>
     <template #mode="{ record }">
       {{ $t(`model.dict.mode.${record.pricing.mode}`) }}
     </template>
@@ -397,6 +414,13 @@
     :bordered="false"
     class="spend-detail-table-spacing"
   >
+    <template #service_tier="{ record }">
+      {{
+        record.pricing.service_tier
+          ? $t(`model.dict.service_tier.${record.pricing.service_tier}`)
+          : '-'
+      }}
+    </template>
     <template #mode="{ record }">
       {{ $t(`model.dict.mode.${record.pricing.mode}`) }}
     </template>
@@ -815,6 +839,13 @@
           width: 100,
         },
         {
+          title: t('model.label.mode'),
+          dataIndex: 'mode',
+          slotName: 'mode',
+          align: 'center',
+          width: 100,
+        },
+        {
           title: t('log.columns.spend.input_tokens'),
           dataIndex: 'input_tokens',
           slotName: 'input_tokens',
@@ -878,6 +909,13 @@
           title: t('model.label.service_tier'),
           dataIndex: 'service_tier',
           slotName: 'service_tier',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('model.label.mode'),
+          dataIndex: 'mode',
+          slotName: 'mode',
           align: 'center',
           width: 100,
         },
@@ -1050,6 +1088,13 @@
       headerCellStyle: tableHeaderCellStyle,
       children: [
         {
+          title: t('model.label.service_tier'),
+          dataIndex: 'service_tier',
+          slotName: 'service_tier',
+          align: 'center',
+          width: 100,
+        },
+        {
           title: t('model.label.mode'),
           dataIndex: 'mode',
           slotName: 'mode',
@@ -1123,6 +1168,13 @@
       title: t('dict.billing_items.tiered_text_cache'),
       headerCellStyle: tableHeaderCellStyle,
       children: [
+        {
+          title: t('model.label.service_tier'),
+          dataIndex: 'service_tier',
+          slotName: 'service_tier',
+          align: 'center',
+          width: 100,
+        },
         {
           title: t('model.label.mode'),
           dataIndex: 'mode',
