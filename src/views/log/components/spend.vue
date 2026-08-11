@@ -164,7 +164,11 @@
     class="spend-detail-table-spacing"
   >
     <template #service_tier="{ record }">
-      {{ $t(`model.dict.service_tier.${record.pricing.service_tier}`) }}
+      {{
+        record.pricing.service_tier
+          ? $t(`model.dict.service_tier.${record.pricing.service_tier}`)
+          : '-'
+      }}
     </template>
     <template #mode="{ record }">
       {{
@@ -219,7 +223,11 @@
     class="spend-detail-table-spacing"
   >
     <template #service_tier="{ record }">
-      {{ $t(`model.dict.service_tier.${record.pricing.service_tier}`) }}
+      {{
+        record.pricing.service_tier
+          ? $t(`model.dict.service_tier.${record.pricing.service_tier}`)
+          : '-'
+      }}
     </template>
     <template #mode="{ record }">
       {{
@@ -359,7 +367,9 @@
       }}
     </template>
     <template #mode="{ record }">
-      {{ $t(`model.dict.mode.${record.pricing.mode}`) }}
+      {{
+        record.pricing.mode ? $t(`model.dict.mode.${record.pricing.mode}`) : '-'
+      }}
     </template>
     <template #gt="{ record }">
       {{ record.pricing.gt }}k - {{ record.pricing.lte }}k
@@ -422,7 +432,9 @@
       }}
     </template>
     <template #mode="{ record }">
-      {{ $t(`model.dict.mode.${record.pricing.mode}`) }}
+      {{
+        record.pricing.mode ? $t(`model.dict.mode.${record.pricing.mode}`) : '-'
+      }}
     </template>
     <template #gt="{ record }">
       {{ record.pricing.gt }}k - {{ record.pricing.lte }}k
@@ -958,7 +970,7 @@
                 dataIndex: 'write_5m_tokens',
                 slotName: 'write_5m_tokens',
                 align: 'center' as const,
-                width: 100,
+                width: 110,
               },
               {
                 title: t('log.columns.spend.write_5m_ratio'),
@@ -1228,7 +1240,7 @@
                 dataIndex: 'write_5m_tokens',
                 slotName: 'write_5m_tokens',
                 align: 'center' as const,
-                width: 100,
+                width: 115,
               },
               {
                 title: t('log.columns.spend.write_5m_ratio'),
@@ -1242,7 +1254,7 @@
                 dataIndex: 'write_1h_tokens',
                 slotName: 'write_1h_tokens',
                 align: 'center' as const,
-                width: 100,
+                width: 110,
               },
               {
                 title: t('log.columns.spend.write_1h_ratio'),
@@ -1916,5 +1928,9 @@
 <style lang="less" scoped>
   .spend-detail-table-spacing {
     margin-bottom: 15px;
+  }
+
+  :deep(.arco-table-cell) {
+    padding: 9px 6px;
   }
 </style>

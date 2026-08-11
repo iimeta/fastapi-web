@@ -820,7 +820,7 @@
       <!-- 花费明细 -->
       <a-modal
         v-model:visible="spendVisible"
-        :width="1188"
+        :width="1068"
         :body-style="spendModalBodyStyle"
         :modal-style="spendModalStyle"
         hide-title
@@ -1077,12 +1077,6 @@
       title: t('log.columns.conn_time'),
       dataIndex: 'conn_time',
       slotName: 'conn_time',
-      align: 'center',
-    },
-    {
-      title: t('log.columns.duration'),
-      dataIndex: 'duration',
-      slotName: 'duration',
       align: 'center',
     },
     {

@@ -890,12 +890,6 @@
       align: 'center',
     },
     {
-      title: t('log.columns.duration'),
-      dataIndex: 'duration',
-      slotName: 'duration',
-      align: 'center',
-    },
-    {
       title: t('log.columns.total_time'),
       dataIndex: 'total_time',
       slotName: 'total_time',
