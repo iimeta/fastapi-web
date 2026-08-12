@@ -26,6 +26,7 @@
   </a-table>
 
   <!-- 以下部分仅在非 onlyTimeRules 模式下渲染 -->
+  <!-- 文本 -->
   <template v-if="!onlyTimeRules">
     <a-table
       v-if="pricing.billing_items.includes('text')"
@@ -36,7 +37,14 @@
       class="pricing-detail-table-spacing"
     >
       <template #service_tier="{ record }">
-        {{ $t(`model.dict.service_tier.${record.service_tier}`) }}
+        {{
+          record.service_tier
+            ? $t(`model.dict.service_tier.${record.service_tier}`)
+            : '-'
+        }}
+      </template>
+      <template #mode="{ record }">
+        {{ record.mode ? $t(`model.dict.mode.${record.mode}`) : '-' }}
       </template>
       <template #input_ratio="{ record }">
         <Quota
@@ -71,7 +79,14 @@
       class="pricing-detail-table-spacing"
     >
       <template #service_tier="{ record }">
-        {{ $t(`model.dict.service_tier.${record.service_tier}`) }}
+        {{
+          record.service_tier
+            ? $t(`model.dict.service_tier.${record.service_tier}`)
+            : '-'
+        }}
+      </template>
+      <template #mode="{ record }">
+        {{ record.mode ? $t(`model.dict.mode.${record.mode}`) : '-' }}
       </template>
       <template #read_ratio="{ record }">
         <Quota
@@ -165,8 +180,15 @@
       :bordered="false"
       class="pricing-detail-table-spacing"
     >
+      <template #service_tier="{ record }">
+        {{
+          record.service_tier
+            ? $t(`model.dict.service_tier.${record.service_tier}`)
+            : '-'
+        }}
+      </template>
       <template #mode="{ record }">
-        {{ $t(`model.dict.mode.${record.mode}`) }}
+        {{ record.mode ? $t(`model.dict.mode.${record.mode}`) : '-' }}
       </template>
       <template #gt="{ record }">
         {{ record.gt }}k - {{ record.lte }}k
@@ -203,8 +225,15 @@
       :bordered="false"
       class="pricing-detail-table-spacing"
     >
+      <template #service_tier="{ record }">
+        {{
+          record.service_tier
+            ? $t(`model.dict.service_tier.${record.service_tier}`)
+            : '-'
+        }}
+      </template>
       <template #mode="{ record }">
-        {{ $t(`model.dict.mode.${record.mode}`) }}
+        {{ record.mode ? $t(`model.dict.mode.${record.mode}`) : '-' }}
       </template>
       <template #gt="{ record }">
         {{ record.gt }}k - {{ record.lte }}k
