@@ -298,7 +298,19 @@
       </a-row>
       <a-divider class="log-list-toolbar-divider" />
       <a-row class="log-list-toolbar-row">
-        <a-col :span="24" class="log-list-table-actions">
+        <a-col :span="12">
+          <a-space>
+            <a-button
+              v-permission="['admin']"
+              type="primary"
+              status="danger"
+              @click="handleBatch({ action: 'delete' })"
+            >
+              {{ $t('button.delete') }}
+            </a-button>
+          </a-space>
+        </a-col>
+        <a-col :span="12" class="log-list-table-actions">
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -362,6 +374,7 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
+        @selection-change="handleSelectionChange"
       >
         <template #user_id="{ record }">
           {{ record.is_smart_match ? '-' : record.user_id }}
@@ -653,6 +666,62 @@
         <Detail :id="recordId" />
       </a-drawer>
 
+      <!-- 删除通用日志 -->
+      <a-modal
+        v-model:visible="delFormVisible"
+        :title="$t('log.form.title.general_del')"
+        @cancel="delHandleCancel"
+        @before-ok="delHandleBeforeOk"
+      >
+        <a-form ref="delForm" :model="delFormData">
+          <a-form-item
+            field="value"
+            :label="$t('common.req_time')"
+            :rules="[
+              { required: true, message: $t('log.error.required.req_time') },
+            ]"
+          >
+            <a-range-picker
+              v-model="delFormData.value"
+              :placeholder="[$t('common.start_time'), $t('common.end_time')]"
+              :time-picker-props="{ defaultValue: ['00:00:00', '23:59:59'] }"
+              show-time
+            />
+          </a-form-item>
+          <a-form-item
+            field="status"
+            :label="$t('log.form.req.status')"
+            :rules="[
+              { required: true, message: $t('log.error.required.req.status') },
+            ]"
+          >
+            <a-space size="large">
+              <a-checkbox v-model="delFormData.status" :value="1">{{
+                $t('log.dict.status.1')
+              }}</a-checkbox>
+              <a-checkbox v-model="delFormData.status" :value="2">{{
+                $t('log.dict.status.2')
+              }}</a-checkbox>
+              <a-checkbox v-model="delFormData.status" :value="3">{{
+                $t('log.dict.status.3')
+              }}</a-checkbox>
+              <a-checkbox v-model="delFormData.status" :value="-1">{{
+                $t('log.dict.status.-1')
+              }}</a-checkbox>
+            </a-space>
+          </a-form-item>
+          <a-form-item field="user_id" :label="$t('common.user_id')">
+            <a-input-number
+              v-model="delFormData.user_id"
+              :placeholder="$t('placeholder.user_id')"
+              :precision="0"
+              :min="1"
+              allow-clear
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
+
       <!-- 花费明细 -->
       <a-modal
         v-model:visible="spendVisible"
@@ -681,7 +750,13 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import dayjs from 'dayjs';
-  import { queryGeneralPage, GeneralPage, GeneralPageParams } from '@/api/log';
+  import {
+    queryGeneralPage,
+    GeneralPage,
+    GeneralPageParams,
+    GeneralBatchOperate,
+    submitGeneralBatchOperate,
+  } from '@/api/log';
   import { queryAppList, AppList } from '@/api/app';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -692,7 +767,7 @@
   } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
-  import { Tooltip } from '@arco-design/web-vue';
+  import { Tooltip, Message, Modal } from '@arco-design/web-vue';
   import { useRoute } from 'vue-router';
   import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
   import { queryModelList, ModelList } from '@/api/model';
@@ -750,6 +825,9 @@
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
+  const ids = ref<Array<string>>([]);
+  const multiple = ref(true);
+  const tableRef = ref();
 
   const basePagination: Pagination = {
     current: 1,
@@ -1207,6 +1285,90 @@
     detailVisible.value = false;
   };
 
+  const delForm = ref();
+  const delFormVisible = ref(false);
+  const delFormData = ref<GeneralBatchOperate>({
+    status: [1, 2, 3, -1],
+  } as GeneralBatchOperate);
+
+  const delHandleBeforeOk = async (done: any) => {
+    const res = await delForm.value?.validate();
+    if (res) {
+      delFormVisible.value = true;
+      done(false);
+      return;
+    }
+    done();
+    handleBatch({
+      action: 'time',
+      value: delFormData.value.value,
+      user_id: delFormData.value.user_id,
+      status: delFormData.value.status,
+    });
+  };
+
+  const delHandleCancel = () => {
+    delFormVisible.value = false;
+  };
+
+  const handleSelectionChange = (rowKeys: Array<any>) => {
+    ids.value = rowKeys;
+    multiple.value = !rowKeys.length;
+  };
+
+  const handleBatch = (params: GeneralBatchOperate) => {
+    if (ids.value.length === 0 && !params.value) {
+      delFormVisible.value = true;
+    } else {
+      let alertContent = t('placeholder.batch.operation', {
+        count: ids.value.length,
+      });
+      switch (params.action) {
+        case 'delete':
+          alertContent = t('placeholder.batch.operation.delete', {
+            count: ids.value.length,
+          });
+          break;
+        case 'time':
+          if (params.user_id) {
+            alertContent = t(
+              'log.placeholder.batch.operation.delete.time.user_id',
+              {
+                user_id: params.user_id,
+                start_time: params.value[0],
+                end_time: params.value[1],
+              }
+            );
+          } else {
+            alertContent = t('log.placeholder.batch.operation.delete.time', {
+              start_time: params.value[0],
+              end_time: params.value[1],
+            });
+          }
+          break;
+        default:
+      }
+      Modal.warning({
+        title: t('modal.warning.title'),
+        titleAlign: 'center',
+        content: alertContent,
+        okText: t('button.ok'),
+        cancelText: t('button.cancel'),
+        hideCancel: false,
+        onOk: () => {
+          setLoading(true);
+          params.ids = ids.value;
+          submitGeneralBatchOperate(params).then(() => {
+            setLoading(false);
+            Message.success(t('success.task'));
+            search();
+            tableRef.value.selectAll(false);
+          });
+        },
+      });
+    }
+  };
+
   const spendVisible = ref(false);
   const spend = ref();
   const modelType = ref();
@@ -1233,4 +1395,14 @@
 
   // 公共骨架已由 page-list.less 全局提供
   // 列表共享样式已由 log-list-shared.less 提供
+
+  // Keep local: text list toolbar needs extra margin-bottom on divider
+  .log-list-toolbar-divider {
+    margin-bottom: 16px;
+  }
+
+  // Keep local: text list toolbar row needs center alignment
+  .log-list-toolbar-row {
+    align-items: center;
+  }
 </style>
