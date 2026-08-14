@@ -718,3 +718,74 @@ export function generalCopyField(params: GeneralCopyFieldParams) {
     params
   );
 }
+export interface ImageBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+  user_id?: number;
+  status?: number[];
+}
+
+export function submitImageBatchOperate(data: ImageBatchOperate) {
+  return axios.post('/api/v1/log/image/batch/operate', data);
+}
+
+export interface AudioBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+  user_id?: number;
+  status?: number[];
+}
+
+export function submitAudioBatchOperate(data: AudioBatchOperate) {
+  return axios.post('/api/v1/log/audio/batch/operate', data);
+}
+
+export interface VideoBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+  user_id?: number;
+  status?: number[];
+}
+
+export function submitVideoBatchOperate(data: VideoBatchOperate) {
+  return axios.post('/api/v1/log/video/batch/operate', data);
+}
+
+export interface FileBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+  user_id?: number;
+  status?: number[];
+}
+
+export function submitFileBatchOperate(data: FileBatchOperate) {
+  return axios.post('/api/v1/log/file/batch/operate', data);
+}
+
+export interface BatchBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+  user_id?: number;
+  status?: number[];
+}
+
+export function submitBatchBatchOperate(data: BatchBatchOperate) {
+  return axios.post('/api/v1/log/batch/batch/operate', data);
+}
+
+export interface GeneralBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+  user_id?: number;
+  status?: number[];
+}
+
+export function submitGeneralBatchOperate(data: GeneralBatchOperate) {
+  return axios.post('/api/v1/log/general/batch/operate', data);
+}
