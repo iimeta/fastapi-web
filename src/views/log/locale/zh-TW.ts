@@ -27,6 +27,7 @@ export default {
   'log.detail.model_agent_name': '代理名稱',
   'log.detail.prompt': '提問',
   'log.detail.completion': '回答',
+  'log.detail.reasoning': '推理',
   'log.detail.status': '結果',
   'log.detail.conn_time': '首字',
   'log.detail.duration': '持續時長',

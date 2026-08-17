@@ -477,6 +477,9 @@
         <template #stream="{ record }">
           {{ $t(`dict.${record.stream || false}`) }}
         </template>
+        <template #reasoning="{ record }">
+          {{ record.reasoning || '-' }}
+        </template>
         <template #conn_time="{ record }">
           <a-tag
             v-if="record.conn_time > 30000"
@@ -1071,6 +1074,12 @@
       title: t('log.columns.stream'),
       dataIndex: 'stream',
       slotName: 'stream',
+      align: 'center',
+    },
+    {
+      title: t('log.detail.reasoning'),
+      dataIndex: 'reasoning',
+      slotName: 'reasoning',
       align: 'center',
     },
     {

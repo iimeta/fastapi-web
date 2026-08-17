@@ -74,6 +74,9 @@ export interface TextDetail {
   fallback_config: FallbackConfig;
   prompt: string;
   completion: string;
+  service_tier: string;
+  mode: string;
+  reasoning: string;
   messages: any;
   spend: Spend;
   stream: boolean;

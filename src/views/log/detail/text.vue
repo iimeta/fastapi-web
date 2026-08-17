@@ -101,6 +101,26 @@
           {{ currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('model.label.service_tier')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.service_tier
+              ? $t(`model.dict.service_tier.${currentData.service_tier}`)
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.reasoning')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.reasoning || '-' }}
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('common.billing_methods')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -492,6 +512,26 @@
         </a-skeleton>
         <span v-else class="log-detail-textarea">
           {{ currentData.completion || '-' }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('model.label.service_tier')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            currentData.service_tier
+              ? $t(`model.dict.service_tier.${currentData.service_tier}`)
+              : '-'
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.reasoning')">
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.reasoning || '-' }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('common.billing_methods')">

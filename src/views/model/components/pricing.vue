@@ -250,6 +250,7 @@
             v-model="formData.text[index].service_tier"
             :placeholder="$t('model.label.service_tier')"
             :options="serviceTierOptions"
+            allow-clear
             class="pricing-select--compact pricing-field--spaced"
           />
           <a-select
@@ -338,6 +339,7 @@
             v-model="formData.text_cache[index].service_tier"
             :placeholder="$t('model.label.service_tier')"
             :options="serviceTierOptions"
+            allow-clear
             class="pricing-select--compact pricing-field--spaced"
           />
           <a-select
@@ -536,6 +538,7 @@
             v-model="formData.tiered_text[index].service_tier"
             :placeholder="$t('model.label.service_tier')"
             :options="serviceTierOptions"
+            allow-clear
             class="pricing-select--compact pricing-field--spaced"
           />
           <a-select
@@ -606,7 +609,7 @@
             type="primary"
             shape="circle"
             class="pricing-action-btn"
-            @click="handleTieredTextPricingAdd()"
+            @click="handleTieredTextPricingAdd('all')"
           >
             <icon-plus />
           </a-button>
@@ -648,6 +651,7 @@
             v-model="formData.tiered_text_cache[index].service_tier"
             :placeholder="$t('model.label.service_tier')"
             :options="serviceTierOptions"
+            allow-clear
             class="pricing-select--compact pricing-field--spaced"
           />
           <a-select
@@ -748,7 +752,7 @@
             type="primary"
             shape="circle"
             class="pricing-action-btn"
-            @click="handleTieredTextCachePricingAdd()"
+            @click="handleTieredTextCachePricingAdd('all')"
           >
             <icon-plus />
           </a-button>

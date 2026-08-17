@@ -27,6 +27,7 @@ export default {
   'log.detail.model_agent_name': 'Agent Name',
   'log.detail.prompt': 'Prompt',
   'log.detail.completion': 'Completion',
+  'log.detail.reasoning': 'Reasoning',
   'log.detail.status': 'Result',
   'log.detail.conn_time': 'First Token',
   'log.detail.duration': 'Duration',
