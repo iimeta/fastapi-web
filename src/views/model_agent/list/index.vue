@@ -636,7 +636,11 @@
     }
   };
   const FILTER_KEY = 'model_agent_list_filter';
-  const SAVE_TO_NAMES = ['ModelAgentUpdate', 'ModelAgentCreate'];
+  const SAVE_TO_NAMES = [
+    'ModelAgentUpdate',
+    'ModelAgentCreate',
+    'ModelKeyList',
+  ];
 
   const restoreAndFetch = () => {
     const saved = sessionStorage.getItem(FILTER_KEY);
