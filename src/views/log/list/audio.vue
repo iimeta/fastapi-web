@@ -521,18 +521,7 @@
           }}</a-tag>
         </template>
         <template #status="{ record }">
-          <a-tag v-if="record.status === -1" color="red">{{
-            $t(`log.dict.status.${record.status}`)
-          }}</a-tag>
-          <a-tag v-else-if="record.status === 2" color="gold">{{
-            $t(`log.dict.status.${record.status}`)
-          }}</a-tag>
-          <a-tag v-else-if="record.status === 3" color="orange">{{
-            $t(`log.dict.status.${record.status}`)
-          }}</a-tag>
-          <a-tag v-else color="green">{{
-            $t(`log.dict.status.${record.status}`)
-          }}</a-tag>
+          <StatusTag :status="record.status" :err-msg="record.err_msg" />
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
@@ -662,6 +651,7 @@
   import Quota from '@/views/common/quota.vue';
   import Detail from '../detail/audio.vue';
   import SpendDetail from '../components/spend.vue';
+  import StatusTag from '../components/status-tag.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

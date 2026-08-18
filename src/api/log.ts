@@ -19,6 +19,8 @@ export interface TextPage {
   total_time: number;
   internal_time: number;
   req_time: any;
+  status: number;
+  err_msg: string;
 }
 
 export interface Paging {
@@ -157,6 +159,8 @@ export interface ImagePage {
   total_time: number;
   internal_time: number;
   req_time: any;
+  status: number;
+  err_msg: string;
 }
 
 export interface ImagePageParams extends Partial<ImagePage> {
@@ -257,6 +261,8 @@ export interface AudioPage {
   total_time: number;
   internal_time: number;
   req_time: any;
+  status: number;
+  err_msg: string;
 }
 
 export interface AudioPageParams extends Partial<AudioPage> {
@@ -349,6 +355,8 @@ export interface VideoPage {
   total_time: number;
   internal_time: number;
   req_time: any;
+  status: number;
+  err_msg: string;
 }
 
 export interface VideoPageParams extends Partial<VideoPage> {
@@ -443,6 +451,8 @@ export interface FilePage {
   total_time: number;
   internal_time: number;
   req_time: any;
+  status: number;
+  err_msg: string;
 }
 
 export interface FilePageParams extends Partial<FilePage> {
@@ -537,6 +547,8 @@ export interface BatchPage {
   total_time: number;
   internal_time: number;
   req_time: any;
+  status: number;
+  err_msg: string;
 }
 
 export interface BatchPageParams extends Partial<BatchPage> {
@@ -635,6 +647,8 @@ export interface GeneralPage {
   total_time: number;
   internal_time: number;
   req_time: any;
+  status: number;
+  err_msg: string;
 }
 
 export interface GeneralPageParams extends Partial<GeneralPage> {
