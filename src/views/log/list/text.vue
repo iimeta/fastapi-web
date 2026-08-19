@@ -997,8 +997,6 @@
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
-      ellipsis: true,
-      tooltip: true,
     },
     {
       title: t('log.columns.action'),
