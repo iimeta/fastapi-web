@@ -7,6 +7,7 @@ export default {
   'user.center.label.email': '信\u3000箱',
   'user.center.label.account': '帳\u3000號',
   'user.center.label.created_at': '註冊時間',
+  'user.center.label.expires_at': '過期時間',
   'user.center.label.password': '登入密碼',
   'user.center.tip.password': '登入帳號時需要輸入的密碼',
   'user.center.title.update_pwd': '修改登入密碼',

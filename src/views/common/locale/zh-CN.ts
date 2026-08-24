@@ -238,6 +238,7 @@ export default {
   // dict
   'dict.status.1': '正常',
   'dict.status.2': '禁用',
+  'dict.status.3': '过期',
   'dict.true': '是',
   'dict.false': '否',
   'dict.public.true': '公开',

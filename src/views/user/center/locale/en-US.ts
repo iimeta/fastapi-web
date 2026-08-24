@@ -7,6 +7,7 @@ export default {
   'user.center.label.email': 'Email',
   'user.center.label.account': 'Account',
   'user.center.label.created_at': 'Registration Time',
+  'user.center.label.expires_at': 'Expiration Time',
   'user.center.label.password': 'Login Password',
   'user.center.tip.password': 'Password required for login',
   'user.center.title.update_pwd': 'Change Login Password',

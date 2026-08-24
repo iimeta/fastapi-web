@@ -80,11 +80,11 @@
               </a-col>
               <a-col :span="9">
                 <a-form-item
-                  field="quota_expires_at"
+                  field="expires_at"
                   :label="$t('common.expires_at')"
                 >
                   <a-range-picker
-                    v-model="searchFormData.quota_expires_at"
+                    v-model="searchFormData.expires_at"
                     class="user-list-full-width"
                   />
                 </a-form-item>
@@ -240,6 +240,7 @@
         :bordered="false"
         :size="size"
         :row-selection="rowSelection"
+        :row-class="getRowClassName"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
         @selection-change="handleSelectionChange"
@@ -717,7 +718,7 @@
       account: '',
       quota: ref(),
       status: ref(),
-      quota_expires_at: [],
+      expires_at: [],
     };
   };
 
@@ -841,7 +842,22 @@
       label: t('dict.status.2'),
       value: 2,
     },
+    {
+      label: t('dict.status.3'),
+      value: 3,
+    },
   ]);
+
+  const getRowClassName = (record: UserPage) => {
+    if (
+      record.expires_at &&
+      dayjs(record.expires_at).isValid() &&
+      dayjs(record.expires_at).isBefore(dayjs())
+    ) {
+      return 'user-list-row-expired';
+    }
+    return '';
+  };
 
   const fetchData = async (
     params: UserPageParams = {
@@ -1283,6 +1299,15 @@
 
   .user-list-expire-button {
     width: 150px;
+  }
+
+  :deep(.user-list-row-expired),
+  :deep(.user-list-row-expired td),
+  :deep(.user-list-row-expired .arco-table-td),
+  :deep(.user-list-row-expired .arco-table-cell),
+  :deep(.user-list-row-expired .arco-btn),
+  :deep(.user-list-row-expired .arco-btn-text) {
+    color: var(--color-text-3);
   }
 
   .user-list-quick-form-item {

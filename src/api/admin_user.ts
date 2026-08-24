@@ -6,6 +6,7 @@ export interface UserCreate {
   email: string;
   account: string;
   password: string;
+  expires_at: string;
   quota: any;
   quota_type: any;
   quota_expires_at: string;
@@ -30,6 +31,7 @@ export interface UserPage {
   quota: number;
   used_quota: number;
   quota_expires_at: any;
+  expires_at: any;
   groups: string[];
   remark: string;
   status: number;
@@ -157,6 +159,7 @@ export interface UserDetail {
   privacy?: UserPrivacy;
   log_privacy?: LogPrivacy;
   created_at: string;
+  expires_at: string;
   updated_at: string;
 }
 
@@ -175,6 +178,7 @@ export interface UserUpdate {
   email: string;
   account: string;
   password: string;
+  expires_at: string;
   quota_expires_at: string;
   is_cycle_reset_quota: boolean;
   reset_quota: any;

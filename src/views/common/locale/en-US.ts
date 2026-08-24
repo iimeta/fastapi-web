@@ -238,6 +238,7 @@ export default {
   // dict
   'dict.status.1': 'Normal',
   'dict.status.2': 'Disabled',
+  'dict.status.3': 'Expired',
   'dict.true': 'Yes',
   'dict.false': 'No',
   'dict.public.true': 'Public',

@@ -310,6 +310,17 @@
           {{ currentData.updated_at }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item
+        v-if="currentData.expires_at"
+        :label="$t('common.expires_at')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.expires_at || '-' }}
+        </span>
+      </a-descriptions-item>
     </a-descriptions>
   </div>
 </template>

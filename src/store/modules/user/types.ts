@@ -7,6 +7,7 @@ export interface UserState {
   email?: string;
   phone?: string;
   created_at?: string;
+  expires_at?: string;
   role: RoleType;
   rid?: number;
 }

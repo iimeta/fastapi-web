@@ -7,6 +7,7 @@ export default {
   'user.center.label.email': '邮\u3000箱',
   'user.center.label.account': '账\u3000号',
   'user.center.label.created_at': '注册时间',
+  'user.center.label.expires_at': '过期时间',
   'user.center.label.password': '登录密码',
   'user.center.tip.password': '登录账号时需要输入的密码',
   'user.center.title.update_pwd': '修改登录密码',

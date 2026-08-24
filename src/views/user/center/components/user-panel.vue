@@ -87,6 +87,10 @@
       label: 'user.center.label.created_at',
       value: userStore.created_at,
     },
+    {
+      label: 'user.center.label.expires_at',
+      value: userStore.expires_at || '-',
+    },
   ] as DescData[];
   const fileList = ref<FileItem[]>([file]);
   const uploadChange = (fileItemList: FileItem[], fileItem: FileItem) => {

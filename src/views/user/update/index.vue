@@ -366,6 +366,75 @@
                 />
               </a-select>
             </a-form-item>
+            <a-form-item field="expires_at" :label="$t('common.expires_at')">
+              <a-date-picker
+                v-model="formData.expires_at"
+                :placeholder="$t('placeholder.expires_at')"
+                :time-picker-props="{ defaultValue: '23:59:59' }"
+                :disabled-date="disabledDate"
+                allow-clear
+                class="user-form-date-picker"
+                show-time
+                :shortcuts="[
+                  {
+                    label: '1',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(1, 'day'),
+                  },
+                  {
+                    label: '7',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(7, 'day'),
+                  },
+                  {
+                    label: '15',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(15, 'day'),
+                  },
+                  {
+                    label: '30',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(30, 'day'),
+                  },
+                  {
+                    label: '90',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(90, 'day'),
+                  },
+                  {
+                    label: '180',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(180, 'day'),
+                  },
+                  {
+                    label: '365',
+                    value: () =>
+                      dayjs(
+                        formData.expires_at ||
+                          new Date().setHours(23, 59, 59, 999)
+                      ).add(365, 'day'),
+                  },
+                ]"
+              />
+            </a-form-item>
             <a-form-item field="remark" :label="$t('common.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -589,6 +658,7 @@
     email: '',
     account: '',
     password: '',
+    expires_at: '',
     quota_expires_at: '',
     is_cycle_reset_quota: false,
     reset_quota: ref(),
@@ -646,6 +716,7 @@
       formData.value.name = data.name;
       formData.value.email = data.email;
       formData.value.account = data.account;
+      formData.value.expires_at = data.expires_at;
       formData.value.quota_expires_at = data.quota_expires_at;
       formData.value.is_cycle_reset_quota = data.is_cycle_reset_quota;
       formData.value.reset_quota = data.reset_quota;
