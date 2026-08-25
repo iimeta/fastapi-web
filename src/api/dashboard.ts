@@ -126,6 +126,7 @@ export interface PerMinuteParams {
   actions?: string[];
   status: any;
   req_time: string[];
+  type?: string;
 }
 
 export interface PerMinuteRes {
