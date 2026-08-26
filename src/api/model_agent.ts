@@ -141,6 +141,7 @@ export function queryModelAgentTagList() {
 
 export interface ModelAgentDeleteParams {
   id: string;
+  delete_keys?: boolean;
 }
 
 export function submitModelAgentDelete(params: ModelAgentDeleteParams) {
@@ -226,6 +227,7 @@ export interface ModelAgentBatchOperate {
   action: string;
   ids?: string[];
   value?: any;
+  delete_keys?: boolean;
 }
 
 export function submitModelAgentBatchOperate(data: ModelAgentBatchOperate) {

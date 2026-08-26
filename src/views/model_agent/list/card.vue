@@ -378,10 +378,10 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, nextTick, reactive, ref, watch } from 'vue';
+  import { computed, nextTick, reactive, ref, watch, h } from 'vue';
   import { useRouter, onBeforeRouteLeave } from 'vue-router';
   import { useI18n } from 'vue-i18n';
-  import { Message, Modal } from '@arco-design/web-vue';
+  import { Message, Modal, Checkbox } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
   import {
     queryModelAgentPage,
@@ -781,10 +781,35 @@
       default:
     }
 
+    const deleteKeys = { value: false };
     Modal.warning({
       title: t('modal.warning.title'),
       titleAlign: 'center',
-      content: alertContent,
+      content:
+        params.action === 'delete'
+          ? () =>
+              h('div', [
+                h('div', alertContent),
+                h(
+                  'div',
+                  { style: 'margin-top: 12px' },
+                  h(
+                    Checkbox,
+                    {
+                      defaultChecked: false,
+                      onChange: (
+                        val: boolean | (string | number | boolean)[]
+                      ) => {
+                        deleteKeys.value = Boolean(val);
+                      },
+                    },
+                    {
+                      default: () => t('model.agent.label.delete_keys'),
+                    }
+                  )
+                ),
+              ])
+          : alertContent,
       okText: t('button.ok'),
       cancelText: t('button.cancel'),
       hideCancel: false,
@@ -793,6 +818,8 @@
         submitModelAgentBatchOperate({
           ...params,
           ids: ids.value,
+          delete_keys:
+            params.action === 'delete' ? deleteKeys.value : undefined,
         }).then(() => {
           setLoading(false);
           Message.success(t('success.operate'));
