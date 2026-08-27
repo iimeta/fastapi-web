@@ -80,7 +80,7 @@ export default {
   'log.columns.stream': '流式',
   'log.columns.conn_time': '首字',
   'log.columns.duration': '持续',
-  'log.columns.total_time': '总耗时',
+  'log.columns.total_time': '耗时',
   'log.columns.tooltip.total_time': '从接收到请求到响应完所用的时长, 单位: ms(毫秒)',
   'log.columns.internal_time': '内耗',
   'log.columns.status': '结果',

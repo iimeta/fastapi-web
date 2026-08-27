@@ -80,7 +80,7 @@ export default {
   'log.columns.stream': 'Stream',
   'log.columns.conn_time': 'First Token',
   'log.columns.duration': 'Dur.',
-  'log.columns.total_time': 'Total Time',
+  'log.columns.total_time': 'Time',
   'log.columns.tooltip.total_time': 'Time from receiving request to completing response, unit: ms (milliseconds)',
   'log.columns.internal_time': 'Internal',
   'log.columns.status': 'Result',

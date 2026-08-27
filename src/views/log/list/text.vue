@@ -480,56 +480,6 @@
         <template #reasoning="{ record }">
           {{ record.reasoning || '-' }}
         </template>
-        <template #conn_time="{ record }">
-          <a-tag
-            v-if="record.conn_time > 30000"
-            v-permission="['user', 'reseller']"
-            color="red"
-          >
-            {{ record.conn_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.conn_time > 15000"
-            v-permission="['user', 'reseller']"
-            color="orange"
-          >
-            {{ record.conn_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.conn_time > 5000"
-            v-permission="['user', 'reseller']"
-            color="gold"
-          >
-            {{ record.conn_time }}
-          </a-tag>
-          <a-tag v-else v-permission="['user', 'reseller']" color="green">
-            {{ record.conn_time || '-' }}
-          </a-tag>
-          <a-tag
-            v-if="record.conn_time > 10000"
-            v-permission="['admin']"
-            color="red"
-          >
-            {{ record.conn_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.conn_time > 5000"
-            v-permission="['admin']"
-            color="orange"
-          >
-            {{ record.conn_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.conn_time > 3000"
-            v-permission="['admin']"
-            color="gold"
-          >
-            {{ record.conn_time }}
-          </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">
-            {{ record.conn_time || '-' }}
-          </a-tag>
-        </template>
         <template #duration="{ record }">
           <a-tag
             v-if="record.duration > 180000"
@@ -581,54 +531,21 @@
           </a-tag>
         </template>
         <template #total_time="{ record }">
-          <a-tag
-            v-if="record.total_time > 180000"
-            v-permission="['user', 'reseller']"
-            color="red"
-          >
-            {{ record.total_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.total_time > 120000"
-            v-permission="['user', 'reseller']"
-            color="orange"
-          >
-            {{ record.total_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.total_time > 90000"
-            v-permission="['user', 'reseller']"
-            color="gold"
-          >
-            {{ record.total_time }}
-          </a-tag>
-          <a-tag v-else v-permission="['user', 'reseller']" color="green">
-            {{ record.total_time || '-' }}
-          </a-tag>
-          <a-tag
-            v-if="record.total_time > 120000"
-            v-permission="['admin']"
-            color="red"
-          >
-            {{ record.total_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.total_time > 90000"
-            v-permission="['admin']"
-            color="orange"
-          >
-            {{ record.total_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.total_time > 60000"
-            v-permission="['admin']"
-            color="gold"
-          >
-            {{ record.total_time }}
-          </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">
-            {{ record.total_time || '-' }}
-          </a-tag>
+          <div class="time-cell" :style="tokensCellStyle">
+            <div class="time-cell-content">
+              <span :style="{ color: getConnTimeColor(record.conn_time) }">
+                {{ $t('log.columns.conn_time') }}:
+                {{ record.conn_time || '-' }}
+              </span>
+              <span
+                class="time-cell-total"
+                :style="{ color: getTotalTimeColor(record.total_time) }"
+              >
+                {{ $t('log.columns.total_time') }}:
+                {{ record.total_time || '-' }}
+              </span>
+            </div>
+          </div>
         </template>
         <template #internal_time="{ record }">
           <a-tag
@@ -930,6 +847,25 @@
       size.value
     ],
   }));
+  const getTimeColor = (
+    value: number | undefined,
+    thresholds: [number, number, number]
+  ) => {
+    if ((value || 0) > thresholds[0]) return 'rgb(var(--red-6))';
+    if ((value || 0) > thresholds[1]) return 'rgb(var(--orange-6))';
+    if ((value || 0) > thresholds[2]) return 'rgb(var(--gold-6))';
+    return 'rgb(var(--green-6))';
+  };
+  const getConnTimeColor = (value: number | undefined) =>
+    getTimeColor(
+      value,
+      userRole === 'admin' ? [10000, 5000, 3000] : [30000, 15000, 5000]
+    );
+  const getTotalTimeColor = (value: number | undefined) =>
+    getTimeColor(
+      value,
+      userRole === 'admin' ? [120000, 90000, 60000] : [180000, 120000, 90000]
+    );
   const ids = ref<Array<string>>([]);
   const multiple = ref(true);
   const tableRef = ref();
@@ -1068,12 +1004,6 @@
       title: t('log.detail.reasoning'),
       dataIndex: 'reasoning',
       slotName: 'reasoning',
-      align: 'center',
-    },
-    {
-      title: t('log.columns.conn_time'),
-      dataIndex: 'conn_time',
-      slotName: 'conn_time',
       align: 'center',
     },
     {
@@ -1660,6 +1590,27 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  .time-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .time-cell-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 80px;
+    font-variant-numeric: tabular-nums;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .time-cell-total {
+    line-height: 1;
   }
 
   .cache-tokens {

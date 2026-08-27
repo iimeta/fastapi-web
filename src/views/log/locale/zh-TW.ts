@@ -80,7 +80,7 @@ export default {
   'log.columns.stream': '串流式',
   'log.columns.conn_time': '首字',
   'log.columns.duration': '持續',
-  'log.columns.total_time': '總耗時',
+  'log.columns.total_time': '耗時',
   'log.columns.tooltip.total_time': '從接收到請求到回應完所用的時長, 單位: ms(毫秒)',
   'log.columns.internal_time': '內耗',
   'log.columns.status': '結果',
