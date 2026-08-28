@@ -1603,10 +1603,11 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    min-width: 80px;
+    min-width: 70px;
     font-variant-numeric: tabular-nums;
     text-align: left;
     white-space: nowrap;
+    font-size: 13px;
   }
 
   .time-cell-total {
