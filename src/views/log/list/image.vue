@@ -545,104 +545,51 @@
           </a-tag>
         </template>
         <template #total_time="{ record }">
-          <a-tag
-            v-if="record.total_time > 500000"
-            v-permission="['user', 'reseller']"
-            color="red"
+          <div
+            v-if="userRole === 'admin'"
+            class="time-cell"
+            :style="tokensCellStyle"
           >
-            {{ record.total_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.total_time > 300000"
-            v-permission="['user', 'reseller']"
-            color="orange"
-          >
-            {{ record.total_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.total_time > 180000"
-            v-permission="['user', 'reseller']"
-            color="gold"
-          >
-            {{ record.total_time }}
-          </a-tag>
-          <a-tag v-else v-permission="['user', 'reseller']" color="green">{{
-            record.total_time || '-'
-          }}</a-tag>
-          <a-tag
-            v-if="record.total_time > 300000"
-            v-permission="['admin']"
-            color="red"
-          >
-            {{ record.total_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.total_time > 210000"
-            v-permission="['admin']"
-            color="orange"
-          >
-            {{ record.total_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.total_time > 120000"
-            v-permission="['admin']"
-            color="gold"
-          >
-            {{ record.total_time }}
-          </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">{{
-            record.total_time || '-'
-          }}</a-tag>
-        </template>
-        <template #internal_time="{ record }">
-          <a-tag
-            v-if="record.internal_time > 1000"
-            v-permission="['user', 'reseller']"
-            color="red"
-          >
-            {{ record.internal_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.internal_time > 500"
-            v-permission="['user', 'reseller']"
-            color="orange"
-          >
-            {{ record.internal_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.internal_time > 300"
-            v-permission="['user', 'reseller']"
-            color="gold"
-          >
-            {{ record.internal_time }}
-          </a-tag>
-          <a-tag v-else v-permission="['user', 'reseller']" color="green">{{
-            record.internal_time || '-'
-          }}</a-tag>
-          <a-tag
-            v-if="record.internal_time > 500"
-            v-permission="['admin']"
-            color="red"
-          >
-            {{ record.internal_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.internal_time > 300"
-            v-permission="['admin']"
-            color="orange"
-          >
-            {{ record.internal_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.internal_time > 100"
-            v-permission="['admin']"
-            color="gold"
-          >
-            {{ record.internal_time }}
-          </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">{{
-            record.internal_time || '-'
-          }}</a-tag>
+            <div class="time-cell-content">
+              <span :style="{ color: getTotalTimeColor(record.total_time) }">
+                {{ $t('log.columns.total_time') }}:
+                {{ record.total_time || '-' }}
+              </span>
+              <span
+                class="time-cell-total"
+                :style="{ color: getInternalTimeColor(record.internal_time) }"
+              >
+                {{ $t('log.columns.internal_time') }}:
+                {{ record.internal_time || '-' }}
+              </span>
+            </div>
+          </div>
+          <template v-else>
+            <a-tag
+              v-if="record.total_time > 500000"
+              v-permission="['user', 'reseller']"
+              color="red"
+            >
+              {{ record.total_time }}
+            </a-tag>
+            <a-tag
+              v-else-if="record.total_time > 300000"
+              v-permission="['user', 'reseller']"
+              color="orange"
+            >
+              {{ record.total_time }}
+            </a-tag>
+            <a-tag
+              v-else-if="record.total_time > 180000"
+              v-permission="['user', 'reseller']"
+              color="gold"
+            >
+              {{ record.total_time }}
+            </a-tag>
+            <a-tag v-else v-permission="['user', 'reseller']" color="green">{{
+              record.total_time || '-'
+            }}</a-tag>
+          </template>
         </template>
         <template #status="{ record }">
           <StatusTag :status="record.status" :err-msg="record.err_msg" />
@@ -851,6 +798,25 @@
     ...basePagination,
   });
 
+  const tokensCellStyle = computed(() => ({
+    minHeight: { mini: '26px', small: '30px', medium: '34px', large: '38px' }[
+      size.value
+    ],
+  }));
+  const getTimeColor = (
+    value: number | undefined,
+    thresholds: [number, number, number]
+  ) => {
+    if ((value || 0) > thresholds[0]) return 'rgb(var(--red-6))';
+    if ((value || 0) > thresholds[1]) return 'rgb(var(--orange-6))';
+    if ((value || 0) > thresholds[2]) return 'rgb(var(--gold-6))';
+    return 'rgb(var(--green-6))';
+  };
+  const getTotalTimeColor = (value: number | undefined) =>
+    getTimeColor(value, [300000, 210000, 120000]);
+  const getInternalTimeColor = (value: number | undefined) =>
+    getTimeColor(value, [500, 300, 100]);
+
   const densityList = computed(() => [
     {
       name: t('size.mini'),
@@ -908,6 +874,8 @@
       dataIndex: 'action',
       slotName: 'action',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('log.columns.prompt'),
@@ -1018,12 +986,6 @@
           ),
         ],
       },
-    },
-    {
-      title: t('log.columns.internal_time'),
-      dataIndex: 'internal_time',
-      slotName: 'internal_time',
-      align: 'center',
     },
     {
       title: t('log.columns.status'),
@@ -1509,6 +1471,28 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+
+  .time-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .time-cell-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 70px;
+    font-variant-numeric: tabular-nums;
+    text-align: left;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+
+  .time-cell-total {
+    line-height: 1;
   }
 
   // 其余计费项（text、text_cache、image、image_cache）花费汇总，

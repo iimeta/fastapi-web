@@ -888,6 +888,8 @@
       dataIndex: 'action',
       slotName: 'action',
       align: 'center',
+      ellipsis: true,
+      tooltip: true,
     },
     {
       title: t('log.columns.input_tokens'),
