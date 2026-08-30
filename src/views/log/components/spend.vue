@@ -536,11 +536,14 @@
     :bordered="false"
     class="spend-detail-table-spacing"
   >
+    <template #mode="{ record }">
+      {{ formatImageGenerationMode(record.pricing) }}
+    </template>
     <template #quality="{ record }">
       {{ record.pricing.quality || '-' }}
     </template>
     <template #width="{ record }">
-      {{ record.pricing.width || '-' }} × {{ record.pricing.height || '-' }}
+      {{ formatImageGenerationSize(record.pricing) }}
     </template>
     <template #n="{ record }"> {{ record.n || '0' }} </template>
     <template #once_ratio="{ record }">
@@ -786,7 +789,7 @@
 <script lang="ts" setup>
   import { computed, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { parseQuota } from '@/utils/common';
+  import { parseQuota, formatImageGenerationSize } from '@/utils/common';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import {
     Spend,
@@ -794,6 +797,7 @@
     CacheSpend,
     AudioSpend,
     ImageSpend,
+    ImageGenerationPricing,
     ImageGenerationSpend,
     VisionSpend,
     VideoSpend,
@@ -813,6 +817,13 @@
   }>();
 
   const spend = ref(props.modelValue);
+
+  const formatImageGenerationMode = (pricing: ImageGenerationPricing) => {
+    if (pricing?.mode === 'pixel') {
+      return t('model.dict.image_generation_mode.pixel');
+    }
+    return t('model.dict.image_generation_mode.size');
+  };
 
   const isClaudeProvider = computed(() => {
     const code = (props.providerCode || '').toLowerCase();
@@ -1330,6 +1341,13 @@
       headerCellStyle: tableHeaderCellStyle,
       children: [
         {
+          title: t('model.label.image.generation.mode'),
+          dataIndex: 'mode',
+          slotName: 'mode',
+          align: 'center',
+          width: 100,
+        },
+        {
           title: t('model.label.image.generation.quality'),
           dataIndex: 'quality',
           slotName: 'quality',
@@ -1341,7 +1359,7 @@
           dataIndex: 'width',
           slotName: 'width',
           align: 'center',
-          width: 100,
+          width: 120,
         },
         {
           title: t('log.columns.spend.image.generation.n'),

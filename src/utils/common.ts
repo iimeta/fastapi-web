@@ -26,6 +26,45 @@ export function parsePrice(price: string) {
   return match ? match[0] : price;
 }
 
+export function parsePixelSize(value: any): number {
+  if (value === undefined || value === null || value === '') {
+    return 0;
+  }
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? Math.round(value) : 0;
+  }
+  const s = String(value).trim().replace(/[×X*]/g, 'x');
+  if (!s) {
+    return 0;
+  }
+  const parts = s
+    .split('x')
+    .map((item) => item.trim())
+    .filter((item) => item !== '');
+  if (parts.length >= 2) {
+    const w = Number(parts[0]);
+    const h = Number(parts[1]);
+    if (Number.isFinite(w) && Number.isFinite(h) && w > 0 && h > 0) {
+      return Math.round(w * h);
+    }
+  }
+  const n = Number(s);
+  return Number.isFinite(n) ? Math.round(n) : 0;
+}
+
+export function formatImageGenerationSize(pricing: {
+  mode?: string;
+  width?: any;
+  height?: any;
+  pixel_gte?: string;
+  pixel_lte?: string;
+}): string {
+  if (pricing?.mode === 'pixel') {
+    return `${pricing.pixel_gte || '-'} ~ ${pricing.pixel_lte || '-'}`;
+  }
+  return `${pricing?.width || '-'} × ${pricing?.height || '-'}`;
+}
+
 export function disabledDate(current: Date) {
   return dayjs(current).isBefore(dayjs().subtract(1, 'day'));
 }

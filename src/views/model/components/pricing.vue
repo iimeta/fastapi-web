@@ -831,8 +831,6 @@
           :key="index"
           :field="
             `image_generation[${index}].quality` &&
-            `image_generation[${index}].width` &&
-            `image_generation[${index}].height` &&
             `image_generation[${index}].once_ratio`
           "
           :label="`${index + 1}. ` + $t('model.label.image_generation')"
@@ -843,30 +841,50 @@
             },
           ]"
         >
+          <a-select
+            v-model="formData.image_generation[index].mode"
+            :options="imageGenerationModeOptions"
+            class="pricing-select--image-mode pricing-field--spaced"
+          />
           <a-input
             v-model="formData.image_generation[index].quality"
             :placeholder="$t('model.placeholder.image_generation.quality')"
             class="pricing-input--image-quality pricing-field--spaced"
           />
-          <a-input-number
-            v-model="formData.image_generation[index].width"
-            :placeholder="$t('model.placeholder.image_generation.width')"
-            :precision="0"
-            :min="1"
-            :max="999999"
-            :step="1"
-            class="pricing-input--image-quality pricing-field--spaced"
-          />
-          ×
-          <a-input-number
-            v-model="formData.image_generation[index].height"
-            :placeholder="$t('model.placeholder.image_generation.height')"
-            :precision="0"
-            :min="1"
-            :max="999999"
-            :step="1"
-            class="pricing-input--image-size pricing-field--offset"
-          />
+          <template v-if="isImageGenerationPixelMode(index)">
+            <a-input
+              v-model="formData.image_generation[index].pixel_gte"
+              :placeholder="$t('model.placeholder.image_generation.pixel_gte')"
+              class="pricing-input--image-quality pricing-field--spaced"
+            />
+            ~
+            <a-input
+              v-model="formData.image_generation[index].pixel_lte"
+              :placeholder="$t('model.placeholder.image_generation.pixel_lte')"
+              class="pricing-input--image-size pricing-field--offset"
+            />
+          </template>
+          <template v-else>
+            <a-input-number
+              v-model="formData.image_generation[index].width"
+              :placeholder="$t('model.placeholder.image_generation.width')"
+              :precision="0"
+              :min="1"
+              :max="999999"
+              :step="1"
+              class="pricing-input--image-quality pricing-field--spaced"
+            />
+            ×
+            <a-input-number
+              v-model="formData.image_generation[index].height"
+              :placeholder="$t('model.placeholder.image_generation.height')"
+              :precision="0"
+              :min="1"
+              :max="999999"
+              :step="1"
+              class="pricing-input--image-size pricing-field--offset"
+            />
+          </template>
           <a-input-number
             v-model="formData.image_generation[index].once_ratio"
             :placeholder="$t('model.placeholder.image_generation.once_ratio')"
@@ -1457,6 +1475,20 @@
     },
   ];
 
+  const imageGenerationModeOptions = [
+    {
+      label: t('model.dict.image_generation_mode.size'),
+      value: 'size',
+    },
+    {
+      label: t('model.dict.image_generation_mode.pixel'),
+      value: 'pixel',
+    },
+  ];
+
+  const isImageGenerationPixelMode = (index: number) =>
+    formData.value.image_generation[index]?.mode === 'pixel';
+
   const videoModeOptions = [
     {
       label: t('model.dict.mode.all'),
@@ -1479,6 +1511,13 @@
     () => props.modelValue,
     (val) => {
       formData.value = val;
+      if (formData.value?.image_generation) {
+        formData.value.image_generation.forEach((item) => {
+          if (!item.mode) {
+            item.mode = 'size';
+          }
+        });
+      }
       if (props.providerId && providerMap.size > 0) {
         provider.value = providerMap.get(props.providerId);
       }
@@ -1603,9 +1642,12 @@
     h?: number
   ) => {
     const imageGenerationPricing: ImageGenerationPricing = {
+      mode: 'size',
       quality: q,
       width: w,
       height: h,
+      pixel_gte: '',
+      pixel_lte: '',
       once_ratio: ref(),
       is_default: formData.value.image_generation.length === 0 ? '1' : '',
     };
@@ -1930,6 +1972,11 @@
       if (formData.value.image_generation.length === 0) {
         initImageGenerationPricing();
       }
+      formData.value.image_generation.forEach((item) => {
+        if (!item.mode) {
+          item.mode = 'size';
+        }
+      });
     }
 
     if (formData.value.billing_items.includes('image_cache')) {
@@ -2164,6 +2211,10 @@
 
   .pricing-input--video-price {
     width: 239px;
+  }
+
+  :deep(.pricing-select--image-mode) {
+    width: 95px;
   }
 
   :deep(.pricing-select--compact) {

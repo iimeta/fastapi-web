@@ -40,9 +40,12 @@ export interface ImagePricing {
 }
 
 export interface ImageGenerationPricing {
+  mode?: string;
   quality: any;
   width: any;
   height: any;
+  pixel_gte?: string;
+  pixel_lte?: string;
   once_ratio: any;
   is_default: string;
 }

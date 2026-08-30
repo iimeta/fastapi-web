@@ -309,11 +309,14 @@
       :bordered="false"
       class="pricing-detail-table-spacing"
     >
+      <template #mode="{ record }">
+        {{ formatImageGenerationMode(record) }}
+      </template>
       <template #quality="{ record }">
         {{ record.quality || '-' }}
       </template>
       <template #width="{ record }">
-        {{ record.width || '-' }} × {{ record.height || '-' }}
+        {{ formatImageGenerationSize(record) }}
       </template>
       <template #once_ratio="{ record }">
         <Quota
@@ -516,6 +519,7 @@
     OncePricing,
   } from '@/api/common';
   import Quota from '@/views/common/quota.vue';
+  import { formatImageGenerationSize } from '@/utils/common';
 
   const { t } = useI18n();
 
@@ -529,6 +533,13 @@
   }>();
 
   const onlyTimeRules = computed(() => !!props.onlyTimeRules);
+
+  const formatImageGenerationMode = (record: ImageGenerationPricing) => {
+    if (record?.mode === 'pixel') {
+      return t('model.dict.image_generation_mode.pixel');
+    }
+    return t('model.dict.image_generation_mode.size');
+  };
 
   const isClaudeProvider = computed(() => {
     const code = (props.providerCode || '').toLowerCase();
@@ -930,11 +941,18 @@
       headerCellStyle: tableHeaderCellStyle,
       children: [
         {
+          title: t('model.label.image.generation.mode'),
+          dataIndex: 'mode',
+          slotName: 'mode',
+          align: 'center',
+          width: 150,
+        },
+        {
           title: t('model.label.image.generation.quality'),
           dataIndex: 'quality',
           slotName: 'quality',
           align: 'center',
-          width: 200,
+          width: 150,
         },
         {
           title: t('model.label.image.generation.width_height'),
@@ -948,14 +966,14 @@
           dataIndex: 'once_ratio',
           slotName: 'once_ratio',
           align: 'center',
-          width: 200,
+          width: 150,
         },
         {
           title: t('model.label.is_default'),
           dataIndex: 'is_default',
           slotName: 'is_default',
           align: 'center',
-          width: 200,
+          width: 150,
         },
       ],
     },
