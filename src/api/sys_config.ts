@@ -230,6 +230,16 @@ export interface ImageStorage {
   raw_keys: string[];
 }
 
+export interface ImageUrlItem {
+  replace_url: string;
+  target_url: string;
+}
+
+export interface ImageUrl {
+  open: boolean;
+  urls: ImageUrlItem[];
+}
+
 export interface VideoTask {
   open: boolean;
   cron: string;
@@ -365,6 +375,7 @@ export interface SysConfigDetail {
   quota_task: QuotaTask;
   image_task: ImageTask;
   image_storage: ImageStorage;
+  image_url: ImageUrl;
   video_task: VideoTask;
   file_task: FileTask;
   batch_task: BatchTask;
@@ -409,6 +420,7 @@ export interface SysConfigUpdate {
   quota_task: QuotaTask;
   image_task: ImageTask;
   image_storage: ImageStorage;
+  image_url: ImageUrl;
   video_task: VideoTask;
   file_task: FileTask;
   batch_task: BatchTask;

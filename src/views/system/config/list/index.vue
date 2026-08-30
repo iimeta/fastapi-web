@@ -23,6 +23,7 @@
                   <General />
                   <Task />
                   <API />
+                  <Resource />
                 </a-tab-pane>
                 <a-tab-pane key="1" :title="$t('sys.config.tab.title.global')">
                   <Global />
@@ -35,6 +36,12 @@
                 </a-tab-pane>
                 <a-tab-pane key="4" :title="$t('sys.config.tab.title.api')">
                   <API />
+                </a-tab-pane>
+                <a-tab-pane
+                  key="5"
+                  :title="$t('sys.config.tab.title.resource')"
+                >
+                  <Resource />
                 </a-tab-pane>
               </a-tabs>
             </a-col>
@@ -50,6 +57,7 @@
   import General from './components/general.vue';
   import Task from './components/task.vue';
   import API from './components/api.vue';
+  import Resource from './components/resource.vue';
   import { provideSysConfig } from './composables/use-sys-config';
 
   provideSysConfig();
