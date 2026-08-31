@@ -14,6 +14,8 @@ if (import.meta.env.VITE_API_BASE_URL) {
   axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 }
 
+axios.defaults.allowAbsoluteUrls = false;
+
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     // let each request carry token
