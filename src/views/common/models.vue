@@ -249,10 +249,10 @@
   // Keep local: medium 尺寸会统一 7px，这里分别指定表头和内容行的 padding
   :deep(.arco-table.arco-table-size-medium) {
     .arco-table-th .arco-table-cell {
-      padding: 7px 16px;
+      padding: 7px 10px;
     }
     .arco-table-td .arco-table-cell {
-      padding: 10px 16px;
+      padding: 10px 10px;
     }
   }
 </style>

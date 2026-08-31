@@ -1623,6 +1623,6 @@
   }
 
   :deep(.arco-table-td .arco-table-cell) {
-    padding: 4px 16px;
+    padding: 4px 10px;
   }
 </style>
