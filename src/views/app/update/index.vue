@@ -390,7 +390,13 @@
                       </span>
                     </div>
                     <span class="app-form-group-option--discount">
-                      {{ getGroupDiscountText(selectedGroup) }}
+                      <a-tag
+                        v-if="getGroupDiscountText(selectedGroup)"
+                        size="small"
+                        :color="getGroupDiscountColor(selectedGroup)"
+                      >
+                        {{ getGroupDiscountText(selectedGroup) }}
+                      </a-tag>
                     </span>
                   </div>
                 </template>
@@ -410,7 +416,13 @@
                       }}</span>
                     </div>
                     <span class="app-form-group-option--discount">
-                      {{ getGroupDiscountText(item) }}
+                      <a-tag
+                        v-if="getGroupDiscountText(item)"
+                        size="small"
+                        :color="getGroupDiscountColor(item)"
+                      >
+                        {{ getGroupDiscountText(item) }}
+                      </a-tag>
                     </span>
                   </div>
                 </a-option>
@@ -531,6 +543,22 @@
       return formatDiscountText(group.time_rules[0].discount);
     }
     return getDiscountRange(group.time_rules);
+  };
+
+  // 按分组最大倍率决定标签颜色: <=1 绿, >1且<=4 蓝, >4 紫
+  const getGroupDiscountColor = (group: GroupList) => {
+    if (!group.time_rules?.length) {
+      return 'gray';
+    }
+    const maxDiscount = Math.max(...group.time_rules.map((r) => r.discount));
+    const maxRate = maxDiscount / 100;
+    if (maxRate <= 1) {
+      return 'green';
+    }
+    if (maxRate <= 4) {
+      return 'arcoblue';
+    }
+    return 'purple';
   };
 
   const getGroupList = async () => {
