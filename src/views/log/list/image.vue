@@ -429,7 +429,8 @@
               v-if="
                 userRole === 'admin' &&
                 (record.status === 1 || record.status === 2) &&
-                record.spend?.billing_items?.includes('image_generation') &&
+                (record.spend?.billing_items?.includes('image_generation') ||
+                  record.spend?.billing_items?.includes('layer_decomp')) &&
                 otherSpendTokens(record.spend)
               "
               class="other-spend"
@@ -1431,7 +1432,7 @@
     providerName.value = pn || '';
   };
 
-  // 总花费按 image_generation 计费，此处汇总其余计费项（text、text_cache、
+  // 总花费按 image_generation / layer_decomp 计费，此处汇总其余计费项（text、text_cache、
   // image、image_cache）的花费，单独展示在总花费下方
   const otherSpendTokens = (s: Spend) => {
     if (!s) return 0;

@@ -101,6 +101,8 @@ export default {
   'model.label.write_1h_ratio': '1-Hour Write Price',
   'model.label.image_generation': 'Generation Price',
   'model.error.required.image_generation': 'Please enter image quality, size or pixel range, and price',
+  'model.label.layer_decomp': 'Decomposition Price',
+  'model.error.required.layer_decomp': 'Please enter image quality, size or pixel range, and price',
   'model.placeholder.image_generation.quality': 'Quality',
   'model.placeholder.image_generation.width': 'Width',
   'model.placeholder.image_generation.height': 'Height',

@@ -306,6 +306,7 @@ export default {
   'dict.billing_items.tiered_text_cache': 'Tiered Text Cache',
   'dict.billing_items.image': 'Image',
   'dict.billing_items.image_generation': 'Image Generation',
+  'dict.billing_items.layer_decomp': 'Layer Decomposition',
   'dict.billing_items.image_cache': 'Image Cache',
   'dict.billing_items.vision': 'Vision',
   'dict.billing_items.audio': 'Audio',

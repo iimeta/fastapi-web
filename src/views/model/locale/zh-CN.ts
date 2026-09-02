@@ -101,6 +101,8 @@ export default {
   'model.label.write_1h_ratio': '1h写入价格',
   'model.label.image_generation': '生成价格',
   'model.error.required.image_generation': '请输入图像质量、尺寸或像素区间和价格',
+  'model.label.layer_decomp': '拆分价格',
+  'model.error.required.layer_decomp': '请输入图像质量、尺寸或像素区间和价格',
   'model.placeholder.image_generation.quality': '质量',
   'model.placeholder.image_generation.width': '宽度',
   'model.placeholder.image_generation.height': '高度',

@@ -347,6 +347,17 @@
         )}`,
       });
     }
+    // 图层拆分: 宽x高 价格 / 张
+    if (has('layer_decomp') && p.layer_decomp?.length) {
+      const d = p.layer_decomp.find((x) => x.is_default) || p.layer_decomp[0];
+      arr.push({
+        key: 'layerDecomp',
+        label: t('dict.billing_items.layer_decomp'),
+        value: `${d.width}x${d.height} ${fmt(d.once_ratio)} / ${t(
+          'unit.piece'
+        )}`,
+      });
+    }
     // 识图: 模式 价格 / 张
     if (has('vision') && p.vision?.length) {
       const d = p.vision.find((x) => x.is_default) || p.vision[0];

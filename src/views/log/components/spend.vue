@@ -71,6 +71,14 @@
       />
     </template>
 
+    <!-- 图层拆分 -->
+    <template #layer_decomp="{ record }">
+      <Quota
+        :currency-symbol="props.modelValue.currency_symbol"
+        :model-value="record.layer_decomp.spend_tokens"
+      />
+    </template>
+
     <!-- 图像缓存 -->
     <template #image_cache="{ record }">
       <Quota
@@ -562,6 +570,43 @@
     </template>
   </a-table>
 
+  <!-- 图层拆分 -->
+  <a-table
+    v-if="
+      spend.billing_items?.includes('layer_decomp') && layerDecompSpend.length
+    "
+    :columns="layerDecompSpendColumns"
+    :data="layerDecompSpend"
+    :pagination="false"
+    :bordered="false"
+    class="spend-detail-table-spacing"
+  >
+    <template #mode="{ record }">
+      {{ formatImageGenerationMode(record.pricing) }}
+    </template>
+    <template #quality="{ record }">
+      {{ record.pricing.quality || '-' }}
+    </template>
+    <template #width="{ record }">
+      {{ formatImageGenerationSize(record.pricing) }}
+    </template>
+    <template #n="{ record }"> {{ record.n || '0' }} </template>
+    <template #once_ratio="{ record }">
+      <Quota
+        :currency-symbol="props.modelValue.currency_symbol"
+        :model-value="record.pricing.once_ratio"
+      />
+      /
+      {{ $t('unit.piece') }}
+    </template>
+    <template #spend_tokens="{ record }">
+      <Quota
+        :currency-symbol="props.modelValue.currency_symbol"
+        :model-value="record.spend_tokens"
+      />
+    </template>
+  </a-table>
+
   <!-- 图像缓存 -->
   <a-table
     v-if="spend.billing_items.includes('image_cache') && imageCacheSpend.length"
@@ -799,6 +844,8 @@
     ImageSpend,
     ImageGenerationPricing,
     ImageGenerationSpend,
+    LayerDecompPricing,
+    LayerDecompSpend,
     VisionSpend,
     VideoSpend,
     VideoGenerationSpend,
@@ -818,7 +865,9 @@
 
   const spend = ref(props.modelValue);
 
-  const formatImageGenerationMode = (pricing: ImageGenerationPricing) => {
+  const formatImageGenerationMode = (
+    pricing: ImageGenerationPricing | LayerDecompPricing
+  ) => {
     if (pricing?.mode === 'pixel') {
       return t('model.dict.image_generation_mode.pixel');
     }
@@ -1386,6 +1435,59 @@
     },
   ]);
 
+  // 图层拆分
+  const layerDecompSpend = ref<LayerDecompSpend[]>([]);
+  const layerDecompSpendColumns = ref<TableColumnData[]>([
+    {
+      title: t('dict.billing_items.layer_decomp'),
+      headerCellStyle: tableHeaderCellStyle,
+      children: [
+        {
+          title: t('model.label.image.generation.mode'),
+          dataIndex: 'mode',
+          slotName: 'mode',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('model.label.image.generation.quality'),
+          dataIndex: 'quality',
+          slotName: 'quality',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('model.label.image.generation.width_height'),
+          dataIndex: 'width',
+          slotName: 'width',
+          align: 'center',
+          width: 120,
+        },
+        {
+          title: t('log.columns.spend.image.generation.n'),
+          dataIndex: 'n',
+          slotName: 'n',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('model.label.image.generation.once_ratio'),
+          dataIndex: 'once_ratio',
+          slotName: 'once_ratio',
+          align: 'center',
+          width: 100,
+        },
+        {
+          title: t('log.columns.spend.spend_tokens'),
+          dataIndex: 'spend_tokens',
+          slotName: 'spend_tokens',
+          align: 'center',
+          width: 100,
+        },
+      ],
+    },
+  ]);
+
   // 图像缓存
   const imageCacheSpend = ref<CacheSpend[]>([]);
   const imageCacheSpendColumns = ref<TableColumnData[]>([
@@ -1797,6 +1899,21 @@
         title: t('dict.billing_items.image_generation'),
         dataIndex: 'image_generation',
         slotName: 'image_generation',
+        align: 'center',
+        width: 100,
+      });
+    }
+
+    // 图层拆分
+    if (
+      spend.value.billing_items?.includes('layer_decomp') &&
+      spend.value.layer_decomp
+    ) {
+      layerDecompSpend.value[0] = spend.value.layer_decomp;
+      totalSpendColumns.value[0].children.push({
+        title: t('dict.billing_items.layer_decomp'),
+        dataIndex: 'layer_decomp',
+        slotName: 'layer_decomp',
         align: 'center',
         width: 100,
       });

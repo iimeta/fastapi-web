@@ -933,6 +933,7 @@
         output_ratio: ref(),
       },
       image_generation: [],
+      layer_decomp: [],
       image_cache: {
         read_ratio: ref(),
       },
@@ -1057,6 +1058,19 @@
         ) {
           if (formData.value.pricing.image_generation[i].is_default) {
             formData.value.pricing.image_generation[i].is_default = '1';
+            break;
+          }
+        }
+      }
+
+      if (formData.value.pricing.layer_decomp) {
+        for (
+          let i = 0;
+          i < formData.value.pricing.layer_decomp.length;
+          i += 1
+        ) {
+          if (formData.value.pricing.layer_decomp[i].is_default) {
+            formData.value.pricing.layer_decomp[i].is_default = '1';
             break;
           }
         }

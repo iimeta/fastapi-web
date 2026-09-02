@@ -150,6 +150,15 @@
         <a-checkbox
           v-if="formData.billing_methods.includes(1)"
           v-model="formData.billing_items"
+          value="layer_decomp"
+          class="billing-items"
+          @change="handleBillingItemsChange"
+        >
+          {{ $t('dict.billing_items.layer_decomp') }}
+        </a-checkbox>
+        <a-checkbox
+          v-if="formData.billing_methods.includes(1)"
+          v-model="formData.billing_items"
           value="image_cache"
           class="billing-items"
           @change="handleBillingItemsChange"
@@ -923,6 +932,109 @@
         </a-form-item>
       </a-tab-pane>
 
+      <!-- 图层拆分 -->
+      <a-tab-pane
+        v-if="formData.billing_items.includes('layer_decomp')"
+        key="layer_decomp"
+        :title="$t('dict.billing_items.layer_decomp')"
+      >
+        <a-form-item
+          v-for="(_, index) of formData.layer_decomp.length"
+          :key="index"
+          :field="
+            `layer_decomp[${index}].quality` &&
+            `layer_decomp[${index}].once_ratio`
+          "
+          :label="`${index + 1}. ` + $t('model.label.layer_decomp')"
+          :rules="[
+            {
+              required: true,
+              message: $t('model.error.required.layer_decomp'),
+            },
+          ]"
+        >
+          <a-select
+            v-model="formData.layer_decomp[index].mode"
+            :options="imageGenerationModeOptions"
+            class="pricing-select--image-mode pricing-field--spaced"
+          />
+          <a-input
+            v-model="formData.layer_decomp[index].quality"
+            :placeholder="$t('model.placeholder.image_generation.quality')"
+            class="pricing-input--image-quality pricing-field--spaced"
+          />
+          <template v-if="isLayerDecompPixelMode(index)">
+            <a-input
+              v-model="formData.layer_decomp[index].pixel_gte"
+              :placeholder="$t('model.placeholder.image_generation.pixel_gte')"
+              class="pricing-input--image-quality pricing-field--spaced"
+            />
+            ~
+            <a-input
+              v-model="formData.layer_decomp[index].pixel_lte"
+              :placeholder="$t('model.placeholder.image_generation.pixel_lte')"
+              class="pricing-input--image-size pricing-field--offset"
+            />
+          </template>
+          <template v-else>
+            <a-input-number
+              v-model="formData.layer_decomp[index].width"
+              :placeholder="$t('model.placeholder.image_generation.width')"
+              :precision="0"
+              :min="1"
+              :max="999999"
+              :step="1"
+              class="pricing-input--image-quality pricing-field--spaced"
+            />
+            ×
+            <a-input-number
+              v-model="formData.layer_decomp[index].height"
+              :placeholder="$t('model.placeholder.image_generation.height')"
+              :precision="0"
+              :min="1"
+              :max="999999"
+              :step="1"
+              class="pricing-input--image-size pricing-field--offset"
+            />
+          </template>
+          <a-input-number
+            v-model="formData.layer_decomp[index].once_ratio"
+            :placeholder="$t('model.placeholder.image_generation.once_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parsePrice"
+            allow-clear
+            class="pricing-input--compact pricing-field--spaced"
+          >
+            <template #prefix> {{ cs }} </template>
+            <template #append> / {{ $t('unit.piece') }} </template>
+          </a-input-number>
+          <a-radio
+            v-model="formData.layer_decomp[index].is_default"
+            value="1"
+            class="pricing-radio--default"
+            @change="handleLayerDecompPricingIsDefaultChange(index)"
+          >
+            {{ $t('common.default') }}
+          </a-radio>
+          <a-button
+            type="primary"
+            shape="circle"
+            class="pricing-action-btn--compact"
+            @click="handleLayerDecompPricingAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleLayerDecompPricingDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
+      </a-tab-pane>
+
       <!-- 图像缓存 -->
       <a-tab-pane
         v-if="formData.billing_items.includes('image_cache')"
@@ -1304,6 +1416,7 @@
     TextPricing,
     CachePricing,
     ImageGenerationPricing,
+    LayerDecompPricing,
     VisionPricing,
     VideoGenerationPricing,
     SearchPricing,
@@ -1408,6 +1521,10 @@
       value: 'image_generation',
     },
     {
+      label: t('dict.billing_items.layer_decomp'),
+      value: 'layer_decomp',
+    },
+    {
       label: t('dict.billing_items.image_cache'),
       value: 'image_cache',
     },
@@ -1489,6 +1606,9 @@
   const isImageGenerationPixelMode = (index: number) =>
     formData.value.image_generation[index]?.mode === 'pixel';
 
+  const isLayerDecompPixelMode = (index: number) =>
+    formData.value.layer_decomp[index]?.mode === 'pixel';
+
   const videoModeOptions = [
     {
       label: t('model.dict.mode.all'),
@@ -1513,6 +1633,13 @@
       formData.value = val;
       if (formData.value?.image_generation) {
         formData.value.image_generation.forEach((item) => {
+          if (!item.mode) {
+            item.mode = 'size';
+          }
+        });
+      }
+      if (formData.value?.layer_decomp) {
+        formData.value.layer_decomp.forEach((item) => {
           if (!item.mode) {
             item.mode = 'size';
           }
@@ -1751,6 +1878,117 @@
     }
   };
 
+  const handleLayerDecompPricingAdd = (q?: string, w?: number, h?: number) => {
+    const layerDecompPricing: LayerDecompPricing = {
+      mode: 'size',
+      quality: q,
+      width: w,
+      height: h,
+      pixel_gte: '',
+      pixel_lte: '',
+      once_ratio: ref(),
+      is_default: formData.value.layer_decomp.length === 0 ? '1' : '',
+    };
+    formData.value.layer_decomp.push(layerDecompPricing);
+  };
+
+  const handleLayerDecompPricingDel = (index: number) => {
+    if (formData.value.layer_decomp.length > 1) {
+      if (formData.value.layer_decomp[index].is_default === '1') {
+        formData.value.layer_decomp[index === 0 ? 1 : 0].is_default = '1';
+      }
+      formData.value.layer_decomp.splice(index, 1);
+    }
+  };
+
+  const handleLayerDecompPricingIsDefaultChange = (index: number) => {
+    for (let i = 0; i < formData.value.layer_decomp.length; i += 1) {
+      if (i === index) {
+        formData.value.layer_decomp[i].is_default = '1';
+      } else {
+        formData.value.layer_decomp[i].is_default = '';
+      }
+    }
+  };
+
+  const initLayerDecompPricing = () => {
+    const qualities = [
+      'high',
+      'high',
+      'high',
+      'medium',
+      'medium',
+      'medium',
+      'low',
+      'low',
+      'low',
+    ];
+    const widths = [1024, 1024, 1536, 1024, 1024, 1536, 1024, 1024, 1536];
+    const heights = [1024, 1536, 1024, 1024, 1536, 1024, 1024, 1536, 1024];
+
+    const googleQualities = [
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '1K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '2K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+      '4K',
+    ];
+    const googleWidths = [
+      1024, 848, 1264, 896, 1200, 928, 1152, 768, 1376, 1584, 2048, 1696, 2528,
+      1792, 2400, 1856, 2304, 1536, 2752, 3168, 4096, 3392, 5056, 3584, 4800,
+      3712, 4608, 3072, 5504, 6336,
+    ];
+    const googleHeights = [
+      1024, 1264, 848, 1200, 896, 1152, 928, 1376, 768, 672, 2048, 2528, 1696,
+      2400, 1792, 2304, 1856, 2752, 1536, 1344, 4096, 5056, 3392, 4800, 3584,
+      4608, 3712, 5504, 3072, 2688,
+    ];
+
+    if (
+      provider.value &&
+      (provider.value.code === 'Google' ||
+        provider.value.name === 'Google' ||
+        provider.value.code === 'GCPGemini')
+    ) {
+      for (let i = 0; i < googleQualities.length; i += 1) {
+        handleLayerDecompPricingAdd(
+          googleQualities[i],
+          googleWidths[i],
+          googleHeights[i]
+        );
+      }
+    } else {
+      for (let i = 0; i < qualities.length; i += 1) {
+        handleLayerDecompPricingAdd(qualities[i], widths[i], heights[i]);
+      }
+    }
+  };
+
   const handleVisionPricingAdd = (m: string) => {
     const visionPricing: VisionPricing = {
       mode: m,
@@ -1973,6 +2211,20 @@
         initImageGenerationPricing();
       }
       formData.value.image_generation.forEach((item) => {
+        if (!item.mode) {
+          item.mode = 'size';
+        }
+      });
+    }
+
+    if (formData.value.billing_items.includes('layer_decomp')) {
+      if (!formData.value.layer_decomp) {
+        formData.value.layer_decomp = [];
+      }
+      if (formData.value.layer_decomp.length === 0) {
+        initLayerDecompPricing();
+      }
+      formData.value.layer_decomp.forEach((item) => {
         if (!item.mode) {
           item.mode = 'size';
         }

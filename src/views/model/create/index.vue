@@ -944,6 +944,7 @@
         output_ratio: ref(),
       },
       image_generation: [],
+      layer_decomp: [],
       image_cache: {
         read_ratio: ref(),
       },

@@ -50,6 +50,17 @@ export interface ImageGenerationPricing {
   is_default: string;
 }
 
+export interface LayerDecompPricing {
+  mode?: string;
+  quality: any;
+  width: any;
+  height: any;
+  pixel_gte?: string;
+  pixel_lte?: string;
+  once_ratio: any;
+  is_default: string;
+}
+
 export interface VisionPricing {
   mode: string;
   once_ratio: any;
@@ -97,6 +108,7 @@ export interface Pricing {
   tiered_text_cache: CachePricing[];
   image: ImagePricing;
   image_generation: ImageGenerationPricing[];
+  layer_decomp: LayerDecompPricing[];
   image_cache: CachePricing;
   vision: VisionPricing[];
   audio: AudioPricing;
@@ -134,6 +146,12 @@ export interface ImageSpend {
 
 export interface ImageGenerationSpend {
   pricing: ImageGenerationPricing;
+  n: number;
+  spend_tokens: number;
+}
+
+export interface LayerDecompSpend {
+  pricing: LayerDecompPricing;
   n: number;
   spend_tokens: number;
 }
@@ -186,6 +204,7 @@ export interface Spend {
   tiered_text_cache: CacheSpend;
   image: ImageSpend;
   image_generation: ImageGenerationSpend;
+  layer_decomp: LayerDecompSpend;
   image_cache: CacheSpend;
   vision: VisionSpend;
   audio: AudioSpend;

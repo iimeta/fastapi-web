@@ -330,6 +330,36 @@
       </template>
     </a-table>
 
+    <!-- 图层拆分 -->
+    <a-table
+      v-if="pricing.billing_items.includes('layer_decomp')"
+      :columns="layerDecompPricingColumns"
+      :data="layerDecompPricing"
+      :pagination="false"
+      :bordered="false"
+      class="pricing-detail-table-spacing"
+    >
+      <template #mode="{ record }">
+        {{ formatImageGenerationMode(record) }}
+      </template>
+      <template #quality="{ record }">
+        {{ record.quality || '-' }}
+      </template>
+      <template #width="{ record }">
+        {{ formatImageGenerationSize(record) }}
+      </template>
+      <template #once_ratio="{ record }">
+        <Quota
+          :currency-symbol="props.modelValue?.currency_symbol"
+          :model-value="record.once_ratio"
+        />
+        / {{ $t('unit.piece') }}
+      </template>
+      <template #is_default="{ record }">
+        {{ record.is_default ? $t('dict.true') : '-' }}
+      </template>
+    </a-table>
+
     <!-- 图像缓存 -->
     <a-table
       v-if="
@@ -512,6 +542,7 @@
     AudioPricing,
     ImagePricing,
     ImageGenerationPricing,
+    LayerDecompPricing,
     VisionPricing,
     VideoPricing,
     VideoGenerationPricing,
@@ -534,7 +565,9 @@
 
   const onlyTimeRules = computed(() => !!props.onlyTimeRules);
 
-  const formatImageGenerationMode = (record: ImageGenerationPricing) => {
+  const formatImageGenerationMode = (
+    record: ImageGenerationPricing | LayerDecompPricing
+  ) => {
     if (record?.mode === 'pixel') {
       return t('model.dict.image_generation_mode.pixel');
     }
@@ -979,6 +1012,52 @@
     },
   ]);
 
+  // 图层拆分
+  const layerDecompPricing = ref<LayerDecompPricing[]>([]);
+  const layerDecompPricingColumns = ref<TableColumnData[]>([
+    {
+      title: t('dict.billing_items.layer_decomp'),
+      headerCellStyle: tableHeaderCellStyle,
+      children: [
+        {
+          title: t('model.label.image.generation.mode'),
+          dataIndex: 'mode',
+          slotName: 'mode',
+          align: 'center',
+          width: 150,
+        },
+        {
+          title: t('model.label.image.generation.quality'),
+          dataIndex: 'quality',
+          slotName: 'quality',
+          align: 'center',
+          width: 150,
+        },
+        {
+          title: t('model.label.image.generation.width_height'),
+          dataIndex: 'width',
+          slotName: 'width',
+          align: 'center',
+          width: 200,
+        },
+        {
+          title: t('model.label.image.generation.once_ratio'),
+          dataIndex: 'once_ratio',
+          slotName: 'once_ratio',
+          align: 'center',
+          width: 150,
+        },
+        {
+          title: t('model.label.is_default'),
+          dataIndex: 'is_default',
+          slotName: 'is_default',
+          align: 'center',
+          width: 150,
+        },
+      ],
+    },
+  ]);
+
   // 图像缓存
   const imageCachePricing = ref<CachePricing[]>([]);
   const imageCachePricingColumns = ref<TableColumnData[]>([
@@ -1251,6 +1330,11 @@
     // 图像生成
     if (pricing.value.billing_items.includes('image_generation')) {
       imageGenerationPricing.value = pricing.value.image_generation;
+    }
+
+    // 图层拆分
+    if (pricing.value.billing_items.includes('layer_decomp')) {
+      layerDecompPricing.value = pricing.value.layer_decomp;
     }
 
     // 图像缓存

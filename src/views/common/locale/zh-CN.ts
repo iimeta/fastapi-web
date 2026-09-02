@@ -306,6 +306,7 @@ export default {
   'dict.billing_items.tiered_text_cache': '阶梯文本缓存',
   'dict.billing_items.image': '图像',
   'dict.billing_items.image_generation': '图像生成',
+  'dict.billing_items.layer_decomp': '图层拆分',
   'dict.billing_items.image_cache': '图像缓存',
   'dict.billing_items.vision': '识图',
   'dict.billing_items.audio': '音频',
