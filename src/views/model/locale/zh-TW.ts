@@ -11,6 +11,8 @@ export default {
   'model.placeholder.type': '請選擇模型類型',
   'model.label.remark': '說明',
   'model.placeholder.remark': '請輸入說明',
+  'model.label.tags': '標籤',
+  'model.placeholder.tags': '請輸入標籤, 按回車確認, 可多個',
   'model.label.currency_symbol': '貨幣符號',
   'model.placeholder.currency_symbol': '請輸入或選擇貨幣符號, 不填則使用站點配置',
   'model.label.data_passthrough': '數據透傳',

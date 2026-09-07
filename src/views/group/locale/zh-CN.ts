@@ -11,6 +11,8 @@ export default {
   'group.error.required.weight': '请输入排序',
   'group.label.remark': '说明',
   'group.placeholder.remark': '请输入说明',
+  'group.label.tags': '标签',
+  'group.placeholder.tags': '请输入标签, 按回车确认, 可多个',
   'group.label.is_enable_forward': '模型转发',
   'group.label.forward_rule': '转发规则',
   'group.placeholder.forward_rule': '请选择转发规则',

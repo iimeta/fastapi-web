@@ -22,6 +22,7 @@ export interface GroupBaseInfo {
   time_rules?: TimeRule[];
   billing_methods: number[];
   name: string;
+  tags: string[];
   models: string[];
   is_default: boolean;
   is_public: boolean;
@@ -57,6 +58,7 @@ export interface GroupPage {
   time_rules?: TimeRule[];
   billing_methods?: number[];
   name: string;
+  tags: string[];
   is_default?: boolean;
   used_quota: number;
   models: string[];
@@ -88,6 +90,14 @@ export function queryGroupPage(params: GroupPageParams) {
   return axios.post<GroupPageRes>('/api/v1/group/page', params);
 }
 
+export interface GroupTagListRes {
+  tags: string[];
+}
+
+export function queryGroupTagList() {
+  return axios.get<GroupTagListRes>('/api/v1/group/tags');
+}
+
 export interface GroupDeleteParams {
   id: string;
 }
@@ -105,6 +115,7 @@ export interface GroupDetail {
   time_rules?: TimeRule[];
   billing_methods: number[];
   name: string;
+  tags: string[];
   models: string[];
   model_names: string[];
   is_default: boolean;

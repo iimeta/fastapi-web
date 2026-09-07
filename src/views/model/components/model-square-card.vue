@@ -69,8 +69,27 @@
       </div>
     </div>
 
-    <!-- 备注 -->
-    <p v-if="showRemark" class="model-square-card__remark">
+    <!-- 标签 -->
+    <div
+      v-if="record.tags && record.tags.length"
+      class="model-square-card__tags"
+      :title="record.tags.join(', ')"
+    >
+      <a-tag
+        v-for="tag in record.tags"
+        :key="tag"
+        size="small"
+        :color="getTagColor(tag)"
+      >
+        {{ tag }}
+      </a-tag>
+    </div>
+
+    <!-- 备注：有内容才显示；标签和描述都没有时保留原来的空行 -->
+    <p
+      v-if="record.remark || !record.tags?.length"
+      class="model-square-card__remark"
+    >
       {{ record.remark || '' }}
     </p>
 
@@ -168,6 +187,7 @@
     getProviderInitial,
     getProviderLogo,
   } from '@/utils/provider-brand';
+  import { getTagColor } from '@/utils/tag-color';
 
   const { t } = useI18n();
   const { copy } = useClipboard();
@@ -175,7 +195,6 @@
 
   const props = defineProps<{
     record: ModelPage;
-    showRemark: boolean;
   }>();
   defineEmits<{
     (e: 'clickCard', r: ModelPage): void;
@@ -652,6 +671,23 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .model-square-card__tags {
+    margin: 4px 18px 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-height: 22px;
+    max-height: 44px;
+    word-break: break-all;
+
+    :deep(.arco-tag) {
+      display: inline-flex;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
   }
 
   .model-square-card__spacer {

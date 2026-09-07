@@ -7,26 +7,26 @@
     <!-- 顶部品牌色带 -->
     <div class="group-square-card__bar" :style="{ background: barGradient }" />
 
-    <!-- 头部: 首字母 + 名称 + 状态 -->
+    <!-- 头部: 首字母 + 名称 + 倍率/计费，标签铺满名称下方整宽 -->
     <div class="group-square-card__head">
-      <div class="group-square-card__avatar-area">
-        <svg
-          v-if="logoData?.kind === 'svg'"
-          class="group-square-card__svg"
-          :viewBox="logoData.viewBox"
-          :style="logoData.color ? { color: logoData.color } : undefined"
-        >
-          <path v-if="logoData.path" :d="logoData.path" />
-          <g v-else-if="logoData.markup" v-html="logoData.markup" />
-        </svg>
-        <span
-          v-else
-          class="group-square-card__letter"
-          :style="{ background: barGradient }"
-        >
-          {{ initial }}
-        </span>
-        <div class="group-square-card__name-wrap">
+      <svg
+        v-if="logoData?.kind === 'svg'"
+        class="group-square-card__svg"
+        :viewBox="logoData.viewBox"
+        :style="logoData.color ? { color: logoData.color } : undefined"
+      >
+        <path v-if="logoData.path" :d="logoData.path" />
+        <g v-else-if="logoData.markup" v-html="logoData.markup" />
+      </svg>
+      <span
+        v-else
+        class="group-square-card__letter"
+        :style="{ background: barGradient }"
+      >
+        {{ initial }}
+      </span>
+      <div class="group-square-card__name-wrap">
+        <div class="group-square-card__name-row">
           <div class="group-square-card__name" :title="record.name">
             <span
               class="group-square-card__name-text"
@@ -43,29 +43,44 @@
               {{ $t('group.detail.is_default') }}
             </span>
           </div>
-          <div class="group-square-card__billing-tags">
-            <span
-              v-for="bm in billingMethods"
-              :key="bm"
-              class="group-square-card__tag"
-              :style="billingTagStyle(bm)"
+          <div class="group-square-card__head-extra">
+            <div
+              v-if="groupMultiplierText"
+              class="group-square-card__multiplier"
+              :style="{ '--brand': brandColor }"
             >
-              {{ $t(`dict.billing_methods.${bm}`) }}
-            </span>
+              {{ groupMultiplierText }}
+            </div>
+            <div class="group-square-card__billing-tags">
+              <a-tag
+                v-for="bm in billingMethods"
+                :key="bm"
+                size="small"
+                :style="billingTagStyle(bm)"
+              >
+                {{ $t(`dict.billing_methods.${bm}`) }}
+              </a-tag>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        v-if="groupMultiplierText"
-        class="group-square-card__multiplier"
-        :style="{ '--brand': brandColor }"
-      >
-        {{ groupMultiplierText }}
+        <div
+          class="group-square-card__tags"
+          :title="record.tags?.join(', ') || ''"
+        >
+          <a-tag
+            v-for="tag in record.tags || []"
+            :key="tag"
+            size="small"
+            :color="getTagColor(tag)"
+          >
+            {{ tag }}
+          </a-tag>
+        </div>
       </div>
     </div>
 
     <!-- 备注 -->
-    <p v-if="showRemark" class="group-square-card__remark">
+    <p class="group-square-card__remark">
       {{ record.remark || '' }}
     </p>
 
@@ -154,10 +169,10 @@
     getProviderInitial,
     getProviderLogo,
   } from '@/utils/provider-brand';
+  import { getTagColor } from '@/utils/tag-color';
 
   const props = defineProps<{
     record: GroupPage;
-    showRemark: boolean;
   }>();
   defineEmits<{
     (e: 'clickCard', r: GroupPage): void;
@@ -195,6 +210,7 @@
     return {
       color: `rgb(${rgb})`,
       background: `rgba(${rgb}, 0.08)`,
+      border: 'none',
     };
   };
 
@@ -262,18 +278,9 @@
 
   .group-square-card__head {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
     gap: 10px;
     padding: 16px 18px 0;
-  }
-
-  .group-square-card__avatar-area {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
-    flex: 1;
   }
 
   .group-square-card__svg {
@@ -296,10 +303,18 @@
   }
 
   .group-square-card__name-wrap {
+    flex: 1;
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
+  }
+
+  .group-square-card__name-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
   }
 
   .group-square-card__name {
@@ -307,11 +322,11 @@
     align-items: center;
     gap: 6px;
     min-width: 0;
+    flex: 1;
   }
 
   .group-square-card__name-text {
     font-size: 15px;
-    font-weight: 600;
     color: var(--color-text-1);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -339,7 +354,14 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .group-square-card__head-extra {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 
   .group-square-card__status-row {
@@ -398,6 +420,24 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .group-square-card__tags {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-height: 22px;
+    min-height: 22px;
+    max-height: 44px;
+    word-break: break-all;
+
+    :deep(.arco-tag) {
+      display: inline-flex;
+      margin-right: 4px;
+      margin-bottom: 2px;
+      vertical-align: middle;
+    }
   }
 
   .group-square-card__spacer {

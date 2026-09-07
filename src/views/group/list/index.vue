@@ -16,12 +16,12 @@
         <a-col :flex="1">
           <a-form
             :model="searchFormData"
-            :label-col-props="{ span: 5 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 7 }"
+            :wrapper-col-props="{ span: 17 }"
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="name" :label="$t('group.label.name')">
                   <a-input
                     v-model="searchFormData.name"
@@ -30,7 +30,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="models" :label="$t('common.models')">
                   <a-select
                     v-model="searchFormData.models"
@@ -50,7 +50,47 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
+                <a-form-item field="is_public" :label="$t('common.public')">
+                  <a-select
+                    v-model="searchFormData.is_public"
+                    :placeholder="$t('common.all')"
+                    :options="publicOptions"
+                    :scrollbar="false"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
+                <a-form-item field="tags" :label="$t('group.label.tags')">
+                  <a-select
+                    v-model="searchFormData.tags"
+                    :placeholder="$t('common.all')"
+                    :max-tag-count="2"
+                    :scrollbar="false"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in tagOptions"
+                      :key="item"
+                      :value="item"
+                      :label="item"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
+                <a-form-item field="remark" :label="$t('group.label.remark')">
+                  <a-input
+                    v-model="searchFormData.remark"
+                    :placeholder="$t('group.placeholder.remark')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
                 <a-form-item
                   field="model_agents"
                   :label="$t('common.model_agents')"
@@ -73,16 +113,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item field="remark" :label="$t('group.label.remark')">
-                  <a-input
-                    v-model="searchFormData.remark"
-                    :placeholder="$t('group.placeholder.remark')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
@@ -93,7 +124,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item
                   field="expires_at"
                   :label="$t('common.expires_at')"
@@ -292,6 +323,9 @@
         </template>
         <template #model_agent_names="{ record }">
           {{ record?.model_agent_names?.join(',') || '-' }}
+        </template>
+        <template #tags="{ record }">
+          {{ record?.tags?.join(',') || '-' }}
         </template>
         <template #used_quota="{ record }">
           <Quota :model-value="record.used_quota" />
@@ -533,6 +567,7 @@
     submitGroupChangeStatus,
     GroupBatchOperate,
     submitGroupBatchOperate,
+    queryGroupTagList,
   } from '@/api/group';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -578,6 +613,8 @@
       model_agents: [],
       status: ref(),
       remark: '',
+      tags: [],
+      is_public: ref(),
       expires_at: [],
     };
   };
@@ -655,6 +692,14 @@
       tooltip: true,
     },
     {
+      title: t('group.label.tags'),
+      dataIndex: 'tags',
+      slotName: 'tags',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
       title: t('common.used_quota'),
       dataIndex: 'used_quota',
       slotName: 'used_quota',
@@ -713,6 +758,17 @@
     {
       label: t('dict.status.2'),
       value: 2,
+    },
+  ]);
+
+  const publicOptions = computed<SelectOptionData[]>(() => [
+    {
+      label: t('dict.true'),
+      value: 'true',
+    },
+    {
+      label: t('dict.false'),
+      value: 'false',
     },
   ]);
 
@@ -847,6 +903,17 @@
     }
   };
   getModelAgentList();
+
+  const tagOptions = ref<string[]>([]);
+  const getTagList = async () => {
+    try {
+      const { data } = await queryGroupTagList();
+      tagOptions.value = data.tags || [];
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getTagList();
 
   const groupChangePublic = (params: GroupChangePublic) => {
     const item = renderData.value.find((r) => r.id === params.id);

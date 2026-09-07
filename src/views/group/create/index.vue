@@ -116,6 +116,25 @@
             <a-form-item field="is_default" :label="$t('common.default')">
               <a-switch v-model="formData.is_default" />
             </a-form-item>
+            <a-form-item field="tags" :label="$t('group.label.tags')">
+              <a-select
+                v-model="formData.tags"
+                :placeholder="$t('group.placeholder.tags')"
+                :max-tag-count="10"
+                :scrollbar="false"
+                multiple
+                allow-create
+                allow-search
+                allow-clear
+              >
+                <a-option
+                  v-for="item in tagOptions"
+                  :key="item"
+                  :value="item"
+                  :label="item"
+                />
+              </a-select>
+            </a-form-item>
             <a-form-item
               field="remark"
               :label="$t('group.label.remark')"
@@ -908,7 +927,11 @@
   import { useRouter } from 'vue-router';
   import { useAppStore } from '@/store';
   import { disabledDate, parsePrice } from '@/utils/common';
-  import { submitGroupCreate, GroupCreate } from '@/api/group';
+  import {
+    submitGroupCreate,
+    GroupCreate,
+    queryGroupTagList,
+  } from '@/api/group';
   import { queryModelList, ModelList } from '@/api/model';
   import ModelSelect from '@/components/model-select/index.vue';
   import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
@@ -946,12 +969,24 @@
   };
   getModelAgentList();
 
+  const tagOptions = ref<string[]>([]);
+  const getTagList = async () => {
+    try {
+      const { data } = await queryGroupTagList();
+      tagOptions.value = data.tags || [];
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getTagList();
+
   const formRef = ref<FormInstance>();
   const formData = ref<GroupCreate>({
     name: '',
     time_rules: [],
     billing_methods: [1, 2],
     models: [],
+    tags: [],
     is_default: false,
     is_public: true,
     weight: ref(),

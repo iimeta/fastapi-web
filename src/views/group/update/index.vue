@@ -116,6 +116,25 @@
             <a-form-item field="is_default" :label="$t('common.default')">
               <a-switch v-model="formData.is_default" />
             </a-form-item>
+            <a-form-item field="tags" :label="$t('group.label.tags')">
+              <a-select
+                v-model="formData.tags"
+                :placeholder="$t('group.placeholder.tags')"
+                :max-tag-count="10"
+                :scrollbar="false"
+                multiple
+                allow-create
+                allow-search
+                allow-clear
+              >
+                <a-option
+                  v-for="item in tagOptions"
+                  :key="item"
+                  :value="item"
+                  :label="item"
+                />
+              </a-select>
+            </a-form-item>
             <a-form-item
               field="remark"
               :label="$t('group.label.remark')"
@@ -914,6 +933,7 @@
     GroupUpdate,
     GroupDetailParams,
     queryGroupDetail,
+    queryGroupTagList,
   } from '@/api/group';
   import { queryModelList, ModelList } from '@/api/model';
   import ModelSelect from '@/components/model-select/index.vue';
@@ -954,12 +974,24 @@
   };
   getModelAgentList();
 
+  const tagOptions = ref<string[]>([]);
+  const getTagList = async () => {
+    try {
+      const { data } = await queryGroupTagList();
+      tagOptions.value = data.tags || [];
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getTagList();
+
   const formRef = ref<FormInstance>();
   const formData = ref<GroupUpdate>({
     name: '',
     time_rules: [],
     billing_methods: [1, 2],
     models: [],
+    tags: [],
     is_default: false,
     is_public: true,
     weight: ref(),
@@ -1038,6 +1070,7 @@
       formData.value.is_public = data.is_public || false;
       formData.value.weight = data.weight;
       formData.value.expires_at = data.expires_at;
+      formData.value.tags = data.tags || [];
       formData.value.remark = data.remark;
       formData.value.status = data.status;
       formData.value.is_enable_model_agent = data.is_enable_model_agent;

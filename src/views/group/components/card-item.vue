@@ -211,6 +211,11 @@
                       {{ record.model_agent_names?.join(', ') || '-' }}
                     </span>
                   </template>
+                  <template v-else-if="field.dataIndex === 'tags'">
+                    <span :title="record.tags?.join(', ') || ''">
+                      {{ record.tags?.join(', ') || '-' }}
+                    </span>
+                  </template>
 
                   <template v-else-if="field.dataIndex === 'expires_at'">
                     <a-date-picker

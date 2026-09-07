@@ -81,7 +81,10 @@
       </div>
 
       <!-- 计费方式 -->
-      <div class="group-square-filter-row group-square-filter-row--last">
+      <div
+        class="group-square-filter-row"
+        :class="{ 'group-square-filter-row--last': !tagOptions.length }"
+      >
         <span class="group-square-filter-label">
           {{ $t('common.billing_methods') }}
         </span>
@@ -103,6 +106,36 @@
             @click="pickBilling(o.value)"
           >
             {{ o.label }}
+          </span>
+        </div>
+      </div>
+
+      <!-- 标签 -->
+      <div
+        v-if="tagOptions.length"
+        class="group-square-filter-row group-square-filter-row--last"
+      >
+        <span class="group-square-filter-label">
+          {{ $t('group.label.tags') }}
+        </span>
+        <div class="group-square-filter-body">
+          <span
+            class="group-square-pill"
+            :class="{ 'group-square-pill-on': !form.tags.length }"
+            @click="pickTag('')"
+          >
+            {{ $t('common.all') }}
+          </span>
+          <span
+            v-for="tag in tagOptions"
+            :key="tag"
+            class="group-square-pill"
+            :class="{
+              'group-square-pill-on': form.tags.includes(tag),
+            }"
+            @click="pickTag(tag)"
+          >
+            {{ tag }}
           </span>
         </div>
       </div>
@@ -168,7 +201,6 @@
           >
             <GroupSquareCard
               :record="item"
-              :show-remark="hasAnyRemark"
               @click-card="openDetail"
               @view-models="(r) => modelsHandle(r.id)"
             />
@@ -248,8 +280,6 @@
                     {{ $t('group.detail.is_default') }}
                   </span>
                 </h2>
-              </div>
-              <div class="tech-meta-row">
                 <div class="tech-billing-tags">
                   <span
                     v-for="bm in detailBillingMethods"
@@ -260,10 +290,25 @@
                     {{ $t(`dict.billing_methods.${bm}`) }}
                   </span>
                 </div>
-                <div v-if="detailRecord.expires_at" class="tech-expire">
+              </div>
+              <div v-if="detailRecord.expires_at" class="tech-meta-row">
+                <div class="tech-expire">
                   <icon-calendar :size="12" />
                   <span>{{ detailRecord.expires_at }}</span>
                 </div>
+              </div>
+              <div
+                v-if="detailRecord.tags && detailRecord.tags.length"
+                class="tech-tags-row"
+              >
+                <a-tag
+                  v-for="tag in detailRecord.tags"
+                  :key="tag"
+                  size="small"
+                  :color="getTagColor(tag)"
+                >
+                  {{ tag }}
+                </a-tag>
               </div>
             </div>
           </div>
@@ -368,7 +413,12 @@
   import { computed, ref, reactive } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryGroupPage, GroupPage, GroupPageParams } from '@/api/group';
+  import {
+    queryGroupPage,
+    GroupPage,
+    GroupPageParams,
+    queryGroupTagList,
+  } from '@/api/group';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -379,6 +429,7 @@
     getProviderInitial,
     getProviderLogo,
   } from '@/utils/provider-brand';
+  import { getTagColor } from '@/utils/tag-color';
   import GroupSquareCard from '../components/group-square-card.vue';
   import GroupSquareSkeleton from '../components/group-square-skeleton.vue';
 
@@ -395,6 +446,7 @@
     type: undefined as number | undefined,
     billing_method: undefined as number | undefined,
     search_value: '',
+    tags: [] as string[],
   });
   const form = reactive(initForm());
 
@@ -404,6 +456,16 @@
     try {
       const { data } = await queryProviderList();
       providers.value = data.items;
+    } catch {
+      /* ignore */
+    }
+  })();
+
+  const tagOptions = ref<string[]>([]);
+  (async () => {
+    try {
+      const { data } = await queryGroupTagList();
+      tagOptions.value = data.tags || [];
     } catch {
       /* ignore */
     }
@@ -432,7 +494,6 @@
 
   /* ---- 数据 ---- */
   const list = ref<GroupPage[]>([]);
-  const hasAnyRemark = computed(() => list.value.some((g) => !!g.remark));
   const basePage: Pagination = {
     current: 1,
     pageSize: 60,
@@ -494,6 +555,9 @@
     if (form.billing_method) {
       params.billing_method = form.billing_method;
     }
+    if (form.tags.length) {
+      params.tags = form.tags;
+    }
     fetchData(params as GroupPageParams);
   };
 
@@ -513,6 +577,16 @@
   };
   const pickBilling = (v: number | undefined) => {
     form.billing_method = v;
+    search();
+  };
+  const pickTag = (tag: string) => {
+    if (!tag) {
+      form.tags = [];
+    } else if (form.tags.includes(tag)) {
+      form.tags = form.tags.filter((item) => item !== tag);
+    } else {
+      form.tags = [...form.tags, tag];
+    }
     search();
   };
 
@@ -988,6 +1062,15 @@
     display: flex;
     gap: 6px;
     flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .tech-tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
   }
 
   .tech-expire {

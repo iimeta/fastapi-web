@@ -11,6 +11,8 @@ export default {
   'group.error.required.weight': '請輸入排序',
   'group.label.remark': '說明',
   'group.placeholder.remark': '請輸入說明',
+  'group.label.tags': '標籤',
+  'group.placeholder.tags': '請輸入標籤, 按回車確認, 可多個',
   'group.label.is_enable_forward': '模型轉發',
   'group.label.forward_rule': '轉發規則',
   'group.placeholder.forward_rule': '請選擇轉發規則',

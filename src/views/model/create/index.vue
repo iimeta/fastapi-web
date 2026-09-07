@@ -132,6 +132,26 @@
                 <a-option value="$"> $ </a-option>
               </a-select>
             </a-form-item>
+            <a-form-item field="tags" :label="$t('model.label.tags')">
+              <a-select
+                v-model="formData.tags"
+                :placeholder="$t('model.placeholder.tags')"
+                :max-tag-count="10"
+                :scrollbar="false"
+                multiple
+                allow-create
+                allow-search
+                allow-clear
+                class="model-form-wide-input"
+              >
+                <a-option
+                  v-for="item in tagOptions"
+                  :key="item"
+                  :value="item"
+                  :label="item"
+                />
+              </a-select>
+            </a-form-item>
             <a-form-item field="remark" :label="$t('model.label.remark')">
               <a-textarea
                 v-model="formData.remark"
@@ -857,6 +877,7 @@
     submitModelCreate,
     queryModelList,
     ModelList,
+    queryModelTagList,
   } from '@/api/model';
   import { ENDPOINTS } from '@/api/common';
   import { queryProviderList, ProviderList } from '@/api/provider';
@@ -915,12 +936,24 @@
   };
   getGroupList();
 
+  const tagOptions = ref<string[]>([]);
+  const getTagList = async () => {
+    try {
+      const { data } = await queryModelTagList();
+      tagOptions.value = data.tags || [];
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getTagList();
+
   const formRef = ref<FormInstance>();
   const formData = ref<Model>({
     provider_id: '',
     name: '',
     model: '',
     type: '1',
+    tags: [],
     remark: '',
     is_enable_preset_config: false,
     preset_config: {

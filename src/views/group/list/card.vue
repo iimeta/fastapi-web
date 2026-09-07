@@ -16,12 +16,12 @@
         <a-col :flex="1">
           <a-form
             :model="searchFormData"
-            :label-col-props="{ span: 5 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 7 }"
+            :wrapper-col-props="{ span: 17 }"
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="name" :label="$t('group.label.name')">
                   <a-input
                     v-model="searchFormData.name"
@@ -30,7 +30,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="models" :label="$t('common.models')">
                   <a-select
                     v-model="searchFormData.models"
@@ -50,7 +50,47 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
+                <a-form-item field="is_public" :label="$t('common.public')">
+                  <a-select
+                    v-model="searchFormData.is_public"
+                    :placeholder="$t('common.all')"
+                    :options="publicOptions"
+                    :scrollbar="false"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
+                <a-form-item field="tags" :label="$t('group.label.tags')">
+                  <a-select
+                    v-model="searchFormData.tags"
+                    :placeholder="$t('common.all')"
+                    :max-tag-count="2"
+                    :scrollbar="false"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in tagOptions"
+                      :key="item"
+                      :value="item"
+                      :label="item"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
+                <a-form-item field="remark" :label="$t('group.label.remark')">
+                  <a-input
+                    v-model="searchFormData.remark"
+                    :placeholder="$t('group.placeholder.remark')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
                 <a-form-item
                   field="model_agents"
                   :label="$t('common.model_agents')"
@@ -73,16 +113,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item field="remark" :label="$t('group.label.remark')">
-                  <a-input
-                    v-model="searchFormData.remark"
-                    :placeholder="$t('group.placeholder.remark')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
@@ -93,7 +124,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item
                   field="expires_at"
                   :label="$t('common.expires_at')"
@@ -366,6 +397,7 @@
     submitGroupChangeStatus,
     GroupBatchOperate,
     submitGroupBatchOperate,
+    queryGroupTagList,
   } from '@/api/group';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -385,6 +417,8 @@
     model_agents: string[];
     status: number | undefined;
     remark: string;
+    tags: string[];
+    is_public: string | undefined;
     expires_at: string[];
   };
   type FieldItem = {
@@ -415,6 +449,8 @@
     model_agents: [],
     status: undefined,
     remark: '',
+    tags: [],
+    is_public: undefined,
     expires_at: [],
   });
 
@@ -444,6 +480,7 @@
     { title: t('common.multiplier'), dataIndex: 'time_rules' },
     { title: t('common.models'), dataIndex: 'models' },
     { title: t('common.model_agents'), dataIndex: 'model_agent_names' },
+    { title: t('group.label.tags'), dataIndex: 'tags' },
     { title: t('common.used_quota'), dataIndex: 'used_quota' },
     { title: t('group.label.weight'), dataIndex: 'weight' },
     { title: t('group.columns.lb_strategy'), dataIndex: 'lb_strategy' },
@@ -480,6 +517,11 @@
   const statusOptions = computed<SelectOptionData[]>(() => [
     { label: t('dict.status.1'), value: 1 },
     { label: t('dict.status.2'), value: 2 },
+  ]);
+
+  const publicOptions = computed<SelectOptionData[]>(() => [
+    { label: t('dict.true'), value: 'true' },
+    { label: t('dict.false'), value: 'false' },
   ]);
 
   const models = ref<ModelList[]>([]);
@@ -650,6 +692,17 @@
     }
   };
   getModelAgentList();
+
+  const tagOptions = ref<string[]>([]);
+  const getTagList = async () => {
+    try {
+      const { data } = await queryGroupTagList();
+      tagOptions.value = data.tags || [];
+    } catch (err) {
+      // ignore
+    }
+  };
+  getTagList();
 
   const groupChangePublic = (params: GroupChangePublic) => {
     const item = renderData.value.find((r) => r.id === params.id);

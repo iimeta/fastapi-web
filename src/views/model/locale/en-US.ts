@@ -11,6 +11,8 @@ export default {
   'model.placeholder.type': 'Please select model type',
   'model.label.remark': 'Description',
   'model.placeholder.remark': 'Please enter description',
+  'model.label.tags': 'Tags',
+  'model.placeholder.tags': 'Enter tag, press Enter to confirm, multiple allowed',
   'model.label.currency_symbol': 'Currency Symbol',
   'model.placeholder.currency_symbol': 'Enter or select currency symbol. Uses site config if empty',
   'model.label.data_passthrough': 'Data Passthrough',

@@ -11,6 +11,8 @@ export default {
   'group.error.required.weight': 'Please enter the sort order',
   'group.label.remark': 'Description',
   'group.placeholder.remark': 'Please enter a description',
+  'group.label.tags': 'Tags',
+  'group.placeholder.tags': 'Enter tag, press Enter to confirm, multiple allowed',
   'group.label.is_enable_forward': 'Model Forwarding',
   'group.label.forward_rule': 'Forwarding Rule',
   'group.placeholder.forward_rule': 'Please select a forwarding rule',

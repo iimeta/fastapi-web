@@ -48,6 +48,7 @@ export interface Model {
   name: string;
   model: string;
   type: string;
+  tags: string[];
   remark: string;
   time_rules?: TimeRule[];
   pricing: Pricing;
@@ -84,6 +85,7 @@ export interface ModelPage {
   name: string;
   model: string;
   type: number;
+  tags: string[];
   time_rules?: TimeRule[];
   pricing: Pricing;
   groups: string[];
@@ -146,6 +148,14 @@ export function queryModelList() {
   return axios.get<ModelListRes>('/api/v1/model/list');
 }
 
+export interface ModelTagListRes {
+  tags: string[];
+}
+
+export function queryModelTagList() {
+  return axios.get<ModelTagListRes>('/api/v1/model/tags');
+}
+
 export interface ModelDeleteParams {
   id: string;
 }
@@ -166,6 +176,7 @@ export interface ModelDetail {
   name: string;
   model: string;
   type: number;
+  tags: string[];
   time_rules?: TimeRule[];
   pricing: Pricing;
   groups: string[];

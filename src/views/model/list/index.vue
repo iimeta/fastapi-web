@@ -16,12 +16,12 @@
         <a-col :flex="1">
           <a-form
             :model="searchFormData"
-            :label-col-props="{ span: 5 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 7 }"
+            :wrapper-col-props="{ span: 17 }"
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="provider_id" :label="$t('common.provider')">
                   <a-select
                     v-model="searchFormData.provider_id"
@@ -39,16 +39,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item field="model" :label="$t('common.model')">
-                  <a-input
-                    v-model="searchFormData.model"
-                    :placeholder="$t('model.form.placeholder.model')"
-                    allow-clear
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="name" :label="$t('common.model_name')">
                   <a-input
                     v-model="searchFormData.name"
@@ -57,7 +48,16 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
+                <a-form-item field="model" :label="$t('common.model')">
+                  <a-input
+                    v-model="searchFormData.model"
+                    :placeholder="$t('model.form.placeholder.model')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
                 <a-form-item field="group" :label="$t('common.group')">
                   <a-select
                     v-model="searchFormData.group"
@@ -75,7 +75,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="status" :label="$t('common.status')">
                   <a-select
                     v-model="searchFormData.status"
@@ -86,7 +86,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item field="type" :label="$t('common.model_type')">
                   <a-select
                     v-model="searchFormData.type"
@@ -94,6 +94,35 @@
                     :options="typeOptions"
                     :scrollbar="false"
                     allow-search
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
+                <a-form-item field="tags" :label="$t('model.label.tags')">
+                  <a-select
+                    v-model="searchFormData.tags"
+                    :placeholder="$t('common.all')"
+                    :max-tag-count="2"
+                    :scrollbar="false"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in tagOptions"
+                      :key="item"
+                      :value="item"
+                      :label="item"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
+                <a-form-item field="remark" :label="$t('model.label.remark')">
+                  <a-input
+                    v-model="searchFormData.remark"
+                    :placeholder="$t('model.placeholder.remark')"
                     allow-clear
                   />
                 </a-form-item>
@@ -422,6 +451,9 @@
         </template>
         <template #group_names="{ record }">
           {{ record?.group_names?.join(',') || '-' }}
+        </template>
+        <template #tags="{ record }">
+          {{ record?.tags?.join(',') || '-' }}
         </template>
         <template #lb_strategy="{ record }">
           {{
@@ -908,6 +940,7 @@
     queryModelList,
     ModelList,
     FallbackConfig,
+    queryModelTagList,
   } from '@/api/model';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -956,6 +989,8 @@
       type: ref(),
       group: '',
       status: ref(),
+      tags: [],
+      remark: '',
     };
   };
 
@@ -1027,6 +1062,14 @@
       title: t('common.group'),
       dataIndex: 'group_names',
       slotName: 'group_names',
+      align: 'center',
+      ellipsis: true,
+      tooltip: true,
+    },
+    {
+      title: t('model.label.tags'),
+      dataIndex: 'tags',
+      slotName: 'tags',
       align: 'center',
       ellipsis: true,
       tooltip: true,
@@ -1275,6 +1318,17 @@
     groups.value = data.items;
   };
   getGroupList();
+
+  const tagOptions = ref<string[]>([]);
+  const getTagList = async () => {
+    try {
+      const { data } = await queryModelTagList();
+      tagOptions.value = data.tags || [];
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+  getTagList();
 
   const modelChangeStatus = async (params: ModelChangeStatus) => {
     await submitModelChangeStatus(params);

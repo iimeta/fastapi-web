@@ -11,6 +11,8 @@ export default {
   'model.placeholder.type': '请选择模型类型',
   'model.label.remark': '说明',
   'model.placeholder.remark': '请输入说明',
+  'model.label.tags': '标签',
+  'model.placeholder.tags': '请输入标签, 按回车确认, 可多个',
   'model.label.currency_symbol': '货币符号',
   'model.placeholder.currency_symbol': '请输入或选择货币符号, 不填则使用站点配置',
   'model.label.data_passthrough': '数据透传',

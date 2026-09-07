@@ -108,7 +108,10 @@
       </div>
 
       <!-- 计费方式 -->
-      <div class="model-square-filter-row model-square-filter-row--last">
+      <div
+        class="model-square-filter-row"
+        :class="{ 'model-square-filter-row--last': !tagOptions.length }"
+      >
         <span class="model-square-filter-label">
           {{ $t('common.billing_methods') }}
         </span>
@@ -130,6 +133,36 @@
             @click="pickBilling(o.value)"
           >
             {{ o.label }}
+          </span>
+        </div>
+      </div>
+
+      <!-- 标签 -->
+      <div
+        v-if="tagOptions.length"
+        class="model-square-filter-row model-square-filter-row--last"
+      >
+        <span class="model-square-filter-label">
+          {{ $t('model.label.tags') }}
+        </span>
+        <div class="model-square-filter-body">
+          <span
+            class="model-square-pill"
+            :class="{ 'model-square-pill-on': !form.tags.length }"
+            @click="pickTag('')"
+          >
+            {{ $t('common.all') }}
+          </span>
+          <span
+            v-for="tag in tagOptions"
+            :key="tag"
+            class="model-square-pill"
+            :class="{
+              'model-square-pill-on': form.tags.includes(tag),
+            }"
+            @click="pickTag(tag)"
+          >
+            {{ tag }}
           </span>
         </div>
       </div>
@@ -190,11 +223,7 @@
             :xxl="6"
             class="model-square-col"
           >
-            <ModelSquareCard
-              :record="item"
-              :show-remark="hasAnyRemark"
-              @click-card="openDetail"
-            />
+            <ModelSquareCard :record="item" @click-card="openDetail" />
           </a-col>
         </a-row>
       </template>
@@ -300,6 +329,20 @@
               {{ g }}
             </span>
           </div>
+          <div
+            v-if="detailRecord.tags && detailRecord.tags.length"
+            class="tech-tags-row"
+          >
+            <icon-tag class="tech-tags-icon" />
+            <a-tag
+              v-for="tag in detailRecord.tags"
+              :key="tag"
+              size="small"
+              :color="getTagColor(tag)"
+            >
+              {{ tag }}
+            </a-tag>
+          </div>
         </div>
 
         <!-- 内容区（可滚动） -->
@@ -366,7 +409,12 @@
   import { useClipboard } from '@vueuse/core';
   import useLoading from '@/hooks/loading';
   import { useAppStore } from '@/store';
-  import { queryModelPage, ModelPage, ModelPageParams } from '@/api/model';
+  import {
+    queryModelPage,
+    ModelPage,
+    ModelPageParams,
+    queryModelTagList,
+  } from '@/api/model';
   import { Pagination } from '@/types/global';
   import { queryProviderList, ProviderList } from '@/api/provider';
   import { queryGroupList, GroupList } from '@/api/group';
@@ -375,6 +423,7 @@
     getProviderInitial,
     getProviderLogo,
   } from '@/utils/provider-brand';
+  import { getTagColor } from '@/utils/tag-color';
   import PricingDetail from '../components/pricing_detail.vue';
   import ModelSquareCard from '../components/model-square-card.vue';
   import ModelSquareSkeleton from '../components/model-square-skeleton.vue';
@@ -392,6 +441,7 @@
     group: '',
     status: undefined as number | undefined,
     search_value: '',
+    tags: [] as string[],
   });
   const form = reactive(initForm());
 
@@ -419,7 +469,6 @@
 
   /* ---- 数据 ---- */
   const list = ref<ModelPage[]>([]);
-  const hasAnyRemark = computed(() => list.value.some((m) => !!m.remark));
   const basePage: Pagination = {
     current: 1,
     pageSize: 60,
@@ -493,6 +542,16 @@
     form.billing_method = v;
     search();
   };
+  const pickTag = (tag: string) => {
+    if (!tag) {
+      form.tags = [];
+    } else if (form.tags.includes(tag)) {
+      form.tags = form.tags.filter((item) => item !== tag);
+    } else {
+      form.tags = [...form.tags, tag];
+    }
+    search();
+  };
   /* ---- 供应商 / 分组 ---- */
   const providers = ref<ProviderList[]>([]);
   const groups = ref<GroupList[]>([]);
@@ -510,6 +569,16 @@
     try {
       const { data } = await queryGroupList();
       groups.value = data.items;
+    } catch {
+      /* ignore */
+    }
+  })();
+
+  const tagOptions = ref<string[]>([]);
+  (async () => {
+    try {
+      const { data } = await queryModelTagList();
+      tagOptions.value = data.tags || [];
     } catch {
       /* ignore */
     }
@@ -975,7 +1044,17 @@
     padding-left: 76px;
   }
 
-  .tech-groups-icon {
+  .tech-tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    padding-left: 76px;
+  }
+
+  .tech-groups-icon,
+  .tech-tags-icon {
     font-size: 13px;
     color: rgb(var(--primary-6));
     flex-shrink: 0;
