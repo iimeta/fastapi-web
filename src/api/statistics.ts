@@ -115,6 +115,8 @@ export interface StatisticsTopItem {
   app_key: string;
   app_key_raw?: string;
   model: string;
+  group_id?: string;
+  group_name?: string;
   provider: string;
   provider_id?: string;
   call: number;
@@ -139,6 +141,7 @@ export interface StatisticsDetailParams {
   app_id?: number;
   app_key?: string;
   model_id?: string;
+  group_id?: string;
   current?: number;
   pageSize?: number;
 }
@@ -157,6 +160,8 @@ export interface StatisticsDetailItem {
   app_id: number;
   app_key: string;
   model: string;
+  group_id?: string;
+  group_name?: string;
   stat_date: string;
   total: number;
   tokens: number;

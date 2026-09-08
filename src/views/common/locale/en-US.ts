@@ -23,6 +23,7 @@ export default {
   'common.model_type': 'Model Type',
   'common.model_agents': 'Model Agent',
   'common.group': 'Group',
+  'common.ungrouped': 'Ungrouped',
   'common.groups': 'Group Permissions',
   'common.bind_group': 'Bind Group',
   'common.bind_models': 'Bind Models',

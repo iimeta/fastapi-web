@@ -16,6 +16,7 @@
           <a-radio value="app">{{ $t('common.app') }}</a-radio>
           <a-radio value="app_key">{{ $t('common.key') }}</a-radio>
           <a-radio value="model">{{ $t('common.model') }}</a-radio>
+          <a-radio value="group">{{ $t('common.group') }}</a-radio>
           <a-radio value="provider"> {{ $t('common.provider') }} </a-radio>
         </a-radio-group>
         <DateShortcut :show-all="false" @change="handleDateChange" />
@@ -101,7 +102,7 @@
             <div v-else class="detail-list">
               <div class="detail-row detail-row--header">
                 <div class="detail-date">{{
-                  dimension === 'model'
+                  dimension === 'model' || dimension === 'group'
                     ? $t('common.user')
                     : $t('statistics.databoard.top.statDate')
                 }}</div>
@@ -125,7 +126,9 @@
                   @click="toggleExpand(idx)"
                 >
                   <div class="detail-date">{{
-                    dimension === 'model' ? row.user_id || '-' : row.stat_date
+                    dimension === 'model' || dimension === 'group'
+                      ? row.user_id || '-'
+                      : row.stat_date
                   }}</div>
                   <div class="detail-metrics">
                     <div class="detail-metric" style="color: #3469ff">{{
@@ -194,6 +197,7 @@
 
 <script lang="ts" setup>
   import { ref, watch, computed } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import dayjs from 'dayjs';
   import { useUserStore, useAppStore } from '@/store';
   import {
@@ -206,6 +210,7 @@
   import DateShortcut from './date-shortcut.vue';
 
   const props = defineProps<{ params: any }>();
+  const { t } = useI18n();
   const userStore = useUserStore();
   const appStore = useAppStore();
   const cs = computed(() => appStore.getCurrencySymbol || '$');
@@ -254,6 +259,11 @@
       }
       case 'model':
         return item.model || '-';
+      case 'group':
+        if (!item.group_id || item.group_id === 'ungrouped') {
+          return t('common.ungrouped');
+        }
+        return item.group_name || item.group_id || '-';
       case 'provider':
         return item.provider || '-';
       default:
@@ -321,6 +331,9 @@
         break;
       case 'model':
         dp.model_id = item.model;
+        break;
+      case 'group':
+        dp.group_id = item.group_id;
         break;
       case 'provider':
         dp.provider = item.provider_id || item.provider;

@@ -23,6 +23,7 @@ export default {
   'common.model_type': '模型類型',
   'common.model_agents': '模型代理',
   'common.group': '分組',
+  'common.ungrouped': '未分組',
   'common.groups': '分組權限',
   'common.bind_group': '綁定分組',
   'common.bind_models': '綁定模型',

@@ -14,6 +14,7 @@
           <a-radio value="app">{{ $t('common.app') }}</a-radio>
           <a-radio value="app_key">{{ $t('common.key') }}</a-radio>
           <a-radio value="model">{{ $t('common.model') }}</a-radio>
+          <a-radio value="group">{{ $t('common.group') }}</a-radio>
           <a-radio value="provider"> {{ $t('common.provider') }} </a-radio>
         </a-radio-group>
         <DateShortcut :show-all="false" @change="handleDateChange" />
@@ -176,6 +177,11 @@
       }
       case 'model':
         return item.model || '-';
+      case 'group':
+        if (!item.group_id || item.group_id === 'ungrouped') {
+          return t('common.ungrouped');
+        }
+        return item.group_name || item.group_id || '-';
       case 'provider':
         return item.provider || '-';
       default:
