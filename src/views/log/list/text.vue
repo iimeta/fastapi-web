@@ -387,8 +387,17 @@
         <template #user_id="{ record }">
           {{ record.is_smart_match ? '-' : record.user_id }}
         </template>
-        <template #action="{ record }">
-          {{ record.action || '-' }}
+        <template #model="{ record }">
+          <div class="model-cell">
+            <div class="model-cell-content">
+              <span class="model-cell-line" :title="record.model || '-'">
+                {{ $t('common.model') }}: {{ record.model || '-' }}
+              </span>
+              <span class="model-cell-line" :title="record.action || '-'">
+                {{ $t('log.columns.action') }}: {{ record.action || '-' }}
+              </span>
+            </div>
+          </div>
         </template>
         <template #input_tokens="{ record }">
           <div class="tokens-cell" :style="tokensCellStyle">
@@ -933,14 +942,8 @@
       dataIndex: 'model',
       slotName: 'model',
       align: 'center',
-    },
-    {
-      title: t('log.columns.action'),
-      dataIndex: 'action',
-      slotName: 'action',
-      align: 'center',
-      ellipsis: true,
-      tooltip: true,
+      cellClass: 'model-col',
+      headerCellClass: 'model-col',
     },
     {
       title: t('log.columns.input_tokens'),
