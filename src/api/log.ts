@@ -18,6 +18,7 @@ export interface TextPage {
   duration: number;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: any;
   status: number;
   err_msg: string;
@@ -86,6 +87,7 @@ export interface TextDetail {
   duration: number;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: string;
   client_ip: string;
   remote_ip: string;
@@ -158,6 +160,7 @@ export interface ImagePage {
   duration: number;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: any;
   status: number;
   err_msg: string;
@@ -215,6 +218,7 @@ export interface ImageDetail {
   duration: number;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: string;
   client_ip: string;
   remote_ip: string;
@@ -260,6 +264,7 @@ export interface AudioPage {
   total_tokens: number;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: any;
   status: number;
   err_msg: string;
@@ -310,6 +315,7 @@ export interface AudioDetail {
   spend: Spend;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: string;
   client_ip: string;
   remote_ip: string;
@@ -354,6 +360,7 @@ export interface VideoPage {
   total_tokens: number;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: any;
   status: number;
   err_msg: string;
@@ -406,6 +413,7 @@ export interface VideoDetail {
   spend: Spend;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: string;
   client_ip: string;
   remote_ip: string;
@@ -450,6 +458,7 @@ export interface FilePage {
   total_tokens: number;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: any;
   status: number;
   err_msg: string;
@@ -502,6 +511,7 @@ export interface FileDetail {
   spend: Spend;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: string;
   client_ip: string;
   remote_ip: string;
@@ -546,6 +556,7 @@ export interface BatchPage {
   total_tokens: number;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: any;
   status: number;
   err_msg: string;
@@ -598,6 +609,7 @@ export interface BatchDetail {
   spend: Spend;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: string;
   client_ip: string;
   remote_ip: string;
@@ -646,6 +658,7 @@ export interface GeneralPage {
   duration: number;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: any;
   status: number;
   err_msg: string;
@@ -700,6 +713,7 @@ export interface GeneralDetail {
   duration: number;
   total_time: number;
   internal_time: number;
+  receive_time: number;
   req_time: string;
   client_ip: string;
   remote_ip: string;

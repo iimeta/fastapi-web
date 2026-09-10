@@ -573,6 +573,13 @@
               </span>
               <span
                 class="time-cell-total"
+                :style="{ color: getReceiveTimeColor(record.receive_time) }"
+              >
+                {{ $t('log.columns.receive_time') }}:
+                {{ record.receive_time || '-' }}
+              </span>
+              <span
+                class="time-cell-total"
                 :style="{ color: getInternalTimeColor(record.internal_time) }"
               >
                 {{ $t('log.columns.internal_time') }}:
@@ -831,6 +838,8 @@
   const getTotalTimeColor = (value: number | undefined) =>
     getTimeColor(value, [300000, 210000, 120000]);
   const getInternalTimeColor = (value: number | undefined) =>
+    getTimeColor(value, [500, 300, 100]);
+  const getReceiveTimeColor = (value: number | undefined) =>
     getTimeColor(value, [500, 300, 100]);
 
   const densityList = computed(() => [

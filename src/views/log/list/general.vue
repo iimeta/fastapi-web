@@ -593,54 +593,21 @@
           </a-tag>
         </template>
         <template #internal_time="{ record }">
-          <a-tag
-            v-if="record.internal_time > 1000"
-            v-permission="['user', 'reseller']"
-            color="red"
-          >
-            {{ record.internal_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.internal_time > 500"
-            v-permission="['user', 'reseller']"
-            color="orange"
-          >
-            {{ record.internal_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.internal_time > 300"
-            v-permission="['user', 'reseller']"
-            color="gold"
-          >
-            {{ record.internal_time }}
-          </a-tag>
-          <a-tag v-else v-permission="['user', 'reseller']" color="green">
-            {{ record.internal_time || '-' }}
-          </a-tag>
-          <a-tag
-            v-if="record.internal_time > 500"
-            v-permission="['admin']"
-            color="red"
-          >
-            {{ record.internal_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.internal_time > 300"
-            v-permission="['admin']"
-            color="orange"
-          >
-            {{ record.internal_time }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.internal_time > 100"
-            v-permission="['admin']"
-            color="gold"
-          >
-            {{ record.internal_time }}
-          </a-tag>
-          <a-tag v-else v-permission="['admin']" color="green">
-            {{ record.internal_time || '-' }}
-          </a-tag>
+          <div class="time-cell" :style="tokensCellStyle">
+            <div class="time-cell-content">
+              <span :style="{ color: getReceiveTimeColor(record.receive_time) }">
+                {{ $t('log.columns.receive_time') }}:
+                {{ record.receive_time || '-' }}
+              </span>
+              <span
+                class="time-cell-total"
+                :style="{ color: getInternalTimeColor(record.internal_time) }"
+              >
+                {{ $t('log.columns.internal_time') }}:
+                {{ record.internal_time || '-' }}
+              </span>
+            </div>
+          </div>
         </template>
         <template #status="{ record }">
           <StatusTag :status="record.status" :err-msg="record.err_msg" />
@@ -824,6 +791,24 @@
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
+  const tokensCellStyle = computed(() => ({
+    minHeight: { mini: '26px', small: '30px', medium: '34px', large: '38px' }[
+      size.value
+    ],
+  }));
+  const getTimeColor = (
+    value: number | undefined,
+    thresholds: [number, number, number]
+  ) => {
+    if ((value || 0) > thresholds[0]) return 'rgb(var(--red-6))';
+    if ((value || 0) > thresholds[1]) return 'rgb(var(--orange-6))';
+    if ((value || 0) > thresholds[2]) return 'rgb(var(--gold-6))';
+    return 'rgb(var(--green-6))';
+  };
+  const getInternalTimeColor = (value: number | undefined) =>
+    getTimeColor(value, [500, 300, 100]);
+  const getReceiveTimeColor = (value: number | undefined) =>
+    getTimeColor(value, [500, 300, 100]);
   const ids = ref<Array<string>>([]);
   const multiple = ref(true);
   const tableRef = ref();

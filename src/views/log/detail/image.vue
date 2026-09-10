@@ -657,17 +657,21 @@
         </a-skeleton>
         <span v-else>
           <a-tag v-if="currentData.internal_time > 500" color="red">
+            {{ currentData.receive_time || '-' }} ms /
             {{ currentData.internal_time }} ms
           </a-tag>
           <a-tag v-else-if="currentData.internal_time > 300" color="orange">
+            {{ currentData.receive_time || '-' }} ms /
             {{ currentData.internal_time }} ms
           </a-tag>
           <a-tag v-else-if="currentData.internal_time > 100" color="gold">
+            {{ currentData.receive_time || '-' }} ms /
             {{ currentData.internal_time }} ms
           </a-tag>
-          <a-tag v-else color="green"
-            >{{ currentData.internal_time || '-' }} ms</a-tag
-          >
+          <a-tag v-else color="green">
+            {{ currentData.receive_time || '-' }} ms /
+            {{ currentData.internal_time || '-' }} ms
+          </a-tag>
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('log.detail.status')">
