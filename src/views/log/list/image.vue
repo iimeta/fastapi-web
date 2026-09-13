@@ -572,14 +572,12 @@
                 {{ record.total_time || '-' }}
               </span>
               <span
-                class="time-cell-total"
                 :style="{ color: getReceiveTimeColor(record.receive_time) }"
               >
                 {{ $t('log.columns.receive_time') }}:
                 {{ record.receive_time || '-' }}
               </span>
               <span
-                class="time-cell-total"
                 :style="{ color: getInternalTimeColor(record.internal_time) }"
               >
                 {{ $t('log.columns.internal_time') }}:
@@ -1491,15 +1489,16 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: 4px;
     min-width: 70px;
     font-variant-numeric: tabular-nums;
     text-align: left;
     white-space: nowrap;
     font-size: 13px;
-  }
 
-  .time-cell-total {
-    line-height: 1;
+    span {
+      line-height: 1;
+    }
   }
 
   // 其余计费项（text、text_cache、image、image_cache）花费汇总，
