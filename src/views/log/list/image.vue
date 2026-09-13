@@ -1490,7 +1490,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-    min-width: 70px;
+    width: 7em;
     font-variant-numeric: tabular-nums;
     text-align: left;
     white-space: nowrap;
