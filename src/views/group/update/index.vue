@@ -825,6 +825,25 @@
                 <icon-minus />
               </a-button>
             </a-form-item>
+            <a-form-item
+              field="is_enable_image_size_check"
+              :label="$t('group.label.is_enable_image_size_check')"
+            >
+              <a-switch v-model="formData.is_enable_image_size_check" />
+            </a-form-item>
+            <a-form-item
+              v-if="formData.is_enable_image_size_check"
+              field="image_size_check_retry"
+              :label="$t('group.label.image_size_check_retry')"
+            >
+              <a-input-number
+                v-model="formData.image_size_check_retry"
+                :placeholder="$t('group.placeholder.image_size_check_retry')"
+                :precision="0"
+                :min="0"
+                allow-clear
+              />
+            </a-form-item>
             <a-form-item field="expires_at" :label="$t('common.expires_at')">
               <a-date-picker
                 v-model="formData.expires_at"
@@ -1009,6 +1028,8 @@
     period_unit: 'day',
     reset_mode: 'natural',
     is_enable_forward: false,
+    is_enable_image_size_check: false,
+    image_size_check_retry: ref(),
     forward_config: {
       forward_rule: '1',
       forward_mode: 1,
@@ -1084,6 +1105,10 @@
       formData.value.period_unit = data.period_unit || 'day';
       formData.value.reset_mode = data.reset_mode || 'natural';
       formData.value.is_enable_forward = data.is_enable_forward;
+      formData.value.is_enable_image_size_check =
+        data.is_enable_image_size_check || false;
+      formData.value.image_size_check_retry =
+        data.image_size_check_retry || undefined;
       formData.value.forward_config = data.forward_config;
       if (data.forward_config) {
         if (data.forward_config.forward_rule) {

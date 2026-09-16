@@ -45,6 +45,8 @@ export interface GroupAdvanced {
   reset_mode: string;
   is_enable_forward: boolean;
   forward_config: ForwardConfig;
+  is_enable_image_size_check: boolean;
+  image_size_check_retry: any;
 }
 
 export type GroupCreate = GroupBaseInfo & GroupAdvanced;
@@ -140,6 +142,8 @@ export interface GroupDetail {
   next_reset_at: string;
   is_enable_forward: boolean;
   forward_config: ForwardConfig;
+  is_enable_image_size_check: boolean;
+  image_size_check_retry: any;
   created_at: string;
   updated_at: string;
 }

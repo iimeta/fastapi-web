@@ -230,6 +230,34 @@
           {{ $t(`dict.enable.${currentData.is_enable_forward || false}`) }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item
+        :label="$t('group.label.is_enable_image_size_check')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{
+            $t(`dict.enable.${currentData.is_enable_image_size_check || false}`)
+          }}
+        </span>
+      </a-descriptions-item>
+      <a-descriptions-item
+        v-if="currentData.is_enable_image_size_check"
+        :label="$t('group.label.image_size_check_retry')"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          <template v-if="currentData.image_size_check_retry > 0">
+            {{ currentData.image_size_check_retry }}
+          </template>
+          <template v-else>
+            {{ $t('group.detail.image_size_check_retry_follow') }}
+          </template>
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('group.label.forward_rule')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
