@@ -482,7 +482,9 @@
         <template #internal_time="{ record }">
           <div class="time-cell" :style="tokensCellStyle">
             <div class="time-cell-content">
-              <span :style="{ color: getReceiveTimeColor(record.receive_time) }">
+              <span
+                :style="{ color: getReceiveTimeColor(record.receive_time) }"
+              >
                 {{ $t('log.columns.receive_time') }}:
                 {{ record.receive_time || '-' }}
               </span>
@@ -694,7 +696,7 @@
   const getInternalTimeColor = (value: number | undefined) =>
     getTimeColor(value, [500, 300, 100]);
   const getReceiveTimeColor = (value: number | undefined) =>
-    getTimeColor(value, [500, 300, 100]);
+    getTimeColor(value, [10000, 5000, 2000]);
   const ids = ref<Array<string>>([]);
   const multiple = ref(true);
   const tableRef = ref();

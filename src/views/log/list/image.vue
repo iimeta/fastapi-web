@@ -838,7 +838,7 @@
   const getInternalTimeColor = (value: number | undefined) =>
     getTimeColor(value, [500, 300, 100]);
   const getReceiveTimeColor = (value: number | undefined) =>
-    getTimeColor(value, [500, 300, 100]);
+    getTimeColor(value, [15000, 10000, 5000]);
 
   const densityList = computed(() => [
     {
