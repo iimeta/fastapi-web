@@ -558,7 +558,7 @@
         </template>
         <template #internal_time="{ record }">
           <div class="time-cell" :style="tokensCellStyle">
-            <div class="time-cell-content">
+            <div class="internal-time-cell-content">
               <span
                 :style="{ color: getReceiveTimeColor(record.receive_time) }"
               >
@@ -1582,6 +1582,17 @@
     flex-direction: column;
     align-items: flex-start;
     min-width: 70px;
+    font-variant-numeric: tabular-nums;
+    text-align: left;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+
+  .internal-time-cell-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 60px;
     font-variant-numeric: tabular-nums;
     text-align: left;
     white-space: nowrap;
