@@ -20,13 +20,17 @@ export interface VideoPage {
   task_id: string;
   video_url: string;
   video_time: number;
+  prompt: string;
   status: number;
+  total_time: number;
   created_at: any;
 }
 
 export interface VideoPageParams extends Partial<VideoPage> {
   current: number;
   pageSize: number;
+  models?: string[];
+  model_agents?: string[];
 }
 
 export interface VideoPageRes {
@@ -45,6 +49,7 @@ export interface VideoDetail {
   app_id: number;
   model: string;
   video_id: string;
+  job_id: string;
   width: number;
   height: number;
   seconds: number;
@@ -58,6 +63,8 @@ export interface VideoDetail {
   file_name: string;
   file_path: string;
   error: any;
+  model_agent_id: string;
+  model_agent: any;
   creator: string;
   created_at: string;
   updated_at: string;
@@ -83,6 +90,20 @@ export interface VideoCopyFieldRes {
 
 export function videoCopyField(params: VideoCopyFieldParams) {
   return axios.post<VideoCopyFieldRes>('/api/v1/task/video/copy/field', params);
+}
+
+export function regenerateVideo(params: { id: string }) {
+  return axios.post('/api/v1/task/video/regenerate', params);
+}
+
+export interface VideoBatchOperate {
+  action: string;
+  ids?: string[];
+  value?: any;
+}
+
+export function submitVideoBatchOperate(data: VideoBatchOperate) {
+  return axios.post('/api/v1/task/video/batch/operate', data);
 }
 
 export interface ImagePage {

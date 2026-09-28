@@ -22,7 +22,7 @@
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col v-permission="['user']" :span="8">
+              <a-col v-permission="['user']" :span="5">
                 <a-form-item field="app_id" :label="$t('common.app')">
                   <a-select
                     v-model="formModel.app_id"
@@ -39,8 +39,13 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col v-permission="['reseller', 'admin']" :span="8">
-                <a-form-item field="user_id" :label="$t('common.user_id')">
+              <a-col v-permission="['reseller', 'admin']" :span="5">
+                <a-form-item
+                  field="user_id"
+                  :label="$t('common.user_id')"
+                  :label-col-props="{ span: userRole === 'admin' ? 7 : 6 }"
+                  :wrapper-col-props="{ span: userRole === 'admin' ? 17 : 18 }"
+                >
                   <a-input-number
                     v-model="formModel.user_id"
                     :placeholder="$t('placeholder.user_id')"
@@ -49,8 +54,12 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item field="trace_id" :label="$t('task.form.trace_id')">
+              <a-col :span="6">
+                <a-form-item
+                  field="trace_id"
+                  :label="$t('task.form.trace_id')"
+                  :label-col-props="{ span: 6 }"
+                >
                   <a-input
                     v-model="formModel.trace_id"
                     :placeholder="$t('placeholder.trace_id')"
@@ -58,10 +67,11 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="6">
                 <a-form-item
                   field="video_id"
                   :label="$t('task.detail.video_id')"
+                  :label-col-props="{ span: 6 }"
                 >
                   <a-input
                     v-model="formModel.video_id"
@@ -70,10 +80,11 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="7">
                 <a-form-item
                   field="video_url"
                   :label="$t('task.detail.video_url')"
+                  :label-col-props="{ span: 6 }"
                 >
                   <a-input
                     v-model="formModel.video_url"
@@ -82,8 +93,74 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item field="status" :label="$t('common.status')">
+              <a-col v-permission="['user', 'reseller']" :span="5">
+                <a-form-item
+                  field="models"
+                  :label="$t('common.model')"
+                  :label-col-props="{ span: userRole === 'reseller' ? 6 : 5 }"
+                >
+                  <a-select
+                    v-model="formModel.models"
+                    :placeholder="$t('common.all')"
+                    :max-tag-count="1"
+                    :scrollbar="false"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in models"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="userRole === 'admin' ? 5 : 6">
+                <a-form-item
+                  field="prompt"
+                  :label="$t('task.detail.prompt')"
+                  :label-col-props="{ span: userRole === 'admin' ? 7 : 6 }"
+                  :wrapper-col-props="{ span: userRole === 'admin' ? 17 : 18 }"
+                >
+                  <a-input
+                    v-model="formModel.prompt"
+                    :placeholder="$t('task.form.placeholder.prompt')"
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col v-permission="['admin']" :span="6">
+                <a-form-item
+                  field="model_agents"
+                  :label="$t('log.form.model_agents')"
+                  :label-col-props="{ span: 6 }"
+                >
+                  <a-select
+                    v-model="formModel.model_agents"
+                    :placeholder="$t('common.all')"
+                    :max-tag-count="1"
+                    :scrollbar="false"
+                    multiple
+                    allow-search
+                    allow-clear
+                  >
+                    <a-option
+                      v-for="item in modelAgents"
+                      :key="item.id"
+                      :value="item.id"
+                      :label="item.name"
+                    />
+                  </a-select>
+                </a-form-item>
+              </a-col>
+              <a-col :span="6">
+                <a-form-item
+                  field="status"
+                  :label="$t('common.status')"
+                  :label-col-props="{ span: 6 }"
+                >
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
@@ -93,10 +170,11 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="7">
                 <a-form-item
                   field="created_at"
                   :label="$t('common.created_at')"
+                  :label-col-props="{ span: 6 }"
                 >
                   <a-range-picker
                     v-model="formModel.created_at"
@@ -137,7 +215,26 @@
       </a-row>
       <a-divider class="task-video-list-toolbar-divider" />
       <a-row class="task-video-list-toolbar-row">
-        <a-col :span="24" class="task-video-list-table-actions">
+        <a-col v-permission="['admin']" :span="12">
+          <a-space>
+            <a-button
+              type="primary"
+              :disabled="multiple"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
+              @click="
+                handleBatch({
+                  action: 'regenerate',
+                })
+              "
+            >
+              {{ $t('task.button.regenerate') }}
+            </a-button>
+          </a-space>
+        </a-col>
+        <a-col
+          :span="userRole === 'admin' ? 12 : 24"
+          class="task-video-list-table-actions"
+        >
           <a-tooltip :content="$t('action.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
@@ -202,6 +299,7 @@
         :row-selection="rowSelection"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
+        @selection-change="handleSelectionChange"
       >
         <template #video_id="{ record }">
           <span class="copy-btn" @click="handleCopy(record.video_id)">
@@ -228,6 +326,7 @@
           </a-tag>
           <a-tag v-else-if="record.status === 'in_progress'" color="orange">
             {{ $t(`task.dict.status.${record.status}`) }}
+            {{ record.progress || 0 }}%
           </a-tag>
           <a-tag
             v-else-if="record.status === 'failed' || !record.status"
@@ -239,9 +338,26 @@
             {{ $t(`task.dict.status.${record.status}`) }}
           </a-tag>
         </template>
+        <template #total_time="{ record }">
+          <span v-if="!record.total_time">-</span>
+          <a-tag v-else :color="getTotalTimeColor(record.total_time)">
+            {{ record.total_time }}
+          </a-tag>
+        </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
             {{ $t('button.detail') }}
+          </a-button>
+          <a-button
+            v-permission="['admin']"
+            type="text"
+            size="small"
+            :disabled="
+              record.status !== 'in_progress' && record.status !== 'failed'
+            "
+            @click="regenerateHandle(record.id)"
+          >
+            {{ $t('task.button.regenerate') }}
           </a-button>
         </template>
       </a-table>
@@ -262,12 +378,22 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import { computed, ref, reactive, watch, nextTick, h } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { Message } from '@arco-design/web-vue';
+  import { Message, Modal, Tooltip } from '@arco-design/web-vue';
+  import { IconQuestionCircle } from '@arco-design/web-vue/es/icon';
   import useLoading from '@/hooks/loading';
   import { queryAppList, AppList } from '@/api/app';
-  import { queryVideoPage, VideoPage, VideoPageParams } from '@/api/task';
+  import { queryModelList, ModelList } from '@/api/model';
+  import { queryModelAgentList, ModelAgentList } from '@/api/model_agent';
+  import {
+    queryVideoPage,
+    VideoPage,
+    VideoPageParams,
+    regenerateVideo,
+    VideoBatchOperate,
+    submitVideoBatchOperate,
+  } from '@/api/task';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type {
@@ -291,6 +417,9 @@
     onlyCurrent: false,
   } as TableRowSelection);
 
+  const ids = ref<Array<string>>([]);
+  const multiple = ref(true);
+
   const generateFormModel = () => {
     return {
       user_id: ref(),
@@ -298,6 +427,9 @@
       trace_id: '',
       video_id: '',
       video_url: '',
+      prompt: '',
+      models: [],
+      model_agents: [],
       status: ref(),
       created_at: [
         dayjs().format('YYYY-MM-DD 00:00:00'),
@@ -333,6 +465,34 @@
 
   if (userRole === 'user') {
     getAppList();
+  }
+
+  const models = ref<ModelList[]>([]);
+  const getModelList = async () => {
+    try {
+      const { data } = await queryModelList();
+      models.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+
+  if (userRole === 'user' || userRole === 'reseller') {
+    getModelList();
+  }
+
+  const modelAgents = ref<ModelAgentList[]>([]);
+  const getModelAgentList = async () => {
+    try {
+      const { data } = await queryModelAgentList();
+      modelAgents.value = data.items;
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
+
+  if (userRole === 'admin') {
+    getModelAgentList();
   }
 
   const basePagination: Pagination = {
@@ -415,6 +575,52 @@
       ellipsis: true,
       tooltip: true,
     },
+    ...(userRole === 'admin'
+      ? [
+          {
+            title: t('task.columns.total_time'),
+            dataIndex: 'total_time',
+            slotName: 'total_time',
+            align: 'center',
+            slots: {
+              title: () => [
+                h(
+                  'div',
+                  {
+                    style: {
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '3px',
+                      justifyContent: 'center',
+                    },
+                  },
+                  [
+                    h('span', t('task.columns.total_time')),
+                    h(
+                      Tooltip,
+                      {
+                        content: t('task.columns.tooltip.total_time'),
+                        contentStyle: {
+                          whiteSpace: 'nowrap',
+                          maxWidth: 'none',
+                        },
+                      },
+                      {
+                        default: () =>
+                          h(IconQuestionCircle, {
+                            style: {
+                              color: 'var(--color-text-3)',
+                            },
+                          }),
+                      }
+                    ),
+                  ]
+                ),
+              ],
+            },
+          } as TableColumnData,
+        ]
+      : []),
     {
       title: t('common.status'),
       dataIndex: 'status',
@@ -433,7 +639,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 75,
+      width: 150,
     },
   ]);
 
@@ -585,6 +791,66 @@
   };
   const detailHandleCancel = () => {
     detailVisible.value = false;
+  };
+
+  const regenerateHandle = (id: string) => {
+    Modal.warning({
+      title: t('modal.warning.title'),
+      titleAlign: 'center',
+      content: t('task.button.regenerate.confirm'),
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
+      hideCancel: false,
+      onOk: () => {
+        setLoading(true);
+        regenerateVideo({ id })
+          .then(() => {
+            Message.success(t('success.operate'));
+            search();
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      },
+    });
+  };
+
+  const handleSelectionChange = (rowKeys: Array<any>) => {
+    ids.value = rowKeys;
+    multiple.value = !rowKeys.length;
+  };
+
+  const handleBatch = (params: VideoBatchOperate) => {
+    Modal.warning({
+      title: t('modal.warning.title'),
+      titleAlign: 'center',
+      content: t('task.button.batch.regenerate.confirm', {
+        count: ids.value.length,
+      }),
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
+      hideCancel: false,
+      onOk: () => {
+        setLoading(true);
+        params.ids = ids.value;
+        submitVideoBatchOperate(params)
+          .then(() => {
+            Message.success(t('success.operate'));
+            search();
+            tableRef.value.selectAll(false);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      },
+    });
+  };
+
+  const getTotalTimeColor = (totalTime: number) => {
+    if (totalTime > 300000) return 'red';
+    if (totalTime > 210000) return 'orange';
+    if (totalTime > 120000) return 'gold';
+    return 'green';
   };
 
   /**

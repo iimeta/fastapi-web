@@ -69,6 +69,19 @@
           />
         </span>
       </a-descriptions-item>
+      <a-descriptions-item
+        v-if="currentData.job_id"
+        :label="$t('task.detail.job_id')"
+        :span="2"
+      >
+        <a-skeleton v-if="loading" :animation="true">
+          <a-skeleton-line :rows="1" />
+        </a-skeleton>
+        <span v-else>
+          {{ currentData.job_id }}
+          <icon-copy class="copy-btn" @click="handleCopy(currentData.job_id)" />
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('task.detail.video_url')" :span="2">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -129,6 +142,7 @@
             color="orange"
           >
             {{ $t(`task.dict.status.${currentData.status}`) }}
+            {{ currentData.progress || 0 }}%
           </a-tag>
           <a-tag
             v-else-if="currentData.status === 'failed' || !currentData.status"
@@ -206,6 +220,31 @@
         </span>
       </a-descriptions-item>
     </a-descriptions>
+
+    <a-descriptions
+      v-permission="['admin']"
+      layout="inline-vertical"
+      :column="2"
+      class="task-detail-tabs-descriptions"
+    >
+      <a-descriptions-item>
+        <a-tabs type="card">
+          <a-tab-pane key="1" :title="$t('common.model_agents')">
+            <a-skeleton v-if="loading" :animation="true">
+              <a-skeleton-line :rows="3" />
+            </a-skeleton>
+            <a-space v-else>
+              <VueJsonPretty
+                v-if="currentData.model_agent"
+                :data="currentData.model_agent"
+                :show-length="true"
+              />
+              <span v-else>-</span>
+            </a-space>
+          </a-tab-pane>
+        </a-tabs>
+      </a-descriptions-item>
+    </a-descriptions>
   </div>
 </template>
 
@@ -215,12 +254,14 @@
   import { useI18n } from 'vue-i18n';
   import { Message } from '@arco-design/web-vue';
   import useLoading from '@/hooks/loading';
+  import VueJsonPretty from 'vue-json-pretty';
   import {
     queryVideoDetail,
     DetailParams,
     VideoDetail,
     videoCopyField,
   } from '@/api/task';
+  import 'vue-json-pretty/lib/styles.css';
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);

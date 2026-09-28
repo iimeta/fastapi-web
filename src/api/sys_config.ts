@@ -244,6 +244,10 @@ export interface VideoTask {
   open: boolean;
   cron: string;
   lock_minutes: number;
+  timeout: number;
+  retry_count: number;
+  concurrency_limit: number;
+  reclaim: number;
   is_enable_storage: boolean;
   storage_dir: string;
   storage_base_url: string;

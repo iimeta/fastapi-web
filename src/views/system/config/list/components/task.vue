@@ -410,6 +410,74 @@
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'video_task'"
+          field="video_task.timeout"
+          :label="$t('sys.config.label.video_task.timeout')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.video_task.timeout'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.video_task.timeout"
+            :placeholder="$t('sys.config.placeholder.video_task.timeout')"
+            :precision="0"
+            :min="1"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.second') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'video_task'"
+          field="video_task.retry_count"
+          :label="$t('sys.config.label.video_task.retry_count')"
+        >
+          <a-input-number
+            v-model="configFormData.video_task.retry_count"
+            :placeholder="$t('sys.config.placeholder.video_task.retry_count')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.once') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'video_task'"
+          field="video_task.concurrency_limit"
+          :label="$t('sys.config.label.video_task.concurrency_limit')"
+        >
+          <a-input-number
+            v-model="configFormData.video_task.concurrency_limit"
+            :placeholder="
+              $t('sys.config.placeholder.video_task.concurrency_limit')
+            "
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.item') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'video_task'"
+          field="video_task.reclaim"
+          :label="$t('sys.config.label.video_task.reclaim')"
+        >
+          <a-input-number
+            v-model="configFormData.video_task.reclaim"
+            :placeholder="$t('sys.config.placeholder.video_task.reclaim')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.second') }} </template>
+          </a-input-number>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'video_task'"
           field="video_task.is_enable_storage"
           :label="$t('sys.config.label.video_task.is_enable_storage')"
         >
