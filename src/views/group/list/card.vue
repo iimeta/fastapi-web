@@ -529,7 +529,7 @@
 
   const multiple = computed(() => ids.value.length === 0);
   const currentPageIds = computed(() =>
-    renderData.value.map((item) => item.id)
+    (renderData.value ?? []).map((item) => item.id)
   );
   const allCurrentChecked = computed(
     () =>
@@ -555,10 +555,10 @@
     setLoading(true);
     try {
       const { data } = await queryGroupPage(params);
-      renderData.value = data.items as GroupCardRecord[];
+      renderData.value = (data?.items ?? []) as GroupCardRecord[];
       pagination.current = params.current;
       pagination.pageSize = params.pageSize;
-      pagination.total = data.paging.total;
+      pagination.total = data?.paging?.total ?? 0;
       clearSelection();
     } catch (err) {
       // ignore
