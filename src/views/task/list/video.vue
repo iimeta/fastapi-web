@@ -318,25 +318,27 @@
           </span>
         </template>
         <template #status="{ record }">
-          <a-tag v-if="record.status === 'completed'" color="green">
-            {{ $t(`task.dict.status.${record.status}`) }}
-          </a-tag>
-          <a-tag v-else-if="record.status === 'queued'" color="arcoblue">
-            {{ $t(`task.dict.status.${record.status}`) }}
-          </a-tag>
-          <a-tag v-else-if="record.status === 'in_progress'" color="orange">
-            {{ $t(`task.dict.status.${record.status}`) }}
-            {{ record.progress || 0 }}%
-          </a-tag>
-          <a-tag
-            v-else-if="record.status === 'failed' || !record.status"
-            color="red"
-          >
-            {{ $t(`task.dict.status.${record.status || 'failed'}`) }}
-          </a-tag>
-          <a-tag v-else color="gray">
-            {{ $t(`task.dict.status.${record.status}`) }}
-          </a-tag>
+          <StatusTag :err-msg="record.err_msg">
+            <a-tag v-if="record.status === 'completed'" color="green">
+              {{ $t(`task.dict.status.${record.status}`) }}
+            </a-tag>
+            <a-tag v-else-if="record.status === 'queued'" color="arcoblue">
+              {{ $t(`task.dict.status.${record.status}`) }}
+            </a-tag>
+            <a-tag v-else-if="record.status === 'in_progress'" color="orange">
+              {{ $t(`task.dict.status.${record.status}`) }}
+              {{ record.progress || 0 }}%
+            </a-tag>
+            <a-tag
+              v-else-if="record.status === 'failed' || !record.status"
+              color="red"
+            >
+              {{ $t(`task.dict.status.${record.status || 'failed'}`) }}
+            </a-tag>
+            <a-tag v-else color="gray">
+              {{ $t(`task.dict.status.${record.status}`) }}
+            </a-tag>
+          </StatusTag>
         </template>
         <template #total_time="{ record }">
           <span v-if="!record.total_time">-</span>
@@ -405,6 +407,7 @@
   import { useClipboard } from '@vueuse/core';
   import dayjs from 'dayjs';
   import Detail from '../detail/video.vue';
+  import StatusTag from '../components/status-tag.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };

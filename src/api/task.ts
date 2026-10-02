@@ -23,6 +23,7 @@ export interface VideoPage {
   prompt: string;
   status: number;
   total_time: number;
+  err_msg?: string;
   created_at: any;
 }
 
@@ -63,6 +64,7 @@ export interface VideoDetail {
   file_name: string;
   file_path: string;
   error: any;
+  err_msg?: string;
   model_agent_id: string;
   model_agent: any;
   creator: string;
@@ -119,6 +121,7 @@ export interface ImagePage {
   quality: string;
   status: number;
   total_time: number;
+  err_msg?: string;
   created_at: any;
 }
 
@@ -165,6 +168,7 @@ export interface ImageDetail {
   file_paths: string[];
   input_file_paths: string[];
   error: any;
+  err_msg?: string;
   model_agent_id: string;
   model_agent: any;
   creator: string;
@@ -217,6 +221,7 @@ export interface FilePage {
   file_url: string;
   file_time: number;
   status: number;
+  err_msg?: string;
   created_at: any;
 }
 
@@ -249,6 +254,7 @@ export interface FileDetail {
   expires_at: string;
   response_data: any;
   error: any;
+  err_msg?: string;
   file_path: string;
   batch_trace_id: string;
   creator: string;
@@ -287,6 +293,7 @@ export interface BatchPage {
   batch_url: string;
   batch_time: number;
   status: number;
+  err_msg?: string;
   created_at: any;
 }
 
@@ -324,6 +331,7 @@ export interface BatchDetail {
   failed_at: string;
   response_data: any;
   error: any;
+  err_msg?: string;
   creator: string;
   created_at: string;
   updated_at: string;

@@ -209,24 +209,26 @@
           {{ formatBytes(record.bytes) || '-' }}
         </template>
         <template #status="{ record }">
-          <a-tag v-if="record.status === 'processed'" color="green">
-            {{ $t(`task.dict.status.${record.status}`) }}
-          </a-tag>
-          <a-tag v-else-if="record.status === 'processing'" color="arcoblue">
-            {{ $t(`task.dict.status.${record.status}`) }}
-          </a-tag>
-          <a-tag v-else-if="record.status === 'uploaded'" color="uploaded">
-            {{ $t(`task.dict.status.${record.status}`) }}
-          </a-tag>
-          <a-tag
-            v-else-if="record.status === 'error' || !record.status"
-            color="red"
-          >
-            {{ $t(`task.dict.status.${record.status || 'failed'}`) }}
-          </a-tag>
-          <a-tag v-else color="gray">
-            {{ $t(`task.dict.status.${record.status}`) }}
-          </a-tag>
+          <StatusTag :err-msg="record.err_msg">
+            <a-tag v-if="record.status === 'processed'" color="green">
+              {{ $t(`task.dict.status.${record.status}`) }}
+            </a-tag>
+            <a-tag v-else-if="record.status === 'processing'" color="arcoblue">
+              {{ $t(`task.dict.status.${record.status}`) }}
+            </a-tag>
+            <a-tag v-else-if="record.status === 'uploaded'" color="uploaded">
+              {{ $t(`task.dict.status.${record.status}`) }}
+            </a-tag>
+            <a-tag
+              v-else-if="record.status === 'error' || !record.status"
+              color="red"
+            >
+              {{ $t(`task.dict.status.${record.status || 'failed'}`) }}
+            </a-tag>
+            <a-tag v-else color="gray">
+              {{ $t(`task.dict.status.${record.status}`) }}
+            </a-tag>
+          </StatusTag>
         </template>
         <template #operations="{ record }">
           <a-button type="text" size="small" @click="detailHandle(record.id)">
@@ -269,6 +271,7 @@
   import dayjs from 'dayjs';
   import { formatBytes } from '@/utils/common';
   import Detail from '../detail/file.vue';
+  import StatusTag from '../components/status-tag.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
