@@ -494,6 +494,12 @@
           {{ currentData.response_data || currentData.completion || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item :label="$t('log.detail.request_ids')" :span="2">
+        <request-ids
+          :loading="loading"
+          :request-ids="currentData.request_ids"
+        />
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('common.billing_methods')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -792,6 +798,7 @@
   import { Spend } from '@/api/common';
   import Quota from '@/views/common/quota.vue';
   import SpendDetail from '../components/spend.vue';
+  import RequestIds from '../components/request-ids.vue';
   import 'vue-json-pretty/lib/styles.css';
 
   const { t } = useI18n();
