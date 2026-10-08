@@ -65,7 +65,7 @@
     <a-modal
       v-model:visible="configVisible"
       :title="$t(configTitle)"
-      :width="828"
+      :width="868"
       :body-style="configModalBodyStyle"
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
@@ -116,6 +116,51 @@
             <icon-minus />
           </a-button>
         </a-form-item>
+        <a-form-item
+          v-for="(item, index) of configFormData.video_url.urls"
+          v-show="configFormData.action === 'video_url'"
+          :key="'video-' + index"
+          :field="
+            `video_url.urls[${index}].replace_url` &&
+            `video_url.urls[${index}].target_url`
+          "
+          :label="`${index + 1}. `"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.required.video_url'),
+            },
+          ]"
+          :label-col-style="fieldLabelColStyle"
+        >
+          <a-input
+            v-model="configFormData.video_url.urls[index].replace_url"
+            :placeholder="$t('sys.config.placeholder.video_url.replace_url')"
+            allow-clear
+            class="field-input field-input-replace-url"
+          />
+          <a-input
+            v-model="configFormData.video_url.urls[index].target_url"
+            :placeholder="$t('sys.config.placeholder.video_url.target_url')"
+            allow-clear
+            class="field-input field-input-target-url"
+          />
+          <a-button
+            type="primary"
+            shape="circle"
+            class="field-action-button"
+            @click="handleVideoUrlAdd()"
+          >
+            <icon-plus />
+          </a-button>
+          <a-button
+            type="secondary"
+            shape="circle"
+            @click="handleVideoUrlDel(index)"
+          >
+            <icon-minus />
+          </a-button>
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -133,6 +178,7 @@
     submitSysConfigReset,
     submitSysConfigChangeStatus,
     ImageUrlItem,
+    VideoUrlItem,
   } from '@/api/sys_config';
   import { useSysConfig } from '../composables/use-sys-config';
 
@@ -159,6 +205,7 @@
   const configForm = ref<FormInstance>();
   const configFormData = ref<SysConfigUpdate>({
     image_url: {},
+    video_url: {},
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
@@ -168,6 +215,13 @@
         configFormData.value.image_url.urls.length === 0)
     ) {
       handleImageUrlAdd();
+    }
+    if (
+      sysConfigItem.action === 'video_url' &&
+      (!configFormData.value.video_url.urls ||
+        configFormData.value.video_url.urls.length === 0)
+    ) {
+      handleVideoUrlAdd();
     }
     configTitle.value = t(`sys.config.item.title.${sysConfigItem.action}`);
     configFormData.value.action = sysConfigItem.action;
@@ -257,12 +311,21 @@
     (data) => {
       if (!data) return;
       configFormData.value.image_url = data.image_url;
+      configFormData.value.video_url = data.video_url;
       sysConfigItems.value = [
         {
           action: 'image_url',
           title: t('sys.config.item.title.image_url'),
           desc: t('sys.config.item.desc.image_url'),
           open: configFormData.value.image_url.open,
+          config: true,
+          reset: true,
+        },
+        {
+          action: 'video_url',
+          title: t('sys.config.item.title.video_url'),
+          desc: t('sys.config.item.desc.video_url'),
+          open: configFormData.value.video_url.open,
           config: true,
           reset: true,
         },
@@ -280,6 +343,20 @@
 
   const handleImageUrlDel = (index: number) => {
     configFormData.value.image_url.urls.splice(index, 1);
+  };
+
+  const handleVideoUrlAdd = () => {
+    if (!configFormData.value.video_url.urls) {
+      configFormData.value.video_url.urls = [];
+    }
+    configFormData.value.video_url.urls.push({
+      replace_url: '',
+      target_url: '',
+    } as VideoUrlItem);
+  };
+
+  const handleVideoUrlDel = (index: number) => {
+    configFormData.value.video_url.urls.splice(index, 1);
   };
 </script>
 

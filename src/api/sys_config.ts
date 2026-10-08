@@ -240,6 +240,16 @@ export interface ImageUrl {
   urls: ImageUrlItem[];
 }
 
+export interface VideoUrlItem {
+  replace_url: string;
+  target_url: string;
+}
+
+export interface VideoUrl {
+  open: boolean;
+  urls: VideoUrlItem[];
+}
+
 export interface VideoTask {
   open: boolean;
   cron: string;
@@ -380,6 +390,7 @@ export interface SysConfigDetail {
   image_task: ImageTask;
   image_storage: ImageStorage;
   image_url: ImageUrl;
+  video_url: VideoUrl;
   video_task: VideoTask;
   file_task: FileTask;
   batch_task: BatchTask;
@@ -425,6 +436,7 @@ export interface SysConfigUpdate {
   image_task: ImageTask;
   image_storage: ImageStorage;
   image_url: ImageUrl;
+  video_url: VideoUrl;
   video_task: VideoTask;
   file_task: FileTask;
   batch_task: BatchTask;
