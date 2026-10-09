@@ -704,23 +704,35 @@
             <template #append> / k </template>
           </a-input-number>
           <a-input-number
+            v-if="isClaudeProvider"
+            :key="'ttc-read-claude-' + index"
             v-model="formData.tiered_text_cache[index].read_ratio"
             :placeholder="$t('model.placeholder.tiered_cache_read_ratio')"
             :min="0"
             :max="9999999999999"
             :parser="parsePrice"
             hide-button
-            class="pricing-field--spaced"
-            :class="{
-              'pricing-input-number--cache': !isClaudeProvider,
-              'pricing-select--compact': isClaudeProvider,
-            }"
+            class="pricing-field--spaced pricing-select--compact"
           >
             <template #prefix> {{ cs }} </template>
-            <template v-if="!isClaudeProvider" #append> / M </template>
+          </a-input-number>
+          <a-input-number
+            v-else
+            :key="'ttc-read-' + index"
+            v-model="formData.tiered_text_cache[index].read_ratio"
+            :placeholder="$t('model.placeholder.tiered_cache_read_ratio')"
+            :min="0"
+            :max="9999999999999"
+            :parser="parsePrice"
+            hide-button
+            class="pricing-field--spaced pricing-input-number--cache"
+          >
+            <template #prefix> {{ cs }} </template>
+            <template #append> / M </template>
           </a-input-number>
           <a-input-number
             v-if="!isClaudeProvider"
+            :key="'ttc-write-' + index"
             v-model="formData.tiered_text_cache[index].write_ratio"
             :placeholder="$t('model.placeholder.tiered_cache_write_ratio')"
             :min="0"
@@ -734,6 +746,7 @@
           </a-input-number>
           <a-input-number
             v-if="isClaudeProvider"
+            :key="'ttc-write-5m-' + index"
             v-model="formData.tiered_text_cache[index].write_5m_ratio"
             :placeholder="$t('model.placeholder.write_5m_ratio')"
             :min="0"
@@ -746,6 +759,7 @@
           </a-input-number>
           <a-input-number
             v-if="isClaudeProvider"
+            :key="'ttc-write-1h-' + index"
             v-model="formData.tiered_text_cache[index].write_1h_ratio"
             :placeholder="$t('model.placeholder.write_1h_ratio')"
             :min="0"
