@@ -107,7 +107,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ `${currentData.width} × ${currentData.height}` }}
+          {{ `${currentData.width || '-'} × ${currentData.height || '-'}` }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('task.detail.seconds')">

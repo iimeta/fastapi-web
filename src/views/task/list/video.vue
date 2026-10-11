@@ -307,7 +307,7 @@
           </span>
         </template>
         <template #width_height="{ record }">
-          {{ `${record.width} × ${record.height}` }}
+          {{ `${record.width || '-'} × ${record.height || '-'}` }}
         </template>
         <template #video_url="{ record }">
           <span
