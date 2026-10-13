@@ -113,6 +113,16 @@
           {{ currentData.response_data || '-' }}
         </span>
       </a-descriptions-item>
+      <a-descriptions-item
+        v-if="!loading && currentData.msg_id"
+        :label="$t('log.detail.msg_id')"
+        :span="2"
+      >
+        <span>
+          {{ currentData.msg_id }}
+          <icon-copy class="copy-btn" @click="handleCopy(currentData.msg_id)" />
+        </span>
+      </a-descriptions-item>
       <a-descriptions-item :label="$t('common.billing_methods')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
@@ -483,6 +493,16 @@
           :loading="loading"
           :request-ids="currentData.request_ids"
         />
+      </a-descriptions-item>
+      <a-descriptions-item
+        v-if="!loading && currentData.msg_id"
+        :label="$t('log.detail.msg_id')"
+        :span="2"
+      >
+        <span>
+          {{ currentData.msg_id }}
+          <icon-copy class="copy-btn" @click="handleCopy(currentData.msg_id)" />
+        </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('common.billing_methods')">
         <a-skeleton v-if="loading" :animation="true">

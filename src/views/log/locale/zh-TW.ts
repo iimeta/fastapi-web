@@ -28,6 +28,7 @@ export default {
   'log.detail.prompt': '提問',
   'log.detail.completion': '回答',
   'log.detail.request_ids': '上游請求ID',
+  'log.detail.msg_id': '消息ID',
   'log.detail.reasoning': '推理',
   'log.detail.status': '結果',
   'log.detail.conn_time': '首字',

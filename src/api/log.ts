@@ -55,6 +55,7 @@ export interface TextDetail {
   method: string;
   path: string;
   request_ids?: Record<string, string>;
+  msg_id?: string;
   trace_id: string;
   user_id: any;
   app_id: any;
@@ -188,6 +189,7 @@ export interface ImageDetail {
   method: string;
   path: string;
   request_ids?: Record<string, string>;
+  msg_id?: string;
   user_id: any;
   app_id: any;
   provider_id: string;
@@ -293,6 +295,7 @@ export interface AudioDetail {
   method: string;
   path: string;
   request_ids?: Record<string, string>;
+  msg_id?: string;
   user_id: any;
   app_id: any;
   provider_id: string;
@@ -390,6 +393,7 @@ export interface VideoDetail {
   method: string;
   path: string;
   request_ids?: Record<string, string>;
+  msg_id?: string;
   user_id: any;
   app_id: any;
   provider_id: string;
@@ -489,6 +493,7 @@ export interface FileDetail {
   method: string;
   path: string;
   request_ids?: Record<string, string>;
+  msg_id?: string;
   user_id: any;
   app_id: any;
   provider_id: string;
@@ -588,6 +593,7 @@ export interface BatchDetail {
   method: string;
   path: string;
   request_ids?: Record<string, string>;
+  msg_id?: string;
   user_id: any;
   app_id: any;
   provider_id: string;
@@ -691,6 +697,7 @@ export interface GeneralDetail {
   method: string;
   path: string;
   request_ids?: Record<string, string>;
+  msg_id?: string;
   user_id: any;
   app_id: any;
   provider_id: string;

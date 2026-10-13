@@ -28,6 +28,7 @@ export default {
   'log.detail.prompt': 'Prompt',
   'log.detail.completion': 'Completion',
   'log.detail.request_ids': 'Upstream Request IDs',
+  'log.detail.msg_id': 'Message ID',
   'log.detail.reasoning': 'Reasoning',
   'log.detail.status': 'Result',
   'log.detail.conn_time': 'First Token',
