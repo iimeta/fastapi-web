@@ -807,8 +807,10 @@
    *
    * @param content 内容
    */
-  const handleCopy = (content: string) => {
-    copy(content);
+  const handleCopy = (content?: string) => {
+    if (content) {
+      copy(content);
+    }
   };
   watch(copied, () => {
     if (copied.value) {
