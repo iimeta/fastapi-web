@@ -169,6 +169,7 @@ export default {
   'button.copy': '複製',
   'button.recharge': '充值',
   'button.test': '測試',
+  'button.weight': '權重',
   'button.clear': '清除',
   'button.all.enable': '全部啟用',
   'button.all.disable': '全部禁用',

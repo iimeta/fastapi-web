@@ -353,6 +353,9 @@
           >
             {{ $t('button.update') }}
           </a-button>
+          <a-button type="text" size="small" @click="weightHandle(record)">
+            {{ $t('button.weight') }}
+          </a-button>
           <a-button
             type="text"
             size="small"
@@ -412,6 +415,32 @@
       >
         <Tests :id="recordId" :action="action" />
       </a-modal>
+
+      <!-- 修改权重 -->
+      <a-modal
+        v-model:visible="weightVisible"
+        :title="$t('model.agent.title.update_weight')"
+        unmount-on-close
+        :ok-text="$t('button.ok')"
+        :cancel-text="$t('button.cancel')"
+        @before-ok="weightHandleBeforeOk"
+      >
+        <a-form :model="weightFormData">
+          <a-form-item
+            field="weight"
+            :label="$t('common.weight')"
+            :label-col-props="{ span: 4 }"
+          >
+            <a-input-number
+              v-model="weightFormData.weight"
+              :placeholder="$t('placeholder.weight')"
+              :precision="0"
+              :min="0"
+              :max="999"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -428,6 +457,8 @@
     ModelAgentPageParams,
     ModelAgentChangeStatus,
     submitModelAgentChangeStatus,
+    ModelAgentChangeWeight,
+    submitModelAgentChangeWeight,
     ModelAgentBatchOperate,
     submitModelAgentBatchOperate,
     queryModelAgentTagList,
@@ -601,7 +632,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 245,
+      width: 275,
     },
   ]);
 
@@ -941,6 +972,11 @@
 
   const modelsVisible = ref(false);
   const testsVisible = ref(false);
+  const weightVisible = ref(false);
+  const weightFormData = ref<ModelAgentChangeWeight>({
+    id: '',
+    weight: 0,
+  });
   const action = ref();
 
   const modelsHandle = (id: string) => {
@@ -953,6 +989,28 @@
     testsVisible.value = true;
     recordId.value = id;
     action.value = 'agent';
+  };
+
+  const weightHandle = (record: ModelAgentPage) => {
+    weightFormData.value = {
+      id: record.id,
+      weight: record.weight || 0,
+    };
+    weightVisible.value = true;
+  };
+
+  const weightHandleBeforeOk = async () => {
+    try {
+      await submitModelAgentChangeWeight({
+        id: weightFormData.value.id,
+        weight: weightFormData.value.weight || 0,
+      });
+      Message.success(t('success.operate'));
+      search();
+      return true;
+    } catch (err) {
+      return false;
+    }
   };
 </script>
 

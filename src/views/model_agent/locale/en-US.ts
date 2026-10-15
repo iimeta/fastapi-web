@@ -58,6 +58,7 @@ export default {
   'model.agent.label.res_header_passthrough_list': 'Specified Response Headers',
   'model.agent.placeholder.req_header_passthrough_list': 'Enter header name, press Enter to add',
   'model.agent.placeholder.res_header_passthrough_list': 'Enter header name, press Enter to add',
+  'model.agent.title.update_weight': 'Update Weight',
   'model.agent.title.test_models': 'Test Models',
   'model.agent.label.model_name': 'Name',
   'model.agent.label.test_models.test_method': 'Test Method',

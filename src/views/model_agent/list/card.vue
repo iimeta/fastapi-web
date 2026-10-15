@@ -312,6 +312,7 @@
                 @models="modelsHandle"
                 @update="updateHandle"
                 @copy="copyHandle"
+                @weight="weightHandle"
                 @keys="keysHandle"
                 @test="testsHandle"
                 @status-change="modelAgentChangeStatus"
@@ -373,6 +374,31 @@
       >
         <Tests :id="recordId" :action="action" />
       </a-modal>
+
+      <a-modal
+        v-model:visible="weightVisible"
+        :title="$t('model.agent.title.update_weight')"
+        unmount-on-close
+        :ok-text="$t('button.ok')"
+        :cancel-text="$t('button.cancel')"
+        @before-ok="weightHandleBeforeOk"
+      >
+        <a-form :model="weightFormData">
+          <a-form-item
+            field="weight"
+            :label="$t('common.weight')"
+            :label-col-props="{ span: 4 }"
+          >
+            <a-input-number
+              v-model="weightFormData.weight"
+              :placeholder="$t('placeholder.weight')"
+              :precision="0"
+              :min="0"
+              :max="999"
+            />
+          </a-form-item>
+        </a-form>
+      </a-modal>
     </a-card>
   </div>
 </template>
@@ -389,6 +415,8 @@
     ModelAgentPageParams,
     ModelAgentChangeStatus,
     submitModelAgentChangeStatus,
+    ModelAgentChangeWeight,
+    submitModelAgentChangeWeight,
     ModelAgentBatchOperate,
     submitModelAgentBatchOperate,
     queryModelAgentTagList,
@@ -456,6 +484,11 @@
   const detailVisible = ref(false);
   const modelsVisible = ref(false);
   const testsVisible = ref(false);
+  const weightVisible = ref(false);
+  const weightFormData = ref<ModelAgentChangeWeight>({
+    id: '',
+    weight: 0,
+  });
 
   const basePagination: Pagination = {
     current: 1,
@@ -848,6 +881,28 @@
     testsVisible.value = true;
     recordId.value = id;
     action.value = 'agent';
+  };
+
+  const weightHandle = (record: ModelAgentCardRecord) => {
+    weightFormData.value = {
+      id: record.id,
+      weight: record.weight || 0,
+    };
+    weightVisible.value = true;
+  };
+
+  const weightHandleBeforeOk = async () => {
+    try {
+      await submitModelAgentChangeWeight({
+        id: weightFormData.value.id,
+        weight: weightFormData.value.weight || 0,
+      });
+      Message.success(t('success.operate'));
+      search();
+      return true;
+    } catch (err) {
+      return false;
+    }
   };
 
   const updateHandle = (id: string) => {

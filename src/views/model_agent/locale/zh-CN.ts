@@ -58,6 +58,7 @@ export default {
   'model.agent.label.res_header_passthrough_list': '指定响应头',
   'model.agent.placeholder.req_header_passthrough_list': '请输入请求头名称, 按回车添加',
   'model.agent.placeholder.res_header_passthrough_list': '请输入响应头名称, 按回车添加',
+  'model.agent.title.update_weight': '修改权重',
   'model.agent.title.test_models': '测试模型',
   'model.agent.label.model_name': '名称',
   'model.agent.label.test_models.test_method': '测试方式',

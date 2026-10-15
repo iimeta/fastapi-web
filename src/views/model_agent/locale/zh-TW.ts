@@ -58,6 +58,7 @@ export default {
   'model.agent.label.res_header_passthrough_list': '指定響應頭',
   'model.agent.placeholder.req_header_passthrough_list': '請輸入請求頭名稱, 按回車添加',
   'model.agent.placeholder.res_header_passthrough_list': '請輸入響應頭名稱, 按回車添加',
+  'model.agent.title.update_weight': '修改權重',
   'model.agent.title.test_models': '測試模型',
   'model.agent.label.model_name': '名稱',
   'model.agent.label.test_models.test_method': '測試方式',

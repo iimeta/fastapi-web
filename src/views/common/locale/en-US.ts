@@ -169,6 +169,7 @@ export default {
   'button.copy': 'Copy',
   'button.recharge': 'Recharge',
   'button.test': 'Test',
+  'button.weight': 'Weight',
   'button.clear': 'Clear',
   'button.all.enable': 'Enable All',
   'button.all.disable': 'Disable All',

@@ -223,6 +223,15 @@ export function submitModelAgentChangeStatus(data: ModelAgentChangeStatus) {
   return axios.post('/api/v1/model/agent/change/status', data);
 }
 
+export interface ModelAgentChangeWeight {
+  id: string;
+  weight: number;
+}
+
+export function submitModelAgentChangeWeight(data: ModelAgentChangeWeight) {
+  return axios.post('/api/v1/model/agent/change/weight', data);
+}
+
 export interface ModelAgentBatchOperate {
   action: string;
   ids?: string[];
