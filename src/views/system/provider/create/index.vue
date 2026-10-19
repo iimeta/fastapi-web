@@ -165,6 +165,18 @@
       value: t('provider.dict.name.Aliyun'),
     },
     {
+      label: t('provider.dict.name.Bailian'),
+      value: t('provider.dict.name.Bailian'),
+    },
+    {
+      label: t('provider.dict.name.MiniMax'),
+      value: t('provider.dict.name.MiniMax'),
+    },
+    {
+      label: t('provider.dict.name.X'),
+      value: t('provider.dict.name.X'),
+    },
+    {
       label: t('provider.dict.name.Xfyun'),
       value: t('provider.dict.name.Xfyun'),
     },
@@ -218,6 +230,18 @@
     {
       label: t('provider.dict.code.Aliyun'),
       value: t('provider.dict.code.Aliyun'),
+    },
+    {
+      label: t('provider.dict.code.Bailian'),
+      value: t('provider.dict.code.Bailian'),
+    },
+    {
+      label: t('provider.dict.code.MiniMax'),
+      value: t('provider.dict.code.MiniMax'),
+    },
+    {
+      label: t('provider.dict.code.X'),
+      value: t('provider.dict.code.X'),
     },
     {
       label: t('provider.dict.code.Xfyun'),
