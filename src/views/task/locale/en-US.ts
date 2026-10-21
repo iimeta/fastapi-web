@@ -24,7 +24,7 @@ export default {
   'task.detail.response_format': 'Response Format',
   'task.detail.video_url': 'Video URL',
   'task.detail.video_id': 'Video ID',
-  'task.detail.width_height': 'Width × Height',
+  'task.detail.width_height': 'Resolution',
   'task.detail.seconds': 'Seconds',
   'task.detail.prompt': 'Prompt',
   'task.detail.progress': 'Progress',

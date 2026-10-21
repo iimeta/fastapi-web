@@ -447,7 +447,10 @@
         {{ $t(`model.dict.mode.${record.mode || 'no_video_input'}`) }}
       </template>
       <template #width="{ record }">
-        {{ record.width }} × {{ record.height }}
+        <template v-if="record.mode === 'resolution' || record.resolution">
+          {{ record.resolution }}
+        </template>
+        <template v-else> {{ record.width }} × {{ record.height }} </template>
       </template>
       <template #once_ratio="{ record }">
         <Quota

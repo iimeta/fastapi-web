@@ -715,7 +715,14 @@
       {{ $t(`model.dict.mode.${record.pricing.mode || 'no_video_input'}`) }}
     </template>
     <template #width="{ record }">
-      {{ record.pricing.width }} × {{ record.pricing.height }}
+      <template
+        v-if="record.pricing.mode === 'resolution' || record.pricing.resolution"
+      >
+        {{ record.pricing.resolution }}
+      </template>
+      <template v-else>
+        {{ record.pricing.width }} × {{ record.pricing.height }}
+      </template>
     </template>
     <template #seconds="{ record }">
       {{ record.seconds || '-' }}

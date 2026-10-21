@@ -24,7 +24,7 @@ export default {
   'task.detail.response_format': '响应格式',
   'task.detail.video_url': '视频URL',
   'task.detail.video_id': '视频ID',
-  'task.detail.width_height': '宽度 × 高度',
+  'task.detail.width_height': '分辨率',
   'task.detail.seconds': '秒数',
   'task.detail.prompt': '提示词',
   'task.detail.progress': '进度',

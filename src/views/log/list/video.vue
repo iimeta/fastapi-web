@@ -395,11 +395,7 @@
           </span>
         </template>
         <template #width_height="{ record }">
-          {{
-            record.spend.video_generation?.pricing?.width
-              ? `${record.spend.video_generation?.pricing.width} × ${record.spend.video_generation?.pricing.height}`
-              : '-'
-          }}
+          {{ formatVideoSize(record.spend?.video_generation?.pricing) }}
         </template>
         <template #seconds="{ record }">
           {{ record.spend.video_generation?.seconds || '-' }}
@@ -634,6 +630,19 @@
 
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
+  const formatVideoSize = (pricing?: {
+    resolution?: string;
+    width?: number;
+    height?: number;
+  }) => {
+    if (pricing?.resolution) {
+      return pricing.resolution;
+    }
+    if (pricing?.width || pricing?.height) {
+      return `${pricing.width || '-'} × ${pricing.height || '-'}`;
+    }
+    return '-';
+  };
   const userRole = localStorage.getItem('userRole');
   const route = useRoute();
   const cardHeaderStyle = {
@@ -774,7 +783,7 @@
       tooltip: true,
     },
     {
-      title: t('log.columns.width_height'),
+      title: t('model.label.video_generation.resolution'),
       dataIndex: 'width_height',
       slotName: 'width_height',
       align: 'center',

@@ -53,6 +53,7 @@ export interface VideoDetail {
   job_id: string;
   width: number;
   height: number;
+  resolution?: string;
   seconds: number;
   prompt: string;
   progress: number;

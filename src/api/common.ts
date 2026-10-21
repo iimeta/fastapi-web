@@ -83,6 +83,7 @@ export interface VideoGenerationPricing {
   mode: any;
   width: any;
   height: any;
+  resolution?: any;
   once_ratio: any;
   is_default: string;
 }

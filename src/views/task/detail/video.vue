@@ -107,7 +107,7 @@
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ `${currentData.width || '-'} × ${currentData.height || '-'}` }}
+          {{ formatVideoSize(currentData) }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('task.detail.seconds')">
@@ -262,6 +262,20 @@
     videoCopyField,
   } from '@/api/task';
   import 'vue-json-pretty/lib/styles.css';
+
+  const formatVideoSize = (record: {
+    resolution?: string;
+    width?: number;
+    height?: number;
+  }) => {
+    if (record?.resolution) {
+      return record.resolution;
+    }
+    if (record?.width || record?.height) {
+      return `${record.width || '-'} × ${record.height || '-'}`;
+    }
+    return '-';
+  };
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(true);

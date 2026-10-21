@@ -307,7 +307,7 @@
           </span>
         </template>
         <template #width_height="{ record }">
-          {{ `${record.width || '-'} × ${record.height || '-'}` }}
+          {{ formatVideoSize(record) }}
         </template>
         <template #video_url="{ record }">
           <span
@@ -453,6 +453,20 @@
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
+  const formatVideoSize = (record: {
+    resolution?: string;
+    width?: number;
+    height?: number;
+  }) => {
+    if (record?.resolution) {
+      return record.resolution;
+    }
+    if (record?.width || record?.height) {
+      return `${record.width || '-'} × ${record.height || '-'}`;
+    }
+    return '-';
+  };
+
   const size = ref<SizeProps>('medium');
   const tableRef = ref();
 

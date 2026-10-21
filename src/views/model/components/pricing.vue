@@ -1224,25 +1224,34 @@
             :options="videoModeOptions"
             class="pricing-select--video-mode pricing-field--spaced"
           />
-          <a-input-number
-            v-model="formData.video_generation[index].width"
-            :placeholder="$t('model.placeholder.video_generation.width')"
-            :precision="0"
-            :min="1"
-            :max="999999"
-            :step="1"
-            class="pricing-input--video-size pricing-field--spaced"
-          />
-          ×
-          <a-input-number
-            v-model="formData.video_generation[index].height"
-            :placeholder="$t('model.placeholder.video_generation.height')"
-            :precision="0"
-            :min="1"
-            :max="999999"
-            :step="1"
-            class="pricing-input--video-size pricing-field--offset"
-          />
+          <template v-if="isVideoResolutionMode(index)">
+            <a-input
+              v-model="formData.video_generation[index].resolution"
+              :placeholder="$t('model.placeholder.video_generation.resolution')"
+              class="pricing-input--video-resolution pricing-field--spaced"
+            />
+          </template>
+          <template v-else>
+            <a-input-number
+              v-model="formData.video_generation[index].width"
+              :placeholder="$t('model.placeholder.video_generation.width')"
+              :precision="0"
+              :min="1"
+              :max="999999"
+              :step="1"
+              class="pricing-input--video-size pricing-field--spaced"
+            />
+            ×
+            <a-input-number
+              v-model="formData.video_generation[index].height"
+              :placeholder="$t('model.placeholder.video_generation.height')"
+              :precision="0"
+              :min="1"
+              :max="999999"
+              :step="1"
+              class="pricing-input--video-size pricing-field--offset"
+            />
+          </template>
           <a-input-number
             v-model="formData.video_generation[index].once_ratio"
             :placeholder="$t('model.placeholder.video_generation.once_ratio')"
@@ -1636,7 +1645,14 @@
       label: t('model.dict.mode.has_video_input'),
       value: 'has_video_input',
     },
+    {
+      label: t('model.dict.mode.resolution'),
+      value: 'resolution',
+    },
   ];
+
+  const isVideoResolutionMode = (index: number) =>
+    formData.value.video_generation[index]?.mode === 'resolution';
 
   const activeKey = ref();
   const lastLength = ref(0);
@@ -2043,6 +2059,7 @@
       mode: m,
       width: w,
       height: h,
+      resolution: '',
       once_ratio: ref(),
       is_default: formData.value.video_generation.length === 0 ? '1' : '',
     };
@@ -2473,6 +2490,10 @@
 
   .pricing-input--video-size {
     width: 118px;
+  }
+
+  .pricing-input--video-resolution {
+    width: 257px;
   }
 
   .pricing-input--video-price {
