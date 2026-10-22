@@ -404,7 +404,7 @@
           <span
             class="spend"
             @click="
-              record.status === 1 || record.status === 2
+              hasVideoSpend(record)
                 ? spendHandle(
                     record.spend,
                     record.model_type,
@@ -415,7 +415,7 @@
             "
           >
             <Quota
-              v-if="record.status === 1 || record.status === 2"
+              v-if="hasVideoSpend(record)"
               :model-value="record.spend.total_spend_tokens"
               :currency-symbol="record.spend?.currency_symbol"
             />
@@ -1229,6 +1229,12 @@
     providerCode.value = pc || '';
     providerName.value = pn || '';
   };
+
+  // 成功/进行中照常展示; 失败但已按官方 ticks 计费时也要能看花费
+  const hasVideoSpend = (record: { status?: number; spend?: Spend }) =>
+    record.status === 1 ||
+    record.status === 2 ||
+    (record.spend?.total_spend_tokens || 0) > 0;
 
   /**
    * 复制内容

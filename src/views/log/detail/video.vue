@@ -193,7 +193,7 @@
           v-else
           class="spend"
           @click="
-            currentData.status === 1 || currentData.status === 2
+            hasVideoSpend(currentData)
               ? spendHandle(
                   currentData.spend,
                   currentData.model_type,
@@ -204,7 +204,7 @@
           "
         >
           <Quota
-            v-if="currentData.status === 1 || currentData.status === 2"
+            v-if="hasVideoSpend(currentData)"
             :model-value="currentData.spend.total_spend_tokens"
             :currency-symbol="currentData.spend?.currency_symbol"
           />
@@ -574,7 +574,7 @@
           v-else
           class="spend"
           @click="
-            currentData.status === 1 || currentData.status === 2
+            hasVideoSpend(currentData)
               ? spendHandle(
                   currentData.spend,
                   currentData.model_type,
@@ -585,7 +585,7 @@
           "
         >
           <Quota
-            v-if="currentData.status === 1 || currentData.status === 2"
+            v-if="hasVideoSpend(currentData)"
             :model-value="currentData.spend.total_spend_tokens"
             :currency-symbol="currentData.spend?.currency_symbol"
           />
@@ -839,6 +839,12 @@
     providerCode.value = pc || '';
     providerName.value = pn || '';
   };
+
+  // 成功/进行中照常展示; 失败但已按官方 ticks 计费时也要能看花费
+  const hasVideoSpend = (record: { status?: number; spend?: Spend }) =>
+    record.status === 1 ||
+    record.status === 2 ||
+    (record.spend?.total_spend_tokens || 0) > 0;
 </script>
 
 <script lang="ts">
