@@ -197,8 +197,16 @@
       value: t('provider.dict.name.VolcEngine'),
     },
     {
-      label: t('provider.dict.name.360AI'),
-      value: t('provider.dict.name.360AI'),
+      label: t('provider.dict.name.AWSClaude'),
+      value: t('provider.dict.name.AWSClaude'),
+    },
+    {
+      label: t('provider.dict.name.GCPClaude'),
+      value: t('provider.dict.name.GCPClaude'),
+    },
+    {
+      label: t('provider.dict.name.GCPGemini'),
+      value: t('provider.dict.name.GCPGemini'),
     },
     {
       label: t('provider.dict.name.FastAPI'),
@@ -266,10 +274,6 @@
     {
       label: t('provider.dict.code.Doubao'),
       value: t('provider.dict.code.Doubao'),
-    },
-    {
-      label: t('provider.dict.code.360AI'),
-      value: t('provider.dict.code.360AI'),
     },
     {
       label: t('provider.dict.code.AWSClaude'),
