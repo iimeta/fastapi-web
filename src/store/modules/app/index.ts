@@ -181,16 +181,16 @@ const useAppStore = defineStore('app', {
       return (
         state.config.announcements || [
           {
+            content: 'v2.5.0 版本发布\u30002026-10-23',
+            jump_url: 'https://www.fastapi.ai/releases/#v2-5-0',
+          },
+          {
             content: 'v2.4.0 版本发布\u30002026-06-03',
             jump_url: 'https://www.fastapi.ai/releases/#v2-4-0',
           },
           {
             content: 'v2.3.0 版本发布\u30002026-04-22',
             jump_url: 'https://www.fastapi.ai/releases/#v2-3-0',
-          },
-          {
-            content: 'v2.2.0 版本发布\u30002026-03-20',
-            jump_url: 'https://www.fastapi.ai/releases/#v2-2-0',
           },
         ]
       );
