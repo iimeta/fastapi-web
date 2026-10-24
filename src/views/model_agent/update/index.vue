@@ -558,13 +558,13 @@
               <a-space size="large">
                 <a-radio
                   v-model="formData.lb_strategy"
-                  value="1"
+                  value="2"
                   :default-checked="true"
                 >
-                  {{ $t('dict.lb_strategy.1') }}
-                </a-radio>
-                <a-radio v-model="formData.lb_strategy" value="2">
                   {{ $t('dict.lb_strategy.2') }}
+                </a-radio>
+                <a-radio v-model="formData.lb_strategy" value="1">
+                  {{ $t('dict.lb_strategy.1') }}
                 </a-radio>
               </a-space>
             </a-form-item>
@@ -860,7 +860,7 @@
     },
     is_remove_abnormal_model: true,
     is_never_disable: false,
-    lb_strategy: '',
+    lb_strategy: '2',
     key: '',
     is_never_disable_key: false,
     is_enable_data_passthrough: false,

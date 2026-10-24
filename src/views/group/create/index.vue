@@ -173,13 +173,13 @@
               <a-space size="large">
                 <a-radio
                   v-model="formData.lb_strategy"
-                  value="1"
+                  value="2"
                   :default-checked="true"
                 >
-                  {{ $t('dict.lb_strategy.1') }}
-                </a-radio>
-                <a-radio v-model="formData.lb_strategy" value="2">
                   {{ $t('dict.lb_strategy.2') }}
+                </a-radio>
+                <a-radio v-model="formData.lb_strategy" value="1">
+                  {{ $t('dict.lb_strategy.1') }}
                 </a-radio>
               </a-space>
             </a-form-item>
@@ -1012,7 +1012,7 @@
     expires_at: '',
     remark: '',
     is_enable_model_agent: false,
-    lb_strategy: '1',
+    lb_strategy: '2',
     model_agents: [],
     is_limit_quota: false,
     quota: ref(),

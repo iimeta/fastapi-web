@@ -591,13 +591,13 @@
             <a-space size="large">
               <a-radio
                 v-model="agentFormData.lb_strategy"
-                value="1"
+                value="2"
                 :default-checked="true"
               >
-                {{ $t('dict.lb_strategy.1') }}
-              </a-radio>
-              <a-radio v-model="agentFormData.lb_strategy" value="2">
                 {{ $t('dict.lb_strategy.2') }}
+              </a-radio>
+              <a-radio v-model="agentFormData.lb_strategy" value="1">
+                {{ $t('dict.lb_strategy.1') }}
               </a-radio>
             </a-space>
           </a-form-item>
@@ -1366,7 +1366,7 @@
   const agentForm = ref<FormInstance>();
   const agentFormVisible = ref(false);
   const agentFormData = ref<ModelBatchOperate>({} as ModelBatchOperate);
-  agentFormData.value.lb_strategy = '1';
+  agentFormData.value.lb_strategy = '2';
 
   const initModel = async () => {
     setLoading(true);
