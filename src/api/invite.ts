@@ -209,6 +209,16 @@ export function submitManageInviteRewardApplyApprove(
   });
 }
 
+export function submitManageInviteRewardApplyDelete(id: string) {
+  return axios.post('/api/v1/invite/manage/reward/apply/delete', { id });
+}
+
+export function submitManageInviteRewardApplyBatchDelete(ids: string[]) {
+  return axios.post('/api/v1/invite/manage/reward/apply/batch/delete', {
+    ids,
+  });
+}
+
 export function submitManageInviteRewardApplyReject(
   id: string,
   rejectReason?: string,

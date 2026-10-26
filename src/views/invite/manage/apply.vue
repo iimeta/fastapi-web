@@ -125,6 +125,14 @@
               @click="handleBatchReject"
               >{{ $t('invite.button.reject') }}</a-button
             >
+            <a-button
+              type="primary"
+              status="danger"
+              :disabled="multiple"
+              :title="multiple ? $t('placeholder.operation.data') : ''"
+              @click="handleBatchDelete"
+              >{{ $t('button.delete') }}</a-button
+            >
           </a-space>
         </a-col>
         <a-col :span="12" class="list-table-actions">
@@ -218,6 +226,13 @@
             @click="handleReject(record.id)"
             >{{ $t('invite.button.reject') }}</a-button
           >
+          <a-button
+            type="text"
+            size="small"
+            status="danger"
+            @click="handleDelete(record.id)"
+            >{{ $t('button.delete') }}</a-button
+          >
         </template>
       </a-table>
     </a-card>
@@ -265,6 +280,8 @@
     queryManageInviteRewardApplyPage,
     submitManageInviteRewardApplyApprove,
     submitManageInviteRewardApplyReject,
+    submitManageInviteRewardApplyDelete,
+    submitManageInviteRewardApplyBatchDelete,
     InviteRewardApplyPage,
     InviteRewardApplyPageParams,
   } from '@/api/invite';
@@ -367,7 +384,7 @@
       dataIndex: 'operations',
       slotName: 'operations',
       align: 'center',
-      width: 120,
+      width: 150,
     },
   ]);
 
@@ -519,6 +536,52 @@
             pendingIds.map((id) => submitManageInviteRewardApplyApprove(id))
           );
           Message.success(t('success.operate'));
+          search();
+          tableRef.value.selectAll(false);
+        } finally {
+          setLoading(false);
+        }
+      },
+    });
+  };
+
+  // 删除申请记录, 不做其他关联操作
+  const handleDelete = (id: string) => {
+    Modal.warning({
+      title: t('modal.warning.title'),
+      titleAlign: 'center',
+      content: t('placeholder.operation.delete'),
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
+      hideCancel: false,
+      onOk: async () => {
+        await submitManageInviteRewardApplyDelete(id);
+        Message.success(t('success.delete'));
+        fetchData({
+          ...basePagination,
+          ...searchFormData.value,
+          current: pagination.current,
+        });
+      },
+    });
+  };
+
+  // 批量删除申请记录, 不做其他关联操作
+  const handleBatchDelete = () => {
+    Modal.warning({
+      title: t('modal.warning.title'),
+      titleAlign: 'center',
+      content: t('placeholder.batch.operation.delete', {
+        count: ids.value.length,
+      }),
+      okText: t('button.ok'),
+      cancelText: t('button.cancel'),
+      hideCancel: false,
+      onOk: async () => {
+        setLoading(true);
+        try {
+          await submitManageInviteRewardApplyBatchDelete(ids.value);
+          Message.success(t('success.delete'));
           search();
           tableRef.value.selectAll(false);
         } finally {
