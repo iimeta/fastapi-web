@@ -65,7 +65,13 @@
     <a-modal
       v-model:visible="configVisible"
       :title="$t(configTitle)"
-      :width="configFormData.action === 'core' ? 588 : 528"
+      :width="
+        configFormData.action === 'logger'
+          ? 640
+          : configFormData.action === 'core'
+          ? 588
+          : 528
+      "
       :body-style="configModalBodyStyle"
       @cancel="handleCancel"
       @before-ok="handleBeforeOk"
@@ -258,6 +264,142 @@
             allow-clear
           />
         </a-form-item>
+        <a-divider v-if="configFormData.action === 'logger'" orientation="left">
+          {{ $t('sys.config.label.logger.api') }}
+        </a-divider>
+        <a-form-item
+          v-if="configFormData.action === 'logger'"
+          field="logger.api.path"
+          :label="$t('sys.config.label.logger.path')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.required.logger.path'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.logger.api.path"
+            :placeholder="$t('sys.config.placeholder.logger.path')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'logger'"
+          field="logger.api.file"
+          :label="$t('sys.config.label.logger.file')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.required.logger.file'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.logger.api.file"
+            :placeholder="$t('sys.config.placeholder.logger.file')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'logger'"
+          field="logger.api.level"
+          :label="$t('sys.config.label.logger.level')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.required.logger.level'),
+            },
+          ]"
+        >
+          <a-select
+            v-model="configFormData.logger.api.level"
+            :placeholder="$t('sys.config.placeholder.logger.level')"
+            :scrollbar="false"
+          >
+            <a-option value="debug">debug</a-option>
+            <a-option value="info">info</a-option>
+            <a-option value="notice">notice</a-option>
+            <a-option value="warning">warning</a-option>
+            <a-option value="error">error</a-option>
+            <a-option value="critical">critical</a-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'logger'"
+          field="logger.api.stdout"
+          :label="$t('sys.config.label.logger.stdout')"
+        >
+          <a-switch v-model="configFormData.logger.api.stdout" />
+        </a-form-item>
+        <a-divider v-if="configFormData.action === 'logger'" orientation="left">
+          {{ $t('sys.config.label.logger.admin') }}
+        </a-divider>
+        <a-form-item
+          v-if="configFormData.action === 'logger'"
+          field="logger.admin.path"
+          :label="$t('sys.config.label.logger.path')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.required.logger.path'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.logger.admin.path"
+            :placeholder="$t('sys.config.placeholder.logger.path')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'logger'"
+          field="logger.admin.file"
+          :label="$t('sys.config.label.logger.file')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.required.logger.file'),
+            },
+          ]"
+        >
+          <a-input
+            v-model="configFormData.logger.admin.file"
+            :placeholder="$t('sys.config.placeholder.logger.file')"
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'logger'"
+          field="logger.admin.level"
+          :label="$t('sys.config.label.logger.level')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.error.required.logger.level'),
+            },
+          ]"
+        >
+          <a-select
+            v-model="configFormData.logger.admin.level"
+            :placeholder="$t('sys.config.placeholder.logger.level')"
+            :scrollbar="false"
+          >
+            <a-option value="debug">debug</a-option>
+            <a-option value="info">info</a-option>
+            <a-option value="notice">notice</a-option>
+            <a-option value="warning">warning</a-option>
+            <a-option value="error">error</a-option>
+            <a-option value="critical">critical</a-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'logger'"
+          field="logger.admin.stdout"
+          :label="$t('sys.config.label.logger.stdout')"
+        >
+          <a-switch v-model="configFormData.logger.admin.stdout" />
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -300,6 +442,10 @@
     http: {},
     core: {},
     debug: {},
+    logger: {
+      admin: {},
+      api: {},
+    },
   } as SysConfigUpdate);
 
   const configHandle = async (sysConfigItem: SysConfigItem) => {
@@ -392,6 +538,10 @@
       configFormData.value.core.replace_error_prefixes =
         configFormData.value.core.replace_error_prefixes?.join(',');
       configFormData.value.debug = data.debug;
+      configFormData.value.logger = {
+        admin: data.logger?.admin || {},
+        api: data.logger?.api || {},
+      };
       sysConfigItems.value = [
         {
           action: 'email',
@@ -420,6 +570,13 @@
           title: t('sys.config.item.title.debug'),
           desc: t('sys.config.item.desc.debug'),
           open: configFormData.value.debug.open,
+        },
+        {
+          action: 'logger',
+          title: t('sys.config.item.title.logger'),
+          desc: t('sys.config.item.desc.logger'),
+          config: true,
+          reset: true,
         },
       ];
     },

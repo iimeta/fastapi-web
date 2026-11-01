@@ -364,6 +364,18 @@ export interface Debug {
   open: boolean;
 }
 
+export interface LoggerConfig {
+  path: string;
+  file: string;
+  level: string;
+  stdout: boolean;
+}
+
+export interface Logger {
+  admin: LoggerConfig;
+  api: LoggerConfig;
+}
+
 export interface SysConfigDetail {
   id: string;
   core: Core;
@@ -402,6 +414,7 @@ export interface SysConfigDetail {
   general_api: GeneralApi;
   test: Test;
   debug: Debug;
+  logger: Logger;
   created_at: string;
   updated_at: string;
 }
@@ -448,6 +461,7 @@ export interface SysConfigUpdate {
   general_api: GeneralApi;
   test: Test;
   debug: Debug;
+  logger: Logger;
 }
 
 export function submitSysConfigUpdate(data: SysConfigUpdate) {
