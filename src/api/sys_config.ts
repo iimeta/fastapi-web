@@ -165,6 +165,8 @@ export interface NotRetryError {
 export interface NotShieldError {
   open: boolean;
   errors: string[];
+  whitelist_user_ids: number[];
+  whitelist_keys: string[];
 }
 
 export interface Notice {

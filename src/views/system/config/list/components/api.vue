@@ -910,6 +910,32 @@
           </a-button>
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'not_shield_error'"
+          field="not_shield_error.whitelist_user_ids"
+          :label="$t('sys.config.label.not_shield_error.whitelist_user_ids')"
+        >
+          <a-input-tag
+            v-model="configFormData.not_shield_error.whitelist_user_ids"
+            :placeholder="
+              $t('sys.config.placeholder.not_shield_error.whitelist_user_ids')
+            "
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'not_shield_error'"
+          field="not_shield_error.whitelist_keys"
+          :label="$t('sys.config.label.not_shield_error.whitelist_keys')"
+        >
+          <a-input-tag
+            v-model="configFormData.not_shield_error.whitelist_keys"
+            :placeholder="
+              $t('sys.config.placeholder.not_shield_error.whitelist_keys')
+            "
+            allow-clear
+          />
+        </a-form-item>
+        <a-form-item
           v-for="(item, index) of configFormData.not_shield_error.errors"
           v-show="configFormData.action === 'not_shield_error'"
           :key="index"
@@ -1799,6 +1825,12 @@
             .map((id: any) => Number(id))
             .filter((id: number) => Number.isInteger(id) && id > 0);
       }
+      if (configFormData.value.not_shield_error?.whitelist_user_ids) {
+        configFormData.value.not_shield_error.whitelist_user_ids =
+          configFormData.value.not_shield_error.whitelist_user_ids
+            .map((id: any) => Number(id))
+            .filter((id: number) => Number.isInteger(id) && id > 0);
+      }
       await submitSysConfigUpdate(configFormData.value);
       done();
       Message.success(t('success.operate'));
@@ -1953,6 +1985,11 @@
       configFormData.value.auto_retry_error = data.auto_retry_error;
       configFormData.value.not_retry_error = data.not_retry_error;
       configFormData.value.not_shield_error = data.not_shield_error;
+      // 白名单可能未返回, 兜底为数组供 a-input-tag 绑定
+      configFormData.value.not_shield_error.whitelist_user_ids =
+        data.not_shield_error.whitelist_user_ids ?? [];
+      configFormData.value.not_shield_error.whitelist_keys =
+        data.not_shield_error.whitelist_keys ?? [];
       configFormData.value.service_unavailable = data.service_unavailable;
       configFormData.value.general_api = data.general_api;
       configFormData.value.api = data.api;
