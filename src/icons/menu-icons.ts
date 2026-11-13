@@ -31,6 +31,7 @@ import IconListChecks from '~icons/lucide/list-checks';
 import IconHeadset from '~icons/lucide/headset';
 import IconCirclePlus from '~icons/lucide/circle-plus';
 import IconList from '~icons/lucide/list';
+import IconDices from '~icons/lucide/dices';
 
 const menuIcons: Record<string, any> = {
   'lucide-layout-grid': IconApps,
@@ -65,6 +66,7 @@ const menuIcons: Record<string, any> = {
   'lucide-headset': IconHeadset,
   'lucide-circle-plus': IconCirclePlus,
   'lucide-list': IconList,
+  'lucide-dices': IconDices,
 };
 
 export function registerMenuIcons(app: App) {

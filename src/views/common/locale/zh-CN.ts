@@ -176,6 +176,7 @@ export default {
   'button.all.update': '全部修改',
   'button.all.delete': '全部删除',
   'button.batch.test': '批量测试',
+  'button.generate_password': '生成密码',
   // modal
   'modal.warning.title': '警告',
   'modal.warning.title.warm': '温馨提示',

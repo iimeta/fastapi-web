@@ -103,3 +103,54 @@ export function fmtMoney(v: number): string {
     maximumFractionDigits: 6,
   });
 }
+
+const PASSWORD_UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const PASSWORD_LOWER = 'abcdefghijklmnopqrstuvwxyz';
+const PASSWORD_DIGIT = '0123456789';
+const PASSWORD_SYMBOL = '!@#$%^&*_=';
+const PASSWORD_SIMILAR = '1Il0Oo';
+const PASSWORD_ALL =
+  PASSWORD_UPPER + PASSWORD_LOWER + PASSWORD_DIGIT + PASSWORD_SYMBOL;
+const PASSWORD_WEIGHTED = PASSWORD_ALL + PASSWORD_SIMILAR.repeat(4);
+
+function randomInt(max: number): number {
+  const buffer = new Uint32Array(1);
+  crypto.getRandomValues(buffer);
+  return buffer[0] % max;
+}
+
+function pickChar(charset: string): string {
+  return charset[randomInt(charset.length)];
+}
+
+export function generatePassword(length = 16): string {
+  const chars: string[] = [];
+
+  for (let i = 0; i < 3; i += 1) {
+    chars.push(pickChar(PASSWORD_SYMBOL));
+  }
+  for (let i = 0; i < 2; i += 1) {
+    chars.push(pickChar(PASSWORD_SIMILAR));
+  }
+
+  if (!chars.some((c) => PASSWORD_UPPER.includes(c))) {
+    chars.push(pickChar(PASSWORD_UPPER));
+  }
+  if (!chars.some((c) => PASSWORD_LOWER.includes(c))) {
+    chars.push(pickChar(PASSWORD_LOWER));
+  }
+  if (!chars.some((c) => PASSWORD_DIGIT.includes(c))) {
+    chars.push(pickChar(PASSWORD_DIGIT));
+  }
+
+  while (chars.length < length) {
+    chars.push(pickChar(PASSWORD_WEIGHTED));
+  }
+
+  for (let i = chars.length - 1; i > 0; i -= 1) {
+    const j = randomInt(i + 1);
+    [chars[i], chars[j]] = [chars[j], chars[i]];
+  }
+
+  return chars.join('');
+}

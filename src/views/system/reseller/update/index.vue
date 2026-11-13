@@ -83,10 +83,9 @@
                 },
               ]"
             >
-              <a-input
+              <PasswordInput
                 v-model="formData.password"
                 :placeholder="$t('reseller.update.placeholder.password')"
-                allow-clear
               />
             </a-form-item>
             <a-form-item
@@ -411,6 +410,7 @@
   } from '@/api/admin_reseller';
   import { queryGroupList, GroupList } from '@/api/group';
   import Quota from '@/views/common/quota.vue';
+  import PasswordInput from '@/views/common/password-input.vue';
 
   const { t } = useI18n();
   const { loading, setLoading } = useLoading(false);
