@@ -23,12 +23,12 @@
         <a-col :flex="1">
           <a-form
             :model="searchFormData"
-            :label-col-props="{ span: 5 }"
-            :wrapper-col-props="{ span: 18 }"
+            :label-col-props="{ span: 7 }"
+            :wrapper-col-props="{ span: 17 }"
             label-align="left"
           >
             <a-row :gutter="16">
-              <a-col :span="8">
+              <a-col :span="isMyTickets ? 8 : 6">
                 <a-form-item
                   field="ticket_no"
                   :label="$t('ticket.label.ticket_no')"
@@ -40,7 +40,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="isMyTickets ? 8 : 6">
                 <a-form-item field="title" :label="$t('ticket.label.title')">
                   <a-input
                     v-model="searchFormData.title"
@@ -49,7 +49,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="isMyTickets ? 8 : 6">
                 <a-form-item
                   field="category"
                   :label="$t('ticket.label.category')"
@@ -78,11 +78,10 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col v-if="userStore.role !== 'user' && !isMyTickets" :span="6">
+              <a-col v-if="isHandlerView" :span="isMyTickets ? 8 : 6">
                 <a-form-item
                   field="user_name"
                   :label="$t('ticket.label.submitter')"
-                  :label-col-props="{ span: 6 }"
                 >
                   <a-input
                     v-model="searchFormData.user_name"
@@ -91,11 +90,22 @@
                   />
                 </a-form-item>
               </a-col>
+              <a-col v-if="isHandlerView" :span="isMyTickets ? 8 : 6">
+                <a-form-item field="user_id" :label="$t('common.user_id')">
+                  <a-input-number
+                    v-model="searchFormData.user_id"
+                    :placeholder="$t('placeholder.user_id')"
+                    :precision="0"
+                    :min="1"
+                    hide-button
+                    allow-clear
+                  />
+                </a-form-item>
+              </a-col>
               <a-col :span="isMyTickets ? 8 : 6">
                 <a-form-item
                   field="priority"
                   :label="$t('ticket.label.priority')"
-                  :label-col-props="{ span: isMyTickets ? 5 : 6 }"
                 >
                   <a-select
                     v-model="searchFormData.priority"
@@ -118,7 +128,7 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="isMyTickets ? 8 : 5">
+              <a-col :span="isMyTickets ? 8 : 6">
                 <a-form-item field="status" :label="$t('ticket.label.status')">
                   <a-select
                     v-model="searchFormData.status"
@@ -147,11 +157,10 @@
                   </a-select>
                 </a-form-item>
               </a-col>
-              <a-col :span="isMyTickets ? 8 : 7">
+              <a-col :span="isMyTickets ? 8 : 6">
                 <a-form-item
                   field="created_at"
                   :label="$t('ticket.label.created_at')"
-                  :label-col-props="{ span: isMyTickets ? 5 : 6 }"
                 >
                   <a-range-picker
                     v-model="searchFormData.created_at"
@@ -300,6 +309,9 @@
         </template>
         <template #user_name="{ record }">
           {{ record.user_name || '-' }}
+          <template v-if="isHandlerView && record.user_id">
+            ({{ record.user_id }})
+          </template>
         </template>
         <template #operations="{ record }">
           <a-space>
@@ -355,6 +367,10 @@
 
   // "我的工单" route only shows user's own tickets
   const isMyTickets = computed(() => route.name === 'TicketMyList');
+  // 处理人视角: 管理员/代理商查看工单列表(非"我的工单")
+  const isHandlerView = computed(
+    () => userStore.role !== 'user' && !isMyTickets.value
+  );
   const cardHeaderStyle = {
     padding: '20px',
   };
@@ -367,6 +383,7 @@
       ticket_no: '',
       title: '',
       user_name: '',
+      user_id: ref(),
       category: ref(),
       status: ref(),
       priority: ref(),
@@ -459,7 +476,7 @@
       },
     ];
 
-    if (userStore.role !== 'user') {
+    if (isHandlerView.value) {
       cols.push({
         title: t('ticket.label.submitter'),
         dataIndex: 'user_name',

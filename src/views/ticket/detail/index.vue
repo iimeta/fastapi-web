@@ -93,6 +93,9 @@
             <span class="meta-item">
               {{ $t('ticket.label.submitter') }}:
               {{ ticketData.user_name || '-' }}
+              <template v-if="ticketData.user_id">
+                ({{ ticketData.user_id }})
+              </template>
             </span>
             <span
               v-if="userStore.role === 'admin' && ticketData.assignee_role"

@@ -53,6 +53,7 @@ export interface TicketPageParams {
   ticket_no?: string;
   title?: string;
   user_name?: string;
+  user_id?: number;
   category?: string;
   priority?: number;
   status?: number;
