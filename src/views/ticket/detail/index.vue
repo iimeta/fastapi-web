@@ -4,7 +4,6 @@
       <a-breadcrumb-item>
         <lucide-headset />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('ticket.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('ticket.menu.detail') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <div class="ticket-detail">
@@ -229,6 +228,7 @@
   import { Message, Modal } from '@arco-design/web-vue';
   import VditorLib from 'vditor';
   import useLoading from '@/hooks/loading';
+  import sanitizeHtml from '@/utils/sanitize';
   import { useUserStore } from '@/store';
   import {
     queryTicketDetail,
@@ -256,7 +256,8 @@
 
   const md2html = async (md: string): Promise<string> => {
     if (!md) return '';
-    return VditorLib.md2html(md, { cdn: VDITOR_CDN, mode: 'dark' });
+    const html = await VditorLib.md2html(md, { cdn: VDITOR_CDN, mode: 'dark' });
+    return sanitizeHtml(html);
   };
 
   const renderContent = async () => {

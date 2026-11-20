@@ -4,7 +4,6 @@
       <a-breadcrumb-item>
         <lucide-headset />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('ticket.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{ $t('ticket.menu.create') }}</a-breadcrumb-item>
     </a-breadcrumb>
     <a-spin :loading="loading" style="width: 100%">

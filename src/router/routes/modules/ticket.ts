@@ -43,7 +43,7 @@ const TICKET: AppRouteRecordRaw = {
       name: 'TicketList',
       component: () => import('@/views/ticket/list/index.vue'),
       meta: {
-        locale: 'ticket.menu.list',
+        locale: 'ticket.menu',
         requiresAuth: true,
         icon: 'lucide-headset',
         roles: ['reseller', 'admin'],

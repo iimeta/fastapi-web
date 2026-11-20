@@ -4,12 +4,11 @@
       <a-breadcrumb-item>
         <lucide-headset />
       </a-breadcrumb-item>
-      <a-breadcrumb-item>{{ $t('ticket.menu') }}</a-breadcrumb-item>
       <a-breadcrumb-item>{{
         $t(
           $route.name === 'TicketMyList'
             ? 'ticket.menu.my_tickets'
-            : 'ticket.menu.list'
+            : 'ticket.menu'
         )
       }}</a-breadcrumb-item>
     </a-breadcrumb>
