@@ -15,13 +15,14 @@ import { AppState } from './types';
 const SETTINGS_STORAGE_KEY = 'app-settings';
 
 // 需要本地缓存的设置项(排除运行时临时状态)
+// 注意: hideMenu / device 由窗口宽度实时计算(见 hooks/responsive.ts), 不能缓存,
+// 否则窄窗口下存入的 hideMenu: true 会在宽屏下把页面锁在移动端布局
 const PERSIST_KEYS: (keyof AppState)[] = [
   'theme',
   'colorWeak',
   'navbar',
   'menu',
   'topMenu',
-  'hideMenu',
   'menuCollapse',
   'menuGroupExpand',
   'footer',

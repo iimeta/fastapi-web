@@ -111,9 +111,13 @@
 
   .left-side {
     flex: 1;
+    // flex 子项默认 min-width: auto, 会被图表 canvas 的固定像素宽度撑住无法收缩,
+    // 进而把右侧栏挤出屏幕; 置 0 后才能随容器收缩并触发图表 autoresize
+    min-width: 0;
   }
 
   .right-side {
+    flex-shrink: 0;
     width: 280px;
     margin-left: 10px;
   }
