@@ -707,7 +707,7 @@
       <!-- 花费明细 -->
       <a-modal
         v-model:visible="spendVisible"
-        :width="1068"
+        :width="1100"
         :body-style="spendModalBodyStyle"
         :modal-style="spendModalStyle"
         hide-title

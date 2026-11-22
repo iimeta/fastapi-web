@@ -1171,7 +1171,7 @@
           dataIndex: 'service_tier',
           slotName: 'service_tier',
           align: 'center',
-          width: 90,
+          width: 80,
         },
         {
           title: t('model.label.mode'),
@@ -1185,7 +1185,7 @@
           dataIndex: 'gt',
           slotName: 'gt',
           align: 'center',
-          width: 110,
+          width: 120,
         },
         {
           title: t('log.columns.spend.input_tokens'),
@@ -1252,28 +1252,28 @@
           dataIndex: 'service_tier',
           slotName: 'service_tier',
           align: 'center',
-          width: 100,
+          width: 80,
         },
         {
           title: t('model.label.mode'),
           dataIndex: 'mode',
           slotName: 'mode',
           align: 'center',
-          width: 100,
+          width: 80,
         },
         {
           title: t('log.columns.spend.tiered.input_tokens'),
           dataIndex: 'gt',
           slotName: 'gt',
           align: 'center',
-          width: 100,
+          width: 120,
         },
         {
           title: t('log.columns.spend.read_tokens'),
           dataIndex: 'read_tokens',
           slotName: 'read_tokens',
           align: 'center',
-          width: 100,
+          width: 110,
         },
         {
           title: t('model.label.tiered.read_ratio'),
@@ -1307,7 +1307,7 @@
                 dataIndex: 'write_5m_tokens',
                 slotName: 'write_5m_tokens',
                 align: 'center' as const,
-                width: 115,
+                width: 120,
               },
               {
                 title: t('log.columns.spend.write_5m_ratio'),
@@ -1321,7 +1321,7 @@
                 dataIndex: 'write_1h_tokens',
                 slotName: 'write_1h_tokens',
                 align: 'center' as const,
-                width: 110,
+                width: 120,
               },
               {
                 title: t('log.columns.spend.write_1h_ratio'),
