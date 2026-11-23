@@ -397,13 +397,13 @@
             },
           ]"
         >
-          <a-input
+          <PasswordInput
             v-model="configFormData.admin_login.path"
             :placeholder="$t('sys.config.placeholder.path')"
-            allow-clear
+            :generator="generateAlphanumeric"
           >
             <template #prepend> / </template>
-          </a-input>
+          </PasswordInput>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'quota'"
@@ -707,6 +707,8 @@
     submitSysConfigReset,
     submitSysConfigChangeStatus,
   } from '@/api/sys_config';
+  import { generateAlphanumeric } from '@/utils/common';
+  import PasswordInput from '@/views/common/password-input.vue';
   import { useSysConfig } from '../composables/use-sys-config';
 
   const { setLoading } = useLoading(true);

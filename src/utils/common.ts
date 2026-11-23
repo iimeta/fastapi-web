@@ -154,3 +154,24 @@ export function generatePassword(length = 16): string {
 
   return chars.join('');
 }
+
+const PASSWORD_ALPHANUMERIC = PASSWORD_UPPER + PASSWORD_LOWER + PASSWORD_DIGIT;
+
+export function generateAlphanumeric(length = 16): string {
+  const chars: string[] = [
+    pickChar(PASSWORD_UPPER),
+    pickChar(PASSWORD_LOWER),
+    pickChar(PASSWORD_DIGIT),
+  ];
+
+  while (chars.length < length) {
+    chars.push(pickChar(PASSWORD_ALPHANUMERIC));
+  }
+
+  for (let i = chars.length - 1; i > 0; i -= 1) {
+    const j = randomInt(i + 1);
+    [chars[i], chars[j]] = [chars[j], chars[i]];
+  }
+
+  return chars.join('');
+}

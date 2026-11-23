@@ -5,6 +5,9 @@
     allow-clear
     @update:model-value="emit('update:modelValue', $event)"
   >
+    <template v-if="$slots.prepend" #prepend>
+      <slot name="prepend" />
+    </template>
     <template #suffix>
       <a-tooltip :content="$t('button.generate_password')">
         <span class="password-generate-btn" @click="handleGenerate">
@@ -18,9 +21,10 @@
 <script lang="ts" setup>
   import { generatePassword } from '@/utils/common';
 
-  defineProps<{
+  const props = defineProps<{
     modelValue?: string;
     placeholder?: string;
+    generator?: () => string;
   }>();
 
   const emit = defineEmits<{
@@ -28,7 +32,7 @@
   }>();
 
   const handleGenerate = () => {
-    emit('update:modelValue', generatePassword());
+    emit('update:modelValue', (props.generator || generatePassword)());
   };
 </script>
 
