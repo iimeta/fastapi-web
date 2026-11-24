@@ -304,6 +304,7 @@
     width: 100%;
     :deep(.arco-input-prepend) {
       border-right: none;
+      padding: 0 8px 0 12px;
     }
     :deep(.arco-input-tag) {
       flex: 1;
