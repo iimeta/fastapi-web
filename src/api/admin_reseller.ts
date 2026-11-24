@@ -106,11 +106,9 @@ export interface ResellerDetail {
   groups: string[];
   group_names: string[];
   quota_warning: boolean;
-  warning_threshold: number;
-  expire_warning_threshold: number;
-  warning_notice: boolean;
+  warning_thresholds: number[];
+  expire_warning_thresholds: number[];
   exhaustion_notice: boolean;
-  expire_warning_notice: boolean;
   expire_notice: boolean;
   remark: string;
   status: number;

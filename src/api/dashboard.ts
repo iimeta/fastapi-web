@@ -55,8 +55,8 @@ export interface Expense {
   to_be_allocated_quota: number;
   quota_expires_at: string;
   quota_warning: boolean;
-  warning_threshold: number;
-  expire_warning_threshold: number;
+  warning_thresholds: Array<number | string>;
+  expire_warning_thresholds: Array<number | string>;
 }
 
 export function queryExpense() {
@@ -140,8 +140,8 @@ export function queryPerMinute(params?: PerMinuteParams) {
 
 export interface QuotaWarningParams {
   quota_warning: boolean;
-  warning_threshold: number;
-  expire_warning_threshold: number;
+  warning_thresholds: Array<number | string>;
+  expire_warning_thresholds: Array<number | string>;
 }
 
 export function submitQuotaWarning(params: QuotaWarningParams) {

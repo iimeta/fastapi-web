@@ -36,8 +36,8 @@ export default {
   'user.placeholder.batch.operation.delete_data': 'Are you sure you want to delete the selected {count} user(s) and also delete: {del_data}?',
   // detail
   'user.detail.quota_warning': 'Quota Warning',
-  'user.detail.warning_threshold': 'Warning Threshold',
-  'user.detail.expire_warning_threshold': 'Expiration Warning Threshold',
+  'user.detail.warning_thresholds': 'Warning Stages',
+  'user.detail.expire_warning_thresholds': 'Expiration Warning Stages',
   'user.detail.warning_notice': 'Warning Notice',
   'user.detail.exhaustion_notice': 'Exhaustion Notice',
   'user.detail.expire_warning_notice': 'Expiration Warning Notice',

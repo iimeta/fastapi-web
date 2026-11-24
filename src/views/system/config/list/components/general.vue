@@ -421,24 +421,32 @@
           v-if="
             configFormData.action === 'quota' && configFormData.quota.warning
           "
-          field="quota.threshold"
-          :label="$t('sys.config.label.quota.threshold')"
+          field="quota.thresholds"
+          :label="$t('sys.config.label.quota.thresholds')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.placeholder.quota.threshold'),
+              type: 'array',
+              minLength: 1,
+              message: $t('sys.config.placeholder.quota.thresholds'),
             },
           ]"
         >
-          <a-input-number
-            v-model="configFormData.quota.threshold"
-            :placeholder="$t('sys.config.placeholder.quota.threshold')"
-            :precision="0"
-            :min="1"
-            allow-clear
+          <span
+            class="arco-input-outer arco-input-outer-size-medium quota-tag-input"
           >
-            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
-          </a-input-number>
+            <span class="arco-input-prepend">
+              {{ appStore.getCurrencySymbol }}
+            </span>
+            <a-input-tag
+              v-model="configFormData.quota.thresholds"
+              :placeholder="$t('sys.config.placeholder.quota.thresholds')"
+              allow-clear
+            />
+          </span>
+          <template #extra>
+            {{ $t('sys.config.tip.quota.thresholds') }}
+          </template>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'quota'"
@@ -457,24 +465,34 @@
             configFormData.action === 'quota' &&
             configFormData.quota.expired_warning
           "
-          field="quota.expired_threshold"
-          :label="$t('sys.config.label.quota.expired_threshold')"
+          field="quota.expired_thresholds"
+          :label="$t('sys.config.label.quota.expired_thresholds')"
           :rules="[
             {
               required: true,
-              message: $t('sys.config.placeholder.quota.expired_threshold'),
+              type: 'array',
+              minLength: 1,
+              message: $t('sys.config.placeholder.quota.expired_thresholds'),
             },
           ]"
         >
-          <a-input-number
-            v-model="configFormData.quota.expired_threshold"
-            :placeholder="$t('sys.config.placeholder.quota.expired_threshold')"
-            :precision="0"
-            :min="1"
-            allow-clear
+          <span
+            class="arco-input-outer arco-input-outer-size-medium quota-tag-input"
           >
-            <template #append> {{ $t('unit.day') }} </template>
-          </a-input-number>
+            <a-input-tag
+              v-model="configFormData.quota.expired_thresholds"
+              :placeholder="
+                $t('sys.config.placeholder.quota.expired_thresholds')
+              "
+              allow-clear
+            />
+            <span class="arco-input-append">
+              {{ $t('unit.day') }}
+            </span>
+          </span>
+          <template #extra>
+            {{ $t('sys.config.tip.quota.expired_thresholds') }}
+          </template>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'quota'"
@@ -755,6 +773,15 @@
     test: {},
   } as SysConfigUpdate);
 
+  const toNumbers = (values?: Array<string | number>) =>
+    Array.from(
+      new Set(
+        (values || [])
+          .map((v) => parseInt(`${v}`.trim(), 10))
+          .filter((v) => !Number.isNaN(v) && v > 0)
+      )
+    ).sort((a, b) => b - a);
+
   const configHandle = async (sysConfigItem: SysConfigItem) => {
     if (
       sysConfigItem.action === 'user_shield_error' &&
@@ -804,6 +831,15 @@
       configVisible.value = true;
       done(false);
       return;
+    }
+
+    if (configFormData.value.action === 'quota') {
+      configFormData.value.quota.thresholds = toNumbers(
+        configFormData.value.quota.thresholds
+      );
+      configFormData.value.quota.expired_thresholds = toNumbers(
+        configFormData.value.quota.expired_thresholds
+      );
     }
 
     setLoading(true);
@@ -901,7 +937,11 @@
         data.reseller_login_register;
       configFormData.value.reseller_shield_error = data.reseller_shield_error;
       configFormData.value.admin_login = data.admin_login;
-      configFormData.value.quota = data.quota;
+      configFormData.value.quota = {
+        ...data.quota,
+        thresholds: data.quota?.thresholds || [],
+        expired_thresholds: data.quota?.expired_thresholds || [],
+      };
       configFormData.value.ticket = data.ticket;
       configFormData.value.test = data.test;
       sysConfigItems.value = [
@@ -1036,7 +1076,16 @@
     max-width: 32%;
   }
 
-  .field-action-button {
-    margin: 0 10px 0 10px;
+  .quota-tag-input {
+    display: inline-flex;
+    width: 100%;
+    :deep(.arco-input-prepend) {
+      border-right: none;
+    }
+    :deep(.arco-input-tag) {
+      flex: 1;
+      min-width: 0;
+      border-radius: 0;
+    }
   }
 </style>

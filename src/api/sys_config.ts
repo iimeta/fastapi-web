@@ -177,9 +177,9 @@ export interface Notice {
 
 export interface Quota {
   warning: boolean;
-  threshold: number;
+  thresholds: Array<number | string>;
   expired_warning: boolean;
-  expired_threshold: number;
+  expired_thresholds: Array<number | string>;
   exhausted_notice: boolean;
   expired_notice: boolean;
   expired_clear: boolean;

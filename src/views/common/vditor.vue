@@ -202,11 +202,11 @@
       value: '{{.user.quota_expires_at}}',
     },
     {
-      label: t('user.detail.warning_threshold'),
+      label: t('user.detail.warning_thresholds'),
       value: '{{.user.warning_threshold}}',
     },
     {
-      label: t('user.detail.expire_warning_threshold'),
+      label: t('user.detail.expire_warning_thresholds'),
       value: '{{.user.expire_warning_threshold}}',
     },
   ];
@@ -241,11 +241,11 @@
       value: '{{.reseller.quota_expires_at}}',
     },
     {
-      label: t('reseller.detail.warning_threshold'),
+      label: t('reseller.detail.warning_thresholds'),
       value: '{{.reseller.warning_threshold}}',
     },
     {
-      label: t('reseller.detail.expire_warning_threshold'),
+      label: t('reseller.detail.expire_warning_thresholds'),
       value: '{{.reseller.expire_warning_threshold}}',
     },
   ];

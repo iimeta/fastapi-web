@@ -36,8 +36,8 @@ export default {
   'user.placeholder.batch.operation.delete_data': '是否确定删除所选的{count}位用户以及同时删除: {del_data}?',
   // detail
   'user.detail.quota_warning': '额度预警',
-  'user.detail.warning_threshold': '预警阈值',
-  'user.detail.expire_warning_threshold': '过期预警阈值',
+  'user.detail.warning_thresholds': '预警档位',
+  'user.detail.expire_warning_thresholds': '过期预警档位',
   'user.detail.warning_notice': '预警通知',
   'user.detail.exhaustion_notice': '耗尽通知',
   'user.detail.expire_warning_notice': '过期预警通知',

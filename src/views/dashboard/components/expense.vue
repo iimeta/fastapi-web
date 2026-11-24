@@ -81,53 +81,71 @@
         </a-form-item>
         <a-form-item
           v-if="quotaWarningFormData.quota_warning"
-          field="warning_threshold"
-          :label="$t('dashboard.label.quota_warning.warning_threshold')"
+          field="warning_thresholds"
+          :label="$t('dashboard.label.quota_warning.warning_thresholds')"
           :rules="[
             {
               required: true,
+              type: 'array',
+              minLength: 1,
               message: $t(
-                'dashboard.placeholder.quota_warning.warning_threshold'
+                'dashboard.placeholder.quota_warning.warning_thresholds'
               ),
             },
           ]"
         >
-          <a-input-number
-            v-model="quotaWarningFormData.warning_threshold"
-            :placeholder="
-              $t('dashboard.placeholder.quota_warning.warning_threshold')
-            "
-            :precision="0"
-            :min="1"
-            allow-clear
+          <span
+            class="arco-input-outer arco-input-outer-size-medium quota-tag-input"
           >
-            <template #prefix> {{ appStore.getCurrencySymbol }} </template>
-          </a-input-number>
+            <span class="arco-input-prepend">
+              {{ appStore.getCurrencySymbol }}
+            </span>
+            <a-input-tag
+              v-model="quotaWarningFormData.warning_thresholds"
+              :placeholder="
+                $t('dashboard.placeholder.quota_warning.warning_thresholds')
+              "
+              allow-clear
+            />
+          </span>
+          <template #extra>
+            {{ $t('dashboard.tip.quota_warning.warning_thresholds') }}
+          </template>
         </a-form-item>
         <a-form-item
           v-if="quotaWarningFormData.quota_warning"
-          field="expire_warning_threshold"
-          :label="$t('dashboard.label.quota_warning.expire_warning_threshold')"
+          field="expire_warning_thresholds"
+          :label="$t('dashboard.label.quota_warning.expire_warning_thresholds')"
           :rules="[
             {
               required: true,
+              type: 'array',
+              minLength: 1,
               message: $t(
-                'dashboard.placeholder.quota_warning.expire_warning_threshold'
+                'dashboard.placeholder.quota_warning.expire_warning_thresholds'
               ),
             },
           ]"
         >
-          <a-input-number
-            v-model="quotaWarningFormData.expire_warning_threshold"
-            :placeholder="
-              $t('dashboard.placeholder.quota_warning.expire_warning_threshold')
-            "
-            :precision="0"
-            :min="1"
-            allow-clear
+          <span
+            class="arco-input-outer arco-input-outer-size-medium quota-tag-input"
           >
-            <template #append> {{ $t('unit.day') }} </template>
-          </a-input-number>
+            <a-input-tag
+              v-model="quotaWarningFormData.expire_warning_thresholds"
+              :placeholder="
+                $t(
+                  'dashboard.placeholder.quota_warning.expire_warning_thresholds'
+                )
+              "
+              allow-clear
+            />
+            <span class="arco-input-append">
+              {{ $t('unit.day') }}
+            </span>
+          </span>
+          <template #extra>
+            {{ $t('dashboard.tip.quota_warning.expire_warning_thresholds') }}
+          </template>
         </a-form-item>
       </a-form>
     </a-modal>
@@ -162,16 +180,26 @@
   const quotaWarningFormData = ref<QuotaWarningParams>(
     {} as QuotaWarningParams
   );
+  const toNumbers = (values?: Array<string | number>) =>
+    Array.from(
+      new Set(
+        (values || [])
+          .map((v) => parseInt(`${v}`.trim(), 10))
+          .filter((v) => !Number.isNaN(v) && v > 0)
+      )
+    ).sort((a, b) => b - a);
 
   const getExpense = async () => {
     const { data } = await queryExpense();
     expense.value = data;
     quotaWarningFormData.value.quota_warning =
       data.quota_warning ||
-      (data.warning_threshold === 0 && data.expire_warning_threshold === 0);
-    quotaWarningFormData.value.warning_threshold = data.warning_threshold;
-    quotaWarningFormData.value.expire_warning_threshold =
-      data.expire_warning_threshold;
+      (!(data.warning_thresholds || []).length &&
+        !(data.expire_warning_thresholds || []).length);
+    quotaWarningFormData.value.warning_thresholds =
+      data.warning_thresholds || [];
+    quotaWarningFormData.value.expire_warning_thresholds =
+      data.expire_warning_thresholds || [];
   };
   getExpense();
 
@@ -186,6 +214,13 @@
       done(false);
       return;
     }
+
+    quotaWarningFormData.value.warning_thresholds = toNumbers(
+      quotaWarningFormData.value.warning_thresholds
+    );
+    quotaWarningFormData.value.expire_warning_thresholds = toNumbers(
+      quotaWarningFormData.value.expire_warning_thresholds
+    );
 
     try {
       await submitQuotaWarning(quotaWarningFormData.value);
@@ -262,5 +297,18 @@
   .arco-link {
     margin-left: 18px;
     padding: 0 4px;
+  }
+
+  .quota-tag-input {
+    display: inline-flex;
+    width: 100%;
+    :deep(.arco-input-prepend) {
+      border-right: none;
+    }
+    :deep(.arco-input-tag) {
+      flex: 1;
+      min-width: 0;
+      border-radius: 0;
+    }
   }
 </style>

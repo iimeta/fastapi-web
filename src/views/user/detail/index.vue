@@ -129,43 +129,37 @@
             $t(
               `dict.open.${
                 currentData.quota_warning ||
-                (currentData.warning_threshold === 0 &&
-                  currentData.expire_warning_threshold === 0)
+                (!(currentData.warning_thresholds || []).length &&
+                  !(currentData.expire_warning_thresholds || []).length)
               }`
             )
           }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('user.detail.warning_threshold')">
+      <a-descriptions-item :label="$t('user.detail.warning_thresholds')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          <Quota :model-value="currentData.warning_threshold" />
+          {{
+            (currentData.warning_thresholds || [])
+              .map((item) => `${appStore.getCurrencySymbol}${item}`)
+              .join(', ') || '-'
+          }}
         </span>
       </a-descriptions-item>
-      <a-descriptions-item :label="$t('user.detail.expire_warning_threshold')">
+      <a-descriptions-item :label="$t('user.detail.expire_warning_thresholds')">
         <a-skeleton v-if="loading" :animation="true">
           <a-skeleton-line :rows="1" />
         </a-skeleton>
         <span v-else>
-          {{ currentData.expire_warning_threshold }}{{ $t('unit.day') }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('user.detail.warning_notice')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ $t(`dict.notice.${currentData.warning_notice || false}`) }}
-        </span>
-      </a-descriptions-item>
-      <a-descriptions-item :label="$t('user.detail.expire_warning_notice')">
-        <a-skeleton v-if="loading" :animation="true">
-          <a-skeleton-line :rows="1" />
-        </a-skeleton>
-        <span v-else>
-          {{ $t(`dict.notice.${currentData.expire_warning_notice || false}`) }}
+          {{
+            (currentData.expire_warning_thresholds || []).length
+              ? `${(currentData.expire_warning_thresholds || []).join(
+                  ', '
+                )}${$t('unit.day')}`
+              : '-'
+          }}
         </span>
       </a-descriptions-item>
       <a-descriptions-item :label="$t('user.detail.exhaustion_notice')">
@@ -338,8 +332,10 @@
     PrivacyLogFieldOption,
   } from '@/api/admin_user';
   import Quota from '@/views/common/quota.vue';
+  import { useAppStore } from '@/store';
 
   const { t } = useI18n();
+  const appStore = useAppStore();
   const { loading, setLoading } = useLoading(true);
   const currentData = ref<UserDetail>({} as UserDetail);
   const logPrivacy = ref<LogPrivacy>();
