@@ -261,15 +261,15 @@
       // 原生事件委托处理分组标题点击和hover
       const menuRef = ref<HTMLElement | null>(null);
 
+      // 只有命中分组标题才算点击分组; 菜单项之间的 margin 缝隙属于分组容器,
+      // 若按整个分组容器判断, 点到缝隙也会触发收起
       const findGroupEl = (target: HTMLElement) => {
-        if (
-          target.closest('.arco-menu-item') ||
-          target.closest('.arco-menu-inline-header') ||
-          target.closest('.arco-menu-pop-header')
-        ) {
+        const titleEl = target.closest('.arco-menu-group-title');
+        if (!titleEl) return null;
+        const groupEl = titleEl.parentElement;
+        if (!groupEl?.classList.contains('menu-group--collapsible'))
           return null;
-        }
-        return target.closest('.menu-group--collapsible') as HTMLElement | null;
+        return groupEl;
       };
 
       const handleMenuClick = (e: MouseEvent) => {
@@ -542,6 +542,9 @@
     > .arco-menu-group-title {
       user-select: none;
       border-radius: 6px;
+      // Arco 默认给分组标题设了 pointer-events: none, 点击会穿透到分组容器;
+      // 这里恢复, 让点击只在标题上生效, 菜单项之间的缝隙不再触发收起
+      pointer-events: auto;
 
       &.menu-group-title--hover {
         background: rgba(var(--primary-6), 0.08);
