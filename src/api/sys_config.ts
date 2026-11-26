@@ -107,6 +107,8 @@ export interface UserLoginRegister {
   verify_email: boolean;
   email_retrieve: boolean;
   session_expire: number;
+  first_login_change_password: boolean;
+  password_expire_days: number;
 }
 
 export interface UserShieldError {
@@ -121,6 +123,8 @@ export interface ResellerLoginRegister {
   verify_email: boolean;
   email_retrieve: boolean;
   session_expire: number;
+  first_login_change_password: boolean;
+  password_expire_days: number;
 }
 
 export interface ResellerShieldError {
@@ -134,6 +138,8 @@ export interface AdminLogin {
   email_retrieve: boolean;
   session_expire: number;
   path: string;
+  first_login_change_password: boolean;
+  password_expire_days: number;
 }
 
 export interface AutoDisabledError {

@@ -193,8 +193,12 @@
           path: window.location.pathname,
           invite_code: String(inviteCode.value || '').trim(),
         })
-        .then(() => {
+        .then((res) => {
           window.localStorage.setItem('userRole', 'user');
+          if (res?.need_change_password) {
+            router.push({ name: 'ChangePassword' });
+            return;
+          }
           const { redirect, ...othersQuery } = router.currentRoute.value.query;
           router.push({
             name: (redirect as string) || 'Workplace',

@@ -165,6 +165,49 @@
           </a-input-number>
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'user_login_register'"
+          field="user_login_register.first_login_change_password"
+          :label="$t('sys.config.label.first_login_change_password')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch
+            v-model="
+              configFormData.user_login_register.first_login_change_password
+            "
+          />
+          <template #extra>
+            {{ $t('sys.config.tip.first_login_change_password') }}
+          </template>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'user_login_register'"
+          field="user_login_register.password_expire_days"
+          :label="$t('sys.config.label.password_expire_days')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.password_expire_days'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.user_login_register.password_expire_days"
+            :placeholder="$t('sys.config.placeholder.password_expire_days')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.day') }} </template>
+          </a-input-number>
+          <template #extra>
+            {{ $t('sys.config.tip.password_expire_days') }}
+          </template>
+        </a-form-item>
+        <a-form-item
           v-for="(item, index) of configFormData.user_shield_error.errors"
           v-show="configFormData.action === 'user_shield_error'"
           :key="index"
@@ -291,6 +334,51 @@
           </a-input-number>
         </a-form-item>
         <a-form-item
+          v-if="configFormData.action === 'reseller_login_register'"
+          field="reseller_login_register.first_login_change_password"
+          :label="$t('sys.config.label.first_login_change_password')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch
+            v-model="
+              configFormData.reseller_login_register.first_login_change_password
+            "
+          />
+          <template #extra>
+            {{ $t('sys.config.tip.first_login_change_password') }}
+          </template>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'reseller_login_register'"
+          field="reseller_login_register.password_expire_days"
+          :label="$t('sys.config.label.password_expire_days')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.password_expire_days'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="
+              configFormData.reseller_login_register.password_expire_days
+            "
+            :placeholder="$t('sys.config.placeholder.password_expire_days')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.day') }} </template>
+          </a-input-number>
+          <template #extra>
+            {{ $t('sys.config.tip.password_expire_days') }}
+          </template>
+        </a-form-item>
+        <a-form-item
           v-for="(item, index) of configFormData.reseller_shield_error.errors"
           v-show="configFormData.action === 'reseller_shield_error'"
           :key="index"
@@ -404,6 +492,47 @@
           >
             <template #prepend> / </template>
           </PasswordInput>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'admin_login'"
+          field="admin_login.first_login_change_password"
+          :label="$t('sys.config.label.first_login_change_password')"
+          :rules="[
+            {
+              required: true,
+            },
+          ]"
+        >
+          <a-switch
+            v-model="configFormData.admin_login.first_login_change_password"
+          />
+          <template #extra>
+            {{ $t('sys.config.tip.first_login_change_password') }}
+          </template>
+        </a-form-item>
+        <a-form-item
+          v-if="configFormData.action === 'admin_login'"
+          field="admin_login.password_expire_days"
+          :label="$t('sys.config.label.password_expire_days')"
+          :rules="[
+            {
+              required: true,
+              message: $t('sys.config.placeholder.password_expire_days'),
+            },
+          ]"
+        >
+          <a-input-number
+            v-model="configFormData.admin_login.password_expire_days"
+            :placeholder="$t('sys.config.placeholder.password_expire_days')"
+            :precision="0"
+            :min="0"
+            allow-clear
+          >
+            <template #append> {{ $t('unit.day') }} </template>
+          </a-input-number>
+          <template #extra>
+            {{ $t('sys.config.tip.password_expire_days') }}
+          </template>
         </a-form-item>
         <a-form-item
           v-if="configFormData.action === 'quota'"

@@ -49,5 +49,20 @@ export default {
   'login.user_agreement': '用戶協議',
   'login.privacy_policy': '隱私政策',
   'login.and': '和',
-  'login.error.agreement': '請閱讀並同意用戶協議和隱私政策'
+  'login.error.agreement': '請閱讀並同意用戶協議和隱私政策',
+
+  'login.change_password.title': '修改密碼',
+  'login.change_password.subtitle': '為了您的帳號安全, 請先修改登入密碼',
+  'login.change_password.placeholder.old': '請輸入原密碼',
+  'login.change_password.placeholder.new': '請輸入新密碼(6-32位, 需包含數字和小寫字母)',
+  'login.change_password.placeholder.confirm': '請再次輸入新密碼',
+  'login.change_password.error.required.old': '請輸入原密碼',
+  'login.change_password.error.required.new': '請輸入新密碼',
+  'login.change_password.error.required.confirm': '請再次輸入新密碼',
+  'login.change_password.error.format.new': '密碼需為6-32位, 且同時包含數字和小寫字母',
+  'login.change_password.error.validator.new': '新密碼不能與原密碼相同',
+  'login.change_password.error.validator.confirm': '兩次輸入的新密碼不一致',
+  'login.change_password.button': '確認修改',
+  'login.change_password.back': '返回登入',
+  'login.change_password.success': '密碼修改成功, 請使用新密碼重新登入',
 };

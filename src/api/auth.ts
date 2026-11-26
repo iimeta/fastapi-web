@@ -28,6 +28,7 @@ export interface LoginData {
 
 export interface LoginRes {
   token: string;
+  need_change_password?: boolean;
 }
 export function login(data: LoginData) {
   return axios.post<LoginRes>('/api/v1/auth/login', data);

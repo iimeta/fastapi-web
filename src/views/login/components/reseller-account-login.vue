@@ -123,8 +123,12 @@
           domain: window.location.hostname,
           path: window.location.pathname,
         })
-        .then(() => {
+        .then((res) => {
           window.localStorage.setItem('userRole', 'reseller');
+          if (res?.need_change_password) {
+            router.push({ name: 'ChangePassword' });
+            return;
+          }
           const { redirect, ...othersQuery } = router.currentRoute.value.query;
           router.push({
             name: (redirect as string) || 'Workplace',

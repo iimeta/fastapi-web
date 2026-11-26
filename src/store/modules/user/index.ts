@@ -22,6 +22,7 @@ const useUserStore = defineStore('user', {
     expires_at: undefined,
     role: '',
     rid: undefined,
+    need_change_password: false,
   }),
 
   getters: {
@@ -51,6 +52,7 @@ const useUserStore = defineStore('user', {
     async info() {
       const res = await getUserInfo();
       this.setInfo(res.data);
+      this.need_change_password = !!res.data.need_change_password;
     },
 
     // Login
@@ -59,6 +61,8 @@ const useUserStore = defineStore('user', {
         const res = await userLogin(loginForm);
         setToken(res.data.token);
         setRole(loginForm.channel);
+        this.need_change_password = !!res.data.need_change_password;
+        return res.data;
       } catch (err) {
         clearToken();
         throw err;

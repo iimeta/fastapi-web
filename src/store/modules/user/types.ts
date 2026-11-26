@@ -10,4 +10,5 @@ export interface UserState {
   expires_at?: string;
   role: RoleType;
   rid?: number;
+  need_change_password?: boolean;
 }

@@ -75,6 +75,18 @@ axios.interceptors.response.use(
     return res;
   },
   async (error) => {
+    // 首次登录或密码已过有效期时, 后端返回 403 + 460, 跳转到修改密码页
+    if (error.response?.status === 403 && error.response?.data?.code === 460) {
+      if (window.location.pathname !== '/change-password') {
+        Message.warning({
+          content: '请先修改密码',
+          duration: 5 * 1000,
+        });
+        window.location.href = '/change-password';
+      }
+      return Promise.reject(error);
+    }
+
     if ([401, 403].includes(error.response.status)) {
       if (error.config.url !== '/api/v1/user/info') {
         Message.error({
